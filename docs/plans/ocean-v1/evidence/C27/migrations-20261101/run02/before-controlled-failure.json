@@ -1,0 +1,4350 @@
+{
+  "revision": "20261005_0016",
+  "rows": {
+    "alembic_version": {
+      "count": 1,
+      "sha256": "e3074de1257fe57898d85da36ad5fbdf65f4034f28dfe678d1ba77a22dddd2f2"
+    },
+    "app_user": {
+      "count": 1,
+      "sha256": "ef3c88d684e0f7e3e8c3e3d5a28d5d067fb7ef9743a0bdaa7426cb5476dcb2e5"
+    },
+    "audit_event": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "chat_feedback": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "chat_interaction": {
+      "count": 1,
+      "sha256": "cadea3f69b45000df19459c33c42d6b7f18bc395b4fdf6f8239a7e7524dfc64b"
+    },
+    "classification_application": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "classification_application_event": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "classification_review": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "classification_review_event": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "corpus_publication": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "edna_aggregate_evidence": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "edna_assay": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "edna_detection": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "edna_internal_standard": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "edna_sample": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "external_source_file": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "external_source_snapshot": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rate_limit_bucket": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_area_definition": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_conversation": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_physical_membership": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_registry_event": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_registry_head": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_registry_review": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "research_registry_version": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "user_invitation": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "schema": {
+    "tables": [
+      "alembic_version",
+      "app_user",
+      "audit_event",
+      "chat_feedback",
+      "chat_interaction",
+      "classification_application",
+      "classification_application_event",
+      "classification_review",
+      "classification_review_event",
+      "corpus_publication",
+      "edna_aggregate_evidence",
+      "edna_assay",
+      "edna_detection",
+      "edna_internal_standard",
+      "edna_sample",
+      "external_source_file",
+      "external_source_snapshot",
+      "rate_limit_bucket",
+      "research_area_definition",
+      "research_conversation",
+      "research_physical_membership",
+      "research_registry_event",
+      "research_registry_head",
+      "research_registry_review",
+      "research_registry_version",
+      "user_invitation"
+    ],
+    "columns": [
+      [
+        "alembic_version",
+        "version_num",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "auth_provider",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "auth_subject",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "email",
+        4,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "display_name",
+        5,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "app_user",
+        "role",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "account_type",
+        7,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "status",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "app_user",
+        "invited_by_user_id",
+        9,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "app_user",
+        "created_at",
+        10,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "app_user",
+        "updated_at",
+        11,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "app_user",
+        "last_login_at",
+        12,
+        "timestamptz",
+        "YES",
+        null
+      ],
+      [
+        "audit_event",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "audit_event",
+        "actor_user_id",
+        2,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "audit_event",
+        "action",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "audit_event",
+        "target_type",
+        4,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "audit_event",
+        "target_id",
+        5,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "audit_event",
+        "metadata_json",
+        6,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "audit_event",
+        "created_at",
+        7,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "chat_feedback",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "chat_feedback",
+        "interaction_id",
+        2,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "chat_feedback",
+        "user_id",
+        3,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "chat_feedback",
+        "rating",
+        4,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "chat_feedback",
+        "reason_codes",
+        5,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "chat_feedback",
+        "comment",
+        6,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "chat_feedback",
+        "created_at",
+        7,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "chat_feedback",
+        "updated_at",
+        8,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "chat_interaction",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "chat_interaction",
+        "user_id",
+        2,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "chat_interaction",
+        "status",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "chat_interaction",
+        "query",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "chat_interaction",
+        "answer",
+        5,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "model",
+        6,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "request_options",
+        7,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "chat_interaction",
+        "evidence_snapshot",
+        8,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "chat_interaction",
+        "answer_audit_snapshot",
+        9,
+        "json",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "corpus_fingerprint",
+        10,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "prompt_version",
+        11,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "prompt_sha256",
+        12,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "latency_ms",
+        13,
+        "int4",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "error_code",
+        14,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "created_at",
+        15,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "chat_interaction",
+        "completed_at",
+        16,
+        "timestamptz",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "legal_hold",
+        17,
+        "bool",
+        "NO",
+        "false"
+      ],
+      [
+        "chat_interaction",
+        "outcome",
+        18,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "chat_interaction",
+        "abstention_reason",
+        19,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_application",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "operation_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "review_id",
+        3,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "review_version",
+        4,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "review_content_sha256",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "source_snapshot_id",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "sample_id",
+        7,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "mode",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "rollback_of_application_id",
+        9,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "classification_application",
+        "actor_user_id",
+        10,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "actor_identity_json",
+        11,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "status",
+        12,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "current_stage",
+        13,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_application",
+        "completed_stages_json",
+        14,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "artifacts_json",
+        15,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "results_json",
+        16,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "error_code",
+        17,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_application",
+        "recovery_json",
+        18,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "started_at",
+        19,
+        "timestamptz",
+        "NO",
+        null
+      ],
+      [
+        "classification_application",
+        "finished_at",
+        20,
+        "timestamptz",
+        "YES",
+        null
+      ],
+      [
+        "classification_application",
+        "created_at",
+        21,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "classification_application",
+        "updated_at",
+        22,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "classification_application_event",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "application_id",
+        2,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "sequence",
+        3,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "event_type",
+        4,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "stage",
+        5,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_application_event",
+        "occurred_at",
+        6,
+        "timestamptz",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "result_json",
+        7,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "error_code",
+        8,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_application_event",
+        "recovery_json",
+        9,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_application_event",
+        "event_sha256",
+        10,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "source_snapshot_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "sample_id",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "provider_sample_id",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "sample_kind",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "rationale",
+        6,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "evidence_json",
+        7,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "content_sha256",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "state",
+        9,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "version",
+        10,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "supersedes_review_id",
+        11,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "created_by_user_id",
+        12,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_review",
+        "scientific_decided_by_user_id",
+        13,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "scientific_decided_at",
+        14,
+        "timestamptz",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "operational_actor_user_id",
+        15,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "operational_at",
+        16,
+        "timestamptz",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "application_reference",
+        17,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "failure_code",
+        18,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "failure_detail",
+        19,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "classification_review",
+        "created_at",
+        20,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "classification_review",
+        "updated_at",
+        21,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "classification_review_event",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "review_id",
+        2,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "sequence",
+        3,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "event_type",
+        4,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "from_state",
+        5,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "classification_review_event",
+        "to_state",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "actor_user_id",
+        7,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "actor_role",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "actor_identity_json",
+        9,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "occurred_at",
+        10,
+        "timestamptz",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "content_sha256",
+        11,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "event_sha256",
+        12,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "review_snapshot_json",
+        13,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "classification_review_event",
+        "details_json",
+        14,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "corpus_publication",
+        "channel",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "corpus_publication",
+        "generation_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "corpus_publication",
+        "manifest_sha256",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_aggregate_evidence",
+        "aggregate_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_aggregate_evidence",
+        "algorithm_version",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_aggregate_evidence",
+        "payload_json",
+        3,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_aggregate_evidence",
+        "created_at",
+        4,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "edna_assay",
+        "assay_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "sample_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "target_gene",
+        3,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "primer_set",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "sequencing_method",
+        5,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "library_layout",
+        6,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_assay",
+        "instrument_model",
+        7,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_assay",
+        "raw_metadata_json",
+        8,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "source_snapshot_id",
+        9,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "source_file_id",
+        10,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "source_row_numbers_json",
+        11,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "active",
+        12,
+        "bool",
+        "NO",
+        "true"
+      ],
+      [
+        "edna_assay",
+        "first_seen_snapshot_id",
+        13,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "last_seen_snapshot_id",
+        14,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "scientific_content_sha256",
+        15,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "source_row_hash",
+        16,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_assay",
+        "raw_metadata_rows_json",
+        17,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_assay",
+        "community_availability_json",
+        18,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "detection_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "assay_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "assignment_method",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "sequence",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "sequence_sha256",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "read_count",
+        6,
+        "int8",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "copies_per_ml",
+        7,
+        "float8",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "superkingdom",
+        8,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "kingdom",
+        9,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "phylum",
+        10,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "class",
+        11,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "order",
+        12,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "family",
+        13,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "genus",
+        14,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "species",
+        15,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "subspecies",
+        16,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "assigned_taxon_name",
+        17,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "assigned_taxon_rank",
+        18,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "taxonomy_json",
+        19,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "source_snapshot_id",
+        20,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "source_file_id",
+        21,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "source_row_number",
+        22,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "active",
+        23,
+        "bool",
+        "NO",
+        "true"
+      ],
+      [
+        "edna_detection",
+        "first_seen_snapshot_id",
+        24,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "last_seen_snapshot_id",
+        25,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "scientific_content_sha256",
+        26,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "source_row_hash",
+        27,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_detection",
+        "assignment_algorithm",
+        28,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_detection",
+        "target_status",
+        29,
+        "varchar",
+        "NO",
+        "'target'::character varying"
+      ],
+      [
+        "edna_detection",
+        "concentration_status",
+        30,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "internal_standard_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "assay_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "standard_name",
+        3,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "sequence",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "sequence_sha256",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "read_count",
+        6,
+        "int8",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "source_snapshot_id",
+        7,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "source_file_id",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "source_row_number",
+        9,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "active",
+        10,
+        "bool",
+        "NO",
+        "true"
+      ],
+      [
+        "edna_internal_standard",
+        "first_seen_snapshot_id",
+        11,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "last_seen_snapshot_id",
+        12,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "scientific_content_sha256",
+        13,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_internal_standard",
+        "source_row_hash",
+        14,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "sample_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "provider",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "provider_sample_id",
+        3,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "provider_project_id",
+        4,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "provider_run_id",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "project_name",
+        6,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "original_sample_label",
+        7,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "sample_kind",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "is_control",
+        9,
+        "bool",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "classification_basis",
+        10,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "collection_date_utc",
+        11,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "temporal_precision",
+        12,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "lat",
+        13,
+        "float8",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "lon",
+        14,
+        "float8",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "raw_metadata_json",
+        15,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "anchor_event_id",
+        16,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "source_snapshot_id",
+        17,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "source_file_id",
+        18,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "source_row_numbers_json",
+        19,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "active",
+        20,
+        "bool",
+        "NO",
+        "true"
+      ],
+      [
+        "edna_sample",
+        "first_seen_snapshot_id",
+        21,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "last_seen_snapshot_id",
+        22,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "scientific_content_sha256",
+        23,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "source_row_hash",
+        24,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "edna_sample",
+        "classification_review_json",
+        25,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "provider_locus",
+        26,
+        "varchar",
+        "NO",
+        "'MiFish'::character varying"
+      ],
+      [
+        "edna_sample",
+        "provider_team",
+        27,
+        "varchar",
+        "NO",
+        "'ANEMONE'::character varying"
+      ],
+      [
+        "edna_sample",
+        "source_occurrence_id",
+        28,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "physical_sample_id",
+        29,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "identity_status",
+        30,
+        "varchar",
+        "NO",
+        "'unresolved_physical_sample'::character varying"
+      ],
+      [
+        "edna_sample",
+        "coordinate_precision",
+        31,
+        "varchar",
+        "NO",
+        "'unspecified'::character varying"
+      ],
+      [
+        "edna_sample",
+        "raw_metadata_rows_json",
+        32,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "edna_sample",
+        "provider_note_json",
+        33,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "external_source_file",
+        "source_file_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "snapshot_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "relative_path",
+        3,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "source_url",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "sample_name",
+        5,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "role",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "selection_status",
+        7,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "size_bytes",
+        8,
+        "int8",
+        "YES",
+        null
+      ],
+      [
+        "external_source_file",
+        "etag",
+        9,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "external_source_file",
+        "last_modified",
+        10,
+        "text",
+        "YES",
+        null
+      ],
+      [
+        "external_source_file",
+        "sha256",
+        11,
+        "varchar",
+        "YES",
+        null
+      ],
+      [
+        "external_source_file",
+        "validation_status",
+        12,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_file",
+        "row_count",
+        13,
+        "int4",
+        "YES",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "snapshot_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "provider",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "source_family",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "scope_url",
+        4,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "scope_level",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "source_collection_sha256",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "contract_version",
+        7,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "contract_sha256",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "selection_policy",
+        9,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "generated_at",
+        10,
+        "timestamptz",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "file_count",
+        11,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "selected_file_count",
+        12,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "total_bytes",
+        13,
+        "int8",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "status",
+        14,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "manifest_sha256",
+        15,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "external_source_snapshot",
+        "manifest_summary_json",
+        16,
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "rate_limit_bucket",
+        "scope",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "rate_limit_bucket",
+        "subject_hash",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "rate_limit_bucket",
+        "window_started_at",
+        3,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "rate_limit_bucket",
+        "request_count",
+        4,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "rate_limit_bucket",
+        "updated_at",
+        5,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "research_area_definition",
+        "registry_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_area_definition",
+        "area_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_area_definition",
+        "area_version",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_area_definition",
+        "definition_json",
+        4,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "research_conversation",
+        "c27_failure_marker",
+        1,
+        "int4",
+        "YES",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "registry_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "sample_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "physical_sample_id",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "scientific_content_sha256",
+        4,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "representative_assay_id",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "representative_assay_sha256",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "area_id",
+        7,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_physical_membership",
+        "area_version",
+        8,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_event",
+        "review_id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_event",
+        "sequence",
+        2,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_event",
+        "event_sha256",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_event",
+        "payload_json",
+        4,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_head",
+        "registry_key",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_head",
+        "registry_id",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "kind",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "registry_key",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "definition_json",
+        4,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "content_sha256",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "state",
+        6,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "version",
+        7,
+        "int4",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "created_at",
+        8,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "research_registry_review",
+        "created_by_user_id",
+        9,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_review",
+        "decided_by_user_id",
+        10,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "research_registry_review",
+        "applied_by_user_id",
+        11,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "research_registry_version",
+        "registry_id",
+        1,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_version",
+        "review_id",
+        2,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_version",
+        "registry_key",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "research_registry_version",
+        "payload_json",
+        4,
+        "json",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "id",
+        1,
+        "uuid",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "email",
+        2,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "role",
+        3,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "account_type",
+        4,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "status",
+        5,
+        "varchar",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "invited_by_user_id",
+        6,
+        "uuid",
+        "YES",
+        null
+      ],
+      [
+        "user_invitation",
+        "expires_at",
+        7,
+        "timestamptz",
+        "NO",
+        null
+      ],
+      [
+        "user_invitation",
+        "accepted_at",
+        8,
+        "timestamptz",
+        "YES",
+        null
+      ],
+      [
+        "user_invitation",
+        "created_at",
+        9,
+        "timestamptz",
+        "NO",
+        "now()"
+      ],
+      [
+        "user_invitation",
+        "updated_at",
+        10,
+        "timestamptz",
+        "NO",
+        "now()"
+      ]
+    ],
+    "constraints": [
+      [
+        "alembic_version",
+        "alembic_version_pkc",
+        "PRIMARY KEY (version_num)"
+      ],
+      [
+        "alembic_version",
+        "alembic_version_version_num_not_null",
+        "NOT NULL version_num"
+      ],
+      [
+        "app_user",
+        "app_user_account_type_not_null",
+        "NOT NULL account_type"
+      ],
+      [
+        "app_user",
+        "app_user_auth_provider_not_null",
+        "NOT NULL auth_provider"
+      ],
+      [
+        "app_user",
+        "app_user_auth_subject_not_null",
+        "NOT NULL auth_subject"
+      ],
+      [
+        "app_user",
+        "app_user_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "app_user",
+        "app_user_email_key",
+        "UNIQUE (email)"
+      ],
+      [
+        "app_user",
+        "app_user_email_not_null",
+        "NOT NULL email"
+      ],
+      [
+        "app_user",
+        "app_user_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "app_user",
+        "app_user_invited_by_user_id_fkey",
+        "FOREIGN KEY (invited_by_user_id) REFERENCES app_user(id) ON DELETE SET NULL"
+      ],
+      [
+        "app_user",
+        "app_user_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "app_user",
+        "app_user_role_not_null",
+        "NOT NULL role"
+      ],
+      [
+        "app_user",
+        "app_user_status_not_null",
+        "NOT NULL status"
+      ],
+      [
+        "app_user",
+        "app_user_updated_at_not_null",
+        "NOT NULL updated_at"
+      ],
+      [
+        "app_user",
+        "ck_app_user_account_type",
+        "CHECK (((account_type)::text = ANY ((ARRAY['research'::character varying, 'commercial'::character varying, 'internal'::character varying])::text[])))"
+      ],
+      [
+        "app_user",
+        "ck_app_user_role",
+        "CHECK (((role)::text = ANY ((ARRAY['viewer'::character varying, 'researcher'::character varying, 'admin'::character varying])::text[])))"
+      ],
+      [
+        "app_user",
+        "ck_app_user_status",
+        "CHECK (((status)::text = ANY ((ARRAY['active'::character varying, 'suspended'::character varying])::text[])))"
+      ],
+      [
+        "app_user",
+        "uq_app_user_provider_subject",
+        "UNIQUE (auth_provider, auth_subject)"
+      ],
+      [
+        "audit_event",
+        "audit_event_action_not_null",
+        "NOT NULL action"
+      ],
+      [
+        "audit_event",
+        "audit_event_actor_user_id_fkey",
+        "FOREIGN KEY (actor_user_id) REFERENCES app_user(id) ON DELETE SET NULL"
+      ],
+      [
+        "audit_event",
+        "audit_event_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "audit_event",
+        "audit_event_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "audit_event",
+        "audit_event_metadata_json_not_null",
+        "NOT NULL metadata_json"
+      ],
+      [
+        "audit_event",
+        "audit_event_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_interaction_id_fkey",
+        "FOREIGN KEY (interaction_id) REFERENCES chat_interaction(id) ON DELETE CASCADE"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_interaction_id_not_null",
+        "NOT NULL interaction_id"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_rating_not_null",
+        "NOT NULL rating"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_reason_codes_not_null",
+        "NOT NULL reason_codes"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_updated_at_not_null",
+        "NOT NULL updated_at"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_user_id_fkey",
+        "FOREIGN KEY (user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "chat_feedback",
+        "chat_feedback_user_id_not_null",
+        "NOT NULL user_id"
+      ],
+      [
+        "chat_feedback",
+        "ck_chat_feedback_rating",
+        "CHECK ((rating = ANY (ARRAY['-1'::integer, 1])))"
+      ],
+      [
+        "chat_feedback",
+        "uq_chat_feedback_interaction_user",
+        "UNIQUE (interaction_id, user_id)"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_evidence_snapshot_not_null",
+        "NOT NULL evidence_snapshot"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_legal_hold_not_null",
+        "NOT NULL legal_hold"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_query_not_null",
+        "NOT NULL query"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_request_options_not_null",
+        "NOT NULL request_options"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_status_not_null",
+        "NOT NULL status"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_user_id_fkey",
+        "FOREIGN KEY (user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "chat_interaction",
+        "chat_interaction_user_id_not_null",
+        "NOT NULL user_id"
+      ],
+      [
+        "chat_interaction",
+        "ck_chat_interaction_abstention_reason",
+        "CHECK (((abstention_reason IS NULL) OR ((abstention_reason)::text = ANY ((ARRAY['no_matching_evidence'::character varying, 'empty_analysis_cohort'::character varying, 'publication_pending'::character varying, 'aggregate_scope_required'::character varying, 'aggregate_unavailable'::character varying, 'no_sources_selected'::character varying, 'source_disabled'::character varying, 'freshness_unavailable'::character varying, 'incomplete_source_coverage'::character varying, 'overlap_unverified'::character varying])::text[]))))"
+      ],
+      [
+        "chat_interaction",
+        "ck_chat_interaction_outcome",
+        "CHECK (((outcome IS NULL) OR ((outcome)::text = ANY ((ARRAY['answered'::character varying, 'abstained'::character varying])::text[]))))"
+      ],
+      [
+        "chat_interaction",
+        "ck_chat_interaction_outcome_reason",
+        "CHECK ((((outcome IS NULL) AND (abstention_reason IS NULL)) OR (((outcome)::text = 'answered'::text) AND (abstention_reason IS NULL)) OR (((outcome)::text = 'abstained'::text) AND (abstention_reason IS NOT NULL))))"
+      ],
+      [
+        "chat_interaction",
+        "ck_chat_interaction_status",
+        "CHECK (((status)::text = ANY ((ARRAY['running'::character varying, 'completed'::character varying, 'failed'::character varying])::text[])))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_completion",
+        "CHECK (((((status)::text = ANY ((ARRAY['applied'::character varying, 'rolled_back'::character varying])::text[])) AND (finished_at IS NOT NULL) AND (error_code IS NULL)) OR ((status)::text <> ALL ((ARRAY['applied'::character varying, 'rolled_back'::character varying])::text[]))))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_current_stage",
+        "CHECK (((current_stage IS NULL) OR ((current_stage)::text = ANY ((ARRAY['register_review'::character varying, 'normalize'::character varying, 'import'::character varying, 'materialize'::character varying, 'analyze'::character varying, 'embed'::character varying, 'provenance'::character varying, 'finalize'::character varying])::text[]))))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_failure",
+        "CHECK (((((status)::text = 'failed'::text) AND (error_code IS NOT NULL) AND (current_stage IS NOT NULL)) OR ((status)::text <> 'failed'::text)))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_mode",
+        "CHECK (((mode)::text = ANY ((ARRAY['apply'::character varying, 'rollback'::character varying])::text[])))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_review_version",
+        "CHECK ((review_version >= 1))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_rollback_target",
+        "CHECK (((((mode)::text = 'rollback'::text) AND (rollback_of_application_id IS NOT NULL)) OR (((mode)::text = 'apply'::text) AND (rollback_of_application_id IS NULL))))"
+      ],
+      [
+        "classification_application",
+        "ck_classification_application_status",
+        "CHECK (((status)::text = ANY ((ARRAY['running'::character varying, 'failed'::character varying, 'applied'::character varying, 'rolled_back'::character varying])::text[])))"
+      ],
+      [
+        "classification_application",
+        "classification_application_actor_identity_json_not_null",
+        "NOT NULL actor_identity_json"
+      ],
+      [
+        "classification_application",
+        "classification_application_actor_user_id_fkey",
+        "FOREIGN KEY (actor_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_application",
+        "classification_application_actor_user_id_not_null",
+        "NOT NULL actor_user_id"
+      ],
+      [
+        "classification_application",
+        "classification_application_artifacts_json_not_null",
+        "NOT NULL artifacts_json"
+      ],
+      [
+        "classification_application",
+        "classification_application_completed_stages_json_not_null",
+        "NOT NULL completed_stages_json"
+      ],
+      [
+        "classification_application",
+        "classification_application_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "classification_application",
+        "classification_application_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "classification_application",
+        "classification_application_mode_not_null",
+        "NOT NULL mode"
+      ],
+      [
+        "classification_application",
+        "classification_application_operation_id_not_null",
+        "NOT NULL operation_id"
+      ],
+      [
+        "classification_application",
+        "classification_application_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "classification_application",
+        "classification_application_recovery_json_not_null",
+        "NOT NULL recovery_json"
+      ],
+      [
+        "classification_application",
+        "classification_application_results_json_not_null",
+        "NOT NULL results_json"
+      ],
+      [
+        "classification_application",
+        "classification_application_review_content_sha256_not_null",
+        "NOT NULL review_content_sha256"
+      ],
+      [
+        "classification_application",
+        "classification_application_review_id_fkey",
+        "FOREIGN KEY (review_id) REFERENCES classification_review(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_application",
+        "classification_application_review_id_not_null",
+        "NOT NULL review_id"
+      ],
+      [
+        "classification_application",
+        "classification_application_review_version_not_null",
+        "NOT NULL review_version"
+      ],
+      [
+        "classification_application",
+        "classification_application_rollback_of_application_id_fkey",
+        "FOREIGN KEY (rollback_of_application_id) REFERENCES classification_application(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_application",
+        "classification_application_sample_id_not_null",
+        "NOT NULL sample_id"
+      ],
+      [
+        "classification_application",
+        "classification_application_source_snapshot_id_not_null",
+        "NOT NULL source_snapshot_id"
+      ],
+      [
+        "classification_application",
+        "classification_application_started_at_not_null",
+        "NOT NULL started_at"
+      ],
+      [
+        "classification_application",
+        "classification_application_status_not_null",
+        "NOT NULL status"
+      ],
+      [
+        "classification_application",
+        "classification_application_updated_at_not_null",
+        "NOT NULL updated_at"
+      ],
+      [
+        "classification_application",
+        "uq_classification_application_operation_id",
+        "UNIQUE (operation_id)"
+      ],
+      [
+        "classification_application_event",
+        "ck_classification_application_event_sequence",
+        "CHECK ((sequence >= 1))"
+      ],
+      [
+        "classification_application_event",
+        "ck_classification_application_event_stage",
+        "CHECK (((stage IS NULL) OR ((stage)::text = ANY ((ARRAY['register_review'::character varying, 'normalize'::character varying, 'import'::character varying, 'materialize'::character varying, 'analyze'::character varying, 'embed'::character varying, 'provenance'::character varying, 'finalize'::character varying])::text[]))))"
+      ],
+      [
+        "classification_application_event",
+        "ck_classification_application_event_stage_shape",
+        "CHECK (((((event_type)::text = ANY ((ARRAY['run_started'::character varying, 'run_resumed'::character varying, 'run_applied'::character varying, 'run_rolled_back'::character varying])::text[])) AND (stage IS NULL)) OR (((event_type)::text = ANY ((ARRAY['stage_started'::character varying, 'stage_completed'::character varying, 'stage_failed'::character varying, 'run_failed'::character varying])::text[])) AND (stage IS NOT NULL))))"
+      ],
+      [
+        "classification_application_event",
+        "ck_classification_application_event_type",
+        "CHECK (((event_type)::text = ANY ((ARRAY['run_started'::character varying, 'run_resumed'::character varying, 'stage_started'::character varying, 'stage_completed'::character varying, 'stage_failed'::character varying, 'run_applied'::character varying, 'run_rolled_back'::character varying, 'run_failed'::character varying])::text[])))"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_application_id_fkey",
+        "FOREIGN KEY (application_id) REFERENCES classification_application(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_application_id_not_null",
+        "NOT NULL application_id"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_event_sha256_not_null",
+        "NOT NULL event_sha256"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_event_type_not_null",
+        "NOT NULL event_type"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_occurred_at_not_null",
+        "NOT NULL occurred_at"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_recovery_json_not_null",
+        "NOT NULL recovery_json"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_result_json_not_null",
+        "NOT NULL result_json"
+      ],
+      [
+        "classification_application_event",
+        "classification_application_event_sequence_not_null",
+        "NOT NULL sequence"
+      ],
+      [
+        "classification_application_event",
+        "uq_classification_application_event_sequence",
+        "UNIQUE (application_id, sequence)"
+      ],
+      [
+        "classification_review",
+        "ck_classification_review_applied",
+        "CHECK (((((state)::text = 'applied'::text) AND (operational_actor_user_id IS NOT NULL) AND (operational_at IS NOT NULL) AND (application_reference IS NOT NULL) AND (failure_code IS NULL)) OR ((state)::text <> 'applied'::text)))"
+      ],
+      [
+        "classification_review",
+        "ck_classification_review_failed",
+        "CHECK (((((state)::text = 'failed'::text) AND (operational_actor_user_id IS NOT NULL) AND (operational_at IS NOT NULL) AND (failure_code IS NOT NULL)) OR ((state)::text <> 'failed'::text)))"
+      ],
+      [
+        "classification_review",
+        "ck_classification_review_sample_kind",
+        "CHECK (((sample_kind)::text = ANY ((ARRAY['environmental'::character varying, 'negative_control'::character varying, 'positive_control'::character varying, 'mock_community'::character varying, 'unknown'::character varying])::text[])))"
+      ],
+      [
+        "classification_review",
+        "ck_classification_review_scientific_decision",
+        "CHECK (((((state)::text = ANY ((ARRAY['approved'::character varying, 'rejected'::character varying, 'superseded'::character varying, 'applied'::character varying, 'failed'::character varying])::text[])) AND (scientific_decided_by_user_id IS NOT NULL) AND (scientific_decided_at IS NOT NULL)) OR ((state)::text = 'draft'::text)))"
+      ],
+      [
+        "classification_review",
+        "ck_classification_review_state",
+        "CHECK (((state)::text = ANY ((ARRAY['draft'::character varying, 'approved'::character varying, 'rejected'::character varying, 'superseded'::character varying, 'applied'::character varying, 'failed'::character varying])::text[])))"
+      ],
+      [
+        "classification_review",
+        "ck_classification_review_version",
+        "CHECK ((version >= 1))"
+      ],
+      [
+        "classification_review",
+        "classification_review_content_sha256_not_null",
+        "NOT NULL content_sha256"
+      ],
+      [
+        "classification_review",
+        "classification_review_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "classification_review",
+        "classification_review_created_by_user_id_fkey",
+        "FOREIGN KEY (created_by_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_review",
+        "classification_review_created_by_user_id_not_null",
+        "NOT NULL created_by_user_id"
+      ],
+      [
+        "classification_review",
+        "classification_review_evidence_json_not_null",
+        "NOT NULL evidence_json"
+      ],
+      [
+        "classification_review",
+        "classification_review_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "classification_review",
+        "classification_review_operational_actor_user_id_fkey",
+        "FOREIGN KEY (operational_actor_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_review",
+        "classification_review_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "classification_review",
+        "classification_review_provider_sample_id_not_null",
+        "NOT NULL provider_sample_id"
+      ],
+      [
+        "classification_review",
+        "classification_review_rationale_not_null",
+        "NOT NULL rationale"
+      ],
+      [
+        "classification_review",
+        "classification_review_sample_id_not_null",
+        "NOT NULL sample_id"
+      ],
+      [
+        "classification_review",
+        "classification_review_sample_kind_not_null",
+        "NOT NULL sample_kind"
+      ],
+      [
+        "classification_review",
+        "classification_review_scientific_decided_by_user_id_fkey",
+        "FOREIGN KEY (scientific_decided_by_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_review",
+        "classification_review_source_snapshot_id_not_null",
+        "NOT NULL source_snapshot_id"
+      ],
+      [
+        "classification_review",
+        "classification_review_state_not_null",
+        "NOT NULL state"
+      ],
+      [
+        "classification_review",
+        "classification_review_supersedes_review_id_fkey",
+        "FOREIGN KEY (supersedes_review_id) REFERENCES classification_review(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_review",
+        "classification_review_updated_at_not_null",
+        "NOT NULL updated_at"
+      ],
+      [
+        "classification_review",
+        "classification_review_version_not_null",
+        "NOT NULL version"
+      ],
+      [
+        "classification_review_event",
+        "ck_classification_review_event_actor_role",
+        "CHECK (((actor_role)::text = ANY ((ARRAY['researcher'::character varying, 'admin'::character varying])::text[])))"
+      ],
+      [
+        "classification_review_event",
+        "ck_classification_review_event_role",
+        "CHECK (((((event_type)::text = ANY ((ARRAY['created'::character varying, 'draft_updated'::character varying, 'approved'::character varying, 'rejected'::character varying, 'superseded'::character varying])::text[])) AND ((actor_role)::text = 'researcher'::text)) OR (((event_type)::text = ANY ((ARRAY['applied'::character varying, 'failed'::character varying])::text[])) AND ((actor_role)::text = 'admin'::text))))"
+      ],
+      [
+        "classification_review_event",
+        "ck_classification_review_event_sequence",
+        "CHECK ((sequence >= 1))"
+      ],
+      [
+        "classification_review_event",
+        "ck_classification_review_event_state",
+        "CHECK (((to_state)::text = ANY ((ARRAY['draft'::character varying, 'approved'::character varying, 'rejected'::character varying, 'superseded'::character varying, 'applied'::character varying, 'failed'::character varying])::text[])))"
+      ],
+      [
+        "classification_review_event",
+        "ck_classification_review_event_transition",
+        "CHECK (((((event_type)::text = 'created'::text) AND (from_state IS NULL) AND ((to_state)::text = 'draft'::text)) OR (((event_type)::text = 'draft_updated'::text) AND ((from_state)::text = 'draft'::text) AND ((to_state)::text = 'draft'::text)) OR (((event_type)::text = ANY ((ARRAY['approved'::character varying, 'rejected'::character varying])::text[])) AND ((from_state)::text = 'draft'::text) AND ((to_state)::text = (event_type)::text)) OR (((event_type)::text = 'superseded'::text) AND ((from_state)::text = ANY ((ARRAY['approved'::character varying, 'applied'::character varying, 'failed'::character varying])::text[])) AND ((to_state)::text = 'superseded'::text)) OR (((event_type)::text = ANY ((ARRAY['applied'::character varying, 'failed'::character varying])::text[])) AND ((from_state)::text = ANY ((ARRAY['approved'::character varying, 'failed'::character varying])::text[])) AND ((to_state)::text = (event_type)::text))))"
+      ],
+      [
+        "classification_review_event",
+        "ck_classification_review_event_type",
+        "CHECK (((event_type)::text = ANY ((ARRAY['created'::character varying, 'draft_updated'::character varying, 'approved'::character varying, 'rejected'::character varying, 'superseded'::character varying, 'applied'::character varying, 'failed'::character varying])::text[])))"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_actor_identity_json_not_null",
+        "NOT NULL actor_identity_json"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_actor_role_not_null",
+        "NOT NULL actor_role"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_actor_user_id_fkey",
+        "FOREIGN KEY (actor_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_actor_user_id_not_null",
+        "NOT NULL actor_user_id"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_content_sha256_not_null",
+        "NOT NULL content_sha256"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_details_json_not_null",
+        "NOT NULL details_json"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_event_sha256_not_null",
+        "NOT NULL event_sha256"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_event_type_not_null",
+        "NOT NULL event_type"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_occurred_at_not_null",
+        "NOT NULL occurred_at"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_review_id_fkey",
+        "FOREIGN KEY (review_id) REFERENCES classification_review(id) ON DELETE RESTRICT"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_review_id_not_null",
+        "NOT NULL review_id"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_review_snapshot_json_not_null",
+        "NOT NULL review_snapshot_json"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_sequence_not_null",
+        "NOT NULL sequence"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_to_state_not_null",
+        "NOT NULL to_state"
+      ],
+      [
+        "classification_review_event",
+        "uq_classification_review_event_sequence",
+        "UNIQUE (review_id, sequence)"
+      ],
+      [
+        "corpus_publication",
+        "corpus_publication_channel_not_null",
+        "NOT NULL channel"
+      ],
+      [
+        "corpus_publication",
+        "corpus_publication_generation_id_not_null",
+        "NOT NULL generation_id"
+      ],
+      [
+        "corpus_publication",
+        "corpus_publication_manifest_sha256_not_null",
+        "NOT NULL manifest_sha256"
+      ],
+      [
+        "corpus_publication",
+        "corpus_publication_pkey",
+        "PRIMARY KEY (channel)"
+      ],
+      [
+        "edna_aggregate_evidence",
+        "edna_aggregate_evidence_aggregate_id_not_null",
+        "NOT NULL aggregate_id"
+      ],
+      [
+        "edna_aggregate_evidence",
+        "edna_aggregate_evidence_algorithm_version_not_null",
+        "NOT NULL algorithm_version"
+      ],
+      [
+        "edna_aggregate_evidence",
+        "edna_aggregate_evidence_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "edna_aggregate_evidence",
+        "edna_aggregate_evidence_payload_json_not_null",
+        "NOT NULL payload_json"
+      ],
+      [
+        "edna_aggregate_evidence",
+        "edna_aggregate_evidence_pkey",
+        "PRIMARY KEY (aggregate_id)"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_active_not_null",
+        "NOT NULL active"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_assay_id_not_null",
+        "NOT NULL assay_id"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_first_seen_snapshot_id_fkey",
+        "FOREIGN KEY (first_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_first_seen_snapshot_id_not_null",
+        "NOT NULL first_seen_snapshot_id"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_last_seen_snapshot_id_fkey",
+        "FOREIGN KEY (last_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_last_seen_snapshot_id_not_null",
+        "NOT NULL last_seen_snapshot_id"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_pkey",
+        "PRIMARY KEY (assay_id)"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_primer_set_not_null",
+        "NOT NULL primer_set"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_raw_metadata_json_not_null",
+        "NOT NULL raw_metadata_json"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_sample_id_fkey",
+        "FOREIGN KEY (sample_id) REFERENCES edna_sample(sample_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_sample_id_not_null",
+        "NOT NULL sample_id"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_scientific_content_sha256_not_null",
+        "NOT NULL scientific_content_sha256"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_sequencing_method_not_null",
+        "NOT NULL sequencing_method"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_source_file_id_fkey",
+        "FOREIGN KEY (source_file_id) REFERENCES external_source_file(source_file_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_source_file_id_not_null",
+        "NOT NULL source_file_id"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_source_row_hash_not_null",
+        "NOT NULL source_row_hash"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_source_row_numbers_json_not_null",
+        "NOT NULL source_row_numbers_json"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_source_snapshot_id_fkey",
+        "FOREIGN KEY (source_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_source_snapshot_id_not_null",
+        "NOT NULL source_snapshot_id"
+      ],
+      [
+        "edna_assay",
+        "edna_assay_target_gene_not_null",
+        "NOT NULL target_gene"
+      ],
+      [
+        "edna_detection",
+        "ck_edna_detection_assignment_method",
+        "CHECK (((assignment_method)::text = ANY ((ARRAY['qcauto_target'::character varying, 'qcauto_95pct_3nn_target'::character varying, 'qcauto_nontarget'::character varying, 'qcauto_95pct_3nn_nontarget'::character varying])::text[])))"
+      ],
+      [
+        "edna_detection",
+        "ck_edna_detection_copies",
+        "CHECK (((copies_per_ml IS NULL) OR (copies_per_ml >= (0)::double precision)))"
+      ],
+      [
+        "edna_detection",
+        "ck_edna_detection_read_count",
+        "CHECK ((read_count >= 0))"
+      ],
+      [
+        "edna_detection",
+        "ck_edna_detection_source_row",
+        "CHECK ((source_row_number >= 2))"
+      ],
+      [
+        "edna_detection",
+        "ck_edna_detection_target_status",
+        "CHECK ((((target_status)::text = ANY ((ARRAY['target'::character varying, 'nontarget'::character varying])::text[])) AND ((((target_status)::text = 'target'::text) AND ((assignment_method)::text = ANY ((ARRAY['qcauto_target'::character varying, 'qcauto_95pct_3nn_target'::character varying])::text[]))) OR (((target_status)::text = 'nontarget'::text) AND ((assignment_method)::text = ANY ((ARRAY['qcauto_nontarget'::character varying, 'qcauto_95pct_3nn_nontarget'::character varying])::text[]))))))"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_active_not_null",
+        "NOT NULL active"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_assay_id_fkey",
+        "FOREIGN KEY (assay_id) REFERENCES edna_assay(assay_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_assay_id_not_null",
+        "NOT NULL assay_id"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_assignment_method_not_null",
+        "NOT NULL assignment_method"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_detection_id_not_null",
+        "NOT NULL detection_id"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_first_seen_snapshot_id_fkey",
+        "FOREIGN KEY (first_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_first_seen_snapshot_id_not_null",
+        "NOT NULL first_seen_snapshot_id"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_last_seen_snapshot_id_fkey",
+        "FOREIGN KEY (last_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_last_seen_snapshot_id_not_null",
+        "NOT NULL last_seen_snapshot_id"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_pkey",
+        "PRIMARY KEY (detection_id)"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_read_count_not_null",
+        "NOT NULL read_count"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_scientific_content_sha256_not_null",
+        "NOT NULL scientific_content_sha256"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_sequence_not_null",
+        "NOT NULL sequence"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_sequence_sha256_not_null",
+        "NOT NULL sequence_sha256"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_source_file_id_fkey",
+        "FOREIGN KEY (source_file_id) REFERENCES external_source_file(source_file_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_source_file_id_not_null",
+        "NOT NULL source_file_id"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_source_row_hash_not_null",
+        "NOT NULL source_row_hash"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_source_row_number_not_null",
+        "NOT NULL source_row_number"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_source_snapshot_id_fkey",
+        "FOREIGN KEY (source_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_source_snapshot_id_not_null",
+        "NOT NULL source_snapshot_id"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_target_status_not_null",
+        "NOT NULL target_status"
+      ],
+      [
+        "edna_detection",
+        "edna_detection_taxonomy_json_not_null",
+        "NOT NULL taxonomy_json"
+      ],
+      [
+        "edna_detection",
+        "uq_edna_detection_identity",
+        "UNIQUE (assay_id, assignment_method, sequence_sha256)"
+      ],
+      [
+        "edna_internal_standard",
+        "ck_edna_internal_standard_read_count",
+        "CHECK ((read_count >= 0))"
+      ],
+      [
+        "edna_internal_standard",
+        "ck_edna_internal_standard_source_row",
+        "CHECK ((source_row_number >= 2))"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_active_not_null",
+        "NOT NULL active"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_assay_id_fkey",
+        "FOREIGN KEY (assay_id) REFERENCES edna_assay(assay_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_assay_id_not_null",
+        "NOT NULL assay_id"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_first_seen_snapshot_id_fkey",
+        "FOREIGN KEY (first_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_first_seen_snapshot_id_not_null",
+        "NOT NULL first_seen_snapshot_id"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_internal_standard_id_not_null",
+        "NOT NULL internal_standard_id"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_last_seen_snapshot_id_fkey",
+        "FOREIGN KEY (last_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_last_seen_snapshot_id_not_null",
+        "NOT NULL last_seen_snapshot_id"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_pkey",
+        "PRIMARY KEY (internal_standard_id)"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_read_count_not_null",
+        "NOT NULL read_count"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_scientific_content_sha256_not_null",
+        "NOT NULL scientific_content_sha256"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_sequence_not_null",
+        "NOT NULL sequence"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_sequence_sha256_not_null",
+        "NOT NULL sequence_sha256"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_source_file_id_fkey",
+        "FOREIGN KEY (source_file_id) REFERENCES external_source_file(source_file_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_source_file_id_not_null",
+        "NOT NULL source_file_id"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_source_row_hash_not_null",
+        "NOT NULL source_row_hash"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_source_row_number_not_null",
+        "NOT NULL source_row_number"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_source_snapshot_id_fkey",
+        "FOREIGN KEY (source_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_source_snapshot_id_not_null",
+        "NOT NULL source_snapshot_id"
+      ],
+      [
+        "edna_internal_standard",
+        "edna_internal_standard_standard_name_not_null",
+        "NOT NULL standard_name"
+      ],
+      [
+        "edna_internal_standard",
+        "uq_edna_internal_standard_identity",
+        "UNIQUE (assay_id, standard_name, sequence_sha256)"
+      ],
+      [
+        "edna_sample",
+        "ck_edna_sample_kind",
+        "CHECK (((sample_kind)::text = ANY ((ARRAY['environmental'::character varying, 'negative_control'::character varying, 'positive_control'::character varying, 'mock_community'::character varying, 'unknown'::character varying])::text[])))"
+      ],
+      [
+        "edna_sample",
+        "ck_edna_sample_lat",
+        "CHECK (((lat IS NULL) OR ((lat >= ('-90'::integer)::double precision) AND (lat <= (90)::double precision))))"
+      ],
+      [
+        "edna_sample",
+        "ck_edna_sample_lon",
+        "CHECK (((lon IS NULL) OR ((lon >= ('-180'::integer)::double precision) AND (lon <= (180)::double precision))))"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_active_not_null",
+        "NOT NULL active"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_classification_basis_not_null",
+        "NOT NULL classification_basis"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_coordinate_precision_not_null",
+        "NOT NULL coordinate_precision"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_first_seen_snapshot_id_fkey",
+        "FOREIGN KEY (first_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_first_seen_snapshot_id_not_null",
+        "NOT NULL first_seen_snapshot_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_identity_status_not_null",
+        "NOT NULL identity_status"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_last_seen_snapshot_id_fkey",
+        "FOREIGN KEY (last_seen_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_last_seen_snapshot_id_not_null",
+        "NOT NULL last_seen_snapshot_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_original_sample_label_not_null",
+        "NOT NULL original_sample_label"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_pkey",
+        "PRIMARY KEY (sample_id)"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_project_name_not_null",
+        "NOT NULL project_name"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_provider_locus_not_null",
+        "NOT NULL provider_locus"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_provider_not_null",
+        "NOT NULL provider"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_provider_project_id_not_null",
+        "NOT NULL provider_project_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_provider_run_id_not_null",
+        "NOT NULL provider_run_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_provider_sample_id_not_null",
+        "NOT NULL provider_sample_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_provider_team_not_null",
+        "NOT NULL provider_team"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_raw_metadata_json_not_null",
+        "NOT NULL raw_metadata_json"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_sample_id_not_null",
+        "NOT NULL sample_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_sample_kind_not_null",
+        "NOT NULL sample_kind"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_scientific_content_sha256_not_null",
+        "NOT NULL scientific_content_sha256"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_source_file_id_fkey",
+        "FOREIGN KEY (source_file_id) REFERENCES external_source_file(source_file_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_source_file_id_not_null",
+        "NOT NULL source_file_id"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_source_row_hash_not_null",
+        "NOT NULL source_row_hash"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_source_row_numbers_json_not_null",
+        "NOT NULL source_row_numbers_json"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_source_snapshot_id_fkey",
+        "FOREIGN KEY (source_snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "edna_sample",
+        "edna_sample_source_snapshot_id_not_null",
+        "NOT NULL source_snapshot_id"
+      ],
+      [
+        "edna_sample",
+        "uq_edna_sample_provider_identity",
+        "UNIQUE (provider, provider_locus, provider_team, provider_project_id, provider_run_id, provider_sample_id)"
+      ],
+      [
+        "edna_sample",
+        "uq_edna_sample_source_occurrence",
+        "UNIQUE (source_occurrence_id)"
+      ],
+      [
+        "external_source_file",
+        "ck_external_source_file_selected_valid",
+        "CHECK ((((selection_status)::text <> 'selected'::text) OR ((sha256 IS NOT NULL) AND ((validation_status)::text = 'valid'::text))))"
+      ],
+      [
+        "external_source_file",
+        "ck_external_source_file_selection",
+        "CHECK (((selection_status)::text = ANY ((ARRAY['selected'::character varying, 'metadata_only'::character varying, 'unknown'::character varying])::text[])))"
+      ],
+      [
+        "external_source_file",
+        "ck_external_source_file_size",
+        "CHECK (((size_bytes IS NULL) OR (size_bytes >= 0)))"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_pkey",
+        "PRIMARY KEY (source_file_id)"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_relative_path_not_null",
+        "NOT NULL relative_path"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_role_not_null",
+        "NOT NULL role"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_sample_name_not_null",
+        "NOT NULL sample_name"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_selection_status_not_null",
+        "NOT NULL selection_status"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_snapshot_id_fkey",
+        "FOREIGN KEY (snapshot_id) REFERENCES external_source_snapshot(snapshot_id) ON DELETE RESTRICT"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_snapshot_id_not_null",
+        "NOT NULL snapshot_id"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_source_file_id_not_null",
+        "NOT NULL source_file_id"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_source_url_not_null",
+        "NOT NULL source_url"
+      ],
+      [
+        "external_source_file",
+        "external_source_file_validation_status_not_null",
+        "NOT NULL validation_status"
+      ],
+      [
+        "external_source_file",
+        "uq_external_source_file_snapshot_path",
+        "UNIQUE (snapshot_id, relative_path)"
+      ],
+      [
+        "external_source_snapshot",
+        "ck_external_source_snapshot_counts",
+        "CHECK (((file_count >= 0) AND (selected_file_count >= 0) AND (total_bytes >= 0)))"
+      ],
+      [
+        "external_source_snapshot",
+        "ck_external_source_snapshot_scope_level",
+        "CHECK (((scope_level)::text = ANY ((ARRAY['sample'::character varying, 'run'::character varying])::text[])))"
+      ],
+      [
+        "external_source_snapshot",
+        "ck_external_source_snapshot_status",
+        "CHECK (((status)::text = 'complete'::text))"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_contract_sha256_not_null",
+        "NOT NULL contract_sha256"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_contract_version_not_null",
+        "NOT NULL contract_version"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_file_count_not_null",
+        "NOT NULL file_count"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_generated_at_not_null",
+        "NOT NULL generated_at"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_manifest_sha256_not_null",
+        "NOT NULL manifest_sha256"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_manifest_summary_json_not_null",
+        "NOT NULL manifest_summary_json"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_pkey",
+        "PRIMARY KEY (snapshot_id)"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_provider_not_null",
+        "NOT NULL provider"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_scope_level_not_null",
+        "NOT NULL scope_level"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_scope_url_not_null",
+        "NOT NULL scope_url"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_selected_file_count_not_null",
+        "NOT NULL selected_file_count"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_selection_policy_not_null",
+        "NOT NULL selection_policy"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_snapshot_id_not_null",
+        "NOT NULL snapshot_id"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_source_collection_sha256_not_null",
+        "NOT NULL source_collection_sha256"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_source_family_not_null",
+        "NOT NULL source_family"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_status_not_null",
+        "NOT NULL status"
+      ],
+      [
+        "external_source_snapshot",
+        "external_source_snapshot_total_bytes_not_null",
+        "NOT NULL total_bytes"
+      ],
+      [
+        "rate_limit_bucket",
+        "ck_rate_limit_bucket_request_count",
+        "CHECK ((request_count >= 0))"
+      ],
+      [
+        "rate_limit_bucket",
+        "rate_limit_bucket_pkey",
+        "PRIMARY KEY (scope, subject_hash)"
+      ],
+      [
+        "rate_limit_bucket",
+        "rate_limit_bucket_request_count_not_null",
+        "NOT NULL request_count"
+      ],
+      [
+        "rate_limit_bucket",
+        "rate_limit_bucket_scope_not_null",
+        "NOT NULL scope"
+      ],
+      [
+        "rate_limit_bucket",
+        "rate_limit_bucket_subject_hash_not_null",
+        "NOT NULL subject_hash"
+      ],
+      [
+        "rate_limit_bucket",
+        "rate_limit_bucket_updated_at_not_null",
+        "NOT NULL updated_at"
+      ],
+      [
+        "rate_limit_bucket",
+        "rate_limit_bucket_window_started_at_not_null",
+        "NOT NULL window_started_at"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_area_id_not_null",
+        "NOT NULL area_id"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_area_version_not_null",
+        "NOT NULL area_version"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_definition_json_not_null",
+        "NOT NULL definition_json"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_pkey",
+        "PRIMARY KEY (registry_id, area_id)"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_registry_id_fkey",
+        "FOREIGN KEY (registry_id) REFERENCES research_registry_version(registry_id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_registry_id_not_null",
+        "NOT NULL registry_id"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membershi_representative_assay_sha25_not_null",
+        "NOT NULL representative_assay_sha256"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_area_id_not_null",
+        "NOT NULL area_id"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_area_version_not_null",
+        "NOT NULL area_version"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_physical_sample_id_not_null",
+        "NOT NULL physical_sample_id"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_pkey",
+        "PRIMARY KEY (registry_id, sample_id)"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_registry_id_fkey",
+        "FOREIGN KEY (registry_id) REFERENCES research_registry_version(registry_id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_registry_id_not_null",
+        "NOT NULL registry_id"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_representative_assay_id_not_null",
+        "NOT NULL representative_assay_id"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_sample_id_not_null",
+        "NOT NULL sample_id"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_scientific_content_sha256_not_null",
+        "NOT NULL scientific_content_sha256"
+      ],
+      [
+        "research_registry_event",
+        "ck_research_registry_event_sequence",
+        "CHECK ((sequence >= 1))"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_event_sha256_key",
+        "UNIQUE (event_sha256)"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_event_sha256_not_null",
+        "NOT NULL event_sha256"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_payload_json_not_null",
+        "NOT NULL payload_json"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_pkey",
+        "PRIMARY KEY (review_id, sequence)"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_review_id_fkey",
+        "FOREIGN KEY (review_id) REFERENCES research_registry_review(id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_review_id_not_null",
+        "NOT NULL review_id"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_sequence_not_null",
+        "NOT NULL sequence"
+      ],
+      [
+        "research_registry_head",
+        "research_registry_head_pkey",
+        "PRIMARY KEY (registry_key)"
+      ],
+      [
+        "research_registry_head",
+        "research_registry_head_registry_id_fkey",
+        "FOREIGN KEY (registry_id) REFERENCES research_registry_version(registry_id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_registry_head",
+        "research_registry_head_registry_id_not_null",
+        "NOT NULL registry_id"
+      ],
+      [
+        "research_registry_head",
+        "research_registry_head_registry_key_not_null",
+        "NOT NULL registry_key"
+      ],
+      [
+        "research_registry_review",
+        "ck_research_registry_review_applied",
+        "CHECK ((((state)::text <> 'applied'::text) OR (applied_by_user_id IS NOT NULL)))"
+      ],
+      [
+        "research_registry_review",
+        "ck_research_registry_review_decided",
+        "CHECK ((((state)::text = 'draft'::text) OR (decided_by_user_id IS NOT NULL)))"
+      ],
+      [
+        "research_registry_review",
+        "ck_research_registry_review_kind",
+        "CHECK (((kind)::text = ANY ((ARRAY['sampling'::character varying, 'sst_product'::character varying])::text[])))"
+      ],
+      [
+        "research_registry_review",
+        "ck_research_registry_review_state",
+        "CHECK (((state)::text = ANY ((ARRAY['draft'::character varying, 'approved'::character varying, 'rejected'::character varying, 'applied'::character varying])::text[])))"
+      ],
+      [
+        "research_registry_review",
+        "ck_research_registry_review_version",
+        "CHECK ((version >= 1))"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_applied_by_user_id_fkey",
+        "FOREIGN KEY (applied_by_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_content_sha256_not_null",
+        "NOT NULL content_sha256"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_created_by_user_id_fkey",
+        "FOREIGN KEY (created_by_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_created_by_user_id_not_null",
+        "NOT NULL created_by_user_id"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_decided_by_user_id_fkey",
+        "FOREIGN KEY (decided_by_user_id) REFERENCES app_user(id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_definition_json_not_null",
+        "NOT NULL definition_json"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_kind_not_null",
+        "NOT NULL kind"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_registry_key_not_null",
+        "NOT NULL registry_key"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_state_not_null",
+        "NOT NULL state"
+      ],
+      [
+        "research_registry_review",
+        "research_registry_review_version_not_null",
+        "NOT NULL version"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_payload_json_not_null",
+        "NOT NULL payload_json"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_pkey",
+        "PRIMARY KEY (registry_id)"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_registry_id_not_null",
+        "NOT NULL registry_id"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_registry_key_not_null",
+        "NOT NULL registry_key"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_review_id_fkey",
+        "FOREIGN KEY (review_id) REFERENCES research_registry_review(id) ON DELETE RESTRICT"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_review_id_key",
+        "UNIQUE (review_id)"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_review_id_not_null",
+        "NOT NULL review_id"
+      ],
+      [
+        "user_invitation",
+        "ck_user_invitation_account_type",
+        "CHECK (((account_type)::text = ANY ((ARRAY['research'::character varying, 'commercial'::character varying, 'internal'::character varying])::text[])))"
+      ],
+      [
+        "user_invitation",
+        "ck_user_invitation_role",
+        "CHECK (((role)::text = ANY ((ARRAY['viewer'::character varying, 'researcher'::character varying, 'admin'::character varying])::text[])))"
+      ],
+      [
+        "user_invitation",
+        "ck_user_invitation_status",
+        "CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'accepted'::character varying, 'revoked'::character varying, 'expired'::character varying])::text[])))"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_account_type_not_null",
+        "NOT NULL account_type"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_created_at_not_null",
+        "NOT NULL created_at"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_email_key",
+        "UNIQUE (email)"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_email_not_null",
+        "NOT NULL email"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_expires_at_not_null",
+        "NOT NULL expires_at"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_id_not_null",
+        "NOT NULL id"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_invited_by_user_id_fkey",
+        "FOREIGN KEY (invited_by_user_id) REFERENCES app_user(id) ON DELETE SET NULL"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_pkey",
+        "PRIMARY KEY (id)"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_role_not_null",
+        "NOT NULL role"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_status_not_null",
+        "NOT NULL status"
+      ],
+      [
+        "user_invitation",
+        "user_invitation_updated_at_not_null",
+        "NOT NULL updated_at"
+      ]
+    ],
+    "triggers": [
+      [
+        "classification_application_event",
+        "classification_application_event_append_only",
+        "CREATE TRIGGER classification_application_event_append_only BEFORE DELETE OR UPDATE ON public.classification_application_event FOR EACH ROW EXECUTE FUNCTION ocean_block_classification_review_event_mutation()"
+      ],
+      [
+        "classification_review_event",
+        "classification_review_event_append_only",
+        "CREATE TRIGGER classification_review_event_append_only BEFORE DELETE OR UPDATE ON public.classification_review_event FOR EACH ROW EXECUTE FUNCTION ocean_block_classification_review_event_mutation()"
+      ],
+      [
+        "research_area_definition",
+        "research_area_definition_immutable",
+        "CREATE TRIGGER research_area_definition_immutable BEFORE DELETE OR UPDATE ON public.research_area_definition FOR EACH ROW EXECUTE FUNCTION ocean_research_immutable_record()"
+      ],
+      [
+        "research_physical_membership",
+        "research_physical_membership_immutable",
+        "CREATE TRIGGER research_physical_membership_immutable BEFORE DELETE OR UPDATE ON public.research_physical_membership FOR EACH ROW EXECUTE FUNCTION ocean_research_immutable_record()"
+      ],
+      [
+        "research_registry_event",
+        "research_registry_event_immutable",
+        "CREATE TRIGGER research_registry_event_immutable BEFORE DELETE OR UPDATE ON public.research_registry_event FOR EACH ROW EXECUTE FUNCTION ocean_research_immutable_record()"
+      ],
+      [
+        "research_registry_version",
+        "research_registry_version_immutable",
+        "CREATE TRIGGER research_registry_version_immutable BEFORE DELETE OR UPDATE ON public.research_registry_version FOR EACH ROW EXECUTE FUNCTION ocean_research_immutable_record()"
+      ]
+    ],
+    "functions": [
+      [
+        "ocean_block_classification_review_event_mutation",
+        "",
+        "CREATE OR REPLACE FUNCTION public.ocean_block_classification_review_event_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\n        BEGIN\n          RAISE EXCEPTION 'classification review events are append-only';\n        END;\n        $function$\n"
+      ],
+      [
+        "ocean_research_immutable_record",
+        "",
+        "CREATE OR REPLACE FUNCTION public.ocean_research_immutable_record()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$ BEGIN\n          RAISE EXCEPTION 'Research evidence records are immutable';\n        END $function$\n"
+      ]
+    ]
+  },
+  "schema_sha256": "c89c589e76b9de21a71b3af582ebd662ed600afa0deb87b0a49b8e3d462450f3"
+}

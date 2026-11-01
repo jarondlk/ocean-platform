@@ -1,0 +1,107 @@
+[
+  {
+    "revision": "20260723_0001",
+    "down_revision": null,
+    "path": "migrations/versions/20260723_0001_app_metadata.py"
+  },
+  {
+    "revision": "20260726_0002",
+    "down_revision": "20260723_0001",
+    "path": "migrations/versions/20260726_0002_rate_limits_and_row_hashes.py"
+  },
+  {
+    "revision": "20260820_0003",
+    "down_revision": "20260726_0002",
+    "path": "migrations/versions/20260820_0003_embedding_provenance.py"
+  },
+  {
+    "revision": "20260825_0004",
+    "down_revision": "20260820_0003",
+    "path": "migrations/versions/20260825_0004_chat_retention_holds.py"
+  },
+  {
+    "revision": "20260901_0005",
+    "down_revision": "20260825_0004",
+    "path": "migrations/versions/20260901_0005_anemone_edna_corpus.py"
+  },
+  {
+    "revision": "20260902_0006",
+    "down_revision": "20260901_0005",
+    "path": "migrations/versions/20260902_0006_anemone_retrieval.py"
+  },
+  {
+    "revision": "20260902_0007",
+    "down_revision": "20260902_0006",
+    "path": "migrations/versions/20260902_0007_corpus_publication.py"
+  },
+  {
+    "revision": "20260903_0008",
+    "down_revision": "20260902_0007",
+    "path": "migrations/versions/20260903_0008_edna_classification_review.py"
+  },
+  {
+    "revision": "20260905_0009",
+    "down_revision": "20260903_0008",
+    "path": "migrations/versions/20260905_0009_chat_outcome.py"
+  },
+  {
+    "revision": "20260905_0010",
+    "down_revision": "20260905_0009",
+    "path": "migrations/versions/20260905_0010_classification_review_domain.py"
+  },
+  {
+    "revision": "20260905_0011",
+    "down_revision": "20260905_0010",
+    "path": "migrations/versions/20260905_0011_classification_application.py"
+  },
+  {
+    "revision": "20260924_0012",
+    "down_revision": "20260905_0011",
+    "path": "migrations/versions/20260924_0012_anemone_catalogue.py"
+  },
+  {
+    "revision": "20260925_0013",
+    "down_revision": "20260924_0012",
+    "path": "migrations/versions/20260925_0013_edna_aggregate_evidence.py"
+  },
+  {
+    "revision": "20261001_0014",
+    "down_revision": "20260925_0013",
+    "path": "migrations/versions/20261001_0014_chat_source_scope.py"
+  },
+  {
+    "revision": "20261004_0015",
+    "down_revision": "20261001_0014",
+    "path": "migrations/versions/20261004_0015_research_registries.py"
+  },
+  {
+    "revision": "20261005_0016",
+    "down_revision": "20261004_0015",
+    "path": "migrations/versions/20261005_0016_source_coverage.py"
+  },
+  {
+    "revision": "20261018_0017",
+    "down_revision": "20261005_0016",
+    "path": "migrations/versions/20261018_0017_investigations.py"
+  },
+  {
+    "revision": "20261019_0018",
+    "down_revision": "20261018_0017",
+    "path": "migrations/versions/20261019_0018_research_runs.py"
+  },
+  {
+    "revision": "20261019_0019",
+    "down_revision": "20261019_0018",
+    "path": "migrations/versions/20261019_0019_research_evidence.py"
+  },
+  {
+    "revision": "20261020_0020",
+    "down_revision": "20261019_0019",
+    "path": "migrations/versions/20261020_0020_research_experiments.py"
+  },
+  {
+    "revision": "20261027_0021",
+    "down_revision": "20261020_0020",
+    "path": "migrations/versions/20261027_0021_experiment_execution.py"
+  }
+]

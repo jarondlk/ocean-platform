@@ -1,0 +1,8 @@
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Generating static SQL
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 20261005_0016 -> 20261018_0017, Add private v1 investigations and immutable context preparation history.
+INFO  [alembic.runtime.migration] Running upgrade 20261018_0017 -> 20261019_0018, Add private durable v1 research execution; no legacy lifecycle changes.
+INFO  [alembic.runtime.migration] Running upgrade 20261019_0018 -> 20261019_0019, Retain private v1 verified evidence and durable synthesis; no physical cleanup.
+INFO  [alembic.runtime.migration] Running upgrade 20261019_0019 -> 20261020_0020, C22 immutable private proposals and fake-only dispatch reservations.
+INFO  [alembic.runtime.migration] Running upgrade 20261020_0020 -> 20261027_0021, C23 opt-in retained execution identity and proof-correlated capacity release.

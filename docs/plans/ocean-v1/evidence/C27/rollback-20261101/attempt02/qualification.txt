@@ -1,0 +1,1 @@
+Harness-only attempt passed the actual shared-stack assertions, then failed while formatting its metadata with a wrong payload_sha256 location. The actual RunContext binding contains the digest. No application repair; this attempt remains failed/not acceptance.

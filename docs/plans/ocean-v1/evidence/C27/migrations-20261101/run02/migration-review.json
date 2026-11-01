@@ -1,0 +1,215 @@
+[
+  {
+    "revision": "20260723_0001",
+    "down_revision": null,
+    "path": "migrations/versions/20260723_0001_app_metadata.py",
+    "upgrade_operations": [
+      "create_index",
+      "create_table",
+      "f"
+    ],
+    "sha256": "d2870ed3e3a9b8aacdb2ae97092e8f69cf78507b3c7b0669aec2314c5f09d814"
+  },
+  {
+    "revision": "20260726_0002",
+    "down_revision": "20260723_0001",
+    "path": "migrations/versions/20260726_0002_rate_limits_and_row_hashes.py",
+    "upgrade_operations": [
+      "create_index",
+      "create_table",
+      "execute",
+      "get_bind"
+    ],
+    "sha256": "2d24a7fd352e8ddf37a7eba1df4f60b49021e4eef2eb6ac8841ee6f61d531b88"
+  },
+  {
+    "revision": "20260820_0003",
+    "down_revision": "20260726_0002",
+    "path": "migrations/versions/20260820_0003_embedding_provenance.py",
+    "upgrade_operations": [
+      "execute"
+    ],
+    "sha256": "24a5fffbb440243d6e5347633b56d706e1e9aa255b6f457629f0f1c1ec460369"
+  },
+  {
+    "revision": "20260825_0004",
+    "down_revision": "20260820_0003",
+    "path": "migrations/versions/20260825_0004_chat_retention_holds.py",
+    "upgrade_operations": [
+      "add_column",
+      "create_index"
+    ],
+    "sha256": "e69eea687c50946a4feca39cc033649f6c21a103f512a73426daa086a4417928"
+  },
+  {
+    "revision": "20260901_0005",
+    "down_revision": "20260825_0004",
+    "path": "migrations/versions/20260901_0005_anemone_edna_corpus.py",
+    "upgrade_operations": [
+      "create_index",
+      "create_table",
+      "execute"
+    ],
+    "sha256": "7ae998ffb5c8f62760625439796958b9425934e0748dbcf21363c58844726a31"
+  },
+  {
+    "revision": "20260902_0006",
+    "down_revision": "20260901_0005",
+    "path": "migrations/versions/20260902_0006_anemone_retrieval.py",
+    "upgrade_operations": [
+      "execute"
+    ],
+    "sha256": "61991b7ebd1b3dc05d8560995e61db3be5f1983a06d4c8503810e48def867311"
+  },
+  {
+    "revision": "20260902_0007",
+    "down_revision": "20260902_0006",
+    "path": "migrations/versions/20260902_0007_corpus_publication.py",
+    "upgrade_operations": [
+      "execute"
+    ],
+    "sha256": "c3f33863325e00719cf34c379aecbed279e408e02c4719ca786d328cab7eeb52"
+  },
+  {
+    "revision": "20260903_0008",
+    "down_revision": "20260902_0007",
+    "path": "migrations/versions/20260903_0008_edna_classification_review.py",
+    "upgrade_operations": [
+      "execute"
+    ],
+    "sha256": "72a22ab0acc919cea808b7b94e1634d184863c61843a4dc847a93ad976ce5412"
+  },
+  {
+    "revision": "20260905_0009",
+    "down_revision": "20260903_0008",
+    "path": "migrations/versions/20260905_0009_chat_outcome.py",
+    "upgrade_operations": [
+      "execute"
+    ],
+    "sha256": "a8f9134cebdf9aa166863c55d0a63dd5366e02e22ea9c8a4edc8a783a344f3be"
+  },
+  {
+    "revision": "20260905_0010",
+    "down_revision": "20260905_0009",
+    "path": "migrations/versions/20260905_0010_classification_review_domain.py",
+    "upgrade_operations": [
+      "create_index",
+      "create_table",
+      "execute"
+    ],
+    "sha256": "904dff4b506d3bcf56db37c290b27a56cc68e376b0cd7bc3b6084a1e1e478928"
+  },
+  {
+    "revision": "20260905_0011",
+    "down_revision": "20260905_0010",
+    "path": "migrations/versions/20260905_0011_classification_application.py",
+    "upgrade_operations": [
+      "create_index",
+      "create_table",
+      "execute"
+    ],
+    "sha256": "0a51a94d7f9dccef262157290beca245c8f6e52d3a9a9a14ed8be54ef63fcb8d"
+  },
+  {
+    "revision": "20260924_0012",
+    "down_revision": "20260905_0011",
+    "path": "migrations/versions/20260924_0012_anemone_catalogue.py",
+    "upgrade_operations": [
+      "add_column",
+      "create_check_constraint",
+      "create_index",
+      "create_unique_constraint",
+      "drop_constraint",
+      "execute"
+    ],
+    "sha256": "4339ce26c2c2d5f1ec7b54b55be7eb0a469f3089e1247034fab571f8aa2c0c35"
+  },
+  {
+    "revision": "20260925_0013",
+    "down_revision": "20260924_0012",
+    "path": "migrations/versions/20260925_0013_edna_aggregate_evidence.py",
+    "upgrade_operations": [
+      "create_check_constraint",
+      "create_table",
+      "drop_constraint"
+    ],
+    "sha256": "8d164f7a770c89a6a6dcbb53021534bb17df48928f326ef9b5c2913db684adec"
+  },
+  {
+    "revision": "20261001_0014",
+    "down_revision": "20260925_0013",
+    "path": "migrations/versions/20261001_0014_chat_source_scope.py",
+    "upgrade_operations": [],
+    "sha256": "1a3f309f092b6a9a5936aa70779c026177d62be48e889b41bf90154d22102bbb"
+  },
+  {
+    "revision": "20261004_0015",
+    "down_revision": "20261001_0014",
+    "path": "migrations/versions/20261004_0015_research_registries.py",
+    "upgrade_operations": [
+      "create_index",
+      "create_table",
+      "execute"
+    ],
+    "sha256": "86f2c56c14029b0999ee3f241149b0eabb4fd2f6afcf9ad76f1e0b5c786d88d3"
+  },
+  {
+    "revision": "20261005_0016",
+    "down_revision": "20261004_0015",
+    "path": "migrations/versions/20261005_0016_source_coverage.py",
+    "upgrade_operations": [],
+    "sha256": "461a8197a8a8b3bb2a1ffbb66da6f6d3029a78c8a54f88618526bb6694148051"
+  },
+  {
+    "revision": "20261018_0017",
+    "down_revision": "20261005_0016",
+    "path": "migrations/versions/20261018_0017_investigations.py",
+    "upgrade_operations": [
+      "create_foreign_key",
+      "create_index",
+      "create_table",
+      "execute"
+    ],
+    "sha256": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3"
+  },
+  {
+    "revision": "20261019_0018",
+    "down_revision": "20261018_0017",
+    "path": "migrations/versions/20261019_0018_research_runs.py",
+    "upgrade_operations": [
+      "create_unique_constraint",
+      "execute"
+    ],
+    "sha256": "bbd66a61de9b80eea7e9dce9304315ac6347b75704eacb4ad702cf1b0fb45a43"
+  },
+  {
+    "revision": "20261019_0019",
+    "down_revision": "20261019_0018",
+    "path": "migrations/versions/20261019_0019_research_evidence.py",
+    "upgrade_operations": [
+      "create_unique_constraint",
+      "execute"
+    ],
+    "sha256": "2e06592c0f2c307fead5985a0639d1520ca60fafb250f9ac64ea32f63dc5f1ae"
+  },
+  {
+    "revision": "20261020_0020",
+    "down_revision": "20261019_0019",
+    "path": "migrations/versions/20261020_0020_research_experiments.py",
+    "upgrade_operations": [
+      "create_foreign_key",
+      "execute"
+    ],
+    "sha256": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff"
+  },
+  {
+    "revision": "20261027_0021",
+    "down_revision": "20261020_0020",
+    "path": "migrations/versions/20261027_0021_experiment_execution.py",
+    "upgrade_operations": [
+      "execute",
+      "get_context"
+    ],
+    "sha256": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98"
+  }
+]

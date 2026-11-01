@@ -1,0 +1,14 @@
+{
+  "version": "c27-baseline-checks-v1",
+  "command": "DEPLOYMENT_ENV=test AUTH_MODE=disabled ENABLE_MOCK_LOGIN=false .venv/bin/python -m pytest tests/test_migration_configuration.py tests/test_render_gcp_templates.py -q --tb=short",
+  "source_commit": "a69eb575ab9f11135778de052d27fa070ac3898e",
+  "accepted_software_source": "afe9cb2d1a6d2c28a834daab1a342de4563dc3a3",
+  "exit_code": 0,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "warnings": 1,
+  "elapsed_seconds": 0.34,
+  "warning": "Existing Alembic path_separator deprecation; not a migration failure.",
+  "evidence_class": "local synthetic/offline tests; no provider validation"
+}

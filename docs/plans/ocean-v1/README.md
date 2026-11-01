@@ -1,6 +1,10 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C24 are Complete within their documented boundaries with hosted delivery; C25–C27 are Not started.**
+**P00 and C01–C26 are Complete within their documented boundaries with hosted delivery; C27 is Complete for local release preparation. Live deployment/release gates remain pending.**
+The user selected C27 on 2026-11-01 after the verified C26 delivery.
+See [C27 readiness](C27_READINESS_AUDIT_2026-11-01.md),
+[release preparation](C27_RELEASE_PREPARATION.md) and [handoff](handoffs/C27.md).
+The dated C24/C25 notes below are historical; current state is in STATUS.
 C24 is delivered for offline configuration and operator preparation; provider/live
 beta deployment gates remain pending. See [C24 handoff](handoffs/C24.md).
 C25 readiness passes for starting local proposal review/approval work. Later

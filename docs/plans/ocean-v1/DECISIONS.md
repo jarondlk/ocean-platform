@@ -1,5 +1,17 @@
 # Accepted decisions
 
+Current C27 selection — 2026-11-01 JST: the user requested readiness and
+implementation once ready. C26's accepted software is `afe9cb2`, with all four
+required hosted jobs passing and evidence closure `a69eb57`. The C27 audit
+passes. Local release manifest, migration dry validation/disposable PostgreSQL
+rehearsal, retained-history/flag rollback and operator/transfer runbooks are
+selected. Existing subagent and commit/push authorization persists; evidence-only
+checkpoints may use `[skip ci]` after proving accepted runtime sources unchanged.
+No tag/release publication, live deployment, real-data transfer, provider call,
+cloud/identity write or scheduler resumption is inferred. All 20 operational
+gates and D26-07 remain visible. Older selection/status notes below are dated
+history; see STATUS and the C27 handoff for current evidence.
+
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
 implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C13 is Complete locally; C14 is Complete locally; C15–C27 remain Not started.

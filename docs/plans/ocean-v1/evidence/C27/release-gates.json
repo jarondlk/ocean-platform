@@ -1,0 +1,137 @@
+{
+  "version": "c27-pending-release-gates-v1",
+  "source_receipt": "docs/plans/ocean-v1/evidence/C26/delivery.json",
+  "requirements": [
+    {
+      "requirement_id": "authenticated-beta",
+      "status": "not_run",
+      "reason": "Authenticated beta serving, independent sessions and exact-origin behavior; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "cloud-queue",
+      "status": "not_run",
+      "reason": "Actual Cloud Tasks, durable outbox, leases and private invocation; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "production-worker-port",
+      "status": "not_run",
+      "reason": "Production retained execution port and supervisor, current containment/admission lifecycle; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "iam-network-isolation",
+      "status": "not_run",
+      "reason": "Actual IAM/network/resource isolation and legacy denial; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "backup-recovery",
+      "status": "not_run",
+      "reason": "Current live database/storage backup, restore and uncertain-state recovery; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "dns-tls",
+      "status": "not_run",
+      "reason": "Authorized beta domain DNS/TLS and origin validation; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "real-data-science",
+      "status": "not_run",
+      "reason": "Separately authorized real data transfer, regeneration and scientific approval; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "live-model-evaluation",
+      "status": "not_run",
+      "reason": "Paid/live provider comparison with exact matched inputs and telemetry; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "release-rehearsal",
+      "status": "not_run",
+      "reason": "C27 independent migration/rollback/promotion rehearsal and operator acceptance; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.whole_site_target_and_live_action_authorization",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: whole_site_target_and_live_action_authorization",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.authenticated_v1_host_proxy_and_bootstrap",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: authenticated_v1_host_proxy_and_bootstrap",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.real_cloud_tasks_adapter_outbox_and_private_invocation",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: real_cloud_tasks_adapter_outbox_and_private_invocation",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.production_experiment_supervisor_health_and_drain",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: production_experiment_supervisor_health_and_drain",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.worker_boot_image_unique_id_and_disk_sourceImageId",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: worker_boot_image_unique_id_and_disk_sourceImageId",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.inherited_IAM_and_network_legacy_access_denials",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: inherited_IAM_and_network_legacy_access_denials",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.two_simultaneous_sandboxes_and_measured_host_capacity",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: two_simultaneous_sandboxes_and_measured_host_capacity",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.independent_backup_restore_retention_budget_and_alert_readbacks",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: independent_backup_restore_retention_budget_and_alert_readbacks",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.C26_C27_integrated_acceptance_and_release_promotion",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: C26_C27_integrated_acceptance_and_release_promotion",
+      "evidence": []
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "D26-07",
+      "severity": "P2",
+      "status": "open",
+      "scope": "Concurrent worker first automatic history hydration may exceed unchanged15s deadline; explicit Reload answers recovers. First-read latency and hosted concurrent capacity are not accepted."
+    }
+  ],
+  "ready_to_deploy": false,
+  "release_accepted": false,
+  "qualification": "Exact original20notrun gates retained. C27local preparation does not satisfy actual runtime/operator release-rehearsal. New live evidence requires separate immutable records and concrete authorization/targets."
+}

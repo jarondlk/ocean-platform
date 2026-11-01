@@ -1,0 +1,130 @@
+BEGIN;
+
+CREATE TABLE alembic_version (
+    version_num VARCHAR(32) NOT NULL, 
+    CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num)
+);
+
+-- Running upgrade  -> 20260723_0001
+
+CREATE TABLE app_user (
+    id UUID NOT NULL, 
+    auth_provider VARCHAR(64) NOT NULL, 
+    auth_subject VARCHAR(255) NOT NULL, 
+    email VARCHAR(320) NOT NULL, 
+    display_name VARCHAR(255), 
+    role VARCHAR(32) NOT NULL, 
+    account_type VARCHAR(32) NOT NULL, 
+    status VARCHAR(32) NOT NULL, 
+    invited_by_user_id UUID, 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    last_login_at TIMESTAMP WITH TIME ZONE, 
+    PRIMARY KEY (id), 
+    CONSTRAINT ck_app_user_account_type CHECK (account_type IN ('research', 'commercial', 'internal')), 
+    CONSTRAINT ck_app_user_role CHECK (role IN ('viewer', 'researcher', 'admin')), 
+    CONSTRAINT ck_app_user_status CHECK (status IN ('active', 'suspended')), 
+    FOREIGN KEY(invited_by_user_id) REFERENCES app_user (id) ON DELETE SET NULL, 
+    CONSTRAINT uq_app_user_provider_subject UNIQUE (auth_provider, auth_subject), 
+    UNIQUE (email)
+);
+
+CREATE INDEX ix_app_user_email ON app_user (email);
+
+CREATE TABLE user_invitation (
+    id UUID NOT NULL, 
+    email VARCHAR(320) NOT NULL, 
+    role VARCHAR(32) NOT NULL, 
+    account_type VARCHAR(32) NOT NULL, 
+    status VARCHAR(32) NOT NULL, 
+    invited_by_user_id UUID, 
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL, 
+    accepted_at TIMESTAMP WITH TIME ZONE, 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    PRIMARY KEY (id), 
+    CONSTRAINT ck_user_invitation_account_type CHECK (account_type IN ('research', 'commercial', 'internal')), 
+    CONSTRAINT ck_user_invitation_role CHECK (role IN ('viewer', 'researcher', 'admin')), 
+    CONSTRAINT ck_user_invitation_status CHECK (status IN ('pending', 'accepted', 'revoked', 'expired')), 
+    FOREIGN KEY(invited_by_user_id) REFERENCES app_user (id) ON DELETE SET NULL, 
+    UNIQUE (email)
+);
+
+CREATE INDEX ix_user_invitation_email ON user_invitation (email);
+
+CREATE TABLE chat_interaction (
+    id UUID NOT NULL, 
+    user_id UUID NOT NULL, 
+    status VARCHAR(32) NOT NULL, 
+    query TEXT NOT NULL, 
+    answer TEXT, 
+    model VARCHAR(255), 
+    request_options JSON NOT NULL, 
+    evidence_snapshot JSON NOT NULL, 
+    answer_audit_snapshot JSON, 
+    corpus_fingerprint VARCHAR(128), 
+    prompt_version VARCHAR(64), 
+    prompt_sha256 VARCHAR(64), 
+    latency_ms INTEGER, 
+    error_code VARCHAR(64), 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    completed_at TIMESTAMP WITH TIME ZONE, 
+    PRIMARY KEY (id), 
+    CONSTRAINT ck_chat_interaction_status CHECK (status IN ('running', 'completed', 'failed')), 
+    FOREIGN KEY(user_id) REFERENCES app_user (id) ON DELETE RESTRICT
+);
+
+CREATE INDEX ix_chat_interaction_user_id ON chat_interaction (user_id);
+
+CREATE TABLE audit_event (
+    id UUID NOT NULL, 
+    actor_user_id UUID, 
+    action VARCHAR(128) NOT NULL, 
+    target_type VARCHAR(64), 
+    target_id VARCHAR(255), 
+    metadata_json JSON NOT NULL, 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    PRIMARY KEY (id), 
+    FOREIGN KEY(actor_user_id) REFERENCES app_user (id) ON DELETE SET NULL
+);
+
+CREATE INDEX ix_audit_event_action ON audit_event (action);
+
+CREATE INDEX ix_audit_event_created_at ON audit_event (created_at);
+
+CREATE INDEX ix_audit_event_actor_user_id ON audit_event (actor_user_id);
+
+CREATE TABLE chat_feedback (
+    id UUID NOT NULL, 
+    interaction_id UUID NOT NULL, 
+    user_id UUID NOT NULL, 
+    rating INTEGER NOT NULL, 
+    reason_codes JSON NOT NULL, 
+    comment TEXT, 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    PRIMARY KEY (id), 
+    CONSTRAINT ck_chat_feedback_rating CHECK (rating IN (-1, 1)), 
+    FOREIGN KEY(interaction_id) REFERENCES chat_interaction (id) ON DELETE CASCADE, 
+    FOREIGN KEY(user_id) REFERENCES app_user (id) ON DELETE RESTRICT, 
+    CONSTRAINT uq_chat_feedback_interaction_user UNIQUE (interaction_id, user_id)
+);
+
+CREATE INDEX ix_chat_feedback_user_id ON chat_feedback (user_id);
+
+INSERT INTO alembic_version (version_num) VALUES ('20260723_0001') RETURNING alembic_version.version_num;
+
+-- Running upgrade 20260723_0001 -> 20260726_0002
+
+CREATE TABLE rate_limit_bucket (
+    scope VARCHAR(64) NOT NULL, 
+    subject_hash VARCHAR(64) NOT NULL, 
+    window_started_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    request_count INTEGER NOT NULL, 
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+    PRIMARY KEY (scope, subject_hash), 
+    CONSTRAINT ck_rate_limit_bucket_request_count CHECK (request_count >= 0)
+);
+
+CREATE INDEX ix_rate_limit_bucket_updated_at ON rate_limit_bucket (updated_at);
+

@@ -1,0 +1,657 @@
+{
+  "version": "c27-requirement-evidence-v1",
+  "source_master_matrix": "docs/plans/ocean-v1/evidence/C26/implementation-20261030/report.json#/matrix",
+  "master_requirements": [
+    {
+      "id": "R01",
+      "description": "One scope validator rejects incompatible geography, date, taxa/panel and method in exact and synthesis routes; include English/Japanese Hokkaido and shark counterexamples.",
+      "owner": "C01, C19, C21",
+      "gates": "G1",
+      "preparation_status": "passed",
+      "check_ids": [
+        "english-japanese-incompatible-geo-taxa-clarify",
+        "regression-scope"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R02",
+      "description": "Reliability tiers require passing checks; top-ten omission is not zero; SST matching respects geography, product, time and resolution. Invalid derived artifacts are corrected or quarantined before exposure.",
+      "owner": "C02, C10, C11, C13",
+      "gates": "G1",
+      "preparation_status": "passed",
+      "check_ids": [
+        "sst-independent-numerical-oracle",
+        "four-source-physical-method-assay-semantics",
+        "regression-publication"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R03",
+      "description": "Legal holds, retention and concurrent cleanup preserve protected artifacts; current authorization governs historical snapshots and receipts.",
+      "owner": "C03, C09, C17, C21",
+      "gates": "G2",
+      "preparation_status": "passed",
+      "check_ids": [
+        "owner-role-source-revocation-and-held-history",
+        "regression-retention"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R04",
+      "description": "Authentication avoids blocking asynchronous requests and preserves roles/session behavior under concurrency.",
+      "owner": "C04, C14, C20",
+      "gates": "G2",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-auth"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R05",
+      "description": "Legacy retrieval uses the correct embedding identity and complete relevant document fields; model truncation cannot become a successful answer.",
+      "owner": "C05, C06, C19, C21",
+      "gates": "G1, G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-model"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R06",
+      "description": "CSV/table downloads are safe for spreadsheet consumers without corrupting legitimate numeric data; all new exports use the shared policy.",
+      "owner": "C07, C21, C22",
+      "gates": "G2",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-csv"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R07",
+      "description": "Five roots and all four source families use canonical identities; aliases and cross-links do not duplicate counts.",
+      "owner": "C08–C14",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "shared-context-inventory-answer",
+        "four-source-physical-method-assay-semantics",
+        "regression-catalogue"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R08",
+      "description": "On a 100,000-object fixture, objects at legacy rank 26 and beyond initial pages are reachable; no top-k cutoff limits catalogue membership.",
+      "owner": "C08, C14, C16, C19",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "catalogue-full-scale-parity"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R09",
+      "description": "Global and scoped counts cover the complete authorized matching population, report entity/denominator and stay identical when preview size changes.",
+      "owner": "C08–C14, C19, C21",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "catalogue-full-scale-parity",
+        "shared-context-inventory-answer",
+        "sst-independent-numerical-oracle"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R10",
+      "description": "UI and agent list/open/query the same IDs and totals under identical permissions, filters and snapshot; no hidden names or counts leak.",
+      "owner": "C14, C16, C19",
+      "gates": "G2, G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "catalogue-full-scale-parity",
+        "owner-role-source-revocation-and-held-history"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R11",
+      "description": "Immutable snapshots bind source, publication, classification, relationship and operation versions; frozen adapters match exact-service reference answers.",
+      "owner": "C09–C14",
+      "gates": "G1, G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "durable-ack-cancel-continuation-rollover",
+        "regression-frozen"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R12",
+      "description": "Query readiness is independent of embeddings. Empty, zero, unknown, unavailable, incomplete source, truncated preview and query failure remain distinguishable.",
+      "owner": "C08–C16, C21",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "known-zero-unknown-and-forged-snapshot",
+        "regression-catalogue"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R13",
+      "description": "CTD casts/measurements, SST products/grids, full metagenome abundance semantics and eDNA protocols/controls/assignments remain scientifically distinct.",
+      "owner": "C10–C13",
+      "gates": "G1",
+      "preparation_status": "passed",
+      "check_ids": [
+        "four-source-physical-method-assay-semantics",
+        "sst-independent-numerical-oracle",
+        "regression-frozen"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R14",
+      "description": "Physical sample identity, source occurrence and candidate overlap remain distinct. Published result, available workflow and experiment authority cannot be conflated.",
+      "owner": "C12, C13, C21–C23, C25",
+      "gates": "G1, G5",
+      "preparation_status": "passed",
+      "check_ids": [
+        "four-source-physical-method-assay-semantics",
+        "experimental-bytes-and-approval",
+        "research-and-experiment-attachment-composition"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R15",
+      "description": "A separate Context Catalog tab exposes every authorized directory and leaf through tree, listing and inspector; paging/virtualization never hides membership. Deep links and history restore the node and snapshot.",
+      "owner": "C15, C16",
+      "gates": "G3, G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "browser-catalogue",
+        "catalogue-full-scale-parity",
+        "regression-browser"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R16",
+      "description": "Research presents Chat and Workspace, named private investigations, multiple separate chats, resizable desktop panels and narrow-screen alternatives.",
+      "owner": "C15, C17, C18",
+      "gates": "G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "browser-research"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R17",
+      "description": "Browse/filter has no context side effect; Attach supplements, Pin restricts; every run freezes its effective revision. Explicit refresh branches and preserves original evidence.",
+      "owner": "C09, C16–C20",
+      "gates": "G3, G4, G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "explicit-attach-pin-multichat-and-experiment-history",
+        "durable-ack-cancel-continuation-rollover",
+        "browser-catalogue"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R18",
+      "description": "All live Chat actions work: submit, status/events, cancel, clarify and continue; reload/reconnect recovers persisted progress. C18 owns controls/boundary, C20 owns live transport.",
+      "owner": "C18–C20",
+      "gates": "G4, G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "durable-ack-cancel-continuation-rollover",
+        "browser-research"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R19",
+      "description": "Typed provider-independent actions use permitted catalogue operations; no unrestricted SQL/admin tools. Malformed actions and hostile source text cannot bypass scope.",
+      "owner": "C06, C14, C19",
+      "gates": "G1, G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "known-zero-unknown-and-forged-snapshot",
+        "regression-controller"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R20",
+      "description": "Deterministic completion accounts for relevant inventory and unresolved work. Enforce 180 active seconds, 12 actions and one repair; retain explicit partial outcomes and linked continuation.",
+      "owner": "C19, C20",
+      "gates": "G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "durable-ack-cancel-continuation-rollover",
+        "regression-controller"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R21",
+      "description": "Queue retries, crashes, leases, outbox and cancellation preserve committed steps, snapshots and budgets; no claim of exactly-once provider billing.",
+      "owner": "C17, C20",
+      "gates": "G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "interrupted-committed-step-replays-without-duplicate-effect",
+        "durable-ack-cancel-continuation-rollover",
+        "regression-runs"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R22",
+      "description": "Evidence receipts can be reopened with original parameters/hashes/scope. Only supplied evidence can be cited; generated narrative from other chats is not implicit evidence.",
+      "owner": "C17, C21",
+      "gates": "G1, G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "shared-context-inventory-answer",
+        "research-and-experiment-attachment-composition",
+        "regression-evidence"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R23",
+      "description": "Experiment approval binds concrete question/cohort/method/code/input hashes. Revision, tampering or revocation invalidates dispatch. No unpublished inputs or silent sampling.",
+      "owner": "C22",
+      "gates": "G2, G5",
+      "preparation_status": "passed",
+      "check_ids": [
+        "experimental-bytes-and-approval",
+        "explicit-attach-pin-multichat-and-experiment-history",
+        "regression-experiments"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R24",
+      "description": "Real Linux/gVisor containment denies network, credentials, host files/sockets and package installation; whole-process-tree termination and resource/output limits are enforced. Mocks cannot prove this.",
+      "owner": "C23, C24",
+      "gates": "G5",
+      "preparation_status": "passed",
+      "check_ids": [
+        "original-c23-physical-evidence"
+      ],
+      "qualification": "Historical C23 physical observations at their original source/host; no current rerun",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R25",
+      "description": "Reproducible experiments retain image/code/input identities, declared seeds, logs and validated outputs. Enforce 1 active/user and 2 globally; experimental labels persist in every surface/export.",
+      "owner": "C22–C25",
+      "gates": "G5, G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "experimental-bytes-and-approval",
+        "research-and-experiment-attachment-composition",
+        "regression-experiments",
+        "browser-experiments"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R26",
+      "description": "Light/dark, English/Japanese, keyboard and screen-reader operation, long labels, narrow layouts and useful error/empty/partial states work across all new surfaces.",
+      "owner": "C15, C16, C18, C25",
+      "gates": "G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "browser-accessibility"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R27",
+      "description": "Legacy endpoints/history/links remain on the unchanged legacy site. Reused code retains appropriate regressions; independent v1 flags/rollback preserve its investigations/evidence without shared sessions or automatic history import.",
+      "owner": "C05, C06, C15, C17, C21, C27",
+      "gates": "G7, G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-legacy",
+        "isolation-legacy-denial"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R28",
+      "description": "Compare actual controller and legacy Chat with matched scope/permission/snapshot. Report numerical parity, factual errors, completion, latency, tool use, tokens and cost separately from citation validity.",
+      "owner": "C26",
+      "gates": "G1, G3, G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "matched-controller-comparison",
+        "regression-framework",
+        "regression-command"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R29",
+      "description": "Independent v1 release preparation has isolated-site/worker configuration, migration rehearsal, flags, rollback triggers and outstanding gates. Preparation neither provisions/deploys nor changes the main domain.",
+      "owner": "C24, C27",
+      "gates": "G7, G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "isolation-offline-contract"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R30",
+      "description": "Every component can resume from a file-based handoff with revision, completed checkpoints, validation and exact next action; no automatic advancement or fabricated completion.",
+      "owner": "All components; planning package",
+      "gates": "G0",
+      "preparation_status": "passed",
+      "check_ids": [
+        "planning-and-original-receipts"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R31",
+      "description": "P00 provides working synthetic local journeys, clear preview labels, recoverable actions and recorded user feedback/accepted UX direction before backend implementation. Prototype evidence cannot complete later integration components.",
+      "owner": "P00; C15, C16, C18, C20, C21, C25 integrate",
+      "gates": "G8, G6",
+      "preparation_status": "passed",
+      "check_ids": [
+        "planning-and-original-receipts",
+        "browser-catalogue",
+        "browser-research",
+        "browser-experiments"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R32",
+      "description": "V1 has independent serving, project/resource targets, database, storage, credentials, sessions and queues; no legacy runtime access, fallback or main-domain cutover.",
+      "owner": "C09, C17, C20, C24, C26, C27",
+      "gates": "G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "isolation-offline-contract",
+        "isolation-legacy-denial"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R33",
+      "description": "Approved data enters through explicit one-way copies with authorization/eligibility checks, source/hash manifests, quarantine validation and origin provenance. Withdrawal handling is documented; no silent sync or account/history/credential copy.",
+      "owner": "C09–C13, C24, C26, C27",
+      "gates": "G1, G2, G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "transfer-independent",
+        "transfer-rejections",
+        "transfer-withdrawal"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G0",
+      "requirement_ids": [
+        "R30"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G1",
+      "requirement_ids": [
+        "R01",
+        "R02",
+        "R05",
+        "R11",
+        "R13",
+        "R14",
+        "R19",
+        "R22",
+        "R28",
+        "R33"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G2",
+      "requirement_ids": [
+        "R03",
+        "R04",
+        "R06",
+        "R10",
+        "R23",
+        "R33"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G3",
+      "requirement_ids": [
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R15",
+        "R17",
+        "R28"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G4",
+      "requirement_ids": [
+        "R05",
+        "R17",
+        "R18",
+        "R19",
+        "R20",
+        "R21",
+        "R22",
+        "R28"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G5",
+      "requirement_ids": [
+        "R14",
+        "R23",
+        "R24",
+        "R25"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G6",
+      "requirement_ids": [
+        "R15",
+        "R16",
+        "R17",
+        "R18",
+        "R25",
+        "R26",
+        "R31"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G7",
+      "requirement_ids": [
+        "R27",
+        "R29"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G8",
+      "requirement_ids": [
+        "R31"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G9",
+      "requirement_ids": [
+        "R27",
+        "R29",
+        "R32",
+        "R33"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    }
+  ],
+  "c27_local_acceptance": [
+    {
+      "id": "candidate_source",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/readiness-20261101/verification.json",
+        "docs/plans/ocean-v1/evidence/C27/release-manifest.json"
+      ]
+    },
+    {
+      "id": "master_traceability",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/release-gates.json",
+        "docs/plans/ocean-v1/evidence/C26/implementation-20261030/report.json"
+      ]
+    },
+    {
+      "id": "isolated_target_and_flags",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/release-manifest.json",
+        "docs/plans/ocean-v1/evidence/C27/rollback-20261101/accepted/result.json"
+      ]
+    },
+    {
+      "id": "migration_review_and_sql",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/migrations-20261101/receipt.json",
+        "docs/plans/ocean-v1/evidence/C27/migrations-20261101/run02/migration-review.json"
+      ]
+    },
+    {
+      "id": "native_preservation_and_failure",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/migrations-20261101/run02/receipt.json",
+        "docs/plans/ocean-v1/evidence/C27/migrations-20261101/run02/after-controlled-failure.json",
+        "docs/plans/ocean-v1/evidence/C27/migrations-20261101/run02/after-refused-downgrade.json"
+      ]
+    },
+    {
+      "id": "dispatch_drain",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/rollback-20261101/accepted/result.json",
+        "docs/plans/ocean-v1/evidence/C27/rollback-20261101/verification.json"
+      ]
+    },
+    {
+      "id": "legacy_compatibility",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/rollback-20261101/accepted/regressions.xml",
+        "docs/plans/ocean-v1/evidence/C27/migrations-20261101/run02/baseline-seeded-0016.json"
+      ]
+    },
+    {
+      "id": "uncertain_execution_capacity",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/rollback-20261101/accepted/result.json",
+        "docs/plans/ocean-v1/evidence/C27/rollback-20261101/README.md"
+      ]
+    },
+    {
+      "id": "operator_recovery",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/operator-runbook.md"
+      ]
+    },
+    {
+      "id": "approved_transfer",
+      "status": "passed",
+      "evidence_class": "local-preparation",
+      "evidence": [
+        "docs/plans/ocean-v1/evidence/C27/data-transfer-runbook.md",
+        "docs/plans/ocean-v1/evidence/C26/implementation-20261030/isolation.json"
+      ]
+    }
+  ],
+  "qualification": "All original43masterrows and their full_operational_acceptance=not_run unchanged. C27criteria are local package acceptance only; no scientific/user/production approval inferred."
+}

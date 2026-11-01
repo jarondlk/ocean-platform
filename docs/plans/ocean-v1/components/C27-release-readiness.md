@@ -1,6 +1,14 @@
 # C27 — Release preparation and rollback
 
-**Status:** Not started. **Prerequisites:** C26.
+**Status:** Complete for local release preparation and disposable rehearsals, verified 2026-11-01 JST. Not ready to deploy. **Prerequisites:** C26.
+
+C26 local preparation and source-bound hosted delivery are Complete at accepted
+software `afe9cb2`, evidence checkpoint `a69eb57`. The user explicitly selected
+C27 after readiness. The [readiness audit](../C27_READINESS_AUDIT_2026-11-01.md)
+verifies 844 source pins, 5,368 prior receipt files and 42 protected paths.
+All 20 operational gates and open P2 D26-07 remain explicit; release acceptance
+is false. See the [release package](../C27_RELEASE_PREPARATION.md) and
+[current handoff](../handoffs/C27.md).
 
 ## Revised delivery boundary
 
@@ -56,3 +64,6 @@ Prefer additive forward-compatible schema changes and preserved artifacts over d
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c27). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+
+Implementation acceptance (2026-11-01 JST): all10local package criteria pass with all43masterrows retained and20operational gates stillnotrun. NativePostgreSQL20checks and actual shared-stack flag/history/drain/ACKloss checks plus11targeted regressions and5baseline cases pass. All844accepted C26source paths,5,368prior receipt files and42protected paths remain unchanged. Historicalfull-baseoffline SQL reflection limitation and openP2 D26-07remain explicit. No earlier v1binary compatibility, live runtime, deployment or release approval is inferred. [Package](../C27_RELEASE_PREPARATION.md), [verification](../evidence/C27/verification.json), [handoff](../handoffs/C27.md).

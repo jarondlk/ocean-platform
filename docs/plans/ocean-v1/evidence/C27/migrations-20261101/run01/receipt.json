@@ -1,0 +1,93 @@
+{
+  "version": "c27-disposable-migration-rehearsal-v1",
+  "started_at": "2026-11-01T05:35:26.933811+00:00",
+  "source_commit": "a69eb575ab9f11135778de052d27fa070ac3898e",
+  "baseline_revision": "20261005_0016",
+  "head_revision": "20261027_0021",
+  "scope": "New owned PostgreSQL18 loopback cluster and synthetic databases only",
+  "production_backup_tested": false,
+  "live_runtime_tested": false,
+  "scientific_execution_performed": false,
+  "prior_binary_compatibility_tested": false,
+  "rollback_strategy": "Disable independent v1 entry/dispatch; preserve schema and all retained records",
+  "checks": [
+    {
+      "id": "single_actual_migration_head",
+      "status": "passed",
+      "expected": [
+        "20261027_0021"
+      ],
+      "observed": [
+        "20261027_0021"
+      ]
+    },
+    {
+      "id": "actual_migration_count",
+      "status": "passed",
+      "expected": 21,
+      "observed": 21
+    }
+  ],
+  "commands": [
+    {
+      "label": "offline-base-to-head",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "base:head",
+        "--sql"
+      ],
+      "returncode": 1,
+      "expected": 0,
+      "stdout": "offline-base-to-head.stdout",
+      "stderr": "offline-base-to-head.stderr"
+    }
+  ],
+  "error": {
+    "type": "AssertionError",
+    "message": "('offline-base-to-head', 'INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\\nINFO  [alembic.runtime.migration] Generating static SQL\\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\\nINFO  [alembic.runtime.migration] Running upgrade  -> 20260723_0001, Create durable application metadata tables.\\nINFO  [alembic.runtime.migration] Running upgrade 20260723_0001 -> 20260726_0002, Add shared rate-limit counters and corpus row hashes.\\nTraceback (most recent call last):\\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\\n  File \"<frozen runpy>\", line 88, in _run_code\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/__main__.py\", line 4, in <module>\\n    main(prog=\"alembic\")\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py\", line 1039, in main\\n    CommandLine(prog=prog).main(argv=argv)\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py\", line 1029, in main\\n    self.run_cmd(cfg, options)\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py\", line 963, in run_cmd\\n    fn(\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/command.py\", line 487, in upgrade\\n    script.run_env()\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/script/base.py\", line 550, in run_env\\n    util.load_python_file(self.dir, \"env.py\")\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/util/pyfiles.py\", line 114, in load_python_file\\n    module = load_module_py(module_id, path)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/util/pyfiles.py\", line 132, in load_module_py\\n    spec.loader.exec_module(module)  # type: ignore\\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"<frozen importlib._bootstrap_external>\", line 995, in exec_module\\n  File \"<frozen importlib._bootstrap>\", line 488, in _call_with_frames_removed\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/migrations/env.py\", line 52, in <module>\\n    run_migrations_offline()\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/migrations/env.py\", line 32, in run_migrations_offline\\n    context.run_migrations()\\n  File \"<string>\", line 8, in run_migrations\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/runtime/environment.py\", line 970, in run_migrations\\n    self.get_context().run_migrations(**kw)\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/runtime/migration.py\", line 616, in run_migrations\\n    step.migration_fn(**kw)\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/migrations/versions/20260726_0002_rate_limits_and_row_hashes.py\", line 65, in upgrade\\n    existing_tables = set(sa.inspect(op.get_bind()).get_table_names())\\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/inspection.py\", line 148, in inspect\\n    raise exc.NoInspectionAvailable(\\nsqlalchemy.exc.NoInspectionAvailable: No inspection system is available for object of type <class \\'sqlalchemy.engine.mock.MockConnection\\'>\\n')"
+  },
+  "cleanup": {
+    "cluster_stopped": true,
+    "temporary_directory": "/private/tmp/ocean-c27-native-yv8_jz74",
+    "temporary_files_removed": true
+  },
+  "finished_at": "2026-11-01T05:35:27.318247+00:00",
+  "status": "failed",
+  "artifact_sha256": {
+    "executed-rehearsal.py": "4bb725dc46237381bd6a85de07f43131a8ef57a5a282103e248be6f5a51d0264",
+    "migration-graph.json": "c28811a06c0fd4d68da7b36784b8b119664cca1dc1b725a0b40a197dc01f091a",
+    "migration-review.json": "2ff3e43282a34c8dfae9dfaf66515176e771c16eda234afff92189ad4f540e6e",
+    "offline-base-to-head.stderr": "4ec8796539ee205e8ebc665c6505538dcb333b673d0155b751368b38b2822b72",
+    "offline-base-to-head.stdout": "6f905c766a48838c01652e10a774400b561205742072aeee2790f2d6c9d077c2"
+  },
+  "source_sha256": {
+    "docs/plans/ocean-v1/evidence/C27/migrations-20261101/rehearsal.py": "4bb725dc46237381bd6a85de07f43131a8ef57a5a282103e248be6f5a51d0264",
+    "migrations/env.py": "af6b3bcbdea8b4804420186e192f03ecd26e574379ddc41159a9db4f5c96c8d7",
+    "config.py": "0d524644a410f5137c77fcf5900b4002c0ed87fb9cde4900c2761522841d405a",
+    "alembic.ini": "713eaa43635cc21c110f7bc45956918ec321558bd079b4cb22a9542948e8ee4d",
+    "migrations/versions/20260723_0001_app_metadata.py": "d2870ed3e3a9b8aacdb2ae97092e8f69cf78507b3c7b0669aec2314c5f09d814",
+    "migrations/versions/20260726_0002_rate_limits_and_row_hashes.py": "2d24a7fd352e8ddf37a7eba1df4f60b49021e4eef2eb6ac8841ee6f61d531b88",
+    "migrations/versions/20260820_0003_embedding_provenance.py": "24a5fffbb440243d6e5347633b56d706e1e9aa255b6f457629f0f1c1ec460369",
+    "migrations/versions/20260825_0004_chat_retention_holds.py": "e69eea687c50946a4feca39cc033649f6c21a103f512a73426daa086a4417928",
+    "migrations/versions/20260901_0005_anemone_edna_corpus.py": "7ae998ffb5c8f62760625439796958b9425934e0748dbcf21363c58844726a31",
+    "migrations/versions/20260902_0006_anemone_retrieval.py": "61991b7ebd1b3dc05d8560995e61db3be5f1983a06d4c8503810e48def867311",
+    "migrations/versions/20260902_0007_corpus_publication.py": "c3f33863325e00719cf34c379aecbed279e408e02c4719ca786d328cab7eeb52",
+    "migrations/versions/20260903_0008_edna_classification_review.py": "72a22ab0acc919cea808b7b94e1634d184863c61843a4dc847a93ad976ce5412",
+    "migrations/versions/20260905_0009_chat_outcome.py": "a8f9134cebdf9aa166863c55d0a63dd5366e02e22ea9c8a4edc8a783a344f3be",
+    "migrations/versions/20260905_0010_classification_review_domain.py": "904dff4b506d3bcf56db37c290b27a56cc68e376b0cd7bc3b6084a1e1e478928",
+    "migrations/versions/20260905_0011_classification_application.py": "0a51a94d7f9dccef262157290beca245c8f6e52d3a9a9a14ed8be54ef63fcb8d",
+    "migrations/versions/20260924_0012_anemone_catalogue.py": "4339ce26c2c2d5f1ec7b54b55be7eb0a469f3089e1247034fab571f8aa2c0c35",
+    "migrations/versions/20260925_0013_edna_aggregate_evidence.py": "8d164f7a770c89a6a6dcbb53021534bb17df48928f326ef9b5c2913db684adec",
+    "migrations/versions/20261001_0014_chat_source_scope.py": "1a3f309f092b6a9a5936aa70779c026177d62be48e889b41bf90154d22102bbb",
+    "migrations/versions/20261004_0015_research_registries.py": "86f2c56c14029b0999ee3f241149b0eabb4fd2f6afcf9ad76f1e0b5c786d88d3",
+    "migrations/versions/20261005_0016_source_coverage.py": "461a8197a8a8b3bb2a1ffbb66da6f6d3029a78c8a54f88618526bb6694148051",
+    "migrations/versions/20261018_0017_investigations.py": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3",
+    "migrations/versions/20261019_0018_research_runs.py": "bbd66a61de9b80eea7e9dce9304315ac6347b75704eacb4ad702cf1b0fb45a43",
+    "migrations/versions/20261019_0019_research_evidence.py": "2e06592c0f2c307fead5985a0639d1520ca60fafb250f9ac64ea32f63dc5f1ae",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98"
+  }
+}

@@ -1,0 +1,28 @@
+2026-11-01 14:35:57.850 JST [50755] LOG:  starting PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-11-01 14:35:57.851 JST [50755] LOG:  listening on IPv4 address "127.0.0.1", port 54782
+2026-11-01 14:35:57.851 JST [50755] LOG:  listening on Unix socket "/private/tmp/ocean-c27-native-wuzwf418/socket/.s.PGSQL.54782"
+2026-11-01 14:35:57.856 JST [50761] LOG:  database system was shut down at 2026-11-01 14:35:57 JST
+2026-11-01 14:35:57.859 JST [50755] LOG:  database system is ready to accept connections
+2026-11-01 14:35:59.695 JST [50808] ERROR:  relation "research_conversation" already exists
+2026-11-01 14:35:59.695 JST [50808] STATEMENT:  
+	CREATE TABLE research_conversation (
+		id UUID NOT NULL, 
+		investigation_id UUID NOT NULL, 
+		name VARCHAR(255) NOT NULL, 
+		metadata_version INTEGER NOT NULL, 
+		created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+		updated_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 
+		PRIMARY KEY (id), 
+		CONSTRAINT ck_research_conversation_name CHECK (length(name) BETWEEN 1 AND 255 AND length(trim(name)) >= 1), 
+		CONSTRAINT ck_research_conversation_version CHECK (metadata_version >= 1), 
+		FOREIGN KEY(investigation_id) REFERENCES research_investigation (id) ON DELETE RESTRICT
+	)
+	
+	
+2026-11-01 14:36:10.862 JST [50755] LOG:  received fast shutdown request
+2026-11-01 14:36:10.862 JST [50755] LOG:  aborting any active transactions
+2026-11-01 14:36:10.863 JST [50755] LOG:  background worker "logical replication launcher" (PID 50764) exited with exit code 1
+2026-11-01 14:36:10.863 JST [50759] LOG:  shutting down
+2026-11-01 14:36:10.864 JST [50759] LOG:  checkpoint starting: shutdown immediate
+2026-11-01 14:36:11.199 JST [50759] LOG:  checkpoint complete: wrote 3797 buffers (23.2%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.202 s, sync=0.132 s, total=0.336 s; sync files=2033, longest=0.001 s, average=0.001 s; distance=23269 kB, estimate=23269 kB; lsn=0/2E44470, redo lsn=0/2E44470
+2026-11-01 14:36:11.205 JST [50755] LOG:  database system is shut down

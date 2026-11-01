@@ -1,0 +1,23 @@
+{
+  "version": "c27-package-verification-v1",
+  "verified": true,
+  "accepted_software_commit": "afe9cb2d1a6d2c28a834daab1a342de4563dc3a3",
+  "candidate_label": "v1.0.0-rc.1",
+  "local_preparation_complete": true,
+  "package_artifacts_verified": 90,
+  "package_manifest_sha256": "aaddbb1323eb39a461c709ef2d8f9e4fa0856e813facb7d2b0c64bf5a76c0c4a",
+  "accepted_source_paths": 844,
+  "prior_evidence_files_preserved": 5368,
+  "protected_paths_preserved": 42,
+  "master_rows": 43,
+  "c27_local_criteria": 10,
+  "migration_checks": 20,
+  "migration_head": "20261027_0021",
+  "rollback_verified": true,
+  "baseline_tests": 5,
+  "pending_release_gates": 20,
+  "open_P2": "D26-07",
+  "ready_to_deploy": false,
+  "release_accepted": false,
+  "qualification": "Local release preparation only; no tag, image build, live integration or promotion."
+}

@@ -1,0 +1,18 @@
+{
+  "version": "c27-independent-software-review-v1",
+  "reviewer": "/root/c27_readiness_review",
+  "scope": "Read-only repository/receipt/tool/runbook review; no scientific review or release approval",
+  "result": "no blocking finding",
+  "observed_receipt_verifiers": {
+    "migration_checks": 20,
+    "rollback_source_paths": 119,
+    "preserved_table_hashes": 58,
+    "targeted_regressions": 11
+  },
+  "incorporated_findings": [
+    "Explicit supported offline SQL spans and preserved historicalbaseofflinefailure",
+    "Dispatch drain allows some proposal/contextediting; alloff meansunavailable",
+    "Scoped structural fingerprint excludes standaloneindexes/sequences/ACLs"
+  ],
+  "live_release_accepted": false
+}

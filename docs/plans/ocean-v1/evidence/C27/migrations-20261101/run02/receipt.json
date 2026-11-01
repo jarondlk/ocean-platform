@@ -1,0 +1,554 @@
+{
+  "version": "c27-disposable-migration-rehearsal-v1",
+  "started_at": "2026-11-01T05:35:55.981829+00:00",
+  "source_commit": "a69eb575ab9f11135778de052d27fa070ac3898e",
+  "baseline_revision": "20261005_0016",
+  "head_revision": "20261027_0021",
+  "scope": "New owned PostgreSQL18 loopback cluster and synthetic databases only",
+  "production_backup_tested": false,
+  "live_runtime_tested": false,
+  "scientific_execution_performed": false,
+  "prior_binary_compatibility_tested": false,
+  "rollback_strategy": "Disable independent v1 entry/dispatch; preserve schema and all retained records",
+  "checks": [
+    {
+      "id": "single_actual_migration_head",
+      "status": "passed",
+      "expected": [
+        "20261027_0021"
+      ],
+      "observed": [
+        "20261027_0021"
+      ]
+    },
+    {
+      "id": "actual_migration_count",
+      "status": "passed",
+      "expected": 21,
+      "observed": 21
+    },
+    {
+      "id": "full_base_offline_known_reflection_limitation",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "offline-0013-to-head-no-target-or-credential",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "offline-0013-to-head-transactional",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "offline-0016-to-head-no-target-or-credential",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "offline-0016-to-head-transactional",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "fresh_current_revision",
+      "status": "passed",
+      "expected": "20261027_0021",
+      "observed": "20261027_0021"
+    },
+    {
+      "id": "partial_migration_transaction_restored",
+      "status": "passed",
+      "expected": "9e4907872cd0f96099d032913332c57d7e7f12e9d211860394d54fb20ea3a0e6",
+      "observed": "9e4907872cd0f96099d032913332c57d7e7f12e9d211860394d54fb20ea3a0e6"
+    },
+    {
+      "id": "baseline_chat_rows_preserved",
+      "status": "passed",
+      "expected": {
+        "count": 1,
+        "sha256": "cadea3f69b45000df19459c33c42d6b7f18bc395b4fdf6f8239a7e7524dfc64b"
+      },
+      "observed": {
+        "count": 1,
+        "sha256": "cadea3f69b45000df19459c33c42d6b7f18bc395b4fdf6f8239a7e7524dfc64b"
+      }
+    },
+    {
+      "id": "research_investigation-preserved-across-upgrade",
+      "status": "passed",
+      "expected": {
+        "count": 1,
+        "sha256": "9f2a986d797dfcda9678a6379b9d93b1ccaca5936bef989a9e41eb967e39a82c"
+      },
+      "observed": {
+        "count": 1,
+        "sha256": "9f2a986d797dfcda9678a6379b9d93b1ccaca5936bef989a9e41eb967e39a82c"
+      }
+    },
+    {
+      "id": "research_context_revision-preserved-across-upgrade",
+      "status": "passed",
+      "expected": {
+        "count": 1,
+        "sha256": "0ecc74aba7ad194df920e587d6640fb51a0d7e974496b03bfcbad374f9f4c0a6"
+      },
+      "observed": {
+        "count": 1,
+        "sha256": "0ecc74aba7ad194df920e587d6640fb51a0d7e974496b03bfcbad374f9f4c0a6"
+      }
+    },
+    {
+      "id": "research_conversation-preserved-across-upgrade",
+      "status": "passed",
+      "expected": {
+        "count": 1,
+        "sha256": "244f3d4d622c5a9e7cb780a47f2c11f8fb024300d41da26ff487a58fb777133d"
+      },
+      "observed": {
+        "count": 1,
+        "sha256": "244f3d4d622c5a9e7cb780a47f2c11f8fb024300d41da26ff487a58fb777133d"
+      }
+    },
+    {
+      "id": "fresh_and_upgrade_schema_equal",
+      "status": "passed",
+      "expected": "77fcfe54deba1329708cc8ec24fdee4365bfb12e843a46addb4788c1bdc635cc",
+      "observed": "77fcfe54deba1329708cc8ec24fdee4365bfb12e843a46addb4788c1bdc635cc"
+    },
+    {
+      "id": "offline_and_online_schema_equal",
+      "status": "passed",
+      "expected": "77fcfe54deba1329708cc8ec24fdee4365bfb12e843a46addb4788c1bdc635cc",
+      "observed": "77fcfe54deba1329708cc8ec24fdee4365bfb12e843a46addb4788c1bdc635cc"
+    },
+    {
+      "id": "current_history_populated",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "repeat_head_preserves_all_rows_and_schema",
+      "status": "passed",
+      "expected": "dc58cac5697ad4d5c6c0dce457ef11def8e25de415ea0619a38ff7028fe93e8b",
+      "observed": "dc58cac5697ad4d5c6c0dce457ef11def8e25de415ea0619a38ff7028fe93e8b"
+    },
+    {
+      "id": "populated_downgrade_transaction_preserves_head_schema_history",
+      "status": "passed",
+      "expected": "dc58cac5697ad4d5c6c0dce457ef11def8e25de415ea0619a38ff7028fe93e8b",
+      "observed": "dc58cac5697ad4d5c6c0dce457ef11def8e25de415ea0619a38ff7028fe93e8b"
+    },
+    {
+      "id": "physical_execution_not_inferred",
+      "status": "passed",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "owned_server_stopped_and_port_closed",
+      "status": "passed",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "commands": [
+    {
+      "label": "offline-base-to-head-unsupported",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "base:head",
+        "--sql"
+      ],
+      "returncode": 1,
+      "expected": 1,
+      "stdout": "offline-base-to-head-unsupported.stdout",
+      "stderr": "offline-base-to-head-unsupported.stderr"
+    },
+    {
+      "label": "offline-0013-to-head",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "20260925_0013:head",
+        "--sql"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "offline-0013-to-head.stdout",
+      "stderr": "offline-0013-to-head.stderr"
+    },
+    {
+      "label": "offline-0016-to-head",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "20261005_0016:head",
+        "--sql"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "offline-0016-to-head.stdout",
+      "stderr": "offline-0016-to-head.stderr"
+    },
+    {
+      "label": "initdb",
+      "argv": [
+        "/opt/homebrew/opt/postgresql@18/bin/initdb",
+        "-D",
+        "/private/tmp/ocean-c27-native-wuzwf418/data",
+        "-U",
+        "c27_owned_synthetic",
+        "-A",
+        "trust",
+        "--no-locale",
+        "-E",
+        "UTF8"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "initdb.stdout",
+      "stderr": "initdb.stderr"
+    },
+    {
+      "label": "pg-start",
+      "argv": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/ocean-c27-native-wuzwf418/data",
+        "-l",
+        "/private/tmp/ocean-c27-native-wuzwf418/postgres.log",
+        "-o",
+        "-h 127.0.0.1 -p 54782 -k /private/tmp/ocean-c27-native-wuzwf418/socket -c max_connections=20",
+        "-w",
+        "start"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "pg-start.stdout",
+      "stderr": "pg-start.stderr"
+    },
+    {
+      "label": "pg-version",
+      "argv": [
+        "/opt/homebrew/opt/postgresql@18/bin/postgres",
+        "--version"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "pg-version.stdout",
+      "stderr": "pg-version.stderr"
+    },
+    {
+      "label": "fresh-upgrade-head",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "head"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "fresh-upgrade-head.stdout",
+      "stderr": "fresh-upgrade-head.stderr"
+    },
+    {
+      "label": "baseline-upgrade-0016",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "20261005_0016"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "baseline-upgrade-0016.stdout",
+      "stderr": "baseline-upgrade-0016.stderr"
+    },
+    {
+      "label": "controlled-duplicate-table-upgrade-failure",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "head"
+      ],
+      "returncode": 1,
+      "expected": 1,
+      "stdout": "controlled-duplicate-table-upgrade-failure.stdout",
+      "stderr": "controlled-duplicate-table-upgrade-failure.stderr"
+    },
+    {
+      "label": "retry-upgrade-0017",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "20261018_0017"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "retry-upgrade-0017.stdout",
+      "stderr": "retry-upgrade-0017.stderr"
+    },
+    {
+      "label": "retry-upgrade-head",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "head"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "retry-upgrade-head.stdout",
+      "stderr": "retry-upgrade-head.stderr"
+    },
+    {
+      "label": "offline-database-baseline-0013",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "20260925_0013"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "offline-database-baseline-0013.stdout",
+      "stderr": "offline-database-baseline-0013.stderr"
+    },
+    {
+      "label": "apply-offline-sql",
+      "argv": [
+        "/opt/homebrew/opt/postgresql@18/bin/psql",
+        "-h",
+        "127.0.0.1",
+        "-p",
+        "54782",
+        "-U",
+        "c27_owned_synthetic",
+        "-d",
+        "ocean_c27_offline",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-f",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/evidence/C27/migrations-20261101/run02/offline-0013-to-head.sql"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "apply-offline-sql.stdout",
+      "stderr": "apply-offline-sql.stderr"
+    },
+    {
+      "label": "repeat-head-with-history",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "upgrade",
+        "head"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "repeat-head-with-history.stdout",
+      "stderr": "repeat-head-with-history.stderr"
+    },
+    {
+      "label": "populated-downgrade-refused",
+      "argv": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "alembic",
+        "downgrade",
+        "20261005_0016"
+      ],
+      "returncode": 1,
+      "expected": 1,
+      "stdout": "populated-downgrade-refused.stdout",
+      "stderr": "populated-downgrade-refused.stderr"
+    },
+    {
+      "label": "pg-stop",
+      "argv": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/ocean-c27-native-wuzwf418/data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "returncode": 0,
+      "expected": 0,
+      "stdout": "pg-stop.stdout",
+      "stderr": "pg-stop.stderr"
+    },
+    {
+      "label": "pg-stopped-status",
+      "argv": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/ocean-c27-native-wuzwf418/data",
+        "status"
+      ],
+      "returncode": 3,
+      "expected": 1,
+      "stdout": "pg-stopped-status.stdout",
+      "stderr": "pg-stopped-status.stderr"
+    }
+  ],
+  "offline_full_base_limitation": {
+    "status": "unsupported",
+    "owner": "historical migration20260726_0002",
+    "reason": "Uses live SQLAlchemy table inspection; MockConnection has no inspection system",
+    "qualification": "Partial stdout is not executable acceptance SQL. No migration repair attempted."
+  },
+  "owned_target": {
+    "temp_directory": "/private/tmp/ocean-c27-native-wuzwf418",
+    "listen_address": "127.0.0.1",
+    "port": 54782,
+    "databases": [
+      "ocean_c27_fresh",
+      "ocean_c27_upgrade",
+      "ocean_c27_offline"
+    ],
+    "database_identity_checked": true,
+    "runtime": "postgres (PostgreSQL) 18.3 (Homebrew)"
+  },
+  "synthetic_history_ids": {
+    "legacy": {
+      "owner_id": "552b68a3-0918-4d4e-8b8f-4309fee3a3f4",
+      "chat_id": "8ca21e13-607a-43ea-a2da-3ab27c381e92"
+    },
+    "context_at0017": {
+      "investigation_id": "0dbc0984-5f30-4200-8f35-dc46aa8ad7e5",
+      "revision_id": "facfe919-0b70-4058-95c4-e9dc2ea9db93",
+      "conversation_id": "f5e16281-c8df-4d04-baea-c2f341f020ad"
+    },
+    "current_investigation": "80d8ca4c-e5db-439e-8158-7771ff8f47f6",
+    "current_run": "f5198489-ad40-4eda-8978-598319cbb456",
+    "current_answer": "583a6d5e-3e0a-5319-b26a-021d0ae88c17",
+    "experiment": "c34b433c-0e56-449f-a96a-c4e70b54d7d6",
+    "synthetic_artifacts": [
+      {
+        "id": "synthetic:eb30b975-5051-4306-b6a1-08f524da86df:8eb89c5872b56466",
+        "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c"
+      }
+    ]
+  },
+  "schema_summary": {
+    "tables": 65,
+    "columns": 713,
+    "constraints": 1033,
+    "triggers": 101,
+    "functions": 36
+  },
+  "schema_sha256": "77fcfe54deba1329708cc8ec24fdee4365bfb12e843a46addb4788c1bdc635cc",
+  "cleanup": {
+    "cluster_stopped": true,
+    "temporary_directory": "/private/tmp/ocean-c27-native-wuzwf418",
+    "temporary_files_removed": true
+  },
+  "finished_at": "2026-11-01T05:36:11.445468+00:00",
+  "status": "passed",
+  "artifact_sha256": {
+    "after-controlled-failure.json": "e15fb425de0f75ec3b18bf9d5108e6e5955eed182ce3a89bdf93f558018cbf93",
+    "after-refused-downgrade.json": "474b1dad91d405d731d6b78c47bcfd98a651355e021c6f0d26155105a501da37",
+    "apply-offline-sql.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "apply-offline-sql.stdout": "f5f9abd03b0cfd960c9709b5832aad83943ad05cfce2bd813140865bd1a0845f",
+    "baseline-seeded-0016.json": "ec0ef4dae1046b22636d2a9e067f4dc596dc62a9d7fad24855965b671d9747f9",
+    "baseline-upgrade-0016.stderr": "5d6c56e82d4441fb737c3798866b24933726a87f3d1f10449281fca84eb4aa9c",
+    "baseline-upgrade-0016.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "before-controlled-failure.json": "e15fb425de0f75ec3b18bf9d5108e6e5955eed182ce3a89bdf93f558018cbf93",
+    "controlled-duplicate-table-upgrade-failure.stderr": "9eada027e8169d7ffe3c85b7383c5674272ac28d05c9bba1e809983e14675d00",
+    "controlled-duplicate-table-upgrade-failure.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed-rehearsal.py": "740c91284b51e6f622469748c5f8ad2ed1432ff1825bf34332ef0e3568816189",
+    "fresh-head.json": "ac77a10d17ef628644345b891d6242a06318cffc9d29ab61e535d15e8ab68276",
+    "fresh-upgrade-head.stderr": "ce47167262dffa2f534008ef710892885d6ecb1281ae79d7386aac1ed4c3aca8",
+    "fresh-upgrade-head.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "initdb.stdout": "38de0a6c8488fb0e960876040a7a4b4c92dd6e1c0ecb1e67da862536e8cf534a",
+    "migration-graph.json": "c28811a06c0fd4d68da7b36784b8b119664cca1dc1b725a0b40a197dc01f091a",
+    "migration-review.json": "2ff3e43282a34c8dfae9dfaf66515176e771c16eda234afff92189ad4f540e6e",
+    "offline-0013-to-head.sql": "47af92a3d8c9a996dc13b69e462663392868f199c615c245f81c548efc943554",
+    "offline-0013-to-head.stderr": "36510ddf726ff9ad331d7c623b113a58347b4f1a06c76d65ead4855e315fc85d",
+    "offline-0013-to-head.stdout": "47af92a3d8c9a996dc13b69e462663392868f199c615c245f81c548efc943554",
+    "offline-0016-to-head.sql": "36ea5c27cbc6e62ce4003d48f7b96a3e2fcc0ce7ad17023929dfc1ec52b2ece9",
+    "offline-0016-to-head.stderr": "2f88c919bfc13eca7f2843de3ca294b132a87834c2103a43a8e32ebeb1a0529d",
+    "offline-0016-to-head.stdout": "36ea5c27cbc6e62ce4003d48f7b96a3e2fcc0ce7ad17023929dfc1ec52b2ece9",
+    "offline-applied-head.json": "ac77a10d17ef628644345b891d6242a06318cffc9d29ab61e535d15e8ab68276",
+    "offline-base-to-head-unsupported.stderr": "4ec8796539ee205e8ebc665c6505538dcb333b673d0155b751368b38b2822b72",
+    "offline-base-to-head-unsupported.stdout": "6f905c766a48838c01652e10a774400b561205742072aeee2790f2d6c9d077c2",
+    "offline-database-baseline-0013.stderr": "6042a9c0e76dacae61856bbb109c6673950bbb6e22950d86171527ec37ee4f0d",
+    "offline-database-baseline-0013.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "owned-postgres.log": "0fef651d2c7b3c01e50da9a9567ec603136b75174213bd01eca194436ed57ed7",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "pg-stopped-status.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped-status.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "pg-version.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-version.stdout": "016d30d0dc5c4614a6e4a8730068242acd01e77d301f4cf475ea535c69287b5d",
+    "populated-current-history.json": "474b1dad91d405d731d6b78c47bcfd98a651355e021c6f0d26155105a501da37",
+    "populated-downgrade-refused.stderr": "af17d047719e79c192483aa04438ca682844dfc50ad101d9d7515aea96b67927",
+    "populated-downgrade-refused.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reapplied-current-history.json": "474b1dad91d405d731d6b78c47bcfd98a651355e021c6f0d26155105a501da37",
+    "repeat-head-with-history.stderr": "84b9cfdaaae75628f3cbd7082d9c05399a66f8049b2a84369fcf326d0622ec92",
+    "repeat-head-with-history.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retry-upgrade-0017.stderr": "69c15320a3184459543ff5d5a1af3e5bbafc65b1328854a32083adf8839c3c7d",
+    "retry-upgrade-0017.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retry-upgrade-head.stderr": "dbe4c2fffb75e882071d937a3f98f0e6d5fede3e73fab8c1ccf18644b161407c",
+    "retry-upgrade-head.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "seeded-context-0017.json": "5cfc2c51a6399bae79ef28817875eed23936e7b368230e0e982241a384801efe",
+    "upgraded-head.json": "79448d3fa5792b6668c13b59003ac5260586e6adb89d3d581aea80ec45be936d"
+  },
+  "source_sha256": {
+    "docs/plans/ocean-v1/evidence/C27/migrations-20261101/rehearsal.py": "740c91284b51e6f622469748c5f8ad2ed1432ff1825bf34332ef0e3568816189",
+    "migrations/env.py": "af6b3bcbdea8b4804420186e192f03ecd26e574379ddc41159a9db4f5c96c8d7",
+    "config.py": "0d524644a410f5137c77fcf5900b4002c0ed87fb9cde4900c2761522841d405a",
+    "alembic.ini": "713eaa43635cc21c110f7bc45956918ec321558bd079b4cb22a9542948e8ee4d",
+    "migrations/versions/20260723_0001_app_metadata.py": "d2870ed3e3a9b8aacdb2ae97092e8f69cf78507b3c7b0669aec2314c5f09d814",
+    "migrations/versions/20260726_0002_rate_limits_and_row_hashes.py": "2d24a7fd352e8ddf37a7eba1df4f60b49021e4eef2eb6ac8841ee6f61d531b88",
+    "migrations/versions/20260820_0003_embedding_provenance.py": "24a5fffbb440243d6e5347633b56d706e1e9aa255b6f457629f0f1c1ec460369",
+    "migrations/versions/20260825_0004_chat_retention_holds.py": "e69eea687c50946a4feca39cc033649f6c21a103f512a73426daa086a4417928",
+    "migrations/versions/20260901_0005_anemone_edna_corpus.py": "7ae998ffb5c8f62760625439796958b9425934e0748dbcf21363c58844726a31",
+    "migrations/versions/20260902_0006_anemone_retrieval.py": "61991b7ebd1b3dc05d8560995e61db3be5f1983a06d4c8503810e48def867311",
+    "migrations/versions/20260902_0007_corpus_publication.py": "c3f33863325e00719cf34c379aecbed279e408e02c4719ca786d328cab7eeb52",
+    "migrations/versions/20260903_0008_edna_classification_review.py": "72a22ab0acc919cea808b7b94e1634d184863c61843a4dc847a93ad976ce5412",
+    "migrations/versions/20260905_0009_chat_outcome.py": "a8f9134cebdf9aa166863c55d0a63dd5366e02e22ea9c8a4edc8a783a344f3be",
+    "migrations/versions/20260905_0010_classification_review_domain.py": "904dff4b506d3bcf56db37c290b27a56cc68e376b0cd7bc3b6084a1e1e478928",
+    "migrations/versions/20260905_0011_classification_application.py": "0a51a94d7f9dccef262157290beca245c8f6e52d3a9a9a14ed8be54ef63fcb8d",
+    "migrations/versions/20260924_0012_anemone_catalogue.py": "4339ce26c2c2d5f1ec7b54b55be7eb0a469f3089e1247034fab571f8aa2c0c35",
+    "migrations/versions/20260925_0013_edna_aggregate_evidence.py": "8d164f7a770c89a6a6dcbb53021534bb17df48928f326ef9b5c2913db684adec",
+    "migrations/versions/20261001_0014_chat_source_scope.py": "1a3f309f092b6a9a5936aa70779c026177d62be48e889b41bf90154d22102bbb",
+    "migrations/versions/20261004_0015_research_registries.py": "86f2c56c14029b0999ee3f241149b0eabb4fd2f6afcf9ad76f1e0b5c786d88d3",
+    "migrations/versions/20261005_0016_source_coverage.py": "461a8197a8a8b3bb2a1ffbb66da6f6d3029a78c8a54f88618526bb6694148051",
+    "migrations/versions/20261018_0017_investigations.py": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3",
+    "migrations/versions/20261019_0018_research_runs.py": "bbd66a61de9b80eea7e9dce9304315ac6347b75704eacb4ad702cf1b0fb45a43",
+    "migrations/versions/20261019_0019_research_evidence.py": "2e06592c0f2c307fead5985a0639d1520ca60fafb250f9ac64ea32f63dc5f1ae",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98"
+  }
+}
