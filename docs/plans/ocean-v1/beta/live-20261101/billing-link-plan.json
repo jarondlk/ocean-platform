@@ -1,0 +1,26 @@
+{
+  "version": "beta-billing-link-plan-v1",
+  "date": "2026-11-01 JST",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "existing_billing_account": "019B3B-2B8BBA-42E4B2",
+  "scope": "Link only the new empty beta project to existing billing, then establish project-scoped cost controls before any paid runtime resources. No legacy billing/budget/service changes.",
+  "budget": {
+    "currency": "JPY",
+    "new_beta_initial_monthly_target": 50000,
+    "user_stated_upper_budget": 100000,
+    "notify_before_exceeding_initial_target": true,
+    "user_clarified_beta_only": true
+  },
+  "observed_console_budgets": "Existingmonthlyguardrail100000andCloudRun100000spendcapare scopedtodata-infra-infobio; no beta coverage assumed.",
+  "approval_basis": "User explicit authorization to use resources fornewbeta within50000initialtarget andexistingbilling; no newbillingarrangement.",
+  "not_yet_authorized_by_this_plan": [
+    "runtimeprovisioning",
+    "IAMgrants",
+    "legacychanges",
+    "DNStraffic",
+    "deployment",
+    "liveexecution",
+    "budgetthresholdincrease"
+  ]
+}

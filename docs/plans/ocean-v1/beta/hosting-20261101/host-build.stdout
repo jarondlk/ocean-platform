@@ -1,0 +1,39 @@
+
+> ocean-v1-authenticated-host@1.0.0-host.0 build
+> NEXT_TELEMETRY_DISABLED=1 next build && node scripts/package-standalone.mjs
+
+   ▲ Next.js 15.5.28
+   - Experiments (use with caution):
+     · cpus: 2
+     ✓ externalDir
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1247ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/3) ...
+ ✓ Generating static pages (3/3)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      128 B         205 kB
+├ ○ /_not-found                            994 B         104 kB
+├ ƒ /_ocean/runtime-mode                     0 B            0 B
+├ ƒ /[destination]                         128 B         205 kB
+├ ƒ /api/auth/[...nextauth]                137 B         103 kB
+├ ƒ /catalogue/[...action]                 137 B         103 kB
+├ ƒ /login                                 137 B         103 kB
+├ ƒ /research/[...action]                  137 B         103 kB
+└ ƒ /v1/runtime                            137 B         103 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-b1e2483a7e02feee.js       46.6 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.91 kB
+
+
+ƒ Middleware                             34.7 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

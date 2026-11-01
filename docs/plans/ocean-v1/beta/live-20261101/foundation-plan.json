@@ -1,0 +1,50 @@
+{
+  "version": "ocean-v1-beta-foundation-plan-v1",
+  "date": "2026-11-01 JST",
+  "branch": "overhaul",
+  "source_checkpoint": "acf208af17c71e414165ed97d6955a7d0788de30",
+  "authorization": "User completed CLI sign-in and authorized resources for new beta only, targetJPY50000 within currentJPY100000billing budget; notify before exceedingJPY50000.",
+  "budget": {
+    "currency": "JPY",
+    "beta_target": 50000,
+    "stated_billing_budget": 100000,
+    "scope": "new beta environment only",
+    "notify_before_exceeding_target": true,
+    "billing_budget_api_read": "permission_denied",
+    "live_budget_enforcement_verified": false
+  },
+  "selected_foundation": {
+    "project_id": "ocean-v1-beta-20261101",
+    "display_name": "OCEAN v1 beta",
+    "organization_id": "735965963562",
+    "intended_billing_account": "019B3B-2B8BBA-42E4B2",
+    "region": "asia-northeast1",
+    "zone": "asia-northeast1-a",
+    "public_origin": "https://beta.oceaninfobio.com"
+  },
+  "first_mutation_scope": [
+    "create independent empty beta project if the ID can be created",
+    "read back project identity and billing state"
+  ],
+  "excluded_until_reviewed": [
+    "billable compute/SQL/load-balancer/worker resources",
+    "IAM grants or public exposure",
+    "DNS changes",
+    "deployment or task dispatch",
+    "real data transfer"
+  ],
+  "live_resource_inventory_before": {
+    "separate_beta_project_visible": false,
+    "project_describe": "permission_denied_or_not_found; not treated as provenabsence",
+    "legacy_project": "data-infra-infobio",
+    "separate_C23_project": "ocean-v1-c23-20261024",
+    "both_existing_billing_linkages_verified": true
+  },
+  "constraints": [
+    "Do not change ambient gcloud project fromlegacy; everyoperation explicitproject",
+    "Do not treat budgetalerts ashardspendcap",
+    "No paidruntimeuntilbeta-specificcost/controls reviewed",
+    "Keep original C27/physicalreceipts immutable; new implementation/source supersessions separate"
+  ],
+  "status": "reviewable_empty_project_foundation_only"
+}

@@ -1,0 +1,29 @@
+{
+  "version": "beta-budget-console-readback-v1",
+  "date": "2026-11-01 JST",
+  "scope": "new beta project only",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "name": "ocean-v1-beta-monthly-50000",
+  "budget_id": "8e005868-c456-4ee3-9f34-682d2e0edc20",
+  "currency": "JPY",
+  "amount": 50000,
+  "period": "monthly",
+  "services": "all",
+  "credits_included": false,
+  "actual_thresholds_percent": [
+    50,
+    75,
+    90,
+    100
+  ],
+  "notify_project_owners": true,
+  "notify_billing_admins_and_users": false,
+  "spend_cap_status": "not_applicable_alert_only",
+  "observed_gross_cost": 0,
+  "cost_reporting_lag": "may exceed24h; zero currentreport notproofno futurecharges",
+  "readback_source": "actual GoogleCloudConsole budgettable aftersave",
+  "console_url": "https://console.cloud.google.com/billing/019B3B-2B8BBA-42E4B2/budgets?project=ocean-v1-beta-20261101",
+  "existing_legacy_controls_unchanged": true,
+  "qualification": "Confirmed budget row scopes only OCEANv1beta; allservicealerts do not enforcehardspendcap."
+}

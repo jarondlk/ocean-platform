@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-11-01 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
+Updated: 2026-11-02 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -262,3 +262,6 @@ Current C27 delivery (2026-11-01 JST): **Complete for local release preparation;
 
 
 Beta follow-on preparation (2026-11-01 JST): **offline preparation complete; runtime implementation/cloud setup not started.** User will sign in later. Actual host, research delivery/outbox and experiment admission/port/supervisor gaps are mapped to ordered checkpoints. Separate cloud worksheet retains67pending inputs and8proposed region/names; no live values inferred.21inspected source pins, all844accepted runtime/configuration paths and90C27artifacts remain unchanged. All20operational gates and P2 D26-07 remain. No GCP/login/deployment/data/provider action; schedulerPAUSED. [Preparation](beta/PREPARATION.md), [cloud plan](beta/CLOUD_PLAN.md), [handoff](handoffs/BETA_PREPARATION.md).
+
+
+Current beta deployment continuation (2026-11-02 JST): **isolated cloud foundation verified; authenticated host/API software locally accepted; public beta not deployed.** Independent Tokyo project `ocean-v1-beta-20261101`, beta-only ¥50,000 all-service alert and ¥3,000 Cloud Run cap are saved. Twenty empty registry/network/identity/storage/secret/paused-queue operations verify; the unused default Compute Editor grant was removed only in beta. No paid runtime/image/DNS/secret value/data/dispatch is created yet. Backend35+9 native checks, host50+1 actual HTTP, static1051regressions/typecheck/build/audit pass.841 accepted paths remain unchanged;3 intentional supersessions and36 additive app files are audited;5368 prior evidence/90 C27 artifacts/42 protected paths preserved. Fresh five-job CI is pending for the new app checkpoint. Container packaging, actual JPY quotes, OAuth/account enrollment and private DB/ingress/provider wiring remain. All20 live gates andP2 D26-07 stay open; scheduler PAUSED. [Current handoff](handoffs/BETA_DEPLOYMENT.md). Earlier offline-preparation/no-cloud entries describe their historical checkpoints.

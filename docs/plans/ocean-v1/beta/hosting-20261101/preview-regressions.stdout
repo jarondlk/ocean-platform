@@ -1,0 +1,5269 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts
+
+TAP version 13
+# Subtest: unrelated demo checks preserve unsaved settings while a committed save updates the draft
+ok 1 - unrelated demo checks preserve unsaved settings while a committed save updates the draft
+  ---
+  duration_ms: 0.951791
+  ...
+# Subtest: versioned local restore preserves admin workflows across reopening and refuses non-admin access
+ok 2 - versioned local restore preserves admin workflows across reopening and refuses non-admin access
+  ---
+  duration_ms: 0.868584
+  ...
+# Subtest: restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+ok 3 - restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+  ---
+  duration_ms: 0.493334
+  ...
+# Subtest: non-admin role cannot mutate or export admin preview records
+ok 4 - non-admin role cannot mutate or export admin preview records
+  ---
+  duration_ms: 0.253833
+  ...
+# Subtest: role and account type remain independent and the demo administrator cannot be locked out
+ok 5 - role and account type remain independent and the demo administrator cannot be locked out
+  ---
+  duration_ms: 0.184042
+  ...
+# Subtest: demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+ok 6 - demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+  ---
+  duration_ms: 2.285416
+  ...
+# Subtest: pause and capacity constrain local jobs, while running work can finish after a pause
+ok 7 - pause and capacity constrain local jobs, while running work can finish after a pause
+  ---
+  duration_ms: 0.467417
+  ...
+# Subtest: cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+ok 8 - cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+  ---
+  duration_ms: 0.149292
+  ...
+# Subtest: retention settings cannot remove retained fixture evidence or silently raise execution limits
+ok 9 - retention settings cannot remove retained fixture evidence or silently raise execution limits
+  ---
+  duration_ms: 0.322416
+  ...
+# Subtest: database inventory counts all local records and feedback triage records an audit without altering evidence
+ok 10 - database inventory counts all local records and feedback triage records an audit without altering evidence
+  ---
+  duration_ms: 0.387833
+  ...
+# Subtest: CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+ok 11 - CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+  ---
+  duration_ms: 0.246166
+  ...
+# Subtest: admin CSV shares typed safety and JSON serialization without mutating structured records
+ok 12 - admin CSV shares typed safety and JSON serialization without mutating structured records
+  ---
+  duration_ms: 0.100125
+  ...
+# Subtest: empty location defaults to latest discovery with complete unfiltered navigation
+ok 13 - empty location defaults to latest discovery with complete unfiltered navigation
+  ---
+  duration_ms: 1.945792
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and overview
+ok 14 - deep-link round trip preserves snapshot, deep object, filters, paging and overview
+  ---
+  duration_ms: 1.031208
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and tables
+ok 15 - deep-link round trip preserves snapshot, deep object, filters, paging and tables
+  ---
+  duration_ms: 0.288916
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and coverage
+ok 16 - deep-link round trip preserves snapshot, deep object, filters, paging and coverage
+  ---
+  duration_ms: 0.214375
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and methods
+ok 17 - deep-link round trip preserves snapshot, deep object, filters, paging and methods
+  ---
+  duration_ms: 0.110041
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and provenance
+ok 18 - deep-link round trip preserves snapshot, deep object, filters, paging and provenance
+  ---
+  duration_ms: 0.094625
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and related
+ok 19 - deep-link round trip preserves snapshot, deep object, filters, paging and related
+  ---
+  duration_ms: 0.086125
+  ...
+# Subtest: rejects malformed catalogue query ?snapshot=../private
+ok 20 - rejects malformed catalogue query ?snapshot=../private
+  ---
+  duration_ms: 0.200834
+  ...
+# Subtest: rejects malformed catalogue query ?node=/etc/passwd
+ok 21 - rejects malformed catalogue query ?node=/etc/passwd
+  ---
+  duration_ms: 0.194459
+  ...
+# Subtest: rejects malformed catalogue query ?parent=
+ok 22 - rejects malformed catalogue query ?parent=
+  ---
+  duration_ms: 0.24525
+  ...
+# Subtest: rejects malformed catalogue query ?cursor=
+ok 23 - rejects malformed catalogue query ?cursor=
+  ---
+  duration_ms: 0.081458
+  ...
+# Subtest: rejects malformed catalogue query ?limit=0
+ok 24 - rejects malformed catalogue query ?limit=0
+  ---
+  duration_ms: 0.034209
+  ...
+# Subtest: rejects malformed catalogue query ?limit=501
+ok 25 - rejects malformed catalogue query ?limit=501
+  ---
+  duration_ms: 0.029833
+  ...
+# Subtest: rejects malformed catalogue query ?limit=1.5
+ok 26 - rejects malformed catalogue query ?limit=1.5
+  ---
+  duration_ms: 0.024375
+  ...
+# Subtest: rejects malformed catalogue query ?limit=true
+ok 27 - rejects malformed catalogue query ?limit=true
+  ---
+  duration_ms: 0.026209
+  ...
+# Subtest: rejects malformed catalogue query ?limit=01
+ok 28 - rejects malformed catalogue query ?limit=01
+  ---
+  duration_ms: 0.0255
+  ...
+# Subtest: rejects malformed catalogue query ?limit=1e2
+ok 29 - rejects malformed catalogue query ?limit=1e2
+  ---
+  duration_ms: 0.0265
+  ...
+# Subtest: rejects malformed catalogue query ?section=execute
+ok 30 - rejects malformed catalogue query ?section=execute
+  ---
+  duration_ms: 0.026167
+  ...
+# Subtest: rejects malformed catalogue query ?roots=private
+ok 31 - rejects malformed catalogue query ?roots=private
+  ---
+  duration_ms: 0.026417
+  ...
+# Subtest: rejects malformed catalogue query ?sources=edna
+ok 32 - rejects malformed catalogue query ?sources=edna
+  ---
+  duration_ms: 0.02425
+  ...
+# Subtest: rejects malformed catalogue query ?kinds=experiment
+ok 33 - rejects malformed catalogue query ?kinds=experiment
+  ---
+  duration_ms: 0.024375
+  ...
+# Subtest: rejects malformed catalogue query ?authorities=admin
+ok 34 - rejects malformed catalogue query ?authorities=admin
+  ---
+  duration_ms: 0.134333
+  ...
+# Subtest: rejects malformed catalogue query ?kinds=dataset,dataset
+ok 35 - rejects malformed catalogue query ?kinds=dataset,dataset
+  ---
+  duration_ms: 0.029542
+  ...
+# Subtest: rejects malformed catalogue query ?search=
+ok 36 - rejects malformed catalogue query ?search=
+  ---
+  duration_ms: 0.030417
+  ...
+# Subtest: rejects malformed catalogue query ?node=one&node=two
+ok 37 - rejects malformed catalogue query ?node=one&node=two
+  ---
+  duration_ms: 0.025208
+  ...
+# Subtest: rejects malformed catalogue query ?limit=100&limit=200
+ok 38 - rejects malformed catalogue query ?limit=100&limit=200
+  ---
+  duration_ms: 0.02625
+  ...
+# Subtest: rejects malformed catalogue query ?section=tables&section=coverage
+ok 39 - rejects malformed catalogue query ?section=tables&section=coverage
+  ---
+  duration_ms: 0.024625
+  ...
+# Subtest: rejects malformed catalogue query ?sources=ctd&sources=metagenome
+ok 40 - rejects malformed catalogue query ?sources=ctd&sources=metagenome
+  ---
+  duration_ms: 0.025042
+  ...
+# Subtest: rejects malformed catalogue query ?cursor=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ok 41 - rejects malformed catalogue query ?cursor=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ---
+  duration_ms: 0.087625
+  ...
+# Subtest: rejects malformed catalogue query ?search=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ok 42 - rejects malformed catalogue query ?search=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ---
+  duration_ms: 0.133333
+  ...
+# Subtest: rejects malformed catalogue query ?snapshot=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ok 43 - rejects malformed catalogue query ?snapshot=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  ---
+  duration_ms: 0.035667
+  ...
+# Subtest: forged authorization, attach, investigation, scope and preview state cannot enter navigation
+ok 44 - forged authorization, attach, investigation, scope and preview state cannot enter navigation
+  ---
+  duration_ms: 0.129708
+  ...
+# Subtest: known navigation duplicates fail even among otherwise ignored query fields
+ok 45 - known navigation duplicates fail even among otherwise ignored query fields
+  ---
+  duration_ms: 0.0365
+  ...
+# Subtest: navigation state remains detached from input and external scientific scope
+ok 46 - navigation state remains detached from input and external scientific scope
+  ---
+  duration_ms: 0.148333
+  ...
+# Subtest: membership change resets stale cursor {"snapshotId":"new-snapshot"}
+ok 47 - membership change resets stale cursor {"snapshotId":"new-snapshot"}
+  ---
+  duration_ms: 0.039084
+  ...
+# Subtest: membership change resets stale cursor {"parentId":"new-parent"}
+ok 48 - membership change resets stale cursor {"parentId":"new-parent"}
+  ---
+  duration_ms: 0.029459
+  ...
+# Subtest: membership change resets stale cursor {"filters":{"search":"new"}}
+ok 49 - membership change resets stale cursor {"filters":{"search":"new"}}
+  ---
+  duration_ms: 0.032583
+  ...
+# Subtest: membership change resets stale cursor {"limit":500}
+ok 50 - membership change resets stale cursor {"limit":500}
+  ---
+  duration_ms: 0.028708
+  ...
+# Subtest: snapshot switching clears old selected object, parent and inspector unless explicit
+ok 51 - snapshot switching clears old selected object, parent and inspector unless explicit
+  ---
+  duration_ms: 0.049542
+  ...
+# Subtest: inspector section updates preserve current page and object; new object defaults overview
+ok 52 - inspector section updates preserve current page and object; new object defaults overview
+  ---
+  duration_ms: 0.081042
+  ...
+# Subtest: restored URL remains sufficient across Back, Forward and reload
+ok 53 - restored URL remains sufficient across Back, Forward and reload
+  ---
+  duration_ms: 0.194417
+  ...
+# Subtest: selection is an explicit event contract without attach or pin mutation
+ok 54 - selection is an explicit event contract without attach or pin mutation
+  ---
+  duration_ms: 0.034125
+  ...
+# Subtest: state patch rejects authority fields rather than persisting them
+ok 55 - state patch rejects authority fields rather than persisting them
+  ---
+  duration_ms: 0.040958
+  ...
+# Subtest: C12 raw inventory describes four methods without widening scientific execution
+ok 56 - C12 raw inventory describes four methods without widening scientific execution
+  ---
+  duration_ms: 3.100875
+  ...
+# Subtest: shared node 0: root:analyses
+ok 57 - shared node 0: root:analyses
+  ---
+  duration_ms: 3.194833
+  ...
+# Subtest: shared node 1: root:data
+ok 58 - shared node 1: root:data
+  ---
+  duration_ms: 1.736584
+  ...
+# Subtest: shared node 2: root:metadata
+ok 59 - shared node 2: root:metadata
+  ---
+  duration_ms: 3.855875
+  ...
+# Subtest: shared node 3: root:relationships
+ok 60 - shared node 3: root:relationships
+  ---
+  duration_ms: 2.001292
+  ...
+# Subtest: shared node 4: root:statistics
+ok 61 - shared node 4: root:statistics
+  ---
+  duration_ms: 1.708416
+  ...
+# Subtest: shared node 5: synthetic:analysis
+ok 62 - shared node 5: synthetic:analysis
+  ---
+  duration_ms: 1.70025
+  ...
+# Subtest: shared node 6: synthetic:candidate-link
+ok 63 - shared node 6: synthetic:candidate-link
+  ---
+  duration_ms: 2.747833
+  ...
+# Subtest: shared node 7: synthetic:coverage
+ok 64 - shared node 7: synthetic:coverage
+  ---
+  duration_ms: 1.913458
+  ...
+# Subtest: shared node 8: synthetic:dataset:000000
+ok 65 - shared node 8: synthetic:dataset:000000
+  ---
+  duration_ms: 1.92625
+  ...
+# Subtest: shared node 9: synthetic:dataset:000001
+ok 66 - shared node 9: synthetic:dataset:000001
+  ---
+  duration_ms: 1.822209
+  ...
+# Subtest: shared node 10: synthetic:dataset:000002
+ok 67 - shared node 10: synthetic:dataset:000002
+  ---
+  duration_ms: 1.858167
+  ...
+# Subtest: shared node 11: synthetic:dataset:000003
+ok 68 - shared node 11: synthetic:dataset:000003
+  ---
+  duration_ms: 1.68475
+  ...
+# Subtest: shared node 12: synthetic:dataset:000004
+ok 69 - shared node 12: synthetic:dataset:000004
+  ---
+  duration_ms: 1.568334
+  ...
+# Subtest: shared node 13: synthetic:dataset:000005
+ok 70 - shared node 13: synthetic:dataset:000005
+  ---
+  duration_ms: 12.595209
+  ...
+# Subtest: shared node 14: synthetic:dataset:000006
+ok 71 - shared node 14: synthetic:dataset:000006
+  ---
+  duration_ms: 1.757083
+  ...
+# Subtest: shared node 15: synthetic:dataset:000007
+ok 72 - shared node 15: synthetic:dataset:000007
+  ---
+  duration_ms: 1.697958
+  ...
+# Subtest: shared node 16: synthetic:method
+ok 73 - shared node 16: synthetic:method
+  ---
+  duration_ms: 1.551167
+  ...
+# Subtest: shared node 17: synthetic:source:ctd
+ok 74 - shared node 17: synthetic:source:ctd
+  ---
+  duration_ms: 1.533542
+  ...
+# Subtest: shared node 18: synthetic:source:edna_metabarcoding
+ok 75 - shared node 18: synthetic:source:edna_metabarcoding
+  ---
+  duration_ms: 3.552584
+  ...
+# Subtest: shared node 19: synthetic:source:metagenome
+ok 76 - shared node 19: synthetic:source:metagenome
+  ---
+  duration_ms: 3.760417
+  ...
+# Subtest: shared node 20: synthetic:source:remote_sensing
+ok 77 - shared node 20: synthetic:source:remote_sensing
+  ---
+  duration_ms: 0.883125
+  ...
+# Subtest: shared node 21: synthetic:unavailable
+ok 78 - shared node 21: synthetic:unavailable
+  ---
+  duration_ms: 0.910583
+  ...
+# Subtest: shared node 22: synthetic:workflow
+ok 79 - shared node 22: synthetic:workflow
+  ---
+  duration_ms: 0.820083
+  ...
+# Subtest: shared node 23: synthetic:dataset:000000
+ok 80 - shared node 23: synthetic:dataset:000000
+  ---
+  duration_ms: 1.549625
+  ...
+# Subtest: shared node 24: synthetic:dataset:000003
+ok 81 - shared node 24: synthetic:dataset:000003
+  ---
+  duration_ms: 1.648833
+  ...
+# Subtest: shared listing 0: known/available
+ok 82 - shared listing 0: known/available
+  ---
+  duration_ms: 16.692208
+  ...
+# Subtest: shared listing 1: known/available
+ok 83 - shared listing 1: known/available
+  ---
+  duration_ms: 59.274125
+  ...
+# Subtest: shared listing 2: known/available
+ok 84 - shared listing 2: known/available
+  ---
+  duration_ms: 14.308583
+  ...
+# Subtest: shared listing 3: unknown/available
+ok 85 - shared listing 3: unknown/available
+  ---
+  duration_ms: 7.803583
+  ...
+# Subtest: shared listing 4: unknown/unavailable
+ok 86 - shared listing 4: unknown/unavailable
+  ---
+  duration_ms: 1.38175
+  ...
+# Subtest: shared listing 5: known/available
+ok 87 - shared listing 5: known/available
+  ---
+  duration_ms: 1.311917
+  ...
+# Subtest: shared operation: catalogue.dataset_inventory
+ok 88 - shared operation: catalogue.dataset_inventory
+  ---
+  duration_ms: 1.163458
+  ...
+# Subtest: shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1
+ok 89 - shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1
+  ---
+  duration_ms: 2.941792
+  ...
+# Subtest: shared result: synthetic:coverage-receipt
+ok 90 - shared result: synthetic:coverage-receipt
+  ---
+  duration_ms: 2.734167
+  ...
+# Subtest: reject shared invalid case: Exact JSON integers cannot silently round in browsers
+ok 91 - reject shared invalid case: Exact JSON integers cannot silently round in browsers
+  ---
+  duration_ms: 0.846375
+  ...
+# Subtest: reject shared invalid case: Result integers cannot silently round in browsers
+ok 92 - reject shared invalid case: Result integers cannot silently round in browsers
+  ---
+  duration_ms: 2.534209
+  ...
+# Subtest: reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59
+ok 93 - reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59
+  ---
+  duration_ms: 0.464583
+  ...
+# Subtest: reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59
+ok 94 - reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59
+  ---
+  duration_ms: 0.442958
+  ...
+# Subtest: reject shared invalid case: Exclusive end UTC calendar overflow
+ok 95 - reject shared invalid case: Exclusive end UTC calendar overflow
+  ---
+  duration_ms: 5.007959
+  ...
+# Subtest: reject shared invalid case: Unsupported version
+ok 96 - reject shared invalid case: Unsupported version
+  ---
+  duration_ms: 0.349917
+  ...
+# Subtest: reject shared invalid case: Paths cannot be canonical identity
+ok 97 - reject shared invalid case: Paths cannot be canonical identity
+  ---
+  duration_ms: 0.180167
+  ...
+# Subtest: reject shared invalid case: Missing English title
+ok 98 - reject shared invalid case: Missing English title
+  ---
+  duration_ms: 1.060666
+  ...
+# Subtest: reject shared invalid case: Self-parent
+ok 99 - reject shared invalid case: Self-parent
+  ---
+  duration_ms: 1.494667
+  ...
+# Subtest: reject shared invalid case: Missing dataset sections
+ok 100 - reject shared invalid case: Missing dataset sections
+  ---
+  duration_ms: 1.470458
+  ...
+# Subtest: reject shared invalid case: Aliases adapted before wire validation
+ok 101 - reject shared invalid case: Aliases adapted before wire validation
+  ---
+  duration_ms: 1.03825
+  ...
+# Subtest: reject shared invalid case: Source descriptor mismatch
+ok 102 - reject shared invalid case: Source descriptor mismatch
+  ---
+  duration_ms: 0.192083
+  ...
+# Subtest: reject shared invalid case: Published flag without publication lifecycle
+ok 103 - reject shared invalid case: Published flag without publication lifecycle
+  ---
+  duration_ms: 1.590417
+  ...
+# Subtest: reject shared invalid case: Invalid calendar date
+ok 104 - reject shared invalid case: Invalid calendar date
+  ---
+  duration_ms: 0.333167
+  ...
+# Subtest: reject shared invalid case: Non-text scientific filter
+ok 105 - reject shared invalid case: Non-text scientific filter
+  ---
+  duration_ms: 0.43425
+  ...
+# Subtest: reject shared invalid case: Malformed scientific filter object
+ok 106 - reject shared invalid case: Malformed scientific filter object
+  ---
+  duration_ms: 0.313875
+  ...
+# Subtest: reject shared invalid case: String boolean scope flag
+ok 107 - reject shared invalid case: String boolean scope flag
+  ---
+  duration_ms: 0.955958
+  ...
+# Subtest: reject shared invalid case: Unknown control classification must not be invented
+ok 108 - reject shared invalid case: Unknown control classification must not be invented
+  ---
+  duration_ms: 5.158167
+  ...
+# Subtest: reject shared invalid case: Control conflicts with known environmental sample
+ok 109 - reject shared invalid case: Control conflicts with known environmental sample
+  ---
+  duration_ms: 1.267791
+  ...
+# Subtest: reject shared invalid case: Origin provenance cannot create live dependency
+ok 110 - reject shared invalid case: Origin provenance cannot create live dependency
+  ---
+  duration_ms: 0.4165
+  ...
+# Subtest: reject shared invalid case: Page returned count mismatch
+ok 111 - reject shared invalid case: Page returned count mismatch
+  ---
+  duration_ms: 31.650542
+  ...
+# Subtest: reject shared invalid case: Boolean count
+ok 112 - reject shared invalid case: Boolean count
+  ---
+  duration_ms: 4.085875
+  ...
+# Subtest: reject shared invalid case: Negative population
+ok 113 - reject shared invalid case: Negative population
+  ---
+  duration_ms: 2.06375
+  ...
+# Subtest: reject shared invalid case: Fractional population
+ok 114 - reject shared invalid case: Fractional population
+  ---
+  duration_ms: 4.078833
+  ...
+# Subtest: reject shared invalid case: Unsafe cross-language population
+ok 115 - reject shared invalid case: Unsafe cross-language population
+  ---
+  duration_ms: 4.064375
+  ...
+# Subtest: reject shared invalid case: Page exceeds whole-scope total
+ok 116 - reject shared invalid case: Page exceeds whole-scope total
+  ---
+  duration_ms: 16.329417
+  ...
+# Subtest: reject shared invalid case: Unknown total cannot contain numeric value
+ok 117 - reject shared invalid case: Unknown total cannot contain numeric value
+  ---
+  duration_ms: 9.75025
+  ...
+# Subtest: reject shared invalid case: Complete listing cannot silently drop later pages
+ok 118 - reject shared invalid case: Complete listing cannot silently drop later pages
+  ---
+  duration_ms: 7.827583
+  ...
+# Subtest: reject shared invalid case: Cursor access context mismatch
+ok 119 - reject shared invalid case: Cursor access context mismatch
+  ---
+  duration_ms: 8.064541
+  ...
+# Subtest: reject shared invalid case: Snapshot context mismatch
+ok 120 - reject shared invalid case: Snapshot context mismatch
+  ---
+  duration_ms: 5.44225
+  ...
+# Subtest: reject shared invalid case: Mixed-snapshot item
+ok 121 - reject shared invalid case: Mixed-snapshot item
+  ---
+  duration_ms: 4.226791
+  ...
+# Subtest: reject shared invalid case: Page limit exceeds contract maximum
+ok 122 - reject shared invalid case: Page limit exceeds contract maximum
+  ---
+  duration_ms: 1.728792
+  ...
+# Subtest: reject shared invalid case: Duplicate canonical item
+ok 123 - reject shared invalid case: Duplicate canonical item
+  ---
+  duration_ms: 6.58775
+  ...
+# Subtest: reject shared invalid case: Unavailable is not known zero
+ok 124 - reject shared invalid case: Unavailable is not known zero
+  ---
+  duration_ms: 0.839333
+  ...
+# Subtest: reject shared invalid case: Operation inputs must be distinct
+ok 125 - reject shared invalid case: Operation inputs must be distinct
+  ---
+  duration_ms: 1.048875
+  ...
+# Subtest: reject shared invalid case: Unknown executable fields forbidden
+ok 126 - reject shared invalid case: Unknown executable fields forbidden
+  ---
+  duration_ms: 0.793375
+  ...
+# Subtest: reject shared invalid case: Result/receipt snapshot mismatch
+ok 127 - reject shared invalid case: Result/receipt snapshot mismatch
+  ---
+  duration_ms: 2.583959
+  ...
+# Subtest: reject shared invalid case: Receipt preview length mismatch
+ok 128 - reject shared invalid case: Receipt preview length mismatch
+  ---
+  duration_ms: 2.601125
+  ...
+# Subtest: reject shared invalid case: Preview truncation cannot hide remaining complete result
+ok 129 - reject shared invalid case: Preview truncation cannot hide remaining complete result
+  ---
+  duration_ms: 4.002125
+  ...
+# Subtest: reject shared invalid case: Table column mismatch
+ok 130 - reject shared invalid case: Table column mismatch
+  ---
+  duration_ms: 2.707917
+  ...
+# Subtest: the complete exported contract validates through one boundary
+ok 131 - the complete exported contract validates through one boundary
+  ---
+  duration_ms: 15.554958
+  ...
+# Subtest: optional factory defaults normalize without mutating external input
+ok 132 - optional factory defaults normalize without mutating external input
+  ---
+  duration_ms: 1.465667
+  ...
+# Subtest: legacy aliases and P00 labels use the exported Python registry
+ok 133 - legacy aliases and P00 labels use the exported Python registry
+  ---
+  duration_ms: 0.236834
+  ...
+# Subtest: P00 projection preserves canonical identities and source labels
+ok 134 - P00 projection preserves canonical identities and source labels
+  ---
+  duration_ms: 9.616292
+  ...
+# Subtest: new kinds project explicitly without changing the prototype type
+ok 135 - new kinds project explicitly without changing the prototype type
+  ---
+  duration_ms: 11.105708
+  ...
+# Subtest: unknown and unavailable never become an empty known catalogue
+ok 136 - unknown and unavailable never become an empty known catalogue
+  ---
+  duration_ms: 5.837625
+  ...
+# Subtest: a missing or malformed backend produces unavailable without fixture fallback
+ok 137 - a missing or malformed backend produces unavailable without fixture fallback
+  ---
+  duration_ms: 1.939792
+  ...
+# Subtest: permission revision or principal changes invalidate even empty cached membership
+ok 138 - permission revision or principal changes invalidate even empty cached membership
+  ---
+  duration_ms: 8.486333
+  ...
+# Subtest: revoked nodes, parents and related links are not retained in projections
+ok 139 - revoked nodes, parents and related links are not retained in projections
+  ---
+  duration_ms: 4.627125
+  ...
+# Subtest: snapshot selection and provenance origins cannot silently select another backend
+ok 140 - snapshot selection and provenance origins cannot silently select another backend
+  ---
+  duration_ms: 5.674041
+  ...
+# Subtest: readiness, authority and completion remain independent fields
+ok 141 - readiness, authority and completion remain independent fields
+  ---
+  duration_ms: 1.678834
+  ...
+# Subtest: wire input rejects non-JSON values and cannot modify object prototypes
+ok 142 - wire input rejects non-JSON values and cannot modify object prototypes
+  ---
+  duration_ms: 0.902875
+  ...
+# Subtest: actual frozen HTTP/tool wire 1: snapshots
+ok 143 - actual frozen HTTP/tool wire 1: snapshots
+  ---
+  duration_ms: 18.46275
+  ...
+# Subtest: actual frozen HTTP/tool wire 2: snapshots-page-2
+ok 144 - actual frozen HTTP/tool wire 2: snapshots-page-2
+  ---
+  duration_ms: 5.357209
+  ...
+# Subtest: actual frozen HTTP/tool wire 3: catalogue.overview
+ok 145 - actual frozen HTTP/tool wire 3: catalogue.overview
+  ---
+  duration_ms: 23.950625
+  ...
+# Subtest: actual frozen HTTP/tool wire 4: catalogue.list
+ok 146 - actual frozen HTTP/tool wire 4: catalogue.list
+  ---
+  duration_ms: 172.990875
+  ...
+# Subtest: actual frozen HTTP/tool wire 5: catalogue.list
+ok 147 - actual frozen HTTP/tool wire 5: catalogue.list
+  ---
+  duration_ms: 31.959416
+  ...
+# Subtest: actual frozen HTTP/tool wire 6: catalogue.list
+ok 148 - actual frozen HTTP/tool wire 6: catalogue.list
+  ---
+  duration_ms: 5.087875
+  ...
+# Subtest: actual frozen HTTP/tool wire 7: catalogue.open
+ok 149 - actual frozen HTTP/tool wire 7: catalogue.open
+  ---
+  duration_ms: 2.659334
+  ...
+# Subtest: actual frozen HTTP/tool wire 8: catalogue.open
+ok 150 - actual frozen HTTP/tool wire 8: catalogue.open
+  ---
+  duration_ms: 1.978166
+  ...
+# Subtest: actual frozen HTTP/tool wire 9: catalogue.open
+ok 151 - actual frozen HTTP/tool wire 9: catalogue.open
+  ---
+  duration_ms: 2.260333
+  ...
+# Subtest: actual frozen HTTP/tool wire 10: catalogue.open
+ok 152 - actual frozen HTTP/tool wire 10: catalogue.open
+  ---
+  duration_ms: 1.948541
+  ...
+# Subtest: actual frozen HTTP/tool wire 11: catalogue.open
+ok 153 - actual frozen HTTP/tool wire 11: catalogue.open
+  ---
+  duration_ms: 4.190167
+  ...
+# Subtest: actual frozen HTTP/tool wire 12: catalogue.open
+ok 154 - actual frozen HTTP/tool wire 12: catalogue.open
+  ---
+  duration_ms: 1.708041
+  ...
+# Subtest: actual frozen HTTP/tool wire 13: catalogue.open
+ok 155 - actual frozen HTTP/tool wire 13: catalogue.open
+  ---
+  duration_ms: 1.56675
+  ...
+# Subtest: actual frozen HTTP/tool wire 14: catalogue.open
+ok 156 - actual frozen HTTP/tool wire 14: catalogue.open
+  ---
+  duration_ms: 1.652625
+  ...
+# Subtest: actual frozen HTTP/tool wire 15: catalogue.open
+ok 157 - actual frozen HTTP/tool wire 15: catalogue.open
+  ---
+  duration_ms: 1.559333
+  ...
+# Subtest: actual frozen HTTP/tool wire 16: catalogue.open
+ok 158 - actual frozen HTTP/tool wire 16: catalogue.open
+  ---
+  duration_ms: 8.244083
+  ...
+# Subtest: actual frozen HTTP/tool wire 17: catalogue.open
+ok 159 - actual frozen HTTP/tool wire 17: catalogue.open
+  ---
+  duration_ms: 1.627
+  ...
+# Subtest: actual frozen HTTP/tool wire 18: catalogue.open
+ok 160 - actual frozen HTTP/tool wire 18: catalogue.open
+  ---
+  duration_ms: 1.520167
+  ...
+# Subtest: actual frozen HTTP/tool wire 19: catalogue.open
+ok 161 - actual frozen HTTP/tool wire 19: catalogue.open
+  ---
+  duration_ms: 1.460625
+  ...
+# Subtest: actual frozen HTTP/tool wire 20: catalogue.open
+ok 162 - actual frozen HTTP/tool wire 20: catalogue.open
+  ---
+  duration_ms: 1.461125
+  ...
+# Subtest: actual frozen HTTP/tool wire 21: catalogue.open
+ok 163 - actual frozen HTTP/tool wire 21: catalogue.open
+  ---
+  duration_ms: 2.184583
+  ...
+# Subtest: actual frozen HTTP/tool wire 22: catalogue.open
+ok 164 - actual frozen HTTP/tool wire 22: catalogue.open
+  ---
+  duration_ms: 1.413083
+  ...
+# Subtest: actual frozen HTTP/tool wire 23: catalogue.open
+ok 165 - actual frozen HTTP/tool wire 23: catalogue.open
+  ---
+  duration_ms: 1.335875
+  ...
+# Subtest: actual frozen HTTP/tool wire 24: catalogue.open
+ok 166 - actual frozen HTTP/tool wire 24: catalogue.open
+  ---
+  duration_ms: 1.498583
+  ...
+# Subtest: actual frozen HTTP/tool wire 25: catalogue.open
+ok 167 - actual frozen HTTP/tool wire 25: catalogue.open
+  ---
+  duration_ms: 1.4625
+  ...
+# Subtest: actual frozen HTTP/tool wire 26: catalogue.open
+ok 168 - actual frozen HTTP/tool wire 26: catalogue.open
+  ---
+  duration_ms: 1.50525
+  ...
+# Subtest: actual frozen HTTP/tool wire 27: catalogue.open
+ok 169 - actual frozen HTTP/tool wire 27: catalogue.open
+  ---
+  duration_ms: 1.300417
+  ...
+# Subtest: actual frozen HTTP/tool wire 28: catalogue.open
+ok 170 - actual frozen HTTP/tool wire 28: catalogue.open
+  ---
+  duration_ms: 1.465709
+  ...
+# Subtest: actual frozen HTTP/tool wire 29: catalogue.open
+ok 171 - actual frozen HTTP/tool wire 29: catalogue.open
+  ---
+  duration_ms: 1.310333
+  ...
+# Subtest: actual frozen HTTP/tool wire 30: catalogue.open
+ok 172 - actual frozen HTTP/tool wire 30: catalogue.open
+  ---
+  duration_ms: 1.519875
+  ...
+# Subtest: actual frozen HTTP/tool wire 31: catalogue.open
+ok 173 - actual frozen HTTP/tool wire 31: catalogue.open
+  ---
+  duration_ms: 12.631
+  ...
+# Subtest: actual frozen HTTP/tool wire 32: catalogue.open
+ok 174 - actual frozen HTTP/tool wire 32: catalogue.open
+  ---
+  duration_ms: 1.828708
+  ...
+# Subtest: actual frozen HTTP/tool wire 33: catalogue.open
+ok 175 - actual frozen HTTP/tool wire 33: catalogue.open
+  ---
+  duration_ms: 1.512084
+  ...
+# Subtest: actual frozen HTTP/tool wire 34: catalogue.open
+ok 176 - actual frozen HTTP/tool wire 34: catalogue.open
+  ---
+  duration_ms: 1.686833
+  ...
+# Subtest: actual frozen HTTP/tool wire 35: catalogue.open
+ok 177 - actual frozen HTTP/tool wire 35: catalogue.open
+  ---
+  duration_ms: 1.426625
+  ...
+# Subtest: actual frozen HTTP/tool wire 36: catalogue.open
+ok 178 - actual frozen HTTP/tool wire 36: catalogue.open
+  ---
+  duration_ms: 1.781584
+  ...
+# Subtest: actual frozen HTTP/tool wire 37: catalogue.open
+ok 179 - actual frozen HTTP/tool wire 37: catalogue.open
+  ---
+  duration_ms: 1.511833
+  ...
+# Subtest: actual frozen HTTP/tool wire 38: catalogue.open
+ok 180 - actual frozen HTTP/tool wire 38: catalogue.open
+  ---
+  duration_ms: 1.680834
+  ...
+# Subtest: actual frozen HTTP/tool wire 39: catalogue.open
+ok 181 - actual frozen HTTP/tool wire 39: catalogue.open
+  ---
+  duration_ms: 1.4345
+  ...
+# Subtest: actual frozen HTTP/tool wire 40: catalogue.open
+ok 182 - actual frozen HTTP/tool wire 40: catalogue.open
+  ---
+  duration_ms: 2.37875
+  ...
+# Subtest: actual frozen HTTP/tool wire 41: catalogue.open
+ok 183 - actual frozen HTTP/tool wire 41: catalogue.open
+  ---
+  duration_ms: 1.443375
+  ...
+# Subtest: actual frozen HTTP/tool wire 42: catalogue.open
+ok 184 - actual frozen HTTP/tool wire 42: catalogue.open
+  ---
+  duration_ms: 1.420958
+  ...
+# Subtest: actual frozen HTTP/tool wire 43: catalogue.open
+ok 185 - actual frozen HTTP/tool wire 43: catalogue.open
+  ---
+  duration_ms: 1.334458
+  ...
+# Subtest: actual frozen HTTP/tool wire 44: catalogue.open
+ok 186 - actual frozen HTTP/tool wire 44: catalogue.open
+  ---
+  duration_ms: 1.442958
+  ...
+# Subtest: actual frozen HTTP/tool wire 45: catalogue.open
+ok 187 - actual frozen HTTP/tool wire 45: catalogue.open
+  ---
+  duration_ms: 1.315709
+  ...
+# Subtest: actual frozen HTTP/tool wire 46: catalogue.open
+ok 188 - actual frozen HTTP/tool wire 46: catalogue.open
+  ---
+  duration_ms: 1.361583
+  ...
+# Subtest: actual frozen HTTP/tool wire 47: catalogue.open
+ok 189 - actual frozen HTTP/tool wire 47: catalogue.open
+  ---
+  duration_ms: 2.115375
+  ...
+# Subtest: actual frozen HTTP/tool wire 48: catalogue.open
+ok 190 - actual frozen HTTP/tool wire 48: catalogue.open
+  ---
+  duration_ms: 1.479208
+  ...
+# Subtest: actual frozen HTTP/tool wire 49: catalogue.open
+ok 191 - actual frozen HTTP/tool wire 49: catalogue.open
+  ---
+  duration_ms: 1.353208
+  ...
+# Subtest: actual frozen HTTP/tool wire 50: catalogue.open
+ok 192 - actual frozen HTTP/tool wire 50: catalogue.open
+  ---
+  duration_ms: 2.001958
+  ...
+# Subtest: actual frozen HTTP/tool wire 51: catalogue.open
+ok 193 - actual frozen HTTP/tool wire 51: catalogue.open
+  ---
+  duration_ms: 1.458125
+  ...
+# Subtest: actual frozen HTTP/tool wire 52: catalogue.open
+ok 194 - actual frozen HTTP/tool wire 52: catalogue.open
+  ---
+  duration_ms: 1.495792
+  ...
+# Subtest: actual frozen HTTP/tool wire 53: catalogue.open
+ok 195 - actual frozen HTTP/tool wire 53: catalogue.open
+  ---
+  duration_ms: 1.357042
+  ...
+# Subtest: actual frozen HTTP/tool wire 54: catalogue.open
+ok 196 - actual frozen HTTP/tool wire 54: catalogue.open
+  ---
+  duration_ms: 1.436916
+  ...
+# Subtest: actual frozen HTTP/tool wire 55: catalogue.open
+ok 197 - actual frozen HTTP/tool wire 55: catalogue.open
+  ---
+  duration_ms: 1.49575
+  ...
+# Subtest: actual frozen HTTP/tool wire 56: catalogue.open
+ok 198 - actual frozen HTTP/tool wire 56: catalogue.open
+  ---
+  duration_ms: 1.758458
+  ...
+# Subtest: actual frozen HTTP/tool wire 57: catalogue.open
+ok 199 - actual frozen HTTP/tool wire 57: catalogue.open
+  ---
+  duration_ms: 1.360542
+  ...
+# Subtest: actual frozen HTTP/tool wire 58: catalogue.open
+ok 200 - actual frozen HTTP/tool wire 58: catalogue.open
+  ---
+  duration_ms: 1.538959
+  ...
+# Subtest: actual frozen HTTP/tool wire 59: catalogue.open
+ok 201 - actual frozen HTTP/tool wire 59: catalogue.open
+  ---
+  duration_ms: 1.3025
+  ...
+# Subtest: actual frozen HTTP/tool wire 60: catalogue.open
+ok 202 - actual frozen HTTP/tool wire 60: catalogue.open
+  ---
+  duration_ms: 3.147916
+  ...
+# Subtest: actual frozen HTTP/tool wire 61: catalogue.open
+ok 203 - actual frozen HTTP/tool wire 61: catalogue.open
+  ---
+  duration_ms: 1.445166
+  ...
+# Subtest: actual frozen HTTP/tool wire 62: catalogue.open
+ok 204 - actual frozen HTTP/tool wire 62: catalogue.open
+  ---
+  duration_ms: 1.362833
+  ...
+# Subtest: actual frozen HTTP/tool wire 63: catalogue.open
+ok 205 - actual frozen HTTP/tool wire 63: catalogue.open
+  ---
+  duration_ms: 1.34075
+  ...
+# Subtest: actual frozen HTTP/tool wire 64: catalogue.open
+ok 206 - actual frozen HTTP/tool wire 64: catalogue.open
+  ---
+  duration_ms: 1.380708
+  ...
+# Subtest: actual frozen HTTP/tool wire 65: catalogue.open
+ok 207 - actual frozen HTTP/tool wire 65: catalogue.open
+  ---
+  duration_ms: 1.301041
+  ...
+# Subtest: actual frozen HTTP/tool wire 66: catalogue.open
+ok 208 - actual frozen HTTP/tool wire 66: catalogue.open
+  ---
+  duration_ms: 1.629042
+  ...
+# Subtest: actual frozen HTTP/tool wire 67: catalogue.open
+ok 209 - actual frozen HTTP/tool wire 67: catalogue.open
+  ---
+  duration_ms: 1.505667
+  ...
+# Subtest: actual frozen HTTP/tool wire 68: catalogue.open
+ok 210 - actual frozen HTTP/tool wire 68: catalogue.open
+  ---
+  duration_ms: 1.438042
+  ...
+# Subtest: actual frozen HTTP/tool wire 69: catalogue.open
+ok 211 - actual frozen HTTP/tool wire 69: catalogue.open
+  ---
+  duration_ms: 1.36675
+  ...
+# Subtest: actual frozen HTTP/tool wire 70: catalogue.open
+ok 212 - actual frozen HTTP/tool wire 70: catalogue.open
+  ---
+  duration_ms: 1.435625
+  ...
+# Subtest: actual frozen HTTP/tool wire 71: catalogue.open
+ok 213 - actual frozen HTTP/tool wire 71: catalogue.open
+  ---
+  duration_ms: 2.166
+  ...
+# Subtest: actual frozen HTTP/tool wire 72: catalogue.open
+ok 214 - actual frozen HTTP/tool wire 72: catalogue.open
+  ---
+  duration_ms: 2.100625
+  ...
+# Subtest: actual frozen HTTP/tool wire 73: catalogue.open
+ok 215 - actual frozen HTTP/tool wire 73: catalogue.open
+  ---
+  duration_ms: 1.31225
+  ...
+# Subtest: actual frozen HTTP/tool wire 74: catalogue.open
+ok 216 - actual frozen HTTP/tool wire 74: catalogue.open
+  ---
+  duration_ms: 1.359375
+  ...
+# Subtest: actual frozen HTTP/tool wire 75: catalogue.open
+ok 217 - actual frozen HTTP/tool wire 75: catalogue.open
+  ---
+  duration_ms: 1.204708
+  ...
+# Subtest: actual frozen HTTP/tool wire 76: catalogue.open
+ok 218 - actual frozen HTTP/tool wire 76: catalogue.open
+  ---
+  duration_ms: 1.26625
+  ...
+# Subtest: actual frozen HTTP/tool wire 77: catalogue.open
+ok 219 - actual frozen HTTP/tool wire 77: catalogue.open
+  ---
+  duration_ms: 1.219542
+  ...
+# Subtest: actual frozen HTTP/tool wire 78: catalogue.open
+ok 220 - actual frozen HTTP/tool wire 78: catalogue.open
+  ---
+  duration_ms: 1.371667
+  ...
+# Subtest: actual frozen HTTP/tool wire 79: catalogue.open
+ok 221 - actual frozen HTTP/tool wire 79: catalogue.open
+  ---
+  duration_ms: 1.294333
+  ...
+# Subtest: actual frozen HTTP/tool wire 80: catalogue.open
+ok 222 - actual frozen HTTP/tool wire 80: catalogue.open
+  ---
+  duration_ms: 1.269
+  ...
+# Subtest: actual frozen HTTP/tool wire 81: catalogue.open
+ok 223 - actual frozen HTTP/tool wire 81: catalogue.open
+  ---
+  duration_ms: 1.207375
+  ...
+# Subtest: actual frozen HTTP/tool wire 82: catalogue.open
+ok 224 - actual frozen HTTP/tool wire 82: catalogue.open
+  ---
+  duration_ms: 2.191292
+  ...
+# Subtest: actual frozen HTTP/tool wire 83: catalogue.open
+ok 225 - actual frozen HTTP/tool wire 83: catalogue.open
+  ---
+  duration_ms: 1.518667
+  ...
+# Subtest: actual frozen HTTP/tool wire 84: catalogue.open
+ok 226 - actual frozen HTTP/tool wire 84: catalogue.open
+  ---
+  duration_ms: 1.959958
+  ...
+# Subtest: actual frozen HTTP/tool wire 85: catalogue.open
+ok 227 - actual frozen HTTP/tool wire 85: catalogue.open
+  ---
+  duration_ms: 1.375417
+  ...
+# Subtest: actual frozen HTTP/tool wire 86: catalogue.open
+ok 228 - actual frozen HTTP/tool wire 86: catalogue.open
+  ---
+  duration_ms: 1.420958
+  ...
+# Subtest: actual frozen HTTP/tool wire 87: catalogue.open
+ok 229 - actual frozen HTTP/tool wire 87: catalogue.open
+  ---
+  duration_ms: 1.375084
+  ...
+# Subtest: actual frozen HTTP/tool wire 88: catalogue.open
+ok 230 - actual frozen HTTP/tool wire 88: catalogue.open
+  ---
+  duration_ms: 1.48775
+  ...
+# Subtest: actual frozen HTTP/tool wire 89: catalogue.open
+ok 231 - actual frozen HTTP/tool wire 89: catalogue.open
+  ---
+  duration_ms: 1.291417
+  ...
+# Subtest: actual frozen HTTP/tool wire 90: catalogue.open
+ok 232 - actual frozen HTTP/tool wire 90: catalogue.open
+  ---
+  duration_ms: 1.415
+  ...
+# Subtest: actual frozen HTTP/tool wire 91: catalogue.open
+ok 233 - actual frozen HTTP/tool wire 91: catalogue.open
+  ---
+  duration_ms: 1.495209
+  ...
+# Subtest: actual frozen HTTP/tool wire 92: catalogue.open
+ok 234 - actual frozen HTTP/tool wire 92: catalogue.open
+  ---
+  duration_ms: 3.1375
+  ...
+# Subtest: actual frozen HTTP/tool wire 93: catalogue.open
+ok 235 - actual frozen HTTP/tool wire 93: catalogue.open
+  ---
+  duration_ms: 1.297166
+  ...
+# Subtest: actual frozen HTTP/tool wire 94: catalogue.open
+ok 236 - actual frozen HTTP/tool wire 94: catalogue.open
+  ---
+  duration_ms: 1.329
+  ...
+# Subtest: actual frozen HTTP/tool wire 95: catalogue.open
+ok 237 - actual frozen HTTP/tool wire 95: catalogue.open
+  ---
+  duration_ms: 1.261
+  ...
+# Subtest: actual frozen HTTP/tool wire 96: catalogue.open
+ok 238 - actual frozen HTTP/tool wire 96: catalogue.open
+  ---
+  duration_ms: 1.285208
+  ...
+# Subtest: actual frozen HTTP/tool wire 97: catalogue.open
+ok 239 - actual frozen HTTP/tool wire 97: catalogue.open
+  ---
+  duration_ms: 1.252542
+  ...
+# Subtest: actual frozen HTTP/tool wire 98: catalogue.open
+ok 240 - actual frozen HTTP/tool wire 98: catalogue.open
+  ---
+  duration_ms: 1.560708
+  ...
+# Subtest: actual frozen HTTP/tool wire 99: catalogue.open
+ok 241 - actual frozen HTTP/tool wire 99: catalogue.open
+  ---
+  duration_ms: 1.294
+  ...
+# Subtest: actual frozen HTTP/tool wire 100: catalogue.open
+ok 242 - actual frozen HTTP/tool wire 100: catalogue.open
+  ---
+  duration_ms: 1.387833
+  ...
+# Subtest: actual frozen HTTP/tool wire 101: catalogue.open
+ok 243 - actual frozen HTTP/tool wire 101: catalogue.open
+  ---
+  duration_ms: 1.455833
+  ...
+# Subtest: actual frozen HTTP/tool wire 102: catalogue.open
+ok 244 - actual frozen HTTP/tool wire 102: catalogue.open
+  ---
+  duration_ms: 2.391916
+  ...
+# Subtest: actual frozen HTTP/tool wire 103: catalogue.open
+ok 245 - actual frozen HTTP/tool wire 103: catalogue.open
+  ---
+  duration_ms: 1.426042
+  ...
+# Subtest: actual frozen HTTP/tool wire 104: catalogue.open
+ok 246 - actual frozen HTTP/tool wire 104: catalogue.open
+  ---
+  duration_ms: 1.434
+  ...
+# Subtest: actual frozen HTTP/tool wire 105: catalogue.open
+ok 247 - actual frozen HTTP/tool wire 105: catalogue.open
+  ---
+  duration_ms: 1.532666
+  ...
+# Subtest: actual frozen HTTP/tool wire 106: catalogue.open
+ok 248 - actual frozen HTTP/tool wire 106: catalogue.open
+  ---
+  duration_ms: 1.424417
+  ...
+# Subtest: actual frozen HTTP/tool wire 107: catalogue.open
+ok 249 - actual frozen HTTP/tool wire 107: catalogue.open
+  ---
+  duration_ms: 1.325041
+  ...
+# Subtest: actual frozen HTTP/tool wire 108: catalogue.open
+ok 250 - actual frozen HTTP/tool wire 108: catalogue.open
+  ---
+  duration_ms: 1.355083
+  ...
+# Subtest: actual frozen HTTP/tool wire 109: catalogue.coverage
+ok 251 - actual frozen HTTP/tool wire 109: catalogue.coverage
+  ---
+  duration_ms: 9.188125
+  ...
+# Subtest: actual frozen HTTP/tool wire 110: catalogue.query
+ok 252 - actual frozen HTTP/tool wire 110: catalogue.query
+  ---
+  duration_ms: 4.4065
+  ...
+# Subtest: actual frozen HTTP/tool wire 111: catalogue.query
+ok 253 - actual frozen HTTP/tool wire 111: catalogue.query
+  ---
+  duration_ms: 3.706541
+  ...
+# Subtest: actual frozen HTTP/tool wire 112: catalogue.coverage
+ok 254 - actual frozen HTTP/tool wire 112: catalogue.coverage
+  ---
+  duration_ms: 3.832
+  ...
+# Subtest: actual frozen HTTP/tool wire 113: catalogue.query
+ok 255 - actual frozen HTTP/tool wire 113: catalogue.query
+  ---
+  duration_ms: 4.531583
+  ...
+# Subtest: actual frozen HTTP/tool wire 114: catalogue.query
+ok 256 - actual frozen HTTP/tool wire 114: catalogue.query
+  ---
+  duration_ms: 5.046625
+  ...
+# Subtest: actual frozen HTTP/tool wire 115: catalogue.query
+ok 257 - actual frozen HTTP/tool wire 115: catalogue.query
+  ---
+  duration_ms: 4.448625
+  ...
+# Subtest: actual frozen HTTP/tool wire 116: catalogue.query
+ok 258 - actual frozen HTTP/tool wire 116: catalogue.query
+  ---
+  duration_ms: 4.366458
+  ...
+# Subtest: actual frozen HTTP/tool wire 117: catalogue.query
+ok 259 - actual frozen HTTP/tool wire 117: catalogue.query
+  ---
+  duration_ms: 4.528208
+  ...
+# Subtest: actual frozen HTTP/tool wire 118: catalogue.coverage
+ok 260 - actual frozen HTTP/tool wire 118: catalogue.coverage
+  ---
+  duration_ms: 2.154708
+  ...
+# Subtest: actual frozen HTTP/tool wire 119: catalogue.coverage
+ok 261 - actual frozen HTTP/tool wire 119: catalogue.coverage
+  ---
+  duration_ms: 2.840208
+  ...
+# Subtest: actual frozen HTTP/tool wire 120: catalogue.query
+ok 262 - actual frozen HTTP/tool wire 120: catalogue.query
+  ---
+  duration_ms: 4.249792
+  ...
+# Subtest: actual frozen HTTP/tool wire 121: catalogue.query
+ok 263 - actual frozen HTTP/tool wire 121: catalogue.query
+  ---
+  duration_ms: 2.492292
+  ...
+# Subtest: actual frozen HTTP/tool wire 122: catalogue.query
+ok 264 - actual frozen HTTP/tool wire 122: catalogue.query
+  ---
+  duration_ms: 2.286125
+  ...
+# Subtest: actual frozen HTTP/tool wire 123: catalogue.query
+ok 265 - actual frozen HTTP/tool wire 123: catalogue.query
+  ---
+  duration_ms: 2.145
+  ...
+# Subtest: actual frozen HTTP/tool wire 124: catalogue.query
+ok 266 - actual frozen HTTP/tool wire 124: catalogue.query
+  ---
+  duration_ms: 3.031833
+  ...
+# Subtest: actual frozen HTTP/tool wire 125: catalogue.coverage
+ok 267 - actual frozen HTTP/tool wire 125: catalogue.coverage
+  ---
+  duration_ms: 2.323459
+  ...
+# Subtest: actual frozen HTTP/tool wire 126: catalogue.query
+ok 268 - actual frozen HTTP/tool wire 126: catalogue.query
+  ---
+  duration_ms: 2.528667
+  ...
+# Subtest: actual frozen HTTP/tool wire 127: catalogue.coverage
+ok 269 - actual frozen HTTP/tool wire 127: catalogue.coverage
+  ---
+  duration_ms: 2.172292
+  ...
+# Subtest: actual frozen HTTP/tool wire 128: catalogue.coverage
+ok 270 - actual frozen HTTP/tool wire 128: catalogue.coverage
+  ---
+  duration_ms: 2.292458
+  ...
+# Subtest: actual frozen HTTP/tool wire 129: catalogue.coverage
+ok 271 - actual frozen HTTP/tool wire 129: catalogue.coverage
+  ---
+  duration_ms: 2.319125
+  ...
+# Subtest: actual frozen HTTP/tool wire 130: catalogue.coverage
+ok 272 - actual frozen HTTP/tool wire 130: catalogue.coverage
+  ---
+  duration_ms: 2.568084
+  ...
+# Subtest: actual frozen HTTP/tool wire 131: catalogue.coverage
+ok 273 - actual frozen HTTP/tool wire 131: catalogue.coverage
+  ---
+  duration_ms: 2.175166
+  ...
+# Subtest: actual frozen HTTP/tool wire 132: catalogue.query
+ok 274 - actual frozen HTTP/tool wire 132: catalogue.query
+  ---
+  duration_ms: 2.310667
+  ...
+# Subtest: actual frozen HTTP/tool wire 133: catalogue.relationships
+ok 275 - actual frozen HTTP/tool wire 133: catalogue.relationships
+  ---
+  duration_ms: 3.897459
+  ...
+# Subtest: actual frozen HTTP/tool wire 134: analysis.get_published
+ok 276 - actual frozen HTTP/tool wire 134: analysis.get_published
+  ---
+  duration_ms: 2.239708
+  ...
+# Subtest: scope defaults are detached and enable all four canonical families
+ok 277 - scope defaults are detached and enable all four canonical families
+  ---
+  duration_ms: 0.04975
+  ...
+# Subtest: public request rejects client access binding before any fetch
+ok 278 - public request rejects client access binding before any fetch
+  ---
+  duration_ms: 0.28375
+  ...
+# Subtest: public request rejects client access revision before any fetch
+ok 279 - public request rejects client access revision before any fetch
+  ---
+  duration_ms: 0.060541
+  ...
+# Subtest: public request rejects client role before any fetch
+ok 280 - public request rejects client role before any fetch
+  ---
+  duration_ms: 0.050958
+  ...
+# Subtest: public request rejects limit above500 before any fetch
+ok 281 - public request rejects limit above500 before any fetch
+  ---
+  duration_ms: 0.554375
+  ...
+# Subtest: public request rejects boolean limit before any fetch
+ok 282 - public request rejects boolean limit before any fetch
+  ---
+  duration_ms: 0.545958
+  ...
+# Subtest: public request rejects null limit before any fetch
+ok 283 - public request rejects null limit before any fetch
+  ---
+  duration_ms: 0.479958
+  ...
+# Subtest: public request rejects null filters before any fetch
+ok 284 - public request rejects null filters before any fetch
+  ---
+  duration_ms: 0.540083
+  ...
+# Subtest: public request rejects null ordering before any fetch
+ok 285 - public request rejects null ordering before any fetch
+  ---
+  duration_ms: 0.563541
+  ...
+# Subtest: public request rejects empty cursor before any fetch
+ok 286 - public request rejects empty cursor before any fetch
+  ---
+  duration_ms: 0.628541
+  ...
+# Subtest: public request rejects long cursor before any fetch
+ok 287 - public request rejects long cursor before any fetch
+  ---
+  duration_ms: 0.557583
+  ...
+# Subtest: public request rejects foreign snapshot path before any fetch
+ok 288 - public request rejects foreign snapshot path before any fetch
+  ---
+  duration_ms: 0.541875
+  ...
+# Subtest: public request rejects no ID tie breaker before any fetch
+ok 289 - public request rejects no ID tie breaker before any fetch
+  ---
+  duration_ms: 0.575458
+  ...
+# Subtest: public request rejects duplicate order before any fetch
+ok 290 - public request rejects duplicate order before any fetch
+  ---
+  duration_ms: 1.563541
+  ...
+# Subtest: public request rejects alias source scope before any fetch
+ok 291 - public request rejects alias source scope before any fetch
+  ---
+  duration_ms: 0.808625
+  ...
+# Subtest: response rejects listing snapshot mismatch
+ok 292 - response rejects listing snapshot mismatch
+  ---
+  duration_ms: 60.60575
+  ...
+# Subtest: response rejects listing scope mismatch
+ok 293 - response rejects listing scope mismatch
+  ---
+  duration_ms: 40.760709
+  ...
+# Subtest: response rejects listing filter mismatch
+ok 294 - response rejects listing filter mismatch
+  ---
+  duration_ms: 38.908625
+  ...
+# Subtest: response rejects listing parent mismatch
+ok 295 - response rejects listing parent mismatch
+  ---
+  duration_ms: 40.202208
+  ...
+# Subtest: response rejects listing limit mismatch
+ok 296 - response rejects listing limit mismatch
+  ---
+  duration_ms: 39.289791
+  ...
+# Subtest: response rejects open object mismatch
+ok 297 - response rejects open object mismatch
+  ---
+  duration_ms: 1.471166
+  ...
+# Subtest: response rejects open snapshot mismatch
+ok 298 - response rejects open snapshot mismatch
+  ---
+  duration_ms: 1.300334
+  ...
+# Subtest: response rejects detail extra envelope
+ok 299 - response rejects detail extra envelope
+  ---
+  duration_ms: 0.677167
+  ...
+# Subtest: response rejects detail wrong object
+ok 300 - response rejects detail wrong object
+  ---
+  duration_ms: 1.337375
+  ...
+# Subtest: response rejects science adapter version
+ok 301 - response rejects science adapter version
+  ---
+  duration_ms: 0.659042
+  ...
+# Subtest: response rejects science extension key
+ok 302 - response rejects science extension key
+  ---
+  duration_ms: 0.754958
+  ...
+# Subtest: response rejects science offset mismatch
+ok 303 - response rejects science offset mismatch
+  ---
+  duration_ms: 4.421083
+  ...
+# Subtest: response rejects science nonprogress page
+ok 304 - response rejects science nonprogress page
+  ---
+  duration_ms: 1.845125
+  ...
+# Subtest: response rejects science invented qualification
+ok 305 - response rejects science invented qualification
+  ---
+  duration_ms: 0.591833
+  ...
+# Subtest: response rejects science wrong operation
+ok 306 - response rejects science wrong operation
+  ---
+  duration_ms: 1.692
+  ...
+# Subtest: response rejects science wrong parameters
+ok 307 - response rejects science wrong parameters
+  ---
+  duration_ms: 1.711834
+  ...
+# Subtest: response rejects science wrong dataset input
+ok 308 - response rejects science wrong dataset input
+  ---
+  duration_ms: 2.549167
+  ...
+# Subtest: preserves typed backend 401 error parity
+ok 309 - preserves typed backend 401 error parity
+  ---
+  duration_ms: 0.670166
+  ...
+# Subtest: preserves typed backend 403 error parity
+ok 310 - preserves typed backend 403 error parity
+  ---
+  duration_ms: 0.615458
+  ...
+# Subtest: preserves typed backend 404 error parity
+ok 311 - preserves typed backend 404 error parity
+  ---
+  duration_ms: 0.563084
+  ...
+# Subtest: preserves typed backend 409 error parity
+ok 312 - preserves typed backend 409 error parity
+  ---
+  duration_ms: 0.584375
+  ...
+# Subtest: preserves typed backend 422 error parity
+ok 313 - preserves typed backend 422 error parity
+  ---
+  duration_ms: 0.59125
+  ...
+# Subtest: preserves typed backend 503 error parity
+ok 314 - preserves typed backend 503 error parity
+  ---
+  duration_ms: 0.545459
+  ...
+# Subtest: rejects duplicate top-level JSON
+ok 315 - rejects duplicate top-level JSON
+  ---
+  duration_ms: 0.680291
+  ...
+# Subtest: rejects duplicate escaped JSON
+ok 316 - rejects duplicate escaped JSON
+  ---
+  duration_ms: 0.554917
+  ...
+# Subtest: rejects unsafe integer
+ok 317 - rejects unsafe integer
+  ---
+  duration_ms: 0.584458
+  ...
+# Subtest: rejects nonfinite number
+ok 318 - rejects nonfinite number
+  ---
+  duration_ms: 0.626
+  ...
+# Subtest: rejects HTML fallback
+ok 319 - rejects HTML fallback
+  ---
+  duration_ms: 0.886209
+  ...
+# Subtest: rejects deep payload
+ok 320 - rejects deep payload
+  ---
+  duration_ms: 0.641708
+  ...
+# Subtest: actual stream bytes bound missing/lying Content-Length and cancel live body
+ok 321 - actual stream bytes bound missing/lying Content-Length and cancel live body
+  ---
+  duration_ms: 2.981916
+  ...
+# Subtest: error streams have a separate bounded budget and are cancelled
+ok 322 - error streams have a separate bounded budget and are cancelled
+  ---
+  duration_ms: 0.782
+  ...
+# Subtest: invalid UTF8 is rejected
+ok 323 - invalid UTF8 is rejected
+  ---
+  duration_ms: 0.762458
+  ...
+# Subtest: caller cancellation works before and during transport, including ignored signals
+ok 324 - caller cancellation works before and during transport, including ignored signals
+  ---
+  duration_ms: 1.287458
+  ...
+# Subtest: abort while consuming a stalled response cancels its reader
+ok 325 - abort while consuming a stalled response cancels its reader
+  ---
+  duration_ms: 0.791042
+  ...
+# Subtest: only trusted in-memory bearer provider supplies authorization
+ok 326 - only trusted in-memory bearer provider supplies authorization
+  ---
+  duration_ms: 3.682041
+  ...
+# Subtest: no implicit fixture fallback on network or redirect refusal
+ok 327 - no implicit fixture fallback on network or redirect refusal
+  ---
+  duration_ms: 0.606791
+  ...
+# Subtest: method-specific public request rejects include_details=null
+ok 328 - method-specific public request rejects include_details=null
+  ---
+  duration_ms: 0.61675
+  ...
+# Subtest: method-specific public request rejects include_details="true"
+ok 329 - method-specific public request rejects include_details="true"
+  ---
+  duration_ms: 0.559125
+  ...
+# Subtest: method-specific public request rejects parameters=null
+ok 330 - method-specific public request rejects parameters=null
+  ---
+  duration_ms: 0.574292
+  ...
+# Subtest: method-specific public request rejects offset=null
+ok 331 - method-specific public request rejects offset=null
+  ---
+  duration_ms: 0.5525
+  ...
+# Subtest: method-specific public request rejects offset=-1
+ok 332 - method-specific public request rejects offset=-1
+  ---
+  duration_ms: 0.550042
+  ...
+# Subtest: method-specific public request rejects offset=9007199254740992
+ok 333 - method-specific public request rejects offset=9007199254740992
+  ---
+  duration_ms: 0.044959
+  ...
+# Subtest: method-specific public request rejects parameters={"value":null}
+ok 334 - method-specific public request rejects parameters={"value":null}
+  ---
+  duration_ms: 0.057042
+  ...
+# Subtest: method-specific public request rejects parameters={"value":9007199254740992}
+ok 335 - method-specific public request rejects parameters={"value":9007199254740992}
+  ---
+  duration_ms: 0.051917
+  ...
+# Subtest: method-specific public request rejects operation_id="c14.execute"
+ok 336 - method-specific public request rejects operation_id="c14.execute"
+  ---
+  duration_ms: 0.57925
+  ...
+# Subtest: method-specific public request rejects operation_version="c12-v1"
+ok 337 - method-specific public request rejects operation_version="c12-v1"
+  ---
+  duration_ms: 0.512875
+  ...
+# Subtest: method-specific public request rejects input_ids=["one","two"]
+ok 338 - method-specific public request rejects input_ids=["one","two"]
+  ---
+  duration_ms: 0.491375
+  ...
+# Subtest: relationships reject simultaneous object and parent selectors
+ok 339 - relationships reject simultaneous object and parent selectors
+  ---
+  duration_ms: 1.717459
+  ...
+# Subtest: initial discovery cannot silently omit remaining authorized snapshots
+ok 340 - initial discovery cannot silently omit remaining authorized snapshots
+  ---
+  duration_ms: 1.11
+  ...
+# Subtest: scientific page cannot silently lose a known remaining table page
+ok 341 - scientific page cannot silently lose a known remaining table page
+  ---
+  duration_ms: 1.952208
+  ...
+# Subtest: actual truncated C12 aggregate preserves known total and honest preview without a cursor
+ok 342 - actual truncated C12 aggregate preserves known total and honest preview without a cursor
+  ---
+  duration_ms: 2.786458
+  ...
+# Subtest: actual pageable source table 1 cannot lose a known continuation
+ok 343 - actual pageable source table 1 cannot lose a known continuation
+  ---
+  duration_ms: 2.188542
+  ...
+# Subtest: actual pageable source table 2 cannot lose a known continuation
+ok 344 - actual pageable source table 2 cannot lose a known continuation
+  ---
+  duration_ms: 1.825542
+  ...
+# Subtest: actual pageable source table 3 cannot lose a known continuation
+ok 345 - actual pageable source table 3 cannot lose a known continuation
+  ---
+  duration_ms: 2.310416
+  ...
+# Subtest: actual pageable source table 4 cannot lose a known continuation
+ok 346 - actual pageable source table 4 cannot lose a known continuation
+  ---
+  duration_ms: 2.123959
+  ...
+# Subtest: actual pageable source table 5 cannot lose a known continuation
+ok 347 - actual pageable source table 5 cannot lose a known continuation
+  ---
+  duration_ms: 2.130166
+  ...
+# Subtest: actual pageable source table 6 cannot lose a known continuation
+ok 348 - actual pageable source table 6 cannot lose a known continuation
+  ---
+  duration_ms: 1.998541
+  ...
+# Subtest: actual pageable source table 7 cannot lose a known continuation
+ok 349 - actual pageable source table 7 cannot lose a known continuation
+  ---
+  duration_ms: 1.959583
+  ...
+# Subtest: actual pageable source table 8 cannot lose a known continuation
+ok 350 - actual pageable source table 8 cannot lose a known continuation
+  ---
+  duration_ms: 1.860166
+  ...
+# Subtest: actual pageable source table 9 cannot lose a known continuation
+ok 351 - actual pageable source table 9 cannot lose a known continuation
+  ---
+  duration_ms: 4.53525
+  ...
+# Subtest: actual pageable source table 10 cannot lose a known continuation
+ok 352 - actual pageable source table 10 cannot lose a known continuation
+  ---
+  duration_ms: 1.929375
+  ...
+# Subtest: actual pageable source table 11 cannot lose a known continuation
+ok 353 - actual pageable source table 11 cannot lose a known continuation
+  ---
+  duration_ms: 2.104708
+  ...
+# Subtest: actual aggregate rejects a nonprogressing continuation rather than inventing pages
+ok 354 - actual aggregate rejects a nonprogressing continuation rather than inventing pages
+  ---
+  duration_ms: 2.0975
+  ...
+# Subtest: HTTP 401 remains authoritative with malformed, misleading or unbounded error body
+ok 355 - HTTP 401 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.59175
+  ...
+# Subtest: HTTP 403 remains authoritative with malformed, misleading or unbounded error body
+ok 356 - HTTP 403 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.406583
+  ...
+# Subtest: HTTP 404 remains authoritative with malformed, misleading or unbounded error body
+ok 357 - HTTP 404 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.443833
+  ...
+# Subtest: HTTP 409 remains authoritative with malformed, misleading or unbounded error body
+ok 358 - HTTP 409 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.477166
+  ...
+# Subtest: qualified unavailable scientific results preserve reasons without inventing input dependencies
+ok 359 - qualified unavailable scientific results preserve reasons without inventing input dependencies
+  ---
+  duration_ms: 1.718583
+  ...
+# Subtest: statistics aliases retain exact source dataset dependency identity
+ok 360 - statistics aliases retain exact source dataset dependency identity
+  ---
+  duration_ms: 1.951917
+  ...
+# Subtest: all five execution routes preserve actual Python HTTP request/reply bytes with explicit synthetic observations
+ok 361 - all five execution routes preserve actual Python HTTP request/reply bytes with explicit synthetic observations
+  ---
+  duration_ms: 24.324666
+  ...
+# Subtest: captured execution addresses bind actual parsed C22 proposals, not fabricated review snapshots
+ok 362 - captured execution addresses bind actual parsed C22 proposals, not fabricated review snapshots
+  ---
+  duration_ms: 5.352584
+  ...
+# Subtest: execution parser rejects launch authority
+ok 363 - execution parser rejects launch authority
+  ---
+  duration_ms: 0.328792
+  ...
+# Subtest: execution parser rejects coerced launch
+ok 364 - execution parser rejects coerced launch
+  ---
+  duration_ms: 0.120875
+  ...
+# Subtest: execution parser rejects unavailable transport with enabled actions
+ok 365 - execution parser rejects unavailable transport with enabled actions
+  ---
+  duration_ms: 0.18275
+  ...
+# Subtest: execution parser rejects configured unavailable source
+ok 366 - execution parser rejects configured unavailable source
+  ---
+  duration_ms: 0.102625
+  ...
+# Subtest: execution parser rejects synthetic Python execution
+ok 367 - execution parser rejects synthetic Python execution
+  ---
+  duration_ms: 0.135416
+  ...
+# Subtest: execution parser rejects synthetic physical termination
+ok 368 - execution parser rejects synthetic physical termination
+  ---
+  duration_ms: 0.132542
+  ...
+# Subtest: execution parser rejects invented authority
+ok 369 - execution parser rejects invented authority
+  ---
+  duration_ms: 0.226333
+  ...
+# Subtest: execution parser rejects invented scientific approval
+ok 370 - execution parser rejects invented scientific approval
+  ---
+  duration_ms: 0.326417
+  ...
+# Subtest: execution parser rejects status consuming events
+ok 371 - execution parser rejects status consuming events
+  ---
+  duration_ms: 0.174042
+  ...
+# Subtest: execution parser rejects cancelling without request
+ok 372 - execution parser rejects cancelling without request
+  ---
+  duration_ms: 0.137583
+  ...
+# Subtest: execution parser rejects source substitution
+ok 373 - execution parser rejects source substitution
+  ---
+  duration_ms: 0.123417
+  ...
+# Subtest: retained operator terminal states require a separate termination proof and completed execution observation
+ok 374 - retained operator terminal states require a separate termination proof and completed execution observation
+  ---
+  duration_ms: 0.920583
+  ...
+# Subtest: all response binding fields and explicit execution address must match the request
+ok 375 - all response binding fields and explicit execution address must match the request
+  ---
+  duration_ms: 4.231958
+  ...
+# Subtest: event pages retain requested cursor, count, consecutive history and current projection high-water
+ok 376 - event pages retain requested cursor, count, consecutive history and current projection high-water
+  ---
+  duration_ms: 7.1495
+  ...
+# Subtest: cancellation acknowledgement keeps the same key, retained intent and separate unconfirmed termination
+ok 377 - cancellation acknowledgement keeps the same key, retained intent and separate unconfirmed termination
+  ---
+  duration_ms: 1.678125
+  ...
+# Subtest: execution merges discard older revisions and reject terminal regression, identity replacement and event loss
+ok 378 - execution merges discard older revisions and reject terminal regression, identity replacement and event loss
+  ---
+  duration_ms: 0.707167
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 379 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.072292
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 380 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.072667
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 381 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.050459
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 382 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.063333
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 383 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.062083
+  ...
+# Subtest: total output bytes, duplicate artifact identities, incomplete states and mismatched attachment snapshots fail
+ok 384 - total output bytes, duplicate artifact identities, incomplete states and mismatched attachment snapshots fail
+  ---
+  duration_ms: 0.769709
+  ...
+# Subtest: canonical base64, chunk bounds, retained manifest and full-byte SHA are verified
+ok 385 - canonical base64, chunk bounds, retained manifest and full-byte SHA are verified
+  ---
+  duration_ms: 12.872625
+  ...
+# Subtest: Python's valid empty EOF page remains supported at the exact retained file length
+ok 386 - Python's valid empty EOF page remains supported at the exact retained file length
+  ---
+  duration_ms: 0.703792
+  ...
+# Subtest: preview is only an initial table display and never parses exact machine int64 bytes into JS numbers
+ok 387 - preview is only an initial table display and never parses exact machine int64 bytes into JS numbers
+  ---
+  duration_ms: 2.904333
+  ...
+# Subtest: large collection uses bounded chunks then a fresh authorized one-byte request before exposure
+ok 388 - large collection uses bounded chunks then a fresh authorized one-byte request before exposure
+  ---
+  duration_ms: 88.662667
+  ...
+# Subtest: collection refuses mid-chunk revocation, stale final authorization and a changed final execution
+ok 389 - collection refuses mid-chunk revocation, stale final authorization and a changed final execution
+  ---
+  duration_ms: 254.624333
+  ...
+# Subtest: a late or callback-aborted chunk cannot publish progress or an assembled artifact
+ok 390 - a late or callback-aborted chunk cannot publish progress or an assembled artifact
+  ---
+  duration_ms: 32.55625
+  ...
+# Subtest: pending cancellation is exact, immutable, non-overwritable and cleared by account/permission generation changes
+ok 391 - pending cancellation is exact, immutable, non-overwritable and cleared by account/permission generation changes
+  ---
+  duration_ms: 0.762917
+  ...
+# Subtest: cancellation slots are bounded without evicting an uncertain request, and original contexts remain distinguishable
+ok 392 - cancellation slots are bounded without evicting an uncertain request, and original contexts remain distinguishable
+  ---
+  duration_ms: 1.850333
+  ...
+# Subtest: historical execution survives a newer C22 head token for the same frozen revision
+ok 393 - historical execution survives a newer C22 head token for the same frozen revision
+  ---
+  duration_ms: 0.5085
+  ...
+# Subtest: a newer C22 read token cannot transfer revision identity or weaken execution immutability
+ok 394 - a newer C22 read token cannot transfer revision identity or weaken execution immutability
+  ---
+  duration_ms: 0.412125
+  ...
+# Subtest: both protocol families permit only their exact fixed same-origin routes
+ok 395 - both protocol families permit only their exact fixed same-origin routes
+  ---
+  duration_ms: 17.335792
+  ...
+# Subtest: HTTP 401 maps to a safe status without leaking server bodies
+ok 396 - HTTP 401 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.46075
+  ...
+# Subtest: HTTP 403 maps to a safe status without leaking server bodies
+ok 397 - HTTP 403 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.11
+  ...
+# Subtest: HTTP 404 maps to a safe status without leaking server bodies
+ok 398 - HTTP 404 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.098833
+  ...
+# Subtest: HTTP 409 maps to a safe status without leaking server bodies
+ok 399 - HTTP 409 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.25525
+  ...
+# Subtest: HTTP 422 maps to a safe status without leaking server bodies
+ok 400 - HTTP 422 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.117042
+  ...
+# Subtest: HTTP 429 maps to a safe status without leaking server bodies
+ok 401 - HTTP 429 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.145292
+  ...
+# Subtest: HTTP 500 maps to a safe status without leaking server bodies
+ok 402 - HTTP 500 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.411916
+  ...
+# Subtest: HTTP 503 maps to a safe status without leaking server bodies
+ok 403 - HTTP 503 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.240792
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":1,"value":2}
+ok 404 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":1,"value":2}
+  ---
+  duration_ms: 0.444083
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":NaN}
+ok 405 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":NaN}
+  ---
+  duration_ms: 0.145791
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":9223372036854775807}
+ok 406 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":9223372036854775807}
+  ---
+  duration_ms: 0.232
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":"\\ud800"}
+ok 407 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":"\\ud800"}
+  ---
+  duration_ms: 0.184208
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: <html>private</html>
+ok 408 - ambiguous/nonfinite/unsafe/malformed response is rejected: <html>private</html>
+  ---
+  duration_ms: 0.124458
+  ...
+# Subtest: stream bytes are bounded even when Content-Length is absent or lies
+ok 409 - stream bytes are bounded even when Content-Length is absent or lies
+  ---
+  duration_ms: 0.625916
+  ...
+# Subtest: oversized declared responses and requests fail before parsing/untrusted work
+ok 410 - oversized declared responses and requests fail before parsing/untrusted work
+  ---
+  duration_ms: 0.373125
+  ...
+# Subtest: invalid UTF-8, getter/prototype/cycle/unsafe numeric inputs never become requests
+ok 411 - invalid UTF-8, getter/prototype/cycle/unsafe numeric inputs never become requests
+  ---
+  duration_ms: 0.355208
+  ...
+# Subtest: abort while a token or fetch is unresolved stops waiting and discards a late response
+ok 412 - abort while a token or fetch is unresolved stops waiting and discards a late response
+  ---
+  duration_ms: 6.85825
+  ...
+# Subtest: bounded deadline ends stalled token/fetch/body waits and reports mutation uncertainty
+ok 413 - bounded deadline ends stalled token/fetch/body waits and reports mutation uncertainty
+  ---
+  duration_ms: 43.009
+  ...
+# Subtest: tokens are explicit and malformed tokens do not reach fetch
+ok 414 - tokens are explicit and malformed tokens do not reach fetch
+  ---
+  duration_ms: 0.906958
+  ...
+# Subtest: response/deadline bound options cannot silently widen limits
+ok 415 - response/deadline bound options cannot silently widen limits
+  ---
+  duration_ms: 0.167917
+  ...
+# Subtest: malicious or stalled body cancellation cannot hold an invalid oversized reply open
+ok 416 - malicious or stalled body cancellation cannot hold an invalid oversized reply open
+  ---
+  duration_ms: 0.605125
+  ...
+# Subtest: all nine review clients accept actual local Python HTTP envelopes with original request bytes and false execution semantics
+ok 417 - all nine review clients accept actual local Python HTTP envelopes with original request bytes and false execution semantics
+  ---
+  duration_ms: 65.152167
+  ...
+# Subtest: review parser rejects invented execution
+ok 418 - review parser rejects invented execution
+  ---
+  duration_ms: 0.589417
+  ...
+# Subtest: review parser rejects coerced execution
+ok 419 - review parser rejects coerced execution
+  ---
+  duration_ms: 0.357084
+  ...
+# Subtest: review parser rejects new authority
+ok 420 - review parser rejects new authority
+  ---
+  duration_ms: 0.32725
+  ...
+# Subtest: review parser rejects scientific approval
+ok 421 - review parser rejects scientific approval
+  ---
+  duration_ms: 0.357416
+  ...
+# Subtest: review parser rejects extra owner field
+ok 422 - review parser rejects extra owner field
+  ---
+  duration_ms: 0.319709
+  ...
+# Subtest: review parser rejects changed code
+ok 423 - review parser rejects changed code
+  ---
+  duration_ms: 1.445084
+  ...
+# Subtest: review parser rejects changed question
+ok 424 - review parser rejects changed question
+  ---
+  duration_ms: 0.490083
+  ...
+# Subtest: review parser rejects changed limits
+ok 425 - review parser rejects changed limits
+  ---
+  duration_ms: 1.429541
+  ...
+# Subtest: review parser rejects changed packages
+ok 426 - review parser rejects changed packages
+  ---
+  duration_ms: 3.831541
+  ...
+# Subtest: review parser rejects mismatched environment identity
+ok 427 - review parser rejects mismatched environment identity
+  ---
+  duration_ms: 0.544208
+  ...
+# Subtest: review parser rejects wrong current approval
+ok 428 - review parser rejects wrong current approval
+  ---
+  duration_ms: 0.351667
+  ...
+# Subtest: review parser rejects dispatch without approval
+ok 429 - review parser rejects dispatch without approval
+  ---
+  duration_ms: 0.332125
+  ...
+# Subtest: review parser rejects unsafe integer
+ok 430 - review parser rejects unsafe integer
+  ---
+  duration_ms: 0.222125
+  ...
+# Subtest: review parser rejects nonfinite metadata
+ok 431 - review parser rejects nonfinite metadata
+  ---
+  duration_ms: 0.189333
+  ...
+# Subtest: review parser rejects bad unicode
+ok 432 - review parser rejects bad unicode
+  ---
+  duration_ms: 0.142958
+  ...
+# Subtest: review parser rejects wrong manifest binding
+ok 433 - review parser rejects wrong manifest binding
+  ---
+  duration_ms: 0.36675
+  ...
+# Subtest: review parser rejects false manifest authority
+ok 434 - review parser rejects false manifest authority
+  ---
+  duration_ms: 0.334333
+  ...
+# Subtest: review parser rejects missing serialized execution field
+ok 435 - review parser rejects missing serialized execution field
+  ---
+  duration_ms: 0.230958
+  ...
+# Subtest: review parser rejects regressed event head
+ok 436 - review parser rejects regressed event head
+  ---
+  duration_ms: 0.35775
+  ...
+# Subtest: empty top response and missing serialized fields cannot fabricate a valid service reply
+ok 437 - empty top response and missing serialized fields cannot fabricate a valid service reply
+  ---
+  duration_ms: 0.709
+  ...
+# Subtest: approval helpers freeze the exact displayed revision, context and all five hashes
+ok 438 - approval helpers freeze the exact displayed revision, context and all five hashes
+  ---
+  duration_ms: 3.385292
+  ...
+# Subtest: approve rejects substituted review identity
+ok 439 - approve rejects substituted review identity
+  ---
+  duration_ms: 9.903333
+  ...
+# Subtest: dispatch rejects substituted review identity
+ok 440 - dispatch rejects substituted review identity
+  ---
+  duration_ms: 15.123375
+  ...
+# Subtest: get rejects substituted review identity
+ok 441 - get rejects substituted review identity
+  ---
+  duration_ms: 2.978208
+  ...
+# Subtest: status rejects substituted review identity
+ok 442 - status rejects substituted review identity
+  ---
+  duration_ms: 5.238875
+  ...
+# Subtest: approval hashes and requested historical revision cannot be rebound by a response
+ok 443 - approval hashes and requested historical revision cannot be rebound by a response
+  ---
+  duration_ms: 10.158958
+  ...
+# Subtest: ready create/revise responses must preserve the normalized typed proposal and operation revision
+ok 444 - ready create/revise responses must preserve the normalized typed proposal and operation revision
+  ---
+  duration_ms: 7.681208
+  ...
+# Subtest: prepared operation responses may retain the prior context without presenting a new proposal as ready
+ok 445 - prepared operation responses may retain the prior context without presenting a new proposal as ready
+  ---
+  duration_ms: 2.179209
+  ...
+# Subtest: list pages bind the owner conversation and reject duplicate/non-progressing cursor pages
+ok 446 - list pages bind the owner conversation and reject duplicate/non-progressing cursor pages
+  ---
+  duration_ms: 5.494958
+  ...
+# Subtest: event pages reject gaps, cursor regression, unbounded pages and wrong experiment addresses
+ok 447 - event pages reject gaps, cursor regression, unbounded pages and wrong experiment addresses
+  ---
+  duration_ms: 0.571709
+  ...
+# Subtest: retry cannot recover a different operation and unsafe requests never reach fetch
+ok 448 - retry cannot recover a different operation and unsafe requests never reach fetch
+  ---
+  duration_ms: 5.50175
+  ...
+# Subtest: opaque machine int64 strings stay exact; unsafe integer conversion is rejected
+ok 449 - opaque machine int64 strings stay exact; unsafe integer conversion is rejected
+  ---
+  duration_ms: 0.120208
+  ...
+# Subtest: generated identifier anchors reject trailing newlines and dictionary keys retain Python identifier restrictions
+ok 450 - generated identifier anchors reject trailing newlines and dictionary keys retain Python identifier restrictions
+  ---
+  duration_ms: 0.311417
+  ...
+# Subtest: proposal canonical bytes and Python source UTF-8 bytes retain independent review bounds
+ok 451 - proposal canonical bytes and Python source UTF-8 bytes retain independent review bounds
+  ---
+  duration_ms: 0.895666
+  ...
+# Subtest: real package identities accept exact PEP 440 forms and reject version expressions and malformed keys
+ok 452 - real package identities accept exact PEP 440 forms and reject version expressions and malformed keys
+  ---
+  duration_ms: 0.894292
+  ...
+# Subtest: ready mutations must retain a result revision and snapshot before uncertainty can clear
+ok 453 - ready mutations must retain a result revision and snapshot before uncertainty can clear
+  ---
+  duration_ms: 9.347667
+  ...
+# Subtest: uncertain mutation retains one immutable exact key across ordinary navigation and same identity binding
+ok 454 - uncertain mutation retains one immutable exact key across ordinary navigation and same identity binding
+  ---
+  duration_ms: 1.866083
+  ...
+# Subtest: account/permission transitions clear private requests and invalidate every earlier callback epoch
+ok 455 - account/permission transitions clear private requests and invalidate every earlier callback epoch
+  ---
+  duration_ms: 0.217917
+  ...
+# Subtest: memory intent cannot bind a request from a different review context and mutation execution rejects it before transport
+ok 456 - memory intent cannot bind a request from a different review context and mutation execution rejects it before transport
+  ---
+  duration_ms: 0.461792
+  ...
+# Subtest: a hard reload has no private request recovery fiction; committed history must be rediscovered
+ok 457 - a hard reload has no private request recovery fiction; committed history must be rediscovered
+  ---
+  duration_ms: 0.117166
+  ...
+# Subtest: bounded pending slots never evict uncertain mutations to make room
+ok 458 - bounded pending slots never evict uncertain mutations to make room
+  ---
+  duration_ms: 6.138625
+  ...
+# Subtest: canonical experiment/proposal URL selection preserves existing research location parameters
+ok 459 - canonical experiment/proposal URL selection preserves existing research location parameters
+  ---
+  duration_ms: 0.561916
+  ...
+# Subtest: malformed or duplicate selection is not a trusted request: ?proposal=b414e75c-e664-4be4-bf86-cfd944796f01
+ok 460 - malformed or duplicate selection is not a trusted request: ?proposal=b414e75c-e664-4be4-bf86-cfd944796f01
+  ---
+  duration_ms: 0.080958
+  ...
+# Subtest: malformed or duplicate selection is not a trusted request: ?experiment=broken
+ok 461 - malformed or duplicate selection is not a trusted request: ?experiment=broken
+  ---
+  duration_ms: 0.034083
+  ...
+# Subtest: malformed or duplicate selection is not a trusted request: ?experiment=b414e75c-e664-4be4-bf86-cfd944796f01&experiment=b414e75c-e
+ok 462 - malformed or duplicate selection is not a trusted request: ?experiment=b414e75c-e664-4be4-bf86-cfd944796f01&experiment=b414e75c-e
+  ---
+  duration_ms: 0.192708
+  ...
+# Subtest: malformed or duplicate selection is not a trusted request: ?experiment=b414e75c-e664-4be4-bf86-cfd944796f01&proposal=broken
+ok 463 - malformed or duplicate selection is not a trusted request: ?experiment=b414e75c-e664-4be4-bf86-cfd944796f01&proposal=broken
+  ---
+  duration_ms: 0.248084
+  ...
+# Subtest: malformed or duplicate selection is not a trusted request: ?experiment=b414e75c-e664-4be4-bf86-cfd944796f01&proposal=b414e75c-e66
+ok 464 - malformed or duplicate selection is not a trusted request: ?experiment=b414e75c-e664-4be4-bf86-cfd944796f01&proposal=b414e75c-e66
+  ---
+  duration_ms: 0.079417
+  ...
+# Subtest: an explicitly malformed next selection clears rather than resurrecting an old selection
+ok 465 - an explicitly malformed next selection clears rather than resurrecting an old selection
+  ---
+  duration_ms: 0.149666
+  ...
+# Subtest: consecutive retained events merge without erased history; gaps, stale heads and wrong experiments fail
+ok 466 - consecutive retained events merge without erased history; gaps, stale heads and wrong experiments fail
+  ---
+  duration_ms: 0.200709
+  ...
+# Subtest: status snapshot merges reject retained identity mutation, stale state and revision substitution
+ok 467 - status snapshot merges reject retained identity mutation, stale state and revision substitution
+  ---
+  duration_ms: 0.183209
+  ...
+# Subtest: v1 shared CSV fixture: ordinary
+ok 468 - v1 shared CSV fixture: ordinary
+  ---
+  duration_ms: 3.536167
+  ...
+# Subtest: v1 shared CSV fixture: japanese
+ok 469 - v1 shared CSV fixture: japanese
+  ---
+  duration_ms: 0.224667
+  ...
+# Subtest: v1 shared CSV fixture: quoted
+ok 470 - v1 shared CSV fixture: quoted
+  ---
+  duration_ms: 0.229375
+  ...
+# Subtest: v1 shared CSV fixture: comma
+ok 471 - v1 shared CSV fixture: comma
+  ---
+  duration_ms: 0.080958
+  ...
+# Subtest: v1 shared CSV fixture: multiline
+ok 472 - v1 shared CSV fixture: multiline
+  ---
+  duration_ms: 0.251459
+  ...
+# Subtest: v1 shared CSV fixture: carriage-return
+ok 473 - v1 shared CSV fixture: carriage-return
+  ---
+  duration_ms: 0.072333
+  ...
+# Subtest: v1 shared CSV fixture: empty
+ok 474 - v1 shared CSV fixture: empty
+  ---
+  duration_ms: 0.155875
+  ...
+# Subtest: v1 shared CSV fixture: equals
+ok 475 - v1 shared CSV fixture: equals
+  ---
+  duration_ms: 0.069708
+  ...
+# Subtest: v1 shared CSV fixture: plus
+ok 476 - v1 shared CSV fixture: plus
+  ---
+  duration_ms: 0.520333
+  ...
+# Subtest: v1 shared CSV fixture: minus-string
+ok 477 - v1 shared CSV fixture: minus-string
+  ---
+  duration_ms: 0.630666
+  ...
+# Subtest: v1 shared CSV fixture: at
+ok 478 - v1 shared CSV fixture: at
+  ---
+  duration_ms: 0.105833
+  ...
+# Subtest: v1 shared CSV fixture: space-formula
+ok 479 - v1 shared CSV fixture: space-formula
+  ---
+  duration_ms: 0.035333
+  ...
+# Subtest: v1 shared CSV fixture: tab-text
+ok 480 - v1 shared CSV fixture: tab-text
+  ---
+  duration_ms: 0.022791
+  ...
+# Subtest: v1 shared CSV fixture: cr-text
+ok 481 - v1 shared CSV fixture: cr-text
+  ---
+  duration_ms: 0.021625
+  ...
+# Subtest: v1 shared CSV fixture: lf-text
+ok 482 - v1 shared CSV fixture: lf-text
+  ---
+  duration_ms: 0.019875
+  ...
+# Subtest: v1 shared CSV fixture: tab-formula
+ok 483 - v1 shared CSV fixture: tab-formula
+  ---
+  duration_ms: 0.021166
+  ...
+# Subtest: v1 shared CSV fixture: crlf-text
+ok 484 - v1 shared CSV fixture: crlf-text
+  ---
+  duration_ms: 0.020708
+  ...
+# Subtest: v1 shared CSV fixture: space-tab-text
+ok 485 - v1 shared CSV fixture: space-tab-text
+  ---
+  duration_ms: 0.018917
+  ...
+# Subtest: v1 shared CSV fixture: nonleading-formula
+ok 486 - v1 shared CSV fixture: nonleading-formula
+  ---
+  duration_ms: 0.018958
+  ...
+# Subtest: v1 shared CSV fixture: multiline-later-formula
+ok 487 - v1 shared CSV fixture: multiline-later-formula
+  ---
+  duration_ms: 0.021667
+  ...
+# Subtest: v1 shared CSV fixture: existing-apostrophe
+ok 488 - v1 shared CSV fixture: existing-apostrophe
+  ---
+  duration_ms: 0.018834
+  ...
+# Subtest: v1 shared CSV fixture: literal-leading-quote
+ok 489 - v1 shared CSV fixture: literal-leading-quote
+  ---
+  duration_ms: 0.0355
+  ...
+# Subtest: v1 shared CSV fixture: negative-number
+ok 490 - v1 shared CSV fixture: negative-number
+  ---
+  duration_ms: 0.022083
+  ...
+# Subtest: v1 shared CSV fixture: negative-scientific
+ok 491 - v1 shared CSV fixture: negative-scientific
+  ---
+  duration_ms: 0.019875
+  ...
+# Subtest: v1 shared CSV fixture: positive-number
+ok 492 - v1 shared CSV fixture: positive-number
+  ---
+  duration_ms: 0.022166
+  ...
+# Subtest: v1 shared CSV fixture: zero
+ok 493 - v1 shared CSV fixture: zero
+  ---
+  duration_ms: 0.018959
+  ...
+# Subtest: v1 shared CSV fixture: null
+ok 494 - v1 shared CSV fixture: null
+  ---
+  duration_ms: 0.019708
+  ...
+# Subtest: v1 shared CSV fixture: true
+ok 495 - v1 shared CSV fixture: true
+  ---
+  duration_ms: 0.017459
+  ...
+# Subtest: v1 shared CSV fixture: false
+ok 496 - v1 shared CSV fixture: false
+  ---
+  duration_ms: 0.017083
+  ...
+# Subtest: v1 shared CSV fixture: object
+ok 497 - v1 shared CSV fixture: object
+  ---
+  duration_ms: 0.037125
+  ...
+# Subtest: v1 shared CSV fixture: array
+ok 498 - v1 shared CSV fixture: array
+  ---
+  duration_ms: 0.021208
+  ...
+# Subtest: v1 shared CSV fixture: empty-object
+ok 499 - v1 shared CSV fixture: empty-object
+  ---
+  duration_ms: 0.017334
+  ...
+# Subtest: v1 shared CSV fixture: empty-array
+ok 500 - v1 shared CSV fixture: empty-array
+  ---
+  duration_ms: 0.018417
+  ...
+# Subtest: v1 shared CSV fixture: undefined
+ok 501 - v1 shared CSV fixture: undefined
+  ---
+  duration_ms: 0.016708
+  ...
+# Subtest: v1 shared CSV fixture: vertical-tab-formula
+ok 502 - v1 shared CSV fixture: vertical-tab-formula
+  ---
+  duration_ms: 0.023042
+  ...
+# Subtest: v1 shared CSV fixture: form-feed-formula
+ok 503 - v1 shared CSV fixture: form-feed-formula
+  ---
+  duration_ms: 0.018833
+  ...
+# Subtest: v1 shared CSV fixture: file-separator-formula
+ok 504 - v1 shared CSV fixture: file-separator-formula
+  ---
+  duration_ms: 0.020292
+  ...
+# Subtest: v1 shared CSV fixture: next-line-formula
+ok 505 - v1 shared CSV fixture: next-line-formula
+  ---
+  duration_ms: 0.018625
+  ...
+# Subtest: v1 shared CSV fixture: nbsp-formula
+ok 506 - v1 shared CSV fixture: nbsp-formula
+  ---
+  duration_ms: 0.021709
+  ...
+# Subtest: v1 shared CSV fixture: ogham-formula
+ok 507 - v1 shared CSV fixture: ogham-formula
+  ---
+  duration_ms: 0.019
+  ...
+# Subtest: v1 shared CSV fixture: em-space-formula
+ok 508 - v1 shared CSV fixture: em-space-formula
+  ---
+  duration_ms: 0.018583
+  ...
+# Subtest: v1 shared CSV fixture: line-separator-formula
+ok 509 - v1 shared CSV fixture: line-separator-formula
+  ---
+  duration_ms: 0.018584
+  ...
+# Subtest: v1 shared CSV fixture: paragraph-separator-formula
+ok 510 - v1 shared CSV fixture: paragraph-separator-formula
+  ---
+  duration_ms: 0.021208
+  ...
+# Subtest: v1 shared CSV fixture: narrow-nbsp-formula
+ok 511 - v1 shared CSV fixture: narrow-nbsp-formula
+  ---
+  duration_ms: 0.02025
+  ...
+# Subtest: v1 shared CSV fixture: medium-math-space-formula
+ok 512 - v1 shared CSV fixture: medium-math-space-formula
+  ---
+  duration_ms: 0.018083
+  ...
+# Subtest: v1 shared CSV fixture: ideographic-space-formula
+ok 513 - v1 shared CSV fixture: ideographic-space-formula
+  ---
+  duration_ms: 0.018542
+  ...
+# Subtest: v1 shared CSV fixture: bom-formula
+ok 514 - v1 shared CSV fixture: bom-formula
+  ---
+  duration_ms: 0.036125
+  ...
+# Subtest: answer feedback updates one run, preserves another run, and requires negative detail
+ok 515 - answer feedback updates one run, preserves another run, and requires negative detail
+  ---
+  duration_ms: 0.176208
+  ...
+# Subtest: safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+ok 516 - safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+  ---
+  duration_ms: 0.116042
+  ...
+# Subtest: CSV protects leading tabs and Python/ECMAScript whitespace without changing row data
+ok 517 - CSV protects leading tabs and Python/ECMAScript whitespace without changing row data
+  ---
+  duration_ms: 0.028959
+  ...
+# Subtest: investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+ok 518 - investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+  ---
+  duration_ms: 0.63675
+  ...
+# Subtest: dedicated support/admin routes restore and first-round local state migrates without losing drafts
+ok 519 - dedicated support/admin routes restore and first-round local state migrates without losing drafts
+  ---
+  duration_ms: 0.712583
+  ...
+# Subtest: wire corpus is from all fourteen actual unchanged C17 HTTP operations
+ok 520 - wire corpus is from all fourteen actual unchanged C17 HTTP operations
+  ---
+  duration_ms: 0.835792
+  ...
+# Subtest: actual Python HTTP wire 1: list 200
+ok 521 - actual Python HTTP wire 1: list 200
+  ---
+  duration_ms: 14.94775
+  ...
+# Subtest: actual Python HTTP wire 2: create 200
+ok 522 - actual Python HTTP wire 2: create 200
+  ---
+  duration_ms: 27.96475
+  ...
+# Subtest: actual Python HTTP wire 3: create 200
+ok 523 - actual Python HTTP wire 3: create 200
+  ---
+  duration_ms: 6.743541
+  ...
+# Subtest: actual Python HTTP wire 4: list 200
+ok 524 - actual Python HTTP wire 4: list 200
+  ---
+  duration_ms: 0.466209
+  ...
+# Subtest: actual Python HTTP wire 5: get 200
+ok 525 - actual Python HTTP wire 5: get 200
+  ---
+  duration_ms: 0.782167
+  ...
+# Subtest: actual Python HTTP wire 6: rename 200
+ok 526 - actual Python HTTP wire 6: rename 200
+  ---
+  duration_ms: 0.270791
+  ...
+# Subtest: actual Python HTTP wire 7: archive 200
+ok 527 - actual Python HTTP wire 7: archive 200
+  ---
+  duration_ms: 0.180875
+  ...
+# Subtest: actual Python HTTP wire 8: archive 200
+ok 528 - actual Python HTTP wire 8: archive 200
+  ---
+  duration_ms: 0.377416
+  ...
+# Subtest: actual Python HTTP wire 9: createConversation 200
+ok 529 - actual Python HTTP wire 9: createConversation 200
+  ---
+  duration_ms: 0.868167
+  ...
+# Subtest: actual Python HTTP wire 10: createConversation 200
+ok 530 - actual Python HTTP wire 10: createConversation 200
+  ---
+  duration_ms: 0.360708
+  ...
+# Subtest: actual Python HTTP wire 11: listConversations 200
+ok 531 - actual Python HTTP wire 11: listConversations 200
+  ---
+  duration_ms: 0.161833
+  ...
+# Subtest: actual Python HTTP wire 12: listConversations 200
+ok 532 - actual Python HTTP wire 12: listConversations 200
+  ---
+  duration_ms: 0.111916
+  ...
+# Subtest: actual Python HTTP wire 13: getConversation 200
+ok 533 - actual Python HTTP wire 13: getConversation 200
+  ---
+  duration_ms: 1.385375
+  ...
+# Subtest: actual Python HTTP wire 14: renameConversation 200
+ok 534 - actual Python HTTP wire 14: renameConversation 200
+  ---
+  duration_ms: 0.52275
+  ...
+# Subtest: actual Python HTTP wire 15: getContext 200
+ok 535 - actual Python HTTP wire 15: getContext 200
+  ---
+  duration_ms: 1.925625
+  ...
+# Subtest: actual Python HTTP wire 16: changeContext 200
+ok 536 - actual Python HTTP wire 16: changeContext 200
+  ---
+  duration_ms: 0.823708
+  ...
+# Subtest: actual Python HTTP wire 17: changeContext 200
+ok 537 - actual Python HTTP wire 17: changeContext 200
+  ---
+  duration_ms: 0.676917
+  ...
+# Subtest: actual Python HTTP wire 18: getContext 200
+ok 538 - actual Python HTTP wire 18: getContext 200
+  ---
+  duration_ms: 0.514083
+  ...
+# Subtest: actual Python HTTP wire 19: getOperation 200
+ok 539 - actual Python HTTP wire 19: getOperation 200
+  ---
+  duration_ms: 0.131542
+  ...
+# Subtest: actual Python HTTP wire 20: retryOperation 200
+ok 540 - actual Python HTTP wire 20: retryOperation 200
+  ---
+  duration_ms: 0.546959
+  ...
+# Subtest: actual Python HTTP wire 21: retryOperation 200
+ok 541 - actual Python HTTP wire 21: retryOperation 200
+  ---
+  duration_ms: 0.090625
+  ...
+# Subtest: actual Python HTTP wire 22: refresh 200
+ok 542 - actual Python HTTP wire 22: refresh 200
+  ---
+  duration_ms: 0.654458
+  ...
+# Subtest: actual Python HTTP wire 23: changeContext 200
+ok 543 - actual Python HTTP wire 23: changeContext 200
+  ---
+  duration_ms: 12.267875
+  ...
+# Subtest: actual Python HTTP wire 24: changeContext 200
+ok 544 - actual Python HTTP wire 24: changeContext 200
+  ---
+  duration_ms: 0.627625
+  ...
+# Subtest: actual Python HTTP wire 25: changeContext 200
+ok 545 - actual Python HTTP wire 25: changeContext 200
+  ---
+  duration_ms: 0.585334
+  ...
+# Subtest: actual Python HTTP wire 26: changeContext 409
+ok 546 - actual Python HTTP wire 26: changeContext 409
+  ---
+  duration_ms: 0.388125
+  ...
+# Subtest: actual Python HTTP wire 27: get 404
+ok 547 - actual Python HTTP wire 27: get 404
+  ---
+  duration_ms: 0.077541
+  ...
+# Subtest: actual Python HTTP wire 28: list 401
+ok 548 - actual Python HTTP wire 28: list 401
+  ---
+  duration_ms: 0.065
+  ...
+# Subtest: HTTP 401 remains authoritative with malformed or misleading bodies
+ok 549 - HTTP 401 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.503334
+  ...
+# Subtest: HTTP 403 remains authoritative with malformed or misleading bodies
+ok 550 - HTTP 403 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.222833
+  ...
+# Subtest: HTTP 404 remains authoritative with malformed or misleading bodies
+ok 551 - HTTP 404 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.31775
+  ...
+# Subtest: HTTP 409 remains authoritative with malformed or misleading bodies
+ok 552 - HTTP 409 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.19025
+  ...
+# Subtest: HTTP 422 remains authoritative with malformed or misleading bodies
+ok 553 - HTTP 422 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.114459
+  ...
+# Subtest: HTTP 503 remains authoritative with malformed or misleading bodies
+ok 554 - HTTP 503 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.119666
+  ...
+# Subtest: rejects wrong version
+ok 555 - rejects wrong version
+  ---
+  duration_ms: 0.22375
+  ...
+# Subtest: rejects unknown owner response field
+ok 556 - rejects unknown owner response field
+  ---
+  duration_ms: 0.152459
+  ...
+# Subtest: rejects cross-investigation context
+ok 557 - rejects cross-investigation context
+  ---
+  duration_ms: 0.487834
+  ...
+# Subtest: rejects wrong current context revision
+ok 558 - rejects wrong current context revision
+  ---
+  duration_ms: 0.462542
+  ...
+# Subtest: rejects wrong hash
+ok 559 - rejects wrong hash
+  ---
+  duration_ms: 0.462
+  ...
+# Subtest: rejects noninteger version
+ok 560 - rejects noninteger version
+  ---
+  duration_ms: 0.140166
+  ...
+# Subtest: rejects null timestamp
+ok 561 - rejects null timestamp
+  ---
+  duration_ms: 4.113042
+  ...
+# Subtest: rejects noncanonical UUID
+ok 562 - rejects noncanonical UUID
+  ---
+  duration_ms: 0.228417
+  ...
+# Subtest: rejects legacy imported history
+ok 563 - rejects legacy imported history
+  ---
+  duration_ms: 0.573333
+  ...
+# Subtest: rejects wrong create snapshot
+ok 564 - rejects wrong create snapshot
+  ---
+  duration_ms: 1.612792
+  ...
+# Subtest: rejects uncommitted successful mutation
+ok 565 - rejects uncommitted successful mutation
+  ---
+  duration_ms: 1.593
+  ...
+# Subtest: rejects wrong operation kind
+ok 566 - rejects wrong operation kind
+  ---
+  duration_ms: 1.668291
+  ...
+# Subtest: rejects wrong candidate revision
+ok 567 - rejects wrong candidate revision
+  ---
+  duration_ms: 1.524
+  ...
+# Subtest: rejects conversation from another owner investigation
+ok 568 - rejects conversation from another owner investigation
+  ---
+  duration_ms: 0.106958
+  ...
+# Subtest: rejects unavailable history silently ready
+ok 569 - rejects unavailable history silently ready
+  ---
+  duration_ms: 0.089792
+  ...
+# Subtest: rejects wrong refresh predecessor
+ok 570 - rejects wrong refresh predecessor
+  ---
+  duration_ms: 0.527333
+  ...
+# Subtest: rejects renamed different metadata
+ok 571 - rejects renamed different metadata
+  ---
+  duration_ms: 0.122417
+  ...
+# Subtest: rejects renamed different conversation
+ok 572 - rejects renamed different conversation
+  ---
+  duration_ms: 0.107834
+  ...
+# Subtest: rejects archive failed to archive
+ok 573 - rejects archive failed to archive
+  ---
+  duration_ms: 0.11425
+  ...
+# Subtest: rejects omitted list continuation
+ok 574 - rejects omitted list continuation
+  ---
+  duration_ms: 0.093167
+  ...
+# Subtest: attached and pinned references remain distinct while resolution joins exact order
+ok 575 - attached and pinned references remain distinct while resolution joins exact order
+  ---
+  duration_ms: 0.698125
+  ...
+# Subtest: refresh branch exposes unavailable selections without rewriting old snapshots
+ok 576 - refresh branch exposes unavailable selections without rewriting old snapshots
+  ---
+  duration_ms: 1.04
+  ...
+# Subtest: invalid create request never dispatches name=" padded "
+ok 577 - invalid create request never dispatches name=" padded "
+  ---
+  duration_ms: 0.099291
+  ...
+# Subtest: invalid create request never dispatches name="control\\nname"
+ok 578 - invalid create request never dispatches name="control\\nname"
+  ---
+  duration_ms: 0.055208
+  ...
+# Subtest: invalid create request never dispatches name="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ok 579 - invalid create request never dispatches name="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ---
+  duration_ms: 0.052542
+  ...
+# Subtest: invalid create request never dispatches name="\\ud800"
+ok 580 - invalid create request never dispatches name="\\ud800"
+  ---
+  duration_ms: 0.043583
+  ...
+# Subtest: invalid create request never dispatches name=4
+ok 581 - invalid create request never dispatches name=4
+  ---
+  duration_ms: 0.052291
+  ...
+# Subtest: invalid create request never dispatches idempotency_key="UPPERCASE"
+ok 582 - invalid create request never dispatches idempotency_key="UPPERCASE"
+  ---
+  duration_ms: 0.051708
+  ...
+# Subtest: invalid create request never dispatches idempotency_key=null
+ok 583 - invalid create request never dispatches idempotency_key=null
+  ---
+  duration_ms: 0.049583
+  ...
+# Subtest: invalid create request never dispatches snapshot_id="../real-data"
+ok 584 - invalid create request never dispatches snapshot_id="../real-data"
+  ---
+  duration_ms: 0.051208
+  ...
+# Subtest: invalid create request never dispatches snapshot_id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ok 585 - invalid create request never dispatches snapshot_id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ---
+  duration_ms: 0.0615
+  ...
+# Subtest: invalid create request never dispatches scope=null
+ok 586 - invalid create request never dispatches scope=null
+  ---
+  duration_ms: 0.08425
+  ...
+# Subtest: invalid create request never dispatches scope={"version":1,"role":"admin"}
+ok 587 - invalid create request never dispatches scope={"version":1,"role":"admin"}
+  ---
+  duration_ms: 0.054333
+  ...
+# Subtest: invalid create request never dispatches user_id="985017d6-1ca7-414a-95d1-0aeed0a30d29"
+ok 588 - invalid create request never dispatches user_id="985017d6-1ca7-414a-95d1-0aeed0a30d29"
+  ---
+  duration_ms: 0.058625
+  ...
+# Subtest: invalid create request never dispatches __test_identity="admin"
+ok 589 - invalid create request never dispatches __test_identity="admin"
+  ---
+  duration_ms: 0.050334
+  ...
+# Subtest: strict method request list {"limit":0}
+ok 590 - strict method request list {"limit":0}
+  ---
+  duration_ms: 0.039875
+  ...
+# Subtest: strict method request list {"limit":101}
+ok 591 - strict method request list {"limit":101}
+  ---
+  duration_ms: 0.030833
+  ...
+# Subtest: strict method request list {"limit":null}
+ok 592 - strict method request list {"limit":null}
+  ---
+  duration_ms: 0.029791
+  ...
+# Subtest: strict method request list {"limit":"25"}
+ok 593 - strict method request list {"limit":"25"}
+  ---
+  duration_ms: 0.029708
+  ...
+# Subtest: strict method request list {"after_id":""}
+ok 594 - strict method request list {"after_id":""}
+  ---
+  duration_ms: 0.036084
+  ...
+# Subtest: strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+ok 595 - strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+  ---
+  duration_ms: 0.035166
+  ...
+# Subtest: strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+ok 596 - strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+  ---
+  duration_ms: 0.030042
+  ...
+# Subtest: strict method request getContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","revision_i
+ok 597 - strict method request getContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","revision_i
+  ---
+  duration_ms: 0.034375
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 598 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.058833
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 599 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.052625
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 600 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.036708
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 601 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.034333
+  ...
+# Subtest: strict method request refresh {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 602 - strict method request refresh {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.032959
+  ...
+# Subtest: non-JSON, cyclic, undefined, sparse and accessor requests cannot bypass validation
+ok 603 - non-JSON, cyclic, undefined, sparse and accessor requests cannot bypass validation
+  ---
+  duration_ms: 0.147333
+  ...
+# Subtest: oversized malformed scientific filters never reach network side effects
+ok 604 - oversized malformed scientific filters never reach network side effects
+  ---
+  duration_ms: 2.850166
+  ...
+# Subtest: bounded decoder rejects duplicate top-level key
+ok 605 - bounded decoder rejects duplicate top-level key
+  ---
+  duration_ms: 0.190417
+  ...
+# Subtest: bounded decoder rejects escaped duplicate key
+ok 606 - bounded decoder rejects escaped duplicate key
+  ---
+  duration_ms: 0.1005
+  ...
+# Subtest: bounded decoder rejects nested duplicate key
+ok 607 - bounded decoder rejects nested duplicate key
+  ---
+  duration_ms: 0.073917
+  ...
+# Subtest: bounded decoder rejects unsafe integer
+ok 608 - bounded decoder rejects unsafe integer
+  ---
+  duration_ms: 0.0675
+  ...
+# Subtest: bounded decoder rejects nonfinite number
+ok 609 - bounded decoder rejects nonfinite number
+  ---
+  duration_ms: 0.060375
+  ...
+# Subtest: bounded decoder rejects lone surrogate
+ok 610 - bounded decoder rejects lone surrogate
+  ---
+  duration_ms: 0.061458
+  ...
+# Subtest: bounded decoder rejects deep JSON
+ok 611 - bounded decoder rejects deep JSON
+  ---
+  duration_ms: 0.120667
+  ...
+# Subtest: bounded decoder rejects HTML
+ok 612 - bounded decoder rejects HTML
+  ---
+  duration_ms: 0.134125
+  ...
+# Subtest: invalid UTF8 does not become a replacement-character name
+ok 613 - invalid UTF8 does not become a replacement-character name
+  ---
+  duration_ms: 0.201417
+  ...
+# Subtest: actual streamed bytes bound missing and lying Content-Length and cancel the source
+ok 614 - actual streamed bytes bound missing and lying Content-Length and cancel the source
+  ---
+  duration_ms: 0.456125
+  ...
+# Subtest: trusted bearer injection is optional and URL/requests never choose an identity
+ok 615 - trusted bearer injection is optional and URL/requests never choose an identity
+  ---
+  duration_ms: 0.637666
+  ...
+# Subtest: abort is honored before dispatch and for a transport which ignores the signal
+ok 616 - abort is honored before dispatch and for a transport which ignores the signal
+  ---
+  duration_ms: 11.268833
+  ...
+# Subtest: abort cancels a stalled response reader rather than publishing its late result
+ok 617 - abort cancels a stalled response reader rather than publishing its late result
+  ---
+  duration_ms: 1.160875
+  ...
+# Subtest: uncertain acknowledgement replays the exact original idempotent request
+ok 618 - uncertain acknowledgement replays the exact original idempotent request
+  ---
+  duration_ms: 4.885458
+  ...
+# Subtest: catalogue totals and membership remain complete across pages and languages
+ok 619 - catalogue totals and membership remain complete across pages and languages
+  ---
+  duration_ms: 5.823708
+  ...
+# Subtest: unknown, unavailable, revoked and zero inventory outcomes are distinct
+ok 620 - unknown, unavailable, revoked and zero inventory outcomes are distinct
+  ---
+  duration_ms: 0.070458
+  ...
+# Subtest: browsing has no context side effect, adding context does not restrict scope
+ok 621 - browsing has no context side effect, adding context does not restrict scope
+  ---
+  duration_ms: 0.180709
+  ...
+# Subtest: each run freezes context and snapshot, so later context changes affect only future runs
+ok 622 - each run freezes context and snapshot, so later context changes affect only future runs
+  ---
+  duration_ms: 0.445125
+  ...
+# Subtest: drafts and transcripts stay separate, including while opening an evidence deep link
+ok 623 - drafts and transcripts stay separate, including while opening an evidence deep link
+  ---
+  duration_ms: 0.582917
+  ...
+# Subtest: completed and partial runs produce one retained answer, even after repeated ticks
+ok 624 - completed and partial runs produce one retained answer, even after repeated ticks
+  ---
+  duration_ms: 0.221833
+  ...
+# Subtest: cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+ok 625 - cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+  ---
+  duration_ms: 0.158708
+  ...
+# Subtest: clarification and interruption retain the question and never fabricate a result
+ok 626 - clarification and interruption retain the question and never fabricate a result
+  ---
+  duration_ms: 0.1195
+  ...
+# Subtest: refresh creates an independent branch, flags withdrawn context and preserves old evidence
+ok 627 - refresh creates an independent branch, flags withdrawn context and preserves old evidence
+  ---
+  duration_ms: 0.338084
+  ...
+# Subtest: approval binds the reviewed proposal version and code edits invalidate it
+ok 628 - approval binds the reviewed proposal version and code edits invalidate it
+  ---
+  duration_ms: 1.4315
+  ...
+# Subtest: empty scope cannot produce fabricated matching datasets
+ok 629 - empty scope cannot produce fabricated matching datasets
+  ---
+  duration_ms: 0.197333
+  ...
+# Subtest: malformed or stale local state fails safely and navigation preserves catalogue state
+ok 630 - malformed or stale local state fails safely and navigation preserves catalogue state
+  ---
+  duration_ms: 0.327791
+  ...
+# Subtest: new storage namespace cannot load P00 or legacy state implicitly
+ok 631 - new storage namespace cannot load P00 or legacy state implicitly
+  ---
+  duration_ms: 0.673792
+  ...
+# Subtest: valid display preferences round trip and defaults never alias callers
+ok 632 - valid display preferences round trip and defaults never alias callers
+  ---
+  duration_ms: 0.109833
+  ...
+# Subtest: invalid panel width NaN restores bounded default
+ok 633 - invalid panel width NaN restores bounded default
+  ---
+  duration_ms: 0.049
+  ...
+# Subtest: invalid panel width Infinity restores bounded default
+ok 634 - invalid panel width Infinity restores bounded default
+  ---
+  duration_ms: 0.035791
+  ...
+# Subtest: invalid panel width -Infinity restores bounded default
+ok 635 - invalid panel width -Infinity restores bounded default
+  ---
+  duration_ms: 0.0395
+  ...
+# Subtest: invalid panel width -1 restores bounded default
+ok 636 - invalid panel width -1 restores bounded default
+  ---
+  duration_ms: 0.029125
+  ...
+# Subtest: invalid panel width 0 restores bounded default
+ok 637 - invalid panel width 0 restores bounded default
+  ---
+  duration_ms: 0.083166
+  ...
+# Subtest: invalid panel width 319 restores bounded default
+ok 638 - invalid panel width 319 restores bounded default
+  ---
+  duration_ms: 0.028833
+  ...
+# Subtest: invalid panel width 621 restores bounded default
+ok 639 - invalid panel width 621 restores bounded default
+  ---
+  duration_ms: 0.225833
+  ...
+# Subtest: invalid panel width 18014398509481984 restores bounded default
+ok 640 - invalid panel width 18014398509481984 restores bounded default
+  ---
+  duration_ms: 0.24
+  ...
+# Subtest: invalid panel width 390.5 restores bounded default
+ok 641 - invalid panel width 390.5 restores bounded default
+  ---
+  duration_ms: 0.075083
+  ...
+# Subtest: invalid panel width 390 restores bounded default
+ok 642 - invalid panel width 390 restores bounded default
+  ---
+  duration_ms: 0.028542
+  ...
+# Subtest: invalid panel width true restores bounded default
+ok 643 - invalid panel width true restores bounded default
+  ---
+  duration_ms: 0.01975
+  ...
+# Subtest: presentation restoration cannot accept role, account, permission, snapshot or scope
+ok 644 - presentation restoration cannot accept role, account, permission, snapshot or scope
+  ---
+  duration_ms: 0.111209
+  ...
+# Subtest: invalid or oversized storage remains presentational defaults
+ok 645 - invalid or oversized storage remains presentational defaults
+  ---
+  duration_ms: 0.145916
+  ...
+# Subtest: legacy nested preferences cannot migrate authority into v1
+ok 646 - legacy nested preferences cannot migrate authority into v1
+  ---
+  duration_ms: 0.030291
+  ...
+# Subtest: preview host requires an explicit process selection
+ok 647 - preview host requires an explicit process selection
+  ---
+  duration_ms: 0.489584
+  ...
+# Subtest: synthetic host rejects remote, deceptive and absent host headers
+ok 648 - synthetic host rejects remote, deceptive and absent host headers
+  ---
+  duration_ms: 0.12375
+  ...
+# Subtest: mode envelope contains no synthetic identity or credentials
+ok 649 - mode envelope contains no synthetic identity or credentials
+  ---
+  duration_ms: 0.256416
+  ...
+# Subtest: 31 server answers keep the freshly acknowledged off-page active job and poll its separate event cursor
+ok 650 - 31 server answers keep the freshly acknowledged off-page active job and poll its separate event cursor
+  ---
+  duration_ms: 46.838916
+  ...
+# Subtest: off-page 401 cannot retain cached private answers
+ok 651 - off-page 401 cannot retain cached private answers
+  ---
+  duration_ms: 2.151208
+  ...
+# Subtest: off-page 403 cannot retain cached private answers
+ok 652 - off-page 403 cannot retain cached private answers
+  ---
+  duration_ms: 2.987
+  ...
+# Subtest: off-page 503 cannot retain cached private answers
+ok 653 - off-page 503 cannot retain cached private answers
+  ---
+  duration_ms: 1.83475
+  ...
+# Subtest: a missing selected answer is reported for guarded publication rather than retained from stale cache
+ok 654 - a missing selected answer is reported for guarded publication rather than retained from stale cache
+  ---
+  duration_ms: 4.119208
+  ...
+# Subtest: only an explicit current selection authorizes status backfill, not arbitrary cached private history
+ok 655 - only an explicit current selection authorizes status backfill, not arbitrary cached private history
+  ---
+  duration_ms: 7.19975
+  ...
+# Subtest: late account transition prevents read publication or another request
+ok 656 - late account transition prevents read publication or another request
+  ---
+  duration_ms: 14.484708
+  ...
+# Subtest: late permission transition prevents read publication or another request
+ok 657 - late permission transition prevents read publication or another request
+  ---
+  duration_ms: 12.894625
+  ...
+# Subtest: late navigation transition prevents read publication or another request
+ok 658 - late navigation transition prevents read publication or another request
+  ---
+  duration_ms: 2.555
+  ...
+# Subtest: late mutation transition prevents read publication or another request
+ok 659 - late mutation transition prevents read publication or another request
+  ---
+  duration_ms: 2.137417
+  ...
+# Subtest: already aborted request never starts a client or exposes cached views
+ok 660 - already aborted request never starts a client or exposes cached views
+  ---
+  duration_ms: 0.141041
+  ...
+# Subtest: answer policy changes require reauthorization; independent evidence resource revision is permitted
+ok 661 - answer policy changes require reauthorization; independent evidence resource revision is permitted
+  ---
+  duration_ms: 6.338083
+  ...
+# Subtest: bounded public read window rejects invalid page counts before contacting a service
+ok 662 - bounded public read window rejects invalid page counts before contacting a service
+  ---
+  duration_ms: 0.201125
+  ...
+# Subtest: separate answer key and original submitted binding survive unchanged identity mounts, with no body storage
+ok 663 - separate answer key and original submitted binding survive unchanged identity mounts, with no body storage
+  ---
+  duration_ms: 1.250125
+  ...
+# Subtest: volatile selected run/job/original receipt IDs restore within conversation and clear at permission/account/denial changes
+ok 664 - volatile selected run/job/original receipt IDs restore within conversation and clear at permission/account/denial changes
+  ---
+  duration_ms: 0.329583
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 665 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.077
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 666 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.103458
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 667 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.064917
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 668 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.063875
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 669 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.051958
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 670 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.050042
+  ...
+# Subtest: selection cannot restore a forged receipt, unbound job, arbitrary fields or invalid run URL
+ok 671 - selection cannot restore a forged receipt, unbound job, arbitrary fields or invalid run URL
+  ---
+  duration_ms: 0.257334
+  ...
+# Subtest: wire snapshot highwater does not impersonate already merged answer events
+ok 672 - wire snapshot highwater does not impersonate already merged answer events
+  ---
+  duration_ms: 0.424708
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 673 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.136209
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 674 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.045958
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 675 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.041917
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 676 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.03525
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 677 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.035
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 678 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.035375
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 679 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.070417
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 680 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 4.9655
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 681 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.109333
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 682 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.055708
+  ...
+# Subtest: immutable completed answer cannot be changed, removed or restarted; cancelled preparation remains distinct
+ok 683 - immutable completed answer cannot be changed, removed or restarted; cancelled preparation remains distinct
+  ---
+  duration_ms: 0.149541
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 684 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.059667
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 685 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.0355
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 686 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.033
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 687 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.030542
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 688 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.030083
+  ...
+# Subtest: actual React answer markup retains qualifiers, literal host table values and citations (en)
+ok 689 - actual React answer markup retains qualifiers, literal host table values and citations (en)
+  ---
+  duration_ms: 5.339209
+  ...
+# Subtest: actual React answer markup retains qualifiers, literal host table values and citations (ja)
+ok 690 - actual React answer markup retains qualifiers, literal host table values and citations (ja)
+  ---
+  duration_ms: 0.572209
+  ...
+# Subtest: actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (en)
+ok 691 - actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (en)
+  ---
+  duration_ms: 0.834834
+  ...
+# Subtest: actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (ja)
+ok 692 - actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (ja)
+  ---
+  duration_ms: 0.561333
+  ...
+# Subtest: actual retained empty states distinguish known zero and unknown population without preview-count promotion
+ok 693 - actual retained empty states distinguish known zero and unknown population without preview-count promotion
+  ---
+  duration_ms: 1.053
+  ...
+# Subtest: actual zero-column retained documentary/catalogue payload remains visible as literal objects
+ok 694 - actual zero-column retained documentary/catalogue payload remains visible as literal objects
+  ---
+  duration_ms: 0.483791
+  ...
+# Subtest: actual zero-column retained documentary/catalogue payload remains visible as literal objects
+ok 695 - actual zero-column retained documentary/catalogue payload remains visible as literal objects
+  ---
+  duration_ms: 0.417917
+  ...
+# Subtest: actual answer terminal, active and cancelled states keep cancellation and shared budget separate
+ok 696 - actual answer terminal, active and cancelled states keep cancellation and shared budget separate
+  ---
+  duration_ms: 1.32175
+  ...
+# Subtest: initial actual React hook render never dispatches generation from reads/restoration
+ok 697 - initial actual React hook render never dispatches generation from reads/restoration
+  ---
+  duration_ms: 1.13825
+  ...
+# Subtest: production runtime and workspace wire independent transport and explicit attachment without changing C20 synthesis
+ok 698 - production runtime and workspace wire independent transport and explicit attachment without changing C20 synthesis
+  ---
+  duration_ms: 1.047834
+  ...
+# Subtest: separate answers/submit uses fixed same-origin safe transport
+ok 699 - separate answers/submit uses fixed same-origin safe transport
+  ---
+  duration_ms: 12.477417
+  ...
+# Subtest: separate answers/status uses fixed same-origin safe transport
+ok 700 - separate answers/status uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.188875
+  ...
+# Subtest: separate answers/events uses fixed same-origin safe transport
+ok 701 - separate answers/events uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.184666
+  ...
+# Subtest: separate answers/cancel uses fixed same-origin safe transport
+ok 702 - separate answers/cancel uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.231833
+  ...
+# Subtest: separate answers/list uses fixed same-origin safe transport
+ok 703 - separate answers/list uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.233583
+  ...
+# Subtest: separate evidence/list uses fixed same-origin safe transport
+ok 704 - separate evidence/list uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.229666
+  ...
+# Subtest: separate evidence/open uses fixed same-origin safe transport
+ok 705 - separate evidence/open uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.115333
+  ...
+# Subtest: separate evidence/page uses fixed same-origin safe transport
+ok 706 - separate evidence/page uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.139834
+  ...
+# Subtest: separate evidence/export uses fixed same-origin safe transport
+ok 707 - separate evidence/export uses fixed same-origin safe transport
+  ---
+  duration_ms: 0.683291
+  ...
+# Subtest: evidence HTTP401 is authoritative despite unreadable error details
+ok 708 - evidence HTTP401 is authoritative despite unreadable error details
+  ---
+  duration_ms: 0.662958
+  ...
+# Subtest: evidence HTTP403 is authoritative despite unreadable error details
+ok 709 - evidence HTTP403 is authoritative despite unreadable error details
+  ---
+  duration_ms: 0.147958
+  ...
+# Subtest: evidence HTTP404 is authoritative despite unreadable error details
+ok 710 - evidence HTTP404 is authoritative despite unreadable error details
+  ---
+  duration_ms: 0.071208
+  ...
+# Subtest: evidence HTTP409 is authoritative despite unreadable error details
+ok 711 - evidence HTTP409 is authoritative despite unreadable error details
+  ---
+  duration_ms: 0.060083
+  ...
+# Subtest: evidence HTTP422 is authoritative despite unreadable error details
+ok 712 - evidence HTTP422 is authoritative despite unreadable error details
+  ---
+  duration_ms: 0.057708
+  ...
+# Subtest: evidence HTTP503 is authoritative despite unreadable error details
+ok 713 - evidence HTTP503 is authoritative despite unreadable error details
+  ---
+  duration_ms: 0.06575
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 714 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.158583
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 715 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.0835
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 716 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.175458
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 717 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.115209
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 718 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.097416
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 719 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.076292
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 720 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.139458
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+ok 721 - ambiguous/nonfinite/unsafe/deep/malformed successful evidence JSON is rejected
+  ---
+  duration_ms: 0.078375
+  ...
+# Subtest: response bounds apply to actual bytes, announced bytes and strict UTF-8
+ok 722 - response bounds apply to actual bytes, announced bytes and strict UTF-8
+  ---
+  duration_ms: 15.640208
+  ...
+# Subtest: invalid request values, excessive requests and arbitrary routes do not reach fetch
+ok 723 - invalid request values, excessive requests and arbitrary routes do not reach fetch
+  ---
+  duration_ms: 0.326667
+  ...
+# Subtest: abort during late noncooperative fetch discards the response without restoring protected data
+ok 724 - abort during late noncooperative fetch discards the response without restoring protected data
+  ---
+  duration_ms: 13.49625
+  ...
+# Subtest: separate evidence discovery is optional and never changes the C20 synthesis literal
+ok 725 - separate evidence discovery is optional and never changes the C20 synthesis literal
+  ---
+  duration_ms: 1.083792
+  ...
+# Subtest: permitted retained evidence remains discoverable with synthesis dispatch disabled
+ok 726 - permitted retained evidence remains discoverable with synthesis dispatch disabled
+  ---
+  duration_ms: 0.20325
+  ...
+# Subtest: evidence discovery rejects version
+ok 727 - evidence discovery rejects version
+  ---
+  duration_ms: 0.187
+  ...
+# Subtest: evidence discovery rejects endpoint injection
+ok 728 - evidence discovery rejects endpoint injection
+  ---
+  duration_ms: 0.058917
+  ...
+# Subtest: evidence discovery rejects synthesis transport
+ok 729 - evidence discovery rejects synthesis transport
+  ---
+  duration_ms: 0.159209
+  ...
+# Subtest: evidence discovery rejects evidence transport
+ok 730 - evidence discovery rejects evidence transport
+  ---
+  duration_ms: 0.071583
+  ...
+# Subtest: evidence discovery rejects nonboolean submit
+ok 731 - evidence discovery rejects nonboolean submit
+  ---
+  duration_ms: 0.056042
+  ...
+# Subtest: evidence discovery rejects submit without synthesis
+ok 732 - evidence discovery rejects submit without synthesis
+  ---
+  duration_ms: 0.055959
+  ...
+# Subtest: evidence discovery rejects synthesis without evidence
+ok 733 - evidence discovery rejects synthesis without evidence
+  ---
+  duration_ms: 0.218542
+  ...
+# Subtest: evidence discovery rejects unavailable without reason
+ok 734 - evidence discovery rejects unavailable without reason
+  ---
+  duration_ms: 4.004167
+  ...
+# Subtest: evidence HTTP discovery cannot bypass missing chat:use
+ok 735 - evidence HTTP discovery cannot bypass missing chat:use
+  ---
+  duration_ms: 0.169708
+  ...
+# Subtest: evidence HTTP discovery cannot bypass missing data:read
+ok 736 - evidence HTTP discovery cannot bypass missing data:read
+  ---
+  duration_ms: 0.053208
+  ...
+# Subtest: answer reads, explicit submit and cancellation use all five separate typed HTTP actions
+ok 737 - answer reads, explicit submit and cancellation use all five separate typed HTTP actions
+  ---
+  duration_ms: 28.807583
+  ...
+# Subtest: evidence list preserves explicitly attached original run bindings, while reads bind selected receipt/hash
+ok 738 - evidence list preserves explicitly attached original run bindings, while reads bind selected receipt/hash
+  ---
+  duration_ms: 3.799
+  ...
+# Subtest: page/export preserve literal retained values, scoped page totals, UTF8 content digest and server CSV escaping
+ok 739 - page/export preserve literal retained values, scoped page totals, UTF8 content digest and server CSV escaping
+  ---
+  duration_ms: 16.927042
+  ...
+# Subtest: strict answer model rejects missing version
+ok 740 - strict answer model rejects missing version
+  ---
+  duration_ms: 0.287167
+  ...
+# Subtest: strict answer model rejects wrong version
+ok 741 - strict answer model rejects wrong version
+  ---
+  duration_ms: 0.111334
+  ...
+# Subtest: strict answer model rejects unknown field
+ok 742 - strict answer model rejects unknown field
+  ---
+  duration_ms: 0.122584
+  ...
+# Subtest: strict answer model rejects synthetic flag
+ok 743 - strict answer model rejects synthetic flag
+  ---
+  duration_ms: 0.111333
+  ...
+# Subtest: strict answer model rejects bool cursor
+ok 744 - strict answer model rejects bool cursor
+  ---
+  duration_ms: 0.088083
+  ...
+# Subtest: strict answer model rejects snapshot activity injection
+ok 745 - strict answer model rejects snapshot activity injection
+  ---
+  duration_ms: 0.312875
+  ...
+# Subtest: strict answer model rejects unpublished prose
+ok 746 - strict answer model rejects unpublished prose
+  ---
+  duration_ms: 0.327
+  ...
+# Subtest: strict answer model rejects independent scientific approval
+ok 747 - strict answer model rejects independent scientific approval
+  ---
+  duration_ms: 0.202792
+  ...
+# Subtest: strict answer model rejects missing scientific qualification
+ok 748 - strict answer model rejects missing scientific qualification
+  ---
+  duration_ms: 0.144625
+  ...
+# Subtest: strict answer model rejects uncited receipt
+ok 749 - strict answer model rejects uncited receipt
+  ---
+  duration_ms: 0.104459
+  ...
+# Subtest: strict answer model rejects repeated block
+ok 750 - strict answer model rejects repeated block
+  ---
+  duration_ms: 0.109209
+  ...
+# Subtest: strict answer model rejects unsafe elapsed
+ok 751 - strict answer model rejects unsafe elapsed
+  ---
+  duration_ms: 0.052875
+  ...
+# Subtest: strict evidence rejects id/hash mismatch
+ok 752 - strict evidence rejects id/hash mismatch
+  ---
+  duration_ms: 0.215625
+  ...
+# Subtest: strict evidence rejects attachment snapshot mismatch
+ok 753 - strict evidence rejects attachment snapshot mismatch
+  ---
+  duration_ms: 0.1675
+  ...
+# Subtest: strict evidence rejects pin substitution
+ok 754 - strict evidence rejects pin substitution
+  ---
+  duration_ms: 0.162541
+  ...
+# Subtest: strict evidence rejects unknown rendered as zero
+ok 755 - strict evidence rejects unknown rendered as zero
+  ---
+  duration_ms: 0.175917
+  ...
+# Subtest: strict evidence rejects known without actual count
+ok 756 - strict evidence rejects known without actual count
+  ---
+  duration_ms: 0.178334
+  ...
+# Subtest: strict evidence rejects coverage unknown without reason
+ok 757 - strict evidence rejects coverage unknown without reason
+  ---
+  duration_ms: 0.132708
+  ...
+# Subtest: strict evidence rejects invalid scope dates
+ok 758 - strict evidence rejects invalid scope dates
+  ---
+  duration_ms: 0.346042
+  ...
+# Subtest: strict evidence rejects duplicate columns
+ok 759 - strict evidence rejects duplicate columns
+  ---
+  duration_ms: 0.185209
+  ...
+# Subtest: strict evidence rejects documentary promoted to exact result
+ok 760 - strict evidence rejects documentary promoted to exact result
+  ---
+  duration_ms: 0.166916
+  ...
+# Subtest: known zero and unknown totals remain distinct, valid and immutable
+ok 761 - known zero and unknown totals remain distinct, valid and immutable
+  ---
+  duration_ms: 0.083916
+  ...
+# Subtest: quoted scientific rows and answer data never become protocol receipts by matching field names
+ok 762 - quoted scientific rows and answer data never become protocol receipts by matching field names
+  ---
+  duration_ms: 14.01675
+  ...
+# Subtest: strict envelopes reject undeclared inherited property name constructor
+ok 763 - strict envelopes reject undeclared inherited property name constructor
+  ---
+  duration_ms: 0.153625
+  ...
+# Subtest: strict envelopes reject undeclared inherited property name __proto__
+ok 764 - strict envelopes reject undeclared inherited property name __proto__
+  ---
+  duration_ms: 0.092792
+  ...
+# Subtest: strict envelopes reject undeclared inherited property name toString
+ok 765 - strict envelopes reject undeclared inherited property name toString
+  ---
+  duration_ms: 0.103041
+  ...
+# Subtest: strict envelopes reject undeclared inherited property name hasOwnProperty
+ok 766 - strict envelopes reject undeclared inherited property name hasOwnProperty
+  ---
+  duration_ms: 0.116917
+  ...
+# Subtest: bad requests fail before network, including forged receipt hashes and unsafe cursors
+ok 767 - bad requests fail before network, including forged receipt hashes and unsafe cursors
+  ---
+  duration_ms: 0.348208
+  ...
+# Subtest: typed clients reject wrong run/job/list identity, cursor bindings, locale and changed page offsets
+ok 768 - typed clients reject wrong run/job/list identity, cursor bindings, locale and changed page offsets
+  ---
+  duration_ms: 11.776459
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 769 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.300333
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 770 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.152584
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 771 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.161834
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 772 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.11975
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 773 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.115042
+  ...
+# Subtest: real TypeScript clients accept all nine saved actual local Python HTTP action envelopes without generated fallbacks
+ok 774 - real TypeScript clients accept all nine saved actual local Python HTTP action envelopes without generated fallbacks
+  ---
+  duration_ms: 47.459875
+  ...
+# Subtest: a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+ok 775 - a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+  ---
+  duration_ms: 0.590375
+  ...
+# Subtest: poll requests coalesce and do not start another history read while a mutation is running
+ok 776 - poll requests coalesce and do not start another history read while a mutation is running
+  ---
+  duration_ms: 0.156
+  ...
+# Subtest: a scheduler created during a mutation waits for its release before fetching
+ok 777 - a scheduler created during a mutation waits for its release before fetching
+  ---
+  duration_ms: 0.103584
+  ...
+# Subtest: one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+ok 778 - one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+  ---
+  duration_ms: 0.270625
+  ...
+# Subtest: navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+ok 779 - navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+  ---
+  duration_ms: 0.183041
+  ...
+# Subtest: an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+ok 780 - an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+  ---
+  duration_ms: 0.380333
+  ...
+# Subtest: the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+ok 781 - the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+  ---
+  duration_ms: 27.815
+  ...
+# Subtest: more than25 actual HTTP history records keep an acknowledged off-page queued run active through repeated scheduler polls
+ok 782 - more than25 actual HTTP history records keep an acknowledged off-page queued run active through repeated scheduler polls
+  ---
+  duration_ms: 57.17375
+  ...
+# Subtest: cached activity without an explicit acknowledgement cannot retain or authorize itself
+ok 783 - cached activity without an explicit acknowledgement cannot retain or authorize itself
+  ---
+  duration_ms: 0.148667
+  ...
+# Subtest: off-page status401 cannot publish a list-only replacement or stale cached run
+ok 784 - off-page status401 cannot publish a list-only replacement or stale cached run
+  ---
+  duration_ms: 0.231916
+  ...
+# Subtest: off-page status403 cannot publish a list-only replacement or stale cached run
+ok 785 - off-page status403 cannot publish a list-only replacement or stale cached run
+  ---
+  duration_ms: 0.055125
+  ...
+# Subtest: off-page status503 cannot publish a list-only replacement or stale cached run
+ok 786 - off-page status503 cannot publish a list-only replacement or stale cached run
+  ---
+  duration_ms: 0.054333
+  ...
+# Subtest: 404 omission is returned without mutating retention before the guarded workspace publication
+ok 787 - 404 omission is returned without mutating retention before the guarded workspace publication
+  ---
+  duration_ms: 0.166208
+  ...
+# Subtest: off-page status cannot change retained investigation_id
+ok 788 - off-page status cannot change retained investigation_id
+  ---
+  duration_ms: 0.086166
+  ...
+# Subtest: off-page status cannot change retained conversation_id
+ok 789 - off-page status cannot change retained conversation_id
+  ---
+  duration_ms: 0.045166
+  ...
+# Subtest: off-page status cannot change retained revision_id
+ok 790 - off-page status cannot change retained revision_id
+  ---
+  duration_ms: 0.158666
+  ...
+# Subtest: off-page status cannot change retained snapshot_id
+ok 791 - off-page status cannot change retained snapshot_id
+  ---
+  duration_ms: 0.21175
+  ...
+# Subtest: off-page status cannot change retained payload_sha256
+ok 792 - off-page status cannot change retained payload_sha256
+  ---
+  duration_ms: 0.043542
+  ...
+# Subtest: off-page status cannot substitute its run ID, scope or references under the same retained binding
+ok 793 - off-page status cannot substitute its run ID, scope or references under the same retained binding
+  ---
+  duration_ms: 0.238083
+  ...
+# Subtest: a listed retained run must match its binding too; status backfill cannot bypass this check
+ok 794 - a listed retained run must match its binding too; status backfill cannot bypass this check
+  ---
+  duration_ms: 0.05275
+  ...
+# Subtest: off-page event high water and immutable history cannot regress or substitute the submitted context
+ok 795 - off-page event high water and immutable history cannot regress or substitute the submitted context
+  ---
+  duration_ms: 0.158875
+  ...
+# Subtest: account change during late status hydration cannot publish or request subsequent events
+ok 796 - account change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.147542
+  ...
+# Subtest: permission change during late status hydration cannot publish or request subsequent events
+ok 797 - permission change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.089292
+  ...
+# Subtest: navigation change during late status hydration cannot publish or request subsequent events
+ok 798 - navigation change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.054417
+  ...
+# Subtest: mutation change during late status hydration cannot publish or request subsequent events
+ok 799 - mutation change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.045292
+  ...
+# Subtest: abort change during late status hydration cannot publish or request subsequent events
+ok 800 - abort change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.050959
+  ...
+# Subtest: navigation during list discovery aborts before any explicit off-page request
+ok 801 - navigation during list discovery aborts before any explicit off-page request
+  ---
+  duration_ms: 0.059417
+  ...
+# Subtest: retention bounds always keep newest acknowledgements, refresh explicit actions and clear on denied identity
+ok 802 - retention bounds always keep newest acknowledgements, refresh explicit actions and clear on denied identity
+  ---
+  duration_ms: 0.315333
+  ...
+# Subtest: retained identities are detached, conversation scoped, immutable and bounded across conversations
+ok 803 - retained identities are detached, conversation scoped, immutable and bounded across conversations
+  ---
+  duration_ms: 0.633083
+  ...
+# Subtest: forged or oversized retained metadata fails before any transport call
+ok 804 - forged or oversized retained metadata fails before any transport call
+  ---
+  duration_ms: 0.116417
+  ...
+# Subtest: actual workspace acknowledges after response guards and publishes only complete current hydration
+ok 805 - actual workspace acknowledges after response guards and publishes only complete current hydration
+  ---
+  duration_ms: 24.467166
+  ...
+# Subtest: submit snapshots and deeply freezes context without freezing or aliasing the caller
+ok 806 - submit snapshots and deeply freezes context without freezing or aliasing the caller
+  ---
+  duration_ms: 1.379666
+  ...
+# Subtest: a later context update affects new submissions while active activity and continuation retain the old revision
+ok 807 - a later context update affects new submissions while active activity and continuation retain the old revision
+  ---
+  duration_ms: 0.4905
+  ...
+# Subtest: all six operations are exposed with no implicit production transport
+ok 808 - all six operations are exposed with no implicit production transport
+  ---
+  duration_ms: 0.051208
+  ...
+# Subtest: deterministic completed outcome and public evidence qualifications
+ok 809 - deterministic completed outcome and public evidence qualifications
+  ---
+  duration_ms: 0.243625
+  ...
+# Subtest: deterministic partial outcome and public evidence qualifications
+ok 810 - deterministic partial outcome and public evidence qualifications
+  ---
+  duration_ms: 0.195834
+  ...
+# Subtest: deterministic failed outcome and public evidence qualifications
+ok 811 - deterministic failed outcome and public evidence qualifications
+  ---
+  duration_ms: 0.153917
+  ...
+# Subtest: clarification pauses active elapsed time and resumes the original binding
+ok 812 - clarification pauses active elapsed time and resumes the original binding
+  ---
+  duration_ms: 0.356666
+  ...
+# Subtest: cancellation or continuation from partial retains the immutable source run
+ok 813 - cancellation or continuation from partial retains the immutable source run
+  ---
+  duration_ms: 0.269333
+  ...
+# Subtest: cancellation or continuation from failed retains the immutable source run
+ok 814 - cancellation or continuation from failed retains the immutable source run
+  ---
+  duration_ms: 0.392333
+  ...
+# Subtest: cancellation or continuation from running retains the immutable source run
+ok 815 - cancellation or continuation from running retains the immutable source run
+  ---
+  duration_ms: 0.383875
+  ...
+# Subtest: cancellation or continuation from clarification retains the immutable source run
+ok 816 - cancellation or continuation from clarification retains the immutable source run
+  ---
+  duration_ms: 0.2375
+  ...
+# Subtest: monotonic public event pages replay exactly, reject reordered/context-substituted pages
+ok 817 - monotonic public event pages replay exactly, reject reordered/context-substituted pages
+  ---
+  duration_ms: 0.466083
+  ...
+# Subtest: event cursor -1 fails closed
+ok 818 - event cursor -1 fails closed
+  ---
+  duration_ms: 0.125166
+  ...
+# Subtest: event cursor 0.5 fails closed
+ok 819 - event cursor 0.5 fails closed
+  ---
+  duration_ms: 0.069458
+  ...
+# Subtest: event cursor Infinity fails closed
+ok 820 - event cursor Infinity fails closed
+  ---
+  duration_ms: 0.070708
+  ...
+# Subtest: event cursor 999 fails closed
+ok 821 - event cursor 999 fails closed
+  ---
+  duration_ms: 0.071333
+  ...
+# Subtest: status, events, cancellation, clarification and continuation cannot cross conversations
+ok 822 - status, events, cancellation, clarification and continuation cannot cross conversations
+  ---
+  duration_ms: 0.178666
+  ...
+# Subtest: operation replay reuses its result and rejects changed payload
+ok 823 - operation replay reuses its result and rejects changed payload
+  ---
+  duration_ms: 0.139041
+  ...
+# Subtest: aborted operations make no state changes
+ok 824 - aborted operations make no state changes
+  ---
+  duration_ms: 0.250666
+  ...
+# Subtest: elapsed time is monotonic despite a backwards injected clock
+ok 825 - elapsed time is monotonic despite a backwards injected clock
+  ---
+  duration_ms: 0.134833
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 826 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.046208
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 827 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.031167
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 828 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.076292
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 829 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.029667
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 830 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.031875
+  ...
+# Subtest: binding and reference identity validation rejects invalid/mismatched/duplicate input
+ok 831 - binding and reference identity validation rejects invalid/mismatched/duplicate input
+  ---
+  duration_ms: 0.213209
+  ...
+# Subtest: C17 retained artifact references keep their own snapshots while catalogue references require the current snapshot
+ok 832 - C17 retained artifact references keep their own snapshots while catalogue references require the current snapshot
+  ---
+  duration_ms: 0.195292
+  ...
+# Subtest: reference uniqueness follows the complete C17 kind/id/snapshot identity
+ok 833 - reference uniqueness follows the complete C17 kind/id/snapshot identity
+  ---
+  duration_ms: 0.06525
+  ...
+# Subtest: production entry import graphs cannot select the development fixture
+ok 834 - production entry import graphs cannot select the development fixture
+  ---
+  duration_ms: 105.023542
+  ...
+# Subtest: elapsed formatter preserves zero and avoids fabricated wall time
+ok 835 - elapsed formatter preserves zero and avoids fabricated wall time
+  ---
+  duration_ms: 0.121708
+  ...
+# Subtest: actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (en)
+ok 836 - actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (en)
+  ---
+  duration_ms: 8.531583
+  ...
+# Subtest: actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (ja)
+ok 837 - actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (ja)
+  ---
+  duration_ms: 4.850625
+  ...
+# Subtest: production completion and approval are honest without fixture labels or invented answers (en)
+ok 838 - production completion and approval are honest without fixture labels or invented answers (en)
+  ---
+  duration_ms: 1.805916
+  ...
+# Subtest: production completion and approval are honest without fixture labels or invented answers (ja)
+ok 839 - production completion and approval are honest without fixture labels or invented answers (ja)
+  ---
+  duration_ms: 1.303042
+  ...
+# Subtest: a result citation invokes the supplied evidence action with the exact run and identity
+ok 840 - a result citation invokes the supplied evidence action with the exact run and identity
+  ---
+  duration_ms: 0.206375
+  ...
+# Subtest: all seven HTTP operations use fixed same-origin POST, no cookies/cache/redirects, and an injected memory token
+ok 841 - all seven HTTP operations use fixed same-origin POST, no cookies/cache/redirects, and an injected memory token
+  ---
+  duration_ms: 22.652083
+  ...
+# Subtest: production run context and retained artifact identity are detached and deeply frozen
+ok 842 - production run context and retained artifact identity are detached and deeply frozen
+  ---
+  duration_ms: 2.926084
+  ...
+# Subtest: lost acknowledgement replay sends the exact original key, question and expected revision
+ok 843 - lost acknowledgement replay sends the exact original key, question and expected revision
+  ---
+  duration_ms: 3.038792
+  ...
+# Subtest: caller mutation during asynchronous token resolution cannot rebind the accepted submission
+ok 844 - caller mutation during asynchronous token resolution cannot rebind the accepted submission
+  ---
+  duration_ms: 1.286458
+  ...
+# Subtest: run responses fail closed on version
+ok 845 - run responses fail closed on version
+  ---
+  duration_ms: 0.323666
+  ...
+# Subtest: run responses fail closed on unknown envelope field
+ok 846 - run responses fail closed on unknown envelope field
+  ---
+  duration_ms: 0.272333
+  ...
+# Subtest: run responses fail closed on foreign owner
+ok 847 - run responses fail closed on foreign owner
+  ---
+  duration_ms: 0.633625
+  ...
+# Subtest: run responses fail closed on foreign conversation
+ok 848 - run responses fail closed on foreign conversation
+  ---
+  duration_ms: 0.636375
+  ...
+# Subtest: run responses fail closed on foreign run
+ok 849 - run responses fail closed on foreign run
+  ---
+  duration_ms: 2.021958
+  ...
+# Subtest: run responses fail closed on status
+ok 850 - run responses fail closed on status
+  ---
+  duration_ms: 0.480917
+  ...
+# Subtest: run responses fail closed on synthetic production flag
+ok 851 - run responses fail closed on synthetic production flag
+  ---
+  duration_ms: 0.600667
+  ...
+# Subtest: run responses fail closed on numeric fixture flag
+ok 852 - run responses fail closed on numeric fixture flag
+  ---
+  duration_ms: 0.872042
+  ...
+# Subtest: run responses fail closed on fabricated result
+ok 853 - run responses fail closed on fabricated result
+  ---
+  duration_ms: 0.244459
+  ...
+# Subtest: run responses fail closed on embedded private events
+ok 854 - run responses fail closed on embedded private events
+  ---
+  duration_ms: 0.167917
+  ...
+# Subtest: run responses fail closed on nonzero snapshot cursor
+ok 855 - run responses fail closed on nonzero snapshot cursor
+  ---
+  duration_ms: 0.143958
+  ...
+# Subtest: run responses fail closed on boolean snapshot cursor
+ok 856 - run responses fail closed on boolean snapshot cursor
+  ---
+  duration_ms: 0.135917
+  ...
+# Subtest: run responses fail closed on unsafe high water
+ok 857 - run responses fail closed on unsafe high water
+  ---
+  duration_ms: 0.136625
+  ...
+# Subtest: run responses fail closed on negative elapsed
+ok 858 - run responses fail closed on negative elapsed
+  ---
+  duration_ms: 0.537417
+  ...
+# Subtest: run responses fail closed on missing high water
+ok 859 - run responses fail closed on missing high water
+  ---
+  duration_ms: 0.146958
+  ...
+# Subtest: run responses fail closed on unknown scope field
+ok 860 - run responses fail closed on unknown scope field
+  ---
+  duration_ms: 0.209458
+  ...
+# Subtest: run responses fail closed on substituted catalogue snapshot
+ok 861 - run responses fail closed on substituted catalogue snapshot
+  ---
+  duration_ms: 0.552792
+  ...
+# Subtest: run responses fail closed on duplicate references
+ok 862 - run responses fail closed on duplicate references
+  ---
+  duration_ms: 0.601958
+  ...
+# Subtest: run responses fail closed on missing clarification token
+ok 863 - run responses fail closed on missing clarification token
+  ---
+  duration_ms: 0.556292
+  ...
+# Subtest: run responses fail closed on nonwaiting clarification
+ok 864 - run responses fail closed on nonwaiting clarification
+  ---
+  duration_ms: 0.574875
+  ...
+# Subtest: run responses fail closed on oversized public text
+ok 865 - run responses fail closed on oversized public text
+  ---
+  duration_ms: 1.024209
+  ...
+# Subtest: run responses fail closed on unsafe event counter
+ok 866 - run responses fail closed on unsafe event counter
+  ---
+  duration_ms: 0.224291
+  ...
+# Subtest: run responses fail closed on lone surrogate
+ok 867 - run responses fail closed on lone surrogate
+  ---
+  duration_ms: 0.194167
+  ...
+# Subtest: submit responses must match the original expected context and question; continuation must link to its parent
+ok 868 - submit responses must match the original expected context and question; continuation must link to its parent
+  ---
+  duration_ms: 3.175875
+  ...
+# Subtest: bounded event pages preserve high water separately from committed cursor and continue across status snapshots
+ok 869 - bounded event pages preserve high water separately from committed cursor and continue across status snapshots
+  ---
+  duration_ms: 5.338208
+  ...
+# Subtest: event page rejects gapped cursor
+ok 870 - event page rejects gapped cursor
+  ---
+  duration_ms: 0.225875
+  ...
+# Subtest: event page rejects foreign event
+ok 871 - event page rejects foreign event
+  ---
+  duration_ms: 0.139916
+  ...
+# Subtest: event page rejects mismatched next cursor
+ok 872 - event page rejects mismatched next cursor
+  ---
+  duration_ms: 0.121166
+  ...
+# Subtest: event page rejects inconsistent more flag
+ok 873 - event page rejects inconsistent more flag
+  ---
+  duration_ms: 0.1145
+  ...
+# Subtest: event page rejects unknown private field
+ok 874 - event page rejects unknown private field
+  ---
+  duration_ms: 0.119458
+  ...
+# Subtest: event page rejects empty nonprogressing page
+ok 875 - event page rejects empty nonprogressing page
+  ---
+  duration_ms: 0.145584
+  ...
+# Subtest: event page rejects wrong initial cursor
+ok 876 - event page rejects wrong initial cursor
+  ---
+  duration_ms: 0.108
+  ...
+# Subtest: event page rejects wrong binding
+ok 877 - event page rejects wrong binding
+  ---
+  duration_ms: 0.1055
+  ...
+# Subtest: event page rejects unsafe cursor
+ok 878 - event page rejects unsafe cursor
+  ---
+  duration_ms: 0.10275
+  ...
+# Subtest: event page rejects oversized summary
+ok 879 - event page rejects oversized summary
+  ---
+  duration_ms: 0.157417
+  ...
+# Subtest: event page rejects decreasing elapsed
+ok 880 - event page rejects decreasing elapsed
+  ---
+  duration_ms: 0.115209
+  ...
+# Subtest: list pages preserve exact opaque 4096-character cursors and accept the schema's 500-item request bound
+ok 881 - list pages preserve exact opaque 4096-character cursors and accept the schema's 500-item request bound
+  ---
+  duration_ms: 0.855208
+  ...
+# Subtest: list rejects duplicate discovery
+ok 882 - list rejects duplicate discovery
+  ---
+  duration_ms: 1.430417
+  ...
+# Subtest: list rejects foreign discovery
+ok 883 - list rejects foreign discovery
+  ---
+  duration_ms: 0.490875
+  ...
+# Subtest: list rejects empty-more discovery
+ok 884 - list rejects empty-more discovery
+  ---
+  duration_ms: 0.073
+  ...
+# Subtest: list rejects same-cursor discovery
+ok 885 - list rejects same-cursor discovery
+  ---
+  duration_ms: 0.472459
+  ...
+# Subtest: list rejects too-many discovery
+ok 886 - list rejects too-many discovery
+  ---
+  duration_ms: 0.155416
+  ...
+# Subtest: list rejects long-cursor discovery
+ok 887 - list rejects long-cursor discovery
+  ---
+  duration_ms: 0.511667
+  ...
+# Subtest: invalid unknown authority request never reaches HTTP
+ok 888 - invalid unknown authority request never reaches HTTP
+  ---
+  duration_ms: 0.109083
+  ...
+# Subtest: invalid invalid key request never reaches HTTP
+ok 889 - invalid invalid key request never reaches HTTP
+  ---
+  duration_ms: 0.407875
+  ...
+# Subtest: invalid empty question request never reaches HTTP
+ok 890 - invalid empty question request never reaches HTTP
+  ---
+  duration_ms: 0.405708
+  ...
+# Subtest: invalid long question request never reaches HTTP
+ok 891 - invalid long question request never reaches HTTP
+  ---
+  duration_ms: 0.520291
+  ...
+# Subtest: invalid invalid unicode request never reaches HTTP
+ok 892 - invalid invalid unicode request never reaches HTTP
+  ---
+  duration_ms: 0.088417
+  ...
+# Subtest: invalid control text request never reaches HTTP
+ok 893 - invalid control text request never reaches HTTP
+  ---
+  duration_ms: 0.456709
+  ...
+# Subtest: invalid unknown scope request never reaches HTTP
+ok 894 - invalid unknown scope request never reaches HTTP
+  ---
+  duration_ms: 0.144916
+  ...
+# Subtest: invalid cycle request never reaches HTTP
+ok 895 - invalid cycle request never reaches HTTP
+  ---
+  duration_ms: 0.054166
+  ...
+# Subtest: invalid accessor request never reaches HTTP
+ok 896 - invalid accessor request never reaches HTTP
+  ---
+  duration_ms: 0.053041
+  ...
+# Subtest: invalid symbol request never reaches HTTP
+ok 897 - invalid symbol request never reaches HTTP
+  ---
+  duration_ms: 0.09175
+  ...
+# Subtest: invalid unsafe number request never reaches HTTP
+ok 898 - invalid unsafe number request never reaches HTTP
+  ---
+  duration_ms: 0.055292
+  ...
+# Subtest: production mutation keys, clarification token and paging bounds are mandatory before HTTP
+ok 899 - production mutation keys, clarification token and paging bounds are mandatory before HTTP
+  ---
+  duration_ms: 0.217834
+  ...
+# Subtest: HTTP 401 remains authoritative despite malformed and oversized error bodies
+ok 900 - HTTP 401 remains authoritative despite malformed and oversized error bodies
+  ---
+  duration_ms: 0.176958
+  ...
+# Subtest: HTTP 403 remains authoritative despite malformed and oversized error bodies
+ok 901 - HTTP 403 remains authoritative despite malformed and oversized error bodies
+  ---
+  duration_ms: 0.054875
+  ...
+# Subtest: HTTP 404 remains authoritative despite malformed and oversized error bodies
+ok 902 - HTTP 404 remains authoritative despite malformed and oversized error bodies
+  ---
+  duration_ms: 0.0465
+  ...
+# Subtest: HTTP 409 remains authoritative despite malformed and oversized error bodies
+ok 903 - HTTP 409 remains authoritative despite malformed and oversized error bodies
+  ---
+  duration_ms: 0.048333
+  ...
+# Subtest: HTTP 422 remains authoritative despite malformed and oversized error bodies
+ok 904 - HTTP 422 remains authoritative despite malformed and oversized error bodies
+  ---
+  duration_ms: 0.041917
+  ...
+# Subtest: HTTP 503 remains authoritative despite malformed and oversized error bodies
+ok 905 - HTTP 503 remains authoritative despite malformed and oversized error bodies
+  ---
+  duration_ms: 0.041542
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 906 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.096959
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 907 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.06125
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 908 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.595083
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 909 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.10075
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 910 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.100167
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 911 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.069333
+  ...
+# Subtest: ambiguous or invalid JSON is rejected before typed presentation
+ok 912 - ambiguous or invalid JSON is rejected before typed presentation
+  ---
+  duration_ms: 0.062166
+  ...
+# Subtest: response limits cover announced and actual streamed bytes and invalid UTF-8
+ok 913 - response limits cover announced and actual streamed bytes and invalid UTF-8
+  ---
+  duration_ms: 0.553166
+  ...
+# Subtest: aborting before send or while token resolution waits makes no HTTP call
+ok 914 - aborting before send or while token resolution waits makes no HTTP call
+  ---
+  duration_ms: 0.181459
+  ...
+# Subtest: late fetch replies and blocked stream reads are discarded after abort even if fetch ignores the signal
+ok 915 - late fetch replies and blocked stream reads are discarded after abort even if fetch ignores the signal
+  ---
+  duration_ms: 9.19275
+  ...
+# Subtest: saved actual wire evidence covers all seven production HTTP actions with synthetic TEST data
+ok 916 - saved actual wire evidence covers all seven production HTTP actions with synthetic TEST data
+  ---
+  duration_ms: 0.620417
+  ...
+# Subtest: actual Python envelope 1: submit decodes through the production TypeScript client
+ok 917 - actual Python envelope 1: submit decodes through the production TypeScript client
+  ---
+  duration_ms: 14.327125
+  ...
+# Subtest: actual Python envelope 2: status decodes through the production TypeScript client
+ok 918 - actual Python envelope 2: status decodes through the production TypeScript client
+  ---
+  duration_ms: 0.788375
+  ...
+# Subtest: actual Python envelope 3: events decodes through the production TypeScript client
+ok 919 - actual Python envelope 3: events decodes through the production TypeScript client
+  ---
+  duration_ms: 0.36575
+  ...
+# Subtest: actual Python envelope 4: cancel decodes through the production TypeScript client
+ok 920 - actual Python envelope 4: cancel decodes through the production TypeScript client
+  ---
+  duration_ms: 0.735583
+  ...
+# Subtest: actual Python envelope 5: continue decodes through the production TypeScript client
+ok 921 - actual Python envelope 5: continue decodes through the production TypeScript client
+  ---
+  duration_ms: 2.340542
+  ...
+# Subtest: actual Python envelope 6: list decodes through the production TypeScript client
+ok 922 - actual Python envelope 6: list decodes through the production TypeScript client
+  ---
+  duration_ms: 1.720583
+  ...
+# Subtest: actual Python envelope 7: status decodes through the production TypeScript client
+ok 923 - actual Python envelope 7: status decodes through the production TypeScript client
+  ---
+  duration_ms: 0.688708
+  ...
+# Subtest: actual Python envelope 8: events decodes through the production TypeScript client
+ok 924 - actual Python envelope 8: events decodes through the production TypeScript client
+  ---
+  duration_ms: 0.469
+  ...
+# Subtest: actual Python envelope 9: clarify decodes through the production TypeScript client
+ok 925 - actual Python envelope 9: clarify decodes through the production TypeScript client
+  ---
+  duration_ms: 1.343833
+  ...
+# Subtest: canonical empty research route remains explicitly in the real research view
+ok 926 - canonical empty research route remains explicitly in the real research view
+  ---
+  duration_ms: 0.794375
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and context/chat
+ok 927 - reload/Back/Forward round trips selected conversation and context/chat
+  ---
+  duration_ms: 0.26525
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and context/workspace
+ok 928 - reload/Back/Forward round trips selected conversation and context/workspace
+  ---
+  duration_ms: 0.1245
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and results/chat
+ok 929 - reload/Back/Forward round trips selected conversation and results/chat
+  ---
+  duration_ms: 0.128334
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and results/workspace
+ok 930 - reload/Back/Forward round trips selected conversation and results/workspace
+  ---
+  duration_ms: 0.144542
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and experiments/chat
+ok 931 - reload/Back/Forward round trips selected conversation and experiments/chat
+  ---
+  duration_ms: 0.067708
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and experiments/workspace
+ok 932 - reload/Back/Forward round trips selected conversation and experiments/workspace
+  ---
+  duration_ms: 0.059917
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and evidence/chat
+ok 933 - reload/Back/Forward round trips selected conversation and evidence/chat
+  ---
+  duration_ms: 0.058458
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and evidence/workspace
+ok 934 - reload/Back/Forward round trips selected conversation and evidence/workspace
+  ---
+  duration_ms: 0.28225
+  ...
+# Subtest: rejects invalid research restoration ?view=preview
+ok 935 - rejects invalid research restoration ?view=preview
+  ---
+  duration_ms: 0.345375
+  ...
+# Subtest: rejects invalid research restoration ?view=research&view=research
+ok 936 - rejects invalid research restoration ?view=research&view=research
+  ---
+  duration_ms: 0.081125
+  ...
+# Subtest: rejects invalid research restoration ?conversation=33333333-3333-3333-3333-333333333333
+ok 937 - rejects invalid research restoration ?conversation=33333333-3333-3333-3333-333333333333
+  ---
+  duration_ms: 0.036333
+  ...
+# Subtest: rejects invalid research restoration ?investigation=../private
+ok 938 - rejects invalid research restoration ?investigation=../private
+  ---
+  duration_ms: 0.028125
+  ...
+# Subtest: rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&investigation=22222222-2222-
+ok 939 - rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&investigation=22222222-2222-
+  ---
+  duration_ms: 0.028958
+  ...
+# Subtest: rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&conversation=
+ok 940 - rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&conversation=
+  ---
+  duration_ms: 0.026042
+  ...
+# Subtest: rejects invalid research restoration ?workspace=admin
+ok 941 - rejects invalid research restoration ?workspace=admin
+  ---
+  duration_ms: 0.024208
+  ...
+# Subtest: rejects invalid research restoration ?workspace=Context
+ok 942 - rejects invalid research restoration ?workspace=Context
+  ---
+  duration_ms: 0.023334
+  ...
+# Subtest: rejects invalid research restoration ?pane=preview
+ok 943 - rejects invalid research restoration ?pane=preview
+  ---
+  duration_ms: 0.024292
+  ...
+# Subtest: rejects invalid research restoration ?pane=chat&pane=workspace
+ok 944 - rejects invalid research restoration ?pane=chat&pane=workspace
+  ---
+  duration_ms: 0.026417
+  ...
+# Subtest: rejects invalid research restoration ?workspace=context&workspace=evidence
+ok 945 - rejects invalid research restoration ?workspace=context&workspace=evidence
+  ---
+  duration_ms: 0.024375
+  ...
+# Subtest: navigation never admits scientific scope, identity, fixture or attach side effects
+ok 946 - navigation never admits scientific scope, identity, fixture or attach side effects
+  ---
+  duration_ms: 0.117208
+  ...
+# Subtest: changing investigation clears old conversation unless explicit without mutating inputs
+ok 947 - changing investigation clears old conversation unless explicit without mutating inputs
+  ---
+  duration_ms: 0.112875
+  ...
+# Subtest: restored explicit routes are sufficient for browser history selection
+ok 948 - restored explicit routes are sufficient for browser history selection
+  ---
+  duration_ms: 0.111875
+  ...
+# Subtest: drafts are isolated by investigation/conversation and survive only an unchanged trusted binding
+ok 949 - drafts are isolated by investigation/conversation and survive only an unchanged trusted binding
+  ---
+  duration_ms: 0.206084
+  ...
+# Subtest: uncertain mutation keeps original key/head and cannot be silently replaced
+ok 950 - uncertain mutation keeps original key/head and cannot be silently replaced
+  ---
+  duration_ms: 1.111916
+  ...
+# Subtest: same exact pending intent can be remembered again across temporary presentation mounts
+ok 951 - same exact pending intent can be remembered again across temporary presentation mounts
+  ---
+  duration_ms: 0.161541
+  ...
+# Subtest: draft sizes and invalid private values are bounded without storage or transport side effects
+ok 952 - draft sizes and invalid private values are bounded without storage or transport side effects
+  ---
+  duration_ms: 0.327041
+  ...
+# Subtest: submitted activity preserves a complete detached immutable explicit revision across later changes
+ok 953 - submitted activity preserves a complete detached immutable explicit revision across later changes
+  ---
+  duration_ms: 0.953083
+  ...
+# Subtest: submission binding rejects cross-owner conversation/context joins and invalid hashes
+ok 954 - submission binding rejects cross-owner conversation/context joins and invalid hashes
+  ---
+  duration_ms: 0.371208
+  ...
+# Subtest: uncertain run mutations preserve the complete original frozen intent across temporary mounts
+ok 955 - uncertain run mutations preserve the complete original frozen intent across temporary mounts
+  ---
+  duration_ms: 0.83475
+  ...
+# Subtest: run intents remain account and permission bound and never migrate to a later identity
+ok 956 - run intents remain account and permission bound and never migrate to a later identity
+  ---
+  duration_ms: 0.388583
+  ...
+# Subtest: run intent validation rejects missing binding, substituted addresses, non-JSON and oversized values
+ok 957 - run intent validation rejects missing binding, substituted addresses, non-JSON and oversized values
+  ---
+  duration_ms: 3.469125
+  ...
+# Subtest: bootstrap exact fields are validated and copied without changing input
+ok 958 - bootstrap exact fields are validated and copied without changing input
+  ---
+  duration_ms: 2.563875
+  ...
+# Subtest: run discovery is optional and copied only from the exact verified runtime block
+ok 959 - run discovery is optional and copied only from the exact verified runtime block
+  ---
+  duration_ms: 0.417
+  ...
+# Subtest: run discovery rejects old version
+ok 960 - run discovery rejects old version
+  ---
+  duration_ms: 0.190625
+  ...
+# Subtest: run discovery rejects unknown transport
+ok 961 - run discovery rejects unknown transport
+  ---
+  duration_ms: 0.060666
+  ...
+# Subtest: run discovery rejects endpoint injection
+ok 962 - run discovery rejects endpoint injection
+  ---
+  duration_ms: 0.063625
+  ...
+# Subtest: run discovery rejects synthesis claim
+ok 963 - run discovery rejects synthesis claim
+  ---
+  duration_ms: 0.053208
+  ...
+# Subtest: run discovery rejects nonboolean flag
+ok 964 - run discovery rejects nonboolean flag
+  ---
+  duration_ms: 0.050417
+  ...
+# Subtest: run discovery rejects missing flag
+ok 965 - run discovery rejects missing flag
+  ---
+  duration_ms: 0.051208
+  ...
+# Subtest: run discovery rejects submit without dispatch
+ok 966 - run discovery rejects submit without dispatch
+  ---
+  duration_ms: 0.226792
+  ...
+# Subtest: run discovery rejects unavailable with submit
+ok 967 - run discovery rejects unavailable with submit
+  ---
+  duration_ms: 0.267209
+  ...
+# Subtest: run discovery rejects unavailable without reason
+ok 968 - run discovery rejects unavailable without reason
+  ---
+  duration_ms: 0.095542
+  ...
+# Subtest: a run HTTP capability cannot restore missing research permissions
+ok 969 - a run HTTP capability cannot restore missing research permissions
+  ---
+  duration_ms: 0.091834
+  ...
+# Subtest: bootstrap rejects foreign mode field
+ok 970 - bootstrap rejects foreign mode field
+  ---
+  duration_ms: 0.051042
+  ...
+# Subtest: bootstrap rejects old version
+ok 971 - bootstrap rejects old version
+  ---
+  duration_ms: 0.033417
+  ...
+# Subtest: bootstrap rejects legacy deployment
+ok 972 - bootstrap rejects legacy deployment
+  ---
+  duration_ms: 0.033
+  ...
+# Subtest: bootstrap rejects invalid UUID
+ok 973 - bootstrap rejects invalid UUID
+  ---
+  duration_ms: 0.103292
+  ...
+# Subtest: bootstrap rejects suspended identity
+ok 974 - bootstrap rejects suspended identity
+  ---
+  duration_ms: 0.032833
+  ...
+# Subtest: bootstrap rejects unknown role
+ok 975 - bootstrap rejects unknown role
+  ---
+  duration_ms: 0.02925
+  ...
+# Subtest: bootstrap rejects unknown account
+ok 976 - bootstrap rejects unknown account
+  ---
+  duration_ms: 0.030291
+  ...
+# Subtest: bootstrap rejects foreign identity field
+ok 977 - bootstrap rejects foreign identity field
+  ---
+  duration_ms: 0.035666
+  ...
+# Subtest: bootstrap rejects duplicate permissions
+ok 978 - bootstrap rejects duplicate permissions
+  ---
+  duration_ms: 0.0385
+  ...
+# Subtest: bootstrap rejects permission whitespace
+ok 979 - bootstrap rejects permission whitespace
+  ---
+  duration_ms: 0.0315
+  ...
+# Subtest: bootstrap rejects long display name
+ok 980 - bootstrap rejects long display name
+  ---
+  duration_ms: 0.035167
+  ...
+# Subtest: bootstrap rejects invalid revision
+ok 981 - bootstrap rejects invalid revision
+  ---
+  duration_ms: 0.030584
+  ...
+# Subtest: bootstrap rejects extra capability
+ok 982 - bootstrap rejects extra capability
+  ---
+  duration_ms: 0.036292
+  ...
+# Subtest: bootstrap rejects missing capability
+ok 983 - bootstrap rejects missing capability
+  ---
+  duration_ms: 0.031083
+  ...
+# Subtest: bootstrap rejects unknown status
+ok 984 - bootstrap rejects unknown status
+  ---
+  duration_ms: 0.037167
+  ...
+# Subtest: bootstrap rejects missing unavailable reason
+ok 985 - bootstrap rejects missing unavailable reason
+  ---
+  duration_ms: 0.03475
+  ...
+# Subtest: bootstrap rejects capability foreign field
+ok 986 - bootstrap rejects capability foreign field
+  ---
+  duration_ms: 0.03475
+  ...
+# Subtest: bootstrap rejects ready without required permission
+ok 987 - bootstrap rejects ready without required permission
+  ---
+  duration_ms: 0.041
+  ...
+# Subtest: research cannot erase or replace fixed required permissions
+ok 988 - research cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.078834
+  ...
+# Subtest: catalogue cannot erase or replace fixed required permissions
+ok 989 - catalogue cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.056042
+  ...
+# Subtest: tools cannot erase or replace fixed required permissions
+ok 990 - tools cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.07175
+  ...
+# Subtest: settings cannot erase or replace fixed required permissions
+ok 991 - settings cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.103791
+  ...
+# Subtest: administration cannot erase or replace fixed required permissions
+ok 992 - administration cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.06675
+  ...
+# Subtest: feedback cannot erase or replace fixed required permissions
+ok 993 - feedback cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.062917
+  ...
+# Subtest: about cannot erase or replace fixed required permissions
+ok 994 - about cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.066625
+  ...
+# Subtest: navigation checks permissions even for unavailable capabilities
+ok 995 - navigation checks permissions even for unavailable capabilities
+  ---
+  duration_ms: 0.08375
+  ...
+# Subtest: navigation checks permissions even for disabled capabilities
+ok 996 - navigation checks permissions even for disabled capabilities
+  ---
+  duration_ms: 0.0325
+  ...
+# Subtest: navigation checks permissions even for forbidden capabilities
+ok 997 - navigation checks permissions even for forbidden capabilities
+  ---
+  duration_ms: 0.041541
+  ...
+# Subtest: account type and role labels never substitute for permissions
+ok 998 - account type and role labels never substitute for permissions
+  ---
+  duration_ms: 0.033458
+  ...
+# Subtest: Research context readiness requires both chat and data permissions
+ok 999 - Research context readiness requires both chat and data permissions
+  ---
+  duration_ms: 0.156291
+  ...
+# Subtest: the C15 single-permission Research contract cannot enable C18 context
+ok 1000 - the C15 single-permission Research contract cannot enable C18 context
+  ---
+  duration_ms: 0.043084
+  ...
+# Subtest: display-name limits count Unicode code points as the server does
+ok 1001 - display-name limits count Unicode code points as the server does
+  ---
+  duration_ms: 0.054959
+  ...
+# Subtest: transport has one fixed v1 URL, no cookies/cache/redirects and optional memory-only token
+ok 1002 - transport has one fixed v1 URL, no cookies/cache/redirects and optional memory-only token
+  ---
+  duration_ms: 11.484709
+  ...
+# Subtest: HTTP 401 replaces ready identity with unauthorized
+ok 1003 - HTTP 401 replaces ready identity with unauthorized
+  ---
+  duration_ms: 0.3985
+  ...
+# Subtest: HTTP 403 replaces ready identity with forbidden
+ok 1004 - HTTP 403 replaces ready identity with forbidden
+  ---
+  duration_ms: 0.193209
+  ...
+# Subtest: HTTP 404 replaces ready identity with unavailable
+ok 1005 - HTTP 404 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.219208
+  ...
+# Subtest: HTTP 410 replaces ready identity with unavailable
+ok 1006 - HTTP 410 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.485667
+  ...
+# Subtest: HTTP 503 replaces ready identity with unavailable
+ok 1007 - HTTP 503 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.265375
+  ...
+# Subtest: HTTP 500 replaces ready identity with error
+ok 1008 - HTTP 500 replaces ready identity with error
+  ---
+  duration_ms: 0.185667
+  ...
+# Subtest: malformed successful responses do not fall back to sample identity
+ok 1009 - malformed successful responses do not fall back to sample identity
+  ---
+  duration_ms: 3.034209
+  ...
+# Subtest: a runtime server cannot overwrite JSON fields through duplicate keys
+ok 1010 - a runtime server cannot overwrite JSON fields through duplicate keys
+  ---
+  duration_ms: 0.215625
+  ...
+# Subtest: actual streaming byte bound rejects a lying length and cancels the reader
+ok 1011 - actual streaming byte bound rejects a lying length and cancels the reader
+  ---
+  duration_ms: 0.489917
+  ...
+# Subtest: absent length still enforces bytes and malformed UTF-8 is unavailable
+ok 1012 - absent length still enforces bytes and malformed UTF-8 is unavailable
+  ---
+  duration_ms: 0.204
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 1013 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.042125
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 1014 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.023334
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 1015 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.020417
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 1016 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.03675
+  ...
+# Subtest: transport errors are honest and omit raw exception contents
+ok 1017 - transport errors are honest and omit raw exception contents
+  ---
+  duration_ms: 0.047042
+  ...
+# Subtest: unused HTTP 401 body is cancelled before retry
+ok 1018 - unused HTTP 401 body is cancelled before retry
+  ---
+  duration_ms: 0.071791
+  ...
+# Subtest: unused HTTP 403 body is cancelled before retry
+ok 1019 - unused HTTP 403 body is cancelled before retry
+  ---
+  duration_ms: 0.081542
+  ...
+# Subtest: unused HTTP 404 body is cancelled before retry
+ok 1020 - unused HTTP 404 body is cancelled before retry
+  ---
+  duration_ms: 0.038125
+  ...
+# Subtest: unused HTTP 500 body is cancelled before retry
+ok 1021 - unused HTTP 500 body is cancelled before retry
+  ---
+  duration_ms: 0.034666
+  ...
+# Subtest: unused HTTP 503 body is cancelled before retry
+ok 1022 - unused HTTP 503 body is cancelled before retry
+  ---
+  duration_ms: 0.042167
+  ...
+# Subtest: cancelled late ready response cannot return an authorized state
+ok 1023 - cancelled late ready response cannot return an authorized state
+  ---
+  duration_ms: 0.115541
+  ...
+# Subtest: trusted loopback localhost may select explicit sample preview
+ok 1024 - trusted loopback localhost may select explicit sample preview
+  ---
+  duration_ms: 0.050959
+  ...
+# Subtest: trusted loopback 127.0.0.1 may select explicit sample preview
+ok 1025 - trusted loopback 127.0.0.1 may select explicit sample preview
+  ---
+  duration_ms: 0.019125
+  ...
+# Subtest: trusted loopback ::1 may select explicit sample preview
+ok 1026 - trusted loopback ::1 may select explicit sample preview
+  ---
+  duration_ms: 0.017417
+  ...
+# Subtest: trusted loopback [::1] may select explicit sample preview
+ok 1027 - trusted loopback [::1] may select explicit sample preview
+  ---
+  duration_ms: 0.01725
+  ...
+# Subtest: preview rejects host example.com
+ok 1028 - preview rejects host example.com
+  ---
+  duration_ms: 0.036875
+  ...
+# Subtest: preview rejects host localhost.example.com
+ok 1029 - preview rejects host localhost.example.com
+  ---
+  duration_ms: 0.022167
+  ...
+# Subtest: preview rejects host 127.0.0.1.example.com
+ok 1030 - preview rejects host 127.0.0.1.example.com
+  ---
+  duration_ms: 0.023375
+  ...
+# Subtest: preview rejects host localhost:3100
+ok 1031 - preview rejects host localhost:3100
+  ---
+  duration_ms: 0.022875
+  ...
+# Subtest: preview rejects host 0.0.0.0
+ok 1032 - preview rejects host 0.0.0.0
+  ---
+  duration_ms: 0.021792
+  ...
+# Subtest: local hostname alone cannot select preview
+ok 1033 - local hostname alone cannot select preview
+  ---
+  duration_ms: 0.031709
+  ...
+# Subtest: mode endpoint 404 means service, never sample fallback
+ok 1034 - mode endpoint 404 means service, never sample fallback
+  ---
+  duration_ms: 0.07725
+  ...
+# Subtest: mode fallback cancels an unused streaming 404 body
+ok 1035 - mode fallback cancels an unused streaming 404 body
+  ---
+  duration_ms: 0.060875
+  ...
+# Subtest: mode payload extras and non-loopback preview fail closed
+ok 1036 - mode payload extras and non-loopback preview fail closed
+  ---
+  duration_ms: 0.160833
+  ...
+# Subtest: navigation URL helpers ignore forged authorization and preview queries
+ok 1037 - navigation URL helpers ignore forged authorization and preview queries
+  ---
+  duration_ms: 0.148833
+  ...
+# Subtest: experiment runtime discovery is optional, explicit and copied
+ok 1038 - experiment runtime discovery is optional, explicit and copied
+  ---
+  duration_ms: 0.095458
+  ...
+# Subtest: proposal review remains available when execution is explicitly unavailable
+ok 1039 - proposal review remains available when execution is explicitly unavailable
+  ---
+  duration_ms: 0.054209
+  ...
+# Subtest: experiment discovery rejects execution version
+ok 1040 - experiment discovery rejects execution version
+  ---
+  duration_ms: 0.050542
+  ...
+# Subtest: experiment discovery rejects review version
+ok 1041 - experiment discovery rejects review version
+  ---
+  duration_ms: 0.04075
+  ...
+# Subtest: experiment discovery rejects implicit execution
+ok 1042 - experiment discovery rejects implicit execution
+  ---
+  duration_ms: 0.038833
+  ...
+# Subtest: experiment discovery rejects unknown source
+ok 1043 - experiment discovery rejects unknown source
+  ---
+  duration_ms: 0.03625
+  ...
+# Subtest: experiment discovery rejects start authority
+ok 1044 - experiment discovery rejects start authority
+  ---
+  duration_ms: 0.035792
+  ...
+# Subtest: experiment discovery rejects endpoint injection
+ok 1045 - experiment discovery rejects endpoint injection
+  ---
+  duration_ms: 0.039125
+  ...
+# Subtest: experiment discovery rejects unavailable with cancel
+ok 1046 - experiment discovery rejects unavailable with cancel
+  ---
+  duration_ms: 0.039667
+  ...
+# Subtest: experiment discovery rejects unavailable without reason
+ok 1047 - experiment discovery rejects unavailable without reason
+  ---
+  duration_ms: 0.039042
+  ...
+# Subtest: experiment discovery rejects HTTP unavailable source
+ok 1048 - experiment discovery rejects HTTP unavailable source
+  ---
+  duration_ms: 1.687709
+  ...
+# Subtest: experiment discovery rejects approval without proposals
+ok 1049 - experiment discovery rejects approval without proposals
+  ---
+  duration_ms: 0.06775
+  ...
+# Subtest: experiment discovery rejects nonboolean approval
+ok 1050 - experiment discovery rejects nonboolean approval
+  ---
+  duration_ms: 0.047417
+  ...
+# Subtest: experiment runtime cannot restore any missing research/export permission
+ok 1051 - experiment runtime cannot restore any missing research/export permission
+  ---
+  duration_ms: 0.136209
+  ...
+1..1051
+# tests 1051
+# suites 0
+# pass 1051
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1066.511625

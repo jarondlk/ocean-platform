@@ -1,0 +1,77 @@
+{
+  "version": "beta-foundation-resources-plan-v1",
+  "date": "2026-11-01 JST",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "region": "asia-northeast1",
+  "zone": "asia-northeast1-a",
+  "authorisation": "Userapprovednewbetaresources withininitialJPY50000target; concrete isolatedemptyfoundation only, nolegacychange.",
+  "budget_readback": "budget-readback.json",
+  "scope": [
+    "enable explicit requiredAPIs",
+    "emptyregionalArtifactRegistryrepository",
+    "customVPC/subnet withprivateGoogleAccess",
+    "fourdedicated serviceaccounts withoutnewruntimeIAMgrants",
+    "fouremptyuniformprivatebuckets",
+    "eightemptysecretcontainers withoutversions",
+    "emptyresearchqueue followedbyverifiedpause"
+  ],
+  "apis": [
+    "run.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "compute.googleapis.com",
+    "secretmanager.googleapis.com",
+    "cloudtasks.googleapis.com",
+    "sqladmin.googleapis.com",
+    "servicenetworking.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "logging.googleapis.com",
+    "monitoring.googleapis.com"
+  ],
+  "registry": "ocean-v1-beta",
+  "network": "ocean-v1-beta-network",
+  "subnet": "ocean-v1-beta-subnet",
+  "subnet_cidr": "10.92.0.0/24",
+  "identities": [
+    "ocean-v1-beta-serving",
+    "ocean-v1-beta-controller",
+    "ocean-v1-beta-supervisor",
+    "ocean-v1-beta-task-invoker"
+  ],
+  "buckets": {
+    "snapshots": "ocean-v1-beta-20261101-snapshots",
+    "results": "ocean-v1-beta-20261101-results",
+    "quarantine": "ocean-v1-beta-20261101-quarantine",
+    "backups": "ocean-v1-beta-20261101-backups"
+  },
+  "secrets": [
+    "ocean-v1-beta-auth",
+    "ocean-v1-beta-internal",
+    "ocean-v1-beta-oauth",
+    "ocean-v1-beta-serving-database",
+    "ocean-v1-beta-controller-database",
+    "ocean-v1-beta-supervisor-database",
+    "ocean-v1-beta-verifier-database",
+    "ocean-v1-beta-termination-seed"
+  ],
+  "queue": {
+    "name": "ocean-v1-beta-research",
+    "max_concurrent_dispatches": 1,
+    "max_dispatches_per_second": 1,
+    "max_attempts": 3,
+    "target_state": "PAUSED"
+  },
+  "not_created": [
+    "CloudRunservices/revisions",
+    "CloudSQLinstances",
+    "ComputeVMs/images/disks",
+    "loadbalancers/IPs",
+    "DNSrecords",
+    "secretversions",
+    "tasks",
+    "datasets",
+    "IAMruntimegrants"
+  ],
+  "cost_boundary": "No billedruntimecapacity selected; emptyfoundationmayemit smallcontrol-plane/auditmetadata. ActualTokyoregionalprices/paidcapacity remainunverifiedandnotcleared.",
+  "rollback_boundary": "Resourcesremainisolated/empty/defaultoff; nodestructivecleanup orlegacyfallbackrequired."
+}

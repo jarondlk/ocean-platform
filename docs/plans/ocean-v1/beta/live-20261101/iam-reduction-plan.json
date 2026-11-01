@@ -1,0 +1,20 @@
+{
+  "version": "beta-unused-default-identity-reduction-v1",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "member": "serviceAccount:534831104543-compute@developer.gserviceaccount.com",
+  "remove_role": "roles/editor",
+  "reason": "Unused automatically granted default Compute identity; dedicated beta identities are ungranted. No VMs or runtime exists in this new project.",
+  "scope": "new beta project only; no organization policy or legacy account change",
+  "expected_result": "Editor binding absent for this member; other bindings unchanged",
+  "command": [
+    "gcloud",
+    "projects",
+    "remove-iam-policy-binding",
+    "ocean-v1-beta-20261101",
+    "--member=serviceAccount:534831104543-compute@developer.gserviceaccount.com",
+    "--role=roles/editor",
+    "--condition=None",
+    "--quiet"
+  ]
+}

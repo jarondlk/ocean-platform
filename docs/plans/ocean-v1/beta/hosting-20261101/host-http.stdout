@@ -1,0 +1,19 @@
+
+> ocean-v1-authenticated-host@1.0.0-host.0 test:server
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests-server/*.test.ts
+
+TAP version 13
+# Subtest: built Next host performs guarded login, encrypted session, private proxy, revocation and logout over actual HTTP
+ok 1 - built Next host performs guarded login, encrypted session, private proxy, revocation and logout over actual HTTP
+  ---
+  duration_ms: 419.017625
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5505.157875

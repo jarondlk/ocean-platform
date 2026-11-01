@@ -1,0 +1,112 @@
+{
+  "version": "beta-api-host-native-v1",
+  "scope": "new disposable local PostgreSQL only",
+  "status": "passed",
+  "checks": [
+    {
+      "id": "prefixed_factory_ignores_legacy_database_url",
+      "passed": true
+    },
+    {
+      "id": "native_authenticated_current_user",
+      "passed": true
+    },
+    {
+      "id": "native_unconfigured_catalogue_is_unavailable",
+      "passed": true
+    },
+    {
+      "id": "native_new_execution_rejected",
+      "passed": true
+    },
+    {
+      "id": "native_revocation_next_request",
+      "passed": true
+    },
+    {
+      "id": "native_shared_postgresql_limiter",
+      "passed": true
+    },
+    {
+      "id": "native_host_adds_no_schema",
+      "passed": true
+    },
+    {
+      "id": "native_migration_head_unchanged",
+      "passed": true
+    },
+    {
+      "id": "native_user_not_imported_or_duplicated",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "create-role",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "create-database",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "migrations",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "cloud_actions": false,
+  "scientific_data_or_execution": false,
+  "server_port": 57397,
+  "temp": "/private/tmp/ocean-v1-host-native-qh62aspk",
+  "table_count": 65,
+  "cleanup": {
+    "port_closed": true,
+    "pid_file_absent": true,
+    "temporary_directory_removed": true
+  },
+  "source_sha256": {
+    "api/v1_host.py": "c4d5b9e5424955cd4c0c680015813ce62f2884f7da753e8488e17c922fb23d64",
+    "tests/test_v1_host.py": "684d12534e35b2938c62b46bfe8ac3e511c8d934f26fe1df39389908e9e4a093",
+    "docs/plans/ocean-v1/beta/bootstrap-20261101/native_rehearsal.py": "dd7b735623e8d1932ad49cbf7df66306f2f490f7fed44b3630939e0b95c28b7f"
+  },
+  "artifact_sha256": {
+    "initdb.stdout": "7c8cef3e3c56a60a855081a04afebc118ffbea900ef9a183e322529ced8c0714",
+    "create-database.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-database.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-role.stdout": "19fe28eff61cdf76665a6150a5ac36e4df175fef2e4679f03b08878f6d8c93d5",
+    "migrations.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "create-role.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "migrations.stderr": "ce47167262dffa2f534008ef710892885d6ecb1281ae79d7386aac1ed4c3aca8",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.stdout": "47730ac5b4bc52148c4e8c8c17e3eb454902e09e528f1f42a0b4d3346514c205",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

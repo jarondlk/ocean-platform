@@ -1,0 +1,28 @@
+{
+  "version": "beta-run-cap-console-readback-v1",
+  "date": "2026-11-01 JST",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "name": "ocean-v1-beta-cloud-run-cap-3000",
+  "budget_id": "790b19ff-fda7-4216-953c-4bf3b54a4b5a",
+  "currency": "JPY",
+  "amount": 3000,
+  "period": "monthly",
+  "service": "Cloud Run (run.googleapis.com)",
+  "credits_included": false,
+  "thresholds_percent": [
+    50,
+    80,
+    100
+  ],
+  "spend_cap_status": "Configured",
+  "source": "ActualGoogleCloudConsole budgetrow+creatednotification",
+  "qualified_limits": [
+    "CloudRunonly;notCloudSQL/Compute/storage",
+    "enforcementdelayandpossibleoverages",
+    "automaticmonthlyreset",
+    "inflightworkfinishes"
+  ],
+  "legacy_settings_unchanged": true,
+  "all_beta_hard_cap_claimed": false
+}

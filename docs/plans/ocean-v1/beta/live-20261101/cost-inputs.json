@@ -1,0 +1,63 @@
+{
+  "version": "ocean-v1-beta-cost-envelope-v1",
+  "date": "2026-11-01 JST",
+  "project_id": "ocean-v1-beta-20261101",
+  "scope": "new beta only",
+  "target_jpy": 50000,
+  "stated_upper_budget_jpy": 100000,
+  "notify_before_target_exceeded": true,
+  "kind": "conditional allocation ceilings, not regional provider quotes",
+  "actual_regional_jpy_quotes_verified": false,
+  "paid_provisioning_cleared": false,
+  "monthly_fixed_resource_hours": 730,
+  "free_credit_assumption": 0,
+  "planning_jpy_per_usd": 200,
+  "contingency_factor": 1.1,
+  "planning_rate_is_google_billing_rate": false,
+  "fx_reference": {
+    "source": "https://www.boj.or.jp/en/statistics/market/forex/fxdaily/fxlist/fx261030.pdf",
+    "date": "2026-10-30",
+    "time_jst": "17:00",
+    "usd_jpy_bid": 157.55,
+    "usd_jpy_offer": 157.56
+  },
+  "allocation_ceilings_usd": {
+    "sql_compute": 135,
+    "sql_storage_backups": 10,
+    "load_balancer_ip_dns": 25,
+    "cloud_run": 15,
+    "worker_compute": 15,
+    "worker_disk": 5,
+    "other_metered": 10
+  },
+  "conditional_total_usd": 215,
+  "stress_total_jpy": 47300,
+  "headroom_jpy": 2700,
+  "worker_ceiling_hourly_usd": 0.4,
+  "worker_active_hours_monthly_max": 37.5,
+  "always_on_worker_selected": false,
+  "two_simultaneous_c23_jobs_still_required": true,
+  "cloud_run_example_rate_ceilings_not_quotes": {
+    "cpu_second_usd": 3e-05,
+    "gib_second_usd": 4e-06,
+    "cpu": 2,
+    "memory_gib": 5,
+    "hour_usd": 0.288,
+    "aggregate_billed_hours_for_15usd_before_other_charges": "52.08333333333333333333333333"
+  },
+  "unsupported_hardcap_claims": [
+    "All-service project budget does not automatically stop spending",
+    "CloudRun spend cap does not cap CloudSQL/Compute/persistentstorage",
+    "Provider enforcement/reporting can lag"
+  ],
+  "source_urls": [
+    "https://cloud.google.com/sql/pricing?hl=ja",
+    "https://docs.cloud.google.com/sql/docs/postgres/editions-intro",
+    "https://cloud.google.com/run/pricing",
+    "https://cloud.google.com/products/compute/pricing",
+    "https://cloud.google.com/vpc/network-pricing",
+    "https://cloud.google.com/artifact-registry/pricing",
+    "https://docs.cloud.google.com/billing/docs/how-to/budgets",
+    "https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps"
+  ]
+}

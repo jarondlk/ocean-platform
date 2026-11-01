@@ -11,10 +11,12 @@ import { createExperimentClient } from "./experiment-service";
 import { createExperimentExecutionClient } from "./experiment-execution-service";
 import { createResearchRunTransport } from "./research-run-service";
 import { createAnswerClient, createEvidenceClient } from "./research-evidence-service";
+import { createCatalogueClient } from "./catalogue-service";
+import { createInvestigationClient } from "./investigation-service";
 import {
   capabilityReady, capabilityVisible, createRuntimeTransport, destinationFromLocation,
   destinationPath, getCapability, parseRuntimeBootstrap, routeAccessible,
-  type RuntimeDestination, type RuntimeState, type RuntimeTransport, type ShellDestination,
+  type Fetcher, type RuntimeDestination, type RuntimeState, type RuntimeTransport, type ShellDestination,
 } from "./runtime";
 import { defaultPresentation, PRESENTATION_STORAGE_KEY, restorePresentation, serializePresentation } from "./presentation";
 import type { Locale } from "./model";
@@ -32,13 +34,17 @@ const canonical = (destination: ShellDestination): RuntimeDestination => destina
 const label = (destination: RuntimeDestination, locale: Locale) => labels[destination][locale === "en" ? 0 : 1];
 const language = (locale: Locale, english: string, japanese: string) => locale === "en" ? english : japanese;
 
-export function RuntimeApp({ initialDestination = "research", transport, researchRunTransport }: { initialDestination?: ShellDestination; transport?: RuntimeTransport; researchRunTransport?: ResearchRunTransport }) {
-  const dependency = useMemo(() => transport ?? createRuntimeTransport(), [transport]);
-  const serviceExperiments = useMemo(() => createExperimentClient(), []);
-  const serviceExecutions = useMemo(() => createExperimentExecutionClient(), []);
-  const serviceRuns = useMemo(() => createResearchRunTransport(), []);
-  const serviceAnswers = useMemo(() => createAnswerClient(), []);
-  const serviceEvidence = useMemo(() => createEvidenceClient(), []);
+export function RuntimeApp({ initialDestination = "research", transport, researchRunTransport, fetcher }: { initialDestination?: ShellDestination; transport?: RuntimeTransport; researchRunTransport?: ResearchRunTransport; fetcher?: Fetcher }) {
+  const dependency = useMemo(() => transport ?? createRuntimeTransport({ fetcher }), [transport, fetcher]);
+  const serviceExperiments = useMemo(() => createExperimentClient({ fetcher }), [fetcher]);
+  const serviceExecutions = useMemo(() => createExperimentExecutionClient({ fetcher }), [fetcher]);
+  const serviceRuns = useMemo(() => createResearchRunTransport({ fetcher }), [fetcher]);
+  const serviceAnswers = useMemo(() => createAnswerClient({ fetcher }), [fetcher]);
+  const serviceEvidence = useMemo(() => createEvidenceClient({ fetcher }), [fetcher]);
+  // The authenticated host explicitly supplies a same-origin session transport.
+  // Preview and other callers retain the original credential-free defaults.
+  const hostCatalogue = useMemo(() => fetcher ? createCatalogueClient({ fetcher }) : undefined, [fetcher]);
+  const hostInvestigations = useMemo(() => fetcher ? createInvestigationClient({ fetcher }) : undefined, [fetcher]);
   const [runtime, setRuntime] = useState<RuntimeState>({ status: "loading" });
   const [destination, setDestination] = useState<RuntimeDestination>(() => canonical(initialDestination));
   const [preferences, setPreferences] = useState(defaultPresentation);
@@ -136,8 +142,8 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
   const permitted = bootstrap && routeAccessible(bootstrap, destination);
   const content = !bootstrap ? <RuntimeBoundary state={runtime} locale={locale} retry={reload} />
     : !permitted ? <RuntimeMessage kind="denied" locale={locale} title={language(locale, "Access is restricted", "アクセスが制限されています")} detail={language(locale, "Your current account cannot open this destination.", "現在のアカウントではこの移動先を開けません。")} />
-    : destination === "research" && capabilityReady(bootstrap, destination) ? <ResearchWorkspace key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} session={researchSession.current} preferences={preferences} onPreferences={patch => setPreferences(current => ({ ...current, ...patch }))} onAccessLost={reload} runTransport={runTransport} runSource={runSource} runSubmitEnabled={!!researchRunTransport || bootstrap.research_runs?.submit_enabled === true} answerClient={!researchRunTransport && bootstrap.research_evidence?.transport === "http-v1" ? serviceAnswers : undefined} evidenceClient={!researchRunTransport && bootstrap.research_evidence?.transport === "http-v1" ? serviceEvidence : undefined} answerSubmitEnabled={!researchRunTransport && bootstrap.research_evidence?.submit_enabled === true} experimentClient={bootstrap.research_experiments?.proposal_transport === "http-v1" ? serviceExperiments : undefined} executionClient={bootstrap.research_experiments?.execution_transport === "http-v1" ? serviceExecutions : undefined} experimentApprovalEnabled={bootstrap.research_experiments?.approval_enabled === true} canExport={bootstrap.identity.permissions.includes("data:export")} />
-    : destination === "catalogue" && capabilityReady(bootstrap, destination) ? <CatalogueBrowser key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} onAccessLost={reload} />
+    : destination === "research" && capabilityReady(bootstrap, destination) ? <ResearchWorkspace key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} session={researchSession.current} preferences={preferences} onPreferences={patch => setPreferences(current => ({ ...current, ...patch }))} onAccessLost={reload} client={hostInvestigations} catalogueClient={hostCatalogue} runTransport={runTransport} runSource={runSource} runSubmitEnabled={!!researchRunTransport || bootstrap.research_runs?.submit_enabled === true} answerClient={!researchRunTransport && bootstrap.research_evidence?.transport === "http-v1" ? serviceAnswers : undefined} evidenceClient={!researchRunTransport && bootstrap.research_evidence?.transport === "http-v1" ? serviceEvidence : undefined} answerSubmitEnabled={!researchRunTransport && bootstrap.research_evidence?.submit_enabled === true} experimentClient={bootstrap.research_experiments?.proposal_transport === "http-v1" ? serviceExperiments : undefined} executionClient={bootstrap.research_experiments?.execution_transport === "http-v1" ? serviceExecutions : undefined} experimentApprovalEnabled={bootstrap.research_experiments?.approval_enabled === true} canExport={bootstrap.identity.permissions.includes("data:export")} />
+    : destination === "catalogue" && capabilityReady(bootstrap, destination) ? <CatalogueBrowser key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} client={hostCatalogue} onAccessLost={reload} />
     : destination === "settings" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><p className="runtime-intro">{language(locale, "Choose how this workspace looks on this device.", "この端末でのワークスペースの表示を選択できます。")}</p><div className="runtime-preferences"><label>{language(locale, "Language", "言語")}<select value={locale} onChange={(event) => setPreferences((current) => ({ ...current, locale: event.target.value as Locale }))}><option value="en">English</option><option value="ja">日本語</option></select></label><label>{language(locale, "Theme", "テーマ")}<select value={preferences.theme} onChange={(event) => setPreferences((current) => ({ ...current, theme: event.target.value as "light" | "dark" }))}><option value="light">{language(locale, "Light", "ライト")}</option><option value="dark">{language(locale, "Dark", "ダーク")}</option></select></label></div><p className="muted small">{language(locale, "These preferences do not change your account, permissions or scientific scope.", "表示設定によってアカウント・権限・科学的な対象範囲は変わりません。")}</p></section>
     : destination === "about" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><p className="runtime-intro">{language(locale, "OCEAN brings marine data, context and evidence into a research workspace.", "OCEANは海洋データ・コンテキスト・根拠をリサーチワークスペースにまとめます。")}</p><div className="runtime-info-grid"><article><Layers3 size={22} /><h2>{language(locale, "Context before conclusions", "結論の前にコンテキストを")}</h2><p>{language(locale, "Source scope, coverage and qualifications stay with the information they describe.", "ソースの対象範囲・カバレッジ・条件を、それぞれの情報とともに示します。")}</p></article><article><ShieldCheck size={22} /><h2>{language(locale, "Current access", "現在のアクセス権")}</h2><p>{language(locale, "Available destinations follow the permissions supplied by the v1 service.", "利用できる移動先はv1サービスが提供する権限に従います。")}</p></article></div></section>
     : <section className="runtime-destination"><PageHeading destination={destination} locale={locale} />{destination === "research" || destination === "catalogue" ? <ShellSplitPanels

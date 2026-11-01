@@ -1,0 +1,1074 @@
+{
+  "version": "beta-empty-foundation-execution-v1",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "operations": {
+    "registry": {
+      "create_command": [
+        "gcloud",
+        "artifacts",
+        "repositories",
+        "create",
+        "ocean-v1-beta",
+        "--repository-format=docker",
+        "--location=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "artifacts",
+        "repositories",
+        "describe",
+        "ocean-v1-beta",
+        "--location=asia-northeast1",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Create request issued for: [ocean-v1-beta]\nWaiting for operation [projects/ocean-v1-beta-20261101/locations/asia-northeast1/operations/0cb17f0a-e249-424a-97ff-034f6744fad4] to complete...\n..................................................................................................done.\nCreated repository [ocean-v1-beta].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:38:05.089942Z",
+        "format": "DOCKER",
+        "mode": "STANDARD_REPOSITORY",
+        "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta",
+        "registryUri": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta",
+        "satisfiesPzi": true,
+        "updateTime": "2026-11-01T10:38:05.089942Z",
+        "vulnerabilityScanningConfig": {
+          "enablementState": "SCANNING_DISABLED",
+          "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
+          "lastEnableTime": "2026-11-01T10:37:52.033654603Z"
+        }
+      },
+      "status": "verified"
+    },
+    "network": {
+      "create_command": [
+        "gcloud",
+        "compute",
+        "networks",
+        "create",
+        "ocean-v1-beta-network",
+        "--subnet-mode=custom",
+        "--bgp-routing-mode=regional",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "compute",
+        "networks",
+        "describe",
+        "ocean-v1-beta-network",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "NAME                   SUBNET_MODE  BGP_ROUTING_MODE  IPV4_RANGE  GATEWAY_IPV4  INTERNAL_IPV6_RANGE\nocean-v1-beta-network  CUSTOM       REGIONAL\n",
+      "create_stderr": "Created [https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network].\n\nInstances on this network will not be reachable until firewall rules\nare created. As an example, you can allow all internal traffic between\ninstances as well as SSH, RDP, and ICMP by running:\n\n$ gcloud compute firewall-rules create <FIREWALL_NAME> --network ocean-v1-beta-network --allow tcp,udp,icmp --source-ranges <IP_RANGE>\n$ gcloud compute firewall-rules create <FIREWALL_NAME> --network ocean-v1-beta-network --allow tcp:22,tcp:3389,icmp\n\n",
+      "readback": {
+        "autoCreateSubnetworks": false,
+        "creationTimestamp": "2026-11-01T02:38:16.221-08:00",
+        "id": "3052575552558508151",
+        "kind": "compute#network",
+        "name": "ocean-v1-beta-network",
+        "networkFirewallPolicyEnforcementOrder": "AFTER_CLASSIC_FIREWALL",
+        "routingConfig": {
+          "bgpBestPathSelectionMode": "LEGACY",
+          "routingMode": "REGIONAL"
+        },
+        "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+        "selfLinkWithId": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/networks/3052575552558508151",
+        "x_gcloud_bgp_routing_mode": "REGIONAL",
+        "x_gcloud_subnet_mode": "CUSTOM"
+      },
+      "status": "verified"
+    },
+    "subnet": {
+      "create_command": [
+        "gcloud",
+        "compute",
+        "networks",
+        "subnets",
+        "create",
+        "ocean-v1-beta-subnet",
+        "--network=ocean-v1-beta-network",
+        "--range=10.92.0.0/24",
+        "--region=asia-northeast1",
+        "--enable-private-ip-google-access",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "compute",
+        "networks",
+        "subnets",
+        "describe",
+        "ocean-v1-beta-subnet",
+        "--region=asia-northeast1",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "NAME                  REGION           NETWORK                RANGE         STACK_TYPE  IPV6_ACCESS_TYPE  INTERNAL_IPV6_PREFIX  EXTERNAL_IPV6_PREFIX\nocean-v1-beta-subnet  asia-northeast1  ocean-v1-beta-network  10.92.0.0/24  IPV4_ONLY\n",
+      "create_stderr": "Created [https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet].\n",
+      "readback": {
+        "allowSubnetCidrRoutesOverlap": false,
+        "creationTimestamp": "2026-11-01T02:38:35.238-08:00",
+        "fingerprint": "CvWM-bvYdxY=",
+        "gatewayAddress": "10.92.0.1",
+        "id": "3251047404350908484",
+        "ipCidrRange": "10.92.0.0/24",
+        "kind": "compute#subnetwork",
+        "name": "ocean-v1-beta-subnet",
+        "network": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+        "privateIpGoogleAccess": true,
+        "privateIpv6GoogleAccess": "DISABLE_GOOGLE_ACCESS",
+        "purpose": "PRIVATE",
+        "region": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/regions/asia-northeast1",
+        "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet",
+        "stackType": "IPV4_ONLY"
+      },
+      "status": "verified"
+    },
+    "identity-ocean-v1-beta-serving": {
+      "create_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "create",
+        "ocean-v1-beta-serving",
+        "--display-name=ocean-v1-beta-serving",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "describe",
+        "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created service account [ocean-v1-beta-serving].\nService account email: ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com\n",
+      "preexisting_readback": {
+        "displayName": "ocean-v1-beta-serving",
+        "email": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "etag": "MDEwMjE5MjA=",
+        "name": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "oauth2ClientId": "111125457753394626935",
+        "projectId": "ocean-v1-beta-20261101",
+        "uniqueId": "111125457753394626935"
+      },
+      "readback": {
+        "displayName": "ocean-v1-beta-serving",
+        "email": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "etag": "MDEwMjE5MjA=",
+        "name": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "oauth2ClientId": "111125457753394626935",
+        "projectId": "ocean-v1-beta-20261101",
+        "uniqueId": "111125457753394626935"
+      },
+      "status": "verified"
+    },
+    "identity-ocean-v1-beta-controller": {
+      "create_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "create",
+        "ocean-v1-beta-controller",
+        "--display-name=ocean-v1-beta-controller",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "describe",
+        "ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created service account [ocean-v1-beta-controller].\nService account email: ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com\n",
+      "readback": {
+        "displayName": "ocean-v1-beta-controller",
+        "email": "ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "etag": "MDEwMjE5MjA=",
+        "name": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "oauth2ClientId": "117982043909204212236",
+        "projectId": "ocean-v1-beta-20261101",
+        "uniqueId": "117982043909204212236"
+      },
+      "status": "verified"
+    },
+    "identity-ocean-v1-beta-supervisor": {
+      "create_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "create",
+        "ocean-v1-beta-supervisor",
+        "--display-name=ocean-v1-beta-supervisor",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "describe",
+        "ocean-v1-beta-supervisor@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created service account [ocean-v1-beta-supervisor].\nService account email: ocean-v1-beta-supervisor@ocean-v1-beta-20261101.iam.gserviceaccount.com\n",
+      "readback": {
+        "displayName": "ocean-v1-beta-supervisor",
+        "email": "ocean-v1-beta-supervisor@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "etag": "MDEwMjE5MjA=",
+        "name": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-supervisor@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "oauth2ClientId": "109702271299961210678",
+        "projectId": "ocean-v1-beta-20261101",
+        "uniqueId": "109702271299961210678"
+      },
+      "status": "verified"
+    },
+    "identity-ocean-v1-beta-task-invoker": {
+      "create_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "create",
+        "ocean-v1-beta-task-invoker",
+        "--display-name=ocean-v1-beta-task-invoker",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "describe",
+        "ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created service account [ocean-v1-beta-task-invoker].\nService account email: ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com\n",
+      "readback_errors": [
+        {
+          "returncode": 1,
+          "stderr": "ERROR: (gcloud.iam.service-accounts.describe) NOT_FOUND: Service account projects/-/serviceAccounts/ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com does not exist. This command is authenticated as dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp which is the active account specified by the [core/account] property.\n"
+        },
+        {
+          "returncode": 1,
+          "stderr": "ERROR: (gcloud.iam.service-accounts.describe) NOT_FOUND: Service account projects/-/serviceAccounts/ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com does not exist. This command is authenticated as dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp which is the active account specified by the [core/account] property.\n"
+        },
+        {
+          "returncode": 1,
+          "stderr": "ERROR: (gcloud.iam.service-accounts.describe) NOT_FOUND: Service account projects/-/serviceAccounts/ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com does not exist. This command is authenticated as dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp which is the active account specified by the [core/account] property.\n"
+        }
+      ],
+      "readback": {
+        "displayName": "ocean-v1-beta-task-invoker",
+        "email": "ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "etag": "MDEwMjE5MjA=",
+        "name": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "oauth2ClientId": "105490365082123397320",
+        "projectId": "ocean-v1-beta-20261101",
+        "uniqueId": "105490365082123397320"
+      },
+      "status": "verified"
+    },
+    "bucket-snapshots": {
+      "create_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "create",
+        "gs://ocean-v1-beta-20261101-snapshots",
+        "--location=asia-northeast1",
+        "--default-storage-class=STANDARD",
+        "--uniform-bucket-level-access",
+        "--public-access-prevention",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-snapshots",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Creating gs://ocean-v1-beta-20261101-snapshots/...\n",
+      "readback": {
+        "etag": "CAE=",
+        "generation": "1793529627621880872",
+        "iamConfiguration": {
+          "bucketPolicyOnly": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:40:28.346000+00:00"
+          },
+          "publicAccessPrevention": "enforced",
+          "uniformBucketLevelAccess": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:40:28.346000+00:00"
+          }
+        },
+        "id": "ocean-v1-beta-20261101-snapshots",
+        "kind": "storage#bucket",
+        "location": "ASIA-NORTHEAST1",
+        "locationType": "region",
+        "metageneration": "1",
+        "name": "ocean-v1-beta-20261101-snapshots",
+        "projectNumber": "534831104543",
+        "satisfiesPZI": true,
+        "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-snapshots",
+        "softDeletePolicy": {
+          "effectiveTime": "2026-11-01T10:40:28.346000+00:00",
+          "retentionDurationSeconds": "604800"
+        },
+        "storageClass": "STANDARD",
+        "timeCreated": "2026-11-01T10:40:28.346000+00:00",
+        "updated": "2026-11-01T10:40:28.346000+00:00"
+      },
+      "active_describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-snapshots",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "preexisting_readback": {
+        "etag": "CAE=",
+        "generation": "1793529627621880872",
+        "iamConfiguration": {
+          "bucketPolicyOnly": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:40:28.346000+00:00"
+          },
+          "publicAccessPrevention": "enforced",
+          "uniformBucketLevelAccess": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:40:28.346000+00:00"
+          }
+        },
+        "id": "ocean-v1-beta-20261101-snapshots",
+        "kind": "storage#bucket",
+        "location": "ASIA-NORTHEAST1",
+        "locationType": "region",
+        "metageneration": "1",
+        "name": "ocean-v1-beta-20261101-snapshots",
+        "projectNumber": "534831104543",
+        "satisfiesPZI": true,
+        "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-snapshots",
+        "softDeletePolicy": {
+          "effectiveTime": "2026-11-01T10:40:28.346000+00:00",
+          "retentionDurationSeconds": "604800"
+        },
+        "storageClass": "STANDARD",
+        "timeCreated": "2026-11-01T10:40:28.346000+00:00",
+        "updated": "2026-11-01T10:40:28.346000+00:00"
+      },
+      "status": "verified"
+    },
+    "bucket-results": {
+      "create_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "create",
+        "gs://ocean-v1-beta-20261101-results",
+        "--location=asia-northeast1",
+        "--default-storage-class=STANDARD",
+        "--uniform-bucket-level-access",
+        "--public-access-prevention",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-results",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-results",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Creating gs://ocean-v1-beta-20261101-results/...\n",
+      "readback": {
+        "etag": "CAE=",
+        "generation": "1793529672521214288",
+        "iamConfiguration": {
+          "bucketPolicyOnly": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:41:13.160000+00:00"
+          },
+          "publicAccessPrevention": "enforced",
+          "uniformBucketLevelAccess": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:41:13.160000+00:00"
+          }
+        },
+        "id": "ocean-v1-beta-20261101-results",
+        "kind": "storage#bucket",
+        "location": "ASIA-NORTHEAST1",
+        "locationType": "region",
+        "metageneration": "1",
+        "name": "ocean-v1-beta-20261101-results",
+        "projectNumber": "534831104543",
+        "satisfiesPZI": true,
+        "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-results",
+        "softDeletePolicy": {
+          "effectiveTime": "2026-11-01T10:41:13.160000+00:00",
+          "retentionDurationSeconds": "604800"
+        },
+        "storageClass": "STANDARD",
+        "timeCreated": "2026-11-01T10:41:13.160000+00:00",
+        "updated": "2026-11-01T10:41:13.160000+00:00"
+      },
+      "status": "verified"
+    },
+    "bucket-quarantine": {
+      "create_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "create",
+        "gs://ocean-v1-beta-20261101-quarantine",
+        "--location=asia-northeast1",
+        "--default-storage-class=STANDARD",
+        "--uniform-bucket-level-access",
+        "--public-access-prevention",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-quarantine",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-quarantine",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Creating gs://ocean-v1-beta-20261101-quarantine/...\n",
+      "readback": {
+        "etag": "CAE=",
+        "generation": "1793529676314707092",
+        "iamConfiguration": {
+          "bucketPolicyOnly": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:41:16.952000+00:00"
+          },
+          "publicAccessPrevention": "enforced",
+          "uniformBucketLevelAccess": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:41:16.952000+00:00"
+          }
+        },
+        "id": "ocean-v1-beta-20261101-quarantine",
+        "kind": "storage#bucket",
+        "location": "ASIA-NORTHEAST1",
+        "locationType": "region",
+        "metageneration": "1",
+        "name": "ocean-v1-beta-20261101-quarantine",
+        "projectNumber": "534831104543",
+        "satisfiesPZI": true,
+        "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-quarantine",
+        "softDeletePolicy": {
+          "effectiveTime": "2026-11-01T10:41:16.952000+00:00",
+          "retentionDurationSeconds": "604800"
+        },
+        "storageClass": "STANDARD",
+        "timeCreated": "2026-11-01T10:41:16.952000+00:00",
+        "updated": "2026-11-01T10:41:16.952000+00:00"
+      },
+      "status": "verified"
+    },
+    "bucket-backups": {
+      "create_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "create",
+        "gs://ocean-v1-beta-20261101-backups",
+        "--location=asia-northeast1",
+        "--default-storage-class=STANDARD",
+        "--uniform-bucket-level-access",
+        "--public-access-prevention",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-backups",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "storage",
+        "buckets",
+        "describe",
+        "gs://ocean-v1-beta-20261101-backups",
+        "--raw",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Creating gs://ocean-v1-beta-20261101-backups/...\n",
+      "readback": {
+        "etag": "CAE=",
+        "generation": "1793529679966897545",
+        "iamConfiguration": {
+          "bucketPolicyOnly": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:41:20.622000+00:00"
+          },
+          "publicAccessPrevention": "enforced",
+          "uniformBucketLevelAccess": {
+            "enabled": true,
+            "lockedTime": "2027-01-30T10:41:20.622000+00:00"
+          }
+        },
+        "id": "ocean-v1-beta-20261101-backups",
+        "kind": "storage#bucket",
+        "location": "ASIA-NORTHEAST1",
+        "locationType": "region",
+        "metageneration": "1",
+        "name": "ocean-v1-beta-20261101-backups",
+        "projectNumber": "534831104543",
+        "satisfiesPZI": true,
+        "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-backups",
+        "softDeletePolicy": {
+          "effectiveTime": "2026-11-01T10:41:20.622000+00:00",
+          "retentionDurationSeconds": "604800"
+        },
+        "storageClass": "STANDARD",
+        "timeCreated": "2026-11-01T10:41:20.622000+00:00",
+        "updated": "2026-11-01T10:41:20.622000+00:00"
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-auth": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-auth",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-auth",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-auth",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-auth].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:24.616901Z",
+        "etag": "\"165f34abc63709\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-auth",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-internal": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-internal",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-internal",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-internal",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-internal].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:27.239820Z",
+        "etag": "\"165f34abfc5c42\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-internal",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-oauth": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-oauth",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-oauth",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-oauth",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-oauth].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:30.782685Z",
+        "etag": "\"165f34ac2bd2dc\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-oauth",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-serving-database": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-serving-database",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-serving-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-serving-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-serving-database].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:33.896910Z",
+        "etag": "\"165f34ac61dce0\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-serving-database",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-controller-database": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-controller-database",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-controller-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-controller-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-controller-database].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:37.407363Z",
+        "etag": "\"165f34ac9be95e\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-controller-database",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-supervisor-database": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-supervisor-database",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-supervisor-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-supervisor-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-supervisor-database].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:41.157292Z",
+        "etag": "\"165f34acc7ecab\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-supervisor-database",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-verifier-database": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-verifier-database",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-verifier-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-verifier-database",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-verifier-database].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:43.992515Z",
+        "etag": "\"165f34acf565a9\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-verifier-database",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "secret-ocean-v1-beta-termination-seed": {
+      "create_command": [
+        "gcloud",
+        "secrets",
+        "create",
+        "ocean-v1-beta-termination-seed",
+        "--replication-policy=user-managed",
+        "--locations=asia-northeast1",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-termination-seed",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "secrets",
+        "describe",
+        "ocean-v1-beta-termination-seed",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created secret [ocean-v1-beta-termination-seed].\n",
+      "readback": {
+        "createTime": "2026-11-01T10:41:47.049093Z",
+        "etag": "\"165f34ad2aa444\"",
+        "name": "projects/534831104543/secrets/ocean-v1-beta-termination-seed",
+        "replication": {
+          "userManaged": {
+            "replicas": [
+              {
+                "location": "asia-northeast1"
+              }
+            ]
+          }
+        }
+      },
+      "status": "verified"
+    },
+    "queue": {
+      "create_command": [
+        "gcloud",
+        "tasks",
+        "queues",
+        "create",
+        "ocean-v1-beta-research",
+        "--location=asia-northeast1",
+        "--max-concurrent-dispatches=1",
+        "--max-dispatches-per-second=1",
+        "--max-attempts=3",
+        "--max-retry-duration=3600s",
+        "--min-backoff=10s",
+        "--max-backoff=300s",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "describe_command": [
+        "gcloud",
+        "tasks",
+        "queues",
+        "describe",
+        "ocean-v1-beta-research",
+        "--location=asia-northeast1",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "active_describe_command": [
+        "gcloud",
+        "tasks",
+        "queues",
+        "describe",
+        "ocean-v1-beta-research",
+        "--location=asia-northeast1",
+        "--format=json",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "create_returncode": 0,
+      "create_stdout": "",
+      "create_stderr": "Created queue [asia-northeast1/ocean-v1-beta-research].\n",
+      "pause_returncode": 0,
+      "pause_stdout": "",
+      "pause_stderr": "Paused queue [asia-northeast1/ocean-v1-beta-research].\n",
+      "readback": {
+        "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/queues/ocean-v1-beta-research",
+        "rateLimits": {
+          "maxBurstSize": 10,
+          "maxConcurrentDispatches": 1,
+          "maxDispatchesPerSecond": 1.0
+        },
+        "retryConfig": {
+          "maxAttempts": 3,
+          "maxBackoff": "300s",
+          "maxDoublings": 16,
+          "maxRetryDuration": "3600s",
+          "minBackoff": "10s"
+        },
+        "state": "PAUSED"
+      },
+      "status": "verified"
+    }
+  },
+  "status": "verified_empty_foundation",
+  "runtime_resources_created": false,
+  "IAM_runtime_grants_created": false,
+  "secret_versions_created": false,
+  "updated_at": "2026-11-01T10:41:53.878876+00:00"
+}

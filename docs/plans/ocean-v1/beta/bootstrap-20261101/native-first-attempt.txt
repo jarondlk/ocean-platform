@@ -1,0 +1,1 @@
+First invocation was sandboxed and failed at loopback port probing (PermissionError) before initdb/start/migrations; no server was started. Newly owned empty socket/temp/output directories were verified and removed. Re-run uses authorized local socket permission and a brand-new directory.

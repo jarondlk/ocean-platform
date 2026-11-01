@@ -1,0 +1,12 @@
+{
+  "version": "ocean-v1-api-host-v1",
+  "project_id": "ocean-v1-beta-20261101",
+  "site_id": "v1:ocean-v1-beta-20261101",
+  "revision": null,
+  "public_origin": "https://beta.oceaninfobio.com",
+  "database_name": "ocean_v1_beta",
+  "backend_hosts": ["127.0.0.1:8000"],
+  "allowed_providers": ["google"],
+  "internal_issuer": "ocean-v1-frontend",
+  "internal_audience": "ocean-v1-api"
+}

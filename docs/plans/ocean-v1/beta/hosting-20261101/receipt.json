@@ -1,0 +1,105 @@
+{
+  "version": "ocean-v1-host-local-checkpoint-v1",
+  "assembled_at": "2026-11-01T15:43:55.605086+00:00",
+  "assembled_at_qualification": "Receipt assembly time only; original execution timestamp is retained in accepted-commands.json.",
+  "source_revision": "sha256:7b90b4d172a8d845d01ad2fae58422100203b72680816d7b36b192b220b18772",
+  "source_file_count": 97,
+  "checkout_commit": "acf208af17c71e414165ed97d6955a7d0788de30",
+  "qualification": "Local software checkpoint only. Completed original checks were not repeated; current bytes match the retained 97-file source snapshot. Host process exit codes are in accepted-commands.json; static-preview completion is qualified by retained output and previous owner report. No real Google callback or cloud deployment acceptance.",
+  "tap_counts": {
+    "host-unit.stdout": {
+      "tests": 50,
+      "pass": 50,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "host-http.stdout": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "preview-regressions.stdout": {
+      "tests": 1051,
+      "pass": 1051,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "intentional_supersessions": [
+    {
+      "path": "frontend-v1/src/runtime-app.tsx",
+      "previous_commit": "acf208af17c71e414165ed97d6955a7d0788de30",
+      "previous_sha256": "1451845365c4da224fd4e9ecdb433a1878d950c3d07ab671056eb7071ccfa4c5",
+      "new_sha256": "59d73b4fdc5607d26764debb8fc6b1afe3380e2181cdbc7b154fe667ccfed996",
+      "reason": "Optional host fetcher is propagated to actual clients; absent opt-in retains prior defaults."
+    },
+    {
+      "path": "frontend-v1/tsconfig.json",
+      "previous_commit": "acf208af17c71e414165ed97d6955a7d0788de30",
+      "previous_sha256": "5c14605dfa560eecdf32b50ea5aedbd1b1814ee9073c90d3dfc6c564244153e8",
+      "new_sha256": "26d8dc0a3112fc85e2ac9ffbd829f8729156b52017658b7fd92d6421dddad109",
+      "reason": "Static preview excludes the separately checked independent host tree."
+    }
+  ],
+  "preview_commands": [
+    {
+      "cwd": "frontend-v1",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "evidence": "preview-regressions.stdout",
+      "qualification": "TAP 1051 passed; process exit code not separately captured"
+    },
+    {
+      "cwd": "frontend-v1",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "evidence": "preview-typecheck.stdout",
+      "qualification": "Successful completion reported by previous owner; captured route type output"
+    },
+    {
+      "cwd": "frontend-v1",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "evidence": "preview-build.stdout",
+      "qualification": "Completed export build output; process exit code not separately captured"
+    }
+  ],
+  "live_google_callback_tested": false,
+  "deployment_accepted": false,
+  "science_provider_composition_accepted": false,
+  "original_release_gates_closed": 0,
+  "evidence_files": {
+    "FINAL_REVIEW.md": "89743838d26a5341081f12353799832266fe2e69955aeec448d504bdc0bbc39f",
+    "README.md": "2e250223258c4711bbdd763cc7d1ba31ca6967fb4e44d413f841a633d9c49d7c",
+    "accepted-commands.json": "9c88ca43cefa0767e1f890828defe60ace582ad08bfad9de50f2c39161f8613e",
+    "host-audit.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-audit.stdout": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+    "host-build.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-build.stdout": "ef4daba30d010b105f41bfd97d1bf84d8c79f5891b39cf46a0799412c690e6bc",
+    "host-http.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-http.stdout": "f32dddc6ead77379758c53e0290a25641f9b31981a61b032597b46ba21dd7675",
+    "host-typecheck.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-typecheck.stdout": "a2bc6cd414c5469248a2d5944bfda3686ea5463f203dbf3ee942fc8865a43b02",
+    "host-unit.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-unit.stdout": "5b79abc331e0eb3ce41bbd0b9c964fee747a4cf7cd28f77e31fc31576f4101fc",
+    "preview-build.stdout": "5ace1994d860921ab6a1aeabea89f19df6f8453fa8ccf816440da5bfa2fcf539",
+    "preview-regressions.stdout": "0a4bf70011b069ea2adbd83de14557f10482827b853c9b196d34ebd01e64b06f",
+    "preview-typecheck.stdout": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "verify.py": "06a5621cde25669f265a465d71ae54a0364a76365d75558b256adb9047d2587e"
+  }
+}

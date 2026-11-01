@@ -1,0 +1,21 @@
+{
+  "version": "beta-run-cap-plan-v1",
+  "date": "2026-11-01 JST",
+  "project_id": "ocean-v1-beta-20261101",
+  "kind": "CloudRun-only enforced spendcap",
+  "currency": "JPY",
+  "amount": 3000,
+  "period": "monthly",
+  "scope": "one beta project, Cloud Run service only",
+  "purpose": "Keep hosting/controllerwithinconservativeinitialallocation and belowbeta50000target. DoesnotcapSQL/Compute/storage orreplaceoverallalert.",
+  "notification_owner": "project owners",
+  "legacy_controls_unchanged": true,
+  "authorization": "Userauthorizedbetaresourceswithin50000andnotifybeforefurther; settinglowernewprojectservicecapiscostcontrol withinthatrequest.",
+  "no_new_runtime_selected": true,
+  "limitations": [
+    "providerreporting/enforcementlag",
+    "monthlyreset",
+    "inflightworkfinishes",
+    "fixedpersistentchargesnotcapped"
+  ]
+}

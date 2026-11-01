@@ -1,0 +1,266 @@
+
+> ocean-v1-authenticated-host@1.0.0-host.0 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts
+
+TAP version 13
+# Subtest: actual auth provider discovery exposes only independent Google and a canonical callback
+ok 1 - actual auth provider discovery exposes only independent Google and a canonical callback
+  ---
+  duration_ms: 11.41325
+  ...
+# Subtest: actual CSRF endpoint sets only Secure HttpOnly host-only v1 cookies
+ok 2 - actual CSRF endpoint sets only Secure HttpOnly host-only v1 cookies
+  ---
+  duration_ms: 2.582292
+  ...
+# Subtest: actual encrypted session is revalidated against current API authority on every read
+ok 3 - actual encrypted session is revalidated against current API authority on every read
+  ---
+  duration_ms: 6.797833
+  ...
+# V1 authentication unavailable
+# Subtest: legacy cookie names and wrong independent signing secret cannot authenticate
+ok 4 - legacy cookie names and wrong independent signing secret cannot authenticate
+  ---
+  duration_ms: 2.682417
+  ...
+# V1 authentication unavailable
+# Subtest: actual logout requires CSRF and clears the independent session
+ok 5 - actual logout requires CSRF and clears the independent session
+  ---
+  duration_ms: 3.1185
+  ...
+# Subtest: only complete independent HTTPS host and explicit loopback sidecar settings are accepted
+ok 6 - only complete independent HTTPS host and explicit loopback sidecar settings are accepted
+  ---
+  duration_ms: 0.860583
+  ...
+# Subtest: host settings reject DEPLOYMENT_ENV=development
+ok 7 - host settings reject DEPLOYMENT_ENV=development
+  ---
+  duration_ms: 0.056125
+  ...
+# Subtest: host settings reject AUTH_MODE=disabled
+ok 8 - host settings reject AUTH_MODE=disabled
+  ---
+  duration_ms: 0.115292
+  ...
+# Subtest: host settings reject ENABLE_MOCK_LOGIN=true
+ok 9 - host settings reject ENABLE_MOCK_LOGIN=true
+  ---
+  duration_ms: 0.036125
+  ...
+# Subtest: host settings reject PERSIST_LOCAL_CHAT=true
+ok 10 - host settings reject PERSIST_LOCAL_CHAT=true
+  ---
+  duration_ms: 0.037167
+  ...
+# Subtest: host settings reject V1_PUBLIC_ORIGIN=https://oceaninfobio.com
+ok 11 - host settings reject V1_PUBLIC_ORIGIN=https://oceaninfobio.com
+  ---
+  duration_ms: 0.030583
+  ...
+# Subtest: host settings reject V1_PUBLIC_ORIGIN=https://evil.invalid
+ok 12 - host settings reject V1_PUBLIC_ORIGIN=https://evil.invalid
+  ---
+  duration_ms: 0.0265
+  ...
+# Subtest: host settings reject AUTH_URL=https://oceaninfobio.com
+ok 13 - host settings reject AUTH_URL=https://oceaninfobio.com
+  ---
+  duration_ms: 0.026542
+  ...
+# Subtest: host settings reject NEXTAUTH_URL=https://legacy.invalid
+ok 14 - host settings reject NEXTAUTH_URL=https://legacy.invalid
+  ---
+  duration_ms: 0.176709
+  ...
+# Subtest: host settings reject V1_API_ORIGIN=https://legacy.invalid
+ok 15 - host settings reject V1_API_ORIGIN=https://legacy.invalid
+  ---
+  duration_ms: 0.235417
+  ...
+# Subtest: host settings reject V1_API_ORIGIN=http://127.0.0.1:8000/
+ok 16 - host settings reject V1_API_ORIGIN=http://127.0.0.1:8000/
+  ---
+  duration_ms: 0.079792
+  ...
+# Subtest: host settings reject V1_AUTH_SECRET=short
+ok 17 - host settings reject V1_AUTH_SECRET=short
+  ---
+  duration_ms: 0.030666
+  ...
+# Subtest: host settings reject V1_INTERNAL_AUTH_SECRET=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ok 18 - host settings reject V1_INTERNAL_AUTH_SECRET=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  ---
+  duration_ms: 0.027375
+  ...
+# Subtest: host settings reject V1_INTERNAL_AUTH_ISSUER=ocean-platform-frontend
+ok 19 - host settings reject V1_INTERNAL_AUTH_ISSUER=ocean-platform-frontend
+  ---
+  duration_ms: 0.025416
+  ...
+# Subtest: host settings reject V1_INTERNAL_AUTH_AUDIENCE=ocean-platform-api
+ok 20 - host settings reject V1_INTERNAL_AUTH_AUDIENCE=ocean-platform-api
+  ---
+  duration_ms: 0.024458
+  ...
+# Subtest: host settings reject V1_GOOGLE_CLIENT_ID=not-a-client
+ok 21 - host settings reject V1_GOOGLE_CLIENT_ID=not-a-client
+  ---
+  duration_ms: 0.022083
+  ...
+# Subtest: host settings reject V1_GOOGLE_CLIENT_SECRET=tiny
+ok 22 - host settings reject V1_GOOGLE_CLIENT_SECRET=tiny
+  ---
+  duration_ms: 0.021875
+  ...
+# Subtest: host settings reject NEXT_PUBLIC_INTERNAL_SECRET=never-publish
+ok 23 - host settings reject NEXT_PUBLIC_INTERNAL_SECRET=never-publish
+  ---
+  duration_ms: 0.026167
+  ...
+# Subtest: host settings reject AUTH_SECRET=ambient-legacy-secret
+ok 24 - host settings reject AUTH_SECRET=ambient-legacy-secret
+  ---
+  duration_ms: 0.022292
+  ...
+# Subtest: host settings reject AUTH_GOOGLE_ID=ambient-client
+ok 25 - host settings reject AUTH_GOOGLE_ID=ambient-client
+  ---
+  duration_ms: 0.024166
+  ...
+# Subtest: host settings reject AUTH_REDIRECT_PROXY_URL=https://legacy.invalid/api/auth
+ok 26 - host settings reject AUTH_REDIRECT_PROXY_URL=https://legacy.invalid/api/auth
+  ---
+  duration_ms: 0.021375
+  ...
+# Subtest: request guard permits exact load-balancer headers and rejects spoofed/ambiguous origins
+ok 27 - request guard permits exact load-balancer headers and rejects spoofed/ambiguous origins
+  ---
+  duration_ms: 8.933833
+  ...
+# Subtest: internal identity token is server-bound, short-lived and excludes authorization roles
+ok 28 - internal identity token is server-bound, short-lived and excludes authorization roles
+  ---
+  duration_ms: 7.964292
+  ...
+# Subtest: current account check resolves the private API and rejects revocation, malformed/current-other identity and redirects
+ok 29 - current account check resolves the private API and rejects revocation, malformed/current-other identity and redirects
+  ---
+  duration_ms: 5.478834
+  ...
+# Subtest: incomplete provider identity cannot mint a trusted user token
+ok 30 - incomplete provider identity cannot mint a trusted user token
+  ---
+  duration_ms: 0.11875
+  ...
+# Subtest: explicit host fetcher sends same-origin cookies only on fixed relative v1 paths
+ok 31 - explicit host fetcher sends same-origin cookies only on fixed relative v1 paths
+  ---
+  duration_ms: 0.3985
+  ...
+# Subtest: actual proxy replaces caller auth/cookies and limits outgoing headers to the independent API
+ok 32 - actual proxy replaces caller auth/cookies and limits outgoing headers to the independent API
+  ---
+  duration_ms: 15.006667
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/runs/submit
+ok 33 - read-only host denies unconfigured write/admin/proxy destination /research/runs/submit
+  ---
+  duration_ms: 0.306292
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/runs/clarify
+ok 34 - read-only host denies unconfigured write/admin/proxy destination /research/runs/clarify
+  ---
+  duration_ms: 0.191875
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/runs/continue
+ok 35 - read-only host denies unconfigured write/admin/proxy destination /research/runs/continue
+  ---
+  duration_ms: 0.324667
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/answers/submit
+ok 36 - read-only host denies unconfigured write/admin/proxy destination /research/answers/submit
+  ---
+  duration_ms: 0.206875
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/experiments/approve
+ok 37 - read-only host denies unconfigured write/admin/proxy destination /research/experiments/approve
+  ---
+  duration_ms: 0.144208
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/experiments/dispatch
+ok 38 - read-only host denies unconfigured write/admin/proxy destination /research/experiments/dispatch
+  ---
+  duration_ms: 0.088917
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/investigations/create
+ok 39 - read-only host denies unconfigured write/admin/proxy destination /research/investigations/create
+  ---
+  duration_ms: 0.18025
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /research/investigations/context/change
+ok 40 - read-only host denies unconfigured write/admin/proxy destination /research/investigations/context/change
+  ---
+  duration_ms: 0.41475
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /admin
+ok 41 - read-only host denies unconfigured write/admin/proxy destination /admin
+  ---
+  duration_ms: 0.322542
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /me
+ok 42 - read-only host denies unconfigured write/admin/proxy destination /me
+  ---
+  duration_ms: 0.168375
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /chat
+ok 43 - read-only host denies unconfigured write/admin/proxy destination /chat
+  ---
+  duration_ms: 0.152167
+  ...
+# Subtest: read-only host denies unconfigured write/admin/proxy destination /catalogue/list?target=legacy
+ok 44 - read-only host denies unconfigured write/admin/proxy destination /catalogue/list?target=legacy
+  ---
+  duration_ms: 0.096417
+  ...
+# Subtest: saved read and cancellation endpoints are admitted independently of new dispatch
+ok 45 - saved read and cancellation endpoints are admitted independently of new dispatch
+  ---
+  duration_ms: 0.05525
+  ...
+# Subtest: authentication and exact-origin failures occur before any upstream call
+ok 46 - authentication and exact-origin failures occur before any upstream call
+  ---
+  duration_ms: 0.214208
+  ...
+# Subtest: body/media/response bounds reject deceptive Content-Length and streaming overflow
+ok 47 - body/media/response bounds reject deceptive Content-Length and streaming overflow
+  ---
+  duration_ms: 3.966417
+  ...
+# Subtest: body reader cancels a stalled request and rejects streamed overflow within its deadline
+ok 48 - body reader cancels a stalled request and rejects streamed overflow within its deadline
+  ---
+  duration_ms: 6.488333
+  ...
+# Subtest: actual RuntimeApp opt-in transport reaches catalogue and investigation children with session credentials
+ok 49 - actual RuntimeApp opt-in transport reaches catalogue and investigation children with session credentials
+  ---
+  duration_ms: 88.829875
+  ...
+# Subtest: RuntimeApp callers without host opt-in retain original child/client defaults
+ok 50 - RuntimeApp callers without host opt-in retain original child/client defaults
+  ---
+  duration_ms: 27.887625
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 407.725666
