@@ -1,0 +1,19 @@
+{
+  "version": "ocean-v1-beta-preparation-receipt-v1",
+  "recorded_on": "2026-11-01 JST",
+  "scope": "offline-preparation-only",
+  "implementation_started": false,
+  "cloud_operations_performed": false,
+  "sign_in_needed_now": false,
+  "source_checkpoint": "5b5afe7df7aaa83de52c887791eb633a6a06bbb8",
+  "artifact_sha256": {
+    "docs/plans/ocean-v1/beta/PREPARATION.md": "3b6035f1c1e6a587c3262f81e251ab93d51d96cdf3251a760f62c3b40e80cdac",
+    "docs/plans/ocean-v1/beta/INTEGRATION_PLAN.md": "51a5bf61f6c8b23afe0ff10c9fe6f48e0f79351000ca86710f9376ee80bf2e2c",
+    "docs/plans/ocean-v1/beta/CLOUD_PLAN.md": "01dcb2330eaa128f4c400f4a5214a0e0371a960877065da56033e0679d17922b",
+    "docs/plans/ocean-v1/beta/cloud-worksheet.json": "fbeb3bb74292404331dee95f0590d938821b748950bcc10579d69d2b31077373",
+    "docs/plans/ocean-v1/beta/source-audit.json": "32f8c474f0fd160d8dccde865934573da9b6db4d26fd1b81b54b28427f7c2462",
+    "docs/plans/ocean-v1/beta/verify.py": "c76ad50a5a2e05b971fd70f7bf7249ef6e5ca11cba4424495c261172aae4028e",
+    "docs/plans/ocean-v1/handoffs/BETA_PREPARATION.md": "94407d90b30eb339c7660ec500e3ce32b1b3c7b84d60c2e69568cca93ed6c551"
+  },
+  "qualification": "No application/dependency changes, cloud auth/account inspection, provisioning, deployment, realdata or provider/model calls. Current public docs only; all20releasegates andP2 remain."
+}

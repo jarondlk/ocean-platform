@@ -1,5 +1,9 @@
 # OCEAN v1.0.0 Planning Hub
 
+Current follow-on: [beta integration/cloud preparation](beta/PREPARATION.md) is
+complete locally. The user will sign in later; runtime implementation and cloud
+setup have not started. [Handoff](handoffs/BETA_PREPARATION.md).
+
 **P00 and C01–C26 are Complete within their documented boundaries with hosted delivery; C27 is Complete for local release preparation. Live deployment/release gates remain pending.**
 The user selected C27 on 2026-11-01 after the verified C26 delivery.
 See [C27 readiness](C27_READINESS_AUDIT_2026-11-01.md),

@@ -1,0 +1,49 @@
+{
+  "version": "ocean-v1-beta-preparation-source-v1",
+  "checkpoint": "5b5afe7df7aaa83de52c887791eb633a6a06bbb8",
+  "accepted_runtime": "afe9cb2d1a6d2c28a834daab1a342de4563dc3a3",
+  "c27_package_manifest_sha256": "aaddbb1323eb39a461c709ef2d8f9e4fa0856e813facb7d2b0c64bf5a76c0c4a",
+  "source_files": {
+    "frontend-v1/next.config.mjs": "7505a8f04bd81aae600796c6294cba926f7ea9dda279fc955a9004afe34b43c9",
+    "frontend-v1/package.json": "e2f2fa5422e5135fa80d2ea16963f62896b14bfe19b8f36ad62eed764d05e7c8",
+    "frontend-v1/scripts/preview.mjs": "be29bafbbacedc52eed30728ab6878e2a24a5519c56526f2ece0d3e198eade81",
+    "frontend-v1/src/runtime.ts": "ad4514a64aa272f9e8a10cb1572fd852855f501c360ce6345a8fa29375bee613",
+    "frontend-v1/src/runtime-app.tsx": "1451845365c4da224fd4e9ecdb433a1878d950c3d07ab671056eb7071ccfa4c5",
+    "frontend/auth.ts": "1c8cc72532bb6ad0ee7985233a3f1701422e06b130be8131c9f2cce6a2135d36",
+    "frontend/lib/internal-auth.ts": "c3df7ce93f4432d45509f1fe22346c48533104bbc55af0e45ccbd06f86c78e87",
+    "frontend/app/api/backend/[...path]/route.ts": "f703321fc4eabd94dc8020d3d224832d279c8317478c5ffa317d264a4b1c50d9",
+    "api/v1_runtime_routes.py": "e944453a55c96258f73bfa0cfacfce0e8458de704c0b0e081e9f49c3933e5c32",
+    "api/research_run_routes.py": "dade58a4067252b8b0e9ac05dea2ebcd3773c036b38d4280678961b3c644cb45",
+    "api/experiment_workspace_routes.py": "e1c07cb76bde3280298e35ca484a5466374b759749f6438ca70a5597b4f282ea",
+    "orchestration/research_runs.py": "0d8e652684005489612eee5e56d53d5a80559c0a62ca34484aef157dc65d89e4",
+    "orchestration/research_experiments.py": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6",
+    "orchestration/experiment_workspace.py": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "deploy/gcp-v1/examples/site.operator.pending.json": "d37a6c7929e92bd019e8bab822b3f4091a8432e6791206d9c60a1482c8aaa942",
+    "deploy/gcp-v1/templates/controller.json": "6ff4df227a5da80784bbc01831ba4bc9d497ccc05fd8feb015e333a541c4a038",
+    "deploy/gcp-v1/templates/serving.json": "21f36e7827bc0876522b1654efc25ed85a3cb2d1383aeaf5b5c45ef8182b8314",
+    "scripts/render_gcp_v1.py": "7c33abd77461e245113d8d8df48cf8457986ab2ca2289b075881851da50ffdf6"
+  },
+  "provider_docs_reviewed_on": "2026-11-01 JST",
+  "provider_references": [
+    {
+      "url": "https://docs.cloud.google.com/tasks/docs/creating-http-target-tasks",
+      "finding": "HTTP task OIDC configuration carries explicit service-account email and audience; live verification remains required."
+    },
+    {
+      "url": "https://docs.cloud.google.com/run/docs/authenticating/service-to-service",
+      "finding": "Private invocation must bind the intended identity/audience; do not substitute application user tokens for task identity."
+    },
+    {
+      "url": "https://docs.cloud.google.com/run/docs/securing/ingress",
+      "finding": "Same-project CloudTasks using default run.app URL can satisfy internal ingress. Disabling that default URL breaks that invocation path; serving and controller URL policies differ."
+    },
+    {
+      "url": "https://docs.cloud.google.com/run/docs/securing/service-identity",
+      "finding": "Deployer and runtime service identities are distinct; use explicit dedicated runtime identities and resource-scoped permissions."
+    }
+  ],
+  "qualification": "Repository audit and public documentation only. No gcloud auth/credential/account/project inspection, cloud mutation, dependency change or application tests performed."
+}
