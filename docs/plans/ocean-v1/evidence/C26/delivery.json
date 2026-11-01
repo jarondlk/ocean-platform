@@ -1,0 +1,239 @@
+{
+  "version": "c26-local-preparation-hosted-delivery-v1",
+  "recorded_on": "2026-11-01 JST",
+  "component": "C26",
+  "branch": "overhaul",
+  "status": "complete_within_local_preparation_and_hosted_software_boundary",
+  "source_commit": "afe9cb2d1a6d2c28a834daab1a342de4563dc3a3",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "original_functional_source_revision": "sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca",
+  "effective_delivery_source_revision": "sha256:b2107ecc0ac41f01cc9d3d8c694429b58094cd45f26b2522aa4fa7aa0d359d97",
+  "source_supersession": "workflow-supersession-afe9cb2.json",
+  "accepted_workflow_run_id": 41175282249,
+  "accepted_workflow_run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/41175282249",
+  "local_preparation_complete": true,
+  "local_regression_tests_passed": 1604,
+  "local_regression_tests_failed": 0,
+  "local_regression_tests_skipped": 0,
+  "preparation_requirement_rows_passed": 43,
+  "shared_service_scenarios_passed": 11,
+  "browser_requests": 707,
+  "browser_source_pins": 204,
+  "browser_functional_checks_passed": 4,
+  "open_findings": [
+    {
+      "id": "D26-07",
+      "severity": "P2",
+      "status": "open",
+      "scope": "Concurrent worker first automatic history hydration may exceed unchanged15s deadline; explicit Reload answers recovers. First-read latency and hosted concurrent capacity are not accepted."
+    }
+  ],
+  "hosted_jobs": [
+    {
+      "name": "backend",
+      "id": 124461440379,
+      "conclusion": "success",
+      "isolated_scale_passed": 1,
+      "covered_integration_passed": 17,
+      "remaining_tests_passed": 6694,
+      "explicit_skipped": 626,
+      "combined_coverage_percent": 83.64
+    },
+    {
+      "name": "postgres",
+      "id": 124461440398,
+      "conclusion": "success",
+      "actual_passed": 318,
+      "explicit_skipped": 16,
+      "backup_restore": "passed"
+    },
+    {
+      "name": "v1-frontend",
+      "id": 124461440084,
+      "conclusion": "success",
+      "tests_passed": 1051,
+      "typecheck_build_audit": "passed"
+    },
+    {
+      "name": "legacy-frontend",
+      "id": 124461440305,
+      "conclusion": "success",
+      "tests_passed": 132,
+      "typecheck_build_audit": "passed"
+    }
+  ],
+  "preservation": {
+    "source_paths": 844,
+    "unchanged_application_paths": 843,
+    "protected_paths": 42,
+    "original_receipts": 5141
+  },
+  "release_status": "not_run",
+  "release_accepted": false,
+  "pending_release_requirements": [
+    {
+      "requirement_id": "authenticated-beta",
+      "status": "not_run",
+      "reason": "Authenticated beta serving, independent sessions and exact-origin behavior; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "cloud-queue",
+      "status": "not_run",
+      "reason": "Actual Cloud Tasks, durable outbox, leases and private invocation; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "production-worker-port",
+      "status": "not_run",
+      "reason": "Production retained execution port and supervisor, current containment/admission lifecycle; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "iam-network-isolation",
+      "status": "not_run",
+      "reason": "Actual IAM/network/resource isolation and legacy denial; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "backup-recovery",
+      "status": "not_run",
+      "reason": "Current live database/storage backup, restore and uncertain-state recovery; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "dns-tls",
+      "status": "not_run",
+      "reason": "Authorized beta domain DNS/TLS and origin validation; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "real-data-science",
+      "status": "not_run",
+      "reason": "Separately authorized real data transfer, regeneration and scientific approval; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "live-model-evaluation",
+      "status": "not_run",
+      "reason": "Paid/live provider comparison with exact matched inputs and telemetry; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "release-rehearsal",
+      "status": "not_run",
+      "reason": "C27 independent migration/rollback/promotion rehearsal and operator acceptance; local synthetic observations cannot establish this gate",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.whole_site_target_and_live_action_authorization",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: whole_site_target_and_live_action_authorization",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.authenticated_v1_host_proxy_and_bootstrap",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: authenticated_v1_host_proxy_and_bootstrap",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.real_cloud_tasks_adapter_outbox_and_private_invocation",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: real_cloud_tasks_adapter_outbox_and_private_invocation",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.production_experiment_supervisor_health_and_drain",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: production_experiment_supervisor_health_and_drain",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.worker_boot_image_unique_id_and_disk_sourceImageId",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: worker_boot_image_unique_id_and_disk_sourceImageId",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.inherited_IAM_and_network_legacy_access_denials",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: inherited_IAM_and_network_legacy_access_denials",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.two_simultaneous_sandboxes_and_measured_host_capacity",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: two_simultaneous_sandboxes_and_measured_host_capacity",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.independent_backup_restore_retention_budget_and_alert_readbacks",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: independent_backup_restore_retention_budget_and_alert_readbacks",
+      "evidence": []
+    },
+    {
+      "requirement_id": "C24.C26_C27_integrated_acceptance_and_release_promotion",
+      "status": "not_run",
+      "reason": "Original C24 live gate remains unrun: C26_C27_integrated_acceptance_and_release_promotion",
+      "evidence": []
+    }
+  ],
+  "actual_c24_live_gates": "11 not_run; offline configuration is not hosted integration",
+  "prior_native_crashes": {
+    "source_commits": [
+      "a683ee8",
+      "e0874e0",
+      "8ddd2a4"
+    ],
+    "raw_logs_preserved": true,
+    "root_cause": "unknown",
+    "qualification": "Success at the recorded coverage/timer/runtime configuration is not a native-runtime causation claim"
+  },
+  "previous_60minute_run": {
+    "source_commit": "55d6e721c93f0546763c3d2879756d7a3cb25eda",
+    "run_id": 41008893669,
+    "conclusion": "cancelled",
+    "readback": "hosted-55d6e72/run.json"
+  },
+  "metadata_checkpoint": {
+    "skip_ci_authorized": true,
+    "rule": "Only new C26 documentation and evidence; all844accepted source bytes must remain unchanged. This metadata commit is not claimed as a separately tested application revision."
+  },
+  "scheduler": "paused",
+  "next_component": "C27 local release-preparation prerequisite audit",
+  "proof_sha256": {
+    "docs/plans/ocean-v1/evidence/C26/verification.json": "a8a6a5a1b6f79f5e17766d254bb32ff7767cfc0dfb605108f2e2e53b323ba5ac",
+    "docs/plans/ocean-v1/evidence/C26/verify_delivery.py": "3bf3867430ddb39f70a0178140dda40c99e34d9d11491a0c3ddff586403ba70d",
+    "docs/plans/ocean-v1/evidence/C26/delivery-target.json": "657a04425153daeeaf45eab14329fc81efb8d293a5eb7b012461f1ddbd1e7f93",
+    "docs/plans/ocean-v1/evidence/C26/workflow-supersession-afe9cb2.json": "fa0d0be234863fe4203a034a3c22776e3f747fa9896060ec64669814324982ef",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/backend.json": "2dc7e514da1cc2420e06ceb7c3a2a99bd0ec1ccfb0b37936e1de06aea618eda1",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/backend.log.gz": "a7ef92d88096c40e341e61647ce2b4c51f9016959f66060454f002680d033766",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/jobs.json": "7ebc2fbf76e9247b69a7a776badd3ef125950dca2e5fa46b245fdddeb28a6d24",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/legacy-frontend.json": "e45e414bd072d58fc722da232a3cdb89b453fb5f4ae7a3e2983ba2944ed983a3",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/legacy-frontend.log.gz": "28761666b1fccd3b5e21ff660145157a3b70af55fe41226a49b63ddeb268033a",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/postgres.json": "d2d868533c21b736b0dfa0c55ccbe701e6f39bec4f79d47973a166f4ec7cb424",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/postgres.log.gz": "f85799d88b171c98742585d4d968ae3dc468a641245ecf81a075a39fdf199fad",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/run.json": "2a89067e543f6d79f36dba1ccd734d96fcdb5869e9dc673c1830ca4c2ab23b42",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/v1-frontend.json": "060b8d0b7fe7af1aac00bb74c4904033acc65b1c258ae49bd8276c5fb2dda083",
+    "docs/plans/ocean-v1/evidence/C26/hosted-afe9cb2/v1-frontend.log.gz": "f933e31f3f8ed073401d1ce450d15cfa558681b94bd422dc762c3c371bd98dfb",
+    "docs/plans/ocean-v1/evidence/C26/ci-timeout-20261101/README.md": "70938b213fea0d68f68990ae0110aced75422ef325926b16d5cf0473b801704b",
+    "docs/plans/ocean-v1/evidence/C26/ci-timeout-20261101/plan.json": "4930ae71a8e852b343eb4fc80ef145aea71e1234d3ec4d47bba37391544b69d5",
+    "docs/plans/ocean-v1/evidence/C26/ci-timeout-20261101/workflow-after.yml": "61754d47e5056ceb5fa284798ba91ac7edd772b534dd2860683ab72d028e7c54",
+    "docs/plans/ocean-v1/evidence/C26/ci-timeout-20261101/workflow-before.yml": "b697bb0e028d7be8ac1c22954df001e046854c579859330319f2f586ebc8a95a"
+  },
+  "qualification": "No beta deployment, live model/provider comparison, real-data transfer, scientific approval, production mutation or new GCP action performed. Original functional/browser/C23 physical receipts remain immutable."
+}

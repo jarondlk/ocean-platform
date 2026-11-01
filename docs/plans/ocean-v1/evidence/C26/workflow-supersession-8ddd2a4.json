@@ -1,0 +1,22 @@
+{
+  "version": "c26-workflow-only-source-supersession-v1",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "original_functional_source_revision": "sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca",
+  "verification_source_commit": "8ddd2a4aa960db559174f659036a6a0fb5f6e316",
+  "verification_run_id": 41007012223,
+  "hosted_directory": "hosted-8ddd2a4",
+  "effective_source_revision": "sha256:3c722e0f98a5ce5ed7530b5733233bf93df57588182f238553b96f85fea72970",
+  "source_path_inventory_preserved": true,
+  "source_paths": 844,
+  "unchanged_application_paths": 843,
+  "supersessions": [
+    {
+      "path": ".github/workflows/tests.yml",
+      "from_sha256": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+      "to_sha256": "dc256f5275fa7872ce91368c6567bc42f1fe6f8ac1dc5d9ef159c91ebaac0dc3",
+      "reason": "Fresh-process covered C26 partition after two native Python exit139 failures; all tests,8targets,sysmon and final70percent combined gate preserved"
+    }
+  ],
+  "plan": "ci-isolation-20261030/plan.json",
+  "qualification": "Original local report/source identity remains unchanged; only the effective delivery manifest composes this workflow amendment. Fresh hosted success is still required."
+}

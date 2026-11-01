@@ -1,0 +1,23 @@
+{
+  "version": "c26-workflow-only-source-supersession-v1",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "original_functional_source_revision": "sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca",
+  "previous_failed_workflow_source_commit": "8ddd2a4aa960db559174f659036a6a0fb5f6e316",
+  "verification_source_commit": "55d6e721c93f0546763c3d2879756d7a3cb25eda",
+  "verification_run_id": 41008893669,
+  "hosted_directory": "hosted-55d6e72",
+  "effective_source_revision": "sha256:c8bc29652d6c4808b83c8dc3c7033943db24934caa2a87ccbe59f9ea33579c0c",
+  "source_path_inventory_preserved": true,
+  "source_paths": 844,
+  "unchanged_application_paths": 843,
+  "supersessions": [
+    {
+      "path": ".github/workflows/tests.yml",
+      "from_sha256": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+      "to_sha256": "b697bb0e028d7be8ac1c22954df001e046854c579859330319f2f586ebc8a95a",
+      "reason": "Preserved17/rest coverage partition; first-group scheduled traceback diagnostic timer set to default0 after three nativecrashes following dumps. Fatal handling/assertions/sysmon/8targets/final70%/60mjob bound remain."
+    }
+  ],
+  "plan": "ci-diagnostic-timer-20261030/plan.json",
+  "qualification": "Originale087/0345functional report and790browser source identities stay unchanged. Only effective delivery workflow is composed; full new hosted success still required."
+}

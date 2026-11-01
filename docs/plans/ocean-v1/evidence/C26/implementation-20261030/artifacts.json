@@ -1,0 +1,86 @@
+{
+  "version": "c26-assembled-artifacts-v1",
+  "source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "source_revision": "sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca",
+  "qualification": "Frozen local deterministic preparation; no live release acceptance. Browser first-read concurrency finding remains open P2. Temporary fixture stores are reproducible from pinned source and not exported as scientific data.",
+  "files": [
+    {
+      "path": "browser.json",
+      "raw_sha256": "1b89c3f3952c037eb3e7034a232590a3eed032b0afbce3193928861214b64c29",
+      "retained_sha256": "1b89c3f3952c037eb3e7034a232590a3eed032b0afbce3193928861214b64c29",
+      "raw_bytes": 50921
+    },
+    {
+      "path": "checks.json",
+      "raw_sha256": "f9d0b131f1d80b6d641b463f1e8202cafff2b71f94461a09336779846ed81f8f",
+      "retained_sha256": "f9d0b131f1d80b6d641b463f1e8202cafff2b71f94461a09336779846ed81f8f",
+      "raw_bytes": 69852
+    },
+    {
+      "path": "comparison.json",
+      "raw_sha256": "32afd8bb56f60e11993944b1ededf425bb6a2bd162f20a33d78ee4a0bb8a6d22",
+      "retained_sha256": "32afd8bb56f60e11993944b1ededf425bb6a2bd162f20a33d78ee4a0bb8a6d22",
+      "raw_bytes": 84217
+    },
+    {
+      "path": "integrated.json",
+      "raw_sha256": "4dbc504e69f82bbbe150a9eb8bc51b0aba05c97b13a7ce28e3063bd2e954d223",
+      "retained_sha256": "4dbc504e69f82bbbe150a9eb8bc51b0aba05c97b13a7ce28e3063bd2e954d223",
+      "raw_bytes": 83585
+    },
+    {
+      "path": "isolation.json",
+      "raw_sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+      "retained_sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+      "raw_bytes": 4825
+    },
+    {
+      "path": "originals-audit.json",
+      "raw_sha256": "eb92c06708db8fad2bab69b4b93d2c58bfff6da3b9811d73761a54931c6e826b",
+      "retained_sha256": "eb92c06708db8fad2bab69b4b93d2c58bfff6da3b9811d73761a54931c6e826b",
+      "raw_bytes": 3655
+    },
+    {
+      "path": "regression-checks.json",
+      "raw_sha256": "c3e54ed9936ca8b6ba914ac832c8afc8b5216232da0c61c2e38ccd3e01c59aa6",
+      "retained_sha256": "c3e54ed9936ca8b6ba914ac832c8afc8b5216232da0c61c2e38ccd3e01c59aa6",
+      "raw_bytes": 10768
+    },
+    {
+      "path": "regressions.txt.gz",
+      "raw_sha256": "7064ae522ce761b78b319d9930a53d1f9da8a4b0fe4a76c155dab353cbd7e709",
+      "retained_sha256": "931bc8692b8782ddbe8f82c0ae30adc04c9a3cda7d126e4e83d473813cf1f05e",
+      "raw_bytes": 3103
+    },
+    {
+      "path": "regressions.xml.gz",
+      "raw_sha256": "1cd2d7ee12c1dd70757f5e679341c5fb0c38b0f7ad8394f34fea27da2d1c725d",
+      "retained_sha256": "20c760dc0f5d8d78d8d74f2d4e08ca0418ac8454d4daafa46cac558b8bb512ca",
+      "raw_bytes": 489822
+    },
+    {
+      "path": "report.json",
+      "raw_sha256": "4a302563118bd1cc5ce15ef85dc313e54cc7c37dfb7854fbd7406640b071585f",
+      "retained_sha256": "4a302563118bd1cc5ce15ef85dc313e54cc7c37dfb7854fbd7406640b071585f",
+      "raw_bytes": 76124
+    },
+    {
+      "path": "run.json",
+      "raw_sha256": "91448c35acae2dea8d3f44e02c7267ec52f24fc4016cb1af700c2a5e3f405519",
+      "retained_sha256": "91448c35acae2dea8d3f44e02c7267ec52f24fc4016cb1af700c2a5e3f405519",
+      "raw_bytes": 451
+    },
+    {
+      "path": "scale.json",
+      "raw_sha256": "4df320496f96486dd3bee9cc06f9756e6052266a05d00d2a6daa2f2ce9160bb9",
+      "retained_sha256": "4df320496f96486dd3bee9cc06f9756e6052266a05d00d2a6daa2f2ce9160bb9",
+      "raw_bytes": 2896
+    },
+    {
+      "path": "source-manifest.json",
+      "raw_sha256": "bb366d789f8dae1357341b672b1344bd7b16be177fa48137ac27d0ecf6c077b5",
+      "retained_sha256": "bb366d789f8dae1357341b672b1344bd7b16be177fa48137ac27d0ecf6c077b5",
+      "raw_bytes": 93770
+    }
+  ]
+}

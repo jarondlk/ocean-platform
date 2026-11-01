@@ -1,6 +1,6 @@
 # C26 — System acceptance and evaluation
 
-**Status:** In progress. **Prerequisites:** P00, C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25.
+**Status:** Complete for local deterministic preparation and source-bound hosted software delivery (2026-11-01 JST); live release acceptance remains not run. **Prerequisites:** P00, C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25.
 
 Readiness audited 2026-10-29 JST: **ready to begin local deterministic acceptance preparation**. P00/C01–C25 receipts/current source reconcile and exact-source C25 hosted delivery passes. User selected local implementation on 2026-10-29 JST. Live beta/release acceptance remains gated by hosting/auth, real queue/worker integration, explicit target configuration and real-world validation. [Readiness audit](../C26_READINESS_AUDIT_2026-10-29.md), [handoff](../handoffs/C26.md).
 
@@ -70,3 +70,10 @@ Do not change default routing to make tests pass. Retain reproducible failure fi
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c26). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+
+Implementation delivery verified 2026-11-01 JST: original functional source `e0874e0` passes the 1,604-case assembled local run, all 43 preparation rows, all 11 shared-service scenarios, independent numerical comparison, complete 100,000-dataset traversal and 707-request actual browser QA. Accepted source `afe9cb2` passes [all four required hosted jobs](https://github.com/jarondlk/ocean-platform/actions/runs/41175282249): 6,712 backend passes (1 isolated scale + 17 covered integration + 6,694 remaining), 626 explicit skips, 83.64% combined coverage; 318 actual PostgreSQL passes/16 expected capability skips and backup/restore; 1,051 v1/132 legacy frontend tests plus both builds/typechecks/audits.
+
+Only the workflow differs from the original local source: the covered suites are partitioned without dropping cases, the first scheduled diagnostic timer is 0, and the user extended the backend job timeout from 60 to 90 minutes. The eight coverage targets, sysmon core, appended coverage and final 70% gate remain. All 843 non-workflow source paths and 204 browser pins are unchanged. Original native-crash logs and the later 60-minute cancellation remain retained; the exact native-crash cause is unknown.
+
+[Implementation report](../C26_IMPLEMENTATION_REPORT_2026-10-30.md), [delivery receipt](../evidence/C26/delivery.json), [verification](../evidence/C26/verification.json), [workflow-only supersession](../evidence/C26/workflow-supersession-afe9cb2.json), [defect register](../C26_DEFECT_REGISTER_2026-10-30.md). D26-07 remains open P2 for recoverable concurrent-worker automatic first-history latency. No UI deadline was raised. `release_accepted=false`; C24 live gates and real hosting/auth, queue/worker, provider/model, scientific and release checks remain pending. C27 remains Not started, ready for its bounded local prerequisite audit. Scheduler PAUSED.

@@ -1,0 +1,51 @@
+{
+  "version": "c26-delivery-verification-v1",
+  "source_commit": "afe9cb2d1a6d2c28a834daab1a342de4563dc3a3",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "original_functional_source_revision": "sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca",
+  "effective_delivery_source_revision": "sha256:b2107ecc0ac41f01cc9d3d8c694429b58094cd45f26b2522aa4fa7aa0d359d97",
+  "workflow_only_supersession_verified": true,
+  "unchanged_application_paths": 843,
+  "source_paths": 844,
+  "protected_paths": 42,
+  "original_receipts": 5141,
+  "requirements": 43,
+  "local_preparation_verified": true,
+  "hosted_verified": true,
+  "release_accepted": false,
+  "open_P2_history_latency_preserved": true,
+  "jobs": [
+    {
+      "name": "backend",
+      "id": 124461440379,
+      "conclusion": "success",
+      "isolated_scale_passed": 1,
+      "covered_integration_passed": 17,
+      "remaining_tests_passed": 6694,
+      "explicit_skipped": 626,
+      "combined_coverage_percent": 83.64
+    },
+    {
+      "name": "postgres",
+      "id": 124461440398,
+      "conclusion": "success",
+      "actual_passed": 318,
+      "explicit_skipped": 16,
+      "backup_restore": "passed"
+    },
+    {
+      "name": "v1-frontend",
+      "id": 124461440084,
+      "conclusion": "success",
+      "tests_passed": 1051,
+      "typecheck_build_audit": "passed"
+    },
+    {
+      "name": "legacy-frontend",
+      "id": 124461440305,
+      "conclusion": "success",
+      "tests_passed": 132,
+      "typecheck_build_audit": "passed"
+    }
+  ]
+}

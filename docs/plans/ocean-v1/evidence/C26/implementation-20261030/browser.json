@@ -1,0 +1,1083 @@
+{
+  "version": "c26-browser-observations-v1",
+  "fixture": {
+    "classification": "synthetic-local-actual-services",
+    "live_calls_performed": false,
+    "production_worker": false,
+    "real_python_execution": false
+  },
+  "source_revision": "sha256:79059c699828bb4e15767eef13e735370ed3ebe32e6f488bbe3e846186ce976f",
+  "source_revision_basis": "tests.system_acceptance_support.source_revision 16-file fixture manifest; expanded serving/frontend/harness pins are individually preserved",
+  "source_files": {
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "orchestration/catalogue_service.py": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a",
+    "orchestration/investigations.py": "6a2238fa6f3ef654cf5f71d43a4820cfd883f43f364b43bbfe271dc11f7b7aa2",
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_runs.py": "0d8e652684005489612eee5e56d53d5a80559c0a62ca34484aef157dc65d89e4",
+    "orchestration/research_evidence.py": "89e62649bb6fdb3b9b60a1f98dda7973683c1c5180c56483d520834184ee63ca",
+    "orchestration/research_answers.py": "82e7578743906d7e0911c6faf496188c23d51e26a77e3c130c1ced7471db0bfd",
+    "orchestration/research_experiments.py": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6",
+    "orchestration/experiment_workspace.py": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24",
+    "orchestration/retained_artifacts.py": "4f96d31e8ad8f82c944acfffeee5d2123e19b6b2f9fbfadcfd4f90ab488ccc80",
+    "orchestration/experiment_artifacts.py": "e6e0b1c369956163fb4cdf1f1eabb86f2a29d06946b34220d52b17d9e7a93177",
+    "tests/experiment_workspace_support.py": "bd96544e49e9a638cd64f60dd6d0b421b63143b9a5a76bc159ff5e36a137139d",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "tests/system_acceptance_support.py": "01d384e8a0b8990a6ea9c21e5d3db49b3bfd4fb014a1e8f122ddc2e29362b640",
+    "api/__init__.py": "a90d55d6ce82a933d9014b902e2d9522758dc1e9c3b84e94051af85fe106111e",
+    "api/admin_feedback_routes.py": "5a7c08643c5f222d62658ebd339592fc9490bd984d257d65a0b5ab5b852f902d",
+    "api/auth.py": "63afb340c13e514d571b30cbee98c1509daf9b424229c374f0d2d1a6a183660b",
+    "api/auth_routes.py": "17c45719aee64d12abca6aeac587af352c22f62fc585e37b64706e46908d38d9",
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "api/catalogue_routes.py": "373f3b05d6ed3f7693beed53564f0598e47a63ab970f40269012f1eae72eaf8d",
+    "api/chat_records.py": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf",
+    "api/classification_application_service.py": "2b782614a77e5aad0241a84654f74ef4042b201bd42e5c1d59971c93977c98d6",
+    "api/classification_operational_contract.py": "bbced962a0c76e5de2dddcaf3d900d4cbf1eb8a1813575bb02e4e0519bd14326",
+    "api/classification_review_routes.py": "b5583d6ebc6b1b2cb54ceaf5557e1f1e83032b884f99d3053a3ae408928dd072",
+    "api/classification_review_service.py": "ac7d93f5685823f37b542b3a9de141371fc8dad5311f9fd6968450f3c07e2cd0",
+    "api/csv_serialization.py": "41d1b37f44007f1e64902e6f489c561982597416c9ba321334befc6c7c8cee93",
+    "api/edna_analysis_routes.py": "4f7771c77e1342fa1692e0527d44273fd07275157064ab8dc579a2a60a4f2fd7",
+    "api/edna_service.py": "70064b8785952703d812f929794e9189e0d4c765239b9ced57ef004fa15c571f",
+    "api/experiment_workspace_routes.py": "e1c07cb76bde3280298e35ca484a5466374b759749f6438ca70a5597b4f282ea",
+    "api/feedback_routes.py": "b39cef76dbeba61ec50cd8bd02291515eb49ca7cbdf5ec7648c0834517c97fda",
+    "api/main.py": "54ac486e714feef57e6cba04f9a5eb849417554134b4d8f9ace220845bf7d9af",
+    "api/overview_coverage.py": "3d16822ca03d5613de269832c02bd5a9bbccd8fb30a9eae809c2cb854b9be252",
+    "api/overview_routes.py": "6ec43ee1b49f7438b4d2908bb5ad180b7b65724d9abbc85b5b8060d125baa1d2",
+    "api/provenance_snapshot_service.py": "9d3360fea4755d62aa4c63a882afc6246dc9e2de21c3a5d6970c0fb65264d609",
+    "api/rate_limit.py": "b4981ca3578e3e5a249d8aa557554840d71a094bb5008954d5669c226b758ce3",
+    "api/research_evidence_routes.py": "137a23e4cdc0281214c5ca9a9b7c7e5eef80fd9fdbf9ac5a44c8fc2a6af9fa01",
+    "api/research_experiment_routes.py": "1bb9f82c0d172a8b663b57abfa7d668c3e543f77d119e82c38d94d45ad10824d",
+    "api/research_registry_routes.py": "811fb120f4e13d46bf8e52c5d132d254608c91157e3aadbb340cb415d80168a4",
+    "api/research_registry_service.py": "85805cb959cf94560cbdd5ef030f61e85e89c6cb3c9b9744c23456198b454ce5",
+    "api/research_run_routes.py": "dade58a4067252b8b0e9ac05dea2ebcd3773c036b38d4280678961b3c644cb45",
+    "api/retention_routes.py": "ae031d5f220abf565a93e869f150b2d727f7d7e5698ba58a9b5f7c79175f0fec",
+    "api/schemas.py": "a5a7342ec0994c9bb4630d21460028afc98e68e00068cb9d1a8d072d64224b52",
+    "api/v1_runtime_routes.py": "e944453a55c96258f73bfa0cfacfce0e8458de704c0b0e081e9f49c3933e5c32",
+    "orchestration/__init__.py": "577deb3cf44e3a77f8e0c1c449e9ea80c84500d6be1b53637a32ea4f3a8409ae",
+    "orchestration/answer_audit.py": "a11891465f7ec604e87973299637a385675755996c949efff72880b96d7ec755",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "orchestration/catalogue_cache.py": "5268f54378c5a096aaaaac0088aba391817231fda4ed11f327a0075cf9e8e484",
+    "orchestration/catalogue_registration.py": "3e76cd613f0653988a6999efb884ec574d285a9f19707f58f57aabad32d1c2b4",
+    "orchestration/catalogue_tools.py": "b675111ac5823133ee4f5474354198219fb9ba754fc6c9a8fc9875c2de9e0a1a",
+    "orchestration/citation_syntax.py": "07367c54645678a6d7d5527d630cf2107bf5c5c415f95b04dd47a5e5131657c9",
+    "orchestration/citations.py": "654141e6e5dfd6af9399ecbdf0db8c255e1985aee80b904d7b079fdc84c4af39",
+    "orchestration/comparison_guard.py": "3883d52b6275a991a8a1f08acd8bf699ae915f900bbc51f1fae2a98b93b0f582",
+    "orchestration/edna_aggregation.py": "73743d72d9679d6cec7fc8f73f515a4e1162383d2e528d75291082d9110d9389",
+    "orchestration/evidence_availability.py": "7d80998972899b6e3b66e2f861282964368da26f977992989ea85d185891d039",
+    "orchestration/evidence_scope.py": "0683498c0b1164aca7d45ff79f557599186ea4414021abf34c83aeb3f6e9cad6",
+    "orchestration/experiment_sandbox/__init__.py": "7fb5622ed5b1030cce038710f67f794f419dfc2bfa76a1d6c61232f2a982dc27",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/operator_inspection.py": "6186090794ee106c8fad3db2169e49018b13158f5ddb2c9ea0bba69d37ebb3b7",
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/profile_execution.py": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5",
+    "orchestration/experiment_sandbox/proofs.py": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "orchestration/experiment_sandbox/traversal.py": "c722c67c428b25cf7139ab00164827fdf713a59653dedcb8347b8acc697e5be3",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_documentary.py": "c3672d21a8a61145b1935879b535f02eb8439fdf8dc3aedb73675274449b1ac5",
+    "orchestration/frozen_edna_catalogue.py": "9adbfb504c968795db8df2971842b780e1af95ebff3fcda1b93703b68c4b2781",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+    "orchestration/frozen_sst_catalogue.py": "ccaa675acda1d11a7dec5aab71b476800c494b99979b8cba74c56a4286603a65",
+    "orchestration/prompt_safety.py": "b8de216ed9ec50c1425da51fb103e3cc8f9277478be7764fc126ff546cbc389d",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/published_results.py": "7406f10f1f7e3aff45ea3e85eb48e630d0113eb2a1c83fea4044d9ef167d7212",
+    "orchestration/query_orchestrator.py": "aeea4c82f21fe98a4f68a213ea543ab93008dc23fa91e9edf0a92fc704858385",
+    "orchestration/research_controller_budget.py": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57",
+    "orchestration/research_controller_observations.py": "e3aeff8f74aa25997ebd1e000ddba490326bde6e908509fc212627379b71b81d",
+    "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/research_dispatch.py": "f4af629f34995572abf47a0db77925ad7a648c45091547fc401b933c533f7e06",
+    "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/research_synthesis.py": "9991a2af117aa6747417c3e2d85b8e76e1494163bb245d49249790b935526a50",
+    "orchestration/settings_plan.py": "9d3c24d0f37f90082414982af889b3ecbfd138b24ca97b2fe12d60ce26443c6a",
+    "orchestration/settings_planner.py": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "orchestration/unified.py": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+    "schema/__init__.py": "36f6e0d461d619a25792bae49817180e1fabd5cc4d6fa5ef327a7cef8f8974d9",
+    "schema/anchor_event.py": "bf78d132a1a7590ec54514c4372d3e9fc64385c046037308af5d05f74088cabd",
+    "schema/catalogue_adapter.py": "ab6580de572dc0c2734f709771300ec40c346f41ee53ce422993fb8897576a4c",
+    "schema/catalogue_adapter_fixtures.py": "26ef07510f206c8648ad502b47f8d9bfc865004d995f327735c19c35e62ccef6",
+    "schema/catalogue_browser.py": "196aea286e0442ce88347366a1e39ac83ef6f65ad056917cc6b87bcd82dd0c3a",
+    "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+    "schema/catalogue_snapshot.py": "0035a2946293b9213f5d32fe4ad8f9263db84b8cb55a540442391dcbfc3b3900",
+    "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+    "schema/context_catalogue_fixtures.py": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+    "schema/edna_catalogue.py": "f39b5f3db0a684622935e89415e436cbc6301ca7f72621ed450f84bf0a2b3786",
+    "schema/edna_catalogue_fixtures.py": "470f7af39d0740154b8eba032fdd18c5f422febaa6dfdb4a9c08a3d27309e921",
+    "schema/experiment_execution.py": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00",
+    "schema/experiment_workspace.py": "7101217dd94b935c29f30c5d1043503750cebcbaeb7db175bf68a9357d2e8b8a",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "schema/research_evidence.py": "79617dba452bdc144c6e43e998f0627a0fcbe5b5475caa88a916de4fef820d92",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "schema/research_runs.py": "080080703d0d758ebf5c301cb2c33d7e7a7f2f1511f0f084caa4208ac2548dfb",
+    "schema/scientific_catalogue.py": "e2d65ac0a6a4d0db9ff931f85d75dca6fffaaf3c0f139395201886642f8efa28",
+    "schema/scientific_catalogue_fixtures.py": "81ea2a5365915fbaba10e58788555ca758fea11aaf85583fcf54d281ed5582c9",
+    "schema/scientific_catalogue_relationships.py": "ca532dae41160330dd622b9bd009322ffd017ec4d8c2cb7c178343ef8319769d",
+    "schema/sst_catalogue.py": "a97aebb40a717734a2100a625a07f81ba48be4fe689094f1d176937e9cc7a947",
+    "schema/sst_catalogue_fixtures.py": "c60e23e46b5fec8e87966ac4817eae24c356755d9eeb8f7b59b044ea6f7dc594",
+    "schema/system_acceptance.py": "7332dc950d8eaba5e7897d13ba4917cf9a493a5a87662bdc58854280f48e7ee8",
+    "schema/time_range.py": "efe12f5ecd0e738cdd2aa2999175f29eb3d5a150b6613450e0167c0e7e9b3d91",
+    "db/__init__.py": "3f1967bcd7a1cfe530d7bf5b8a4879f97c678a81d1bee33063e009808a5aa914",
+    "db/backup.py": "e30414891ba35532bfdfbb7873e2df784acaff90b875ced30a18b40f59cadb43",
+    "db/connection.py": "54648b1119b9bfecfb74832ca67d0344d2d2d5a99b900f6e0edea2ed0d4c5197",
+    "db/embedding_identity.py": "a04f66f2198bc46484b7b961a503b9dbbeb269abe5ba5ba451268c43238f23ba",
+    "db/experiment_execution_models.py": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+    "db/models.py": "e113fe7e6a2ed27d8f931c0282c398003f0dd8b335c0f1ac8e6276558fd7d086",
+    "db/retention.py": "063fb25caf1ad5ba45bf112d66d150090e359f7e98491245309b9d984057e9f1",
+    "db/vector_store.py": "50f511b91765512a6e688a37415f06db8fad566f40fa955b9c35264ad1ef8e4c",
+    "frontend-v1/src/about-view.tsx": "74fe41ba1bf31520dc01e436046f5fd2b0b7426c7e01eaef1a5f4266b8fe0f2b",
+    "frontend-v1/src/adapter.ts": "0c482e5a5062c12afd1d1fd4993652cc9307bc4e84cd3ba362a80b6e5c9c41bb",
+    "frontend-v1/src/admin-model.ts": "43bb4d7722796bce62a30ed63ee76e28a7a75c7bfb4e96df410cf646b588dd3c",
+    "frontend-v1/src/admin-view.tsx": "7b1b5da92e66b3f937a6615c281059e5c1afd05a1080d52942c1b4d46e8e1bff",
+    "frontend-v1/src/admin.css": "f2e6474aa1d0847ac99bbe07a073b97aec48d8eb9487106ee8eea62c4d4da3a3",
+    "frontend-v1/src/application-shell.tsx": "797135afe8601957f5e4291c4ff8cf02bec71368a160c0894d457b37d494f968",
+    "frontend-v1/src/catalogue-browser-state.ts": "c3d847d0a876e8f9d266f724dff2af4f2e809a8b73c03f01aba34bb2d60b8210",
+    "frontend-v1/src/catalogue-browser.css": "9974beebbba14e480cc15e47ad7375900c4647128e8a8dac2a5d0abc0632eab1",
+    "frontend-v1/src/catalogue-browser.tsx": "217f5702cc331b2e62cefd7ed76dccdf7d9c51787fc8828640cbcac66c024990",
+    "frontend-v1/src/catalogue-contract.generated.ts": "663b0bd13f5c3a4a4e6441b102185ddffafff51be6ccc6750ed67e6ceab3ebe0",
+    "frontend-v1/src/catalogue-contract.ts": "5b1fe9accdc455bd5f298af20a97e0f300fcb4d69b362e92baf18782c49f02b1",
+    "frontend-v1/src/catalogue-overview.css": "e7c7db8e86d331d00de694a0563dec0fcadf5ca6dfa338ae8e52eb74da230f69",
+    "frontend-v1/src/catalogue-overview.tsx": "d8c9df29850bf7a3c652e10be6f3508afd7c1dabce84f1bee3a5930a2a2aba96",
+    "frontend-v1/src/catalogue-service.ts": "c05df3c8d87b97a28ec4c3bc8a0410aa47ae0221e45ede5dc90576520ace77f3",
+    "frontend-v1/src/catalogue-view.tsx": "60642da929330899b97d3d45aca51bfdfb0371ffceb17ab4712757429c8de8e1",
+    "frontend-v1/src/experiment-contract.ts": "036de5832107ee105a4183d9eb1ece4909552464c53b742fbdbf6f3d5566de80",
+    "frontend-v1/src/experiment-execution-service.ts": "02c75900d389cc0bdc40a9a5f7a0ba696eb01b55a1d6bea9b81e5b0bca334539",
+    "frontend-v1/src/experiment-http.ts": "0a18de3d61b0cdcf466d0f795811e3f43d225365ab73c1104cc9e4dcc88f0207",
+    "frontend-v1/src/experiment-service.ts": "78e7d06be17a0a9ef3e4b1ba10af34928d3a98c3d63e5aa89d3486e368a0cfe0",
+    "frontend-v1/src/experiment-state.ts": "eabff86baf9b0e5d45bead35a960405409c07fc06c1aea1d1beb2dceb6e3e383",
+    "frontend-v1/src/exports.ts": "c6d44e5cfa921d3bb9328c8553ec67a8bd61673f9fd95848a50ea18e9006be7c",
+    "frontend-v1/src/feedback-model.ts": "7000b5e1620eb2e474bd2856c69e49d58a18f3cab2a29be2bb15a634a96a9bbe",
+    "frontend-v1/src/feedback-view.tsx": "eecc19f4b3ed0b70c0a282969d3f620793f5e446f01133660c2f343c4ba340ff",
+    "frontend-v1/src/fixtures.ts": "ed124b18ff4c0175c2abd5f6bf11c724cbe2890c2df746a14058ae9a66abb8fa",
+    "frontend-v1/src/generated/experiment-execution.generated.ts": "0509124a13d77f1320727918347ceda1dc741feecc2d3e868e9e15494fb72991",
+    "frontend-v1/src/generated/experiment-review.generated.ts": "af560c2c8d4c31d9bbe9564e1f07be8d4beda4cb78f480859d33aa44e2908d3c",
+    "frontend-v1/src/i18n.ts": "3f14468ff49c647e1b14d71e45e946a312218682abb5c6e489071fafc7a9c5fd",
+    "frontend-v1/src/investigation-service.ts": "c8b8164a9438f6f05a4a2d770ea767aec055e3bfe1266f597ebffe484f0ac31c",
+    "frontend-v1/src/model.ts": "22f6c8572649db7d3999a19e552ebddd6247dacea70eb4df2159cc00f2536fc5",
+    "frontend-v1/src/presentation.ts": "49e0c1d314482caff2b7507b81154e5cfe138875182acc22caf30486076a5809",
+    "frontend-v1/src/research-activity.css": "3b5a993df6a2b58bfd35dfeea553387ef860611cb568eb1070adde385511e4c0",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/research-answer-history.ts": "274446b0fd48bccb0d5a82d516f35e54fa33f7be53cd739e711db8fe05cabc07",
+    "frontend-v1/src/research-answer-state.ts": "09cee76eba48f62785149f97eeafb007ac3396f4b53d8e2b223e47cc6486d363",
+    "frontend-v1/src/research-answers.tsx": "08eeb168d067080396acbfbd08eae4b80ddd8d9e1b65131fc76637284bfba57f",
+    "frontend-v1/src/research-app.tsx": "ba5961abb30023c22522eed4e9d6bbf49d67ceb0c881d9ba294f2d97cc29f204",
+    "frontend-v1/src/research-evidence-contract.ts": "c78a9d1cc677d51244d674136e28055314928681df324152cbd52298328c8986",
+    "frontend-v1/src/research-evidence-http.ts": "38175cbcda396e1e61a1b7347614e265a485a49e2174f011af4b4e5f5815ccdc",
+    "frontend-v1/src/research-evidence-service.ts": "76293bd6cf39d9aa9c2fc2e3e51d4c68167ee87583500ae803e05f98450eecd9",
+    "frontend-v1/src/research-evidence.generated.ts": "bc06ce3fb9320d21cbf64698be8128fbe69b73a9d731d68629d29ae49bfe3911",
+    "frontend-v1/src/research-experiments-view.tsx": "ec7e9442d7403282b88eddc304ec72f356bc083d8e5de1960ee38355b57dfb9d",
+    "frontend-v1/src/research-experiments.css": "f9f0e19fdf8b7fc81b66282138d5a2be234d912cceb945719f210c639bfcaf48",
+    "frontend-v1/src/research-experiments.tsx": "c97c8390da38e23b5a85962ccc2d59067c2adf611bd3488607415fb845d90b4a",
+    "frontend-v1/src/research-history-scheduler.ts": "a7893bbe5eb4a578a54559d2938c3164fb0f2b96447c818ebdcd4c85cbc82c2f",
+    "frontend-v1/src/research-history.ts": "bffaf8b8e9780c2f6306b54e12da972ed8faa796e35adf15c4d2033c08c74c27",
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-state.ts": "0cc3cdbf61a6a30bb1933abd7a6456e2f3e19e58d40edabc4a5604cfe476a3c8",
+    "frontend-v1/src/research-workspace.css": "2cd6c98c665616be69b8723de46287d589d6d6f789056d93bd162802ee718a1e",
+    "frontend-v1/src/research-workspace.tsx": "d01330890662c8dc8798b6efa6f1693d2cf41ec877c38e06c56c457f1982bb95",
+    "frontend-v1/src/runtime-app.tsx": "1451845365c4da224fd4e9ecdb433a1878d950c3d07ab671056eb7071ccfa4c5",
+    "frontend-v1/src/runtime.ts": "ad4514a64aa272f9e8a10cb1572fd852855f501c360ce6345a8fa29375bee613",
+    "frontend-v1/src/shell-panels.tsx": "9f2fea5dc988c9c3ad1ac374b3b7effe07e2a33756be136c29a0d9755742a50e",
+    "frontend-v1/src/shell.css": "91e598a615d09f113e59e21f2333005801c3754dbb1fc360d6a1efccc41ae9e2",
+    "frontend-v1/src/state.ts": "0cdae9675ef37275b0ca6e963c6bdee18e7a3a4fd24cdb60ca4d86ea9fa101bc",
+    "frontend-v1/src/support-views.css": "2a1a146de5d821d0aa2a04579be7b7a9de8da91528879fb37c4dca9441d25bfe",
+    "frontend-v1/src/ui.tsx": "2c8e5400f1b6baf8102e2539f4edea8705a026b5fd7694310cf9878fb8af0751",
+    "frontend-v1/src/v1-entry.tsx": "49d09e7d5aa08ee73291a0dbb8116b7f8f68d2b7a957ecf14d4334e8d9eae169",
+    "frontend-v1/src/workspace-view.tsx": "edb24d0490da6b645db605cd234792dadf7664a70c08accaa0fdf2ef1adff5ec",
+    "frontend-v1/app/about/page.tsx": "7e1373254367b031297747d8626f66794c6e9f83845191019406eb458054dc7e",
+    "frontend-v1/app/admin/page.tsx": "2c776bc8e3f12a54638044d1e4a1c4b3bfe976ecf6cade4dd839f572af53c81b",
+    "frontend-v1/app/feedback/page.tsx": "a64479cdb73b0fba845062b1b051ad38110508d25e1355dae401bc554f0dd102",
+    "frontend-v1/app/globals.css": "47fc09d276ac9e9b5c1a5cc8e97335f0803e6285b612dc8c350e13c3fd8ee2b5",
+    "frontend-v1/app/layout.tsx": "730f39bd16d2649a19476936b42c68190e89343aaa478030c9faf0692280d2c2",
+    "frontend-v1/app/page.tsx": "97bd5264c34c10da0bf8165f813c4b3da6069a370299834259b2bc240a9dad50",
+    "config.py": "0d524644a410f5137c77fcf5900b4002c0ed87fb9cde4900c2761522841d405a",
+    "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+    "frontend-v1/package.json": "e2f2fa5422e5135fa80d2ea16963f62896b14bfe19b8f36ad62eed764d05e7c8",
+    "frontend-v1/package-lock.json": "46b7bddd462c6b2eea159f9994d158ec958027f156314529d2ab6632f4e082f7",
+    "docs/plans/ocean-v1/evidence/C26/serve_acceptance_qa.py": "499d2a88b030a1d560b8c1fe5252fe276a43f92a45f2cdc168b2b2ddb7e5ccac",
+    "frontend-v1/development/c26/app/page.tsx": "7e687f964c53fc90d284264db94a4294499de89ecf72f90975f9327ff21f1920",
+    "frontend-v1/development/c26/app/layout.tsx": "89be047fc29795d4e10c851faa038e380d69eb0efbed1b6520650fe7ae396223",
+    "frontend-v1/development/c26/next.config.mjs": "de75596787b8f8fa3c810a33a33d65a2021cb74420e4d9380ba4778090bdfbc4"
+  },
+  "source_unchanged": true,
+  "checks": [
+    {
+      "id": "browser-catalogue",
+      "status": "passed",
+      "owner_components": [
+        "C14",
+        "C17",
+        "C18",
+        "C25",
+        "C26"
+      ],
+      "reason": null,
+      "expected": {
+        "browse_select_automatic_mutation": false,
+        "explicit_pin_shared": true,
+        "independent_narrative": true,
+        "deep_link_back_forward_reload": true
+      },
+      "observed": {
+        "browse_select_automatic_mutation": false,
+        "explicit_pin_shared": true,
+        "independent_narrative": true,
+        "deep_link_back_forward_reload": true
+      },
+      "evidence": [
+        "select-without-mutation-dom.txt",
+        "shared-pin-independent-chat-dom.txt",
+        "catalogue-deeplink-reload-dom.txt",
+        "mixed-context-independent-conversation-dom.txt"
+      ]
+    },
+    {
+      "id": "browser-research",
+      "status": "passed",
+      "owner_components": [
+        "C17",
+        "C20",
+        "C21",
+        "C25",
+        "C26"
+      ],
+      "reason": null,
+      "expected": {
+        "mixed_context_run": "completed",
+        "prepared_answer": "completed",
+        "datasets": 4,
+        "model_calls": 0,
+        "attachments": 2,
+        "foreign_scientific_qualification": true,
+        "reload_reopens_answer": true,
+        "bounded_read_recovery": true
+      },
+      "observed": {
+        "mixed_context_run": "completed",
+        "prepared_answer": "completed",
+        "datasets": 4,
+        "model_calls": 0,
+        "attachments": 2,
+        "foreign_scientific_qualification": true,
+        "reload_reopens_answer": true,
+        "bounded_read_recovery": true
+      },
+      "evidence": [
+        "native-first-experimental-second-dom.txt",
+        "mixed-evidence-history-loaded-dom.txt",
+        "mixed-prepared-answer-dom.txt",
+        "mixed-prepared-answer.png",
+        "mixed-answer-binding-budget-dom.txt",
+        "mixed-prepared-answer-reloaded-dom.txt",
+        "actual-http.json.gz"
+      ]
+    },
+    {
+      "id": "browser-experiments",
+      "status": "passed",
+      "owner_components": [
+        "C17",
+        "C21",
+        "C22",
+        "C25",
+        "C26"
+      ],
+      "reason": null,
+      "expected": {
+        "native_first_foreign_second": true,
+        "output_int64": "9223372036854775807",
+        "attachments": 2,
+        "real_start_available": false,
+        "authority": "experimental",
+        "scientific_approval": "not_independently_verified"
+      },
+      "observed": {
+        "native_first_foreign_second": true,
+        "output_int64": "9223372036854775807",
+        "attachments": 2,
+        "real_start_available": false,
+        "authority": "experimental",
+        "scientific_approval": "not_independently_verified"
+      },
+      "evidence": [
+        "native-first-attachment-dom.txt",
+        "experimental-output-dom.txt",
+        "native-first-experimental-second-dom.txt",
+        "actual-http.json.gz"
+      ]
+    },
+    {
+      "id": "browser-accessibility",
+      "status": "passed",
+      "owner_components": [
+        "C15",
+        "C18",
+        "C25",
+        "C26"
+      ],
+      "reason": null,
+      "expected": {
+        "width": 390,
+        "documentWidth": 390,
+        "language": "ja",
+        "theme": "dark",
+        "focusedRole": "tab",
+        "focusedSelected": "true",
+        "focusedText": "来歴",
+        "escape_dialog_open": false,
+        "escape_return_focus": "ディレクトリ",
+        "other_account_retained_content": false,
+        "revoked_owner_retained_content": false
+      },
+      "observed": {
+        "documentWidth": 390,
+        "focusedRole": "tab",
+        "focusedSelected": "true",
+        "focusedText": "来歴",
+        "language": "ja",
+        "theme": "dark",
+        "width": 390,
+        "escape_dialog_open": false,
+        "escape_return_focus": "ディレクトリ",
+        "other_account_retained_content": false,
+        "revoked_owner_retained_content": false
+      },
+      "evidence": [
+        "keyboard-inspector-dom.txt",
+        "japanese-narrow-inspector.png",
+        "other-account-denial-dom.txt",
+        "revoked-account-dom.txt"
+      ]
+    }
+  ],
+  "http_capture": {
+    "path": "actual-http.json.gz",
+    "raw_sha256": "496f4b4c17c29c03a871e5b624ed21da53629b5f1e9d48aed5b55039d3c3ab8b",
+    "actual_requests": 707,
+    "unexpected_server_error_responses": 0,
+    "server_stopped": true
+  },
+  "mixed_context_trace": [
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.7902762079611421
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.772345791105181
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.849066000431776
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8788153338246047
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 6.1471148752607405
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8542386251501739
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 5.749680125154555
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.7520543746650219
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.494138041976839
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8996259169653058
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 6.236143374815583
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8211596249602735
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.434221500065178
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 1.993931207805872
+    },
+    {
+      "path": "/research/answers/submit",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "locale": "en",
+        "idempotency_key": "b27a9c07-81c5-4b21-9a88-68794e25a1ad"
+      },
+      "wall_seconds": 1.7307119998149574
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 2.861773916054517
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 2.88909133290872
+    },
+    {
+      "path": "/research/answers/events",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "job_id": "401fdc7e-2174-461e-b427-fe2f45c23d82",
+        "after_cursor": 0,
+        "limit": 100
+      },
+      "wall_seconds": 2.249699667096138
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 14.676564916037023
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 14.140961916651577
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 1.1502500418573618
+    },
+    {
+      "path": "/research/answers/events",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "job_id": "401fdc7e-2174-461e-b427-fe2f45c23d82",
+        "after_cursor": 0,
+        "limit": 100
+      },
+      "wall_seconds": 2.416501041036099
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.464849083684385
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8793812077492476
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 6.216354333329946
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.88347770832479
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.4868254996836185
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 2.235139917116612
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.81802091607824
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8542350828647614
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 6.156141499988735
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.7900980422273278
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.4838111670687795
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 1.2053327499888837
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 5.831163958180696
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 4.033447749912739
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8184988326393068
+    },
+    {
+      "path": "/research/answers/events",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "job_id": "401fdc7e-2174-461e-b427-fe2f45c23d82",
+        "after_cursor": 0,
+        "limit": 100
+      },
+      "wall_seconds": 0.751131625380367
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 6.302887833677232
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8554354580119252
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 4.452193332836032
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.8382187080569565
+    },
+    {
+      "path": "/research/evidence/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner",
+      "revision": "c26-browser-final-79059c6-owner-1",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "input_version": 1,
+        "offset": 0,
+        "limit": 100
+      },
+      "wall_seconds": 6.243490000255406
+    },
+    {
+      "path": "/research/answers/list",
+      "method": "POST",
+      "status": 404,
+      "actor": "other",
+      "revision": "c26-browser-final-79059c6-other-2",
+      "request": {
+        "investigation_id": "6250811b-9cd2-4e23-9791-b55093f45539",
+        "conversation_id": "36a0ec57-cf47-4ab7-a6ce-0769487ddc7a",
+        "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+        "cursor": null,
+        "limit": 25
+      },
+      "wall_seconds": 0.004862166941165924
+    }
+  ],
+  "findings": [
+    {
+      "id": "c26-active-worker-history-deadline",
+      "status": "open",
+      "severity": "P2",
+      "owner_components": [
+        "C21",
+        "C25"
+      ],
+      "observed": "While the real local template-answer worker was active, one automatic hydration showed an unverified notice. Concurrent evidence-list reads returned200 after14.14/14.68s, exceeding the unchanged15s whole-history budget once answer-list/events were included. Explicit Reload answers and evidence recovered; stable prepared answer and a fresh page reload rendered datasets4 and preserved all qualifications. No API500/503 occurred in this final capture.",
+      "evidence": [
+        "prepared-answer-first-hydration-notice-dom.txt",
+        "mixed-prepared-answer-dom.txt",
+        "mixed-prepared-answer-reloaded-dom.txt",
+        "actual-http.json.gz"
+      ],
+      "acceptance_impact": "Functional local browser checks include successful bounded read recovery. The concurrent-read performance finding remains explicit for root acceptance/release review; this receipt does not declare release acceptance."
+    }
+  ],
+  "limits": [
+    "Actual assistive-technology user study not run; the local accessibility check covers actual keyboard interaction, DOM accessibility semantics, English/Japanese and responsive presentation.",
+    "No beta hosting, real queue/worker integration, paid/live provider, real Python containment or scientific review was performed.",
+    "The original Oct29 failed history capture and Oct30 intermediate event race remain immutable; this capture intentionally supersedes their source qualification for the tested local UI behavior."
+  ]
+}

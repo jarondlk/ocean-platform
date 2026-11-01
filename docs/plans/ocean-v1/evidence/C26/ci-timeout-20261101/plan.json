@@ -1,0 +1,25 @@
+{
+  "version": "c26-ci-timeout-plan-v1",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "previous_cancelled_source_commit": "55d6e721c93f0546763c3d2879756d7a3cb25eda",
+  "verification_source_commit": "afe9cb2d1a6d2c28a834daab1a342de4563dc3a3",
+  "from_sha256": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+  "previous_diagnostic_sha256": "b697bb0e028d7be8ac1c22954df001e046854c579859330319f2f586ebc8a95a",
+  "to_sha256": "61754d47e5056ceb5fa284798ba91ac7edd772b534dd2860683ab72d028e7c54",
+  "changed_source_paths": [
+    ".github/workflows/tests.yml"
+  ],
+  "first_cases": 17,
+  "coverage_core": "sysmon",
+  "coverage_append_second": true,
+  "final_combined_coverage_gate": 70,
+  "no_tests_dropped": true,
+  "diagnostic_dump_first_seconds": 0,
+  "diagnostic_dump_remaining_seconds": 120,
+  "fatal_crash_handling_enabled": true,
+  "previous_job_timeout_minutes": 60,
+  "job_timeout_minutes": 90,
+  "authorization": "User changed backend job timeout on GitHub, reported the passing run, and authorized continuation and appropriate evidence-only skip-ci checkpoints on 2026-11-01 JST.",
+  "scope": "Only backend job timeout changes from60to90minutes relative to55d6. Original covered first17/rest partition, all assertions,8coverage targets,sysmon and final70% gate retained. No application or browser source changes.",
+  "qualification": "Success at this configuration is observed; the earlier native crash root cause remains unknown."
+}
