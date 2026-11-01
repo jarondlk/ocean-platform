@@ -1,0 +1,56 @@
+{
+  "version": "beta-operator-effective-privilege-amendment-v1",
+  "date": "2026-11-02 JST",
+  "state": "localchecks_passed; independentreview_pending; noimagebuild/deploy",
+  "predecessor_receipt_sha256": "ab339c5552e77d74d960e525230d1472df3e907f3e5f04a45610463784414ae0",
+  "intentional_source_supersession": {
+    "path": "deploy/gcp/beta/operator/operator.py",
+    "before_sha256": "e39b489dd76541c0edf1d2e1e312577fba51836d34223a1899a9493f78a36e87",
+    "after_sha256": "988fced9ee949df08a2d4d74a24d23c931badfdfb16fe71628b2afe23cfa4c00",
+    "reason": "Reviewer found direct table-grant inspection omitted PUBLIC and column-only effective/delegation rights",
+    "preserved_before": "frozen-source/deploy/gcp/beta/operator/operator.py"
+  },
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "988fced9ee949df08a2d4d74a24d23c931badfdfb16fe71628b2afe23cfa4c00",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/effective-privileges-amendment/README.md": "4168e3e69710553002360d2cb7b826c80931a27c25d41341164f2db3e9d14d15",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/effective-privileges-amendment/verify.py": "c1b97059d37d7573baf00aebcb96b3efb21036e2d47ec2d99c5f9555b2553f24",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/effective-privileges-amendment/native_rehearsal.py": "f0233f65dd2ef6de2fe6f7db1b79ed2ff508a334ab001839fea6c6d240f8dbea"
+  },
+  "artifact_pins": {
+    "frozen-source/deploy/gcp/beta/operator/Dockerfile": "39feb8573973e3f22052a82325adbc24b9f4cfa25ca64c6e0fd6072342029027",
+    "frozen-source/deploy/gcp/beta/operator/operator.py": "e39b489dd76541c0edf1d2e1e312577fba51836d34223a1899a9493f78a36e87",
+    "frozen-source/deploy/gcp/beta/operator/prepare_context.py": "e026ba5ada5b6241d419b505eadfc13d0fd6f372d8c5c9d83329aac60cc3b244",
+    "frozen-source/docs/plans/ocean-v1/beta/packaging-20261102/operator/README.md": "cea2847cab6fd411475fb9a0ad47563d5666308366b4fe997270d2719d25cd8a",
+    "frozen-source/docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py": "233b7f948e533ff1773f592b85d0d7aa7dff5f003d2204a9c12063d5379d2d0e",
+    "frozen-source/docs/plans/ocean-v1/beta/packaging-20261102/operator/verify.py": "8bf8f7194733bbb3a5ad7e7e687f7a947e398bd1e364d75fd431aa3a3f3f475c",
+    "guards.json": "c1f1e76dc87c8027f8a2ee6d670f98e83b3ca44a9d2226270fc5edc831e15351",
+    "native-accepted/initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-accepted/initdb.stdout": "82a714b45bc650d34ae70a210dd942b2784a1749034c75bff6235aef1a4b614e",
+    "native-accepted/pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-accepted/pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "native-accepted/pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-accepted/pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "native-accepted/pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-accepted/pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "native-accepted/postgres.stdout": "5683638c02bb0e1a2e338a36a856981c76e0f9507bf3789aa81186fcd18aeed1",
+    "native-command.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-command.stdout": "b5626d1fe8efafbe71a7d88d8d3efe37fc415b7f32eb4ffe31259018e8143188",
+    "original-receipt.json": "ab339c5552e77d74d960e525230d1472df3e907f3e5f04a45610463784414ae0",
+    "review-of-predecessor.md": "c6599b2bea38d91a7d0adc6a4c8f16a4443e4c5646f5976c85b0c2e55e2b1885",
+    "native-accepted/receipt.json": "8552434af3a1a9183ce680dbe7d3d32956278792895c6fc3312e8e7ca1d739b9"
+  },
+  "native_checks": 38,
+  "guard_checks": 26,
+  "actual_public_and_column_grants_refused": true,
+  "unexpected_acl_state_preserved": true,
+  "new_C23_or_runtime_privilege_activation": false,
+  "predecessor_receipt_or_artifact_mutation": false,
+  "cloud_or_image_actions": false,
+  "native_cleanup_verified": true,
+  "remaining_gates": [
+    "Independent amendment source/evidence review",
+    "Immutable operatorcontext/build/audit",
+    "ActualCloudSQL16 privatebootstrap/migration/grants/proxyexitreadbacks",
+    "AllunchangedC23/scientific/account/releasegates"
+  ]
+}

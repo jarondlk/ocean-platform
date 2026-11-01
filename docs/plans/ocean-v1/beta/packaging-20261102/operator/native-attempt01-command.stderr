@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py", line 423, in <module>
+    main()
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py", line 212, in main
+    migrated = operator.run_stage(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/deploy/gcp/beta/operator/operator.py", line 441, in run_stage
+    raise OperatorError(
+beta_native_operator.OperatorError: Reviewed migration subprocess failed; private target remains for inspection

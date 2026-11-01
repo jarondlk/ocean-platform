@@ -1,0 +1,17 @@
+2026-11-02 01:09:51.483 JST [32395] LOG:  starting PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-11-02 01:09:51.484 JST [32395] LOG:  listening on IPv4 address "127.0.0.1", port 65203
+2026-11-02 01:09:51.484 JST [32395] LOG:  listening on Unix socket "/private/tmp/ocean-beta-operator-pg-nsz2f7jk/socket/.s.PGSQL.65203"
+2026-11-02 01:09:51.490 JST [32402] LOG:  database system was shut down at 2026-11-02 01:09:51 JST
+2026-11-02 01:09:51.492 JST [32395] LOG:  database system is ready to accept connections
+2026-11-02 01:09:51.786 JST [32413] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_migrator" by role "postgres"
+2026-11-02 01:09:51.788 JST [32413] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_serving" by role "postgres"
+2026-11-02 01:09:52.691 JST [32435] ERROR:  permission denied for schema pg_catalog at character 15
+2026-11-02 01:09:52.691 JST [32435] STATEMENT:  
+	CREATE TABLE alembic_version (
+		version_num VARCHAR(32) NOT NULL, 
+		CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num)
+	)
+	
+	
+2026-11-02 01:09:52.733 JST [32395] LOG:  received immediate shutdown request
+2026-11-02 01:09:52.735 JST [32395] LOG:  database system is shut down

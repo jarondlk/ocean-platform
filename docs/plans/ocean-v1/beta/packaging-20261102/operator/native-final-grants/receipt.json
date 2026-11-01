@@ -1,0 +1,446 @@
+{
+  "version": "beta-operator-native-v1",
+  "state": "passed",
+  "checks": [
+    {
+      "name": "fresh bootstrap creates actual vector extension",
+      "passed": true
+    },
+    {
+      "name": "bootstrap creates no application table",
+      "passed": true
+    },
+    {
+      "name": "two actual restricted roles have no admin attributes or memberships",
+      "passed": true
+    },
+    {
+      "name": "bootstrap retry refuses existing state rather than resetting roles",
+      "passed": true
+    },
+    {
+      "name": "migrator authenticates over actual SCRAM connection",
+      "passed": true
+    },
+    {
+      "name": "serving authenticates over actual distinct SCRAM connection",
+      "passed": true
+    },
+    {
+      "name": "existing guarded migration runs as restricted object owner",
+      "passed": true
+    },
+    {
+      "name": "actual head is exact reviewed head",
+      "passed": true
+    },
+    {
+      "name": "restricted migrator can grant exact initial serving rights",
+      "passed": true
+    },
+    {
+      "name": "serving can read current account table without enrolling anyone",
+      "passed": true
+    },
+    {
+      "name": "serving can read migration head",
+      "passed": true
+    },
+    {
+      "name": "serving can use only accepted limiter DML",
+      "passed": true
+    },
+    {
+      "name": "serving cannot create table",
+      "passed": true
+    },
+    {
+      "name": "serving cannot change account authority",
+      "passed": true
+    },
+    {
+      "name": "serving cannot read unrelated private history",
+      "passed": true
+    },
+    {
+      "name": "serving cannot read C23 execution state",
+      "passed": true
+    },
+    {
+      "name": "serving cannot execute app definer functions",
+      "passed": true
+    },
+    {
+      "name": "finalize refuses unexpected delegation rights on otherwise allowed table",
+      "passed": true
+    },
+    {
+      "name": "unexpected delegation remains inspectable after refusal",
+      "passed": true
+    },
+    {
+      "name": "finalize refuses unexpected grants without silently resetting them",
+      "passed": true
+    },
+    {
+      "name": "unexpected grant remains inspectable after refusal",
+      "passed": true
+    },
+    {
+      "name": "actual owned loopback HTTP shutdown transport succeeds",
+      "passed": true
+    },
+    {
+      "name": "owned proxy fixture terminates",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "native_version": "PostgreSQL18.3 and pgvector0.8.7, not CloudSQL16",
+  "cloud_actions": false,
+  "scientific_data": false,
+  "owned_directory": "/private/tmp/ocean-beta-operator-pg-bqzylty6",
+  "database_readback": {
+    "database": "ocean_v1_beta",
+    "principal": "ocean_v1_migrator",
+    "roles": [
+      {
+        "name": "ocean_v1_migrator",
+        "superuser": false,
+        "create_role": false,
+        "create_database": false,
+        "replication": false,
+        "bypass_rls": false,
+        "login": true
+      },
+      {
+        "name": "ocean_v1_serving",
+        "superuser": false,
+        "create_role": false,
+        "create_database": false,
+        "replication": false,
+        "bypass_rls": false,
+        "login": true
+      }
+    ],
+    "tables": [
+      {
+        "name": "alembic_version",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "app_user",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "audit_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "chat_feedback",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "chat_interaction",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "classification_application",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "classification_application_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "classification_review",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "classification_review_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "corpus_publication",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "edna_aggregate_evidence",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "edna_assay",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "edna_detection",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "edna_internal_standard",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "edna_sample",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "external_source_file",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "external_source_snapshot",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "rate_limit_bucket",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_attempt",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_input_history",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_job",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_outbox",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_payload",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_answer_step",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_area_definition",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_context_operation",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_context_revision",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_conversation",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_evidence_blob",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_evidence_context_dependency",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_evidence_dependency",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_evidence_protection",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_evidence_receipt",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_approval",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_capacity",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_execution",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_execution_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_execution_state",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_input_blob",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_operation",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_outbox",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_release",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_reservation",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_revision",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_revision_file",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_experiment_termination_proof",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_investigation",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_physical_membership",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_registry_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_registry_head",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_registry_review",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_registry_version",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_attempt",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_event",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_input_history",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_manifest",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_outbox",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_payload",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "research_run_step",
+        "owner": "ocean_v1_migrator"
+      },
+      {
+        "name": "user_invitation",
+        "owner": "ocean_v1_migrator"
+      }
+    ],
+    "migration_versions": [
+      "20261027_0021"
+    ],
+    "extensions": [
+      {
+        "name": "plpgsql",
+        "version": "1.0"
+      },
+      {
+        "name": "vector",
+        "version": "0.8.7"
+      }
+    ],
+    "C23_execution_enabled": false,
+    "cloudsql_limited_superuser_qualification_claimed": false
+  },
+  "cleanup": {
+    "port_closed": true,
+    "postmaster_pid_absent": true,
+    "owned_temporary_directory_removed": true
+  },
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "e39b489dd76541c0edf1d2e1e312577fba51836d34223a1899a9493f78a36e87",
+    "deploy/gcp/beta/api/entry.py": "f8de983e45be087c96c5eceda061aec4eb60c256d479d238d0adca88f169d1a1",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py": "233b7f948e533ff1773f592b85d0d7aa7dff5f003d2204a9c12063d5379d2d0e"
+  },
+  "artifacts": {
+    "initdb.stdout": "ba3c02108087bdef5fda7fb969610caf55333e0cd1d75c278e86a4b2fbf5def6",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.stdout": "57de7fd4cc503a5c51418b08500580648c0a3fc119a20eb41453b768221cba21",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

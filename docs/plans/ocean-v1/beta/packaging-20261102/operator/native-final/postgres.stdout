@@ -1,0 +1,17 @@
+2026-11-02 01:12:21.667 JST [33968] LOG:  starting PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-11-02 01:12:21.668 JST [33968] LOG:  listening on IPv4 address "127.0.0.1", port 49294
+2026-11-02 01:12:21.668 JST [33968] LOG:  listening on Unix socket "/private/tmp/ocean-beta-operator-pg-42odbnqa/socket/.s.PGSQL.49294"
+2026-11-02 01:12:21.674 JST [33974] LOG:  database system was shut down at 2026-11-02 01:12:21 JST
+2026-11-02 01:12:21.676 JST [33968] LOG:  database system is ready to accept connections
+2026-11-02 01:12:21.967 JST [33989] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_migrator" by role "postgres"
+2026-11-02 01:12:21.969 JST [33989] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_serving" by role "postgres"
+2026-11-02 01:12:23.044 JST [33991] ERROR:  permission denied for schema public at character 14
+2026-11-02 01:12:23.044 JST [33991] STATEMENT:  CREATE TABLE public.forbidden_table(id integer)
+2026-11-02 01:12:23.044 JST [33991] ERROR:  permission denied for table app_user
+2026-11-02 01:12:23.044 JST [33991] STATEMENT:  UPDATE public.app_user SET role='admin'
+2026-11-02 01:12:23.045 JST [33991] ERROR:  permission denied for table audit_event
+2026-11-02 01:12:23.045 JST [33991] STATEMENT:  SELECT * FROM public.audit_event
+2026-11-02 01:12:23.046 JST [33991] ERROR:  permission denied for table research_experiment_execution_state
+2026-11-02 01:12:23.046 JST [33991] STATEMENT:  SELECT * FROM public.research_experiment_execution_state
+2026-11-02 01:12:23.567 JST [33968] LOG:  received immediate shutdown request
+2026-11-02 01:12:23.569 JST [33968] LOG:  database system is shut down

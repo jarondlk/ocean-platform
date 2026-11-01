@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py", line 423, in <module>
+    main()
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py", line 229, in main
+    finalized = operator.finalize(connection)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/deploy/gcp/beta/operator/operator.py", line 386, in finalize
+    raise OperatorError(
+beta_native_operator.OperatorError: Serving unexpectedly inherits application function execution

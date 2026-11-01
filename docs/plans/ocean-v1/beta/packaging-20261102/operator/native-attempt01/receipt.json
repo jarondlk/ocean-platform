@@ -1,0 +1,78 @@
+{
+  "version": "beta-operator-native-v1",
+  "state": "failed",
+  "checks": [
+    {
+      "name": "fresh bootstrap creates actual vector extension",
+      "passed": true
+    },
+    {
+      "name": "bootstrap creates no application table",
+      "passed": true
+    },
+    {
+      "name": "two actual restricted roles have no admin attributes or memberships",
+      "passed": true
+    },
+    {
+      "name": "bootstrap retry refuses existing state rather than resetting roles",
+      "passed": true
+    },
+    {
+      "name": "migrator authenticates over actual SCRAM connection",
+      "passed": true
+    },
+    {
+      "name": "serving authenticates over actual distinct SCRAM connection",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "native_version": "PostgreSQL18.3 and pgvector0.8.7, not CloudSQL16",
+  "cloud_actions": false,
+  "scientific_data": false,
+  "owned_directory": "/private/tmp/ocean-beta-operator-pg-nsz2f7jk",
+  "failure_type": "OperatorError",
+  "cleanup": {
+    "port_closed": true,
+    "postmaster_pid_absent": true,
+    "owned_temporary_directory_removed": true
+  },
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "99b4081579d2174e3128bab10683bffa3650cd00a93b600fe7ea087d5951980d",
+    "deploy/gcp/beta/api/entry.py": "f8de983e45be087c96c5eceda061aec4eb60c256d479d238d0adca88f169d1a1",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/native_rehearsal.py": "804583c46c3a60f065784c6bbfe1e5ea0163f9242d761d42c82377d53c146da3"
+  },
+  "artifacts": {
+    "initdb.stdout": "06e3cd41e7873dbb33850279d4f9fcea5970762ac5b5e2eecfa9937b761620fa",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.stdout": "456c39dcb2fd48c93e5e8efb1d758e4310105710e47eeb9303c669309e507979",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
