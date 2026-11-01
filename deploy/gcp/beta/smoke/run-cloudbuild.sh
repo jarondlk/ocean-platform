@@ -5,7 +5,12 @@ set -euo pipefail
 [[ "${SMOKE_API:?}" =~ ^asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:[a-f0-9]{64}$ ]]
 [[ "${SMOKE_FRONTEND:?}" =~ ^asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:[a-f0-9]{64}$ ]]
 cleanup() {
-  docker cp "${SMOKE_RUNNER}:/tmp/container-smoke-receipt.json" /workspace/container-smoke-receipt.json || true
+  if docker cp "${SMOKE_RUNNER}:/tmp/container-smoke-receipt.json" /workspace/container-smoke-receipt.json; then
+    # Cloud Build omits automatic artifacts after a failed step. Preserve the
+    # complete synthetic/no-credential result as one structured log line too.
+    tr -d '\n' < /workspace/container-smoke-receipt.json
+    printf '\n'
+  fi
   docker rm -f "${SMOKE_RUNNER}" >/dev/null 2>&1 || true
 }
 trap cleanup EXIT

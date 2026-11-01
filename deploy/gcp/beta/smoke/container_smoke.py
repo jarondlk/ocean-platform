@@ -56,7 +56,7 @@ const call=(path,host='beta.oceaninfobio.com')=>new Promise((resolve,reject)=>{
  for(let i=0;i<20;i++){
   try{login=await call('/login');break;}catch(error){if(i===19)throw error;await new Promise(resolve=>setTimeout(resolve,200));}
  }
- assert.equal(login.status,200);assert.match(login.body.toString(),'Sign in to OCEAN');
+ assert.equal(login.status,200);assert.match(login.body.toString(),/Sign in to OCEAN/);
  const links=[...login.body.toString().matchAll(/<link\b[^>]*href="([^"]+)"[^>]*>/g)].map(m=>m[1]);
  const css=links.find(path=>path.startsWith('/_next/static/')&&/\.css(?:\?|$)/.test(path));
  assert(css,'Built login must reference a local generated CSS asset');
@@ -120,9 +120,28 @@ class DockerSmoke:
                 absent = result.returncode == 0 or 'No such container' in result.stderr
                 self.cleanup.append({'container_name': name, 'removed_or_already_absent': absent,
                     'returncode': result.returncode})
-            except subprocess.TimeoutExpired:
+            except (subprocess.TimeoutExpired, OSError):
                 self.cleanup.append({'container_name': name, 'removed_or_already_absent': False,
-                    'error': 'cleanup deadline'})
+                    'error': 'bounded cleanup unavailable'})
+
+    def frontend_diagnostics(self, name: str) -> dict:
+        """Bounded evidence from only this invocation's synthetic networkless host."""
+        if name not in self.owned_names:
+            raise SmokeFailure('Diagnostic container is not owned by this smoke')
+        evidence = {}
+        operations = {
+            'server_logs': ['logs', '--tail=80', name],
+            'container_state': ['inspect', '--format={{json .State}}', name],
+        }
+        for key, args in operations.items():
+            try:
+                result = subprocess.run([self.docker, *args], capture_output=True,
+                    text=True, timeout=5, check=False)
+                evidence[key] = {'returncode': result.returncode,
+                    'stdout_tail': result.stdout[-12000:], 'stderr_tail': result.stderr[-12000:]}
+            except (subprocess.TimeoutExpired, OSError):
+                evidence[key] = {'error': 'bounded diagnostic unavailable'}
+        return evidence
 
 
 def manifest_check(probe: dict, kind: str, revision: str, expected_sha256: str) -> dict:
@@ -167,6 +186,7 @@ def main(argv: list[str] | None = None) -> int:
     if docker is None:
         parser.error('Docker CLI and an existing daemon with both images are required')
     smoke = DockerSmoke(docker)
+    frontend_name = None
     receipt = {'version': 'ocean-beta-container-smoke-v1', 'started_at': datetime.now(timezone.utc).isoformat(),
         'status': 'failed', 'source_commit': args.revision,
         'images': {'frontend': args.frontend_image, 'api': args.api_image},
@@ -199,6 +219,7 @@ def main(argv: list[str] | None = None) -> int:
             'V1_GOOGLE_CLIENT_SECRET': 'fixture-oauth-secret-not-live'}
         options = smoke.options('frontend')
         name = smoke.owned_names[-1]
+        frontend_name = name
         smoke.run(['run', '--detach', *options,
             *[part for key, value in env.items() for part in ['--env', key + '=' + value]], args.frontend_image])
         result = smoke.run(['exec', name, 'node', '-e', FRONTEND_PROBE], timeout=35)
@@ -213,6 +234,8 @@ def main(argv: list[str] | None = None) -> int:
         receipt['status'] = 'passed'
     except (SmokeFailure, KeyError, ValueError, OSError) as exc:
         receipt['error'] = str(exc)
+        if frontend_name is not None:
+            receipt['frontend_failure_diagnostics'] = smoke.frontend_diagnostics(frontend_name)
     finally:
         smoke.close()
         receipt['commands'] = smoke.commands
@@ -224,6 +247,7 @@ def main(argv: list[str] | None = None) -> int:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(receipt, indent=2) + '\n')
     print(json.dumps({'status': receipt['status'], 'output': str(args.output),
+        'error': receipt.get('error'), 'cleanup_error': receipt.get('cleanup_error'),
         'checks': sorted(receipt['checks']), 'owned_containers_cleaned': all(
             item['removed_or_already_absent'] for item in smoke.cleanup)}))
     return 0 if receipt['status'] == 'passed' else 1

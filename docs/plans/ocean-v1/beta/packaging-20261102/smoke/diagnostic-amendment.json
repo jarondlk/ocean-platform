@@ -1,0 +1,25 @@
+{
+  "version": "beta-container-smoke-diagnostic-amendment-v1",
+  "recorded_at": "2026-11-01T16:13:05.036241+00:00",
+  "status": "prepared_for_new_runtime_run",
+  "original_source_commit": "74f2262",
+  "previous_source_sha256": "ac7df09ee1e672187fc2100e604b66c3708f09dba7cfa50708b9cc1bed0e00c6",
+  "new_source_sha256": "0c59506c428d95f0c87f1750f1bbc495c7cfbd469dc4f46a6cc7f0abf4462c2b",
+  "original_preparation_sha256": "06328d881c0007d70b214f5ac010318575b717fedb29cfc974f00d93631b48c9",
+  "amendment_document_sha256": "b21eedd3652c89f2d1050e40ad7d65dd44e02804c5f7d7ee93c69399095bdf6d",
+  "changes": [
+    "Replace invalid string argument to Node assert.match with a regular expression",
+    "Include actual failure and cleanup errors in stdout summary",
+    "Capture bounded owned frontend logs and state before cleanup",
+    "Record bounded cleanup/diagnostic command availability failures"
+  ],
+  "static_checks": {
+    "ruff": "passed",
+    "python_and_api_probe_syntax": "passed",
+    "embedded_node_probe_syntax": "passed",
+    "corrected_node_assertion_api": "passed"
+  },
+  "first_build_failure_conclusively_attributed": false,
+  "actual_container_run_repeated_here": false,
+  "application_or_image_changed": false
+}
