@@ -14,7 +14,7 @@ requests==2.34.2
 urllib3==2.8.0
 google-genai==2.25.0
 google-cloud-storage==3.15.0
-sqlalchemy==2.0.52
+sqlalchemy==2.1.6
 # SQLAlchemy requires greenlet on the Linux/x86_64 Cloud Build and Cloud Run
 # targets, but pip-compile omits that conditional dependency on Apple Silicon.
 greenlet==3.5.6
