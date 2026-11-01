@@ -1,0 +1,16 @@
+{
+  "version": "beta-container-smoke-preparation-v1",
+  "recorded_at": "2026-11-01T16:03:07.997668+00:00",
+  "status": "prepared_runtime_not_run",
+  "source_sha256": "ac7df09ee1e672187fc2100e604b66c3708f09dba7cfa50708b9cc1bed0e00c6",
+  "readme_sha256": "fb219c7206cf3fe80b717a38f3d3c3cb68eeea3318b83ba7e234a2f7c5a92211",
+  "static_checks": {
+    "ruff": "passed",
+    "python_and_api_probe_syntax": "passed",
+    "embedded_node_probe_syntax": "passed",
+    "fixed_registry_digest_input_validation": "passed"
+  },
+  "actual_container_execution_performed": false,
+  "cloud_calls_performed": false,
+  "deployment_accepted": false
+}
