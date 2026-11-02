@@ -1,0 +1,38 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "entrypoint": "bash",
+      "args": [
+        "/workspace/run-cloudbuild.sh"
+      ],
+      "env": [
+        "SMOKE_RUNNER=ocean-beta-smoke-runner-${BUILD_ID}",
+        "SMOKE_API=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+        "SMOKE_FRONTEND=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+        "SMOKE_REVISION=7924a28e919b1fb751890c694f7b1f9b26b104ff",
+        "SMOKE_FRONTEND_MANIFEST=319e1ded57230b8078f1eedc1c6c259816eb9fc25b6d0f20b92ddac4bbb31b35",
+        "SMOKE_API_MANIFEST=b1a9a463ca8d7603b5a2c289a2ea0582335f44fb4e0be2b0b39e0f465d848ab3"
+      ]
+    }
+  ],
+  "timeout": "600s",
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "diskSizeGb": 100
+  },
+  "artifacts": {
+    "objects": {
+      "location": "gs://ocean-v1-beta-20261101-build-source/smoke/${BUILD_ID}/",
+      "paths": [
+        "container-smoke-receipt.json"
+      ]
+    }
+  },
+  "tags": [
+    "ocean-v1-beta",
+    "image-smoke"
+  ]
+}

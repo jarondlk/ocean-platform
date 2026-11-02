@@ -1,0 +1,345 @@
+{
+  "version": "beta-private-sql-provisioning-plan-v1",
+  "date": "2026-11-02 JST",
+  "state": "concrete proposal; no operation applied by this plan",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "region": "asia-northeast1",
+  "quote": {
+    "path": "docs/plans/ocean-v1/beta/quotes-20261102/cost-qualification.json",
+    "sha256": "1cf9f42e075254f9ac3710e77ea39011c7812b544eec58e89789ff16826631db",
+    "currency": "JPY",
+    "scenario_744h_with_contingency_jpy": "35604.045104616",
+    "root_reported_verification": "completed before plan freeze; actual account tax and usage are not an invoice",
+    "no_free_credits_assumed": true
+  },
+  "apply_boundary": "Root may apply only after current project identity, no-overlap/read-only resource inventory and quote verification. This document performs no mutations.",
+  "network": {
+    "existing_network": "ocean-v1-beta-network",
+    "existing_subnet": "ocean-v1-beta-subnet",
+    "subnet_cidr": "10.92.0.0/24",
+    "proposed_psa_range_name": "ocean-v1-beta-sql-range",
+    "proposed_psa_cidr": "10.93.0.0/20",
+    "service": "servicenetworking.googleapis.com",
+    "public_ingress_rules_to_database": [],
+    "nat_created": false,
+    "vpc_connector_created": false
+  },
+  "instance": {
+    "name": "ocean-v1-beta-sql",
+    "connection_name": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+    "database_version": "POSTGRES_16",
+    "edition": "ENTERPRISE",
+    "zone": "asia-northeast1-a",
+    "availability_type": "ZONAL",
+    "cpu": 2,
+    "memory_mib": 7680,
+    "expected_tier": "db-custom-2-7680",
+    "storage_type": "SSD",
+    "storage_size_gb": 20,
+    "storage_auto_increase": true,
+    "storage_auto_increase_limit_gb": 30,
+    "ipv4_enabled": false,
+    "authorized_networks": [],
+    "ssl_mode": "ENCRYPTED_ONLY",
+    "connector_enforcement": "REQUIRED",
+    "deletion_protection": true,
+    "backup_start_utc": "18:00",
+    "backup_location": "asia-northeast1",
+    "retained_backups_count": 7,
+    "point_in_time_recovery": true,
+    "retained_transaction_log_days": 7,
+    "high_availability": false,
+    "replicas": [],
+    "root_password_argument_used": false
+  },
+  "database": {
+    "name": "ocean_v1_beta",
+    "initial_data_import": false,
+    "migration_head": "20261027_0021",
+    "migration_executed_by_plan": false
+  },
+  "preflight_read_commands": [
+    [
+      "gcloud",
+      "projects",
+      "describe",
+      "ocean-v1-beta-20261101",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "compute",
+      "networks",
+      "subnets",
+      "list",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "compute",
+      "addresses",
+      "list",
+      "--global",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "compute",
+      "routes",
+      "list",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "services",
+      "vpc-peerings",
+      "list",
+      "--network=ocean-v1-beta-network",
+      "--service=servicenetworking.googleapis.com",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "sql",
+      "instances",
+      "list",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ]
+  ],
+  "ordered_mutation_commands": [
+    {
+      "id": "reserve-new-psa-range",
+      "command": [
+        "gcloud",
+        "compute",
+        "addresses",
+        "create",
+        "ocean-v1-beta-sql-range",
+        "--global",
+        "--purpose=VPC_PEERING",
+        "--addresses=10.93.0.0",
+        "--prefix-length=20",
+        "--network=projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "gate": "Project identity and nonoverlap confirmed; refuse unexpected pre-existing allocation"
+    },
+    {
+      "id": "connect-psa",
+      "command": [
+        "gcloud",
+        "services",
+        "vpc-peerings",
+        "connect",
+        "--service=servicenetworking.googleapis.com",
+        "--ranges=ocean-v1-beta-sql-range",
+        "--network=ocean-v1-beta-network",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "gate": "Retain reserved range readback; no force update of unexpected peering"
+    },
+    {
+      "id": "create-private-sql",
+      "command": [
+        "gcloud",
+        "sql",
+        "instances",
+        "create",
+        "ocean-v1-beta-sql",
+        "--database-version=POSTGRES_16",
+        "--edition=enterprise",
+        "--cpu=2",
+        "--memory=7680MiB",
+        "--zone=asia-northeast1-a",
+        "--availability-type=zonal",
+        "--network=projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+        "--no-assign-ip",
+        "--ssl-mode=ENCRYPTED_ONLY",
+        "--connector-enforcement=REQUIRED",
+        "--storage-type=SSD",
+        "--storage-size=20",
+        "--storage-auto-increase",
+        "--storage-auto-increase-limit=30",
+        "--backup-start-time=18:00",
+        "--backup-location=asia-northeast1",
+        "--retained-backups-count=7",
+        "--enable-point-in-time-recovery",
+        "--retained-transaction-log-days=7",
+        "--deletion-protection",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "gate": "Completed quote accepted; sole reviewed PSA allocation connected; no existing unexpected instance; paid ongoing resource within initial target"
+    },
+    {
+      "id": "create-independent-database",
+      "command": [
+        "gcloud",
+        "sql",
+        "databases",
+        "create",
+        "ocean_v1_beta",
+        "--instance=ocean-v1-beta-sql",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ],
+      "gate": "Actual private SQL readback matches all controls and expected target; no import or role creation by this call"
+    }
+  ],
+  "readback_commands": [
+    [
+      "gcloud",
+      "compute",
+      "addresses",
+      "describe",
+      "ocean-v1-beta-sql-range",
+      "--global",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "services",
+      "vpc-peerings",
+      "list",
+      "--network=ocean-v1-beta-network",
+      "--service=servicenetworking.googleapis.com",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "sql",
+      "instances",
+      "describe",
+      "ocean-v1-beta-sql",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ],
+    [
+      "gcloud",
+      "sql",
+      "databases",
+      "list",
+      "--instance=ocean-v1-beta-sql",
+      "--format=json",
+      "--project=ocean-v1-beta-20261101",
+      "--quiet"
+    ]
+  ],
+  "mandatory_live_readback_assertions": [
+    "Exact project_number534831104543 and project_id",
+    "Range10.93.0.0/20 with purposeVPC_PEERING and exactbetaVPC",
+    "PSA connection operation complete and namedrange retained; no unexpected allocation",
+    "SQL enginePOSTGRES16/Enterprise/ZONAL/db-custom-2-7680/zoneasia-northeast1-a/RUNNABLE",
+    "Only private SQL address inside10.93.0.0/20; ipv4Enabledfalse; authorizedNetworks empty",
+    "ExactprivateNetwork, sslModeENCRYPTED_ONLY, connectorEnforcementREQUIRED",
+    "20GB initialSSD withstorageAutoResize true/limit30GB; deletionProtectionEnabledtrue",
+    "Dailybackup18:00UTC,7retained,7dayPITR enabled; actuallogstoragestate retained",
+    "ActualconnectionName exactbeta and independentdatabase name only; no legacy data/users imported"
+  ],
+  "private_connectivity": {
+    "proxy": "Official Cloud SQL Auth Proxy2 image, exact digest still required before deployment",
+    "arguments": [
+      "--private-ip",
+      "--address=127.0.0.1",
+      "--port=5432",
+      "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+    ],
+    "serving_ports": {
+      "frontend_ingress": 8080,
+      "api_loopback_only": 8000,
+      "database_proxy_loopback_only": 5432
+    },
+    "direct_vpc": {
+      "network": "ocean-v1-beta-network",
+      "subnet": "ocean-v1-beta-subnet",
+      "vpc_egress": "private-ranges-only"
+    },
+    "platform_public_ip_cloud_sql_socket_substitution": false,
+    "persistent_service_account_keys": false,
+    "adc_attached_identity": true,
+    "actual_startup_route_IAM_TLS_qualification": "pending"
+  },
+  "operator_jobs": {
+    "bootstrap_job_proposed": "ocean-v1-beta-db-bootstrap",
+    "migration_job_proposed": "ocean-v1-beta-db-migrate",
+    "separate_attached_identities_required": true,
+    "tasks": 1,
+    "parallelism": 1,
+    "max_retries": 0,
+    "task_timeout_seconds": 600,
+    "execute_on_create": false,
+    "official_proxy_sidecar_required": true,
+    "sidecar_finish_contract": "Reviewed operator finally calls proxylocalhostquitquitquit endpoint and observes exit; timeout is failure, not completion",
+    "bootstrap_entry_implemented": false,
+    "migration_entry": "deploy/gcp/beta/api/entry.py migrate",
+    "bootstrap_credential": "Private new-instance postgres password, never serving/migration/userdata mounts; no argv/log/repo exposure",
+    "runtime_connector_IAM": "Onlyselectedinstance cloudsql.instances.get/connect via testedconditionalCloudSQLClient or reviewedcustomrole; noAdmin/Editor",
+    "network_or_IAM_grants_applied": false
+  },
+  "database_role_plan": {
+    "migrator": "ocean_v1_migrator",
+    "serving": "ocean_v1_serving",
+    "research_controller": "ocean_v1_research_controller",
+    "sandbox_controller": "ocean_v1_sandbox_controller",
+    "sandbox_verifier": "ocean_v1_sandbox_verifier",
+    "sandbox_function_owner": "ocean_v1_sandbox_function_owner",
+    "all_runtime_attributes": {
+      "rolsuper": false,
+      "rolcreaterole": false,
+      "rolcreatedb": false,
+      "rolreplication": false,
+      "rolbypassrls": false,
+      "memberships": [],
+      "database_schema_table_owner": false
+    },
+    "function_owner_login": false,
+    "initial_bare_host_grants": {
+      "CONNECT": "ocean_v1_beta",
+      "USAGE": "public",
+      "SELECT": [
+        "public.app_user",
+        "public.alembic_version"
+      ],
+      "SELECT_INSERT_UPDATE": [
+        "public.rate_limit_bucket"
+      ]
+    },
+    "blanket_all_tables_grant": false,
+    "runtime_user_creation": "Explicit SQLDDL via boundedbootstrap; unqualifiedCloudSQLAdminusercreate defaults privileged cloudsqlsuperuser and must not be used",
+    "C23_cloudsql_function_owner_bootstrap_qualified": false,
+    "C23_gate": "Exactacceptedno-membership/no-ownership bootstrap usednativeSUPERUSER; CloudSQLlimitedsuperuser capabilities unqualified. Keepdisabled; do notweakenchecks."
+  },
+  "not_performed": [
+    "cloudmutation",
+    "databaseconnection",
+    "secretvaluegeneration",
+    "rolegrant",
+    "operatorcodeimplementation",
+    "imagebuild",
+    "migration",
+    "scientificdataacquisition/transfer",
+    "executionenablement",
+    "liveacceptance"
+  ],
+  "original_receipts_modified": false
+}

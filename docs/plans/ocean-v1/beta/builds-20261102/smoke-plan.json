@@ -1,0 +1,16 @@
+{
+  "version": "beta-bounded-image-smoke-plan-v1",
+  "images": {
+    "frontend": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+    "api": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f"
+  },
+  "image_source_commit": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "timeout_seconds": 600,
+  "runner_role": "build-only root controller with Docker socket; no-network subject containers retain their non-root image users",
+  "additional_grant": "roles/storage.objectCreator only for this source bucket smoke/ prefix; no deployment/data/secret permissions",
+  "maximum_total_initial_build_minutes": 50,
+  "maximum_build_JPY_at_quoted_rate": "47.46149995",
+  "initial_build_allocation_JPY": 100,
+  "deployments_performed": false,
+  "real_credentials_supplied": false
+}

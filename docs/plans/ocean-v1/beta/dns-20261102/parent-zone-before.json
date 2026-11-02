@@ -1,0 +1,37 @@
+{
+  "cloudLoggingConfig": {
+    "kind": "dns#managedZoneCloudLoggingConfig"
+  },
+  "creationTime": "2026-09-05T07:07:13.201Z",
+  "description": "DNS zone for domain: oceaninfobio.com",
+  "dnsName": "oceaninfobio.com.",
+  "dnssecConfig": {
+    "defaultKeySpecs": [
+      {
+        "algorithm": "rsasha256",
+        "keyLength": 2048,
+        "keyType": "keySigning",
+        "kind": "dns#dnsKeySpec"
+      },
+      {
+        "algorithm": "rsasha256",
+        "keyLength": 1024,
+        "keyType": "zoneSigning",
+        "kind": "dns#dnsKeySpec"
+      }
+    ],
+    "kind": "dns#managedZoneDnsSecConfig",
+    "nonExistence": "nsec3",
+    "state": "on"
+  },
+  "id": "3665927363125883965",
+  "kind": "dns#managedZone",
+  "name": "oceaninfobio-com",
+  "nameServers": [
+    "ns-cloud-a1.googledomains.com.",
+    "ns-cloud-a2.googledomains.com.",
+    "ns-cloud-a3.googledomains.com.",
+    "ns-cloud-a4.googledomains.com."
+  ],
+  "visibility": "public"
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "cloudLoggingConfig": {
+      "kind": "dns#managedZoneCloudLoggingConfig"
+    },
+    "creationTime": "2026-11-01T16:18:34.804Z",
+    "description": "Independent OCEAN v1 beta subdomain",
+    "dnsName": "beta.oceaninfobio.com.",
+    "id": "3930630191425672013",
+    "kind": "dns#managedZone",
+    "labels": {
+      "environment": "beta",
+      "system": "ocean-v1"
+    },
+    "name": "ocean-v1-beta-domain",
+    "nameServers": [
+      "ns-cloud-e1.googledomains.com.",
+      "ns-cloud-e2.googledomains.com.",
+      "ns-cloud-e3.googledomains.com.",
+      "ns-cloud-e4.googledomains.com."
+    ],
+    "visibility": "public"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "gcloud",
+    "certificate-manager",
+    "maps",
+    "create",
+    "ocean-v1-beta-cert-map",
+    "--location=global",
+    "--format=json",
+    "--project=ocean-v1-beta-20261101"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"@type\": \"type.googleapis.com/google.cloud.certificatemanager.v1.CertificateMap\",\n  \"createTime\": \"2026-11-01T16:25:00.766183564Z\",\n  \"name\": \"projects/ocean-v1-beta-20261101/locations/global/certificateMaps/ocean-v1-beta-cert-map\",\n  \"updateTime\": \"2026-11-01T16:25:00.766183564Z\"\n}\n",
+  "stderr": "Waiting for 'operation-1793550300628-65f39788e4727-313ca0ce-ddaf7615' to complete...\n............done.\nCreated certificate map [ocean-v1-beta-cert-map].\n"
+}

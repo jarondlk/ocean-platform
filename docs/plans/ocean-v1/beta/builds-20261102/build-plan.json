@@ -1,0 +1,42 @@
+{
+  "version": "beta-bounded-source-image-build-plan-v1",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "region": "asia-northeast1",
+  "source_commit": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "application_ci_source": "50566b7cfa4a0d8ee19686f0109e74f3a2a45d45",
+  "application_ci_run": 41322838746,
+  "source_identity_qualification": "Packaging-only successor; app source remains identical to running current CI. Host and both frontends already passed; overall backend/PostgreSQL still pending. Images are preparation artifacts, not live deployment or release.",
+  "builds": 2,
+  "timeout_seconds_each": 1200,
+  "machine": "E2_STANDARD_2",
+  "disk_gb_each": 100,
+  "initial_build_spend_allocation_JPY": 100,
+  "registry_retention_allowance_GiB": 5,
+  "build_identity": "ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "identity_scope": [
+    "Artifact Registry writer on beta repository only",
+    "Storage objectViewer on new source bucket only",
+    "Logging logWriter on beta project only"
+  ],
+  "default_compute_editor_used": false,
+  "secrets_or_data_access": false,
+  "deploy_permissions_granted": false,
+  "runtime_resources_created": false,
+  "source_bucket": "ocean-v1-beta-20261101-build-source",
+  "sources": {
+    "frontend": {
+      "context_manifest_sha256": "319e1ded57230b8078f1eedc1c6c259816eb9fc25b6d0f20b92ddac4bbb31b35",
+      "bytes": 902260,
+      "image_tag": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend:beta-7924a28",
+      "config": "frontend-cloudbuild.json"
+    },
+    "api": {
+      "context_manifest_sha256": "b1a9a463ca8d7603b5a2c289a2ea0582335f44fb4e0be2b0b39e0f465d848ab3",
+      "bytes": 2656298,
+      "image_tag": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api:beta-7924a28",
+      "config": "api-cloudbuild.json"
+    }
+  },
+  "source_context_qualification": "Explicit committed transitive app sources and locks only; generated local files, credentials, scientific data and synthetic preview graph excluded."
+}

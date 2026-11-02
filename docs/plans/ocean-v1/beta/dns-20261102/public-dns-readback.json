@@ -1,0 +1,38 @@
+{
+  "parent-referral": {
+    "command": [
+      "dig",
+      "@ns-cloud-a1.googledomains.com",
+      "beta.oceaninfobio.com",
+      "NS",
+      "+short"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "public-beta-ns": {
+    "command": [
+      "dig",
+      "@8.8.8.8",
+      "beta.oceaninfobio.com",
+      "NS",
+      "+short"
+    ],
+    "returncode": 0,
+    "stdout": "ns-cloud-e4.googledomains.com.\nns-cloud-e2.googledomains.com.\nns-cloud-e3.googledomains.com.\nns-cloud-e1.googledomains.com.\n",
+    "stderr": ""
+  },
+  "public-auth-cname": {
+    "command": [
+      "dig",
+      "@8.8.8.8",
+      "_acme-challenge_l36plgibqogykbuv.beta.oceaninfobio.com.",
+      "CNAME",
+      "+short"
+    ],
+    "returncode": 0,
+    "stdout": "b2272d7f-ce9f-4111-9b05-e1573a263c50.3.authorize.certificatemanager.goog.\n",
+    "stderr": ""
+  }
+}

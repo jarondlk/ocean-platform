@@ -1,0 +1,15 @@
+{
+  "version": "beta-private-operator-build-plan-v1",
+  "source_commit": "756c7a7dc46d4ba75e3a0308b7ab23d9b3553bfe",
+  "api_source_commit": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "base_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator:beta-756c7a7",
+  "manifest_sha256": "e2e79422dfeedbe66de7e289b7876a78587eca4fe47c63de25db4ae64a62f099",
+  "local_qualification": "26guards38actualnativechecks; independent amendment reviewpasses",
+  "timeout_seconds": 600,
+  "total_initial_build_minutes_upper_bound": 70,
+  "compute_JPY_upper_bound": "66.44609993",
+  "initial_build_allocation_JPY": 100,
+  "deployments_performed_by_build": false,
+  "credentials_in_context": false
+}

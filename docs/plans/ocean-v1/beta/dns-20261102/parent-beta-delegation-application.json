@@ -1,0 +1,57 @@
+[
+  {
+    "command": [
+      "gcloud",
+      "dns",
+      "record-sets",
+      "transaction",
+      "start",
+      "--zone=oceaninfobio-com",
+      "--transaction-file=/private/tmp/ocean-beta-parent-delegation-20261102.yaml",
+      "--project=data-infra-infobio",
+      "--quiet"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "Transaction started [/private/tmp/ocean-beta-parent-delegation-20261102.yaml].\n"
+  },
+  {
+    "command": [
+      "gcloud",
+      "dns",
+      "record-sets",
+      "transaction",
+      "add",
+      "ns-cloud-e1.googledomains.com.",
+      "ns-cloud-e2.googledomains.com.",
+      "ns-cloud-e3.googledomains.com.",
+      "ns-cloud-e4.googledomains.com.",
+      "--name=beta.oceaninfobio.com.",
+      "--type=NS",
+      "--ttl=300",
+      "--zone=oceaninfobio-com",
+      "--transaction-file=/private/tmp/ocean-beta-parent-delegation-20261102.yaml",
+      "--project=data-infra-infobio",
+      "--quiet"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "Record addition appended to transaction at [/private/tmp/ocean-beta-parent-delegation-20261102.yaml].\n"
+  },
+  {
+    "command": [
+      "gcloud",
+      "dns",
+      "record-sets",
+      "transaction",
+      "execute",
+      "--zone=oceaninfobio-com",
+      "--transaction-file=/private/tmp/ocean-beta-parent-delegation-20261102.yaml",
+      "--project=data-infra-infobio",
+      "--quiet"
+    ],
+    "returncode": 0,
+    "stdout": "ID  START_TIME                STATUS\n26  2026-11-01T16:25:31.574Z  pending\n",
+    "stderr": "Executed transaction [/private/tmp/ocean-beta-parent-delegation-20261102.yaml] for managed-zone [oceaninfobio-com].\nCreated [https://dns.googleapis.com/dns/v1/projects/data-infra-infobio/managedZones/oceaninfobio-com/changes/26].\n"
+  }
+]

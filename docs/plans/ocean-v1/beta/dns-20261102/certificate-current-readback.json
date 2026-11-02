@@ -1,0 +1,28 @@
+{
+  "createTime": "2026-11-01T16:24:55.264069102Z",
+  "managed": {
+    "authorizationAttemptInfo": [
+      {
+        "domain": "beta.oceaninfobio.com",
+        "state": "AUTHORIZING"
+      }
+    ],
+    "dnsAuthorizations": [
+      "projects/534831104543/locations/global/dnsAuthorizations/ocean-v1-beta-domain-auth"
+    ],
+    "domains": [
+      "beta.oceaninfobio.com"
+    ],
+    "state": "PROVISIONING"
+  },
+  "name": "projects/ocean-v1-beta-20261101/locations/global/certificates/ocean-v1-beta-domain-cert",
+  "sanDnsnames": [
+    "beta.oceaninfobio.com"
+  ],
+  "updateTime": "2026-11-01T16:24:55.767431202Z",
+  "usedBy": [
+    {
+      "name": "//certificatemanager.googleapis.com/projects/534831104543/locations/global/certificateMaps/ocean-v1-beta-cert-map/certificateMapEntries/ocean-v1-beta-domain-entry"
+    }
+  ]
+}

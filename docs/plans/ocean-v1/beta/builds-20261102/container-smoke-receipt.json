@@ -1,0 +1,105 @@
+{
+  "version": "ocean-beta-container-smoke-v1",
+  "started_at": "2026-11-01T16:15:04.757050+00:00",
+  "status": "passed",
+  "source_commit": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "images": {
+    "frontend": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+    "api": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f"
+  },
+  "container_network": "none",
+  "ports_published": false,
+  "real_credentials_supplied": false,
+  "google_callback_tested": false,
+  "deployment_accepted": false,
+  "checks": {
+    "frontend_default_user": "node",
+    "api_default_user": "10001:10001",
+    "api_import": {
+      "uid": 10001,
+      "manifest_sha256": "b1a9a463ca8d7603b5a2c289a2ea0582335f44fb4e0be2b0b39e0f465d848ab3",
+      "source_file_count": 171,
+      "source_commit": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+      "v1_host_imported": true,
+      "legacy_entry_imported": false
+    },
+    "api_default_refuses_unconfigured_startup": true,
+    "frontend": {
+      "uid": 1000,
+      "manifest_sha256": "319e1ded57230b8078f1eedc1c6c259816eb9fc25b6d0f20b92ddac4bbb31b35",
+      "source_file_count": 71,
+      "source_commit": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+      "http": {
+        "login_status": 200,
+        "css_status": 200,
+        "css_bytes": 35011,
+        "wrong_host_status": 403,
+        "unauthenticated_runtime_status": 401
+      },
+      "google_callback_tested": false,
+      "database_or_science_available": false
+    }
+  },
+  "commands": [
+    {
+      "operation": "image",
+      "returncode": 0,
+      "stdout_sha256": "a1d242f51b3e9ce459a910bdb94a24e3e1864e2b336379a3b4b67ea818f252cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "operation": "image",
+      "returncode": 0,
+      "stdout_sha256": "32ff4271688eb68110b1fb9232f3ff9f81a5672cb664559ed8d865ed8f4f517a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "operation": "run",
+      "returncode": 0,
+      "stdout_sha256": "58a9f440b9a82d1f57f7584a2bb13d538e31b6e36bc3ac4a6cb7cb6235411a1c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "operation": "run",
+      "returncode": 2,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "474264053e39cff0d28ee3a598a4cee6252993e92a4cbf5487c84610d358406b"
+    },
+    {
+      "operation": "run",
+      "returncode": 0,
+      "stdout_sha256": "e227d8acf7073fa766cd75d17a996a64e32935a538084ef1d1a6aedd1c941a30",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "operation": "exec",
+      "returncode": 0,
+      "stdout_sha256": "04f8068a2f4122eb243d06e35ebe1c5b874297405106fe8118d453574f26f016",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "operation": "inspect",
+      "returncode": 0,
+      "stdout_sha256": "a3009e087073ff1634644ab04edc7468cc6d77913e60df62b9cd1950f571d9f2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "cleanup": [
+    {
+      "container_name": "ocean-beta-smoke-frontend-5ccc7836ff734e708009e80bc9beac4c",
+      "removed_or_already_absent": true,
+      "returncode": 0
+    },
+    {
+      "container_name": "ocean-beta-smoke-api-default-49bc6461722c48169707fa6280b9e021",
+      "removed_or_already_absent": true,
+      "returncode": 0
+    },
+    {
+      "container_name": "ocean-beta-smoke-api-import-5b46f901db9a4e4ab836eb94aa06a318",
+      "removed_or_already_absent": true,
+      "returncode": 0
+    }
+  ],
+  "finished_at": "2026-11-01T16:15:12.855347+00:00"
+}

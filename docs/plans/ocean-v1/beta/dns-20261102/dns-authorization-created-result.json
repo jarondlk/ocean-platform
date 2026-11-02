@@ -1,0 +1,17 @@
+{
+  "command": [
+    "gcloud",
+    "certificate-manager",
+    "dns-authorizations",
+    "create",
+    "ocean-v1-beta-domain-auth",
+    "--domain=beta.oceaninfobio.com",
+    "--type=per-project-record",
+    "--location=global",
+    "--format=json",
+    "--project=ocean-v1-beta-20261101"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"createTime\": \"2026-11-01T16:18:36.637673182Z\",\n  \"dnsResourceRecord\": {\n    \"data\": \"b2272d7f-ce9f-4111-9b05-e1573a263c50.3.authorize.certificatemanager.goog.\",\n    \"name\": \"_acme-challenge_l36plgibqogykbuv.beta.oceaninfobio.com.\",\n    \"type\": \"CNAME\"\n  },\n  \"domain\": \"beta.oceaninfobio.com\",\n  \"name\": \"projects/ocean-v1-beta-20261101/locations/global/dnsAuthorizations/ocean-v1-beta-domain-auth\",\n  \"type\": \"PER_PROJECT_RECORD\",\n  \"updateTime\": \"2026-11-01T16:18:39.066700603Z\"\n}\n",
+  "stderr": "Create request issued for: [ocean-v1-beta-domain-auth]\nWaiting for operation [projects/ocean-v1-beta-20261101/locations/global/operations/operation-1793549916499-65f3961a8ee3c-33d9db74-f210037b] to complete...\n........................done.\nCreated dnsAuthorization [ocean-v1-beta-domain-auth].\n"
+}

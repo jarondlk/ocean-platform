@@ -1,0 +1,113 @@
+{
+  "artifacts": {
+    "objects": {
+      "location": "gs://ocean-v1-beta-20261101-build-source/smoke/07cd8231-b72e-4e2b-8cde-b56118563233/",
+      "paths": [
+        "container-smoke-receipt.json"
+      ]
+    }
+  },
+  "createTime": "2026-11-01T16:07:09.672589872Z",
+  "failureInfo": {
+    "detail": "Build step failure: build step 0 \"gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36\" failed: step exited with non-zero status: 1",
+    "type": "USER_BUILD_STEP"
+  },
+  "finishTime": "2026-11-01T16:08:42.108615Z",
+  "id": "07cd8231-b72e-4e2b-8cde-b56118563233",
+  "logUrl": "https://console.cloud.google.com/cloud-build/builds;region=asia-northeast1/07cd8231-b72e-4e2b-8cde-b56118563233?project=534831104543",
+  "name": "projects/534831104543/locations/asia-northeast1/builds/07cd8231-b72e-4e2b-8cde-b56118563233",
+  "options": {
+    "diskSizeGb": "100",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "pool": {},
+    "workerRelease": "legacy"
+  },
+  "projectId": "ocean-v1-beta-20261101",
+  "queueTtl": "3600s",
+  "results": {
+    "buildStepImages": [
+      "sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    ],
+    "buildStepOutputs": [
+      ""
+    ]
+  },
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793549229319017",
+      "object": "source/1793549229.116966-04dec5c5df5f434b8454c38a059090aa.tgz"
+    }
+  },
+  "sourceProvenance": {
+    "fileHashes": {
+      "gs://ocean-v1-beta-20261101-build-source/source/1793549229.116966-04dec5c5df5f434b8454c38a059090aa.tgz#1793549229319017": {
+        "fileHash": [
+          {
+            "type": "MD5",
+            "value": "Thk_1Sb3am1kRisPk9WMtA=="
+          },
+          {
+            "type": "SHA256",
+            "value": "Y52JchD_eItc8x5NXfhO6s7asZYiz2lo8xob4-BI2pg="
+          }
+        ]
+      }
+    },
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793549229319017",
+      "object": "source/1793549229.116966-04dec5c5df5f434b8454c38a059090aa.tgz"
+    }
+  },
+  "startTime": "2026-11-01T16:07:11.052468653Z",
+  "status": "FAILURE",
+  "steps": [
+    {
+      "args": [
+        "/workspace/run-cloudbuild.sh"
+      ],
+      "entrypoint": "bash",
+      "env": [
+        "SMOKE_RUNNER=ocean-beta-smoke-runner-07cd8231-b72e-4e2b-8cde-b56118563233",
+        "SMOKE_API=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+        "SMOKE_FRONTEND=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+        "SMOKE_REVISION=7924a28e919b1fb751890c694f7b1f9b26b104ff",
+        "SMOKE_FRONTEND_MANIFEST=319e1ded57230b8078f1eedc1c6c259816eb9fc25b6d0f20b92ddac4bbb31b35",
+        "SMOKE_API_MANIFEST=b1a9a463ca8d7603b5a2c289a2ea0582335f44fb4e0be2b0b39e0f465d848ab3"
+      ],
+      "exitCode": 1,
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "pullTiming": {
+        "endTime": "2026-11-01T16:07:37.729049292Z",
+        "startTime": "2026-11-01T16:07:14.676582526Z"
+      },
+      "status": "FAILURE",
+      "timing": {
+        "endTime": "2026-11-01T16:08:31.823428820Z",
+        "startTime": "2026-11-01T16:07:14.676582526Z"
+      }
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "image-smoke"
+  ],
+  "timeout": "600s",
+  "timing": {
+    "BUILD": {
+      "endTime": "2026-11-01T16:08:31.824021249Z",
+      "startTime": "2026-11-01T16:07:14.052426855Z"
+    },
+    "FETCHSOURCE": {
+      "endTime": "2026-11-01T16:07:14.052132065Z",
+      "startTime": "2026-11-01T16:07:11.268635186Z"
+    },
+    "STORAGE_SOURCE": {
+      "endTime": "2026-11-01T16:07:14.052132065Z",
+      "startTime": "2026-11-01T16:07:11.268635186Z"
+    }
+  }
+}

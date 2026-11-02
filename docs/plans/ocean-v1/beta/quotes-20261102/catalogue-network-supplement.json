@@ -1,0 +1,52 @@
+{
+  "currency": "JPY",
+  "fetched_at_utc": "2026-11-01T15:50:57.975431+00:00",
+  "records": [
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "TopologyAndGoogleCloudPerformance",
+        "serviceDisplayName": "Networking",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Intelligence Center Internet to Google Cloud Performance Resource Hours",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/E505-1604-58F8/skus/BDBA-22FA-3925",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 126563999,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "BDBA-22FA-3925"
+    }
+  ],
+  "source_api": "https://cloudbilling.googleapis.com/v1/services/E505-1604-58F8/skus?currencyCode=JPY&pageSize=5000",
+  "version": "beta-public-jpy-network-candidates-v1"
+}

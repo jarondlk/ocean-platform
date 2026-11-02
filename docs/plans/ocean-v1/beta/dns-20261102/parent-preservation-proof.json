@@ -1,0 +1,26 @@
+{
+  "version": "beta-parent-dns-preservation-v1",
+  "verified": true,
+  "prior_non_SOA_record_sets_unchanged": 4,
+  "prior_records_deleted": 0,
+  "one_explicitly_approved_beta_NS_added": {
+    "kind": "dns#resourceRecordSet",
+    "name": "beta.oceaninfobio.com.",
+    "rrdatas": [
+      "ns-cloud-e1.googledomains.com.",
+      "ns-cloud-e2.googledomains.com.",
+      "ns-cloud-e3.googledomains.com.",
+      "ns-cloud-e4.googledomains.com."
+    ],
+    "ttl": 300,
+    "type": "NS"
+  },
+  "provider_managed_SOA_serial_increment": {
+    "before": "1",
+    "after": "2",
+    "all_other_SOA_fields_unchanged": true
+  },
+  "qualification": "First strict byte-equality check stopped on the service-managed SOA serial1->2. No additional mutation or reset was made. Existing routing/verification records remain byte-equivalent. The standard zone-version increment is retained explicitly; do not claim all5 prior record bytes identical.",
+  "approval": "delegation-user-authorization.json",
+  "parent_after_sha256": "238088a4b2d9a971ccb03a690c203bb674a24ae8e2a3c6d54c38bffda0c4e51b"
+}

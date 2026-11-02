@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "objects": {
+      "location": "gs://ocean-v1-beta-20261101-build-source/smoke/32ed8ad4-b52b-4e6c-8662-15196df06648/",
+      "paths": [
+        "container-smoke-receipt.json"
+      ]
+    }
+  },
+  "createTime": "2026-11-01T16:14:08.949465411Z",
+  "id": "32ed8ad4-b52b-4e6c-8662-15196df06648",
+  "logUrl": "https://console.cloud.google.com/cloud-build/builds;region=asia-northeast1/32ed8ad4-b52b-4e6c-8662-15196df06648?project=534831104543",
+  "name": "projects/534831104543/locations/asia-northeast1/builds/32ed8ad4-b52b-4e6c-8662-15196df06648",
+  "options": {
+    "diskSizeGb": "100",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "pool": {},
+    "workerRelease": "legacy"
+  },
+  "projectId": "ocean-v1-beta-20261101",
+  "queueTtl": "3600s",
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793549648729510",
+      "object": "source/1793549648.423347-d17f44c7dad74f51901aa2cf458320e0.tgz"
+    }
+  },
+  "sourceProvenance": {
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793549648729510",
+      "object": "source/1793549648.423347-d17f44c7dad74f51901aa2cf458320e0.tgz"
+    }
+  },
+  "status": "QUEUED",
+  "steps": [
+    {
+      "args": [
+        "/workspace/run-cloudbuild.sh"
+      ],
+      "entrypoint": "bash",
+      "env": [
+        "SMOKE_RUNNER=ocean-beta-smoke-runner-32ed8ad4-b52b-4e6c-8662-15196df06648",
+        "SMOKE_API=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+        "SMOKE_FRONTEND=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+        "SMOKE_REVISION=7924a28e919b1fb751890c694f7b1f9b26b104ff",
+        "SMOKE_FRONTEND_MANIFEST=319e1ded57230b8078f1eedc1c6c259816eb9fc25b6d0f20b92ddac4bbb31b35",
+        "SMOKE_API_MANIFEST=b1a9a463ca8d7603b5a2c289a2ea0582335f44fb4e0be2b0b39e0f465d848ab3"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "image-smoke"
+  ],
+  "timeout": "600s"
+}

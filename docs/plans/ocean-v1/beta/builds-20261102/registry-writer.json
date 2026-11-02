@@ -1,0 +1,18 @@
+{
+  "command": [
+    "gcloud",
+    "artifacts",
+    "repositories",
+    "add-iam-policy-binding",
+    "ocean-v1-beta",
+    "--location=asia-northeast1",
+    "--member=serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "--role=roles/artifactregistry.writer",
+    "--project=ocean-v1-beta-20261101",
+    "--quiet",
+    "--format=json"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"bindings\": [\n    {\n      \"members\": [\n        \"serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/artifactregistry.writer\"\n    }\n  ],\n  \"etag\": \"BwZfOQgUXBY=\",\n  \"version\": 1\n}\n",
+  "stderr": "Updated IAM policy for repository [ocean-v1-beta].\n"
+}

@@ -1,0 +1,101 @@
+{
+  "backendType": "SECOND_GEN",
+  "connectionName": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+  "createTime": "2026-11-01T16:04:52.176Z",
+  "databaseInstalledVersion": "POSTGRES_16_15",
+  "databaseVersion": "POSTGRES_16",
+  "etag": "56f6cc8657321267e35111fd4a1c5f3f29df3208c6b71acb8a2e7276e3461167",
+  "gceZone": "asia-northeast1-a",
+  "geminiConfig": {
+    "activeQueryEnabled": false,
+    "entitled": false,
+    "googleVacuumMgmtEnabled": false,
+    "indexAdvisorEnabled": false,
+    "oomSessionCancelEnabled": true
+  },
+  "includeReplicasForMajorVersionUpgrade": false,
+  "instanceType": "CLOUD_SQL_INSTANCE",
+  "ipAddresses": [
+    {
+      "ipAddress": "10.93.0.3",
+      "type": "PRIVATE"
+    }
+  ],
+  "kind": "sql#instance",
+  "maintenanceVersion": "POSTGRES_16_15.R20260712.01_44",
+  "name": "ocean-v1-beta-sql",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "satisfiesPzi": true,
+  "selfLink": "https://sqladmin.googleapis.com/sql/v1beta4/projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql",
+  "serverCaCert": {
+    "cert": "-----BEGIN CERTIFICATE-----\nMIIDcTCCAlmgAwIBAgIBADANBgkqhkiG9w0BAQsFADBwMS0wKwYDVQQuEyQyMDky\nMzZkNi02MjFiLTQyMDgtOWFlNi1jZjBkMmExOWE3N2IxHDAaBgNVBAMTE0Nsb3Vk\nIFNRTCBTZXJ2ZXIgQ0ExFDASBgNVBAoTC0dvb2dsZSwgSW5jMQswCQYDVQQGEwJV\nUzAeFw0yNjExMDExNjA3NDdaFw0zNjEwMjkxNjA4NDdaMHAxLTArBgNVBC4TJDIw\nOTIzNmQ2LTYyMWItNDIwOC05YWU2LWNmMGQyYTE5YTc3YjEcMBoGA1UEAxMTQ2xv\ndWQgU1FMIFNlcnZlciBDQTEUMBIGA1UEChMLR29vZ2xlLCBJbmMxCzAJBgNVBAYT\nAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuu59sIPdpJuBL3o1\nGqWveym/juQK6YUyXT6T3/A6fNZxuf8UOP6xsG9dHHuO8OeYgLhlCjDmRN2sxnNL\nTuv5fpmZscOIl1Edb4VqVAslaTmLhOkep5Behb2bH6xgx/ggaxyc0yOzfX5HiB4j\naMtxazGCNWUJg+tLbLrciWEElpL5pJedDdWe2BbrkN50/uQ0Arpcyyb4RWC0T7Ue\nrj42wWKfjIfZ+7ww9pGi5ATvJyL+dMO8K6zjUlZbj1lpSOASNVTuDDfslZNrP2P6\nAGDkZOy2pSWqgMNZH2g8sAyXrxdMbP7MU05ywDPDV1FWnoBRbpdF3ktPNn12Avj7\nuvVTlQIDAQABoxYwFDASBgNVHRMBAf8ECDAGAQH/AgEAMA0GCSqGSIb3DQEBCwUA\nA4IBAQADAFNkzf+2vt4eg2dlZ6J+SlJPZ1OYHMUG7ni9Br75qHMHAHZGcmZvoba6\nZrVlBTzQoViQR0ewMPqB5lLNtrsyGUDUo+ASDaXl4AKiq2MtCoDKtBWbyjTxXN+K\nOemYUzhToKg4Wn4RuRe5s1qGdosNMgNS8GED+ZETJIKUSkknZH9ofIDugIj6Lr6q\ndszz50CEYdkYIaQisbkuEE5k3Gw7gICeHYp8XcfgXGEoI9Giw6TpypAHgoZEQ5nf\nMpOEQatA0nsqWkxqNDSj74hXvpAY9zsx//+8sWSHP1+zNMI2VIceIM3ohZeG2fxX\nkykiYpeQyUrBVv1EEwgKfX+bDF4g\n-----END CERTIFICATE-----",
+    "certSerialNumber": "0",
+    "commonName": "C=US,O=Google\\, Inc,CN=Cloud SQL Server CA,dnQualifier=209236d6-621b-4208-9ae6-cf0d2a19a77b",
+    "createTime": "2026-11-01T16:07:47.631Z",
+    "expirationTime": "2036-10-29T16:08:47.631Z",
+    "instance": "ocean-v1-beta-sql",
+    "kind": "sql#sslCert",
+    "sha1Fingerprint": "85c159cac7ea2ef17b6274bb473ef8583521b25d"
+  },
+  "serviceAccountEmailAddress": "p534831104543-wcadcm@gcp-sa-cloud-sql.iam.gserviceaccount.com",
+  "settings": {
+    "activationPolicy": "ALWAYS",
+    "availabilityType": "ZONAL",
+    "backupConfiguration": {
+      "backupRetentionSettings": {
+        "retainedBackups": 7,
+        "retentionUnit": "COUNT"
+      },
+      "backupTier": "STANDARD",
+      "enabled": true,
+      "kind": "sql#backupConfiguration",
+      "location": "asia-northeast1",
+      "pointInTimeRecoveryEnabled": true,
+      "replicationLogArchivingEnabled": true,
+      "startTime": "18:00",
+      "transactionLogRetentionDays": 7,
+      "transactionalLogStorageState": "CLOUD_STORAGE"
+    },
+    "connectorEnforcement": "REQUIRED",
+    "dataDiskSizeGb": "20",
+    "dataDiskType": "PD_SSD",
+    "deletionProtectionEnabled": true,
+    "edition": "ENTERPRISE",
+    "enableDataplexIntegration": true,
+    "ipConfiguration": {
+      "ipv4Enabled": false,
+      "privateNetwork": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+      "requireSsl": false,
+      "serverCaMode": "GOOGLE_MANAGED_INTERNAL_CA",
+      "serverCertificateRotationMode": "SERVER_CERTIFICATE_ROTATION_MODE_UNSPECIFIED",
+      "sslMode": "ENCRYPTED_ONLY"
+    },
+    "kind": "sql#settings",
+    "locationPreference": {
+      "kind": "sql#locationPreference",
+      "zone": "asia-northeast1-a"
+    },
+    "pricingPlan": "PER_USE",
+    "replicationLagMaxSeconds": 31536000,
+    "replicationType": "SYNCHRONOUS",
+    "settingsVersion": "1",
+    "storageAutoResize": true,
+    "storageAutoResizeLimit": "30",
+    "tier": "db-custom-2-7680"
+  },
+  "sqlNetworkArchitecture": "NEW_NETWORK_ARCHITECTURE",
+  "state": "RUNNABLE",
+  "upgradableDatabaseVersions": [
+    {
+      "displayName": "PostgreSQL 17",
+      "majorVersion": "POSTGRES_17",
+      "name": "POSTGRES_17"
+    },
+    {
+      "displayName": "PostgreSQL 18",
+      "majorVersion": "POSTGRES_18",
+      "name": "POSTGRES_18"
+    }
+  ]
+}

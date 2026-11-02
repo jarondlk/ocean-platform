@@ -1,0 +1,17 @@
+{
+  "operation": "connect-psa",
+  "command": [
+    "gcloud",
+    "services",
+    "vpc-peerings",
+    "connect",
+    "--service=servicenetworking.googleapis.com",
+    "--ranges=ocean-v1-beta-sql-range",
+    "--network=ocean-v1-beta-network",
+    "--project=ocean-v1-beta-20261101",
+    "--quiet"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "Operation \"operations/pssn.p24-534831104543-18684d4e-2918-440a-bd8e-f668b0951206\" finished successfully.\n"
+}

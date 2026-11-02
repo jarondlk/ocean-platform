@@ -1,0 +1,19 @@
+{
+  "command": [
+    "gcloud",
+    "certificate-manager",
+    "maps",
+    "entries",
+    "create",
+    "ocean-v1-beta-domain-entry",
+    "--map=ocean-v1-beta-cert-map",
+    "--hostname=beta.oceaninfobio.com",
+    "--certificates=ocean-v1-beta-domain-cert",
+    "--location=global",
+    "--format=json",
+    "--project=ocean-v1-beta-20261101"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"@type\": \"type.googleapis.com/google.cloud.certificatemanager.v1.CertificateMapEntry\",\n  \"certificates\": [\n    \"projects/534831104543/locations/global/certificates/ocean-v1-beta-domain-cert\"\n  ],\n  \"createTime\": \"2026-11-01T16:25:05.592096742Z\",\n  \"hostname\": \"beta.oceaninfobio.com\",\n  \"name\": \"projects/ocean-v1-beta-20261101/locations/global/certificateMaps/ocean-v1-beta-cert-map/certificateMapEntries/ocean-v1-beta-domain-entry\",\n  \"state\": \"PENDING\",\n  \"updateTime\": \"2026-11-01T16:25:05.592096742Z\"\n}\n",
+  "stderr": "Waiting for 'operation-1793550305288-65f3978d56089-61b75db8-06c42f1f' to complete...\n..........done.\nCreated certificate map entry [ocean-v1-beta-domain-entry].\n"
+}

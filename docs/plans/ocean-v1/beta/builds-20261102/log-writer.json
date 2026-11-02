@@ -1,0 +1,16 @@
+{
+  "command": [
+    "gcloud",
+    "projects",
+    "add-iam-policy-binding",
+    "ocean-v1-beta-20261101",
+    "--member=serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "--role=roles/logging.logWriter",
+    "--project=ocean-v1-beta-20261101",
+    "--quiet",
+    "--format=json"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"bindings\": [\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@gcp-sa-artifactregistry.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/artifactregistry.serviceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:534831104543@cloudbuild.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/cloudbuild.builds.builder\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@gcp-sa-cloudbuild.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/cloudbuild.serviceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@gcp-sa-cloudtasks.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/cloudtasks.serviceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:534831104543@cloudservices.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/compute.instanceGroupManagerServiceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@compute-system.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/compute.serviceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@containerregistry.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/containerregistry.ServiceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/logging.logWriter\"\n    },\n    {\n      \"members\": [\n        \"user:dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp\"\n      ],\n      \"role\": \"roles/owner\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@gcp-sa-pubsub.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/pubsub.serviceAgent\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:service-534831104543@serverless-robot-prod.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/run.serviceAgent\"\n    }\n  ],\n  \"etag\": \"BwZfOQhIiKQ=\",\n  \"version\": 1\n}\n",
+  "stderr": "Updated IAM policy for project [ocean-v1-beta-20261101].\n"
+}

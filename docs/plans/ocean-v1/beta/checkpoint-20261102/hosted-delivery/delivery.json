@@ -1,0 +1,42 @@
+{
+  "version": "beta-hosted-application-delivery-v1",
+  "recorded_on": "2026-11-02 JST",
+  "source_commit": "50566b7cfa4a0d8ee19686f0109e74f3a2a45d45",
+  "branch": "overhaul",
+  "composed_source_revision": "sha256:1d3b93f3abbf914d165982a43d4a24f830d975712029e7e5570cb0b868828128",
+  "source_paths": 880,
+  "run_id": 41322838746,
+  "run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/41322838746",
+  "required_jobs_passed": 5,
+  "conditional_dependency_review": "skipped as configured for push; not a required runtime job",
+  "backend": {
+    "isolated_scale_passed": 1,
+    "covered_integration_passed": 17,
+    "remaining_passed": 6729,
+    "total_passed": 6747,
+    "explicit_skips": 626,
+    "combined_coverage_percent": "83.67",
+    "required_coverage_percent": 70,
+    "coverage_log_excerpt": "2026-11-01T16:48:39.2161422Z Required test coverage of 70% reached. Total coverage: 83.67%"
+  },
+  "postgres": {
+    "passed": 318,
+    "explicit_capability_skips": 16,
+    "migration_upsert_backup_restore_steps": "passed"
+  },
+  "frontend": {
+    "legacy_passed": 132,
+    "prototype_passed": 1051,
+    "authenticated_host_unit_passed": 50,
+    "actual_standalone_http_passed": 1,
+    "builds_typechecks_and_production_audits": "all passed"
+  },
+  "cloud_or_google_callback_acceptance": false,
+  "live_release_accepted": false,
+  "qualification": "Exact-source hosted application delivery. Later packaging/operator commits preserve these application bytes and have separate local/native/container evidence; this run does not claim hosted tests for those later wrappers. Original C26/C27 and initial beta source receipts remain immutable.",
+  "artifact_sha256": {
+    "run.json": "aa03e2e86c1f100aee223acf54864194ee555c68c189becc93fff5f3b6e9ed9b",
+    "jobs.json": "1823aeca763708069898e2a7a674a0efd114d025866656de374d66bbe7325075",
+    "log-excerpts.json": "a350a60d4ee711af8e80ea286ad67bc692903dc924d015c6971bc3273c8556a1"
+  }
+}

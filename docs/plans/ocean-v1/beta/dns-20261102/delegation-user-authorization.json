@@ -1,0 +1,18 @@
+{
+  "version": "beta-parent-delegation-explicit-user-authorization-v1",
+  "source": "User reply in this chat on2026-11-02 JST: Approve beta NS delegation",
+  "approved": true,
+  "scope": "One new beta.oceaninfobio.com NS delegation in data-infra-infobio/oceaninfobio-com; no existing record changed or deleted",
+  "addition": {
+    "name": "beta.oceaninfobio.com.",
+    "type": "NS",
+    "ttl": 300,
+    "rrdatas": [
+      "ns-cloud-e1.googledomains.com.",
+      "ns-cloud-e2.googledomains.com.",
+      "ns-cloud-e3.googledomains.com.",
+      "ns-cloud-e4.googledomains.com."
+    ]
+  },
+  "supersedes_prior_legacy_boundary_only_for_this_addition": true
+}

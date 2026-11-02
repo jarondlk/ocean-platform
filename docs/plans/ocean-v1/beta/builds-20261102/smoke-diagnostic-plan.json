@@ -1,0 +1,11 @@
+{
+  "harness_commit": "ded63b50454407783033ebf724d7a8ef2316e53c",
+  "previous_smoke_build": "07cd8231-b72e-4e2b-8cde-b56118563233",
+  "reason": "Confirmed Node assert.match string-versus-RegExp defect fixed; retain full synthetic/no-credential diagnostic on failure. First failure attribution remains qualified because full receipt was not uploaded.",
+  "images_unchanged": true,
+  "timeout_seconds": 600,
+  "maximum_total_initial_build_minutes": 60,
+  "maximum_build_compute_JPY": "56.95379994",
+  "initial_build_allocation_JPY": 100,
+  "old_source_receipts_preserved": true
+}

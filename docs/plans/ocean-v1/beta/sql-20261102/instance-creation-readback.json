@@ -1,0 +1,72 @@
+{
+  "backendType": "SECOND_GEN",
+  "connectionName": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+  "createTime": "2026-11-01T16:04:52.176Z",
+  "databaseInstalledVersion": "POSTGRES_16_15",
+  "databaseVersion": "POSTGRES_16",
+  "etag": "121e092118ee107c1bd411ff515eb02b12b99971e6d96c185b10c3caa7003b89",
+  "gceZone": "asia-northeast1-a",
+  "geminiConfig": {
+    "activeQueryEnabled": false,
+    "entitled": false,
+    "googleVacuumMgmtEnabled": false,
+    "indexAdvisorEnabled": false,
+    "oomSessionCancelEnabled": true
+  },
+  "includeReplicasForMajorVersionUpgrade": false,
+  "instanceType": "CLOUD_SQL_INSTANCE",
+  "kind": "sql#instance",
+  "maintenanceVersion": "POSTGRES_16_15.R20260712.01_44",
+  "name": "ocean-v1-beta-sql",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "satisfiesPzi": false,
+  "selfLink": "https://sqladmin.googleapis.com/sql/v1beta4/projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql",
+  "serviceAccountEmailAddress": "p534831104543-wcadcm@gcp-sa-cloud-sql.iam.gserviceaccount.com",
+  "settings": {
+    "activationPolicy": "ALWAYS",
+    "availabilityType": "ZONAL",
+    "backupConfiguration": {
+      "backupRetentionSettings": {
+        "retainedBackups": 7,
+        "retentionUnit": "COUNT"
+      },
+      "backupTier": "STANDARD",
+      "enabled": true,
+      "kind": "sql#backupConfiguration",
+      "location": "asia-northeast1",
+      "pointInTimeRecoveryEnabled": true,
+      "replicationLogArchivingEnabled": true,
+      "startTime": "18:00",
+      "transactionLogRetentionDays": 7,
+      "transactionalLogStorageState": "CLOUD_STORAGE"
+    },
+    "connectorEnforcement": "REQUIRED",
+    "dataDiskSizeGb": "20",
+    "dataDiskType": "PD_SSD",
+    "deletionProtectionEnabled": true,
+    "edition": "ENTERPRISE",
+    "enableDataplexIntegration": true,
+    "ipConfiguration": {
+      "ipv4Enabled": false,
+      "privateNetwork": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+      "requireSsl": false,
+      "serverCertificateRotationMode": "SERVER_CERTIFICATE_ROTATION_MODE_UNSPECIFIED",
+      "sslMode": "ENCRYPTED_ONLY"
+    },
+    "kind": "sql#settings",
+    "locationPreference": {
+      "kind": "sql#locationPreference",
+      "zone": "asia-northeast1-a"
+    },
+    "pricingPlan": "PER_USE",
+    "replicationLagMaxSeconds": 31536000,
+    "replicationType": "SYNCHRONOUS",
+    "settingsVersion": "0",
+    "storageAutoResize": true,
+    "storageAutoResizeLimit": "30",
+    "tier": "db-custom-2-7680"
+  },
+  "sqlNetworkArchitecture": "NEW_NETWORK_ARCHITECTURE",
+  "state": "PENDING_CREATE"
+}

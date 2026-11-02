@@ -1,0 +1,31 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend:beta-7924a28",
+        "."
+      ],
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ]
+    }
+  ],
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend:beta-7924a28"
+  ],
+  "timeout": "1200s",
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "diskSizeGb": 100
+  },
+  "tags": [
+    "ocean-v1-beta",
+    "source-7924a28",
+    "frontend"
+  ]
+}

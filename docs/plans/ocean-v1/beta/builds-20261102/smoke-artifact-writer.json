@@ -1,0 +1,18 @@
+{
+  "command": [
+    "gcloud",
+    "storage",
+    "buckets",
+    "add-iam-policy-binding",
+    "gs://ocean-v1-beta-20261101-build-source",
+    "--member=serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "--role=roles/storage.objectCreator",
+    "--condition=expression=resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-build-source/objects/smoke/'),title=beta-smoke-evidence-create-only",
+    "--project=ocean-v1-beta-20261101",
+    "--format=json",
+    "--quiet"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"bindings\": [\n    {\n      \"members\": [\n        \"projectEditor:ocean-v1-beta-20261101\",\n        \"projectOwner:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyBucketOwner\"\n    },\n    {\n      \"members\": [\n        \"projectViewer:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyBucketReader\"\n    },\n    {\n      \"members\": [\n        \"projectEditor:ocean-v1-beta-20261101\",\n        \"projectOwner:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyObjectOwner\"\n    },\n    {\n      \"members\": [\n        \"projectViewer:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyObjectReader\"\n    },\n    {\n      \"condition\": {\n        \"expression\": \"resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-build-source/objects/smoke/')\",\n        \"title\": \"beta-smoke-evidence-create-only\"\n      },\n      \"members\": [\n        \"serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/storage.objectCreator\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/storage.objectViewer\"\n    }\n  ],\n  \"etag\": \"CAM=\",\n  \"kind\": \"storage#policy\",\n  \"resourceId\": \"projects/_/buckets/ocean-v1-beta-20261101-build-source\",\n  \"version\": 3\n}\n",
+  "stderr": "WARNING: Adding binding with condition to a policy without condition will change the behavior of add-iam-policy-binding and remove-iam-policy-binding commands.\n"
+}

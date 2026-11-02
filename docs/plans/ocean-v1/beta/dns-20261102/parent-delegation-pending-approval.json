@@ -1,0 +1,25 @@
+{
+  "version": "beta-parent-delegation-approval-request-v1",
+  "project_id": "data-infra-infobio",
+  "zone": "oceaninfobio-com",
+  "addition": {
+    "name": "beta.oceaninfobio.com.",
+    "type": "NS",
+    "ttl": 300,
+    "rrdatas": [
+      "ns-cloud-e1.googledomains.com.",
+      "ns-cloud-e2.googledomains.com.",
+      "ns-cloud-e3.googledomains.com.",
+      "ns-cloud-e4.googledomains.com."
+    ]
+  },
+  "deletions": [],
+  "existing_parent_records": 5,
+  "parent_records_sha256": "7074fd019b9a769dddb9aa52cf8653e23b8270cd429318a479c0cc8e27387903",
+  "child_cname_authoritative_verified": true,
+  "parent_changed": false,
+  "approval_required": true,
+  "approval_received": false,
+  "auto_review_rejection": "Publishing beta delegation mutates the authoritative legacy parent zone; standing no-legacy-mutation boundary requires an explicit exception.",
+  "rejected_action_executed": false
+}

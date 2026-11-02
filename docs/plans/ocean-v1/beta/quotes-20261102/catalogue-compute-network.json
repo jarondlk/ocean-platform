@@ -1,0 +1,3150 @@
+{
+  "currency": "JPY",
+  "fetched_at_utc": "2026-11-01T15:52:02.982001+00:00",
+  "records": [
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to India",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/0115-181C-3232",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "0115-181C-3232"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Middle East",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/017C-922F-E5A6",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 402549999,
+                  "units": "17"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "017C-922F-E5A6"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Indonesia to Tokyo",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/087E-1803-344E",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "087E-1803-344E"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Africa to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/0894-43E7-B451",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "0894-43E7-B451"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to China",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/0D27-F4FA-E8E0",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 387149998,
+                  "units": "36"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 805099998,
+                  "units": "34"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 640999998,
+                  "units": "31"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "0D27-F4FA-E8E0"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to APAC",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/0E87-F07F-0654",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "0E87-F07F-0654"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from EMEA to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/10CA-6364-BCD5",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "10CA-6364-BCD5"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from APAC to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/1149-38DD-C2BE",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 0,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": "Sku is not being priced by default."
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "1149-38DD-C2BE"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from EMEA to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/17EC-770C-7AED",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "17EC-770C-7AED"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from APAC to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/1C8B-97BC-7C05",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "1C8B-97BC-7C05"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Western Europe",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/1E20-524B-2415",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "1E20-524B-2415"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Middle East to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/1E3E-0152-9416",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "1E3E-0152-9416"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Americas to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/2577-FFFB-00DC",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "2577-FFFB-00DC"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to South America",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/2CC8-9854-325A",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "2CC8-9854-325A"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Central America",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/30E3-9079-BDD4",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "30E3-9079-BDD4"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from India to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/31A6-AE0E-9D16",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "31A6-AE0E-9D16"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to China",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/3692-3376-B722",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 387149998,
+                  "units": "36"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 805099998,
+                  "units": "34"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 640999998,
+                  "units": "31"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "3692-3376-B722"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Eastern Europe to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/47A3-86AA-8AC1",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "47A3-86AA-8AC1"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Africa",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/47C1-0AF4-E559",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "47C1-0AF4-E559"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "IpAddress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "External IP Charge on a Spot Preemptible VM",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/6F81-5844-456A/skus/4AF8-7C1F-39C4",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 395512499,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "4AF8-7C1F-39C4"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Central America to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/4C97-2072-23E4",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "4C97-2072-23E4"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from South America to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/4EE4-9881-A120",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "4EE4-9881-A120"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to South America",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/52B5-D3A7-E572",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 58949999,
+                  "units": "30"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "52B5-D3A7-E572"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Eastern Europe",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/5DE1-47A0-7EBF",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 447424999,
+                  "units": "13"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "5DE1-47A0-7EBF"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Central America",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/66DA-7510-36E8",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 447424999,
+                  "units": "13"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "66DA-7510-36E8"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Tokyo to Indonesia",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/6923-4D1E-B070",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 58949999,
+                  "units": "30"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 476899999,
+                  "units": "28"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "6923-4D1E-B070"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Eastern Europe to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/6AF2-595F-943D",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "6AF2-595F-943D"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Americas to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/6E7B-F67F-2C18",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "6E7B-F67F-2C18"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from India to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/7488-898B-7252",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "7488-898B-7252"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from South Korea to Tokyo",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/757A-DC30-DEBB",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "757A-DC30-DEBB"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Western Europe",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/75A6-8E6D-CA9E",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 447424999,
+                  "units": "13"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "75A6-8E6D-CA9E"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "IpAddress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Static Ip Charge in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/7A91-88CA-899A",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 1,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 373074999,
+                  "units": "2"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "7A91-88CA-899A"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Australia to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/7C6F-014A-4702",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "7C6F-014A-4702"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from South America to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/86B9-2A90-866E",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "86B9-2A90-866E"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "StandardInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Standard Data Transfer Out to Internet from Tokyo",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/8C32-CDC8-9FE7",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 200,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 402549999,
+                  "units": "17"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 865374999,
+                  "units": "11"
+                }
+              },
+              {
+                "startUsageAmount": 153600,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 74349999,
+                  "units": "11"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "8C32-CDC8-9FE7"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Australia",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/90F5-B482-1DD5",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 58949999,
+                  "units": "30"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 476899999,
+                  "units": "28"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "90F5-B482-1DD5"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Western Europe to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/9288-C676-8F3B",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "9288-C676-8F3B"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Tokyo to South Korea",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/9799-FFCB-9A0A",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 58949999,
+                  "units": "30"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 476899999,
+                  "units": "28"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "9799-FFCB-9A0A"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Americas",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/9BD3-FF87-6DCB",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 447424999,
+                  "units": "13"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "9BD3-FF87-6DCB"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Middle East to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/9E72-598B-333A",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "9E72-598B-333A"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to India",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/A406-C631-C022",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "A406-C631-C022"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to APAC",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/ABE7-A6A4-7E29",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 0,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": "Sku is not being priced by default."
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "ABE7-A6A4-7E29"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to EMEA",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/AE12-2FA9-FF84",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 447424999,
+                  "units": "13"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "AE12-2FA9-FF84"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from China to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/AF12-3A5E-79BA",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "AF12-3A5E-79BA"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Tokyo to Apac(Excluding Korea and Indonesia)",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/B455-917B-2122",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 402549999,
+                  "units": "17"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 447424999,
+                  "units": "13"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "B455-917B-2122"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "IpAddress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "External IP Charge on a Standard VM",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/6F81-5844-456A/skus/C054-7F72-A02E",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 721,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 791024999,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "C054-7F72-A02E"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Middle East",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/C643-DC54-DB0F",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "C643-DC54-DB0F"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Central America to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/C90B-7281-55CE",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "C90B-7281-55CE"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Africa",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/CC82-2885-A759",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 402549999,
+                  "units": "17"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "CC82-2885-A759"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from China to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/CD0B-2CFC-062E",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "CD0B-2CFC-062E"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to EMEA",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/D320-CB62-C8CC",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "D320-CB62-C8CC"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to Australia",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/D639-5F3E-35CD",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 58949999,
+                  "units": "30"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 476899999,
+                  "units": "28"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 730749999,
+                  "units": "23"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "D639-5F3E-35CD"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Africa to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/D959-B8CE-6DB2",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "D959-B8CE-6DB2"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Western Europe to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/DE27-143B-6B36",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "DE27-143B-6B36"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer In from Apac(Excluding Korea and Indonesia) to Tokyo",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/E380-5AA7-58AC",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "E380-5AA7-58AC"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "StandardInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Standard Internet Data Transfer In to Tokyo",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/E5DB-22B3-8F12",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "E5DB-22B3-8F12"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetIngress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer In from Australia to Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/EAA2-F8F0-D627",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "EAA2-F8F0-D627"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Eastern Europe",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/EDD7-E383-FC19",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "EDD7-E383-FC19"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "VPNInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Vpn Internet Data Transfer Out from Japan to Americas",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/F42B-53B3-C4A0",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 148699999,
+                  "units": "22"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 984599999,
+                  "units": "18"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "F42B-53B3-C4A0"
+    }
+  ],
+  "rows_examined": 33567,
+  "source_api": "https://cloudbilling.googleapis.com/v1/services/6F81-5844-456A/skus?currencyCode=JPY&pageSize=5000",
+  "version": "beta-public-jpy-compute-network-candidates-v1"
+}

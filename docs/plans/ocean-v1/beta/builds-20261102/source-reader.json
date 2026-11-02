@@ -1,0 +1,17 @@
+{
+  "command": [
+    "gcloud",
+    "storage",
+    "buckets",
+    "add-iam-policy-binding",
+    "gs://ocean-v1-beta-20261101-build-source",
+    "--member=serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "--role=roles/storage.objectViewer",
+    "--project=ocean-v1-beta-20261101",
+    "--quiet",
+    "--format=json"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"bindings\": [\n    {\n      \"members\": [\n        \"projectEditor:ocean-v1-beta-20261101\",\n        \"projectOwner:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyBucketOwner\"\n    },\n    {\n      \"members\": [\n        \"projectViewer:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyBucketReader\"\n    },\n    {\n      \"members\": [\n        \"projectEditor:ocean-v1-beta-20261101\",\n        \"projectOwner:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyObjectOwner\"\n    },\n    {\n      \"members\": [\n        \"projectViewer:ocean-v1-beta-20261101\"\n      ],\n      \"role\": \"roles/storage.legacyObjectReader\"\n    },\n    {\n      \"members\": [\n        \"serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com\"\n      ],\n      \"role\": \"roles/storage.objectViewer\"\n    }\n  ],\n  \"etag\": \"CAI=\",\n  \"kind\": \"storage#policy\",\n  \"resourceId\": \"projects/_/buckets/ocean-v1-beta-20261101-build-source\",\n  \"version\": 1\n}\n",
+  "stderr": ""
+}

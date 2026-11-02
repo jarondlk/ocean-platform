@@ -1,0 +1,16 @@
+{
+  "operation": "create-independent-database",
+  "command": [
+    "gcloud",
+    "sql",
+    "databases",
+    "create",
+    "ocean_v1_beta",
+    "--instance=ocean-v1-beta-sql",
+    "--project=ocean-v1-beta-20261101",
+    "--quiet"
+  ],
+  "returncode": 0,
+  "stdout": "instance: ocean-v1-beta-sql\nname: ocean_v1_beta\nproject: ocean-v1-beta-20261101\n",
+  "stderr": "Creating Cloud SQL database...\n.done.\nCreated database [ocean_v1_beta].\n"
+}

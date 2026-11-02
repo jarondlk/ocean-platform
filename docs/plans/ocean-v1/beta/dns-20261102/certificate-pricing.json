@@ -1,0 +1,266 @@
+{
+  "currency": "JPY",
+  "eligibility_count_still_requires_actual_beta_certificate_inventory": true,
+  "fetched_at_utc": "2026-11-01T16:10:40.361588+00:00",
+  "official_records": [
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "SSL",
+        "serviceDisplayName": "Certificate Manager",
+        "usageType": "OnDemand"
+      },
+      "description": "Regional Certificates usage",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-east1",
+          "asia-east2",
+          "asia-northeast1",
+          "asia-northeast2",
+          "asia-northeast3",
+          "asia-south1",
+          "asia-south2",
+          "asia-southeast1",
+          "asia-southeast2",
+          "australia-southeast1",
+          "australia-southeast2",
+          "europe-central2",
+          "europe-north1",
+          "europe-southwest1",
+          "europe-west1",
+          "europe-west2",
+          "europe-west3",
+          "europe-west4",
+          "europe-west5",
+          "europe-west6",
+          "europe-west8",
+          "europe-west9",
+          "me-west1",
+          "northamerica-northeast1",
+          "northamerica-northeast2",
+          "southamerica-east1",
+          "southamerica-west1",
+          "us-central1",
+          "us-central2",
+          "us-east1",
+          "us-east4",
+          "us-east5",
+          "us-east7",
+          "us-south1",
+          "us-west1",
+          "us-west2",
+          "us-west3",
+          "us-west4"
+        ],
+        "type": "MULTI_REGIONAL"
+      },
+      "name": "services/7766-403C-6D6E/skus/4B89-6413-74D9",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "PROJECT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 2595600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 100,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 640999998,
+                  "units": "31"
+                }
+              },
+              {
+                "startUsageAmount": 2000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 820499999,
+                  "units": "15"
+                }
+              }
+            ],
+            "usageUnit": "mo",
+            "usageUnitDescription": "month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "asia-southeast2",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west5",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4"
+      ],
+      "skuId": "4B89-6413-74D9"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "SSL",
+        "serviceDisplayName": "Certificate Manager",
+        "usageType": "OnDemand"
+      },
+      "description": "LB connections with enabled mTLS - ADVANCED tier",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/7766-403C-6D6E/skus/96D8-F0B3-E8A1",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1000000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 71192,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "96D8-F0B3-E8A1"
+    },
+    {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "SSL",
+        "serviceDisplayName": "Certificate Manager",
+        "usageType": "OnDemand"
+      },
+      "description": "Certificates usage",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/7766-403C-6D6E/skus/F08F-F1CD-3492",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "PROJECT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-01T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 2595600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 100,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 640999998,
+                  "units": "31"
+                }
+              },
+              {
+                "startUsageAmount": 2000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 820499999,
+                  "units": "15"
+                }
+              }
+            ],
+            "usageUnit": "mo",
+            "usageUnitDescription": "month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "F08F-F1CD-3492"
+    }
+  ],
+  "pricing_kind": "public list; no account contract/tax attestation",
+  "service": {
+    "businessEntityName": "businessEntities/GCP",
+    "displayName": "Certificate Manager",
+    "name": "services/7766-403C-6D6E",
+    "serviceId": "7766-403C-6D6E"
+  },
+  "source_api": "https://cloudbilling.googleapis.com/v1/services/7766-403C-6D6E/skus?currencyCode=JPY&pageSize=5000",
+  "version": "beta-certificate-manager-public-jpy-price-v1"
+}

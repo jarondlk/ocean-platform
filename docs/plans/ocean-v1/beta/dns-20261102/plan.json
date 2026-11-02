@@ -1,0 +1,418 @@
+{
+  "authorization_qualification": "Userselectedbeta.oceaninfobio.comandapprovedGCPresourceswithininitialJPY50000newbetatarget. Rootmustreviewconcreteinputs/readbacksbeforeapply;thisplanitselfperformsnomutation. Originallegacydeployments/data remainuntouched;onlyexactnewbetaNSadditionwouldtouchparentzone.",
+  "beta_project": {
+    "id": "ocean-v1-beta-20261101",
+    "number": "534831104543"
+  },
+  "cost_qualification": {
+    "certificate_manager": "Currentofficialpricingfirst100certificates/month/projecthaszerocharge;verifyactualbetacount/globalvsregionalandrawJPYtiersbeforeclaimingeligibility. Do notassumesharedaccountfreecredit. Differentkeytypeshaveconnectioncharges; captureactualissuedkeytypeandonlyclaimnochargeifmatchedpolicy.",
+    "certificate_price_capture": "certificate-pricing.json; global F08F-F1CD-3492 versus regional4B89-6413-74D9. Actual beta inventory must qualify the zero tier.",
+    "dns_child_zone": "Use actualglobalDNSManagedZoneJPYSKU8C22-6FC3-D478 inquotes-20261102; parentDNSunchangedexceptdelegation. Additionalnewzonecostisalreadyallocated.",
+    "load_balancer": "No paidLB/forwardingIPprovisioningatthisstage; existingquoteallowsonefutureglobalHTTPSruleminimum.",
+    "pricing_reference": "https://cloud.google.com/certificate-manager/pricing"
+  },
+  "deferred_inputs": [
+    "Freshparentandbetaalltype/subtreeinventory",
+    "ActualchildzoneassignedNS",
+    "ActualDNSauthCNAMEnameandtarget",
+    "ActualCertificateManagercountandcertificateACTIVEreadback",
+    "ConcreteOAuth/enrollment/provider/livehostgates",
+    "ActualglobalHTTPSproxy/IPv4resourceandlaterArecord"
+  ],
+  "dns_name": "beta.oceaninfobio.com.",
+  "origin": "https://beta.oceaninfobio.com",
+  "parent_zone": {
+    "dns_name": "oceaninfobio.com.",
+    "facts_source": "Root prior read-only discovery; fresh readback required before apply",
+    "known_name_servers": [
+      "ns-cloud-a1.googledomains.com.",
+      "ns-cloud-a2.googledomains.com.",
+      "ns-cloud-a3.googledomains.com.",
+      "ns-cloud-a4.googledomains.com."
+    ],
+    "name": "oceaninfobio-com",
+    "project": "data-infra-infobio"
+  },
+  "permitted_parent_zone_change": {
+    "create_only": true,
+    "data": "Exact actual child zone nameServers array",
+    "name": "beta.oceaninfobio.com.",
+    "no_parent_A_AAAA_CNAME_MX_TXT_CAA_DS_record_change": true,
+    "no_parent_zone_or_apex_NS_change": true,
+    "other_parent_zone_records_must_remain_byte_equivalent": true,
+    "required_existing_subtree": "No explicit parent record at beta or any descendant; investigate current wildcard/public-answer behavior separately",
+    "ttl": 300,
+    "type": "NS"
+  },
+  "preflight_assertions": [
+    "Actual beta project ACTIVE and number534831104543; explicitproject on every SDK command",
+    "Actual parent managed-zone dnsNameoceaninfobio.com.,publicvisibility andexpected authoritativeNS",
+    "Capture every parent record including alltypes; verify beta exactname and descendants empty beforedelegation; public emptyA/CNAMEalone isinsufficient",
+    "Capture authoritative beta NS/DS/A/AAAA/CNAME/CAA/TXT and relevant parent/wildcard/CAAanswers. ExistingbetaNSorDS/subtree/data meansstopandreconcile,notreplace",
+    "Inspect inheritedCAAauthorization forGoogleTrustServices(per-projectrecordusesGTS); do notalterparentCAA. Conflictrequiresconcretebeta-onlypolicyreview",
+    "No existing beta childzone/auth/certificate/map byproposednames unless exactidentityandconfigurationqualifyresume",
+    "Check actualbetaCertificateManagerinventory andpublicpricingeligibilitybeforeclaimingzero certificatecost; no paidSKU/freequotaassumption",
+    "NoLB/IP/URLmap/proxy/backend/CloudRun/DNSapexA createdbythisplanstage"
+  ],
+  "prepared_on": "2026-11-02 JST",
+  "proposed_certificate": {
+    "dns_authorization": "ocean-v1-beta-domain-auth",
+    "dns_authorization_type_api": "PER_PROJECT_RECORD",
+    "dns_authorization_type_cli": "per-project-record",
+    "domains": [
+      "beta.oceaninfobio.com"
+    ],
+    "location": "global",
+    "map": "ocean-v1-beta-cert-map",
+    "map_entry": "ocean-v1-beta-domain-entry",
+    "name": "ocean-v1-beta-domain-cert",
+    "primary_matcher": false,
+    "scope": "DEFAULT",
+    "wildcard_requested": false
+  },
+  "proposed_child_zone": {
+    "dns_name": "beta.oceaninfobio.com.",
+    "name": "ocean-v1-beta-domain",
+    "name_servers": null,
+    "name_servers_source": "Actual child managed-zone create/describe response; never copy the parent servers",
+    "project": "ocean-v1-beta-20261101",
+    "visibility": "public"
+  },
+  "reference_urls": [
+    "https://docs.cloud.google.com/dns/docs/key-terms",
+    "https://docs.cloud.google.com/dns/docs/records-overview",
+    "https://docs.cloud.google.com/certificate-manager/docs/dns-authorizations",
+    "https://docs.cloud.google.com/certificate-manager/docs/domain-authorization",
+    "https://docs.cloud.google.com/certificate-manager/docs/deploy-google-managed-dns-auth",
+    "https://cloud.google.com/certificate-manager/pricing",
+    "https://docs.cloud.google.com/sdk/gcloud/reference/certificate-manager/dns-authorizations/create",
+    "https://docs.cloud.google.com/sdk/gcloud/reference/certificate-manager/certificates/create",
+    "https://docs.cloud.google.com/sdk/gcloud/reference/certificate-manager/maps/entries/create",
+    "https://docs.cloud.google.com/sdk/gcloud/reference/dns/record-sets/transaction/add"
+  ],
+  "stages": [
+    {
+      "commands": [
+        [
+          "gcloud",
+          "projects",
+          "describe",
+          "ocean-v1-beta-20261101",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "managed-zones",
+          "describe",
+          "oceaninfobio-com",
+          "--format=json",
+          "--project=data-infra-infobio"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "list",
+          "--zone=oceaninfobio-com",
+          "--format=json",
+          "--project=data-infra-infobio"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "managed-zones",
+          "list",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "certificate-manager",
+          "certificates",
+          "list",
+          "--location=global",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "id": "readback",
+      "mutation": false
+    },
+    {
+      "commands": [
+        [
+          "gcloud",
+          "services",
+          "enable",
+          "dns.googleapis.com",
+          "certificatemanager.googleapis.com",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "id": "enable_beta_apis_if_missing",
+      "mutation": true,
+      "scope": "beta project only"
+    },
+    {
+      "assertions": [
+        "Exact beta project/dnsName/public; actualnameServers nonemptyandvalidGoogleCloudDNS FQDNs; preserveautoNS/SOA"
+      ],
+      "commands": [
+        [
+          "gcloud",
+          "dns",
+          "managed-zones",
+          "create",
+          "ocean-v1-beta-domain",
+          "--dns-name=beta.oceaninfobio.com.",
+          "--visibility=public",
+          "--description=Independent OCEAN v1 beta subdomain",
+          "--labels=environment=beta,system=ocean-v1",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "managed-zones",
+          "describe",
+          "ocean-v1-beta-domain",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "id": "create_child_zone",
+      "mutation": true
+    },
+    {
+      "assertions": [
+        "domainexactbeta,typePER_PROJECT_RECORD,globalresourceinbeta",
+        "dnsResourceRecord.typeCNAME,namebelowbeta,targetofficialauthorize.certificatemanager.goog suffix; captureactualvalues"
+      ],
+      "commands": [
+        [
+          "gcloud",
+          "certificate-manager",
+          "dns-authorizations",
+          "create",
+          "ocean-v1-beta-domain-auth",
+          "--domain=beta.oceaninfobio.com",
+          "--type=per-project-record",
+          "--location=global",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "certificate-manager",
+          "dns-authorizations",
+          "describe",
+          "ocean-v1-beta-domain-auth",
+          "--location=global",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "id": "create_beta_dns_authorization",
+      "mutation": true
+    },
+    {
+      "assertions": [
+        "ExistingCNAMEnameabsentforalltypes or exactresume; noarbitrarytarget/templatevalue",
+        "Childreadbackexactmatchesrecord; authoritativechildNSrespondsCNAME"
+      ],
+      "commands": [
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "transaction",
+          "start",
+          "--zone=ocean-v1-beta-domain",
+          "--transaction-file=<new-child-transaction.yaml>",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "transaction",
+          "add",
+          "<actual-authorization-CNAME-target>",
+          "--name=<actual-authorization-CNAME-name>",
+          "--type=CNAME",
+          "--ttl=300",
+          "--zone=ocean-v1-beta-domain",
+          "--transaction-file=<same-child-transaction.yaml>",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "transaction",
+          "execute",
+          "--zone=ocean-v1-beta-domain",
+          "--transaction-file=<same-child-transaction.yaml>",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "dynamic_values_required": [
+        "Actual DNSauthorization dnsResourceRecord.name",
+        "Actual DNSauthorization dnsResourceRecord.data"
+      ],
+      "id": "add_dns_authorization_cname_child_only",
+      "mutation": true
+    },
+    {
+      "assertions": [
+        "Refreshfullparentzoneimmediatelybeforeexecute; plannedNSissoleadditionandnoexistingrecorddeleted",
+        "Afterreadback,allpreviousparentrecordsidentical; exactonebetaNSaddition",
+        "Publicresolver/authoritativeparentreferralpointsactualchildNS; childCNAMEresolvespubliclyafterTTL/negativecacheexpiry"
+      ],
+      "commands": [
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "transaction",
+          "start",
+          "--zone=oceaninfobio-com",
+          "--transaction-file=<new-parent-transaction.yaml>",
+          "--project=data-infra-infobio"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "transaction",
+          "add",
+          "<actual-child-ns1>",
+          "<actual-child-ns2>",
+          "<actual-child-ns3>",
+          "<actual-child-ns4>",
+          "--name=beta.oceaninfobio.com.",
+          "--type=NS",
+          "--ttl=300",
+          "--zone=oceaninfobio-com",
+          "--transaction-file=<same-parent-transaction.yaml>",
+          "--project=data-infra-infobio"
+        ],
+        [
+          "gcloud",
+          "dns",
+          "record-sets",
+          "transaction",
+          "execute",
+          "--zone=oceaninfobio-com",
+          "--transaction-file=<same-parent-transaction.yaml>",
+          "--project=data-infra-infobio"
+        ]
+      ],
+      "dynamic_values_required": [
+        "AllactualchildnameServers"
+      ],
+      "id": "add_parent_delegation_only",
+      "mutation": true
+    },
+    {
+      "assertions": [
+        "Certificate managed.domains exactsinglebeta; dnsauthorizationresourceexactnewbetaauth; no importedprivatekey",
+        "Readactualmanaged.state; PROVISIONINGisnotACTIVE. Preserveauthorization attempts/errors; do not inventissuance completion"
+      ],
+      "commands": [
+        [
+          "gcloud",
+          "certificate-manager",
+          "certificates",
+          "create",
+          "ocean-v1-beta-domain-cert",
+          "--domains=beta.oceaninfobio.com",
+          "--dns-authorizations=ocean-v1-beta-domain-auth",
+          "--location=global",
+          "--scope=DEFAULT",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "certificate-manager",
+          "certificates",
+          "describe",
+          "ocean-v1-beta-domain-cert",
+          "--location=global",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "id": "create_managed_certificate",
+      "mutation": true
+    },
+    {
+      "assertions": [
+        "Onlyexactbetahostnamematcher; noPRIMARYorwildcard; certificateexistsinsamebeta/globalproject",
+        "Creatingmapdoesnotbindservingtraffic; actualmapentrystateandcertstatecapturelater"
+      ],
+      "commands": [
+        [
+          "gcloud",
+          "certificate-manager",
+          "maps",
+          "create",
+          "ocean-v1-beta-cert-map",
+          "--location=global",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ],
+        [
+          "gcloud",
+          "certificate-manager",
+          "maps",
+          "entries",
+          "create",
+          "ocean-v1-beta-domain-entry",
+          "--map=ocean-v1-beta-cert-map",
+          "--hostname=beta.oceaninfobio.com",
+          "--certificates=ocean-v1-beta-domain-cert",
+          "--location=global",
+          "--format=json",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "id": "create_exact_hostname_certificate_map",
+      "mutation": true
+    },
+    {
+      "allowed_now": false,
+      "assertions": [
+        "PublishbetaapexAonlyinsidechildzoneafteractualIPv4andbackendgates; noAAAAorHTTPredirectruleimplicitly",
+        "VerifyactualTLSchain/SAN/expiryandbetaHost/Origin behavior;directrun.appdisabled/isolationactualtests; nofullreleaseclaimfromDNSalone"
+      ],
+      "dependencies": [
+        "OAuth/accountenrollmentandhost/APIcurrent-sourceCIaccepted",
+        "ConcretepaidglobalHTTPSLB/serverlessNEG/IAMingressplanreviewed",
+        "ActualcertACTIVEandmapentryACTIVE",
+        "Existingproxyidentityconfirmednewbetaonly; actualLBIPv4readback; nolegacyproxychanges"
+      ],
+      "id": "later_bind_after_host_ready",
+      "illustrative_commands_not_ready_to_run": [
+        [
+          "gcloud",
+          "compute",
+          "target-https-proxies",
+          "update",
+          "<actual-new-beta-https-proxy>",
+          "--global",
+          "--certificate-map=projects/ocean-v1-beta-20261101/locations/global/certificateMaps/ocean-v1-beta-cert-map",
+          "--project=ocean-v1-beta-20261101"
+        ]
+      ],
+      "mutation": true
+    }
+  ],
+  "state": "prepared_not_applied",
+  "this_task_cloud_mutations_performed": false,
+  "version": "beta-isolated-dns-tls-plan-v1"
+}

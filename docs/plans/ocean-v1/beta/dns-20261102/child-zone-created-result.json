@@ -1,0 +1,18 @@
+{
+  "command": [
+    "gcloud",
+    "dns",
+    "managed-zones",
+    "create",
+    "ocean-v1-beta-domain",
+    "--dns-name=beta.oceaninfobio.com.",
+    "--visibility=public",
+    "--description=Independent OCEAN v1 beta subdomain",
+    "--labels=environment=beta,system=ocean-v1",
+    "--format=json",
+    "--project=ocean-v1-beta-20261101"
+  ],
+  "returncode": 0,
+  "stdout": "[\n  {\n    \"cloudLoggingConfig\": {\n      \"kind\": \"dns#managedZoneCloudLoggingConfig\"\n    },\n    \"creationTime\": \"2026-11-01T16:18:34.804Z\",\n    \"description\": \"Independent OCEAN v1 beta subdomain\",\n    \"dnsName\": \"beta.oceaninfobio.com.\",\n    \"id\": \"3930630191425672013\",\n    \"kind\": \"dns#managedZone\",\n    \"labels\": {\n      \"environment\": \"beta\",\n      \"system\": \"ocean-v1\"\n    },\n    \"name\": \"ocean-v1-beta-domain\",\n    \"nameServers\": [\n      \"ns-cloud-e1.googledomains.com.\",\n      \"ns-cloud-e2.googledomains.com.\",\n      \"ns-cloud-e3.googledomains.com.\",\n      \"ns-cloud-e4.googledomains.com.\"\n    ],\n    \"visibility\": \"public\"\n  }\n]\n",
+  "stderr": "Created [https://dns.googleapis.com/dns/v1/projects/ocean-v1-beta-20261101/managedZones/ocean-v1-beta-domain].\n"
+}

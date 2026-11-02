@@ -1,0 +1,596 @@
+{
+  "actual_account_tax_treatment_verified": false,
+  "base_month_conversion_qualification": "Captured GiBy.mo and mo SKUs report2595600seconds (721hours) per month. Calculations use each raw baseUnitConversionFactor, including744h/721h proration; do not silently assume730hours per price-month.",
+  "currency": "JPY",
+  "free_credit_assumption": 0,
+  "ipv4_qualification": "Static external IPv4 assigned to forwarding rules is not charged per official network pricing. JPY100 is an operator transition allowance for unused reservations, not an exact global-unused-IP quote. Regional unused Tokyo reference SKU retained separately; do not mislabel it global. Reserve address only when immediately binding the rule; review actual readback.",
+  "is_provider_hard_cap": false,
+  "is_usage_forecast_or_invoice": false,
+  "paid_resource_provisioning_performed": false,
+  "pitr_qualification": "10GiB at actual SQL SSD unit rate is a procurement allowance for log storage, not a claim all PITR logs are billed as SSD. Parent must select the actual PITR storage/retention implementation and meter bytes.20GiB backup is separate.",
+  "pricing_kind": "Google public list OnDemand/default; no CUD/free credits/negotiated contract assumed",
+  "project_id": "ocean-v1-beta-20261101",
+  "public_price_usage_scenario_fits_target": true,
+  "quote_date": "2026-11-02 JST",
+  "region": "asia-northeast1",
+  "scenario_31day_744h": {
+    "contingency_is_tax_claim": false,
+    "contingency_jpy": "3236.731373147",
+    "cost_contingency_factor": "0.10",
+    "fixed_resource_hours": 744,
+    "gross_before_contingency_jpy": "32367.313731469",
+    "headroom_to_50000_jpy": "14395.954895384",
+    "line_items_jpy": {
+      "dns_100000_queries": "6.328100000",
+      "dns_one_managed_zone": "32.650352286",
+      "eight_single_region_secret_versions": "78.360845484",
+      "internet_10gib_max_selected_destination_rate": "363.871499980",
+      "ipv4_attached_to_forwarding_rule": "0E-9",
+      "lb_processing_10gib_in_and_10gib_out": "37.969199980",
+      "logging_ingestion_5gib_no_free_assumption": "395.512499985",
+      "object_operations_10000_class_a_100000_class_b": "14.238340000",
+      "object_storage_10gib_including_soft_deleted_versions": "37.547905121",
+      "one_global_https_forwarding_minimum": "2942.612999256",
+      "registry_5gib": "81.625880716",
+      "run_aggregate_monthly_budget_allocation": "3000.000000000",
+      "secret_access_10000_operations": "4.746140000",
+      "sql_enterprise_zonal_compute_2vcpu_7_5gib": "20674.798930932",
+      "sql_pitr_log_allowance_10gib_at_ssd_rate": "360.786392767",
+      "sql_retained_backups_20gib": "339.563663780",
+      "sql_ssd_20gib": "721.572785534",
+      "tasks_100000_operations": "6.328100000",
+      "two_builds_20_minutes_each_e2_standard_2": "37.969199960",
+      "unbound_address_transition_allowance_not_exact_global_sku": "100.000000000",
+      "worker_50gib_balanced_disk_scenario": "1061.136449324",
+      "worker_e2_standard_8_37_5_active_hours": "2040.031008900",
+      "worker_ephemeral_external_ipv4_37_5h_if_used": "29.663437462"
+    },
+    "total_with_contingency_jpy": "35604.045104616"
+  },
+  "scenario_730h": {
+    "contingency_is_tax_claim": false,
+    "contingency_jpy": "3187.184439427",
+    "cost_contingency_factor": "0.10",
+    "fixed_resource_hours": 730,
+    "gross_before_contingency_jpy": "31871.844394274",
+    "headroom_to_50000_jpy": "14940.971166298",
+    "line_items_jpy": {
+      "dns_100000_queries": "6.328100000",
+      "dns_one_managed_zone": "32.035963937",
+      "eight_single_region_secret_versions": "76.886313445",
+      "internet_10gib_max_selected_destination_rate": "363.871499980",
+      "ipv4_attached_to_forwarding_rule": "0E-9",
+      "lb_processing_10gib_in_and_10gib_out": "37.969199980",
+      "logging_ingestion_5gib_no_free_assumption": "395.512499985",
+      "object_operations_10000_class_a_100000_class_b": "14.238340000",
+      "object_storage_10gib_including_soft_deleted_versions": "36.841358520",
+      "one_global_https_forwarding_minimum": "2887.241249270",
+      "registry_5gib": "80.089909842",
+      "run_aggregate_monthly_budget_allocation": "3000.000000000",
+      "secret_access_10000_operations": "4.746140000",
+      "sql_enterprise_zonal_compute_2vcpu_7_5gib": "20285.757015565",
+      "sql_pitr_log_allowance_10gib_at_ssd_rate": "353.997401505",
+      "sql_retained_backups_20gib": "333.174024945",
+      "sql_ssd_20gib": "707.994803011",
+      "tasks_100000_operations": "6.328100000",
+      "two_builds_20_minutes_each_e2_standard_2": "37.969199960",
+      "unbound_address_transition_allowance_not_exact_global_sku": "100.000000000",
+      "worker_50gib_balanced_disk_scenario": "1041.168827966",
+      "worker_e2_standard_8_37_5_active_hours": "2040.031008900",
+      "worker_ephemeral_external_ipv4_37_5h_if_used": "29.663437462"
+    },
+    "total_with_contingency_jpy": "35059.028833702"
+  },
+  "selected_prices": {
+    "build_e2_standard_2": {
+      "currency": "JPY",
+      "description": "Build time e2-standard-2",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.949229999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "A464-9020-6404",
+      "usage_unit": "min"
+    },
+    "dns_queries": {
+      "currency": "JPY",
+      "description": "DNS Query (port 53)",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "6DFF-5025-A128",
+      "usage_unit": "count"
+    },
+    "dns_zone": {
+      "currency": "JPY",
+      "description": "ManagedZone",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "31.640999998",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "8C22-6FC3-D478",
+      "usage_unit": "mo"
+    },
+    "global_https_forwarding_minimum": {
+      "currency": "JPY",
+      "description": "Cloud Load Balancer Forwarding Rule Minimum Global",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "3.955124999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "DEE3-C42E-3E4D",
+      "usage_unit": "h"
+    },
+    "internet_worst_selected_destination": {
+      "currency": "JPY",
+      "description": "Network Internet Data Transfer Out from Japan to China",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "36.387149998",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "0D27-F4FA-E8E0",
+      "usage_unit": "GiBy"
+    },
+    "lb_inbound_tokyo": {
+      "currency": "JPY",
+      "description": "Global External Application Load Balancer Inbound Data Processing for Tokyo (asia-northeast1)",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "1.898459999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "4445-66EE-8E07",
+      "usage_unit": "GiBy"
+    },
+    "lb_outbound_tokyo": {
+      "currency": "JPY",
+      "description": "Global External Application Load Balancer Outbound Data Processing for Tokyo (asia-northeast1)",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "1.898459999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "86C9-AD43-1809",
+      "usage_unit": "GiBy"
+    },
+    "logging_extra_retention": {
+      "currency": "JPY",
+      "description": "Log Retention cost",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "1.582049999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "F4AE-5A52-ACE3",
+      "usage_unit": "GiBy.mo"
+    },
+    "logging_ingestion": {
+      "currency": "JPY",
+      "description": "Log Storage cost",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "79.102499997",
+      "regions": [
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "asia-southeast2",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east7",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4"
+      ],
+      "sku_id": "143F-A1B0-E0BE",
+      "usage_unit": "GiBy"
+    },
+    "object_class_a": {
+      "currency": "JPY",
+      "description": "Regional Standard Class A Operations",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000791024",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "4DBF-185F-A415",
+      "usage_unit": "count"
+    },
+    "object_class_b": {
+      "currency": "JPY",
+      "description": "Regional Standard Class B Operations",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "7870-010B-2763",
+      "usage_unit": "count"
+    },
+    "object_standard_tokyo": {
+      "currency": "JPY",
+      "description": "Standard Storage Tokyo",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "3.638714999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "1845-1496-2891",
+      "usage_unit": "GiBy.mo"
+    },
+    "registry_storage": {
+      "currency": "JPY",
+      "description": "Artifact Registry Storage",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "15.820499999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "8502-299A-ABAF",
+      "usage_unit": "GiBy.mo"
+    },
+    "run_request_cpu": {
+      "currency": "JPY",
+      "description": "Services CPU (Request-based billing)",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.003796919",
+      "regions": [
+        "asia-east1",
+        "asia-northeast1",
+        "asia-northeast2",
+        "europe-north1",
+        "europe-north2",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-south1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west8",
+        "asia-south1",
+        "asia-southeast3",
+        "africa-south1",
+        "asia-southeast4"
+      ],
+      "sku_id": "4856-B847-F1EB",
+      "usage_unit": "s"
+    },
+    "run_request_ram": {
+      "currency": "JPY",
+      "description": "Services Memory (Request-based billing)",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000395512",
+      "regions": [
+        "asia-east1",
+        "asia-northeast1",
+        "asia-northeast2",
+        "europe-north1",
+        "europe-north2",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-south1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west8",
+        "asia-south1",
+        "asia-southeast3",
+        "africa-south1",
+        "asia-southeast4"
+      ],
+      "sku_id": "02A2-9231-36A6",
+      "usage_unit": "GiBy.s"
+    },
+    "run_requests": {
+      "currency": "JPY",
+      "description": "Requests",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "2DA5-55D3-E679",
+      "usage_unit": "count"
+    },
+    "secret_access": {
+      "currency": "JPY",
+      "description": "Secret access operations",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000474614",
+      "regions": [
+        "africa-south1",
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west10",
+        "europe-west12",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "me-central1",
+        "me-central2",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4",
+        "us-west8",
+        "northamerica-south1",
+        "europe-north2",
+        "europe-north3",
+        "asia-southeast2",
+        "asia-southeast3",
+        "eu",
+        "us",
+        "us-central6",
+        "in",
+        "ca"
+      ],
+      "sku_id": "EBA7-264F-2D2C",
+      "usage_unit": "count"
+    },
+    "secret_version_replica": {
+      "currency": "JPY",
+      "description": "Secret version replica storage",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "9.492299999",
+      "regions": [
+        "africa-south1",
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west10",
+        "europe-west12",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "global",
+        "me-central1",
+        "me-central2",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4",
+        "us-west8",
+        "northamerica-south1",
+        "europe-north2",
+        "europe-north3",
+        "asia-southeast2",
+        "asia-southeast3",
+        "eu",
+        "us",
+        "us-central6",
+        "in",
+        "ca"
+      ],
+      "sku_id": "7756-ADEF-84F4",
+      "usage_unit": "mo"
+    },
+    "sql_backups": {
+      "currency": "JPY",
+      "description": "Cloud SQL: Backups in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "16.453319999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "F8BE-1CC3-FDF3",
+      "usage_unit": "GiBy.mo"
+    },
+    "sql_cpu": {
+      "currency": "JPY",
+      "description": "Cloud SQL for PostgreSQL: Zonal - vCPU in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "8.495608499",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "D34E-ED22-3AA3",
+      "usage_unit": "h"
+    },
+    "sql_ram": {
+      "currency": "JPY",
+      "description": "Cloud SQL for PostgreSQL: Zonal - RAM in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "1.439665499",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "9AE6-50FF-E3A7",
+      "usage_unit": "GiBy.h"
+    },
+    "sql_ssd": {
+      "currency": "JPY",
+      "description": "Cloud SQL for PostgreSQL: Zonal - Standard storage in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "34.963304998",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "A593-7E26-0880",
+      "usage_unit": "GiBy.mo"
+    },
+    "standard_vm_ipv4": {
+      "currency": "JPY",
+      "description": "External IP Charge on a Standard VM",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.791024999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "C054-7F72-A02E",
+      "usage_unit": "h"
+    },
+    "tasks_operations": {
+      "currency": "JPY",
+      "description": "Operations",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "378A-D762-1F74",
+      "usage_unit": "count"
+    },
+    "unused_regional_ipv4_reference": {
+      "currency": "JPY",
+      "description": "Static Ip Charge in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "2.373074999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "7A91-88CA-899A",
+      "usage_unit": "h"
+    },
+    "worker_balanced_disk": {
+      "currency": "JPY",
+      "description": "Balanced PD Capacity in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "20.566649999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "6D8C-DF09-314D",
+      "usage_unit": "GiBy.mo"
+    },
+    "worker_cpu": {
+      "currency": "JPY",
+      "description": "E2 Instance Core running in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "4.433919775",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "EAED-8A05-843B",
+      "usage_unit": "h"
+    },
+    "worker_ram": {
+      "currency": "JPY",
+      "description": "E2 Instance Ram running in Japan",
+      "effective_time": "2026-11-01T07:00:00Z",
+      "no_free_credit_rate_jpy": "0.591545897",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "CB4B-B875-93B4",
+      "usage_unit": "GiBy.h"
+    }
+  },
+  "target_jpy": 50000,
+  "unknowns_remaining": [
+    "Accountnegotiatedprices/taxinvoice not inspected;10% iscostcontingency only",
+    "ActualAPI/cataloguememory,traffic,snapshotlogbackupvolume andworkersizeacceptance mustbeobserved",
+    "GlobalunusedIPv4exactSKU notestablished;normalattachedstate hasofficialzeroIPv4charge",
+    "Models/realdataacquisition/transfer notincludedorselected"
+  ],
+  "usage_conditions": [
+    "SQL Enterprise PostgreSQL dedicatedzonal2vCPU7.5GiB,20GiB SSD; no HA/replica/EnterprisePlus/extendedsupport",
+    "Backups20GiB plus10GiB separate log allowance; no deletion/TTL ofheld evidence proposed",
+    "One globalHTTPS forwarding minimum; noHTTPredirect forwardingrule; noCloudArmor/CDN/NAT/PSCpaidendpoint",
+    "Run aggregateJPY3000 allocation across services; cap is service-scoped/lagged and not a whole-projecthardstop; min0/max1 still requires observedusage",
+    "Worker only37.5activehours/month;50GiBbalanced disk scenario pending realC23capacity qualification; noalways-onworker",
+    "Build2x20minutes e2-standard-2;Registry5GiB;Objectstorage10GiB acrosslive+retained/softdeleted versions",
+    "Logingestion5GiB/month,defaultretention;8singleregionsecretversions,10kaccesses;100kTasksoperations",
+    "10GiB inbound+10GiB outboundLBprocessing and10GiB internettransfer pricedatmaxselectedJapan destination;100kDNSqueries",
+    "Re-quote before larger volumes, machines, HA, paid add-ons or sustainedwork;notifybeforeforecastexceedsJPY50000"
+  ],
+  "version": "beta-public-jpy-cost-qualification-v1"
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "gcloud",
+    "certificate-manager",
+    "certificates",
+    "create",
+    "ocean-v1-beta-domain-cert",
+    "--domains=beta.oceaninfobio.com",
+    "--dns-authorizations=ocean-v1-beta-domain-auth",
+    "--location=global",
+    "--scope=DEFAULT",
+    "--format=json",
+    "--project=ocean-v1-beta-20261101"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"createTime\": \"2026-11-01T16:24:55.264069102Z\",\n  \"managed\": {\n    \"authorizationAttemptInfo\": [\n      {\n        \"domain\": \"beta.oceaninfobio.com\",\n        \"state\": \"AUTHORIZING\"\n      }\n    ],\n    \"dnsAuthorizations\": [\n      \"projects/534831104543/locations/global/dnsAuthorizations/ocean-v1-beta-domain-auth\"\n    ],\n    \"domains\": [\n      \"beta.oceaninfobio.com\"\n    ],\n    \"state\": \"PROVISIONING\"\n  },\n  \"name\": \"projects/ocean-v1-beta-20261101/locations/global/certificates/ocean-v1-beta-domain-cert\",\n  \"sanDnsnames\": [\n    \"beta.oceaninfobio.com\"\n  ],\n  \"updateTime\": \"2026-11-01T16:24:55.767431202Z\"\n}\n",
+  "stderr": "Create request issued for: [ocean-v1-beta-domain-cert]\nWaiting for operation [projects/ocean-v1-beta-20261101/locations/global/operations/operation-1793550295184-65f39783b3477-514cb385-193fc806] to complete...\n..........done.\nCreated certificate [ocean-v1-beta-domain-cert].\n"
+}

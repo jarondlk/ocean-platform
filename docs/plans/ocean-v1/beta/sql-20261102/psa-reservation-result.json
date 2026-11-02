@@ -1,0 +1,20 @@
+{
+  "operation": "reserve-new-psa-range",
+  "command": [
+    "gcloud",
+    "compute",
+    "addresses",
+    "create",
+    "ocean-v1-beta-sql-range",
+    "--global",
+    "--purpose=VPC_PEERING",
+    "--addresses=10.93.0.0",
+    "--prefix-length=20",
+    "--network=projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+    "--project=ocean-v1-beta-20261101",
+    "--quiet"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "Created [https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/addresses/ocean-v1-beta-sql-range].\n"
+}
