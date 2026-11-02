@@ -1,0 +1,51 @@
+{
+  "version": "beta-job-operator-revision-supersession-v1",
+  "reason": "Use password-safe operator source after reviewed client-side SCRAM/logging amendment; original756operator is not permitted for live bootstrap.",
+  "path": "deploy/gcp/beta/setup/render_jobs.py",
+  "from_revision": "756c7a7dc46d4ba75e3a0308b7ab23d9b3553bfe",
+  "to_revision": "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089",
+  "from_sha256": "3370b02b00a2d60c32c309bc267c0238d61f9c607294e02f6016a5e3eace8a76",
+  "to_sha256": "479498972a72513b8ddb723710b48ee194ac3c9f96a9a6d543d29b4a523d9486",
+  "old_source_copy": "render_jobs.before.py",
+  "only_change": "single fixed OPERATOR_REVISION constant; exact byte-replacement asserted",
+  "prior_receipt_sha256": "a054d81d09fff0df36ac6ec08791d2454aa7fa5c89244dcf815d027c6f354798",
+  "prior_artifact_sha256": {
+    "checks.json": "ee374dadc94a2d3b45bb5173ec0a447c097d0c1d9c9c6056a0d3225ad663779a",
+    "default-plan.json": "42bcccc5998f7433b4539ea68448377ae7a8b951e37c77629ff9c96039c7eaa4",
+    "rendered-synthetic/INPUT_QUALIFICATION.json": "7f21d16bf6a11bb9d322096b25e73c402d6a9ae2e3a73a415a07435be009e655",
+    "rendered-synthetic/ocean-v1-beta-db-bootstrap.json": "1d9e83f61775e9d3bdca962f99eb51a517179a4a16c783e3ba3a4e026c3e2cf8",
+    "rendered-synthetic/ocean-v1-beta-db-finalize.json": "b2be77e32b68c23e7eab9d3427e1a9919c19a7409009c01b8fa7a73dd35212b3",
+    "rendered-synthetic/ocean-v1-beta-db-migrate.json": "d56b16a26dfb68ffde07eb4d0b505b662bf6288a951710affb17503ed210e37d",
+    "rendered-synthetic/ocean-v1-beta-db-readback.json": "1ae7a135e64008d8331cb27766eb77ab2661b8963b844ab8e27c2bcf0d068d17"
+  },
+  "new_render_checks": [
+    {
+      "job": "ocean-v1-beta-db-bootstrap",
+      "new_operator_revision_in_environment_and_confirmation": true,
+      "api_source_unchanged": true,
+      "real_secret_or_image_reference": false
+    },
+    {
+      "job": "ocean-v1-beta-db-migrate",
+      "new_operator_revision_in_environment_and_confirmation": true,
+      "api_source_unchanged": true,
+      "real_secret_or_image_reference": false
+    },
+    {
+      "job": "ocean-v1-beta-db-finalize",
+      "new_operator_revision_in_environment_and_confirmation": true,
+      "api_source_unchanged": true,
+      "real_secret_or_image_reference": false
+    },
+    {
+      "job": "ocean-v1-beta-db-readback",
+      "new_operator_revision_in_environment_and_confirmation": true,
+      "api_source_unchanged": true,
+      "real_secret_or_image_reference": false
+    }
+  ],
+  "cloud_calls": false,
+  "credentials_generated": false,
+  "image_built_or_verified_for_new_revision": false,
+  "qualification": "Four synthetic rendering checks only. Original50-case setup receipt/source remain historical and preserved. New immutable image and actual credential refs are required before live job creation."
+}

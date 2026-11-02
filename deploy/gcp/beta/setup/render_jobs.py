@@ -22,7 +22,7 @@ from prepare_credentials import (
 )
 
 API_REVISION = "7924a28e919b1fb751890c694f7b1f9b26b104ff"
-OPERATOR_REVISION = "756c7a7dc46d4ba75e3a0308b7ab23d9b3553bfe"
+OPERATOR_REVISION = "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089"
 PROXY = "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
 
 

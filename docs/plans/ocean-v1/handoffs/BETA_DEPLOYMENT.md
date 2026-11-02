@@ -3,7 +3,7 @@
 State: **authenticated host/API software delivery accepted; two immutable images
 and actual Linux container smoke accepted; private SQL and an empty beta DB exist;
 beta DNS delegation applied with explicit approval. Public hosting is not deployed.**
-**Live bootstrap hold:** the original operator756c7a7 has a confirmed plaintext-password SQL logging risk. No live values or role creation have occurred. A separate password-safety amendment is in progress and requires review, exact-image rebuild and renderer source update before any bootstrap. Do not execute the original operator image.
+**Live bootstrap hold:** original operator756c7a7 has a confirmed plaintext-password SQL logging risk and must not be executed. The reviewed replacement8b06a1b is now source-qualified (32pure+26guard+48actual native checks) and its renderer reference is updated. Its new immutable image, actual CloudSQL privacy profile and live stage/proxy qualification remain gated by SDK reauthentication. No live values or role creation have occurred.
 
 Branch `overhaul`. Scheduler stays PAUSED. All original C26/C27/scientific receipts
 remain immutable; no further numbered component or automation is created.
@@ -26,7 +26,7 @@ packaging commits preserve those app bytes; their own wrappers have separate
 proof and are not falsely attributed to this earlier hosted run.
 
 Pushed packaging `7924a28`, original smoke `74f2262`, diagnostic correction
-`ded63b5` and reviewed operator `756c7a7` are on `overhaul`. Original native and
+`ded63b5`, original operator `756c7a7`, cloud/CI checkpoint `6f5a385` and setup `8075542` are on `overhaul`. Password-safe source `8b06a1b` is the current required operator successor; its push is part of this checkpoint. Original native and
 failed smoke attempts remain preserved. Unrelated root README, legacy deployment
 template and scientific/audit/benchmark files remain excluded from commits.
 
@@ -96,7 +96,7 @@ an explicit separate gate; no weakening of accepted role checks is permitted.
 Private credential and Cloud Run job setup code is being prepared under
 `deploy/gcp/beta/setup` with default read-only planning, exact target preflight,
 zero-existing-version requirement, private coupled secret values and postgres
-password last. The installer/renderer passed50mocked guards and independent review; no real value, SDK call or job was created. Apply still waits for reauthentication and completion of the separate operator password-safety amendment. The original renderer756operator reference must be updated through a recorded supersession after that new operator commit/image exists.
+password last. The installer/renderer passed50mocked guards and independent review; no real value, SDK call or job was created. Apply still waits for reauthentication and completion of the separate operator password-safety amendment. The renderer now selects8b06a1b through a separate one-constant supersession with four synthetic binding checks. The old50-case setup source/artifacts remain immutable. Use [current renderer verifier](../beta/sql-20261102/setup/operator-revision-amendment/verify.py); the original setup verifier intentionally targets old807source. The new image digest and real refs are still required.
 No fake OAuth client or fabricated provider/data may be mounted in production.
 
 ## Actual beta DNS/TLS
@@ -143,3 +143,13 @@ API reports absent science unavailable; no data acquisition/import/legacy-user
 copy or scientific approval is inferred. All20 original live release gates and
 openP2 D26-07 remain; release acceptance is false. No Cloud Run service/job/worker,
 LB/IP, real data, task dispatch or secret value has been deployed by this phase.
+
+## Current password-safe continuation
+
+[Password amendment](../beta/packaging-20261102/operator/password-safety-amendment/README.md) and its separate independent REVIEW pass:32purechecks,26guard regressions,48actual owned native checks, all cleanup verified. Client libpq supplies only SCRAM verifiers to role SQL, with no plaintext/MD5 fallback. Actual same-session ordinary logging/debug/sampling and finite audit/utility-collector profiles are attested before preparation/binding. Full owned logs and query texts contain neither synthetic plaintext nor verifier; ordinary query metrics remain active. Old756sources/3receipts and intermediate attempts are preserved. This is not universal server-crash redaction or actual CloudSQL acceptance.
+
+New source-only context `/private/tmp/ocean-beta-operator-context-8b06a1b` and [bounded build config](../beta/builds-20261102/operator-password-safe-cloudbuild.json) are prepared **but not submitted**. Oldae32526a remains historical/unverified/superseded. Proposed total initial build ceilings remain below the already planned¥100build allocation; no cloud call occurred for this new image.
+
+After sign-in, fresh exact-target readbacks and the [two-flag privacy plan](../beta/sql-20261102/logging-policy/PLAN.md) precede live bootstrap. Preserve unrelated flags and use fresh settingsVersion; do not silently add unsupported duration/sampling flags. Actual active utility/audit/QueryInsights collection may require its own reviewed minimal adjustment. Never treat local48-case proof as actual provider attestation. No secret versions, real credential values, migrations, application roles, accounts or CloudRun jobs have been created.
+
+The open SDKpage was rechecked and still requests the user's passkey identity confirmation. Complete that flow in IABtab1 and use owned CLI session98412; do not start duplicate sign-in or cloud jobs. No further independent local implementation is required before this next cloud stage. All published hosting/OAuth/science/worker/release gates above remain.

@@ -274,3 +274,6 @@ Beta checkpoint (2026-11-02 09:01JST): **all five source-bound host/API CI jobs 
 
 
 Beta security preparation (2026-11-02 morning JST): private credential installer/job renderer passes50mocked checks and independent review without cloud calls or generated values. A separate focused review confirmed the original DBoperator can expose plaintext role passwords in ordinary PostgreSQL/CloudSQL statement-error logging. No live credentials/bootstrap occurred; its use is held while a source-bound password-safety amendment is implemented and reviewed. Fresh SDKpasskey verification remains user-pending.
+
+
+Beta password-safe checkpoint (2026-11-02 JST): operator8b06a1b replaces unsafe756for futurebootstrap;32pure+26guard+48native checks and independent review pass. Original sources/receipts remain frozen. Four synthetic job bindings select8b06a1b through a recorded renderer supersession; accepted API source stays7924a28. New immutable image context/build plan is ready but unsubmitted; actualSQLprivacy/collector attestation and all live stages wait for the user’s SDKpasskey verification. No live credentials or CloudRun jobs were created. All five application CI jobs remain accepted on unchanged880-path source50566b7. [Current handoff](handoffs/BETA_DEPLOYMENT.md).
