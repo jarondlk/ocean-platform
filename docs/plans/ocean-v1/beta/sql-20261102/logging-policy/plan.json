@@ -1,0 +1,222 @@
+{
+  "additional_observability_readback": {
+    "pg_stat_statements_if_present": {
+      "active_if_any": [
+        "Named in actual shared_preload_libraries",
+        "track GUC is present",
+        "Extension metadata is present"
+      ],
+      "extra_flag_change_requires_separate_review": true,
+      "not_in_allowed_patch_overlay": true,
+      "required_safe_alternatives": [
+        {
+          "pg_stat_statements.track": "none"
+        },
+        {
+          "pg_stat_statements.track_utility": "off"
+        }
+      ]
+    },
+    "qualification": "No broad dump of query text, connection strings, role password catalogues or secret values. Missing/unknown settings, active/unqualified collectors, conflicting role/database overrides or pending_restart stop before any credential SQL.",
+    "query_insights_required_before_bootstrap": "Actual queryInsightsEnabled=false readback in the selected beta instance; owner verifies separately. No change is made by this two-flag plan.",
+    "query_text_collector_review": [
+      "Inspect pg_stat_statements.track and track_utility if the module is active; absence of its SQL extension in the target database does not prove module-level collection is inactive.",
+      "Inspect actual Cloud SQL Query Insights config and provider-managed preload modules; do not silently whitelist an unexplained statement collector.",
+      "An active collector capable of retaining credential utility SQL is a closed gate requiring a separate reviewed owning change; it is not permission to add more flags in this patch."
+    ],
+    "required_database_metadata": [
+      "pg_extension identity list",
+      "pg_db_role_setting entries relevant to bootstrap/current database and user",
+      "pg_settings.setting/unit/context/source/pending_restart for relevant names"
+    ],
+    "required_debug_values": {
+      "debug_print_parse": "off",
+      "debug_print_plan": "off",
+      "debug_print_rewritten": "off",
+      "log_executor_stats": "off",
+      "log_parser_stats": "off",
+      "log_planner_stats": "off",
+      "log_statement_stats": "off"
+    },
+    "required_disabled_when_present": {
+      "auto_explain.log_min_duration": "-1",
+      "pgaudit.log": "none",
+      "pgaudit.log_client": "off"
+    },
+    "required_settings": [
+      "shared_preload_libraries",
+      "session_preload_libraries",
+      "local_preload_libraries",
+      "debug_print_parse",
+      "debug_print_rewritten",
+      "debug_print_plan",
+      "log_statement_stats",
+      "log_parser_stats",
+      "log_planner_stats",
+      "log_executor_stats",
+      "log_min_messages",
+      "log_error_verbosity"
+    ]
+  },
+  "allowed_flag_overlay": {
+    "log_min_error_statement": "panic",
+    "log_statement": "none"
+  },
+  "apply_sequence": [
+    {
+      "action": "Require refreshed CLI authorization, reviewed client-SCRAM operator source and exact-image build; no live password generation or SQL yet. Confirm new beta is still empty and this operation is its only writer.",
+      "id": "wait_for_prerequisites"
+    },
+    {
+      "action": "Read beta project ACTIVE/number and actual instance identity/engine/state, settingsVersion, complete databaseFlags, Insights config and pending operations. Read actual POSTGRES_16 supported flag metadata. Save non-secret baseline. Reject any mismatch or unreviewed concurrent operation.",
+      "id": "fresh_identity_and_flags"
+    },
+    {
+      "action": "Build a map from the complete fresh databaseFlags; reject duplicate names. Overlay only log_statement=none and log_min_error_statement=panic when different. Preserve all other entries exactly. If both already explicit/effective target values and there is no configuration drift, record a no-op and proceed to fresh live attestation, not an unnecessary patch.",
+      "id": "merge_minimal_overlay"
+    },
+    {
+      "action": "Show the actual two-or-fewer-flag diff and secret-free request body. Read the instance again immediately before request; require identical settingsVersion and baseline flags/settings and exclusive writer. On mismatch stop and re-review; never refresh-and-retry blindly.",
+      "id": "review_and_compare"
+    },
+    {
+      "action": "Submit exactly this settings-only patch using in-memory authorization. Do not log auth tokens. Treat concurrency/precondition errors as closed. Never use a destructive full settings update or a two-item --database-flags shortcut that drops unrelated entries.",
+      "body_template": {
+        "settings": {
+          "databaseFlags": null,
+          "settingsVersion": null
+        }
+      },
+      "dynamic_body_fields": {
+        "settings.databaseFlags": "Complete merged fresh list, not only the overlay",
+        "settings.settingsVersion": "Fresh current server version string, never historical1"
+      },
+      "http_method": "PATCH",
+      "id": "conditional_patch",
+      "url": "https://sqladmin.googleapis.com/v1/projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql"
+    },
+    {
+      "action": "Poll only the returned target-bound SQL operation to DONE without errors, then GET actual instance and verify the exact merged flags and all unrelated settings preserved. Supported rows say no restart required, but observe actual state/operation. Wait for RUNNABLE and reconcile settingsVersion advance; do not assume success/restart behavior from the documentation alone.",
+      "id": "operation_and_readback"
+    },
+    {
+      "action": "Open the actual operator connection, assert database/principal identity, and read effective pg_settings/SHOW values plus logger/preload/role/database metadata before any PASSWORD SQL. Require the six exact values and qualified additional collectors; pending or conflicting settings fail closed. Record only non-secret setting values and fixed statuses. Instance metadata alone is insufficient.",
+      "id": "fresh_connection_attestation"
+    },
+    {
+      "action": "Only the reviewed operator using client-generated SCRAM verifiers may proceed after its own same-connection attestation. No plaintext or MD5 fallback, no raw exception/query dump, no SQL privilege widening. Preserve separate native proof and exact source/image binding.",
+      "id": "bootstrap_source_bound"
+    }
+  ],
+  "authorization": "Concrete beta-only credential privacy preparation within the already authorized GCP deployment. This task performs no cloud calls or mutations; root reviews exact fresh inputs before application.",
+  "cloud_calls_performed_by_this_task": false,
+  "flag_support": {
+    "observed_documented_values": {
+      "log_duration": {
+        "default": "off",
+        "restart_required_documented": false
+      },
+      "log_min_duration_statement": {
+        "default": "-1",
+        "restart_required_documented": false
+      },
+      "log_min_error_statement": {
+        "default": "error",
+        "restart_required_documented": false,
+        "values": [
+          "debug5",
+          "debug4",
+          "debug3",
+          "debug2",
+          "debug1",
+          "info",
+          "notice",
+          "warning",
+          "error",
+          "log",
+          "fatal",
+          "panic"
+        ]
+      },
+      "log_statement": {
+        "default": "none",
+        "restart_required_documented": false,
+        "values": [
+          "none",
+          "ddl",
+          "mod",
+          "all"
+        ]
+      }
+    },
+    "pg16_show_only_not_listed_in_current_cloud_flag_table": [
+      "log_min_duration_sample",
+      "log_transaction_sample_rate"
+    ],
+    "qualification": "Re-read actual POSTGRES_16 supported flags after reauthentication before applying. PostgreSQL settings not exposed as Cloud SQL flags are attested by the exact live operator connection and are not silently added to the instance patch.",
+    "source": "https://docs.cloud.google.com/sql/docs/postgres/flags"
+  },
+  "historical_baseline": {
+    "database_flags": [],
+    "database_flags_present": false,
+    "path": "docs/plans/ocean-v1/beta/sql-20261102/instance-final-readback.json",
+    "qualification": "Historical readback only. Fresh readback and exclusive writer are required; do not reuse this settingsVersion in a request.",
+    "settings_version": "1",
+    "sha256": "f954406a3c57c00f8baaa1125968dd7bb89db3ab15eb5ec103e7176075401be8"
+  },
+  "limits": [
+    "PANIC is PostgreSQL's documented effective suppression threshold for ordinary failed statement text, but a PANIC-level event can still include statement text. This plan does not claim universal no-log behavior under all server failures.",
+    "Error messages themselves may contain application-controlled data; this narrowly scoped operator uses fixed role/SQL structure and a SCRAM verifier. Ordinary error/metadata logging remains enabled.",
+    "A SCRAM verifier remains sensitive; the policy and native scan complement client-side password preparation and do not relabel verifiers public.",
+    "No actual current Cloud SQL settings, native proof or applied policy is verified by this plan.",
+    "Only the two declared flags may change under this plan. Any other enabled logger or required setting change stays explicit for separate review."
+  ],
+  "native_proof_plan": {
+    "no_live_credential_probe": true,
+    "owned_disposable_only": true,
+    "state": "required_not_run_by_this_task",
+    "steps": [
+      "Use a new owned disposable PostgreSQL server/log destination with restrictive local permissions; apply the policy in the owner harness, never a legacy database.",
+      "Generate a known synthetic password and its exact client-generated SCRAM verifier only in memory; record neither value nor a credential-derived hash in durable receipts.",
+      "Exercise successful restricted role creation/authentication and a controlled failing role statement through the actual operator path. Check ordinary error diagnostics still appear without statement bodies.",
+      "Read and scan the complete raw server log bytes over the whole owned run, including all lines and continuations, for the exact synthetic plaintext and the exact SCRAM verifier; do not restrict scanning to CREATE/STATEMENT lines or a few filtered records.",
+      "If audit/other logger paths are included, inspect the complete corresponding owned output too. Prove no applicable query-text collector captured the credential SQL; do not assume normalized statistics are universally sanitized.",
+      "On a hit, stop and preserve an honest failure status without printing/copying the secret-bearing log text. Keep raw files only under the controlled temporary owner path for diagnosis, not in receipts/source.",
+      "Record only fixed booleans, checked paths/categories, byte counts/time bounds, source identity and cleanup/stop evidence. Verify server stop and owned temporary cleanup. Do not claim a live cloud log proof from the native result."
+    ]
+  },
+  "prepared_on": "2026-11-02 JST",
+  "preserve_unchanged": [
+    "All pre-existing unrelated databaseFlags, including their exact values",
+    "log_min_messages and log_error_verbosity; ordinary severity/error diagnostics",
+    "Cloud Audit Logs, IAM/access metadata and existing log sinks/retention",
+    "Engine/edition/tier/zone/network/TLS/connector/deletion-protection/backup/PITR/storage settings",
+    "Every legacy project and database setting",
+    "Original instance readbacks and accepted receipts"
+  ],
+  "references": [
+    "https://docs.cloud.google.com/sql/docs/postgres/flags",
+    "https://docs.cloud.google.com/sql/docs/postgres/admin-api/rest/v1/instances/patch",
+    "https://docs.cloud.google.com/sql/docs/postgres/admin-api/rest/v1beta4/instances#Settings",
+    "https://www.postgresql.org/docs/16/runtime-config-logging.html",
+    "https://www.postgresql.org/docs/16/pgstatstatements.html"
+  ],
+  "required_live_pg_settings_before_password_sql": {
+    "log_duration": "off",
+    "log_min_duration_sample": "-1",
+    "log_min_duration_statement": "-1",
+    "log_min_error_statement": "panic",
+    "log_statement": "none",
+    "log_transaction_sample_rate": "0"
+  },
+  "state": "prepared_not_applied",
+  "target": {
+    "connection_name": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+    "database": "ocean_v1_beta",
+    "engine": "POSTGRES_16",
+    "instance": "ocean-v1-beta-sql",
+    "project_id": "ocean-v1-beta-20261101",
+    "project_number": "534831104543"
+  },
+  "version": "beta-sql-password-statement-privacy-plan-v1"
+}

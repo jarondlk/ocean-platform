@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from decimal import Decimal, InvalidOperation
 import http.client
 import json
 import os
@@ -13,6 +14,7 @@ import sys
 import time
 
 from psycopg2 import sql
+from psycopg2.extensions import encrypt_password, libpq_version
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 
@@ -30,6 +32,138 @@ FLAGS = (
     "ENABLE_V1_SYNTHESIS",
     "ENABLE_V1_EXPERIMENT_DISPATCH",
 )
+
+PASSWORD_LOGGING_POLICY = {
+    "log_statement": "none",
+    "log_min_error_statement": "panic",
+    "log_duration": "off",
+    "log_min_duration_statement": "-1",
+    "log_min_duration_sample": "-1",
+    "log_transaction_sample_rate": "0",
+    "debug_print_parse": "off",
+    "debug_print_rewritten": "off",
+    "debug_print_plan": "off",
+    "log_parser_stats": "off",
+    "log_planner_stats": "off",
+    "log_executor_stats": "off",
+    "log_statement_stats": "off",
+    "password_encryption": "scram-sha-256",
+}
+
+
+def attest_password_logging(connection):
+    """Read actual session policy before any password-bearing SQL; never SET it.
+
+    SCRAM verifiers are sensitive too. This verifies the reviewed ordinary
+    statement/error/duration/sampling/debug paths, not universal log redaction
+    or host-memory/crash-dump confidentiality.
+    """
+    optional = (
+        "pgaudit.log",
+        "auto_explain.log_min_duration",
+        "shared_preload_libraries",
+        "pg_stat_statements.track",
+        "pg_stat_statements.track_utility",
+    )
+    names = list(PASSWORD_LOGGING_POLICY) + list(optional)
+    observed = dict(
+        connection.execute(
+            text(
+                "SELECT setting_name,current_setting(setting_name,true) FROM "
+                "unnest(CAST(:names AS text[])) AS settings(setting_name)"
+            ),
+            {"names": names},
+        ).all()
+    )
+    for name, expected in PASSWORD_LOGGING_POLICY.items():
+        actual = observed.get(name)
+        if name == "log_transaction_sample_rate":
+            try:
+                matches = Decimal(actual) == Decimal(expected)
+            except (TypeError, InvalidOperation):
+                matches = False
+        else:
+            matches = actual == expected
+        if not matches:
+            raise OperatorError(
+                "Password SQL logging policy is not attested; no password statement is allowed"
+            )
+    if observed.get("pgaudit.log") not in {None, "", "none", "off"} or observed.get(
+        "auto_explain.log_min_duration"
+    ) not in {None, "", "-1"}:
+        raise OperatorError(
+            "Optional query/audit statement logging is not attested for password SQL"
+        )
+    pgss_extension = bool(
+        connection.scalar(
+            text(
+                "SELECT EXISTS(SELECT 1 FROM pg_extension WHERE extname='pg_stat_statements')"
+            )
+        )
+    )
+    pgss_preloaded = "pg_stat_statements" in (
+        observed.get("shared_preload_libraries") or ""
+    )
+    pgss_present = (
+        pgss_extension
+        or pgss_preloaded
+        or any(
+            observed.get(name) is not None
+            for name in ("pg_stat_statements.track", "pg_stat_statements.track_utility")
+        )
+    )
+    if pgss_present and not (
+        observed.get("pg_stat_statements.track") == "none"
+        or observed.get("pg_stat_statements.track_utility") == "off"
+    ):
+        raise OperatorError(
+            "Credential utility query collection is not attested; no password SQL is allowed"
+        )
+    if libpq_version() < 100000:
+        raise OperatorError("Client SCRAM password preparation is unavailable")
+    if connection.connection.driver_connection.server_version < 100000:
+        raise OperatorError("Server SCRAM password support is unavailable")
+    return {
+        "version": "beta-password-sql-log-policy-v1",
+        "verified": True,
+        "settings": {name: observed[name] for name in PASSWORD_LOGGING_POLICY},
+        "optional_statement_traces": "disabled_or_not_loaded",
+        "client_scram_supported": True,
+        "server_scram_supported": True,
+        "utility_query_collection": {
+            "pg_stat_statements_present_or_preloaded": pgss_present,
+            "present_in_current_database": pgss_extension,
+            "preloaded": pgss_preloaded,
+            "credential_utility_capture": "disabled" if pgss_present else "not_loaded",
+        },
+        "qualification": "actual session settings before password SQL; no universal redaction claim",
+    }
+
+
+def prepare_scram(connection, password, role):
+    """Use libpq client-side SCRAM only; plaintext never reaches role SQL."""
+    try:
+        if (
+            libpq_version() < 100000
+            or connection.connection.driver_connection.server_version < 100000
+        ):
+            raise ValueError()
+        verifier = encrypt_password(
+            password,
+            role,
+            scope=connection.connection.driver_connection,
+            algorithm="scram-sha-256",
+        )
+        if not isinstance(verifier, str) or not re.fullmatch(
+            r"SCRAM-SHA-256\$[1-9][0-9]*:[A-Za-z0-9+/=]+\$[A-Za-z0-9+/=]+:[A-Za-z0-9+/=]+",
+            verifier,
+        ):
+            raise ValueError()
+        return verifier
+    except Exception:
+        raise OperatorError(
+            "Client SCRAM password preparation rejected; no fallback is allowed"
+        ) from None
 
 
 class OperatorError(ValueError):
@@ -262,16 +396,21 @@ def fresh_database(connection):
 
 
 def create_roles(connection, env):
+    attest_password_logging(connection)
     for role, key in (
         (MIGRATOR, "OCEAN_V1_MIGRATOR_PASSWORD"),
         (SERVING, "OCEAN_V1_SERVING_PASSWORD"),
     ):
+        verifier = prepare_scram(connection, env[key], role)
+        # Recheck the actual session immediately before binding sensitive material.
+        attest_password_logging(connection)
         statement(
             connection,
             "CREATE ROLE {} LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS PASSWORD %s",
             role,
-            parameters=(env[key],),
+            parameters=(verifier,),
         )
+        verifier = None
         # PostgreSQL may automatically make a non-superuser role creator a member.
         # Remove only the newly created role's creator membership, never a pre-existing role.
         statement(connection, "REVOKE {} FROM {}", role, "postgres")
@@ -296,6 +435,7 @@ def create_roles(connection, env):
 
 
 def bootstrap(connection, env):
+    logging_policy = attest_password_logging(connection)
     fresh_database(connection)
     connection.exec_driver_sql("CREATE EXTENSION vector WITH SCHEMA public")
     version = connection.scalar(
@@ -308,6 +448,8 @@ def bootstrap(connection, env):
         "roles": roles,
         "public_schema_owner_unchanged": True,
         "application_rows_created": False,
+        "password_logging_policy": logging_policy,
+        "password_preparation": "client-side SCRAM-SHA-256 only",
     }
 
 

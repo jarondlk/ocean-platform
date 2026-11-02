@@ -1,0 +1,16 @@
+2026-11-02 09:21:03.787 JST [66627] LOG:  starting PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-11-02 09:21:03.788 JST [66627] LOG:  listening on IPv4 address "127.0.0.1", port 49639
+2026-11-02 09:21:03.788 JST [66627] LOG:  listening on Unix socket "/private/tmp/ocean-beta-operator-pg-dd306d81/socket/.s.PGSQL.49639"
+2026-11-02 09:21:03.794 JST [66633] LOG:  database system was shut down at 2026-11-02 09:21:03 JST
+2026-11-02 09:21:03.796 JST [66627] LOG:  database system is ready to accept connections
+2026-11-02 09:21:04.060 JST [66627] LOG:  received SIGHUP, reloading configuration files
+2026-11-02 09:21:04.061 JST [66627] LOG:  parameter "log_min_error_statement" changed to "panic"
+2026-11-02 09:21:04.091 JST [66644] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_migrator" by role "postgres"
+2026-11-02 09:21:04.095 JST [66644] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_serving" by role "postgres"
+2026-11-02 09:21:05.228 JST [66646] ERROR:  permission denied for schema public at character 14
+2026-11-02 09:21:05.229 JST [66646] ERROR:  permission denied for table app_user
+2026-11-02 09:21:05.229 JST [66646] ERROR:  permission denied for table audit_event
+2026-11-02 09:21:05.230 JST [66646] ERROR:  permission denied for table research_experiment_execution_state
+2026-11-02 09:21:05.269 JST [66644] ERROR:  role "ocean_v1_migrator" already exists
+2026-11-02 09:21:05.275 JST [66627] LOG:  received immediate shutdown request
+2026-11-02 09:21:05.277 JST [66627] LOG:  database system is shut down
