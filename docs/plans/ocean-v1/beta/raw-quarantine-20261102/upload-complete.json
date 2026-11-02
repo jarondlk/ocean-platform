@@ -1,0 +1,48 @@
+{
+  "state": "private_raw_quarantine_complete",
+  "project_id": "ocean-v1-beta-20261101",
+  "bucket": "ocean-v1-beta-20261101-quarantine",
+  "prefix": "v1/raw-imports/local-20261102-e62eb0e62ad1/",
+  "objects": [
+    {
+      "state": "uploaded_and_download_sha256_verified",
+      "name": "v1/raw-imports/local-20261102-e62eb0e62ad1/raw-quarantine.tar",
+      "generation": "1793619478325582",
+      "bytes": 91934720,
+      "sha256": "e62eb0e62ad1a1b0b9354944cb46b3b1d818fd12b5076b1e2749fb317cf471cb",
+      "crc32c": "qOu9oQ=="
+    },
+    {
+      "state": "uploaded_and_download_sha256_verified",
+      "name": "v1/raw-imports/local-20261102-e62eb0e62ad1/source-manifest.json",
+      "generation": "1793619491643837",
+      "bytes": 875939,
+      "sha256": "9ac5170ff1030a9ffb153754865d5fd9bcd0acce81542456dae543e831b86a65",
+      "crc32c": "qR4GvQ=="
+    },
+    {
+      "state": "uploaded_and_download_sha256_verified",
+      "name": "v1/raw-imports/local-20261102-e62eb0e62ad1/transfer-manifest.json",
+      "generation": "1793619494664444",
+      "bytes": 533074,
+      "sha256": "ab05149d6b59e8c63207dfef249e407d4cb246ea8b141dace608cb98919b685d",
+      "crc32c": "i+Pdaw=="
+    },
+    {
+      "state": "uploaded_and_download_sha256_verified",
+      "name": "v1/raw-imports/local-20261102-e62eb0e62ad1/scope-amendment.json",
+      "generation": "1793619497184565",
+      "bytes": 6991,
+      "sha256": "73e49c36a7fa53d7cdb831970c57345a52250f8fffa582d62f6c8a7ebf2db1b3",
+      "crc32c": "G9ESyQ=="
+    }
+  ],
+  "payload_files": 1860,
+  "payload_bytes": 89159370,
+  "scientific_approval": false,
+  "C09_snapshot_sealed": false,
+  "catalogue_registered": false,
+  "published_or_promoted": false,
+  "legacy_or_local_source_mutation": false,
+  "new_runtime_legacy_access": false
+}

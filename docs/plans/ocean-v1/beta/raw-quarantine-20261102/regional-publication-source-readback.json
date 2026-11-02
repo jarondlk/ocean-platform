@@ -1,0 +1,94 @@
+{
+  "state": "generation_pinned_existing_publication_read_for_import_preparation",
+  "objects": [
+    {
+      "source_name": "edna/regional-publications/current.json",
+      "source_generation": "1791449294225225",
+      "local_file": "0-current.json",
+      "bytes": 188,
+      "sha256": "485f2e0a0e5ac9b50bf24afa6efc9b706859230223f1544c7925bc010ac7efbe",
+      "json_type": "dict",
+      "top_level_keys": [
+        "publication_id",
+        "receipt_sha256",
+        "schema_version"
+      ]
+    },
+    {
+      "source_name": "edna/regional-publications/index.json",
+      "source_generation": "1791450491886651",
+      "local_file": "1-index.json",
+      "bytes": 199,
+      "sha256": "b42f41c83bc6061f8212b18494f5ff8500d1a5020374f38730f79e3bc099b21c",
+      "json_type": "dict",
+      "top_level_keys": [
+        "entries",
+        "schema_version"
+      ]
+    },
+    {
+      "source_name": "edna/regional-publications/objects/d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952/period.json",
+      "source_generation": "1791449293364136",
+      "local_file": "2-period.json",
+      "bytes": 2616967,
+      "sha256": "a02e205a70cc43532631b10ec170a3500052e01e9f75d9f050bac202236bdc33",
+      "json_type": "dict",
+      "top_level_keys": [
+        "algorithm",
+        "area_id",
+        "batches",
+        "definition",
+        "final_series_gaps",
+        "integration_plan_id",
+        "limitations",
+        "native_sample_area_evidence",
+        "observations",
+        "period",
+        "period_preview_id",
+        "relative_temperature",
+        "schema_version",
+        "scientific_approval",
+        "scientific_publication",
+        "source_plan_sha256",
+        "source_report_id",
+        "status",
+        "year_coverage"
+      ]
+    },
+    {
+      "source_name": "edna/regional-publications/objects/d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952/publication.json",
+      "source_generation": "1791449293506339",
+      "local_file": "3-publication.json",
+      "bytes": 1998,
+      "sha256": "d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952",
+      "json_type": "dict",
+      "top_level_keys": [
+        "analyses",
+        "dataset_id",
+        "decision",
+        "label",
+        "notes",
+        "period_sha256",
+        "schema_version"
+      ]
+    },
+    {
+      "source_name": "edna/regional-publications/registry/d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952.json",
+      "source_generation": "1791449293619761",
+      "local_file": "4-d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952.json",
+      "bytes": 428,
+      "sha256": "80feba7f166cfa573e980b8e456353b44fb96b24b104fff4b79773706ca3e3de",
+      "json_type": "dict",
+      "top_level_keys": [
+        "files",
+        "id",
+        "metadata",
+        "namespace",
+        "schema_version"
+      ]
+    }
+  ],
+  "source_mutated": false,
+  "copied_to_beta": false,
+  "scientific_eligibility_inferred": false
+}

@@ -1,0 +1,10 @@
+{
+  "state": "actual_operator_source_retained",
+  "script": "upload-operator.py",
+  "sha256": "c797953d498a46c80083a29b16e89946db5cce9a71c49d4677926de84ddbf7b6",
+  "preparer_source_commit": "b34a62a9168b58f8aba96632fe213bf08fc8a9f3",
+  "initial_local_preflight": "stopped before auth/cloud calls because stat equality included access time; corrected stable identity fields exclude atime",
+  "final_outcome": "four create-only objects uploaded; each exact generation downloaded and SHA256 verified",
+  "private_keys_or_tokens_saved": false,
+  "new_cloud_resources_or_iam_grants": false
+}

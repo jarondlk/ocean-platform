@@ -1,0 +1,31 @@
+{
+  "kind": "storage#bucket",
+  "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-quarantine",
+  "id": "ocean-v1-beta-20261101-quarantine",
+  "name": "ocean-v1-beta-20261101-quarantine",
+  "projectNumber": "534831104543",
+  "generation": "1793529676314707092",
+  "metageneration": "1",
+  "location": "ASIA-NORTHEAST1",
+  "storageClass": "STANDARD",
+  "etag": "CAE=",
+  "timeCreated": "2026-11-01T10:41:16.952Z",
+  "updated": "2026-11-01T10:41:16.952Z",
+  "softDeletePolicy": {
+    "retentionDurationSeconds": "604800",
+    "effectiveTime": "2026-11-01T10:41:16.952Z"
+  },
+  "iamConfiguration": {
+    "bucketPolicyOnly": {
+      "enabled": true,
+      "lockedTime": "2027-01-30T10:41:16.952Z"
+    },
+    "uniformBucketLevelAccess": {
+      "enabled": true,
+      "lockedTime": "2027-01-30T10:41:16.952Z"
+    },
+    "publicAccessPrevention": "enforced"
+  },
+  "locationType": "region",
+  "satisfiesPZI": true
+}

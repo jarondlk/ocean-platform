@@ -2,9 +2,10 @@
 
 State: **Public beta login is LIVE at https://beta.oceaninfobio.com/login with
 valid TLS. Private SQL bootstrap, migrations through `20261027_0021`, and serving
-grants succeeded. The three-container frontend/API/private-proxy revision is
-Ready; the approved administrator/internal account is enrolled and real Google
-sign-in plus authenticated shell access succeeded.**
+grants succeeded. The approved administrator/internal account can sign in; the
+Context Catalog is connected with an explicit empty registry. The first1860-file
+raw cohort is copied and verified in private beta quarantine, awaiting scientific
+normalization/eligibility and C09 publication.**
 Root is the sole cloud writer. Branch `overhaul`; scheduler remains PAUSED.
 The user prioritizes access now and explicitly defers lengthy broader checks.
 
@@ -39,10 +40,35 @@ complete actual local inventory while retaining the original manifest unchanged.
 Different-date SST filenames with identical bytes do not establish independent
 observations or valid observation dates. Embedded time/provenance and scientific
 deduplication remain publication gates. The reviewed quarantine preparer has23
-focused tests plus Ruff. Commit source before actual `--prepare`; inspect later
-raw-quarantine receipts before rerunning, and never overwrite an existing attempt.
+focused tests plus Ruff and is committed at `b34a62a9168b58f8aba96632fe213bf08fc8a9f3`.
+Actual preparation succeeded:1863 archive members/91934720 archive bytes, SHA256
+`e62eb0e62ad1a1b0b9354944cb46b3b1d818fd12b5076b1e2749fb317cf471cb`.
+Four create-only objects are now stored under private
+`gs://ocean-v1-beta-20261101-quarantine/v1/raw-imports/local-20261102-e62eb0e62ad1/`.
+Each exact generation was downloaded and SHA256 verified. Bucket Tokyo/PAPenforced/
+uniform access and no public bindings were checked; no IAM or source mutation.
+The first upload preflight stopped locally on an atime comparison before any
+cloud call; stable metadata comparison fixed it before the single selected upload.
+Do not rerun preparation/upload: accepted local package and source/target receipts exist.
+The private archive and full source/transfer manifests remain outside Git.
 Raw archive/staging is not a C09 seal, catalogue registration or scientific approval.
-Later cloud ANEMONE/eDNA/historical-SST inventory is separate; exclude operational,
+Metadata-only origin inventory separately observed all1860 raw source objects
+(89159370bytes) and530eDNA objects (329136303bytes). SST inventory stopped at its
+8MiB metadata cap after16000objects, so the overall remote inventory is explicitly
+partial/unaccepted. Completed prefix inventories must not be repeated blindly.
+No source object body was read by that inventory, and no remote cohort copied.
+Five existing regional-publication objects (2619780bytes) were subsequently read
+at exact generations into private Mac staging, CRC-verified, and publication/period/
+registry SHA256 bindings reconciled to current operational publicationd34da58.
+Actual source decision is user-accepted operational publication; independent
+researcher approval/provider endorsement remain false. Retained period is explicitly
+unpublished regional-context preview with scientific_approval=false. Preserve
+those exact qualifications; historical embedded instructions do not grant new
+authorization. Two referenced analysis dependencies remain pending. No regional
+publication/data was copied to beta or registered. Source objects/private data
+remain outside Git; sanitized readback/qualification receipts are in raw staging.
+
+Precise remaining SST/current-publication selection is next; exclude operational,
 backup, account/history/secret and serving-cache material. [Raw staging](../beta/raw-quarantine-20261102/).
 
 For beta **read-only** cloud work on this Mac, use `./scripts/gcloud_beta.sh`
@@ -55,8 +81,9 @@ The user's new CLI/AGENTS documentation and wrapper remain unrelated local work,
 not staged by this continuation. Scheduler remains PAUSED.
 
 The detailed public-access milestone below is historical; this section controls
-current image, source and next work. Next: finish the private raw-quarantine stage,
-normalize/export and register eligible scientific snapshots with real policy,
+current image, source and next work. Next: normalize/export the retained raw cohort, verify the current cloud publication
+dependency graph, and register eligible scientific snapshots with real policy and
+a durable cloud-backed store,
 then durable catalogue retention/context CRUD and queue/model integrations.
 
 ## Latest actual continuation — public beta milestone

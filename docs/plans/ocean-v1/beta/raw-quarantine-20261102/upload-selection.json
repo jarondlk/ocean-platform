@@ -1,0 +1,34 @@
+{
+  "state": "selected_once",
+  "project_id": "ocean-v1-beta-20261101",
+  "bucket": "ocean-v1-beta-20261101-quarantine",
+  "prefix": "v1/raw-imports/local-20261102-e62eb0e62ad1/",
+  "source_code_revision": "b34a62a9168b58f8aba96632fe213bf08fc8a9f3",
+  "objects": {
+    "raw-quarantine.tar": {
+      "bytes": 91934720,
+      "sha256": "e62eb0e62ad1a1b0b9354944cb46b3b1d818fd12b5076b1e2749fb317cf471cb",
+      "crc32c": "qOu9oQ=="
+    },
+    "source-manifest.json": {
+      "bytes": 875939,
+      "sha256": "9ac5170ff1030a9ffb153754865d5fd9bcd0acce81542456dae543e831b86a65",
+      "crc32c": "qR4GvQ=="
+    },
+    "transfer-manifest.json": {
+      "bytes": 533074,
+      "sha256": "ab05149d6b59e8c63207dfef249e407d4cb246ea8b141dace608cb98919b685d",
+      "crc32c": "i+Pdaw=="
+    },
+    "scope-amendment.json": {
+      "bytes": 6991,
+      "sha256": "73e49c36a7fa53d7cdb831970c57345a52250f8fffa582d62f6c8a7ebf2db1b3",
+      "crc32c": "G9ESyQ=="
+    }
+  },
+  "source_files": 1860,
+  "payload_bytes": 89159370,
+  "purpose": "private raw quarantine; not published or C09 sealed",
+  "source_mutation": false,
+  "if_generation_match": 0
+}
