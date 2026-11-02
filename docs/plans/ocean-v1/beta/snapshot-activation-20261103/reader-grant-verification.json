@@ -1,0 +1,10 @@
+{
+  "state": "one_prefix_scoped_beta_snapshot_reader_verified",
+  "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "resource": "gs://ocean-v1-beta-20261101-snapshots",
+  "role": "roles/storage.objectViewer",
+  "expression": "resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/')",
+  "all_other_bindings_preserved": true,
+  "legacy_or_project_grant": false,
+  "keys_or_secrets_read": false
+}

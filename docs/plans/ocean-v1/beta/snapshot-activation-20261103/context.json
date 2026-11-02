@@ -1,0 +1,21 @@
+{
+  "revision": "a4923c4e41fba694f77ebb60c1d3f768390e8b1b",
+  "base_serving_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/catalogue-api@sha256:0de4842308efeef1b64c3e51b9c225d2ce0dbdd5b4b321ea4c65c1b6e37de13d",
+  "context_files": [
+    "Dockerfile",
+    "application/api/v1_catalogue_host.py",
+    "application/api/v1_host.py",
+    "application/ingestion/gcs_catalogue_snapshot.py",
+    "beta-host-config.json",
+    "catalogue-source.json",
+    "snapshot-serving-manifest.json",
+    "source-manifest.json"
+  ],
+  "unchanged_base_sources": 170,
+  "composed_api_sources": 173,
+  "runtime_activation_document_included": false,
+  "opaque_source_binding_included": true,
+  "source_binding_sha256": "6060a23281bc81a893aef6c659aabeb827b1963e5fc3c760b0a863e370b6178a",
+  "activation_sha256": "746743985d3d4eca37b41cb62c9e7f8ef55782ab977ff7f242ddbc45db6490ed",
+  "manifest_sha256": "51918d1f7c7d831882cce9900d92bd0c2849656134ed3fad7561959e018a0f7e"
+}

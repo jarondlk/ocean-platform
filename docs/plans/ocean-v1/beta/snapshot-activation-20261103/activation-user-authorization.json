@@ -1,0 +1,14 @@
+{
+  "state": "explicit_user_ctd_activation_and_persistent_reader_approved",
+  "question": "Copy the prepared CTD catalogue (162 casts,10955 depth observations) into beta snapshots v1/catalogue/ and grant the serving service account persistent Object Viewer access limited to that prefix?",
+  "user_answer": "Approve CTD activation and scoped read access",
+  "project_id": "ocean-v1-beta-20261101",
+  "resource": "gs://ocean-v1-beta-20261101-snapshots/v1/catalogue/",
+  "recipient": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "role": "roles/storage.objectViewer",
+  "condition_expression": "resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/')",
+  "public_legacy_or_write_access": false,
+  "scientific_approval": false,
+  "initial_auto_review": "Rejected before execution pending this exact access authorization",
+  "operator_source_sha256": "ad626c81ab1d4a4911fdd6644c7a09400ce26fadec4dcfd323f78cdde8f2e2b0"
+}

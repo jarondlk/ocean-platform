@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-11-02 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
+Updated: 2026-11-03 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -292,3 +292,6 @@ Beta catalogue connected (2026-11-02 JST): sourceabcdff7 is pushed; actual build
 
 
 Beta first raw cohort staged (2026-11-02 JST): reviewed preparer/sourceb34a62a and explicit11-path alias amendment preserve the original legacy manifest/raw bytes. Actual archive verification passes1860 unique payload files/89159370bytes/1863members; four create-only objects are copied to private beta quarantine and each exact generation downloaded/SHA256 verified. No publication, C09 seal, science approval, runtime legacy access or source mutation. Metadata-only remote inventory completesraw1860/eDNA530 but SST remains partial after8MiB metadata cap; further remote copy is unselected. Catalogue revision00007-lxt remains Ready and honestly empty until eligible snapshots are sealed/registered. [Current handoff](handoffs/BETA_DEPLOYMENT.md), [raw staging receipts](beta/raw-quarantine-20261102/).
+
+
+Beta CTD activation delivered (2026-11-03 JST): **real authenticated CTD catalogue and both tables are live** at https://beta.oceaninfobio.com. Pushed sourcea4923c4, actual build4b8fa356 and network-none Linux image proof pass; Ready revision00008-ngj uses immutable snapshot-api877b1b3. Exact user approval precedes eight create-only generation/SHA256-verified private snapshot objects and one conditional beta-prefix Object Viewer grant. Actual Google browser discovery/inspector/cast and depth tables show162casts/10955observations with100-row first pages and explicit qualifications. Descriptive/unpublished/scientific approvalfalse; other raw columns/families and Research/queue/model/worker remain gated.232distinct focused cases across retained231+13runs,32packaging probes/Ruff/review pass;885sources/5368original receipts/90C27artifacts/42protected paths verify. Only API image/two source selectors changed; frontend/proxy/auth/network/secrets/scale preserved. HTTPS200/TLSverified, unauthenticatedruntime401. Broad CI deferred per user; old CI source50566b7 remains unchanged. Next: remaining scientific family qualification and durable retention/context integration before Research. SchedulerPAUSED. [Current handoff](handoffs/BETA_DEPLOYMENT.md), [activation receipts](beta/snapshot-activation-20261103/).

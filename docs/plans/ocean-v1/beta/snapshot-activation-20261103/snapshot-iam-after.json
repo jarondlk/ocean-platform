@@ -1,0 +1,44 @@
+{
+  "kind": "storage#policy",
+  "resourceId": "projects/_/buckets/ocean-v1-beta-20261101-snapshots",
+  "version": 3,
+  "etag": "CAI=",
+  "bindings": [
+    {
+      "role": "roles/storage.legacyBucketOwner",
+      "members": [
+        "projectEditor:ocean-v1-beta-20261101",
+        "projectOwner:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.legacyBucketReader",
+      "members": [
+        "projectViewer:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.legacyObjectOwner",
+      "members": [
+        "projectEditor:ocean-v1-beta-20261101",
+        "projectOwner:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.legacyObjectReader",
+      "members": [
+        "projectViewer:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.objectViewer",
+      "members": [
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "condition": {
+        "expression": "resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/')",
+        "title": "ocean-v1-beta-catalogue-only"
+      }
+    }
+  ]
+}

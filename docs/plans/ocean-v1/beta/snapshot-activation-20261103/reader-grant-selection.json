@@ -1,0 +1,11 @@
+{
+  "state": "selected_once",
+  "bucket": "ocean-v1-beta-20261101-snapshots",
+  "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "role": "roles/storage.objectViewer",
+  "condition": {
+    "title": "ocean-v1-beta-catalogue-only",
+    "expression": "resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/')"
+  },
+  "direct_legacy_or_project_grant": false
+}

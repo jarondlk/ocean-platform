@@ -1,0 +1,147 @@
+{
+  "artifacts": {
+    "images": [
+      "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-a4923c4"
+    ]
+  },
+  "createTime": "2026-11-02T16:35:31.680944876Z",
+  "finishTime": "2026-11-02T16:36:29.860312Z",
+  "id": "4b8fa356-9261-4a0a-9df9-df61c88669ef",
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-a4923c4"
+  ],
+  "logUrl": "https://console.cloud.google.com/cloud-build/builds;region=asia-northeast1/4b8fa356-9261-4a0a-9df9-df61c88669ef?project=534831104543",
+  "name": "projects/534831104543/locations/asia-northeast1/builds/4b8fa356-9261-4a0a-9df9-df61c88669ef",
+  "options": {
+    "diskSizeGb": "100",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "pool": {},
+    "workerRelease": "legacy"
+  },
+  "projectId": "ocean-v1-beta-20261101",
+  "queueTtl": "3600s",
+  "results": {
+    "buildStepImages": [
+      "sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    ],
+    "buildStepOutputs": [
+      "",
+      ""
+    ],
+    "images": [
+      {
+        "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/snapshot-api/versions/sha256:877b1b3f7db703f5a8e9fedc3cca30f4a5aa67d238201cb5e9159482561e7eb9",
+        "digest": "sha256:877b1b3f7db703f5a8e9fedc3cca30f4a5aa67d238201cb5e9159482561e7eb9",
+        "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-a4923c4",
+        "pushTiming": {
+          "endTime": "2026-11-02T16:36:29.327223164Z",
+          "startTime": "2026-11-02T16:36:26.977523155Z"
+        }
+      }
+    ]
+  },
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793637331497227",
+      "object": "source/1793637331.267339-e83653770dee4ca38045e91ddf25ee7b.tgz"
+    }
+  },
+  "sourceProvenance": {
+    "fileHashes": {
+      "gs://ocean-v1-beta-20261101-build-source/source/1793637331.267339-e83653770dee4ca38045e91ddf25ee7b.tgz#1793637331497227": {
+        "fileHash": [
+          {
+            "type": "MD5",
+            "value": "x-ZM9gMiK5W2YdeCMHlj-Q=="
+          },
+          {
+            "type": "SHA256",
+            "value": "T4PlQmRdZ9-8hIGWY4ux1so9Bhb6anXtolr2A-sgfOI="
+          }
+        ]
+      }
+    },
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793637331497227",
+      "object": "source/1793637331.267339-e83653770dee4ca38045e91ddf25ee7b.tgz"
+    }
+  },
+  "startTime": "2026-11-02T16:35:32.999369585Z",
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-a4923c4",
+        "."
+      ],
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "pullTiming": {
+        "endTime": "2026-11-02T16:35:57.062652056Z",
+        "startTime": "2026-11-02T16:35:36.523988140Z"
+      },
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-02T16:36:17.412494478Z",
+        "startTime": "2026-11-02T16:35:36.523988140Z"
+      }
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--entrypoint=python",
+        "--env=DEPLOYMENT_ENV=production",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-a4923c4",
+        "-c",
+        "\nimport os,json,stat,hashlib,sys\nfrom pathlib import Path\nassert os.getuid()==10001 and os.getgid()==10001\nfor name in ('beta-host-config.json','beta-catalogue-source.json','source-manifest.json'):\n p=Path('/opt/ocean')/name;s=p.stat()\n assert p.is_file() and not p.is_symlink() and s.st_uid==0 and stat.S_IMODE(s.st_mode)==0o444 and s.st_nlink==1\nassert not any(os.environ.get(k) for k in ('DATABASE_URL','OCEAN_V1_DATABASE_URL','OCEAN_V1_INTERNAL_AUTH_SECRET','V1_AUTH_SECRET','V1_GOOGLE_CLIENT_SECRET','GOOGLE_APPLICATION_CREDENTIALS'))\na=json.loads(Path('/opt/ocean/source-manifest.json').read_bytes())\nassert a['revision']=='a4923c4e41fba694f77ebb60c1d3f768390e8b1b' and len(a['sources'])==173\nfor name in ('api/v1_host.py','api/v1_catalogue_host.py','ingestion/gcs_catalogue_snapshot.py'):\n assert hashlib.sha256((Path('/opt/ocean')/name).read_bytes()).hexdigest()==a['sources'][name]\nimport beta_entry\nbeta_entry.validate_serving_source(os.environ)\nfrom api.v1_catalogue_host import _ConfigurationSource,_source_binding\nsource=_ConfigurationSource('/opt/ocean/beta-catalogue-source.json')\nbinding=_source_binding(source,'ocean-v1-beta-20261101','v1:ocean-v1-beta-20261101')\nassert binding['activation_sha256']=='746743985d3d4eca37b41cb62c9e7f8ef55782ab977ff7f242ddbc45db6490ed'\nassert set(binding)=={'version','project_id','site_id','bucket','prefix','activation_object','activation_sha256'}\nfrom ingestion.gcs_catalogue_snapshot import GcsCatalogueSnapshotStore\ntry:GcsCatalogueSnapshotStore(access_gate=lambda m:True,_test_store=object())\nexcept ValueError:pass\nelse:raise AssertionError('Production transport injection allowed')\nassert 'api.main' not in sys.modules\nprint(json.dumps({'state':'sealed_snapshot_image_verified','revision':a['revision'],'uid':os.getuid(),'configuration_root_owned_0444':True,'source_bound_modules':3,'opaque_binding_only':True,'database_data_authority_or_credentials_accessed':False,'production_test_transport_injection_denied':True,'network':'none'}))\n"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "pullTiming": {
+        "endTime": "2026-11-02T16:36:17.414089628Z",
+        "startTime": "2026-11-02T16:36:17.412690860Z"
+      },
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-02T16:36:26.855135963Z",
+        "startTime": "2026-11-02T16:36:17.412690860Z"
+      }
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "sealed-ctd-source-a4923c4"
+  ],
+  "timeout": "600s",
+  "timing": {
+    "BUILD": {
+      "endTime": "2026-11-02T16:36:26.976397157Z",
+      "startTime": "2026-11-02T16:35:35.920292175Z"
+    },
+    "FETCHSOURCE": {
+      "endTime": "2026-11-02T16:35:35.920083594Z",
+      "startTime": "2026-11-02T16:35:33.208883117Z"
+    },
+    "PUSH": {
+      "endTime": "2026-11-02T16:36:29.332136275Z",
+      "startTime": "2026-11-02T16:36:26.977425661Z"
+    },
+    "STORAGE_SOURCE": {
+      "endTime": "2026-11-02T16:35:35.920083594Z",
+      "startTime": "2026-11-02T16:35:33.208883117Z"
+    }
+  }
+}

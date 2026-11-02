@@ -1,0 +1,6 @@
+{
+  "state": "cli_staging_path_refused_before_build_submission",
+  "message": "wrong collection: expected storage.buckets, got storage.objects for bare staging bucket URI",
+  "correction": "Use the previously successful source/ directory inside the same approved staging bucket",
+  "roles_or_resources_expanded": false
+}

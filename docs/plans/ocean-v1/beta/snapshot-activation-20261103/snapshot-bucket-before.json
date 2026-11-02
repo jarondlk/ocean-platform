@@ -1,0 +1,31 @@
+{
+  "kind": "storage#bucket",
+  "selfLink": "https://www.googleapis.com/storage/v1/b/ocean-v1-beta-20261101-snapshots",
+  "id": "ocean-v1-beta-20261101-snapshots",
+  "name": "ocean-v1-beta-20261101-snapshots",
+  "projectNumber": "534831104543",
+  "generation": "1793529627621880872",
+  "metageneration": "1",
+  "location": "ASIA-NORTHEAST1",
+  "storageClass": "STANDARD",
+  "etag": "CAE=",
+  "timeCreated": "2026-11-01T10:40:28.346Z",
+  "updated": "2026-11-01T10:40:28.346Z",
+  "softDeletePolicy": {
+    "retentionDurationSeconds": "604800",
+    "effectiveTime": "2026-11-01T10:40:28.346Z"
+  },
+  "iamConfiguration": {
+    "bucketPolicyOnly": {
+      "enabled": true,
+      "lockedTime": "2027-01-30T10:40:28.346Z"
+    },
+    "uniformBucketLevelAccess": {
+      "enabled": true,
+      "lockedTime": "2027-01-30T10:40:28.346Z"
+    },
+    "publicAccessPrevention": "enforced"
+  },
+  "locationType": "region",
+  "satisfiesPZI": true
+}

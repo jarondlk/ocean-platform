@@ -1,15 +1,56 @@
-# Beta deployment continuation — 2026-11-02 JST
+# Beta deployment continuation — 2026-11-03 JST
 
-State: **Public beta login is LIVE at https://beta.oceaninfobio.com/login with
-valid TLS. Private SQL bootstrap, migrations through `20261027_0021`, and serving
-grants succeeded. The approved administrator/internal account can sign in; the
-Context Catalog is connected with an explicit empty registry. The first1860-file
-raw cohort is copied and verified in private beta quarantine, awaiting scientific
-normalization/eligibility and C09 publication.**
+State: **Authenticated beta is LIVE at https://beta.oceaninfobio.com. The
+first real CTD catalogue is deployed and browser-verified:162 casts and10,955
+depth observations. Other scientific families, durable Research/queue/worker
+integration and full release acceptance remain unfinished.**
 Root is the sole cloud writer. Branch `overhaul`; scheduler remains PAUSED.
-The user prioritizes access now and explicitly defers lengthy broader checks.
+The user prioritizes usable access and explicitly defers lengthy broader checks.
 
-## Current catalogue and data continuation — 2026-11-02 JST
+## Current CTD activation — 2026-11-03 JST
+
+Pushed source `a4923c4e41fba694f77ebb60c1d3f768390e8b1b`; actual build
+`4b8fa356-9261-4a0a-9df9-df61c88669ef` and both build/network-none image-proof
+steps succeed. Ready generation8 revision `ocean-v1-beta-serving-00008-ngj` uses
+`snapshot-api@sha256:877b1b3f7db703f5a8e9fedc3cca30f4a5aa67d238201cb5e9159482561e7eb9`.
+Only API image and two source-selection settings changed; frontend/proxy/auth/
+network/secrets/scale preserved. Only SHELL/CATALOGUE/CATALOGUE_BROWSER flags
+are on in the API. Research/worker/model/scientific dispatch stays off.
+
+After exact user approval, eight create-only CTD objects were copied into private
+`gs://ocean-v1-beta-20261101-snapshots/v1/catalogue/`, each exact generation
+SHA256-readback verified, lifecycle control last. Serving SA received only the
+approved conditional Object Viewer prefix grant. No public, write, project-wide
+or legacy grant. Original scientific files/manifest remain unchanged. Actual
+operator source and all selection/readback/grant/build/deployment receipts are
+retained; do not rerun upload, grant, DB bootstrap/migrations or enrollment.
+
+Actual Google sign-in, catalogue discovery/drill-down, inspector and both tables
+render:162cast rows and10955depth rows, with100-row first pages and explicit
+source/query completion. Data remains descriptive/unpublished/not_reviewed.
+Depth/temperature/salinity retain source rows and signed values; existing contract
+units do not imply independent calibration. Other raw columns remain quarantined.
+Child snapshot04f779af and index50bfdf55 are explicit registrations; activation
+74674398 is immutable. No scientific findings/approvals or cross-source pairing.
+
+232 distinct focused cases across231+final13 retained runs,32packaging checks,
+Ruff, independent final review and actual nonroot Linux image proof pass. New
+reconciler verifies885composed sources,5368original receipts,90C27 artifacts and
+42protected paths. Broad CI is deferred; old run stays bound to50566b7. HTTPS
+login200/TLSverified and unauthenticatedruntime401; actual browser observation
+and private screenshot hash retained. [Activation delivery](../beta/snapshot-activation-20261103/).
+
+Next: qualify/register metagenome, SST and eDNA under their actual provenance
+constraints; integrate durable retention/context writes before Research; then
+outbox/queue/model/worker integration and broader release/operational acceptance.
+The GCS runtime store is deliberately read-only; it does not provide durable
+retention writes needed for research bundles. No missing personal GCP sign-in
+currently blocks granted read/build/existing-service-update operations. Use the
+local beta wrapper for those authorized scopes, explicit beta project/Tokyo,
+exact build SA and approved source bucket. Do not broaden roles for other work.
+The user's CLI/AGENTS/wrapper edits remain unrelated and are not staged.
+
+## Historical catalogue and data continuation — 2026-11-02 JST
 
 Catalogue API source `abcdff79d8695be2e493efa29dc92c454d5b6dfe` is pushed.
 Actual build `bddb55b2-bd82-4d84-aa07-385bc78d6dcf` and both build/image-proof
@@ -71,7 +112,7 @@ remain outside Git; sanitized readback/qualification receipts are in raw staging
 Precise remaining SST/current-publication selection is next; exclude operational,
 backup, account/history/secret and serving-cache material. [Raw staging](../beta/raw-quarantine-20261102/).
 
-For beta **read-only** cloud work on this Mac, use `./scripts/gcloud_beta.sh`
+Historical read-only scope at that checkpoint: use `./scripts/gcloud_beta.sh`
 when local config is present, per user AGENTS instructions. It has viewer roles
 only; do not broaden them. It successfully inspected current service/jobs/build
 and regular logs. Authorized deployment/data writes use the separate operator
@@ -80,7 +121,7 @@ legacy project only for the user's approved data preparation. No legacy writes.
 The user's new CLI/AGENTS documentation and wrapper remain unrelated local work,
 not staged by this continuation. Scheduler remains PAUSED.
 
-The detailed public-access milestone below is historical; this section controls
+The following milestones are historical; the current CTD section above controls
 current image, source and next work. Next: normalize/export the retained raw cohort, verify the current cloud publication
 dependency graph, and register eligible scientific snapshots with real policy and
 a durable cloud-backed store,

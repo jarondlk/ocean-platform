@@ -1,0 +1,41 @@
+{
+  "state": "actual_authenticated_beta_ctd_catalogue_and_both_tables_rendered",
+  "origin": "https://beta.oceaninfobio.com",
+  "revision": "ocean-v1-beta-serving-00008-ngj",
+  "account_role": "administrator/internal",
+  "authentication": "actual Google sign-in and callback, no test actor or injected auth",
+  "snapshot_id": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459",
+  "journey": [
+    "Context Catalog",
+    "Data",
+    "CTD source",
+    "CTD collection",
+    "Dataset inspector",
+    "Tables: casts",
+    "Tables: depth_observations"
+  ],
+  "casts_retained_rows": 162,
+  "depth_observations_retained_rows": 10955,
+  "cast_page_rows_rendered": 100,
+  "depth_page_rows_rendered": 100,
+  "columns_observed": [
+    "observation_id",
+    "cast_id",
+    "depth [m]",
+    "temperature [degC]",
+    "salinity [PSU]",
+    "source_row"
+  ],
+  "authority": "descriptive",
+  "publication": "unpublished",
+  "scientific_approval": "not_reviewed / false",
+  "source_completeness": "complete",
+  "query_completion": "complete",
+  "row_qualification_visible": true,
+  "all_rows_browser_traversal_claimed": false,
+  "screenshot_private_path": "/private/tmp/ocean-beta-ctd-live-20261103.png",
+  "screenshot_sha256": "d61d6044b1f6d78728d011098d900fede0a7a546be724d0bbd13d40face0a4c5",
+  "scientific_rows_or_full_snapshot_in_git": false,
+  "research_enabled": false,
+  "release_accepted": false
+}

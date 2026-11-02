@@ -1,0 +1,68 @@
+{
+  "state": "selected_once",
+  "source_revision": "a4923c4e41fba694f77ebb60c1d3f768390e8b1b",
+  "bucket": "ocean-v1-beta-20261101-snapshots",
+  "activation_sha256": "746743985d3d4eca37b41cb62c9e7f8ef55782ab977ff7f242ddbc45db6490ed",
+  "objects": [
+    {
+      "bytes": 2742,
+      "immutable": true,
+      "object_key": "v1/catalogue/activations/746743985d3d4eca37b41cb62c9e7f8ef55782ab977ff7f242ddbc45db6490ed.json",
+      "sha256": "746743985d3d4eca37b41cb62c9e7f8ef55782ab977ff7f242ddbc45db6490ed",
+      "upload_last": false
+    },
+    {
+      "bytes": 6735,
+      "immutable": true,
+      "object_key": "v1/catalogue/manifests/04f779af23dae93a82f80923115ca3c7fe2784994e222bd455ab21ad4538798d.json",
+      "sha256": "04f779af23dae93a82f80923115ca3c7fe2784994e222bd455ab21ad4538798d",
+      "upload_last": false
+    },
+    {
+      "bytes": 2875,
+      "immutable": true,
+      "object_key": "v1/catalogue/manifests/50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459.json",
+      "sha256": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459",
+      "upload_last": false
+    },
+    {
+      "bytes": 8310,
+      "immutable": true,
+      "object_key": "v1/catalogue/objects/4cde55b3b98abedbf2de07e307da465411f8371e7e85eb38bc1e12219f5a3084",
+      "sha256": "4cde55b3b98abedbf2de07e307da465411f8371e7e85eb38bc1e12219f5a3084",
+      "upload_last": false
+    },
+    {
+      "bytes": 563,
+      "immutable": true,
+      "object_key": "v1/catalogue/objects/897ad1bd6fbd6616aecb36604b4dfe69531867c10a94926df1ab502f94357cb0",
+      "sha256": "897ad1bd6fbd6616aecb36604b4dfe69531867c10a94926df1ab502f94357cb0",
+      "upload_last": false
+    },
+    {
+      "bytes": 105800,
+      "immutable": true,
+      "object_key": "v1/catalogue/objects/9a661ac113e863f35fe3cab8ad26cd2c5a964e6eb3be79d1767072a8549b827c",
+      "sha256": "9a661ac113e863f35fe3cab8ad26cd2c5a964e6eb3be79d1767072a8549b827c",
+      "upload_last": false
+    },
+    {
+      "bytes": 4036,
+      "immutable": true,
+      "object_key": "v1/catalogue/objects/f42771c1ebbeb6cf6f5fdb8c24781da28105fbfe6bd8b7719545bf96860ca283",
+      "sha256": "f42771c1ebbeb6cf6f5fdb8c24781da28105fbfe6bd8b7719545bf96860ca283",
+      "upload_last": false
+    },
+    {
+      "bytes": 1311,
+      "immutable": false,
+      "object_key": "v1/catalogue/control.json",
+      "sha256": "276e0190ba4bd149b4d26867ce76a584845e15b23efae0bc8eb0265bf8fba7ab",
+      "upload_last": true
+    }
+  ],
+  "immutable_bytes_before_control": true,
+  "if_generation_match": 0,
+  "scientific_approval": false,
+  "research_enabled": false
+}

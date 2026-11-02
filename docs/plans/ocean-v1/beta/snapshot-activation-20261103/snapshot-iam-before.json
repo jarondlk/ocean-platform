@@ -1,0 +1,34 @@
+{
+  "kind": "storage#policy",
+  "resourceId": "projects/_/buckets/ocean-v1-beta-20261101-snapshots",
+  "version": 1,
+  "etag": "CAE=",
+  "bindings": [
+    {
+      "role": "roles/storage.legacyBucketOwner",
+      "members": [
+        "projectEditor:ocean-v1-beta-20261101",
+        "projectOwner:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.legacyBucketReader",
+      "members": [
+        "projectViewer:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.legacyObjectOwner",
+      "members": [
+        "projectEditor:ocean-v1-beta-20261101",
+        "projectOwner:ocean-v1-beta-20261101"
+      ]
+    },
+    {
+      "role": "roles/storage.legacyObjectReader",
+      "members": [
+        "projectViewer:ocean-v1-beta-20261101"
+      ]
+    }
+  ]
+}
