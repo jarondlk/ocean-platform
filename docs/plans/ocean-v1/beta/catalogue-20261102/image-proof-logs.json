@@ -1,0 +1,22 @@
+[
+  {
+    "insertId": "bddb55b2-bd82-4d84-aa07-385bc78d6dcf-155",
+    "labels": {
+      "build_step": "Step #1",
+      "build_tags": "ocean-v1-beta,catalogue-source-abcdff7"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T11:22:24.291017203Z",
+    "resource": {
+      "labels": {
+        "build_id": "bddb55b2-bd82-4d84-aa07-385bc78d6dcf",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #1: {\"state\": \"catalogue_image_verified\", \"revision\": \"abcdff79d8695be2e493efa29dc92c454d5b6dfe\", \"uid\": 10001, \"configuration_root_owned_0444\": true, \"actual_empty_discovery\": true, \"research_enabled\": false, \"database_or_credentials_used\": false, \"network\": \"none\"}",
+    "timestamp": "2026-11-02T11:22:23.592570852Z"
+  }
+]

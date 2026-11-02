@@ -1,0 +1,17 @@
+{
+  "revision": "abcdff79d8695be2e493efa29dc92c454d5b6dfe",
+  "base_serving_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/serving-api@sha256:28f769ee6b44cb46b10c936f045e609bb83ad9d9bc8ccefa98603801a52157ab",
+  "context_files": [
+    "Dockerfile",
+    "application/api/v1_catalogue_host.py",
+    "application/api/v1_host.py",
+    "beta-host-config.json",
+    "catalogue-serving-manifest.json",
+    "empty-catalogue.json",
+    "source-manifest.json"
+  ],
+  "unchanged_base_sources": 170,
+  "composed_api_sources": 172,
+  "empty_registry_only": true,
+  "manifest_sha256": "dca4924b2281f690333be85c8f94408b012a96e9af9ed18e21901fb17c377a68"
+}

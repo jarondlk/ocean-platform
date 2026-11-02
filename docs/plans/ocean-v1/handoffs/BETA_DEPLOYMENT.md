@@ -8,6 +8,57 @@ sign-in plus authenticated shell access succeeded.**
 Root is the sole cloud writer. Branch `overhaul`; scheduler remains PAUSED.
 The user prioritizes access now and explicitly defers lengthy broader checks.
 
+## Current catalogue and data continuation — 2026-11-02 JST
+
+Catalogue API source `abcdff79d8695be2e493efa29dc92c454d5b6dfe` is pushed.
+Actual build `bddb55b2-bd82-4d84-aa07-385bc78d6dcf` and both build/image-proof
+steps SUCCEEDED. Current Ready generation7 revision
+`ocean-v1-beta-serving-00007-lxt` uses catalogue API image
+`asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/catalogue-api@sha256:0de4842308efeef1b64c3e51b9c225d2ce0dbdd5b4b321ea4c65c1b6e37de13d`.
+Catalogue/browser flags and SHELL are enabled only in the API. No database, IAM,
+network, OAuth or dispatch change. Frontend and private proxy images unchanged.
+Actual authenticated browser now renders Context Catalog controls and the honest
+**No eligible snapshots** state. It is a real configured empty inventory, not a
+fallback for missing scientific data. Research remains unavailable.
+
+69 focused host/authority checks,14 packaging checks, Ruff and independent review
+pass. Actual nonrootLinux/no-network image proof confirms root-owned0444 files,
+source/config identity, import closure and real empty discovery. New delivery
+reconciles882 committed source paths (two intentional source/test supersessions
+and two additions),5368 original receipts,90 C27 artifacts and42 protected paths.
+The previous hosted run remains bound to50566b7; broad CI/release acceptance is
+deferred per user. [Catalogue delivery](../beta/catalogue-20261102/).
+
+User answered **“Lets do all”** for the initial beta dataset selection. This
+covers preparation/copy of all eligible existing scientific data to independent
+beta, not accounts/history/backups/credentials or invented scientific reviews.
+The first available raw CTD/metagenome/SST cohort has1860 unique files and
+89159370 payload bytes. Its immutable legacy manifest9ac5170f has1860 entries but
+1849 unique paths; a separately pinned11-path raw-alias amendment reconciles the
+complete actual local inventory while retaining the original manifest unchanged.
+Different-date SST filenames with identical bytes do not establish independent
+observations or valid observation dates. Embedded time/provenance and scientific
+deduplication remain publication gates. The reviewed quarantine preparer has23
+focused tests plus Ruff. Commit source before actual `--prepare`; inspect later
+raw-quarantine receipts before rerunning, and never overwrite an existing attempt.
+Raw archive/staging is not a C09 seal, catalogue registration or scientific approval.
+Later cloud ANEMONE/eDNA/historical-SST inventory is separate; exclude operational,
+backup, account/history/secret and serving-cache material. [Raw staging](../beta/raw-quarantine-20261102/).
+
+For beta **read-only** cloud work on this Mac, use `./scripts/gcloud_beta.sh`
+when local config is present, per user AGENTS instructions. It has viewer roles
+only; do not broaden them. It successfully inspected current service/jobs/build
+and regular logs. Authorized deployment/data writes use the separate operator
+identity and explicit target; read-only legacy scientific inventory uses explicit
+legacy project only for the user's approved data preparation. No legacy writes.
+The user's new CLI/AGENTS documentation and wrapper remain unrelated local work,
+not staged by this continuation. Scheduler remains PAUSED.
+
+The detailed public-access milestone below is historical; this section controls
+current image, source and next work. Next: finish the private raw-quarantine stage,
+normalize/export and register eligible scientific snapshots with real policy,
+then durable catalogue retention/context CRUD and queue/model integrations.
+
 ## Latest actual continuation — public beta milestone
 
 Source `6f03f9d37d29b4ebeefc7c7fc35d61bc6ef495cb` and its predecessors
