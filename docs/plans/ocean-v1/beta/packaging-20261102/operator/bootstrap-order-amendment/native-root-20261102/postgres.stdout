@@ -1,0 +1,9 @@
+2026-11-02 14:04:52.467 JST [44628] LOG:  starting PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-11-02 14:04:52.467 JST [44628] LOG:  listening on IPv4 address "127.0.0.1", port 65521
+2026-11-02 14:04:52.468 JST [44628] LOG:  listening on Unix socket "/private/tmp/ocean-beta-role-order-8l89mw9d/socket/.s.PGSQL.65521"
+2026-11-02 14:04:52.473 JST [44634] LOG:  database system was shut down at 2026-11-02 14:04:52 JST
+2026-11-02 14:04:52.476 JST [44628] LOG:  database system is ready to accept connections
+2026-11-02 14:04:52.743 JST [44647] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_migrator" by role "postgres"
+2026-11-02 14:04:52.747 JST [44647] WARNING:  role "postgres" has not been granted membership in role "ocean_v1_serving" by role "postgres"
+2026-11-02 14:04:52.758 JST [44628] LOG:  received immediate shutdown request
+2026-11-02 14:04:52.760 JST [44628] LOG:  database system is shut down

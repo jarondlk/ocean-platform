@@ -1,0 +1,36 @@
+{
+  "version": "beta-preserved-security-function-bytes-v1",
+  "comparison": "exact Python source segment bytes; not a new native execution",
+  "accepted_predecessor": "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089",
+  "operator_sha256": "ec7d04e1273b7491c3af94528c49dcc28891244827413bf77642dba60e1abc2d",
+  "functions": {
+    "PASSWORD_LOGGING_POLICY": {
+      "source_bytes_identical": true,
+      "sha256": "d4c24a175682e9f8bb4697c1ac55e559dee29a51e991a5a3f7cbf22e676311b1"
+    },
+    "attest_password_logging": {
+      "source_bytes_identical": true,
+      "sha256": "02b78bd9ee6112bbeb3992c3ff27b66d73ec91bfe12041f09a14b6f677f77d6c"
+    },
+    "prepare_scram": {
+      "source_bytes_identical": true,
+      "sha256": "0760d830a70c31f2f96b41f4694bb9629baec4455207f7e9a6a65ac2275aafcf"
+    },
+    "fresh_database": {
+      "source_bytes_identical": true,
+      "sha256": "fee5bed31d74afed29b8636f485155e33f77c40abb687969e47098fa12e648d6"
+    },
+    "assert_restricted_roles": {
+      "source_bytes_identical": true,
+      "sha256": "76ed8be981e0d5d055b9abaa703d93bd749726b145962a2cbb2d32a2c466c9a3"
+    },
+    "verify_serving_privileges": {
+      "source_bytes_identical": true,
+      "sha256": "f9a44ece22039c70100567269475a8a9cdd6b7b917516a3ad8bb201299886c1b"
+    }
+  },
+  "old_native_privacy_receipt": "../password-safety-amendment/native-final-qualified/receipt.json",
+  "old_native_checks": 48,
+  "old_receipt_source_pin_retargeted": false,
+  "actual_managed_qualification_claimed": false
+}

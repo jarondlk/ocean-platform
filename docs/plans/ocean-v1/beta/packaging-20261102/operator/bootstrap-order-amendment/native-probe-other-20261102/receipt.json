@@ -1,0 +1,800 @@
+{
+  "version": "beta-rollback-probe-native-v1",
+  "profile": "other-grantor",
+  "state": "passed",
+  "checks": [
+    {
+      "name": "fixture uses actual PostgreSQL18, not a managed PostgreSQL16 claim",
+      "passed": true
+    },
+    {
+      "name": "actual creator is non-superuser CREATEROLE and owns the new database",
+      "passed": true
+    },
+    {
+      "name": "fixture distinguishes bootstrap-superuser OID10 identity",
+      "passed": true
+    },
+    {
+      "name": "strict password logging/utility collector attestation holds before role SQL",
+      "passed": true
+    },
+    {
+      "name": "native-only read-all-settings fixture grant exposes finite metadata",
+      "passed": true
+    },
+    {
+      "name": "provider readback never authorizes password SQL",
+      "passed": true
+    },
+    {
+      "name": "qualifier SQL is fixed NOLOGIN/default/revoke with no password binding",
+      "passed": true
+    },
+    {
+      "name": "qualifier SQL is fixed NOLOGIN/default/revoke with no password binding",
+      "passed": true
+    },
+    {
+      "name": "qualifier SQL is fixed NOLOGIN/default/revoke with no password binding",
+      "passed": true
+    },
+    {
+      "name": "rollback-only probe observes provider behavior without authorizing bootstrap",
+      "passed": true
+    },
+    {
+      "name": "probe ALTER precedes REVOKE and only three scoped statements run",
+      "passed": true
+    },
+    {
+      "name": "probe automatic grantor is OID10 in each distinct fixture",
+      "passed": true
+    },
+    {
+      "name": "probe always rolls back and verifies absence in a new physical session",
+      "passed": true
+    },
+    {
+      "name": "old order honestly refuses remaining other-grantor memberships",
+      "passed": true
+    },
+    {
+      "name": "old order refusal rolls back both application roles",
+      "passed": true
+    },
+    {
+      "name": "corrected source sets defaults before revoking each creator membership",
+      "passed": true
+    },
+    {
+      "name": "corrected order preserves refusal for unsupported grantor profile",
+      "passed": true
+    },
+    {
+      "name": "unsupported corrected order rolls back both app roles",
+      "passed": true
+    },
+    {
+      "name": "exported metadata excludes synthetic plaintext and SCRAM material",
+      "passed": true
+    },
+    {
+      "name": "whole multiline server-log byte stream excludes every synthetic plaintext and verifier",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "cloud_actions": false,
+  "managed_cloudsql_qualification_claimed": false,
+  "vector_bootstrap_or_migrations_performed": false,
+  "server_log_exported": false,
+  "server_version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+  "provider_before": {
+    "version": "beta-provider-safety-metadata-v1",
+    "database_owner": "postgres",
+    "public_schema_owner": "pg_database_owner",
+    "current_principal": {
+      "name": "postgres",
+      "oid": 16384,
+      "superuser": false,
+      "create_role": true,
+      "create_database": true,
+      "replication": false,
+      "bypass_rls": false,
+      "login": true
+    },
+    "fixed_settings": [
+      {
+        "name": "debug_print_parse",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "user",
+        "pending_restart": false
+      },
+      {
+        "name": "debug_print_plan",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "user",
+        "pending_restart": false
+      },
+      {
+        "name": "debug_print_rewritten",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "user",
+        "pending_restart": false
+      },
+      {
+        "name": "log_duration",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_executor_stats",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_min_duration_sample",
+        "value": "-1",
+        "unit": "ms",
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_min_duration_statement",
+        "value": "-1",
+        "unit": "ms",
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_min_error_statement",
+        "value": "panic",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_parser_stats",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_planner_stats",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_statement",
+        "value": "none",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_statement_stats",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "log_transaction_sample_rate",
+        "value": "0",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "password_encryption",
+        "value": "scram-sha-256",
+        "unit": null,
+        "source": "configuration file",
+        "context": "user",
+        "pending_restart": false
+      },
+      {
+        "name": "pg_stat_statements.track",
+        "value": "top",
+        "unit": null,
+        "source": "default",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "pg_stat_statements.track_utility",
+        "value": "off",
+        "unit": null,
+        "source": "configuration file",
+        "context": "superuser",
+        "pending_restart": false
+      },
+      {
+        "name": "search_path",
+        "value": "\"$user\", public",
+        "unit": null,
+        "source": "default",
+        "context": "user",
+        "pending_restart": false
+      },
+      {
+        "name": "shared_preload_libraries",
+        "value": "pg_stat_statements",
+        "unit": null,
+        "source": "configuration file",
+        "context": "postmaster",
+        "pending_restart": false
+      }
+    ],
+    "matching_role_database_overrides": [],
+    "protected_values_hidden": false,
+    "password_sql_authorized_by_this_readback": false,
+    "qualification": "Metadata only; actual password SQL still requires strict separate attestation"
+  },
+  "probe_observation": {
+    "stage": "qualify",
+    "probe_role": "ocean_v1_beta_setup_probe",
+    "sequence_supported": false,
+    "bootstrap_authorized": false,
+    "password_sql_performed": false,
+    "application_roles_created": false,
+    "attempted_steps": [
+      "create_nologin_probe",
+      "alter_probe_database_defaults",
+      "revoke_creator_probe_membership"
+    ],
+    "provider_before": {
+      "version": "beta-provider-safety-metadata-v1",
+      "database_owner": "postgres",
+      "public_schema_owner": "pg_database_owner",
+      "current_principal": {
+        "name": "postgres",
+        "oid": 16384,
+        "superuser": false,
+        "create_role": true,
+        "create_database": true,
+        "replication": false,
+        "bypass_rls": false,
+        "login": true
+      },
+      "fixed_settings": [
+        {
+          "name": "debug_print_parse",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "user",
+          "pending_restart": false
+        },
+        {
+          "name": "debug_print_plan",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "user",
+          "pending_restart": false
+        },
+        {
+          "name": "debug_print_rewritten",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "user",
+          "pending_restart": false
+        },
+        {
+          "name": "log_duration",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_executor_stats",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_min_duration_sample",
+          "value": "-1",
+          "unit": "ms",
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_min_duration_statement",
+          "value": "-1",
+          "unit": "ms",
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_min_error_statement",
+          "value": "panic",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_parser_stats",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_planner_stats",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_statement",
+          "value": "none",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_statement_stats",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "log_transaction_sample_rate",
+          "value": "0",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "password_encryption",
+          "value": "scram-sha-256",
+          "unit": null,
+          "source": "configuration file",
+          "context": "user",
+          "pending_restart": false
+        },
+        {
+          "name": "pg_stat_statements.track",
+          "value": "top",
+          "unit": null,
+          "source": "default",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "pg_stat_statements.track_utility",
+          "value": "off",
+          "unit": null,
+          "source": "configuration file",
+          "context": "superuser",
+          "pending_restart": false
+        },
+        {
+          "name": "search_path",
+          "value": "\"$user\", public",
+          "unit": null,
+          "source": "default",
+          "context": "user",
+          "pending_restart": false
+        },
+        {
+          "name": "shared_preload_libraries",
+          "value": "pg_stat_statements",
+          "unit": null,
+          "source": "configuration file",
+          "context": "postmaster",
+          "pending_restart": false
+        }
+      ],
+      "matching_role_database_overrides": [],
+      "protected_values_hidden": false,
+      "password_sql_authorized_by_this_readback": false,
+      "qualification": "Metadata only; actual password SQL still requires strict separate attestation"
+    },
+    "probe_attributes": {
+      "name": "ocean_v1_beta_setup_probe",
+      "superuser": false,
+      "create_role": false,
+      "create_database": false,
+      "replication": false,
+      "bypass_rls": false,
+      "login": false
+    },
+    "memberships_after_create": [
+      {
+        "role": "ocean_v1_beta_setup_probe",
+        "member": "postgres",
+        "grantor": "native_admin",
+        "admin": true,
+        "inherit": false,
+        "set": false,
+        "role_oid": 16387,
+        "member_oid": 16384,
+        "grantor_oid": 10
+      }
+    ],
+    "defaults_set": true,
+    "memberships_after_revoke": [
+      {
+        "role": "ocean_v1_beta_setup_probe",
+        "member": "postgres",
+        "grantor": "native_admin",
+        "admin": true,
+        "inherit": false,
+        "set": false,
+        "role_oid": 16387,
+        "member_oid": 16384,
+        "grantor_oid": 10
+      }
+    ],
+    "refusal_reason": "Restricted probe attributes or zero-membership guard not satisfied",
+    "transaction_rolled_back": true,
+    "probe_absent_after_rollback": true,
+    "application_role_inventory_unchanged": true,
+    "application_table_inventory_unchanged": true,
+    "readback": {
+      "database": "ocean_v1_beta",
+      "principal": "postgres",
+      "roles": [],
+      "tables": [],
+      "migration_versions": [],
+      "extensions": [
+        {
+          "name": "plpgsql",
+          "version": "1.0"
+        }
+      ],
+      "C23_execution_enabled": false,
+      "cloudsql_limited_superuser_qualification_claimed": false,
+      "provider_safety": {
+        "version": "beta-provider-safety-metadata-v1",
+        "database_owner": "postgres",
+        "public_schema_owner": "pg_database_owner",
+        "current_principal": {
+          "name": "postgres",
+          "oid": 16384,
+          "superuser": false,
+          "create_role": true,
+          "create_database": true,
+          "replication": false,
+          "bypass_rls": false,
+          "login": true
+        },
+        "fixed_settings": [
+          {
+            "name": "debug_print_parse",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "user",
+            "pending_restart": false
+          },
+          {
+            "name": "debug_print_plan",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "user",
+            "pending_restart": false
+          },
+          {
+            "name": "debug_print_rewritten",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "user",
+            "pending_restart": false
+          },
+          {
+            "name": "log_duration",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_executor_stats",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_min_duration_sample",
+            "value": "-1",
+            "unit": "ms",
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_min_duration_statement",
+            "value": "-1",
+            "unit": "ms",
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_min_error_statement",
+            "value": "panic",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_parser_stats",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_planner_stats",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_statement",
+            "value": "none",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_statement_stats",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "log_transaction_sample_rate",
+            "value": "0",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "password_encryption",
+            "value": "scram-sha-256",
+            "unit": null,
+            "source": "configuration file",
+            "context": "user",
+            "pending_restart": false
+          },
+          {
+            "name": "pg_stat_statements.track",
+            "value": "top",
+            "unit": null,
+            "source": "default",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "pg_stat_statements.track_utility",
+            "value": "off",
+            "unit": null,
+            "source": "configuration file",
+            "context": "superuser",
+            "pending_restart": false
+          },
+          {
+            "name": "search_path",
+            "value": "\"$user\", public",
+            "unit": null,
+            "source": "default",
+            "context": "user",
+            "pending_restart": false
+          },
+          {
+            "name": "shared_preload_libraries",
+            "value": "pg_stat_statements",
+            "unit": null,
+            "source": "configuration file",
+            "context": "postmaster",
+            "pending_restart": false
+          }
+        ],
+        "matching_role_database_overrides": [],
+        "protected_values_hidden": false,
+        "password_sql_authorized_by_this_readback": false,
+        "qualification": "Metadata only; actual password SQL still requires strict separate attestation"
+      }
+    }
+  },
+  "old_order": {
+    "outcome": "refused",
+    "error_type": "OperatorError",
+    "sqlstate": null,
+    "steps": [
+      [
+        "password",
+        "ocean_v1_migrator"
+      ],
+      [
+        "revoke_creator",
+        "ocean_v1_migrator"
+      ],
+      [
+        "alter_defaults",
+        "ocean_v1_migrator"
+      ],
+      [
+        "password",
+        "ocean_v1_serving"
+      ],
+      [
+        "revoke_creator",
+        "ocean_v1_serving"
+      ],
+      [
+        "alter_defaults",
+        "ocean_v1_serving"
+      ]
+    ],
+    "after_revokes": [
+      {
+        "role": "ocean_v1_migrator",
+        "memberships": [
+          {
+            "grantor": "native_admin",
+            "admin": true
+          }
+        ]
+      },
+      {
+        "role": "ocean_v1_serving",
+        "memberships": [
+          {
+            "grantor": "native_admin",
+            "admin": true
+          }
+        ]
+      }
+    ]
+  },
+  "corrected_order": {
+    "outcome": "refused",
+    "error_type": "OperatorError",
+    "sqlstate": null,
+    "steps": [
+      [
+        "password",
+        "ocean_v1_migrator"
+      ],
+      [
+        "alter_defaults",
+        "ocean_v1_migrator"
+      ],
+      [
+        "revoke_creator",
+        "ocean_v1_migrator"
+      ],
+      [
+        "password",
+        "ocean_v1_serving"
+      ],
+      [
+        "alter_defaults",
+        "ocean_v1_serving"
+      ],
+      [
+        "revoke_creator",
+        "ocean_v1_serving"
+      ]
+    ],
+    "after_revokes": [
+      {
+        "role": "ocean_v1_migrator",
+        "memberships": [
+          {
+            "grantor": "native_admin",
+            "admin": true
+          }
+        ]
+      },
+      {
+        "role": "ocean_v1_serving",
+        "memberships": [
+          {
+            "grantor": "native_admin",
+            "admin": true
+          }
+        ]
+      }
+    ]
+  },
+  "cleanup": {
+    "port_closed": true,
+    "postmaster_pid_absent": true,
+    "temporary_removed": true
+  },
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "ec7d04e1273b7491c3af94528c49dcc28891244827413bf77642dba60e1abc2d",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/operator.before.py": "aa17c2f2a5d51207bb19c1ed7c1b2e4d3d2af2257c9ed913913423573bd876f9",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/probe_native_rehearsal.py": "8c75b255e3d948d22d0a94582a917bc1d79df7da66dd9d70b6fe6e5aaf1fd151"
+  },
+  "artifacts": {
+    "initdb.stdout": "8cda0dea8dd68e9416d39720c289fa3a2bd0382db9c0d8d9219d42a31cd88caa",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "version": "beta-bootstrap-order-native-v1",
+  "state": "failed",
+  "checks": [
+    {
+      "name": "actual creator is non-superuser CREATEROLE and database owner",
+      "passed": true
+    },
+    {
+      "name": "logging policy attested for the limited creator",
+      "passed": true
+    },
+    {
+      "name": "whole owned server log excludes synthetic plaintext and verifier material",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "native_version": "PostgreSQL18.3, qualifies16+ core role semantics; notCloudSQL",
+  "cloud_actions": false,
+  "managed_vector_extension_bootstrap_qualified": false,
+  "failure_type": "OperatorError",
+  "cleanup": {
+    "port_closed": true,
+    "postmaster_pid_absent": true,
+    "temporary_removed": true
+  },
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "eb3ff52715bd4fa4f9dd734eeebfdb8484b3c08acf08738e752093bf8569c29f",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/operator.before.py": "aa17c2f2a5d51207bb19c1ed7c1b2e4d3d2af2257c9ed913913423573bd876f9",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/native_rehearsal.py": "7c5c2198a4f25c5d34124260a42cb4f64661b9a43deb3973f661494147acde61"
+  },
+  "artifacts": {
+    "initdb.stdout": "383e23ec2070b86c8ef33e1b8dd19652688eaae12ab6cb5b7690cd90b3484603",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "postgres.stdout": "3d2102256012854d012dce5410067895b338228bd736b7d9d1367c4c551bb448",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

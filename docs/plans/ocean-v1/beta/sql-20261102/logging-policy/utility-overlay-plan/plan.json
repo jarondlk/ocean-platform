@@ -1,0 +1,108 @@
+{
+  "version": "beta-pgss-utility-one-flag-overlay-plan-v1",
+  "recorded_at": "2026-11-02T05:51:30.422338+00:00",
+  "state": "prepared_not_applied",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "instance": "ocean-v1-beta-sql",
+  "database_version": "POSTGRES_16",
+  "cloud_calls_or_tokens_or_mutations": false,
+  "only_allowed_overlay": {
+    "pg_stat_statements.track_utility": "off"
+  },
+  "flag_representation": {
+    "type": "BOOLEAN",
+    "api_string_value": "off",
+    "json_boolean_accepted_by_this_plan": false,
+    "documented_restart_required": false,
+    "actual_POSTGRES_16_supported_flag_metadata_required": true,
+    "saved_supported_metadata_contains_this_flag": false
+  },
+  "historical_observation": {
+    "settingsVersion": "3",
+    "configured_flags": {
+      "log_min_error_statement": "panic",
+      "log_statement": "none"
+    },
+    "queryInsightsEnabled": false,
+    "operator_revision": "dcde1ef2c5332e9543c826b6185c5e746fbde410",
+    "session_pg_stat_statements_track": "top",
+    "session_pg_stat_statements_track_utility": "on",
+    "session_shared_preload_libraries": "dbsecurity,google_app_stats,google_dataplex,google_dbheartbeat,google_insights,iamgroup_management,pg_stat_statements,password_validation",
+    "qualification": "Historical source only; not a fresh patch precondition or utility-off acceptance"
+  },
+  "immutable_input_pins": {
+    "docs/plans/ocean-v1/beta/sql-20261102/inspection-jobs-dcde1ef/live/readback-operator-result.json": "cedd73862f4d7907dcf7394b61d99692f14ad0015c0762dac8cc06d7dc020d5e",
+    "docs/plans/ocean-v1/beta/sql-20261102/inspection-jobs-dcde1ef/live/sql-before-readback-execution.json": "ce8d21f25dd3a805e7e7b5cba42e11345e756c3e67d9968e1e035e7a868e3e22",
+    "docs/plans/ocean-v1/beta/sql-20261102/logging-policy/live-20261102/instance-after.json": "8417bfc8585e8699e2943c1b17f1717fadc466dc10b7187019d259db9a9bfdc3",
+    "docs/plans/ocean-v1/beta/sql-20261102/logging-policy/live-20261102/verification.json": "91af247531182974d9b06350681ff80d40d0179f535eb7f10321c15060f0be89",
+    "docs/plans/ocean-v1/beta/sql-20261102/logging-policy/live-20261102/supported-flags.json": "4ea0a6022a2f6f24cefff1aa117c0627fd8b33bb52c7761cfba2893bdd419294",
+    "docs/plans/ocean-v1/beta/sql-20261102/logging-policy/live-20261102/request.json": "c4696e1cf219f41feeb6f33af82d7cca8f364d4ef57a0ea9af4b0be0d8f54560"
+  },
+  "unresolved_live_inputs": {
+    "active_qualify_successful_physical_exit_evidence": null,
+    "all_beta_db_job_executions_idle_readback": null,
+    "no_pending_sql_operations": null,
+    "actual_supported_flag_metadata": null,
+    "fresh_same_API_instance_baseline": null,
+    "immediate_prepatch_version_and_baseline_match": null,
+    "fresh_settingsVersion": null,
+    "complete_merged_databaseFlags": null
+  },
+  "request": {
+    "method": "PATCH",
+    "url": "https://sqladmin.googleapis.com/sql/v1/projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql",
+    "body": null,
+    "body_construction": "settings only: settingsVersion from fresh same-API baseline, databaseFlags complete unique-name map preserving all existing values with only utility=off overlaid",
+    "must_not_use_historical_settingsVersion": true,
+    "must_not_submit_partial_flag_replacement": true
+  },
+  "supported_flag_read": {
+    "method": "GET",
+    "url": "https://sqladmin.googleapis.com/sql/v1beta4/flags?databaseVersion=POSTGRES_16",
+    "retain_only_needed_nonsecret_metadata": true
+  },
+  "preconditions": [
+    "Wait until actual active qualify task and both containers have completed; do not patch concurrently",
+    "No active beta database job execution and no non-DONE SQL operation",
+    "One reviewed configuration writer and exact active project ID/number/SQL private target",
+    "Actual flag metadata supports exact POSTGRES_16 BOOLEAN row, on/off values and no-restart classification",
+    "Fresh same-API baseline retains none/panic ordinary flags and Query Insightsfalse",
+    "Reject duplicate flag names and unexpected baseline/version drift; no silent repair",
+    "Review complete merged list and prove only one prospective flag value differs",
+    "Repeat exact same-API baseline/version/job/operation checks immediately before patch"
+  ],
+  "no_op_condition": "utility already off plus unchanged reviewed baseline; record no-op and require actual fresh session proof",
+  "forbidden_changes": [
+    "pg_stat_statements.track=none",
+    "provider or Google preload removal",
+    "pg_stat_statements reset or query history deletion",
+    "pgAudit or error-verbosity policy change",
+    "Query Insights enable/disable",
+    "IAM or parameter privileges",
+    "legacy project settings",
+    "network/backups/PITR/storage/retention/other flags"
+  ],
+  "operation_acceptance": [
+    "Returned operation bound to exact project/instance and DONE without error",
+    "RUNNABLE instance with exact merged flags and only allowed prospective diff",
+    "Unrelated settings and none/panic/Query Insightsfalse preserved",
+    "No automatic precondition refresh/retry"
+  ],
+  "session_acceptance": [
+    "New explicit readback job without overrides after completed patch",
+    "Fresh actual connection reports utility off and track top with expected preloads",
+    "No pending restart; relevant role/database overrides and other finite privacy settings reviewed",
+    "Both operator/proxy physical successful exits plus task/execution result preserved",
+    "No old utility-on receipt retargeting"
+  ],
+  "bootstrap_or_password_SQL_authorized_by_plan": false,
+  "new_user_or_C23_or_release_accepted": false,
+  "primary_sources": {
+    "supported_flag_table": "https://docs.cloud.google.com/sql/docs/postgres/flags",
+    "pg16_utility_semantics": "https://www.postgresql.org/docs/16/pgstatstatements.html",
+    "flag_metadata": "https://docs.cloud.google.com/sql/docs/postgres/admin-api/rest/v1beta4/flags/list",
+    "patch_method": "https://docs.cloud.google.com/sql/docs/postgres/admin-api/rest/v1/instances/patch"
+  },
+  "plan_document_sha256": "5841275621b3b275466c256cf2947d6cda248699f985ea867b16d62c3793f338"
+}

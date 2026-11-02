@@ -1,0 +1,450 @@
+{
+  "version": "beta-dedicated-database-iam-and-jobs-plan-v1",
+  "recorded_at": "2026-11-02T03:48:45.535369+00:00",
+  "state": "prepared_not_applied",
+  "cloud_calls_or_writes_performed_by_this_plan": false,
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "region": "asia-northeast1",
+  "instance": "ocean-v1-beta-sql",
+  "database": "ocean_v1_beta",
+  "sql_connection_name": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+  "api_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "operator_revision": "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089",
+  "input_pins": {
+    "deploy/gcp/beta/setup/prepare_credentials.py": "ac91c5b2b3ef0e6c6dc93ca325bf268cc3b86c4eeb4136891b70530fd6c5e23d",
+    "deploy/gcp/beta/setup/render_jobs.py": "479498972a72513b8ddb723710b48ee194ac3c9f96a9a6d543d29b4a523d9486",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/receipt.json": "a054d81d09fff0df36ac6ec08791d2454aa7fa5c89244dcf815d027c6f354798",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/operator-revision-amendment/supersession.json": "0101d42e9ceb8c6b33774dc0f0950e826448b3aab6dac097f836bfef914a36db",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/password-safety-amendment/receipt.json": "a5d6b1db671fd0223fa0cf5066683dfe3595293fae9b32677e4a1f16bdb8702a"
+  },
+  "actual_inputs_required": {
+    "accepted_operator_digest_url": null,
+    "accepted_operator_build_receipt": null,
+    "completed_credentials_metadata_receipt": null,
+    "actual_numeric_secret_refs": null,
+    "new_render_directory": null,
+    "fresh_project_and_secret_iam_baselines": null,
+    "fresh_sql_private_and_logging_provider_qualification": null
+  },
+  "preconditions": [
+    "One beta configuration writer; preserve current source receipts and unrelated IAM",
+    "Verify active project ID/number, only reviewed beta SQL target and no competing operations",
+    "Verify existing authorized deployer can attach the two SAs and create/run jobs without new broad roles",
+    "Require no existing unexpected SA/job or service-account user-managed keys",
+    "Verify complete credential receipt and actual enabled numeric secret refs without payload reads",
+    "Verify accepted operator image embeds the exact API/operator source identities; do not use old756/synthetic render",
+    "Read existing Cloud Run service-agent network/image access; do not grant runtime Admin/Editor to resolve denials"
+  ],
+  "service_account_creates": [
+    {
+      "account_id": "ocean-v1-beta-db-bootstrap",
+      "email": "ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "precondition": "fresh exact-name GET must be NOT_FOUND; reject permission errors/unexpected existing identity",
+      "command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "create",
+        "ocean-v1-beta-db-bootstrap",
+        "--display-name=OCEAN beta database bootstrap",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ]
+    },
+    {
+      "account_id": "ocean-v1-beta-db-migrator",
+      "email": "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "precondition": "fresh exact-name GET must be NOT_FOUND; reject permission errors/unexpected existing identity",
+      "command": [
+        "gcloud",
+        "iam",
+        "service-accounts",
+        "create",
+        "ocean-v1-beta-db-migrator",
+        "--display-name=OCEAN beta database migrator",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet"
+      ]
+    }
+  ],
+  "connector_bindings": [
+    {
+      "resource": "projects/ocean-v1-beta-20261101",
+      "member": "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/cloudsql.client",
+      "condition": {
+        "title": "ocean-v1-beta-sql-only",
+        "expression": "resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com'"
+      },
+      "command": [
+        "gcloud",
+        "projects",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-20261101",
+        "--member=serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/cloudsql.client",
+        "--condition=expression=resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com',title=ocean-v1-beta-sql-only",
+        "--quiet",
+        "--format=json"
+      ]
+    },
+    {
+      "resource": "projects/ocean-v1-beta-20261101",
+      "member": "serviceAccount:ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/cloudsql.client",
+      "condition": {
+        "title": "ocean-v1-beta-sql-only",
+        "expression": "resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com'"
+      },
+      "command": [
+        "gcloud",
+        "projects",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-20261101",
+        "--member=serviceAccount:ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/cloudsql.client",
+        "--condition=expression=resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com',title=ocean-v1-beta-sql-only",
+        "--quiet",
+        "--format=json"
+      ]
+    }
+  ],
+  "secret_bindings": [
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-bootstrap-database",
+      "member": "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "condition": null,
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-bootstrap-database",
+        "--member=serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet",
+        "--format=json"
+      ]
+    },
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-migrator-password",
+      "member": "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "condition": null,
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-migrator-password",
+        "--member=serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet",
+        "--format=json"
+      ]
+    },
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-serving-password",
+      "member": "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "condition": null,
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-serving-password",
+        "--member=serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet",
+        "--format=json"
+      ]
+    },
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-migrator-database",
+      "member": "serviceAccount:ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "condition": null,
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-migrator-database",
+        "--member=serviceAccount:ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--project=ocean-v1-beta-20261101",
+        "--quiet",
+        "--format=json"
+      ]
+    }
+  ],
+  "readback_commands": [
+    [
+      "gcloud",
+      "projects",
+      "describe",
+      "ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "projects",
+      "get-iam-policy",
+      "ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "sql",
+      "instances",
+      "list",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "iam",
+      "service-accounts",
+      "describe",
+      "ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "iam",
+      "service-accounts",
+      "keys",
+      "list",
+      "--iam-account=ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "--managed-by=user",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "secrets",
+      "get-iam-policy",
+      "ocean-v1-beta-bootstrap-database",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "secrets",
+      "get-iam-policy",
+      "ocean-v1-beta-migrator-password",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "secrets",
+      "get-iam-policy",
+      "ocean-v1-beta-serving-password",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "iam",
+      "service-accounts",
+      "describe",
+      "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "iam",
+      "service-accounts",
+      "keys",
+      "list",
+      "--iam-account=ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "--managed-by=user",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ],
+    [
+      "gcloud",
+      "secrets",
+      "get-iam-policy",
+      "ocean-v1-beta-migrator-database",
+      "--project=ocean-v1-beta-20261101",
+      "--format=json"
+    ]
+  ],
+  "iam_acceptance": {
+    "project_policy_version_for_conditions": 3,
+    "user_managed_service_account_keys": 0,
+    "unconditional_cloudsql_client": false,
+    "preserve_unrelated_bindings": true,
+    "reject_unexpected_existing_or_concurrent_drift": true,
+    "secret_accessor_project_grants": false,
+    "runtime_serving_worker_grants_deferred": true,
+    "new_custom_roles_needed": false
+  },
+  "job_requests": [
+    {
+      "job_id": "ocean-v1-beta-db-bootstrap",
+      "v2_resource_name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-bootstrap",
+      "body_file": "ACTUAL_NEW_RENDER_DIRECTORY/ocean-v1-beta-db-bootstrap.json",
+      "before_and_after_get": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-bootstrap",
+      "before_create_required": "NOT_FOUND; reject 403, unexpected existing specification or concurrent drift",
+      "validate_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-bootstrap&validateOnly=true"
+      },
+      "create_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-bootstrap"
+      },
+      "task_identity": "ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "stage": "bootstrap",
+      "execute_on_create": false
+    },
+    {
+      "job_id": "ocean-v1-beta-db-migrate",
+      "v2_resource_name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-migrate",
+      "body_file": "ACTUAL_NEW_RENDER_DIRECTORY/ocean-v1-beta-db-migrate.json",
+      "before_and_after_get": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-migrate",
+      "before_create_required": "NOT_FOUND; reject 403, unexpected existing specification or concurrent drift",
+      "validate_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-migrate&validateOnly=true"
+      },
+      "create_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-migrate"
+      },
+      "task_identity": "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "stage": "migrate",
+      "execute_on_create": false
+    },
+    {
+      "job_id": "ocean-v1-beta-db-finalize",
+      "v2_resource_name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-finalize",
+      "body_file": "ACTUAL_NEW_RENDER_DIRECTORY/ocean-v1-beta-db-finalize.json",
+      "before_and_after_get": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-finalize",
+      "before_create_required": "NOT_FOUND; reject 403, unexpected existing specification or concurrent drift",
+      "validate_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-finalize&validateOnly=true"
+      },
+      "create_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-finalize"
+      },
+      "task_identity": "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "stage": "finalize",
+      "execute_on_create": false
+    },
+    {
+      "job_id": "ocean-v1-beta-db-readback",
+      "v2_resource_name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-readback",
+      "body_file": "ACTUAL_NEW_RENDER_DIRECTORY/ocean-v1-beta-db-readback.json",
+      "before_and_after_get": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-readback",
+      "before_create_required": "NOT_FOUND; reject 403, unexpected existing specification or concurrent drift",
+      "validate_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-readback&validateOnly=true"
+      },
+      "create_only": {
+        "method": "POST",
+        "url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs?jobId=ocean-v1-beta-db-readback"
+      },
+      "task_identity": "ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "stage": "readback",
+      "execute_on_create": false
+    }
+  ],
+  "job_specification_required": {
+    "taskCount": 1,
+    "parallelism": 1,
+    "maxRetries": 0,
+    "timeout": "600s",
+    "executionEnvironment": "EXECUTION_ENVIRONMENT_GEN2",
+    "execution_flags": false,
+    "operator_image": "actual accepted fixed beta registry digest",
+    "proxy_image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+    "secrets": "exact numeric ENABLED refs from actual completed receipt",
+    "vpc_network": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+    "vpc_subnet": "projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet",
+    "vpc_egress": "PRIVATE_RANGES_ONLY",
+    "operator_depends_on": [
+      "sql-proxy"
+    ],
+    "proxy_private_ip": true,
+    "proxy_sql_listen": "127.0.0.1:5432",
+    "proxy_admin": "127.0.0.1:9091/quitquitquit",
+    "proxy_startup_probe": {
+      "http_path": "/readiness",
+      "port": 9090,
+      "periodSeconds": 5,
+      "timeoutSeconds": 2,
+      "failureThreshold": 24
+    },
+    "public_invoker_or_trigger_added": false
+  },
+  "execution_order": [
+    "readback-before-bootstrap",
+    "bootstrap",
+    "migrate",
+    "finalize",
+    "readback-after-finalize"
+  ],
+  "execute_command_template": [
+    "gcloud",
+    "run",
+    "jobs",
+    "execute",
+    "EXACT_STAGE_JOB",
+    "--region=asia-northeast1",
+    "--project=ocean-v1-beta-20261101",
+    "--wait"
+  ],
+  "execution_requirements": [
+    "All four actual create-only job readbacks verified before any execution",
+    "Immediate source/image/secret/SA/spec/generation check before each explicit run; no overrides",
+    "Exact operator state=stage_completed and stage/source/target metadata required",
+    "Actual session logging/provider collector gate before bootstrap; no native-to-cloud capability assumption",
+    "Proxy shutdown acknowledged AND actual successful exits for both containers AND task/execution success required",
+    "No timeout/cancel/stopped/uncertain mutation or missing exit evidence counts as accepted",
+    "Preserve failures and resources; no automatic rerun, reset, downgrade or role-gate weakening"
+  ],
+  "post_bootstrap_reduction": [
+    {
+      "secret": "ocean-v1-beta-migrator-password",
+      "member": "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "action": "remove only this newly added membership after accepted bootstrap; retain secret/version and bootstrap DSN grant"
+    },
+    {
+      "secret": "ocean-v1-beta-serving-password",
+      "member": "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "action": "remove only this newly added membership after accepted bootstrap; retain secret/version and bootstrap DSN grant"
+    }
+  ],
+  "after_all_stages": "Review removal only of these temporary identities new connector/secret memberships; preserve audit resources/versions and unrelated IAM",
+  "remaining_gates": [
+    "Actual credentials/install operation/source-bound operator build",
+    "Narrow actual IAM/readbacks and provider job validation/create acceptance",
+    "Cloud SQL16 limited principal/private bootstrap/migration/finalize and actual proxy exits",
+    "OAuth/account/scientific/C23/recovery/full release acceptance"
+  ],
+  "primary_sources": {
+    "cloudsql_instance_condition": "https://docs.cloud.google.com/sql/docs/postgres/iam-conditions",
+    "client_role": "https://docs.cloud.google.com/iam/docs/roles-permissions/cloudsql",
+    "secret_iam": "https://docs.cloud.google.com/secret-manager/docs/access-control",
+    "job_create": "https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.jobs/create",
+    "job_get": "https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.jobs/get"
+  },
+  "plan_document_sha256": "057ffb3f4e83071eab5f655b2fa5a0fb12c15846a9958c5f42a37978efa721e6"
+}

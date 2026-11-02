@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "settingsVersion": "3",
+    "databaseFlags": [
+      {
+        "name": "log_min_error_statement",
+        "value": "panic"
+      },
+      {
+        "name": "log_statement",
+        "value": "none"
+      },
+      {
+        "name": "pg_stat_statements.track_utility",
+        "value": "off"
+      }
+    ]
+  }
+}

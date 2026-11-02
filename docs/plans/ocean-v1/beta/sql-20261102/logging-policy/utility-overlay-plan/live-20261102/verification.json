@@ -1,0 +1,8 @@
+{
+  "state": "utility_flag_patch_verified",
+  "settingsVersion": "4",
+  "only_added_flag": "pg_stat_statements.track_utility=off",
+  "existing_flags_and_unrelated_settings_preserved": true,
+  "actual_fresh_session_pending": true,
+  "bootstrap_permitted": false
+}

@@ -1,0 +1,210 @@
+{
+  "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/operations/f856af82-df20-4cb7-899d-8258951e5d06",
+  "metadata": {
+    "@type": "type.googleapis.com/google.cloud.run.v2.Service",
+    "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving",
+    "description": "Independent beta login page only; private API/account verification not yet attached",
+    "uid": "1fc1d9c9-8960-4cae-bf01-8bcbebbbeca2",
+    "generation": "1",
+    "labels": {
+      "environment": "beta",
+      "managed-by": "overhaul",
+      "system": "ocean-v1"
+    },
+    "createTime": "2026-11-02T06:15:28.800086Z",
+    "updateTime": "2026-11-02T06:15:28.800086Z",
+    "creator": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+    "lastModifier": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+    "launchStage": "GA",
+    "template": {
+      "scaling": {
+        "maxInstanceCount": 1
+      },
+      "timeout": "60s",
+      "serviceAccount": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "containers": [
+        {
+          "name": "frontend",
+          "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+          "env": [
+            {
+              "name": "DEPLOYMENT_ENV",
+              "value": "production"
+            },
+            {
+              "name": "AUTH_MODE",
+              "value": "required"
+            },
+            {
+              "name": "ENABLE_MOCK_LOGIN",
+              "value": "false"
+            },
+            {
+              "name": "PERSIST_LOCAL_CHAT",
+              "value": "false"
+            },
+            {
+              "name": "AUTH_URL",
+              "value": "https://beta.oceaninfobio.com"
+            },
+            {
+              "name": "V1_PUBLIC_ORIGIN",
+              "value": "https://beta.oceaninfobio.com"
+            },
+            {
+              "name": "V1_API_ORIGIN",
+              "value": "http://127.0.0.1:8000"
+            },
+            {
+              "name": "V1_INTERNAL_AUTH_ISSUER",
+              "value": "ocean-v1-frontend"
+            },
+            {
+              "name": "V1_INTERNAL_AUTH_AUDIENCE",
+              "value": "ocean-v1-api"
+            },
+            {
+              "name": "V1_GOOGLE_CLIENT_ID",
+              "value": "534831104543-4l3hm9dqd60u320mf73ql0d3s9rsuprn.apps.googleusercontent.com"
+            },
+            {
+              "name": "V1_AUTH_SECRET",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "projects/534831104543/secrets/ocean-v1-beta-auth",
+                  "version": "1"
+                }
+              }
+            },
+            {
+              "name": "V1_INTERNAL_AUTH_SECRET",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "projects/534831104543/secrets/ocean-v1-beta-internal",
+                  "version": "1"
+                }
+              }
+            },
+            {
+              "name": "V1_GOOGLE_CLIENT_SECRET",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "projects/534831104543/secrets/ocean-v1-beta-oauth",
+                  "version": "1"
+                }
+              }
+            },
+            {
+              "name": "ENABLE_V1_CATALOGUE",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_CATALOGUE_BROWSER",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_SHELL",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_INVESTIGATIONS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_RUNS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EVIDENCE",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_SYNTHESIS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENTS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENT_WORKSPACE",
+              "value": "false"
+            }
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "512Mi"
+            },
+            "cpuIdle": true
+          },
+          "ports": [
+            {
+              "name": "http1",
+              "containerPort": 8080
+            }
+          ],
+          "startupProbe": {
+            "timeoutSeconds": 2,
+            "periodSeconds": 5,
+            "failureThreshold": 36,
+            "httpGet": {
+              "path": "/login",
+              "httpHeaders": [
+                {
+                  "name": "Host",
+                  "value": "beta.oceaninfobio.com"
+                },
+                {
+                  "name": "X-Forwarded-Host",
+                  "value": "beta.oceaninfobio.com"
+                },
+                {
+                  "name": "X-Forwarded-Proto",
+                  "value": "https"
+                },
+                {
+                  "name": "X-Forwarded-Port",
+                  "value": "443"
+                }
+              ],
+              "port": 8080
+            }
+          }
+        }
+      ],
+      "executionEnvironment": "EXECUTION_ENVIRONMENT_GEN2",
+      "maxInstanceRequestConcurrency": 4
+    },
+    "traffic": [
+      {
+        "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+        "percent": 100
+      }
+    ],
+    "scaling": {
+      "scalingMode": "AUTOMATIC",
+      "maxInstanceCount": 1
+    },
+    "invokerIamDisabled": true,
+    "defaultUriDisabled": true,
+    "sshEnabled": false,
+    "terminalCondition": {
+      "state": "CONDITION_PENDING"
+    },
+    "reconciling": true,
+    "etag": "\"CIDVoNcGEPCvwf0C/cHJvamVjdHMvb2NlYW4tdjEtYmV0YS0yMDI2MTEwMS9sb2NhdGlvbnMvYXNpYS1ub3J0aGVhc3QxL3NlcnZpY2VzL29jZWFuLXYxLWJldGEtc2VydmluZw\""
+  }
+}

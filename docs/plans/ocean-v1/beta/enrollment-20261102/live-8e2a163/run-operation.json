@@ -1,0 +1,158 @@
+{
+  "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/operations/51c12a8a-498c-4715-8f47-28988d21ceb0",
+  "metadata": {
+    "@type": "type.googleapis.com/google.cloud.run.v2.Execution",
+    "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-enrollment-first-account/executions/ocean-v1-beta-enrollment-first-account-g58sh",
+    "uid": "5e1de201-cbff-4b1e-a2a2-f86d1e6bcda0",
+    "generation": "1",
+    "labels": {
+      "managed-by": "overhaul"
+    },
+    "createTime": "2026-11-02T07:36:50.509849Z",
+    "updateTime": "2026-11-02T07:36:50.509849Z",
+    "launchStage": "GA",
+    "job": "ocean-v1-beta-enrollment-first-account",
+    "parallelism": 1,
+    "taskCount": 1,
+    "template": {
+      "containers": [
+        {
+          "name": "enrollment",
+          "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/enrollment@sha256:65592dada494d70dd5cb13cf923fc4c67172a7aa20648cb6ee5ce1c05f7fa564",
+          "args": [
+            "--apply",
+            "--confirm-project",
+            "ocean-v1-beta-20261101",
+            "--confirm-database",
+            "ocean_v1_beta",
+            "--confirm-source",
+            "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+            "--confirm-enrollment",
+            "8e2a1630d5d2a7028495ec7b56a422a38b1c0807",
+            "--role",
+            "admin",
+            "--account-type",
+            "internal"
+          ],
+          "env": [
+            {
+              "name": "DEPLOYMENT_ENV",
+              "value": "production"
+            },
+            {
+              "name": "OCEAN_V1_PROJECT_ID",
+              "value": "ocean-v1-beta-20261101"
+            },
+            {
+              "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+              "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+            },
+            {
+              "name": "OCEAN_V1_SOURCE_REVISION",
+              "value": "7924a28e919b1fb751890c694f7b1f9b26b104ff"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_SYNTHESIS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "OCEAN_V1_ENROLLMENT_REVISION",
+              "value": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+            },
+            {
+              "name": "OCEAN_V1_ENROLLMENT_EXPECTED_EMAIL",
+              "value": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp"
+            },
+            {
+              "name": "OCEAN_V1_ENROLLMENT_EXPECTED_AUDIENCE",
+              "value": "32555940559.apps.googleusercontent.com"
+            },
+            {
+              "name": "OCEAN_V1_ENROLLMENT_DATABASE_URL",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "ocean-v1-beta-migrator-database",
+                  "version": "1"
+                }
+              }
+            },
+            {
+              "name": "OCEAN_V1_ENROLLMENT_ID_TOKEN",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "ocean-v1-beta-enrollment-identity",
+                  "version": "1"
+                }
+              }
+            }
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "dependsOn": [
+            "sql-proxy"
+          ]
+        },
+        {
+          "name": "sql-proxy",
+          "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+          "args": [
+            "--private-ip",
+            "--address=127.0.0.1",
+            "--port=5432",
+            "--quitquitquit",
+            "--admin-port=9091",
+            "--health-check",
+            "--http-address=0.0.0.0",
+            "--http-port=9090",
+            "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "256Mi"
+            }
+          },
+          "startupProbe": {
+            "timeoutSeconds": 2,
+            "periodSeconds": 5,
+            "failureThreshold": 24,
+            "httpGet": {
+              "path": "/readiness",
+              "port": 9090
+            }
+          }
+        }
+      ],
+      "maxRetries": 0,
+      "timeout": "600s",
+      "serviceAccount": "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "executionEnvironment": "EXECUTION_ENVIRONMENT_GEN2"
+    },
+    "reconciling": true,
+    "conditions": [
+      {
+        "type": "Completed",
+        "state": "CONDITION_PENDING"
+      }
+    ],
+    "logUri": "https://console.cloud.google.com/logs/viewer?project=ocean-v1-beta-20261101&advancedFilter=resource.type%3D%22cloud_run_job%22%0Aresource.labels.job_name%3D%22ocean-v1-beta-enrollment-first-account%22%0Aresource.labels.location%3D%22asia-northeast1%22%0Alabels.%22run.googleapis.com/execution_name%22%3D%22ocean-v1-beta-enrollment-first-account-g58sh%22",
+    "creator": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+    "etag": "\"CJL7oNcGEKjbjvMB/cHJvamVjdHMvb2NlYW4tdjEtYmV0YS0yMDI2MTEwMS9sb2NhdGlvbnMvYXNpYS1ub3J0aGVhc3QxL2pvYnMvb2NlYW4tdjEtYmV0YS1lbnJvbGxtZW50LWZpcnN0LWFjY291bnQvZXhlY3V0aW9ucy9vY2Vhbi12MS1iZXRhLWVucm9sbG1lbnQtZmlyc3QtYWNjb3VudC1nNThzaA\""
+  }
+}

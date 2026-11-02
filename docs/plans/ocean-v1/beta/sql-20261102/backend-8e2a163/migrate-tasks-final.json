@@ -1,0 +1,143 @@
+{
+  "tasks": [
+    {
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-migrate/executions/ocean-v1-beta-db-migrate-wvzh4/tasks/ocean-v1-beta-db-migrate-wvzh4-task0",
+      "generation": "1",
+      "createTime": "2026-11-02T07:22:23.817483Z",
+      "completionTime": "2026-11-02T07:22:48.270831Z",
+      "updateTime": "2026-11-02T07:22:50.535393Z",
+      "job": "ocean-v1-beta-db-migrate",
+      "execution": "ocean-v1-beta-db-migrate-wvzh4",
+      "containers": [
+        {
+          "name": "operator",
+          "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator@sha256:0a89057b7459342e191e4b194628bee00cc7544749489df9f85f31508399e7b3",
+          "args": [
+            "migrate",
+            "--confirm-project",
+            "ocean-v1-beta-20261101",
+            "--confirm-database",
+            "ocean_v1_beta",
+            "--confirm-source",
+            "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+            "--confirm-operator",
+            "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+          ],
+          "env": [
+            {
+              "name": "DEPLOYMENT_ENV",
+              "value": "production"
+            },
+            {
+              "name": "OCEAN_V1_PROJECT_ID",
+              "value": "ocean-v1-beta-20261101"
+            },
+            {
+              "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+              "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+            },
+            {
+              "name": "OCEAN_V1_SOURCE_REVISION",
+              "value": "7924a28e919b1fb751890c694f7b1f9b26b104ff"
+            },
+            {
+              "name": "OCEAN_V1_OPERATOR_REVISION",
+              "value": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_SYNTHESIS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "OCEAN_V1_OPERATOR_DATABASE_URL",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "ocean-v1-beta-migrator-database",
+                  "version": "1"
+                }
+              }
+            }
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "dependsOn": [
+            "sql-proxy"
+          ]
+        },
+        {
+          "name": "sql-proxy",
+          "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+          "args": [
+            "--private-ip",
+            "--address=127.0.0.1",
+            "--port=5432",
+            "--quitquitquit",
+            "--admin-port=9091",
+            "--health-check",
+            "--http-address=0.0.0.0",
+            "--http-port=9090",
+            "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "256Mi"
+            }
+          },
+          "startupProbe": {
+            "timeoutSeconds": 2,
+            "periodSeconds": 5,
+            "failureThreshold": 24,
+            "httpGet": {
+              "path": "/readiness",
+              "port": 9090
+            }
+          }
+        }
+      ],
+      "timeout": "600s",
+      "serviceAccount": "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "conditions": [
+        {
+          "type": "Started",
+          "state": "CONDITION_SUCCEEDED"
+        },
+        {
+          "type": "Completed",
+          "state": "CONDITION_SUCCEEDED"
+        }
+      ],
+      "observedGeneration": "1",
+      "lastAttemptResult": {
+        "status": {}
+      },
+      "startTime": "2026-11-02T07:22:34.381466Z",
+      "vpcAccess": {
+        "networkInterfaces": [
+          {
+            "network": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+            "subnetwork": "projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet"
+          }
+        ]
+      },
+      "scheduledTime": "2026-11-02T07:22:28.524563Z",
+      "etag": "\"CMr0oNcGEOjlpf8B/cHJvamVjdHMvb2NlYW4tdjEtYmV0YS0yMDI2MTEwMS9sb2NhdGlvbnMvYXNpYS1ub3J0aGVhc3QxL2pvYnMvb2NlYW4tdjEtYmV0YS1kYi1taWdyYXRlL2V4ZWN1dGlvbnMvb2NlYW4tdjEtYmV0YS1kYi1taWdyYXRlLXd2emg0L3Rhc2tzL29jZWFuLXYxLWJldGEtZGItbWlncmF0ZS13dnpoNC10YXNrMA\""
+    }
+  ]
+}

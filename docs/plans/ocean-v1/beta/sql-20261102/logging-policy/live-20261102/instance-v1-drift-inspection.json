@@ -1,0 +1,86 @@
+{
+  "kind": "sql#instance",
+  "state": "RUNNABLE",
+  "databaseVersion": "POSTGRES_16",
+  "settings": {
+    "authorizedGaeApplications": [],
+    "tier": "db-custom-2-7680",
+    "kind": "sql#settings",
+    "availabilityType": "ZONAL",
+    "pricingPlan": "PER_USE",
+    "replicationType": "SYNCHRONOUS",
+    "activationPolicy": "ALWAYS",
+    "ipConfiguration": {
+      "privateNetwork": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+      "authorizedNetworks": [],
+      "sslMode": "ENCRYPTED_ONLY",
+      "ipv4Enabled": false,
+      "requireSsl": false,
+      "serverCaMode": "GOOGLE_MANAGED_INTERNAL_CA",
+      "serverCertificateRotationMode": "SERVER_CERTIFICATE_ROTATION_MODE_UNSPECIFIED"
+    },
+    "locationPreference": {
+      "zone": "asia-northeast1-a",
+      "kind": "sql#locationPreference"
+    },
+    "dataDiskType": "PD_SSD",
+    "backupConfiguration": {
+      "startTime": "18:00",
+      "kind": "sql#backupConfiguration",
+      "location": "asia-northeast1",
+      "backupRetentionSettings": {
+        "retentionUnit": "COUNT",
+        "retainedBackups": 7
+      },
+      "enabled": true,
+      "replicationLogArchivingEnabled": true,
+      "pointInTimeRecoveryEnabled": true,
+      "transactionLogRetentionDays": 7,
+      "transactionalLogStorageState": "CLOUD_STORAGE",
+      "backupTier": "STANDARD"
+    },
+    "edition": "ENTERPRISE",
+    "connectorEnforcement": "REQUIRED",
+    "settingsVersion": "2",
+    "storageAutoResizeLimit": "30",
+    "storageAutoResize": true,
+    "dataDiskSizeGb": "20",
+    "deletionProtectionEnabled": true,
+    "recreateReplicasOnPrimaryCrash": true,
+    "replicationLagMaxSeconds": 31536000,
+    "enableDataplexIntegration": true,
+    "assistiveTroubleshootingEnabled": false
+  },
+  "etag": "0368b282b31040cc7ab5088785d15ceb2cb4d1f2f0983b3df15124cbb19a830c",
+  "ipAddresses": [
+    {
+      "type": "PRIVATE",
+      "ipAddress": "10.93.0.3"
+    }
+  ],
+  "serverCaCert": {
+    "kind": "sql#sslCert",
+    "certSerialNumber": "0",
+    "cert": "-----BEGIN CERTIFICATE-----\nMIIDcTCCAlmgAwIBAgIBADANBgkqhkiG9w0BAQsFADBwMS0wKwYDVQQuEyQyMDky\nMzZkNi02MjFiLTQyMDgtOWFlNi1jZjBkMmExOWE3N2IxHDAaBgNVBAMTE0Nsb3Vk\nIFNRTCBTZXJ2ZXIgQ0ExFDASBgNVBAoTC0dvb2dsZSwgSW5jMQswCQYDVQQGEwJV\nUzAeFw0yNjExMDExNjA3NDdaFw0zNjEwMjkxNjA4NDdaMHAxLTArBgNVBC4TJDIw\nOTIzNmQ2LTYyMWItNDIwOC05YWU2LWNmMGQyYTE5YTc3YjEcMBoGA1UEAxMTQ2xv\ndWQgU1FMIFNlcnZlciBDQTEUMBIGA1UEChMLR29vZ2xlLCBJbmMxCzAJBgNVBAYT\nAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuu59sIPdpJuBL3o1\nGqWveym/juQK6YUyXT6T3/A6fNZxuf8UOP6xsG9dHHuO8OeYgLhlCjDmRN2sxnNL\nTuv5fpmZscOIl1Edb4VqVAslaTmLhOkep5Behb2bH6xgx/ggaxyc0yOzfX5HiB4j\naMtxazGCNWUJg+tLbLrciWEElpL5pJedDdWe2BbrkN50/uQ0Arpcyyb4RWC0T7Ue\nrj42wWKfjIfZ+7ww9pGi5ATvJyL+dMO8K6zjUlZbj1lpSOASNVTuDDfslZNrP2P6\nAGDkZOy2pSWqgMNZH2g8sAyXrxdMbP7MU05ywDPDV1FWnoBRbpdF3ktPNn12Avj7\nuvVTlQIDAQABoxYwFDASBgNVHRMBAf8ECDAGAQH/AgEAMA0GCSqGSIb3DQEBCwUA\nA4IBAQADAFNkzf+2vt4eg2dlZ6J+SlJPZ1OYHMUG7ni9Br75qHMHAHZGcmZvoba6\nZrVlBTzQoViQR0ewMPqB5lLNtrsyGUDUo+ASDaXl4AKiq2MtCoDKtBWbyjTxXN+K\nOemYUzhToKg4Wn4RuRe5s1qGdosNMgNS8GED+ZETJIKUSkknZH9ofIDugIj6Lr6q\ndszz50CEYdkYIaQisbkuEE5k3Gw7gICeHYp8XcfgXGEoI9Giw6TpypAHgoZEQ5nf\nMpOEQatA0nsqWkxqNDSj74hXvpAY9zsx//+8sWSHP1+zNMI2VIceIM3ohZeG2fxX\nkykiYpeQyUrBVv1EEwgKfX+bDF4g\n-----END CERTIFICATE-----",
+    "commonName": "C=US,O=Google\\, Inc,CN=Cloud SQL Server CA,dnQualifier=209236d6-621b-4208-9ae6-cf0d2a19a77b",
+    "sha1Fingerprint": "85c159cac7ea2ef17b6274bb473ef8583521b25d",
+    "instance": "ocean-v1-beta-sql",
+    "createTime": "2026-11-01T16:07:47.631Z",
+    "expirationTime": "2036-10-29T16:08:47.631Z"
+  },
+  "instanceType": "CLOUD_SQL_INSTANCE",
+  "project": "ocean-v1-beta-20261101",
+  "serviceAccountEmailAddress": "p534831104543-wcadcm@gcp-sa-cloud-sql.iam.gserviceaccount.com",
+  "backendType": "SECOND_GEN",
+  "selfLink": "https://sqladmin.googleapis.com/v1/projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql",
+  "connectionName": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+  "name": "ocean-v1-beta-sql",
+  "region": "asia-northeast1",
+  "gceZone": "asia-northeast1-a",
+  "databaseInstalledVersion": "POSTGRES_16_15",
+  "maintenanceVersion": "POSTGRES_16_15.R20260712.01_44",
+  "createTime": "2026-11-01T16:04:52.176Z",
+  "sqlNetworkArchitecture": "NEW_NETWORK_ARCHITECTURE",
+  "satisfiesPzi": true,
+  "includeReplicasForMajorVersionUpgrade": false
+}

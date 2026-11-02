@@ -1,0 +1,63 @@
+{
+  "version": "beta-rollback-probe-native-v1",
+  "profile": "self-grantor",
+  "state": "failed",
+  "checks": [
+    {
+      "name": "fixture uses actual PostgreSQL18, not a managed PostgreSQL16 claim",
+      "passed": true
+    },
+    {
+      "name": "whole multiline server-log byte stream excludes every synthetic plaintext and verifier",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "cloud_actions": false,
+  "managed_cloudsql_qualification_claimed": false,
+  "vector_bootstrap_or_migrations_performed": false,
+  "server_log_exported": false,
+  "server_version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+  "failure_type": "NotSupportedError",
+  "cleanup": {
+    "port_closed": true,
+    "postmaster_pid_absent": true,
+    "temporary_removed": true
+  },
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "ec7d04e1273b7491c3af94528c49dcc28891244827413bf77642dba60e1abc2d",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/operator.before.py": "aa17c2f2a5d51207bb19c1ed7c1b2e4d3d2af2257c9ed913913423573bd876f9",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/probe_native_rehearsal.py": "8c75b255e3d948d22d0a94582a917bc1d79df7da66dd9d70b6fe6e5aaf1fd151"
+  },
+  "artifacts": {
+    "initdb.stdout": "23fb0bbc33b0c9afb38e1b1cf962f0cfcbd51dcbf30b4f692b0fe9607a809090",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

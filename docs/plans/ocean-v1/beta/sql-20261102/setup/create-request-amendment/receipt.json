@@ -1,0 +1,38 @@
+{
+  "version": "beta-job-create-body-amendment-v1",
+  "recorded_at": "2026-11-02T04:00:11.570078+00:00",
+  "state": "local_regression_passed_provider_revalidation_pending",
+  "source_supersession": {
+    "path": "deploy/gcp/beta/setup/render_jobs.py",
+    "before_sha256": "479498972a72513b8ddb723710b48ee194ac3c9f96a9a6d543d29b4a523d9486",
+    "after_sha256": "8a1e7c2f5a93de00e6e1ccbcafc00894affe89c6b69831834eae34f07bf1b4a4",
+    "preserved_before": "render_jobs.before.py",
+    "only_change": "Remove top-level name from create bodies; keys, file names, stage policy and OPERATOR_REVISION8b unchanged"
+  },
+  "source_pins": {
+    "deploy/gcp/beta/setup/render_jobs.py": "8a1e7c2f5a93de00e6e1ccbcafc00894affe89c6b69831834eae34f07bf1b4a4",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/create-request-amendment/README.md": "143034befb9360c0f8c92ec02d6f0e243878f6f0a3df2b45bae7f72cbe9fe871",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/create-request-amendment/checks.py": "2e60eb1e25f8642435c6e31acfd6000f8307715faf997dfe6d1156b2e74d8b34",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/create-request-amendment/verify.py": "46612733a8cb2f59d488b5e86aa84460c3eab59c87c6874b7c8c579dad64f7c9"
+  },
+  "artifact_pins": {
+    "render_jobs.before.py": "479498972a72513b8ddb723710b48ee194ac3c9f96a9a6d543d29b4a523d9486",
+    "checks.json": "e866ec90d52be890e1ab65306127d59e6bd02411b4ffcbb6a67898a4624bcbe8"
+  },
+  "immutable_predecessor_and_provider_pins": {
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/receipt.json": "a054d81d09fff0df36ac6ec08791d2454aa7fa5c89244dcf815d027c6f354798",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/operator-revision-amendment/supersession.json": "0101d42e9ceb8c6b33774dc0f0950e826448b3aab6dac097f836bfef914a36db",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/operator-revision-amendment/render_jobs.before.py": "3370b02b00a2d60c32c309bc267c0238d61f9c607294e02f6016a5e3eace8a76",
+    "docs/plans/ocean-v1/beta/sql-20261102/jobs-live-20261102/validation-8b06a1b/ocean-v1-beta-db-bootstrap-before.json": "4176ed3333f4043f00949d300aa078a48bd7845a2407f2211b4f10d3f22dd2c8",
+    "docs/plans/ocean-v1/beta/sql-20261102/jobs-live-20261102/validation-8b06a1b/ocean-v1-beta-db-bootstrap-validation.json": "3f5f0f821b9fce894b9d9e61ab1ff053a36e312c8d9048afc83a7f4044d1a563"
+  },
+  "targeted_stage_checks": 4,
+  "actual_cli_serialization_passed": true,
+  "ruff": "passed",
+  "original50_case_or_four_revision_case_receipt_retargeted": false,
+  "operator_revision_changed": false,
+  "cloud_calls_or_credential_generation_performed": false,
+  "provider_request_revalidated": false,
+  "jobs_created_or_executed_by_this_amendment": false,
+  "remaining": "Root must bind current accepted operator image/source and numeric secret refs, render anew, and perform new actual validation/create/readback separately."
+}

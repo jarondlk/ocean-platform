@@ -1,0 +1,32 @@
+{
+  "version": "beta-create-request-regression-v1",
+  "stage_checks_passed": 4,
+  "checks": [
+    {
+      "job_id": "ocean-v1-beta-db-bootstrap",
+      "create_body_name_absent": true,
+      "all_other_policy_and_stage_fields_unchanged": true
+    },
+    {
+      "job_id": "ocean-v1-beta-db-migrate",
+      "create_body_name_absent": true,
+      "all_other_policy_and_stage_fields_unchanged": true
+    },
+    {
+      "job_id": "ocean-v1-beta-db-finalize",
+      "create_body_name_absent": true,
+      "all_other_policy_and_stage_fields_unchanged": true
+    },
+    {
+      "job_id": "ocean-v1-beta-db-readback",
+      "create_body_name_absent": true,
+      "all_other_policy_and_stage_fields_unchanged": true
+    }
+  ],
+  "actual_cli_serialization_passed": true,
+  "operator_revision_unchanged": "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089",
+  "synthetic_input_qualification": "Zero image digest and numeric version1 are invented fixture inputs only",
+  "cloud_calls": false,
+  "secret_generation": false,
+  "provider_revalidation_claimed": false
+}

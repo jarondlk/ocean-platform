@@ -1,0 +1,2595 @@
+[
+  {
+    "insertId": "1rlcxnqd4dri",
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudaudit.googleapis.com%2Factivity",
+    "operation": {
+      "first": true,
+      "id": "operations/build/ocean-v1-beta-20261101/ZjYzYjI2YmItMzA1OS00ZjQ3LWJiZTYtNGM2NjBlMGQ3OTAz",
+      "producer": "cloudbuild.googleapis.com"
+    },
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "32555940559.apps.googleusercontent.com"
+        },
+        "principalEmail": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+        "principalSubject": "user:dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "cloudbuild.builds.create",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "projects/ocean-v1-beta-20261101",
+          "resourceAttributes": {
+            "name": "projects//locations/asia-northeast1/builds",
+            "service": "cloudbuild.googleapis.com",
+            "type": "cloudbuild.googleapis.com/Build"
+          }
+        }
+      ],
+      "methodName": "google.devtools.cloudbuild.v1.CloudBuild.CreateBuild",
+      "request": {
+        "@type": "type.googleapis.com/google.devtools.cloudbuild.v1.CreateBuildRequest",
+        "build": {
+          "images": [
+            "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/serving-frontend:beta-6f03f9d"
+          ],
+          "tags": [
+            "ocean-v1-beta",
+            "frontend-transport-6f03f9d"
+          ],
+          "timeout": "600s"
+        },
+        "parent": "projects/ocean-v1-beta-20261101/locations/asia-northeast1"
+      },
+      "requestMetadata": {
+        "callerIp": "130.34.232.113",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/577.0.0 agent-name/codex_cli command/gcloud.builds.submit invocation-id/61502fcb6b154bd08d76f11d3daa7a22 environment/None environment-version/None client-os/MACOSX client-os-ver/27.0.0 client-pltf-arch/arm interactive/False from-script/True python/3.14.6 term/dumb  (Macintosh; Intel Mac OS X 27.0.0),gzip(gfe),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-11-02T06:51:40.057147Z"
+        }
+      },
+      "resourceLocation": {
+        "currentLocations": [
+          "asia-northeast1"
+        ]
+      },
+      "resourceName": "projects/ocean-v1-beta-20261101/builds",
+      "serviceName": "cloudbuild.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-02T06:51:40.414114675Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-11-02T06:51:38.949042Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-0",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:41.572829947Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "starting build \"f63b26bb-3059-4f47-bbe6-4c660e0d7903\" using release legacy\n",
+    "timestamp": "2026-11-02T06:51:40.393086928Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-1",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:41.572829947Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "FETCHSOURCE",
+    "timestamp": "2026-11-02T06:51:40.393196570Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-2",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:41.572829947Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Fetching storage object: gs://ocean-v1-beta-20261101-build-source/source/1793602298.492195-ed8d72e52e534fc2bc194bd396a5bd9c.tgz#1793602298738870",
+    "timestamp": "2026-11-02T06:51:40.393218923Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-3",
+    "labels": {
+      "build_step": "gsutil:STDERR",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:42.473639291Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Copying gs://ocean-v1-beta-20261101-build-source/source/1793602298.492195-ed8d72e52e534fc2bc194bd396a5bd9c.tgz#1793602298738870...",
+    "timestamp": "2026-11-02T06:51:42.035805984Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-4",
+    "labels": {
+      "build_step": "gsutil:STDERR",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:42.473639291Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "/ [0 files][    0.0 B/  1.9 KiB]                                                \r/ [1 files][  1.9 KiB/  1.9 KiB]                                                \r",
+    "timestamp": "2026-11-02T06:51:42.113009324Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-5",
+    "labels": {
+      "build_step": "gsutil:STDERR",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:42.473639291Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Operation completed over 1 objects/1.9 KiB.                                      ",
+    "timestamp": "2026-11-02T06:51:42.113029799Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-6",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:44.465106586Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "BUILD",
+    "timestamp": "2026-11-02T06:51:43.502126918Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-7",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:44.465106586Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Starting Step #0",
+    "timestamp": "2026-11-02T06:51:44.137160464Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-8",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:44.465106586Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: Pulling image: gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+    "timestamp": "2026-11-02T06:51:44.138229722Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-9",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:46.475968775Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36: Pulling from cloud-builders/docker",
+    "timestamp": "2026-11-02T06:51:45.555825494Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-10",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:46.475968775Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: d2aa1518a716: Already exists",
+    "timestamp": "2026-11-02T06:51:45.556500562Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-11",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:46.475968775Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: 76ff73118202: Already exists",
+    "timestamp": "2026-11-02T06:51:45.565349052Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-12",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:46.475968775Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: 3c2cba919283: Already exists",
+    "timestamp": "2026-11-02T06:51:45.573098008Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-13",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:46.475968775Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: e8044f737d3d: Pulling fs layer",
+    "timestamp": "2026-11-02T06:51:45.580911922Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-14",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:46.475968775Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: b1e5e86992f6: Pulling fs layer",
+    "timestamp": "2026-11-02T06:51:45.580927757Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-15",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:50.466396303Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: e8044f737d3d: Verifying Checksum",
+    "timestamp": "2026-11-02T06:51:50.374650141Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-16",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:50.466396303Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: e8044f737d3d: Download complete",
+    "timestamp": "2026-11-02T06:51:50.374668307Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-17",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:54.465898114Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: b1e5e86992f6: Verifying Checksum",
+    "timestamp": "2026-11-02T06:51:54.317109557Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-18",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:54.465898114Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: b1e5e86992f6: Download complete",
+    "timestamp": "2026-11-02T06:51:54.317124451Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-19",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:51:56.464713978Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: e8044f737d3d: Pull complete",
+    "timestamp": "2026-11-02T06:51:56.382752975Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-20",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:06.452147917Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: b1e5e86992f6: Pull complete",
+    "timestamp": "2026-11-02T06:52:06.381005737Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-21",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:07.460152754Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: Digest: sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+    "timestamp": "2026-11-02T06:52:06.443558128Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-22",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:07.460152754Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: Status: Downloaded newer image for gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+    "timestamp": "2026-11-02T06:52:06.448287666Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-23",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:07.460152754Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+    "timestamp": "2026-11-02T06:52:06.454561786Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-24",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #1 [internal] load build definition from Dockerfile",
+    "timestamp": "2026-11-02T06:52:08.667727713Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-25",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #1 sha256:653a45ee88b529955290ed23e1cf5b8c8c66e7d0d40db44f4d483c222ecb16c5",
+    "timestamp": "2026-11-02T06:52:08.667743585Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-26",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #1 transferring dockerfile: 625B done",
+    "timestamp": "2026-11-02T06:52:08.667745898Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-27",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #1 DONE 0.1s",
+    "timestamp": "2026-11-02T06:52:08.667747597Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-28",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:08.667748157Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-29",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #2 [internal] load .dockerignore",
+    "timestamp": "2026-11-02T06:52:08.667753369Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-30",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #2 sha256:bb93e6ef3ee88e679024302c743cc44c1f97d91b049453df67887c163edfac55",
+    "timestamp": "2026-11-02T06:52:08.667754369Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-31",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #2 transferring context: 2B done",
+    "timestamp": "2026-11-02T06:52:08.667755243Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-32",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #2 DONE 0.0s",
+    "timestamp": "2026-11-02T06:52:08.667756006Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-33",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:08.667756568Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-34",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #3 [internal] load metadata for asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+    "timestamp": "2026-11-02T06:52:08.667758510Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-35",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #3 sha256:d6de7726629966ff787913c11e8b5406880d305cce7b10a3ae7771b781610994",
+    "timestamp": "2026-11-02T06:52:08.667759487Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-36",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #3 ...",
+    "timestamp": "2026-11-02T06:52:09.118789357Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-37",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:09.118807746Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-38",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #4 [auth] ocean-v1-beta-20261101/ocean-v1-beta/frontend:pull token for asia-northeast1-docker.pkg.dev",
+    "timestamp": "2026-11-02T06:52:09.118810505Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-39",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #4 sha256:ce73f05f26768c66567096faa1a3a380e39cbc58fbc15ce603e1c5e1e18b025d",
+    "timestamp": "2026-11-02T06:52:09.118812887Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-40",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #4 DONE 0.0s",
+    "timestamp": "2026-11-02T06:52:09.118813844Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-41",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:09.269614243Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-42",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #3 [internal] load metadata for asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+    "timestamp": "2026-11-02T06:52:09.269634403Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-43",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:09.456908635Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #3 sha256:d6de7726629966ff787913c11e8b5406880d305cce7b10a3ae7771b781610994",
+    "timestamp": "2026-11-02T06:52:09.269637376Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-44",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #3 DONE 0.8s",
+    "timestamp": "2026-11-02T06:52:09.571263525Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-45",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:09.571289594Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-46",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #6 [internal] load build context",
+    "timestamp": "2026-11-02T06:52:09.571293595Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-47",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #6 sha256:72999d26c6e4d65dbb13e41328113f0feb7560448e0f29ac9f359168ff460119",
+    "timestamp": "2026-11-02T06:52:09.571295815Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-48",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #6 transferring context: 3.48kB done",
+    "timestamp": "2026-11-02T06:52:09.571297064Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-49",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #6 DONE 0.0s",
+    "timestamp": "2026-11-02T06:52:09.571303376Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-50",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:09.571304136Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-51",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 [1/4] FROM asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+    "timestamp": "2026-11-02T06:52:09.571306252Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-52",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:f0c688387359ece208694752f9cb0db4eb97143e1dcc040ed1f512c13b053851",
+    "timestamp": "2026-11-02T06:52:09.571307247Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-53",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 resolve asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc 0.0s done",
+    "timestamp": "2026-11-02T06:52:09.571308450Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-54",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:709e8267cebf108d59c4e6e386882a5c79c10bbe11ecd02c6ed9ed4efa5b905d 3.31kB / 3.31kB 0.1s done",
+    "timestamp": "2026-11-02T06:52:09.693035277Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-55",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d22dd8aef5082b9de7fb037db9c398ee2822c5c81cc5cbb63bb32a46a5decdb1 0B / 1.71MB 0.2s",
+    "timestamp": "2026-11-02T06:52:09.693050045Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-56",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:0bee45faaffff77eee1e3d151cc650b854df28523ea01e5a2dcc0327da8793a9 0B / 448B 0.2s",
+    "timestamp": "2026-11-02T06:52:09.693051856Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-57",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:7057751db9b135635fb938cfc4f72607e2a7f252f9139f2e888e4a0499db402c 147B / 147B 0.2s",
+    "timestamp": "2026-11-02T06:52:09.693072990Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-58",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc 1.99kB / 1.99kB done",
+    "timestamp": "2026-11-02T06:52:09.693074224Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-59",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:a88a852043a04da89d6a69e134ba9f3c8621b9ed9e37f29e53d7ba629bacdb3a 8.23kB / 8.23kB done",
+    "timestamp": "2026-11-02T06:52:09.693075112Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-60",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd 2.10MB / 29.17MB 0.2s",
+    "timestamp": "2026-11-02T06:52:09.693076336Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-61",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 0B / 49.89MB 0.2s",
+    "timestamp": "2026-11-02T06:52:09.693077225Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-62",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 0B / 25.79MB 0.2s",
+    "timestamp": "2026-11-02T06:52:09.693078089Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-63",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d22dd8aef5082b9de7fb037db9c398ee2822c5c81cc5cbb63bb32a46a5decdb1 1.71MB / 1.71MB 0.3s done",
+    "timestamp": "2026-11-02T06:52:09.868358122Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-64",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:0bee45faaffff77eee1e3d151cc650b854df28523ea01e5a2dcc0327da8793a9 448B / 448B 0.2s done",
+    "timestamp": "2026-11-02T06:52:09.868373142Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-65",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:7057751db9b135635fb938cfc4f72607e2a7f252f9139f2e888e4a0499db402c 147B / 147B 0.2s done",
+    "timestamp": "2026-11-02T06:52:09.868375011Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-66",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd 7.34MB / 29.17MB 0.3s",
+    "timestamp": "2026-11-02T06:52:09.868376163Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-67",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 6.29MB / 49.89MB 0.3s",
+    "timestamp": "2026-11-02T06:52:09.868377222Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-68",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:4facd10eb4c88224493c6f114c80c7580f788471dcc48fd0c5461ff74f589223 0B / 3.67kB 0.3s",
+    "timestamp": "2026-11-02T06:52:09.868378228Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-69",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd 14.68MB / 29.17MB 0.4s",
+    "timestamp": "2026-11-02T06:52:10.031055052Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-70",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 13.63MB / 49.89MB 0.4s",
+    "timestamp": "2026-11-02T06:52:10.031069409Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-71",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 6.29MB / 25.79MB 0.4s",
+    "timestamp": "2026-11-02T06:52:10.031072013Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-72",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:4facd10eb4c88224493c6f114c80c7580f788471dcc48fd0c5461ff74f589223 3.67kB / 3.67kB 0.4s done",
+    "timestamp": "2026-11-02T06:52:10.031073963Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-73",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd 26.21MB / 29.17MB 0.6s",
+    "timestamp": "2026-11-02T06:52:10.173965959Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-74",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 24.12MB / 49.89MB 0.6s",
+    "timestamp": "2026-11-02T06:52:10.173980927Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-75",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 13.63MB / 25.79MB 0.6s",
+    "timestamp": "2026-11-02T06:52:10.173982831Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-76",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd 29.17MB / 29.17MB 0.7s done",
+    "timestamp": "2026-11-02T06:52:10.286076140Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-77",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 35.86MB / 49.89MB 0.8s",
+    "timestamp": "2026-11-02T06:52:10.286092744Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-78",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:10.450336488Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 25.79MB / 25.79MB 0.8s",
+    "timestamp": "2026-11-02T06:52:10.286094293Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-79",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:11.450110036Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 44.04MB / 49.89MB 0.9s",
+    "timestamp": "2026-11-02T06:52:10.413470580Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-80",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:11.450110036Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 25.79MB / 25.79MB 0.8s done",
+    "timestamp": "2026-11-02T06:52:10.413489923Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-81",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:11.450110036Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd",
+    "timestamp": "2026-11-02T06:52:10.413491485Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-82",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:11.450110036Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 49.89MB / 49.89MB 1.0s",
+    "timestamp": "2026-11-02T06:52:10.517251202Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-83",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:11.450110036Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 49.89MB / 49.89MB 1.1s done",
+    "timestamp": "2026-11-02T06:52:10.736997593Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-84",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:12.453385296Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:d9970ea1f37036a1c7fe4b314c2457f1a86e32f4c65c481bfff025d0771601bd 1.8s done",
+    "timestamp": "2026-11-02T06:52:12.191877948Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-85",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:12.453385296Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:709e8267cebf108d59c4e6e386882a5c79c10bbe11ecd02c6ed9ed4efa5b905d done",
+    "timestamp": "2026-11-02T06:52:12.342780246Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-86",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:13.429400445Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c",
+    "timestamp": "2026-11-02T06:52:12.492483634Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-87",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:15.454872711Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:df736340692d217b57cd447c94f978f9a91ce3e8805b225e78374eae3aff864c 2.4s done",
+    "timestamp": "2026-11-02T06:52:14.931696767Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-88",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:15.454872711Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:d22dd8aef5082b9de7fb037db9c398ee2822c5c81cc5cbb63bb32a46a5decdb1 0.1s",
+    "timestamp": "2026-11-02T06:52:15.042751722Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-89",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:15.454872711Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:d22dd8aef5082b9de7fb037db9c398ee2822c5c81cc5cbb63bb32a46a5decdb1 0.2s done",
+    "timestamp": "2026-11-02T06:52:15.192968181Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-90",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:15.454872711Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:0bee45faaffff77eee1e3d151cc650b854df28523ea01e5a2dcc0327da8793a9 done",
+    "timestamp": "2026-11-02T06:52:15.192985964Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-91",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:15.454872711Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:7057751db9b135635fb938cfc4f72607e2a7f252f9139f2e888e4a0499db402c done",
+    "timestamp": "2026-11-02T06:52:15.343456911Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-92",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:16.429751954Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 0.1s",
+    "timestamp": "2026-11-02T06:52:15.491660107Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-93",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:17.429296055Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:8f185f4a42ec2b02d66a8ed92b95a8e26ec05c3245a7fcbdc94af82cf262c80f 1.6s done",
+    "timestamp": "2026-11-02T06:52:17.025984266Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-94",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:17.429296055Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:4facd10eb4c88224493c6f114c80c7580f788471dcc48fd0c5461ff74f589223",
+    "timestamp": "2026-11-02T06:52:17.025999433Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-95",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:17.429296055Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 extracting sha256:4facd10eb4c88224493c6f114c80c7580f788471dcc48fd0c5461ff74f589223 done",
+    "timestamp": "2026-11-02T06:52:17.175906056Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-96",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:18.449096096Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #5 DONE 7.9s",
+    "timestamp": "2026-11-02T06:52:17.477246439Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-97",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:18.449096096Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:17.477263735Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-98",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:18.449096096Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #7 [2/4] COPY forwarded-adapter.cjs /opt/ocean/serving-frontend-adapter.cjs",
+    "timestamp": "2026-11-02T06:52:17.477267230Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-99",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:18.449096096Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #7 sha256:8064c032aaa811366492fccb16de17ac9b916caa39fedbec642cdcb86349bae1",
+    "timestamp": "2026-11-02T06:52:17.477268328Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-100",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #7 DONE 1.3s",
+    "timestamp": "2026-11-02T06:52:18.672027253Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-101",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:18.822742670Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-102",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #8 [3/4] COPY serving-frontend-manifest.json /opt/ocean/serving-frontend-manifest.json",
+    "timestamp": "2026-11-02T06:52:18.822761939Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-103",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #8 sha256:ed1953a86e36353c0c6d7fb4c86443f12684a08f60aa069c026494b49ca45490",
+    "timestamp": "2026-11-02T06:52:18.822764500Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-104",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #8 DONE 0.0s",
+    "timestamp": "2026-11-02T06:52:18.822766408Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-105",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:18.822766886Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-106",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #9 [4/4] RUN chmod 0444 /opt/ocean/serving-frontend-adapter.cjs /opt/ocean/serving-frontend-manifest.json",
+    "timestamp": "2026-11-02T06:52:18.822767993Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-107",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #9 sha256:64870577fa27e6ddb2a465955d55af845c68e8e9729e61900db7598f496cc4fe",
+    "timestamp": "2026-11-02T06:52:18.822768876Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-108",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #9 DONE 0.4s",
+    "timestamp": "2026-11-02T06:52:19.108421118Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-109",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: ",
+    "timestamp": "2026-11-02T06:52:19.209189172Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-110",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #10 exporting to image",
+    "timestamp": "2026-11-02T06:52:19.209215405Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-111",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #10 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00",
+    "timestamp": "2026-11-02T06:52:19.209217540Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-112",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #10 exporting layers 0.1s done",
+    "timestamp": "2026-11-02T06:52:19.209218791Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-113",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #10 writing image sha256:49f319f1968406ee5798289f8b5b4b5aae44245be9404b80a42e2c3bbdc0f5ee done",
+    "timestamp": "2026-11-02T06:52:19.243182942Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-114",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #10 naming to asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/serving-frontend:beta-6f03f9d done",
+    "timestamp": "2026-11-02T06:52:19.243209951Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-115",
+    "labels": {
+      "build_step": "Step #0",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:19.428294146Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #0: #10 DONE 0.1s",
+    "timestamp": "2026-11-02T06:52:19.243211874Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-116",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:20.429985433Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Finished Step #0",
+    "timestamp": "2026-11-02T06:52:19.485832963Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-117",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:20.429985433Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Starting Step #1",
+    "timestamp": "2026-11-02T06:52:19.486137604Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-118",
+    "labels": {
+      "build_step": "Step #1",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:20.429985433Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #1: Already have image (with digest): gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+    "timestamp": "2026-11-02T06:52:19.487562620Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-119",
+    "labels": {
+      "build_step": "Step #1",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:22.425098410Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Step #1: bounded frontend HTTP qualification failed",
+    "timestamp": "2026-11-02T06:52:21.866615084Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-120",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:22.425098410Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "Finished Step #1",
+    "timestamp": "2026-11-02T06:52:22.271077576Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-121",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:22.425098410Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "ERROR",
+    "timestamp": "2026-11-02T06:52:22.271844720Z"
+  },
+  {
+    "insertId": "f63b26bb-3059-4f47-bbe6-4c660e0d7903-122",
+    "labels": {
+      "build_step": "MAIN",
+      "build_tags": "ocean-v1-beta,frontend-transport-6f03f9d"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudbuild",
+    "receiveTimestamp": "2026-11-02T06:52:22.425098410Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "INFO",
+    "textPayload": "ERROR: build step 1 \"gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36\" failed: step exited with non-zero status: 1",
+    "timestamp": "2026-11-02T06:52:22.271877897Z"
+  },
+  {
+    "insertId": "-us80xhd26wu",
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudaudit.googleapis.com%2Factivity",
+    "operation": {
+      "id": "operations/build/ocean-v1-beta-20261101/ZjYzYjI2YmItMzA1OS00ZjQ3LWJiZTYtNGM2NjBlMGQ3OTAz",
+      "last": true,
+      "producer": "cloudbuild.googleapis.com"
+    },
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "32555940559.apps.googleusercontent.com"
+        },
+        "principalEmail": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+        "principalSubject": "user:dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "cloudbuild.builds.create",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "projects/ocean-v1-beta-20261101",
+          "resourceAttributes": {
+            "name": "projects//locations/asia-northeast1/builds",
+            "service": "cloudbuild.googleapis.com",
+            "type": "cloudbuild.googleapis.com/Build"
+          }
+        }
+      ],
+      "methodName": "google.devtools.cloudbuild.v1.CloudBuild.CreateBuild",
+      "requestMetadata": {
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceLocation": {
+        "currentLocations": [
+          "asia-northeast1"
+        ]
+      },
+      "resourceName": "projects/ocean-v1-beta-20261101/builds",
+      "serviceName": "cloudbuild.googleapis.com",
+      "status": {
+        "code": 9
+      }
+    },
+    "receiveTimestamp": "2026-11-02T06:52:32.945117691Z",
+    "resource": {
+      "labels": {
+        "build_id": "f63b26bb-3059-4f47-bbe6-4c660e0d7903",
+        "build_trigger_id": "",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "build"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-11-02T06:52:32.605156Z"
+  }
+]

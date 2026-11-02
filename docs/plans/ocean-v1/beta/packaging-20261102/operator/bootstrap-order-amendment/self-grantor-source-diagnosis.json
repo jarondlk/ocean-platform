@@ -1,0 +1,15 @@
+{
+  "version": "beta-native-self-grantor-fixture-source-diagnosis-v1",
+  "observed_receipt": "native-probe-self-20261102/receipt.json",
+  "observed_failure_type": "NotSupportedError",
+  "provider_before_metadata_observed": false,
+  "observed_sqlstate_or_error_text_recorded": false,
+  "fixture_attempt": "Demote bootstrap postgres OID10 using ALTER ROLE NOSUPERUSER through alternate native superuser",
+  "primary_source": "https://github.com/postgres/postgres/blob/REL_18_3/src/backend/commands/user.c#L819-L827",
+  "source_version": "REL_18_3",
+  "source_diagnosis": "ALTER ROLE rejects NOSUPERUSER for the bootstrap-superuser OID with FEATURE_NOT_SUPPORTED; this is consistent with the failed native fixture, whose receipt does not record a precise failing statement.",
+  "implicit_creator_grant_source": "https://github.com/postgres/postgres/blob/REL_18_3/src/backend/commands/user.c#L503-L532",
+  "scope": "Owned stock PostgreSQL18.3; does not characterize managed CloudSQL16 behavior",
+  "catalogue_edits_or_further_native_runs": false,
+  "ordering_success_qualified": false
+}

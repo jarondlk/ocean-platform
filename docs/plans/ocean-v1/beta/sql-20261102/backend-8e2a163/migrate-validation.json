@@ -1,0 +1,147 @@
+{
+  "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/operations/9f5fbe87-a8e5-4f62-a733-2a76752c7448",
+  "metadata": {
+    "@type": "type.googleapis.com/google.cloud.run.v2.Job",
+    "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-db-migrate",
+    "uid": "4388cd59-01a9-4c26-a7b7-47e6c305f18a",
+    "generation": "1",
+    "labels": {
+      "environment": "beta",
+      "managed-by": "overhaul",
+      "system": "ocean-v1"
+    },
+    "createTime": "2026-11-02T07:03:23.648187Z",
+    "updateTime": "2026-11-02T07:03:23.648187Z",
+    "creator": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+    "lastModifier": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+    "launchStage": "GA",
+    "template": {
+      "parallelism": 1,
+      "taskCount": 1,
+      "template": {
+        "containers": [
+          {
+            "name": "operator",
+            "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator@sha256:0a89057b7459342e191e4b194628bee00cc7544749489df9f85f31508399e7b3",
+            "args": [
+              "migrate",
+              "--confirm-project",
+              "ocean-v1-beta-20261101",
+              "--confirm-database",
+              "ocean_v1_beta",
+              "--confirm-source",
+              "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+              "--confirm-operator",
+              "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+            ],
+            "env": [
+              {
+                "name": "DEPLOYMENT_ENV",
+                "value": "production"
+              },
+              {
+                "name": "OCEAN_V1_PROJECT_ID",
+                "value": "ocean-v1-beta-20261101"
+              },
+              {
+                "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+                "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+              },
+              {
+                "name": "OCEAN_V1_SOURCE_REVISION",
+                "value": "7924a28e919b1fb751890c694f7b1f9b26b104ff"
+              },
+              {
+                "name": "OCEAN_V1_OPERATOR_REVISION",
+                "value": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_SYNTHESIS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "OCEAN_V1_OPERATOR_DATABASE_URL",
+                "valueSource": {
+                  "secretKeyRef": {
+                    "secret": "ocean-v1-beta-migrator-database",
+                    "version": "1"
+                  }
+                }
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "1Gi"
+              }
+            },
+            "dependsOn": [
+              "sql-proxy"
+            ]
+          },
+          {
+            "name": "sql-proxy",
+            "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+            "args": [
+              "--private-ip",
+              "--address=127.0.0.1",
+              "--port=5432",
+              "--quitquitquit",
+              "--admin-port=9091",
+              "--health-check",
+              "--http-address=0.0.0.0",
+              "--http-port=9090",
+              "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "256Mi"
+              }
+            },
+            "startupProbe": {
+              "timeoutSeconds": 2,
+              "periodSeconds": 5,
+              "failureThreshold": 24,
+              "httpGet": {
+                "path": "/readiness",
+                "port": 9090
+              }
+            }
+          }
+        ],
+        "maxRetries": 0,
+        "timeout": "600s",
+        "serviceAccount": "ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "executionEnvironment": "EXECUTION_ENVIRONMENT_GEN2",
+        "vpcAccess": {
+          "egress": "PRIVATE_RANGES_ONLY",
+          "networkInterfaces": [
+            {
+              "network": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+              "subnetwork": "projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet"
+            }
+          ]
+        }
+      }
+    },
+    "terminalCondition": {
+      "state": "CONDITION_PENDING"
+    },
+    "latestCreatedExecution": {},
+    "reconciling": true,
+    "etag": "\"CLvroNcGEPiYirUC/cHJvamVjdHMvb2NlYW4tdjEtYmV0YS0yMDI2MTEwMS9sb2NhdGlvbnMvYXNpYS1ub3J0aGVhc3QxL2pvYnMvb2NlYW4tdjEtYmV0YS1kYi1taWdyYXRl\""
+  }
+}

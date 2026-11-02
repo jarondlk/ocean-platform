@@ -1,0 +1,45 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/enrollment:beta-8e2a163",
+        "."
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--entrypoint=python",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/enrollment:beta-8e2a163",
+        "-c",
+        "import os,sys,json,subprocess;assert os.getuid()==10001 and os.getgid()==10001;r=subprocess.run([sys.executable,'/opt/ocean/beta_enroll.py'],capture_output=True,text=True,check=True);d=json.loads(r.stdout);assert d['state']=='plan_only' and d['database_or_network_calls'] is False;print(json.dumps({'state':'enrollment_default_linux_plan_verified','uid':os.getuid(),'token_database_or_network_calls':False}))"
+      ]
+    }
+  ],
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/enrollment:beta-8e2a163"
+  ],
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "diskSizeGb": 100
+  },
+  "timeout": "600s",
+  "tags": [
+    "ocean-v1-beta",
+    "enrollment-source-8e2a163"
+  ]
+}

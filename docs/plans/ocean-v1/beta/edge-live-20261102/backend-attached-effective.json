@@ -1,0 +1,27 @@
+{
+  "affinityCookieTtlSec": 0,
+  "backends": [
+    {
+      "balancingMode": "UTILIZATION",
+      "capacityScaler": 1.0,
+      "group": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/regions/asia-northeast1/networkEndpointGroups/ocean-v1-beta-serving-neg"
+    }
+  ],
+  "connectionDraining": {
+    "drainingTimeoutSec": 0
+  },
+  "creationTimestamp": "2026-11-01T22:20:11.581-08:00",
+  "description": "",
+  "enableCDN": false,
+  "fingerprint": "oUuHLJ48fy0=",
+  "id": "6496607774502655348",
+  "kind": "compute#backendService",
+  "loadBalancingScheme": "EXTERNAL_MANAGED",
+  "name": "ocean-v1-beta-serving-backend",
+  "port": 80,
+  "portName": "http",
+  "protocol": "HTTP",
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/backendServices/ocean-v1-beta-serving-backend",
+  "sessionAffinity": "NONE",
+  "timeoutSec": 30
+}

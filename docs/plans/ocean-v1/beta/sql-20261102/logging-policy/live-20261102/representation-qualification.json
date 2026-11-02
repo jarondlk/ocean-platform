@@ -1,0 +1,14 @@
+{
+  "first_attempt_mutation": false,
+  "reason": "v1 versus gcloud beta4 representation-only fields",
+  "extra_v1_fields": {
+    "assistiveTroubleshootingEnabled": false,
+    "authorizedGaeApplications": [],
+    "recreateReplicasOnPrimaryCrash": true
+  },
+  "extra_v1_ip_field": {
+    "authorizedNetworks": []
+  },
+  "settingsVersion": "2",
+  "same_api_fresh_comparison_required": true
+}

@@ -1,0 +1,17 @@
+{
+  "IPAddress": "136.81.62.56",
+  "IPProtocol": "TCP",
+  "creationTimestamp": "2026-11-01T22:22:13.498-08:00",
+  "description": "",
+  "fingerprint": "z6Pcx7BtwVk=",
+  "id": "2447625281453003514",
+  "kind": "compute#forwardingRule",
+  "labelFingerprint": "42WmSpB8rSM=",
+  "loadBalancingScheme": "EXTERNAL_MANAGED",
+  "name": "ocean-v1-beta-serving-https",
+  "networkTier": "PREMIUM",
+  "portRange": "443-443",
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/forwardingRules/ocean-v1-beta-serving-https",
+  "selfLinkWithId": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/forwardingRules/2447625281453003514",
+  "target": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/targetHttpsProxies/ocean-v1-beta-serving-https-proxy"
+}

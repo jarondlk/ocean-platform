@@ -1,0 +1,46 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/serving-frontend:beta-6f03f9d",
+        "."
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "entrypoint": "sh",
+      "args": [
+        "-c",
+        "set -eu\nbeta_probe_cid=$(docker run --detach --rm --network=none --read-only --cap-drop=ALL --security-opt=no-new-privileges --memory=512m --env K_SERVICE=ocean-v1-beta-serving --env DEPLOYMENT_ENV=production --env AUTH_MODE=required --env ENABLE_MOCK_LOGIN=false --env PERSIST_LOCAL_CHAT=false --env AUTH_URL=https://beta.oceaninfobio.com --env V1_PUBLIC_ORIGIN=https://beta.oceaninfobio.com --env V1_API_ORIGIN=http://127.0.0.1:8000 --env V1_INTERNAL_AUTH_ISSUER=ocean-v1-frontend --env V1_INTERNAL_AUTH_AUDIENCE=ocean-v1-api --env V1_AUTH_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA --env V1_INTERNAL_AUTH_SECRET=BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB --env V1_GOOGLE_CLIENT_ID=fixture-client.apps.googleusercontent.com --env V1_GOOGLE_CLIENT_SECRET=synthetic-fixture-client-secret asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/serving-frontend:beta-6f03f9d)\ntrap 'docker rm -f \"$beta_probe_cid\" >/dev/null 2>&1 || true' EXIT\ndocker exec \"$beta_probe_cid\" node -e 'const http=require('\"'\"'node:http'\"'\"'),fs=require('\"'\"'node:fs'\"'\"'),crypto=require('\"'\"'node:crypto'\"'\"');const base={Host:'\"'\"'beta.oceaninfobio.com'\"'\"','\"'\"'X-Forwarded-Host'\"'\"':'\"'\"'beta.oceaninfobio.com'\"'\"','\"'\"'X-Forwarded-Proto'\"'\"':'\"'\"'https'\"'\"','\"'\"'X-Forwarded-Port'\"'\"':'\"'\"'443'\"'\"',Forwarded:'\"'\"'for=192.0.2.1;proto=http;host=transport.invalid'\"'\"'};const call=(path,extra={},method='\"'\"'GET'\"'\"')=>new Promise((resolve,reject)=>{const r=http.request({hostname:'\"'\"'127.0.0.1'\"'\"',port:8080,path,method,headers:{...base,...extra}},s=>{let b='\"'\"''\"'\"';s.on('\"'\"'data'\"'\"',c=>b+=c);s.on('\"'\"'end'\"'\"',()=>resolve({status:s.statusCode,body:b}));});r.on('\"'\"'error'\"'\"',reject);r.setTimeout(4000,()=>r.destroy(new Error('\"'\"'bounded request'\"'\"')));r.end();});(async()=>{let login;for(let i=0;i<50;i++){try{login=await call('\"'\"'/login'\"'\"');if(login.status===200)break;}catch{}await new Promise(r=>setTimeout(r,200));}if(!login||login.status!==200||!login.body.includes('\"'\"'Sign in with Google'\"'\"'))throw new Error('\"'\"'login not200'\"'\"');const bad=await call('\"'\"'/login'\"'\"',{Host:'\"'\"'wrong.invalid'\"'\"'});if(bad.status!==403)throw new Error('\"'\"'host guard'\"'\"');const origin=await call('\"'\"'/login'\"'\"',{Origin:'\"'\"'https://sibling.invalid'\"'\"'},'\"'\"'POST'\"'\"');if(origin.status!==403)throw new Error('\"'\"'origin guard'\"'\"');const runtime=await call('\"'\"'/api/runtime/v1/runtime'\"'\"');if(runtime.status!==401)throw new Error('\"'\"'runtime guard'\"'\"');const css=login.body.match(/href=\"([^\"]+\\.css[^\"]*)\"/);let cssStatus=null;if(css){cssStatus=(await call(css[1])).status;if(cssStatus!==200)throw new Error('\"'\"'css guard'\"'\"');}const m=JSON.parse(fs.readFileSync('\"'\"'/opt/ocean/serving-frontend-manifest.json'\"'\"'));if(m.revision!=='\"'\"'6f03f9d37d29b4ebeefc7c7fc35d61bc6ef495cb'\"'\"'||crypto.createHash('\"'\"'sha256'\"'\"').update(fs.readFileSync('\"'\"'/opt/ocean/serving-frontend-adapter.cjs'\"'\"')).digest('\"'\"'hex'\"'\"')!==m.source_pins['\"'\"'forwarded-adapter.cjs'\"'\"'])throw new Error('\"'\"'manifest'\"'\"');if(process.getuid()===0)throw new Error('\"'\"'root'\"'\"');console.log(JSON.stringify({state:'\"'\"'actual_linux_next_login_transport_verified'\"'\"',revision:m.revision,uid:process.getuid(),forwarded_login:200,wrong_host:bad.status,wrong_origin:origin.status,unauthenticated_runtime:runtime.status,css_status:cssStatus,google_database_or_real_credentials_used:false,network:'\"'\"'none'\"'\"'}));})().catch(()=>{console.error('\"'\"'bounded frontend HTTP qualification failed'\"'\"');process.exitCode=1;});' > /workspace/frontend-http-proof.json\ncat /workspace/frontend-http-proof.json\ndocker rm -f \"$beta_probe_cid\" >/dev/null\ntrap - EXIT\n"
+      ]
+    }
+  ],
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/serving-frontend:beta-6f03f9d"
+  ],
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "diskSizeGb": 100
+  },
+  "timeout": "600s",
+  "tags": [
+    "ocean-v1-beta",
+    "frontend-transport-6f03f9d"
+  ],
+  "artifacts": {
+    "objects": {
+      "location": "gs://ocean-v1-beta-20261101-build-source/smoke/frontend-6f03f9d/",
+      "paths": [
+        "frontend-http-proof.json"
+      ]
+    }
+  }
+}

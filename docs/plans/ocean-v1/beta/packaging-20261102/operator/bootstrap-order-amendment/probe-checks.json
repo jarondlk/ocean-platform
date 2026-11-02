@@ -1,0 +1,28 @@
+{
+  "version": "beta-rollback-capability-probe-pure-v1",
+  "passed": 20,
+  "checks": [
+    "probe captures creator-grantor behavior without claiming bootstrap",
+    "probe always rolls back and verifies from another connection",
+    "probe touches only fixed NOLOGIN role/default/membership",
+    "provider refusal and original inventories remain explicit",
+    "probe captures creator-grantor behavior without claiming bootstrap",
+    "probe always rolls back and verifies from another connection",
+    "probe touches only fixed NOLOGIN role/default/membership",
+    "provider refusal and original inventories remain explicit",
+    "SQL refusal is metadata-only and still rolls back",
+    "existing probe is refused without altering/deleting it",
+    "unreadable baseline rolls back before any probe mutation",
+    "failed absence verification closes qualification",
+    "qualify keeps exact target/source confirmations without application passwords",
+    "qualify preserves source/target/execution rejection",
+    "qualify preserves source/target/execution rejection",
+    "qualify preserves source/target/execution rejection",
+    "qualifier inspection result controls exit while finalizer always runs",
+    "qualifier inspection result controls exit while finalizer always runs",
+    "hidden settings remain explicit without an authorization claim",
+    "metadata has no password or query catalogue read"
+  ],
+  "cloud_database_or_native_actions": false,
+  "secret_generation_or_password_sql": false
+}

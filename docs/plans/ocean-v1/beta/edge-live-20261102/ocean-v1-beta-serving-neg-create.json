@@ -1,0 +1,13 @@
+{
+  "cloudRun": {
+    "service": "ocean-v1-beta-serving"
+  },
+  "creationTimestamp": "2026-11-01T22:20:07.642-08:00",
+  "id": "1988727074055361912",
+  "kind": "compute#networkEndpointGroup",
+  "name": "ocean-v1-beta-serving-neg",
+  "networkEndpointType": "SERVERLESS",
+  "region": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/regions/asia-northeast1",
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/regions/asia-northeast1/networkEndpointGroups/ocean-v1-beta-serving-neg",
+  "size": 0
+}

@@ -1,0 +1,23 @@
+{
+  "qualification": "Actual inspected local source/root receipts, not live cloud attestation.",
+  "sha256": {
+    "api/v1_host.py": "c6b25a222789fdcc9d6b80eeef1da0c74506a6c4e649e386300e5d587f671618",
+    "deploy/gcp/beta/api/Dockerfile": "c33ff6734ff4187d26aeeaa78927d628d510c05973241bd1015d14479ff40c82",
+    "deploy/gcp/beta/api/entry.py": "f8de983e45be087c96c5eceda061aec4eb60c256d479d238d0adca88f169d1a1",
+    "deploy/gcp/beta/frontend/Dockerfile": "e39faa9d4ba507c6bc7db2813a50aad7d098c2a44fa82af984855ee4a79b955d",
+    "docs/plans/ocean-v1/beta/builds-20261102/api-final-readback.json": "2587b640ef8d20848a6e117c40aad26a1281b7421baa577391b8da607cc9cb30",
+    "docs/plans/ocean-v1/beta/builds-20261102/container-smoke-receipt.json": "d1bb54691237aa433fc64022ddaf28de6b16da23cbea96287f7de616ff39a889",
+    "docs/plans/ocean-v1/beta/builds-20261102/frontend-final-readback.json": "513c6bbc6a3bffa560b899aae400f105cb175a4e7f58127cb7fa93ef5d0fea36",
+    "docs/plans/ocean-v1/beta/dns-20261102/certificate-active-20261102.json": "a463f79844ea68b94d4b8fad270b46c937d2265a81f1d9e5bbf78905cdb8fa78",
+    "docs/plans/ocean-v1/beta/oauth-20261102/credential-installation.json": "d89d6b86df96a30af61c4b746032ab4059832e5b8967d0df5741e76b3ff9221d",
+    "docs/plans/ocean-v1/beta/quotes-20261102/catalogue-candidates.json": "8aaa7fd3f18e7241cfdc7e8c7e6e275e03afea780f6933980929ee318123d2e9",
+    "docs/plans/ocean-v1/beta/quotes-20261102/cost-qualification.json": "1cf9f42e075254f9ac3710e77ea39011c7812b544eec58e89789ff16826631db",
+    "docs/plans/ocean-v1/beta/quotes-20261102/selected-prices.json": "6a5e91c4661e7c5720af9a5a6f7c7b59bad6971bf1683b177bf9a436f9d7e07b",
+    "docs/plans/ocean-v1/beta/sql-20261102/proxy-image.json": "f76693bba9a56f2913466ba1a8aadd1735a586cf7348c4e90c98250759d27f10",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/live-credentials-20261102.json": "b7225e621e72a11acfeda4837f2186a503a6ae46fe16995ef90a6568ca792fde",
+    "frontend-v1/hosting/lib/auth-config.ts": "47cfe2dbd7672576987efdaea7c71654ac3a19944d96502ccb5ceac007591325",
+    "frontend-v1/hosting/lib/settings.ts": "ea7754cc5c92466f0621ec64eed367c6a474ba59dc3fdb16d9943127a0d01468",
+    "frontend-v1/hosting/middleware.ts": "99d7599d4c3f6e023708905523a968a178089b9c5958eddc5c8645a750ea188c"
+  },
+  "version": "beta-hosting-inspected-inputs-v1"
+}

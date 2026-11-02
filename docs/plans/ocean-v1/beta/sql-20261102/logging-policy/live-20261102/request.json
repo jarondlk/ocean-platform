@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "settingsVersion": "2",
+    "databaseFlags": [
+      {
+        "name": "log_min_error_statement",
+        "value": "panic"
+      },
+      {
+        "name": "log_statement",
+        "value": "none"
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "artifact_pins": {
+    "docs/plans/ocean-v1/beta/packaging-20261102/serving-api/README.md": "73244652ae14d6d16d6039aa5108e5ff35a90cac0592f14a0e9691fe47c77e4e",
+    "docs/plans/ocean-v1/beta/packaging-20261102/serving-api/checks.json": "41a0e4e9ae7997261a3fb37a274caca1ca7fc8a6b209352aa3e2d0d7f172680e",
+    "docs/plans/ocean-v1/beta/packaging-20261102/serving-api/checks.py": "42ad140957c473d5243fe59fd9094550a0cac11a79b64e66b0bec66718285553",
+    "docs/plans/ocean-v1/beta/packaging-20261102/serving-api/verify.py": "a21415727c35e9674d4a1c5fa896e210b7daf5e174b94ae4d135af8106bf5d9e"
+  },
+  "cloud_calls_performed": false,
+  "commit_created": false,
+  "database_or_native_tests_run": false,
+  "follow_up": "Root reviews/commits exact package source, prepares new committed context, builds immutable derived image and proves regular root-owned0444 file plus inherited UID/ENTRYPOINT/CMD. Later renderer amendment selects new image/path while preserving the original hosting proposal.",
+  "image_built": false,
+  "linux_file_proof_performed": false,
+  "predecessor_metadata_pins": {
+    "docs/plans/ocean-v1/beta/checkpoint-20261102/source-supersession.json": "f6554e00785beb832d9c6113a4b9bbb1338977f36c553506efd4657854f5e0e9",
+    "docs/plans/ocean-v1/beta/hosting-plan-20261102/artifacts.json": "b68134f08cfba0479e9c9d87f97560f126d9f10b0f3813e9b489692fa31149da",
+    "docs/plans/ocean-v1/beta/hosting-plan-20261102/inspected-inputs.json": "0e1c716d58152ca1c34d786ad0e8797c78b309cce4e4c598642c4b6e54fc2a13",
+    "docs/plans/ocean-v1/evidence/C27/release-manifest.json": "40a9949260ae6a3b346a16038565a55a236075c695bfd1b7675c7b5fcb474bd3"
+  },
+  "preservation": {
+    "application_source_paths": 880,
+    "hosting_inspected_inputs": 17,
+    "old_receipts_changed": false,
+    "original_hosting_proposal_changed": false
+  },
+  "pure_checks_passed": 26,
+  "real_credentials_used": false,
+  "recorded_on": "2026-11-02 JST",
+  "source_pins": {
+    "deploy/gcp/beta/serving-api/Dockerfile": "ad612ab000e5751d017e7ee63089162f3b9a398807f055a88b820429c8c7f7d1",
+    "deploy/gcp/beta/serving-api/api-host-config.json": "09d474b588a13273281195ba30159266bc02a9f12187d55620a0bd5fc588cf06",
+    "deploy/gcp/beta/serving-api/prepare_context.py": "34617873e453842f744887ae0f3cb6da87cb63352d1d4f3d1e3d8ff2eb30c0a6"
+  },
+  "state": "local config-only package complete; source checkpoint and actual image pending",
+  "successful_committed_context_export": "pending source checkpoint",
+  "version": "beta-serving-api-configuration-layer-receipt-v1"
+}

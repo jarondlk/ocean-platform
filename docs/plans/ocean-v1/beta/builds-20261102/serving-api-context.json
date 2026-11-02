@@ -1,0 +1,12 @@
+{
+  "revision": "dcde1ef2c5332e9543c826b6185c5e746fbde410",
+  "base_api_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "base_api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+  "context_files": [
+    "Dockerfile",
+    "api-host-config.json",
+    "serving-manifest.json"
+  ],
+  "manifest_sha256": "ded67d94fca7da0a674a5334b2cb22bbebba7e3909a070c624c49548eb5b5eba",
+  "api_host_config_sha256": "09d474b588a13273281195ba30159266bc02a9f12187d55620a0bd5fc588cf06"
+}

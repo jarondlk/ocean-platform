@@ -1,155 +1,239 @@
 # Beta deployment continuation — 2026-11-02 JST
 
-State: **authenticated host/API software delivery accepted; two immutable images
-and actual Linux container smoke accepted; private SQL and an empty beta DB exist;
-beta DNS delegation applied with explicit approval. Public hosting is not deployed.**
-**Live bootstrap hold:** original operator756c7a7 has a confirmed plaintext-password SQL logging risk and must not be executed. The reviewed replacement8b06a1b is now source-qualified (32pure+26guard+48actual native checks) and its renderer reference is updated. Its new immutable image, actual CloudSQL privacy profile and live stage/proxy qualification remain gated by SDK reauthentication. No live values or role creation have occurred.
+State: **Public beta login is LIVE at https://beta.oceaninfobio.com/login with
+valid TLS. Private SQL bootstrap, migrations through `20261027_0021`, and serving
+grants succeeded. The three-container frontend/API/private-proxy revision is
+Ready; the approved administrator/internal account is enrolled and real Google
+sign-in plus authenticated shell access succeeded.**
+Root is the sole cloud writer. Branch `overhaul`; scheduler remains PAUSED.
+The user prioritizes access now and explicitly defers lengthy broader checks.
 
-Branch `overhaul`. Scheduler stays PAUSED. All original C26/C27/scientific receipts
-remain immutable; no further numbered component or automation is created.
+## Latest actual continuation — public beta milestone
 
-## Source and accepted software
+Source `6f03f9d37d29b4ebeefc7c7fc35d61bc6ef495cb` and its predecessors
+`8e2a163`, `094841c`, `dcde1ef` are pushed to `overhaul`. Accepted application
+bytes remain unchanged; deployment wrappers have separate source/evidence.
+
+The independent beta edge is deployed: global Premium IP `136.81.62.56`, one
+443 forwarding rule, HTTPS proxy/certificate map, URL map, backend service and
+Tokyo serverless NEG. The exact beta certificate is ACTIVE. Child-zone A record
+`beta.oceaninfobio.com. -> 136.81.62.56`, TTL300, is publicly resolving. No further
+legacy/parent-zone changes occurred. Actual public normal-DNS login is200/TLS
+verified, CSS200, wrong hostname403, correct unauthenticated `/v1/runtime`401.
+The earlier optional build smoke failed and is preserved; its protected route
+was incorrectly `/api/runtime/v1/runtime` (live404), not the actual `/v1/runtime`.
+No claim is made that this failed optional smoke passed.
+
+Cloud Run `ocean-v1-beta-serving` has default URL disabled, LB-only ingress,
+application authentication, min0/max1 and closed dispatch flags. Frontend-only
+revision00003-frs made the login publicly accessible. Generation4 revision00004-prr attached the real API and private SQL proxy.
+Generation5 added a deployment-only startup wait for loopback API health before
+starting Next, keeping startup CPU allocated until the API is ready while retaining
+request billing/min0. Current generation6 revision
+`ocean-v1-beta-serving-00006-sd9` is Ready and enables only `ENABLE_V1_SHELL`;
+all other ENABLE_V1 flags remain false, authentication remains required. Runtime identity has only the existing three auth/OAuth secret reads,
+one exact serving-DSN secret read and instance-conditioned Cloud SQL Client.
+[Public edge evidence](../beta/edge-live-20261102/),
+[backend attachment](../beta/backend-live-20261102/).
+
+Actual images (all under the beta Tokyo registry except the official proxy):
+
+- `serving-frontend@sha256:db0b822805cd3599abf33a5a05b931a0d05c2c337b87381927b4dc6233eb77e2`, source6f03f9d, successful build6872f1eb. Its14 actual Node HTTP checks pass. The deployment-only adapter removes Cloud Run's redundant RFC Forwarded field only after exact canonical beta transport checks; accepted Next/auth sources stay unchanged. Temporary secret-free diagnostic revision00002 is inactive.
+- `serving-api@sha256:28f769ee6b44cb46b10c936f045e609bb83ad9d9bc8ccefa98603801a52157ab`, sourcedcde1ef, builde539fd8a. Config-only layer over accepted APIf2e; root-owned0444 `/opt/ocean/beta-host-config.json`, unchanged source validation, nonrootUID10001.
+- Official proxy2.26.3 `gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736`, private IP/loopback5432.
+
+Actual private Cloud SQL qualification succeeded: readback-r2gk5 observed initial
+managed ownership; rollback-only qualify-xk4cm found no automatic memberships,
+and left the fixed NOLOGIN probe absent. Native failure receipts remain immutable.
+A reviewed one-flag `pg_stat_statements.track_utility=off` overlay was applied,
+then fresh-session owner/bootstrap receipts verified it. Explicit empty-database
+normalization to ownerpostgres succeeded under operator source8e2a163/image
+`operator@sha256:0a89057b7459342e191e4b194628bee00cc7544749489df9f85f31508399e7b3`
+(buildc6339079). The owner operation's23 guards and independent review passed.
+
+Selected once, actual jobs all succeeded with structured operator completion and
+successful provider execution:
+
+- Owner `ocean-v1-beta-db-normalize-owner-rljsn`.
+- Bootstrap `ocean-v1-beta-db-bootstrap-mktnv`: vector0.8.5, two restricted LOGIN roles, no memberships.
+- Migrate `ocean-v1-beta-db-migrate-wvzh4`: all migrations through0021.
+- Finalize `ocean-v1-beta-db-finalize-kbwr5`: exact serving table/column grants verified; no PUBLIC ACL or broad all-tables grant.
+
+[Actual database stages](../beta/sql-20261102/backend-8e2a163/). Do not rerun
+these executions, reinstall existing credentials or reset the database. Proxy
+shutdown was acknowledged; the previously qualified distinction between provider
+successful completion and a separately exposed operator exit line remains.
+
+User selected exactly one verified Google **admin/internal** account for
+`dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp`. Enrollment source8e2a163 and actual
+image `enrollment@sha256:65592dada494d70dd5cb13cf923fc4c67172a7aa20648cb6ee5ce1c05f7fa564`
+(build634ba0bf) are ready. Genuine Google SDK signature/issuer/audience/email verification succeeded.
+One-shot execution `ocean-v1-beta-enrollment-first-account-g58sh` SUCCEEDED; its
+structured result and new-connection readback verify exactly one active verified
+admin/internal account. Temporary enrollment token accessor was removed and its
+version1 destroyed after terminal success. The original unbounded log reader
+refused a continuation token; an exact execution-time window found one outcome
+and no continuation, recorded as a separate reader amendment. No account retry.
+Real browser Google sign-in with that approved account returned to the beta root
+and loaded authenticated navigation with the Administrator/Internal account badge.
+[Enrollment evidence](../beta/enrollment-20261102/).
+
+The immediate access milestone is complete. Screenshot and browser-observation
+receipt are in backend-live-20261102. Research/catalogue are honestly unavailable
+without configured services/data; Settings/About and the authenticated shell
+are visible. Two temporary bootstrap password accessors were also removed after
+all database stages completed. Preserve the working beta and continue remaining
+service/data integration and broader checks separately. Scientific/queue/worker
+dispatch, broad system/release acceptance and P2 D26-07 remain explicit later
+gates. No release tag or complete-platform claim. Historical prospective sections
+below must be read against this actual current continuation.
+
+## Accepted software and images
 
 App source `50566b7cfa4a0d8ee19686f0109e74f3a2a45d45` passes all five required
 jobs in [CI41322838746](https://github.com/jarondlk/ocean-platform/actions/runs/41322838746):
-6747backend passes/626explicit skips/83.67%coverage (70%threshold unchanged),
-318actual PostgreSQL/16capability skips plus migration/upsert/backup/restore;
-132legacy/1051prototype/50host-unit+1actual standalone HTTP cases; all frontend
-builds/typechecks/production audits pass. Conditional push-only dependency review
-is skipped as configured. [Separate hosted delivery](../beta/checkpoint-20261102/hosted-delivery/delivery.json).
+6747 backend passes/626 explicit skips/83.67% coverage;318 actual PostgreSQL/
+16 capability skips plus migration/upsert/backup/restore;132 legacy/1051 prototype/
+50 host-unit+1 actual standalone HTTP cases. Coverage threshold remains70%.
+The conditional push-only dependency review is skipped as configured.
+[Hosted delivery](../beta/checkpoint-20261102/hosted-delivery/delivery.json).
 
-Current880-path app identity `sha256:1d3b93f3abbf914d165982a43d4a24f830d975712029e7e5570cb0b868828128`
-reconciles841unchanged accepted paths,3intentional supersessions (workflow,
-optional UI fetcher, static tsconfig exclusion) and36additive app paths.
-5368prior evidence files,90C27 artifacts and42protected paths verify. Later
-packaging commits preserve those app bytes; their own wrappers have separate
-proof and are not falsely attributed to this earlier hosted run.
+The current880-path app identity is
+`sha256:1d3b93f3abbf914d165982a43d4a24f830d975712029e7e5570cb0b868828128`:
+841 unchanged accepted paths,3 intentional supersessions and36 additive paths.
+5368 prior receipts,90 original C27 artifacts and42 protected paths are retained.
+Later deployment wrappers have separate source/evidence; their changes are not
+attributed to that earlier hosted app run. P2 D26-07 remains open.
 
-Pushed packaging `7924a28`, original smoke `74f2262`, diagnostic correction
-`ded63b5`, original operator `756c7a7`, cloud/CI checkpoint `6f5a385` and setup `8075542` are on `overhaul`. Password-safe source `8b06a1b` is the current required operator successor; its push is part of this checkpoint. Original native and
-failed smoke attempts remain preserved. Unrelated root README, legacy deployment
-template and scientific/audit/benchmark files remain excluded from commits.
-
-## Cloud identity and cost controls
-
-Only new beta project `ocean-v1-beta-20261101`, number534831104543, Tokyo
-`asia-northeast1`; existing billing linked without altering its arrangement.
-**Ambient gcloud project is still legacy: every operation needs an explicit
-project.** The sole approved legacy-project exception is the new beta NS record
-below; never broaden it to apex/www/legacy deployment/data/IAM changes.
-
-Beta-only gross ¥50,000/month all-service alert (50/75/90/100%) and separate
-¥3,000/month Cloud Run cap were saved/read back. Neither is a whole-project hard
-cap. Initial beta-only target is¥50,000; notify before exceeding it, despite the
-user's stated¥100,000 upper amount. [28actual public JPY SKU quote](../beta/quotes-20261102/README.md)
-qualifies a bounded31-day scenario at¥35,604.05 including10% cost reserve and no
-free credits. This is conditional usage, not an invoice or tax attestation.
-No always-on worker or model/data usage is budgeted. Original stress envelope
-remains historical. Initial image-build allocation is¥100; bounded plans retain
-actual attempts and declared maxima.
-
-Twenty empty foundation operations verified: registry, customVPC/subnet,
-4dedicated initially ungranted runtime identities,4private uniform buckets,
-8empty Secret Manager containers and a PAUSED queue. The unused default Compute
-identity's automatic Editor grant was removed only in beta; other then-current
-bindings preserved. Dedicated build identity has only beta-repository write,
-source-bucket read, beta log-write and conditional create-only smoke evidence
-prefix access. No deploy/data/secret access was granted to the builder.
-
-## Actual images and container evidence
-
-Source-only contexts from `7924a28` built successfully with pinned official bases:
+Source-only containers built from packaging `7924a28`:
 
 - Frontend: `asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc`
 - API: `asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f`
+- Password-safe8b operator: `asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator@sha256:ccd38dae9065b73e89865434123abe07d984af906bf3da626961e727c9a37f3d`
 
-[Actual container smoke](../beta/builds-20261102/container-smoke-receipt.json)
-passes nonroot/Linux/embedded source manifest checks, real API import without
-legacy entry or DB credentials, unconfigured API startup refusal, actual login
-and built CSS200, wrong-host403 and unauthenticated runtime401. All owned
-containers removed; network disabled, no real OAuth/DB/scientific claim.
-First smoke07cd8231 failed after API checks; a confirmed harness assert.match
-string/RegExp defect was fixed and bounded diagnostics added. Full first failure
-attribution stays qualified because its full receipt was not uploaded. Corrected
-run32ed8ad4 passes and its private artifact was downloaded/verified. Both preserved.
+Operator build `e403b44c-e92e-48fa-b94a-6b43d6a84b84` inasia-northeast1
+is SUCCESS. Earlier756operator is superseded and must not be executed.
+[Actual Linux smoke](../beta/builds-20261102/container-smoke-receipt.json)
+for the frontend/API passes; the first failed harness attempt remains preserved.
+Operator32pure/26guard/48actual native password-safety evidence and independent
+review remain historical accepted local evidence, not CloudSQL qualification.
 
-Reviewed database operator source `756c7a7` has26guards/38actual native tests and
-separate independent review after fixing PUBLIC/effective column/delegation
-privilege drift refusal. Original23-case receipt/source and all intermediate
-failures remain frozen. [Amendment](../beta/packaging-20261102/operator/effective-privileges-amendment/README.md).
-Operator build **ae32526a-ba81-4d68-8251-0a2f5592f5f9** was submitted; its final
-state/digest remain **unverified** because CLI reauthentication is now required.
-Resume by describing this exact existing build, never resubmit a duplicate.
+## Cloud target and financial boundary
 
-## Actual private database
+Only new beta project `ocean-v1-beta-20261101`, number534831104543, Tokyo
+asia-northeast1. Ambient gcloud project remains legacy: **every command must use
+an explicit project**. CLI sign-in completed and actual authenticated reads and
+reviewed writes succeeded; do not restart sign-in absent a new auth failure.
 
-Private-only Enterprise PostgreSQL16 `ocean-v1-beta-sql` and empty `ocean_v1_beta`
-exist. Actual RUNNABLE/Tokyo-zone-a/db-custom-2-7680/ZONAL/SSD20GiB/growth-limit30/
-private10.93.0.0/20/no public IP/ENCRYPTED_ONLY/connectorREQUIRED/deletion-protection/
-backup7/PITR7 match the concrete plan. PITR logs are actually CLOUD_STORAGE;
-quoted log allowance is labelled, not misrepresented as actual SSD billing.
-[Settings proof](../beta/sql-20261102/settings-verification.json).
-No cloud migration, application role, user enrollment or secret version was
-created yet. C23 Cloud SQL limited-superuser/function-owner qualification remains
-an explicit separate gate; no weakening of accepted role checks is permitted.
+Beta-only target is¥50,000/month. Notify before exceeding it; the stated¥100,000
+upper amount does not remove that notice gate. Saved beta-only all-service¥50k
+alert and Cloud Run¥3k cap remain; neither is a whole-project hard cap.
+The [31-day bounded public JPY scenario](../beta/quotes-20261102/README.md)
+is¥35,604.05 with10% reserve and no credits. Actual usage/tax/invoice are separate.
+No always-on worker/model/data acquisition is budgeted.
 
-Private credential and Cloud Run job setup code is being prepared under
-`deploy/gcp/beta/setup` with default read-only planning, exact target preflight,
-zero-existing-version requirement, private coupled secret values and postgres
-password last. The installer/renderer passed50mocked guards and independent review; no real value, SDK call or job was created. Apply still waits for reauthentication and completion of the separate operator password-safety amendment. The renderer now selects8b06a1b through a separate one-constant supersession with four synthetic binding checks. The old50-case setup source/artifacts remain immutable. Use [current renderer verifier](../beta/sql-20261102/setup/operator-revision-amendment/verify.py); the original setup verifier intentionally targets old807source. The new image digest and real refs are still required.
-No fake OAuth client or fabricated provider/data may be mounted in production.
+Private VPC/subnet, registry,4private buckets, initially separate runtime
+identities,8initial empty secret containers and PAUSED Cloud Tasks queue exist.
+The default Compute identity's automatic Editor was removed only in beta.
+The dedicated build account has narrowly scoped source/registry/log access.
+No legacy deployment/data/IAM/billing change is authorized.
 
-## Actual beta DNS/TLS
+## Private SQL and installed credentials
 
-New beta project public child zone `ocean-v1-beta-domain` owns
-`beta.oceaninfobio.com.` at ns-cloud-e1/e2/e3/e4.googledomains.com. Per-project DNS
-authorization and its exact CNAME exist in the child zone. Global managed cert
-`ocean-v1-beta-domain-cert` and exact-host map/entry exist; last observed certificate
-state was **PROVISIONING**, map entryACTIVE. Public Google DNS resolves both the
-beta NS set and authorization CNAME. Current certificate issuance still requires
-a fresh readback; no TLS endpoint, publicA/AAAA, LB, proxy or IP is published.
+Private-only Enterprise PG16 `ocean-v1-beta-sql`, independent DB`ocean_v1_beta`,
+Tokyo-zone-a/db-custom-2-7680/ZONAL/SSD20GiB/growth-limit30/private10.93.0.3,
+connectorREQUIRED/ENCRYPTED_ONLY/backup7/PITR7/deletion protection are verified.
+[Original settings](../beta/sql-20261102/settings-verification.json).
 
-Automatic review initially rejected touching the legacy authoritative parent
-zone. The user then explicitly approved exactly one new NS delegation in this
-chat. It was applied to data-infra-infobio/oceaninfobio-com, TTL300, no deletions.
-[Authorization](../beta/dns-20261102/delegation-user-authorization.json),
+The reviewed logging overlay log_statement=none/log_min_error_statement=panic
+was applied once, operationDONE, settingsVersion3/RUNNABLE, unrelated settings
+preserved. QueryInsights remains defaultfalse. First preflight stopped on v1 vs
+CLI beta4 response representation differences before mutation; the difference
+was explicitly qualified and a fresh same-API comparison preceded application.
+[Live flag evidence](../beta/sql-20261102/logging-policy/live-20261102/verification.json).
+Actual session collector/logging attestation remains required before password SQL.
+
+The reviewed installer successfully created4exact Tokyo secret containers and
+installed7coupled versions: auth/internal/bootstrap DSN/migrator DSN/serving DSN/
+migrator password/serving password. Only the independent instance's postgres
+password was updated after all7versions were retained; UPDATE_USER reachedDONE.
+[Metadata receipt](../beta/sql-20261102/setup/live-credentials-20261102.json).
+Never rerun the installer, regenerate values or print/read payloads as diagnostics.
+
+Two dedicated DB identities were created with zero user-managed keys, exactly
+2instance-conditioned CloudSQL Client memberships and4secret-scoped Accessor
+memberships. Unrelated IAM preserved; no project-wide secret access or runtime
+Admin/Editor/key grant. [IAM proof](../beta/sql-20261102/iam-jobs-plan/live-20261102/verification.json).
+
+No actual CloudSQL application role/schema migration has run. A limited-creator
+native rehearsal exposed a deeper automatic creator-membership/grantor issue;
+the proposed ordering-only fix is **not accepted**. Failed run, safe logs and
+complete owned-cluster stop/removal are retained under
+[bootstrap amendment](../beta/packaging-20261102/operator/bootstrap-order-amendment/).
+A source-bound rollback-only qualification stage and finite provider metadata
+are being prepared. Preserve strict zero-membership/finalizer checks; do not
+weaken them or blindly attempt actual role bootstrap.
+
+Actual Cloud Run validateOnly rejected the first body because job.name must be
+empty on create. The owning renderer omits that output-only identity, retaining
+external jobId and every other policy. All4corrected bodies received HTTP200 in
+new validateOnly responses; no job was created/executed or reconciled by those
+requests. Old50/four-case receipts, before-source and failed provider response
+remain immutable. New operator source/revision/digest binding is still required.
+[Create amendment](../beta/sql-20261102/setup/create-request-amendment/README.md).
+
+## Beta domain and real Google OAuth
+
+The exact child zone `beta.oceaninfobio.com` is delegated to e1/e2/e3/e4
+CloudDNS servers. Managed certificate is now **ACTIVE**, exact beta domain
+AUTHORIZED, expiry2027-01-30; map entryACTIVE.
+[Fresh cert readback](../beta/dns-20261102/certificate-active-20261102.json).
+There is no published servingA/AAAA, externalIP/LB/CloudRun service yet.
+
+User specifically approved the single beta NS delegation in legacy project
+`data-infra-infobio` / `oceaninfobio-com`, TTL300. It was applied once; four prior
+non-SOA sets unchanged, provider SOAserial1→2 with other fields preserved.
+[Exact authorization](../beta/dns-20261102/delegation-user-authorization.json),
 [preservation proof](../beta/dns-20261102/parent-preservation-proof.json).
-Four prior non-SOA record sets are byte-equivalent; the DNS service incremented
-SOA serial1→2 with every other SOA field unchanged. The first overly strict
-all-record-byte-equality check stopped on this normal metadata increment; no
-reset or further mutation followed. Do not claim all five prior record bytes
-identical or extend the exception to any other legacy change.
+This exception does not authorize any other legacy mutation.
 
-## Immediate continuation and remaining gates
+User completed Console passkey reauthentication and explicitly approved Google
+API Services User Data Policy plus the independent web client and secret storage.
+OCEAN Beta app remains EXTERNAL/Testing with0test users. Actual web client
+`534831104543-4l3hm9dqd60u320mf73ql0d3s9rsuprn.apps.googleusercontent.com`
+has only `https://beta.oceaninfobio.com/api/auth/callback/google` as redirect,
+no JavaScript origins. App requests only openid/email/profile. Its secret is
+ENABLED numeric version1 in ocean-v1-beta-oauth. It was privately transferred to
+SecretManager; the temporary0600file/0700directory were removed, and no secret,
+its hash or credential-page screenshot was exported into source/chat.
+[OAuth metadata](../beta/oauth-20261102/credential-installation.json).
+The browser is on the public Audience/Testing page; tab3 should be retained for
+continuation. No genuine beta AppUser has been enrolled and no actual callback/
+session exchange is accepted yet. Do not import legacy users or enroll by email.
 
-GCP CLI refresh failed at09:01JST. A new SDK login is waiting in owned PTY98412;
-IABtab1 is the user identity/passkey page. The user was asked to finish and leave
-the verification-code page open; never copy the code/token into chat or source.
-Native Mac controls are locked, but IAB works. No new login is needed if this
-pending flow completes. Check actual session/tab state before starting another.
+## Immediate continuation
 
-Continue independent local setup/review and checkpoint current cloud/CI evidence
-while waiting. After reauthentication, verify the existing operator build and
-actual cert state, then review/apply only the finished private credential/IAM/
-operator jobs. Initial bootstrap/migration/finalize/readback are explicit bounded
-stages with private proxy/directVPC and trusted cleanup, not automatic deployment
-migration. First actual Cloud SQL execution and backups/restores remain unrun.
+Root owns cloud mutation. Complete/read-only review the provider metadata and
+rollback-only qualification amendment, run its owned native checks with honest
+limited-principal results, commit/push the exact source and build an immutable
+new operator image. Bind the renderer to that actual revision/digest and existing
+numeric secret refs. Do not create or execute stale8b bootstrap definitions.
 
-Independent Google OAuth client/account enrollment, real callback/session,
-private runtime/service/provider composition, beta LB/ingress/default-URL/DNS/TLS
-and full UI validation remain required. Real queue/outbox/private invocation and
-retained worker integrations must precede research/experiment dispatch. The bare
-API reports absent science unavailable; no data acquisition/import/legacy-user
-copy or scientific approval is inferred. All20 original live release gates and
-openP2 D26-07 remain; release acceptance is false. No Cloud Run service/job/worker,
-LB/IP, real data, task dispatch or secret value has been deployed by this phase.
+Use fresh target/IAM/job-operation checks. Create reviewed private job definitions
+without running them; verify effective specs/source/SA/network/refs, then actual
+readback/rollback-only qualification before bootstrap→migrate→finalize→readback.
+Every real stage requires safe source-bound output, successful task/job state
+and physical operator/proxy exit evidence. No timeout/retry/reset counts as pass.
+Actual provider privacy, limited-superuser/C23 function-owner and managed
+migration behavior remain gates until demonstrated.
 
-## Current password-safe continuation
-
-[Password amendment](../beta/packaging-20261102/operator/password-safety-amendment/README.md) and its separate independent REVIEW pass:32purechecks,26guard regressions,48actual owned native checks, all cleanup verified. Client libpq supplies only SCRAM verifiers to role SQL, with no plaintext/MD5 fallback. Actual same-session ordinary logging/debug/sampling and finite audit/utility-collector profiles are attested before preparation/binding. Full owned logs and query texts contain neither synthetic plaintext nor verifier; ordinary query metrics remain active. Old756sources/3receipts and intermediate attempts are preserved. This is not universal server-crash redaction or actual CloudSQL acceptance.
-
-New source-only context `/private/tmp/ocean-beta-operator-context-8b06a1b` and [bounded build config](../beta/builds-20261102/operator-password-safe-cloudbuild.json) are prepared **but not submitted**. Oldae32526a remains historical/unverified/superseded. Proposed total initial build ceilings remain below the already planned¥100build allocation; no cloud call occurred for this new image.
-
-After sign-in, fresh exact-target readbacks and the [two-flag privacy plan](../beta/sql-20261102/logging-policy/PLAN.md) precede live bootstrap. Preserve unrelated flags and use fresh settingsVersion; do not silently add unsupported duration/sampling flags. Actual active utility/audit/QueryInsights collection may require its own reviewed minimal adjustment. Never treat local48-case proof as actual provider attestation. No secret versions, real credential values, migrations, application roles, accounts or CloudRun jobs have been created.
-
-The open SDKpage was rechecked and still requests the user's passkey identity confirmation. Complete that flow in IABtab1 and use owned CLI session98412; do not start duplicate sign-in or cloud jobs. No further independent local implementation is required before this next cloud stage. All published hosting/OAuth/science/worker/release gates above remain.
+Complete the concrete hosting plan for one bounded beta frontend/API/privateSQL
+proxy service, real OAuth config and enrolled current account, then LB/certmap/
+childDNS/HTTPS/defaultURL and cookie/UI checks. API loopback listener stays private;
+its source-bound regular config-file and actual startup/probe behavior must be
+qualified, not invented. Queue/outbox/private invocation/retained worker
+integrations must precede any research/experiment dispatch. Absent scientific
+providers report unavailable; no source/data import or scientific approval is
+inferred from GCP permission. All20original live release gates and P2 D26-07 remain;
+release acceptance is false. Keep unrelated/scientific files unmodified and
+excluded from staging. [Cloud checkpoint](../beta/continuation-20261102/cloud-checkpoint.json).

@@ -1,0 +1,59 @@
+{
+  "artifacts": {
+    "images": [
+      "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator:beta-8e2a163"
+    ]
+  },
+  "createTime": "2026-11-02T06:24:14.695489826Z",
+  "id": "c6339079-4284-4c7a-93d0-9ca2c30f400b",
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator:beta-8e2a163"
+  ],
+  "logUrl": "https://console.cloud.google.com/cloud-build/builds;region=asia-northeast1/c6339079-4284-4c7a-93d0-9ca2c30f400b?project=534831104543",
+  "name": "projects/534831104543/locations/asia-northeast1/builds/c6339079-4284-4c7a-93d0-9ca2c30f400b",
+  "options": {
+    "diskSizeGb": "100",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "pool": {},
+    "workerRelease": "legacy"
+  },
+  "projectId": "ocean-v1-beta-20261101",
+  "queueTtl": "3600s",
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793600654245645",
+      "object": "source/1793600653.968752-fec58a8c825346818f65037c4b89e9a1.tgz"
+    }
+  },
+  "sourceProvenance": {
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793600654245645",
+      "object": "source/1793600653.968752-fec58a8c825346818f65037c4b89e9a1.tgz"
+    }
+  },
+  "status": "QUEUED",
+  "steps": [
+    {
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--build-arg=API_IMAGE=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator:beta-8e2a163",
+        "."
+      ],
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "owner-stage-source-8e2a163"
+  ],
+  "timeout": "600s"
+}

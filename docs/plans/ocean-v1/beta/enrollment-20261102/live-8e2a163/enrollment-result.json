@@ -1,0 +1,20 @@
+{
+  "version": "beta-first-account-result-v1",
+  "state": "first_account_enrolled",
+  "project_id": "ocean-v1-beta-20261101",
+  "database": "ocean_v1_beta",
+  "enrollment_revision": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807",
+  "result": {
+    "account_count": 1,
+    "provider": "google",
+    "role": "admin",
+    "account_type": "internal",
+    "status": "active",
+    "identity_verified": true,
+    "subject_or_token_exported": false
+  },
+  "proxy": {
+    "shutdown_requested": true
+  },
+  "token_subject_email_or_raw_logs_exported": false
+}

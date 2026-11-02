@@ -1,0 +1,747 @@
+[
+  {
+    "insertId": "6ae831150009420d848c8d73",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:33.612754191Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:33 Authorizing with Application Default Credentials",
+    "timestamp": "2026-11-02T06:43:33.606733Z"
+  },
+  {
+    "insertId": "6ae83115000b21ad52f3daaa",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:33.948304862Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:33 [ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql] Listening on 127.0.0.1:5432",
+    "timestamp": "2026-11-02T06:43:33.729517Z"
+  },
+  {
+    "insertId": "6ae83115000b21deb7ef8d2a",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:33.948304862Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:33 The proxy has started successfully and is ready for new connections!",
+    "timestamp": "2026-11-02T06:43:33.729566Z"
+  },
+  {
+    "insertId": "6ae83115000b21e596f7f7a0",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:33.948304862Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:33 Starting health check server at 0.0.0.0:9090",
+    "timestamp": "2026-11-02T06:43:33.729573Z"
+  },
+  {
+    "insertId": "6ae83115000b21eb91ee431a",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:33.948304862Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:33 Enabling quitquitquit endpoint at localhost:9091",
+    "timestamp": "2026-11-02T06:43:33.729579Z"
+  },
+  {
+    "insertId": "6ae8311a00049f01c3b0de3b",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-11-02T06:43:38.309840589Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "severity": "INFO",
+    "textPayload": "Default STARTUP HTTP probe succeeded after 2 attempts for container \"sql-proxy\" on port 9090 path \"/readiness\".",
+    "timestamp": "2026-11-02T06:43:38.302849Z"
+  },
+  {
+    "insertId": "6ae8311b000e069ebc87c1a5",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:39.942682556Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:39 [ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql] Accepted connection from 127.0.0.1:42686",
+    "timestamp": "2026-11-02T06:43:39.919198Z"
+  },
+  {
+    "insertId": "6ae8311b000f30717fadab6f",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:40.279834341Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:39 [ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql] client closed the connection",
+    "timestamp": "2026-11-02T06:43:39.995441Z"
+  },
+  {
+    "insertId": "6ae8311b000f332e2e153e83",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:40.279834341Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:39 [ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql] Accepted connection from 127.0.0.1:42698",
+    "timestamp": "2026-11-02T06:43:39.996142Z"
+  },
+  {
+    "insertId": "6ae8311c0000f9ef55bcf639",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:40.279834341Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:40 [ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql] client closed the connection",
+    "timestamp": "2026-11-02T06:43:40.063983Z"
+  },
+  {
+    "insertId": "6ae8311c0001432ff11c635d",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:40.279834341Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:40 /quitquitquit received request. Shutting down...",
+    "timestamp": "2026-11-02T06:43:40.082735Z"
+  },
+  {
+    "insertId": "6ae8311c0001433ec7ec2e5d",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:40.279834341Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "textPayload": "2026/11/02 06:43:40 proxy server error: accept tcp4 127.0.0.1:5432: use of closed network connection",
+    "timestamp": "2026-11-02T06:43:40.082750Z"
+  },
+  {
+    "insertId": "6ae8311c000144a7cc1ca27b",
+    "jsonPayload": {
+      "database": "ocean_v1_beta",
+      "operator_revision": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807",
+      "project_id": "ocean-v1-beta-20261101",
+      "proxy": {
+        "http_status": 200,
+        "proxy_process_exit_observation": "requires Cloud Run per-container execution readback",
+        "shutdown_requested": true
+      },
+      "result": {
+        "database_owner": "postgres",
+        "explicit_role_grant_password_or_application_sql_performed": false,
+        "previous_database_owner": "cloudsqlsuperuser",
+        "public_schema_owner": "pg_database_owner",
+        "public_schema_owner_unchanged": true,
+        "readback": {
+          "C23_execution_enabled": false,
+          "cloudsql_limited_superuser_qualification_claimed": false,
+          "database": "ocean_v1_beta",
+          "extensions": [
+            {
+              "name": "plpgsql",
+              "version": "1.0"
+            }
+          ],
+          "migration_versions": [],
+          "principal": "postgres",
+          "provider_safety": {
+            "current_principal": {
+              "bypass_rls": false,
+              "create_database": true,
+              "create_role": true,
+              "login": true,
+              "name": "postgres",
+              "oid": 16390,
+              "replication": false,
+              "superuser": false
+            },
+            "database_owner": "postgres",
+            "fixed_settings": [
+              {
+                "context": "user",
+                "name": "debug_print_parse",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "user",
+                "name": "debug_print_plan",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "user",
+                "name": "debug_print_rewritten",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "superuser",
+                "name": "log_duration",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "superuser",
+                "name": "log_executor_stats",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "superuser",
+                "name": "log_min_duration_sample",
+                "pending_restart": false,
+                "source": "default",
+                "unit": "ms",
+                "value": "-1"
+              },
+              {
+                "context": "superuser",
+                "name": "log_min_duration_statement",
+                "pending_restart": false,
+                "source": "default",
+                "unit": "ms",
+                "value": "-1"
+              },
+              {
+                "context": "superuser",
+                "name": "log_min_error_statement",
+                "pending_restart": false,
+                "source": "configuration file",
+                "unit": null,
+                "value": "panic"
+              },
+              {
+                "context": "superuser",
+                "name": "log_parser_stats",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "superuser",
+                "name": "log_planner_stats",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "superuser",
+                "name": "log_statement",
+                "pending_restart": false,
+                "source": "configuration file",
+                "unit": null,
+                "value": "none"
+              },
+              {
+                "context": "superuser",
+                "name": "log_statement_stats",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "superuser",
+                "name": "log_transaction_sample_rate",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "0"
+              },
+              {
+                "context": "user",
+                "name": "password_encryption",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "scram-sha-256"
+              },
+              {
+                "context": "superuser",
+                "name": "pg_stat_statements.track",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "top"
+              },
+              {
+                "context": "superuser",
+                "name": "pg_stat_statements.track_utility",
+                "pending_restart": false,
+                "source": "configuration file",
+                "unit": null,
+                "value": "off"
+              },
+              {
+                "context": "user",
+                "name": "search_path",
+                "pending_restart": false,
+                "source": "default",
+                "unit": null,
+                "value": "\"$user\", public"
+              },
+              {
+                "context": "postmaster",
+                "name": "shared_preload_libraries",
+                "pending_restart": false,
+                "source": "configuration file",
+                "unit": null,
+                "value": "dbsecurity,google_app_stats,google_dataplex,google_dbheartbeat,google_insights,iamgroup_management,pg_stat_statements,password_validation"
+              }
+            ],
+            "matching_role_database_overrides": [],
+            "password_sql_authorized_by_this_readback": false,
+            "protected_values_hidden": false,
+            "public_schema_owner": "pg_database_owner",
+            "qualification": "Metadata only; actual password SQL still requires strict separate attestation",
+            "version": "beta-provider-safety-metadata-v1"
+          },
+          "roles": [],
+          "tables": []
+        },
+        "stage": "normalize-owner"
+      },
+      "source_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+      "stage": "normalize-owner",
+      "state": "stage_completed",
+      "version": "ocean-v1-beta-operator-result-v1"
+    },
+    "labels": {
+      "container_name": "operator",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-11-02T06:43:40.279834341Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "timestamp": "2026-11-02T06:43:40.083111Z"
+  },
+  {
+    "insertId": "6ae8311c000228dc426c1def",
+    "labels": {
+      "container_name": "sql-proxy",
+      "instanceId": "00e8a408bde129864f33dded902441dc42ef1fb6ae71f8db89c07ab03a9376b673cbcba8ce3bbeaeabbbccc7de51ce17b8f20b2c41b0bc545a2e15eec67f59ea393b915bff051bff5ab5dfca99f851a07b0ca6314f45ebc5078ce971de",
+      "managed-by": "overhaul",
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn",
+      "run.googleapis.com/task_attempt": "0",
+      "run.googleapis.com/task_index": "0"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-11-02T06:43:40.305665939Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "severity": "INFO",
+    "textPayload": "Container called exit(0).",
+    "timestamp": "2026-11-02T06:43:40.141461Z"
+  },
+  {
+    "insertId": "-txyli3dc02i",
+    "labels": {
+      "run.googleapis.com/execution_name": "ocean-v1-beta-db-normalize-owner-rljsn"
+    },
+    "logName": "projects/ocean-v1-beta-20261101/logs/cloudaudit.googleapis.com%2Fsystem_event",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "methodName": "/Jobs.RunJob",
+      "resourceName": "namespaces/ocean-v1-beta-20261101/executions/ocean-v1-beta-db-normalize-owner-rljsn",
+      "response": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.Execution",
+        "apiVersion": "run.googleapis.com/v1",
+        "kind": "Execution",
+        "metadata": {
+          "annotations": {
+            "run.googleapis.com/container-dependencies": "{\"operator\":[\"sql-proxy\"]}",
+            "run.googleapis.com/creator": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+            "run.googleapis.com/execution-environment": "gen2",
+            "run.googleapis.com/lastModifier": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+            "run.googleapis.com/network-interfaces": "[{\"network\":\"projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network\",\"subnetwork\":\"projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet\"}]",
+            "run.googleapis.com/operation-id": "6d73247d-9ecf-4099-a24a-00f7f5e8f4f0",
+            "run.googleapis.com/vpc-access-egress": "private-ranges-only"
+          },
+          "creationTimestamp": "2026-11-02T06:43:20.167830Z",
+          "generation": 1,
+          "labels": {
+            "cloud.googleapis.com/location": "asia-northeast1",
+            "managed-by": "overhaul",
+            "run.googleapis.com/job": "ocean-v1-beta-db-normalize-owner",
+            "run.googleapis.com/jobGeneration": "1",
+            "run.googleapis.com/jobResourceVersion": "1793601601063522",
+            "run.googleapis.com/jobUid": "b7115a19-cfe3-4c86-99ed-a9fa4074cefa"
+          },
+          "name": "ocean-v1-beta-db-normalize-owner-rljsn",
+          "namespace": "534831104543",
+          "ownerReferences": [
+            {
+              "apiVersion": "serving.knative.dev/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "Job",
+              "name": "ocean-v1-beta-db-normalize-owner",
+              "uid": "b7115a19-cfe3-4c86-99ed-a9fa4074cefa"
+            }
+          ],
+          "resourceVersion": "AAZfRXeWQX8",
+          "selfLink": "/apis/run.googleapis.com/v1/namespaces/534831104543/executions/ocean-v1-beta-db-normalize-owner-rljsn",
+          "uid": "c19ec24a-25ab-4eec-b2f0-1f6f7dbb3423"
+        },
+        "spec": {
+          "parallelism": 1,
+          "taskCount": 1,
+          "template": {
+            "spec": {
+              "containers": [
+                {
+                  "args": [
+                    "normalize-owner",
+                    "--confirm-project",
+                    "ocean-v1-beta-20261101",
+                    "--confirm-database",
+                    "ocean_v1_beta",
+                    "--confirm-source",
+                    "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+                    "--confirm-operator",
+                    "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+                  ],
+                  "env": [
+                    {
+                      "name": "DEPLOYMENT_ENV",
+                      "value": "production"
+                    },
+                    {
+                      "name": "OCEAN_V1_PROJECT_ID",
+                      "value": "ocean-v1-beta-20261101"
+                    },
+                    {
+                      "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+                      "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+                    },
+                    {
+                      "name": "OCEAN_V1_SOURCE_REVISION",
+                      "value": "7924a28e919b1fb751890c694f7b1f9b26b104ff"
+                    },
+                    {
+                      "name": "OCEAN_V1_OPERATOR_REVISION",
+                      "value": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807"
+                    },
+                    {
+                      "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+                      "value": "false"
+                    },
+                    {
+                      "name": "ENABLE_V1_RESEARCH_DISPATCH",
+                      "value": "false"
+                    },
+                    {
+                      "name": "ENABLE_V1_SYNTHESIS",
+                      "value": "false"
+                    },
+                    {
+                      "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+                      "value": "false"
+                    },
+                    {
+                      "name": "OCEAN_V1_OPERATOR_DATABASE_URL",
+                      "valueFrom": {
+                        "secretKeyRef": {
+                          "key": "1",
+                          "name": "ocean-v1-beta-bootstrap-database"
+                        }
+                      }
+                    }
+                  ],
+                  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator@sha256:0a89057b7459342e191e4b194628bee00cc7544749489df9f85f31508399e7b3",
+                  "name": "operator",
+                  "resources": {
+                    "limits": {
+                      "cpu": "1",
+                      "memory": "1Gi"
+                    }
+                  }
+                },
+                {
+                  "args": [
+                    "--private-ip",
+                    "--address=127.0.0.1",
+                    "--port=5432",
+                    "--quitquitquit",
+                    "--admin-port=9091",
+                    "--health-check",
+                    "--http-address=0.0.0.0",
+                    "--http-port=9090",
+                    "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+                  ],
+                  "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+                  "name": "sql-proxy",
+                  "resources": {
+                    "limits": {
+                      "cpu": "1",
+                      "memory": "256Mi"
+                    }
+                  },
+                  "startupProbe": {
+                    "failureThreshold": 24,
+                    "httpGet": {
+                      "path": "/readiness",
+                      "port": 9090
+                    },
+                    "periodSeconds": 5,
+                    "timeoutSeconds": 2
+                  }
+                }
+              ],
+              "maxRetries": 0,
+              "serviceAccountName": "ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+              "timeoutSeconds": "600"
+            }
+          }
+        },
+        "status": {
+          "completionTime": "2026-11-02T06:43:42.584036Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-11-02T06:43:42.584036Z",
+              "message": "Execution completed successfully in 17.58s.",
+              "status": "True",
+              "type": "Completed"
+            },
+            {
+              "lastTransitionTime": "2026-11-02T06:43:23.066511Z",
+              "message": "Provisioned imported containers.",
+              "status": "True",
+              "type": "ResourcesAvailable"
+            },
+            {
+              "lastTransitionTime": "2026-11-02T06:43:33.205483Z",
+              "message": "Started deployed execution in 10.13s.",
+              "status": "True",
+              "type": "Started"
+            },
+            {
+              "lastTransitionTime": "2026-11-02T06:43:22.670371Z",
+              "message": "Imported container image in 2.5s.",
+              "status": "True",
+              "type": "ContainerReady"
+            },
+            {
+              "lastTransitionTime": "2026-11-02T06:43:43.981951Z",
+              "message": "System will retry after 00:00 from lastTransitionTime for attempt 0.",
+              "reason": "ImmediateRetry",
+              "severity": "Info",
+              "status": "True",
+              "type": "Retry"
+            }
+          ],
+          "logUri": "https://console.cloud.google.com/logs/viewer?project=ocean-v1-beta-20261101&advancedFilter=resource.type%3D%22cloud_run_job%22%0Aresource.labels.job_name%3D%22ocean-v1-beta-db-normalize-owner%22%0Aresource.labels.location%3D%22asia-northeast1%22%0Alabels.%22run.googleapis.com/execution_name%22%3D%22ocean-v1-beta-db-normalize-owner-rljsn%22",
+          "observedGeneration": 1,
+          "startTime": "2026-11-02T06:43:24.999768Z",
+          "succeededCount": 1
+        }
+      },
+      "serviceName": "run.googleapis.com",
+      "status": {
+        "message": "Execution ocean-v1-beta-db-normalize-owner-rljsn has completed successfully."
+      }
+    },
+    "receiveTimestamp": "2026-11-02T06:43:44.439683914Z",
+    "resource": {
+      "labels": {
+        "job_name": "ocean-v1-beta-db-normalize-owner",
+        "location": "asia-northeast1",
+        "project_id": "ocean-v1-beta-20261101"
+      },
+      "type": "cloud_run_job"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-02T06:43:43.999150Z"
+  }
+]

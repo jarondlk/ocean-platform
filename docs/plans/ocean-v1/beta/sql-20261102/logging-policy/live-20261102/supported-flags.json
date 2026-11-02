@@ -1,0 +1,60 @@
+{
+  "log_min_error_statement": {
+    "allowedStringValues": [
+      "debug5",
+      "debug4",
+      "debug3",
+      "debug2",
+      "debug1",
+      "info",
+      "notice",
+      "warning",
+      "error",
+      "log",
+      "fatal",
+      "panic"
+    ],
+    "appliesTo": [
+      "POSTGRES_9_6",
+      "POSTGRES_10",
+      "POSTGRES_11",
+      "POSTGRES_12",
+      "POSTGRES_13",
+      "POSTGRES_14",
+      "POSTGRES_15",
+      "POSTGRES_16",
+      "POSTGRES_17",
+      "POSTGRES_18",
+      "POSTGRES_19"
+    ],
+    "kind": "sql#flag",
+    "name": "log_min_error_statement",
+    "requiresRestart": false,
+    "type": "STRING"
+  },
+  "log_statement": {
+    "allowedStringValues": [
+      "none",
+      "ddl",
+      "mod",
+      "all"
+    ],
+    "appliesTo": [
+      "POSTGRES_9_6",
+      "POSTGRES_10",
+      "POSTGRES_11",
+      "POSTGRES_12",
+      "POSTGRES_13",
+      "POSTGRES_14",
+      "POSTGRES_15",
+      "POSTGRES_16",
+      "POSTGRES_17",
+      "POSTGRES_18",
+      "POSTGRES_19"
+    ],
+    "kind": "sql#flag",
+    "name": "log_statement",
+    "requiresRestart": false,
+    "type": "STRING"
+  }
+}

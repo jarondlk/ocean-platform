@@ -1,0 +1,15 @@
+{
+  "project_id": "ocean-v1-beta-20261101",
+  "instance": "ocean-v1-beta-sql",
+  "settings_version": "2",
+  "queryInsightsEnabled": false,
+  "query_insights_qualification": "Absent insightsConfig has the API default false; no enabling patch is made.",
+  "only_overlay": {
+    "log_statement": "none",
+    "log_min_error_statement": "panic"
+  },
+  "original_flags": [],
+  "credentials_or_password_SQL": false,
+  "request_sha256": "c4696e1cf219f41feeb6f33af82d7cca8f364d4ef57a0ea9af4b0be0d8f54560",
+  "root_sole_active_writer": true
+}

@@ -1,0 +1,11 @@
+{
+  "certificateMap": "https://certificatemanager.googleapis.com/v1/projects/ocean-v1-beta-20261101/locations/global/certificateMaps/ocean-v1-beta-cert-map",
+  "creationTimestamp": "2026-11-01T22:21:58.418-08:00",
+  "fingerprint": "c68mmRPXTek=",
+  "id": "7931008756945883881",
+  "kind": "compute#targetHttpsProxy",
+  "name": "ocean-v1-beta-serving-https-proxy",
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/targetHttpsProxies/ocean-v1-beta-serving-https-proxy",
+  "tlsEarlyData": "DISABLED",
+  "urlMap": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/urlMaps/ocean-v1-beta-serving-url-map"
+}

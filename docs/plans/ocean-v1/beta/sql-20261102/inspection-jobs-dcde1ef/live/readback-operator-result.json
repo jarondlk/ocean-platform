@@ -1,0 +1,197 @@
+{
+  "database": "ocean_v1_beta",
+  "operator_revision": "dcde1ef2c5332e9543c826b6185c5e746fbde410",
+  "project_id": "ocean-v1-beta-20261101",
+  "proxy": {
+    "http_status": 200,
+    "proxy_process_exit_observation": "requires Cloud Run per-container execution readback",
+    "shutdown_requested": true
+  },
+  "result": {
+    "readback": {
+      "C23_execution_enabled": false,
+      "cloudsql_limited_superuser_qualification_claimed": false,
+      "database": "ocean_v1_beta",
+      "extensions": [
+        {
+          "name": "plpgsql",
+          "version": "1.0"
+        }
+      ],
+      "migration_versions": [],
+      "principal": "postgres",
+      "provider_safety": {
+        "current_principal": {
+          "bypass_rls": false,
+          "create_database": true,
+          "create_role": true,
+          "login": true,
+          "name": "postgres",
+          "oid": 16390,
+          "replication": false,
+          "superuser": false
+        },
+        "database_owner": "cloudsqlsuperuser",
+        "fixed_settings": [
+          {
+            "context": "user",
+            "name": "debug_print_parse",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "user",
+            "name": "debug_print_plan",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "user",
+            "name": "debug_print_rewritten",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_duration",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_executor_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_min_duration_sample",
+            "pending_restart": false,
+            "source": "default",
+            "unit": "ms",
+            "value": "-1"
+          },
+          {
+            "context": "superuser",
+            "name": "log_min_duration_statement",
+            "pending_restart": false,
+            "source": "default",
+            "unit": "ms",
+            "value": "-1"
+          },
+          {
+            "context": "superuser",
+            "name": "log_min_error_statement",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "panic"
+          },
+          {
+            "context": "superuser",
+            "name": "log_parser_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_planner_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_statement",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "none"
+          },
+          {
+            "context": "superuser",
+            "name": "log_statement_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_transaction_sample_rate",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "0"
+          },
+          {
+            "context": "user",
+            "name": "password_encryption",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "scram-sha-256"
+          },
+          {
+            "context": "superuser",
+            "name": "pg_stat_statements.track",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "top"
+          },
+          {
+            "context": "superuser",
+            "name": "pg_stat_statements.track_utility",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "on"
+          },
+          {
+            "context": "user",
+            "name": "search_path",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "\"$user\", public"
+          },
+          {
+            "context": "postmaster",
+            "name": "shared_preload_libraries",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "dbsecurity,google_app_stats,google_dataplex,google_dbheartbeat,google_insights,iamgroup_management,pg_stat_statements,password_validation"
+          }
+        ],
+        "matching_role_database_overrides": [],
+        "password_sql_authorized_by_this_readback": false,
+        "protected_values_hidden": false,
+        "public_schema_owner": "pg_database_owner",
+        "qualification": "Metadata only; actual password SQL still requires strict separate attestation",
+        "version": "beta-provider-safety-metadata-v1"
+      },
+      "roles": [],
+      "tables": []
+    },
+    "stage": "readback"
+  },
+  "source_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "stage": "readback",
+  "state": "stage_completed",
+  "version": "ocean-v1-beta-operator-result-v1"
+}

@@ -1,0 +1,90 @@
+{
+  "version": 3,
+  "etag": "BwZfRiegsKw=",
+  "bindings": [
+    {
+      "role": "roles/artifactregistry.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/cloudbuild.builds.builder",
+      "members": [
+        "serviceAccount:534831104543@cloudbuild.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/cloudbuild.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/cloudsql.client",
+      "members": [
+        "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "serviceAccount:ocean-v1-beta-db-migrator@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "condition": {
+        "expression": "resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com'",
+        "title": "ocean-v1-beta-sql-only"
+      }
+    },
+    {
+      "role": "roles/cloudtasks.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@gcp-sa-cloudtasks.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/compute.instanceGroupManagerServiceAgent",
+      "members": [
+        "serviceAccount:534831104543@cloudservices.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/compute.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@compute-system.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/containerregistry.ServiceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@containerregistry.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/logging.logWriter",
+      "members": [
+        "serviceAccount:ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/owner",
+      "members": [
+        "user:dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp"
+      ]
+    },
+    {
+      "role": "roles/pubsub.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/run.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@serverless-robot-prod.iam.gserviceaccount.com"
+      ]
+    },
+    {
+      "role": "roles/servicenetworking.serviceAgent",
+      "members": [
+        "serviceAccount:service-534831104543@service-networking.iam.gserviceaccount.com"
+      ]
+    }
+  ]
+}

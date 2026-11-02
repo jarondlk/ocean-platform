@@ -1,0 +1,6 @@
+{
+  "path": "deploy/gcp/beta/serving-frontend/wait-api.cjs",
+  "sha256": "bafc2b8f1be05185a23a9d6905141cb44fa58e5bd6b12e82e4fc319784e0a286",
+  "reason": "Frontend startup probe retains startup CPU until loopback API health is ready; min0 and request-based billing preserved",
+  "application_bytes_changed": false
+}

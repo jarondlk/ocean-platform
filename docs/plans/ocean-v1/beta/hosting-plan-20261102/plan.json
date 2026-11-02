@@ -1,0 +1,298 @@
+{
+  "actual_metadata_inputs": {
+    "oauth_client_id": "534831104543-4l3hm9dqd60u320mf73ql0d3s9rsuprn.apps.googleusercontent.com",
+    "oauth_secret_version": {
+      "name": "projects/534831104543/secrets/ocean-v1-beta-oauth/versions/1",
+      "state": "ENABLED"
+    },
+    "other_secret_versions": {
+      "ocean-v1-beta-auth": {
+        "name": "projects/534831104543/secrets/ocean-v1-beta-auth/versions/1",
+        "state": "ENABLED"
+      },
+      "ocean-v1-beta-internal": {
+        "name": "projects/534831104543/secrets/ocean-v1-beta-internal/versions/1",
+        "state": "ENABLED"
+      },
+      "ocean-v1-beta-serving-database": {
+        "name": "projects/534831104543/secrets/ocean-v1-beta-serving-database/versions/1",
+        "state": "ENABLED"
+      }
+    },
+    "qualification": "Copied from existing root metadata receipts only; no secret payload access and no fresh cloud read by this task."
+  },
+  "api_config": {
+    "alternative_proposal": "A separate non-secret Secret Manager config volume is possible only after actual mounted-file regular/non-symlink behavior passes the entry checks; it requires its own numeric ref and narrow accessor grant. It is not included in the current four-secret candidate.",
+    "contents": "api-host-config.json",
+    "delivery_state": "not_implemented_or_qualified_in_current_image",
+    "no_config_map_assumed": true,
+    "no_image_mutation_by_this_task": true,
+    "preferred_proposal": "A tiny reviewed source-bound startup wrapper writes only this non-secret JSON to a new regular absolute file with restrictive permissions before execing unchanged beta_entry serve; verify actual source-manifest revision. This task does not add or run it.",
+    "required_regular_file": "/tmp/ocean-v1-api-host.json",
+    "selected_image_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff"
+  },
+  "application_ci_reference": {
+    "qualification": "Actual image/build/smoke receipts are pinned separately; the source-app CI does not by itself accept live deployment.",
+    "run_id": 41322838746,
+    "source": "50566b7cfa4a0d8ee19686f0109e74f3a2a45d45"
+  },
+  "apply_sequence": [
+    "Verify frozen image/source/metadata pins and actual current target; retain one configuration writer.",
+    "Finish real SQL bootstrap/migration/finalization and owning API config delivery; enroll approved independent accounts; verify OAuth configuration.",
+    "Read current serving SA/IAM/secret policies; add only missing reviewed instance-conditioned SQL and four secret accessors. Read effective organization/network/service-agent policy.",
+    "Create the serving revision privately with IAM invocation enforced, min0/max1, no default URL and internal/LB ingress; validate dependencies/probes and actual complete-instance startup.",
+    "Fresh-check certificate/map active and target resources absent; create only the new beta serverless NEG/backend/global URL map/HTTPS proxy/static IPv4/one443rule. Bind address promptly to avoid unused-address fees.",
+    "Review final edge change (invoker IAM check disabled only for this application-authenticated beta); preserve app-level Google/current-account enforcement and ingress/default-URL fences.",
+    "Publish only the child beta A record after actual IPv4/backend readbacks; verify real DNS/TLS/OAuth/session/API/negative cases without collecting credentials in receipts.",
+    "Record source-bound safe live receipt/status and bounded cost telemetry. Keep science/queue/worker disabled and preserve independent full release gates."
+  ],
+  "candidate_images": {
+    "api": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+    "frontend": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+    "sql-proxy": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+  },
+  "closed_capabilities": {
+    "all_enable_v1_flags_false": [
+      "ENABLE_V1_CATALOGUE",
+      "ENABLE_V1_CATALOGUE_BROWSER",
+      "ENABLE_V1_SHELL",
+      "ENABLE_V1_INVESTIGATIONS",
+      "ENABLE_V1_RESEARCH_CONTROLLER",
+      "ENABLE_V1_RESEARCH_RUNS",
+      "ENABLE_V1_RESEARCH_DISPATCH",
+      "ENABLE_V1_EVIDENCE",
+      "ENABLE_V1_SYNTHESIS",
+      "ENABLE_V1_EXPERIMENTS",
+      "ENABLE_V1_EXPERIMENT_DISPATCH",
+      "ENABLE_V1_EXPERIMENT_WORKSPACE"
+    ],
+    "controller_or_worker_started": false,
+    "full_release_accepted": false,
+    "initial_user_visible_scope": "Authenticated beta shell/current-account and runtime availability; scientific catalogue/research capabilities stay unavailable, never fake empty/fixture results.",
+    "queue_state": "PAUSED",
+    "real_data_acquisition_or_transfer": false,
+    "real_scientific_provider_installed": false
+  },
+  "cloud_mutations_performed_by_this_task": false,
+  "commit_performed": false,
+  "cost": {
+    "custom_header_cost_is_from_existing_contingency": true,
+    "custom_header_feature_100k_requests_jpy": "11.865300000",
+    "custom_header_reference_sku": "4162-C0C6-016E",
+    "max_instances": 1,
+    "min_instances": 0,
+    "original_744h_envelope_jpy": "35604.045104616",
+    "original_quote": "docs/plans/ocean-v1/beta/quotes-20261102/cost-qualification.json",
+    "qualification": "Original JPY quote remains immutable. The small header-feature allowance consumes its existing contingency; no claim the original gross arithmetic already included it. All Run services/jobs share the3000 allocation. Max instances and the cap are not guaranteed hard spending limits; monitor actual usage/overlap/retained bytes and notify before forecast exceeds50000. The50h figure is a usage condition, not an observed forecast.",
+    "remaining_original_contingency_after_header_feature_jpy": "3224.866073147",
+    "request_based_no_startup_cpu_boost": true,
+    "resource_shape": {
+      "aggregate_cpu": 3,
+      "aggregate_memory_gib": "4.75",
+      "api": {
+        "cpu": 1,
+        "memory_mib": 4096
+      },
+      "frontend": {
+        "cpu": 1,
+        "memory_mib": 512
+      },
+      "sql_proxy": {
+        "cpu": 1,
+        "memory_mib": 256
+      }
+    },
+    "run_allocation_jpy": 3000,
+    "run_margin_for_jobs_starts_other_run_jpy": "605.172880000",
+    "serving_example_50h_plus_100k_requests_jpy": "2394.827120000",
+    "serving_example_billed_hours_monthly_max": 50,
+    "serving_example_rate_jpy_per_hour": "47.769980400",
+    "target_jpy": 50000
+  },
+  "dns": {
+    "create_only_record": {
+      "name": "beta.oceaninfobio.com.",
+      "rrdatas": null,
+      "ttl": 300,
+      "type": "A"
+    },
+    "gate": "Refresh full child record set; require no conflicting A/AAAA/CNAME or existing beta endpoint before adding. Parent delegation is already a separate immutable receipt.",
+    "preserve": [
+      "child NS/SOA/authorization CNAME",
+      "all parent zone records",
+      "apex/www/legacy DNS"
+    ],
+    "project_id": "ocean-v1-beta-20261101",
+    "target": "Only the actual reviewed new beta global IPv4; no invented address",
+    "zone": "ocean-v1-beta-domain"
+  },
+  "iam": {
+    "cloudsql_client_binding": {
+      "condition": "resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com'",
+      "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/cloudsql.client",
+      "scope": "beta project, exact selected instance condition"
+    },
+    "not_granted": [
+      "bootstrap or migrator DSN/password secrets",
+      "worker/supervisor/termination secrets",
+      "project Editor/Owner/Admin",
+      "project-wide Secret Accessor",
+      "service-account keys/tokenCreator",
+      "bucket writes/queue/task dispatch/model credentials"
+    ],
+    "secret_bindings": [
+      {
+        "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "resource": "projects/534831104543/secrets/ocean-v1-beta-auth",
+        "role": "roles/secretmanager.secretAccessor"
+      },
+      {
+        "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "resource": "projects/534831104543/secrets/ocean-v1-beta-internal",
+        "role": "roles/secretmanager.secretAccessor"
+      },
+      {
+        "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "resource": "projects/534831104543/secrets/ocean-v1-beta-oauth",
+        "role": "roles/secretmanager.secretAccessor"
+      },
+      {
+        "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "resource": "projects/534831104543/secrets/ocean-v1-beta-serving-database",
+        "role": "roles/secretmanager.secretAccessor"
+      }
+    ],
+    "service_agent_qualification": "Read existing Cloud Run service-agent Artifact Registry and Direct VPC permissions. Do not fall back to broad app/default-identity grants.",
+    "shared_instance_trust_boundary": "All containers share this Cloud Run service identity. Per-container secret mounts are not per-container IAM isolation; the serving instance is one trusted unit."
+  },
+  "image_source_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "load_balancer": {
+    "address_name": "ocean-v1-beta-serving-ip",
+    "address_value": null,
+    "backend_service": "ocean-v1-beta-serving-backend",
+    "certificate_map": "projects/ocean-v1-beta-20261101/locations/global/certificateMaps/ocean-v1-beta-cert-map",
+    "certificate_name": "ocean-v1-beta-domain-cert",
+    "header_action_scope": "Modern global external managed LB; do not substitute classic EXTERNAL, which does not support this headerAction. Preserve Host and normalize only forwarded metadata. Wrong Host is still rejected by the app.",
+    "health_check_resource_created": false,
+    "network_tier": "PREMIUM",
+    "no_armor_cdn_nat_or_extra_paid_proxy": true,
+    "no_http_forwarding_redirect_rule": true,
+    "one_https_rule": {
+      "name": "ocean-v1-beta-serving-https",
+      "ports": [
+        443
+      ]
+    },
+    "protocol": "HTTP",
+    "scheme": "EXTERNAL_MANAGED",
+    "scope": "global",
+    "serverless_neg": {
+      "cloud_run_service": "ocean-v1-beta-serving",
+      "name": "ocean-v1-beta-serving-neg",
+      "region": "asia-northeast1"
+    },
+    "target_https_proxy": "ocean-v1-beta-serving-https-proxy",
+    "url_map": "url-map.proposed.json"
+  },
+  "prepared_on": "2026-11-02 JST",
+  "private_container_contract": {
+    "api_bind": "127.0.0.1:8000",
+    "api_platform_probe": null,
+    "dependency_edges": {
+      "api": [
+        "sql-proxy"
+      ],
+      "frontend": [
+        "sql-proxy"
+      ]
+    },
+    "frontend_bind": "0.0.0.0:8080",
+    "probe_qualification": "Frontend and API each wait for actual proxy startup readiness; frontend does not depend on the loopback-only API, and no unreachable API platform probe or widened API listener is invented. Frontend /login probe proves frontend configuration only. Actual whole-instance API/auth checks are mandatory before acceptance. Provider validation of this dependency/probe candidate remains required.",
+    "proxy_health_bind": "0.0.0.0:9090; sidecar only, never public ingress",
+    "public_ingress_port": 8080,
+    "sql_proxy_bind": "127.0.0.1:5432"
+  },
+  "public_edge": {
+    "application_authority": "Real Google Auth.js session plus live independent current-account checks; Cloud Run IAM is not the browser identity provider",
+    "default_run_app_url_disabled": true,
+    "final_invoker_iam_disabled": true,
+    "ingress": "internal and Cloud Load Balancing",
+    "initial_hold": "Keep invoker IAM check enabled while creating/qualifying the private candidate; the final candidate file explicitly shows public-LB target state. Do not flip before OAuth/account/config/SQL gates.",
+    "no_domain_mapping_created": true,
+    "no_task_or_controller_target_reuse": true,
+    "organization_policy_gate": "Read effective run.managed.requireInvokerIam / relevant policy. If public edge is forbidden, retain the gate; do not change org policy or silently add allUsers."
+  },
+  "qualification": "Prepared plan only. Known actual OAuth/secret/certificate/image metadata comes from root receipts, not live calls by this task. Missing implementation/configuration is explicit. No cloud mutation, image edit, legacy/evidence edit, credential payload access or commit.",
+  "readiness_gates": [
+    {
+      "evidence_needed": "Actual independent schema head0021, restricted serving user/grants and no ownership/bootstrap privilege; no auto migrations on serving startup",
+      "id": "sql",
+      "state": "pending_actual_limited_creator_bootstrap_migration_finalization"
+    },
+    {
+      "evidence_needed": "Actual regular bounded JSON at exact path, matching selected API image manifest revision before exec",
+      "id": "config_delivery",
+      "state": "missing_owning_implementation_or_qualified_mount"
+    },
+    {
+      "evidence_needed": "Real callback/token exchange to exact beta URI with correct client, no auth code/token in receipts",
+      "id": "oauth",
+      "state": "client_and_secret_metadata_installed_callback_unrun"
+    },
+    {
+      "evidence_needed": "Explicit independent approved Google subject/email and role in current AppUser contract; no legacy copy or email-only enrollment. No enrollment command is implemented in the current four-stage DB operator.",
+      "id": "account_enrollment",
+      "state": "missing"
+    },
+    {
+      "evidence_needed": "Provider-accepted dependency/probe spec plus actual API startup/loopback/current DB/head/auth readiness; /login alone is insufficient",
+      "id": "container_lifecycle",
+      "state": "pending_live"
+    },
+    {
+      "evidence_needed": "Fresh cert/map ACTIVE, default URL disabled, exact new LB/header behavior and child A record; TLS SAN/chain and direct/alternate-host negative checks",
+      "id": "ingress_tls",
+      "state": "pending_live"
+    },
+    {
+      "evidence_needed": "Encrypted host-only cookies, real sign-in/sign-out/current-account revocation and sibling Origin denial through the actual public beta",
+      "id": "session",
+      "state": "pending_live"
+    },
+    {
+      "evidence_needed": "A later reviewed independent source/policy-bound read-service provider and explicit data authorization before scientific features can be enabled",
+      "id": "scientific_provider",
+      "state": "unselected_not_fabricated"
+    },
+    {
+      "evidence_needed": "Actual memory/cold-start/latency/cost and unchanged release gates including D26-07; no scientific execution or full release acceptance by this plan",
+      "id": "capacity_release",
+      "state": "pending"
+    }
+  ],
+  "references": [
+    "https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.services",
+    "https://docs.cloud.google.com/run/docs/reference/rest/v2/Container",
+    "https://docs.cloud.google.com/run/docs/configuring/services/containers",
+    "https://docs.cloud.google.com/run/docs/configuring/healthchecks",
+    "https://docs.cloud.google.com/run/docs/securing/ingress",
+    "https://docs.cloud.google.com/run/docs/securing/managing-access",
+    "https://docs.cloud.google.com/run/docs/configuring/vpc-direct-vpc",
+    "https://docs.cloud.google.com/run/docs/configuring/services/secrets",
+    "https://docs.cloud.google.com/load-balancing/docs/https/setup-global-ext-https-serverless",
+    "https://docs.cloud.google.com/compute/docs/reference/rest/v1/urlMaps"
+  ],
+  "service_candidate": "serving-service.pending.json",
+  "service_candidate_is_ready_to_submit": false,
+  "state": "prepared_not_deployable_until_gates_close",
+  "target": {
+    "project_id": "ocean-v1-beta-20261101",
+    "project_number": "534831104543",
+    "public_origin": "https://beta.oceaninfobio.com",
+    "region": "asia-northeast1",
+    "runtime_service_account": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "service_name": "ocean-v1-beta-serving"
+  },
+  "version": "beta-authenticated-hosting-plan-v1"
+}

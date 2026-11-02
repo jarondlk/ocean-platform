@@ -1,0 +1,290 @@
+{
+  "database": "ocean_v1_beta",
+  "operator_revision": "8e2a1630d5d2a7028495ec7b56a422a38b1c0807",
+  "project_id": "ocean-v1-beta-20261101",
+  "proxy": {
+    "http_status": 200,
+    "proxy_process_exit_observation": "requires Cloud Run per-container execution readback",
+    "shutdown_requested": true
+  },
+  "result": {
+    "application_rows_created": false,
+    "extension": {
+      "name": "vector",
+      "version": "0.8.5"
+    },
+    "password_logging_policy": {
+      "client_scram_supported": true,
+      "optional_statement_traces": "disabled_or_not_loaded",
+      "qualification": "actual session settings before password SQL; no universal redaction claim",
+      "server_scram_supported": true,
+      "settings": {
+        "debug_print_parse": "off",
+        "debug_print_plan": "off",
+        "debug_print_rewritten": "off",
+        "log_duration": "off",
+        "log_executor_stats": "off",
+        "log_min_duration_sample": "-1",
+        "log_min_duration_statement": "-1",
+        "log_min_error_statement": "panic",
+        "log_parser_stats": "off",
+        "log_planner_stats": "off",
+        "log_statement": "none",
+        "log_statement_stats": "off",
+        "log_transaction_sample_rate": "0",
+        "password_encryption": "scram-sha-256"
+      },
+      "utility_query_collection": {
+        "credential_utility_capture": "disabled",
+        "pg_stat_statements_present_or_preloaded": true,
+        "preloaded": true,
+        "present_in_current_database": false
+      },
+      "verified": true,
+      "version": "beta-password-sql-log-policy-v1"
+    },
+    "password_preparation": "client-side SCRAM-SHA-256 only",
+    "public_schema_owner_unchanged": true,
+    "readback": {
+      "C23_execution_enabled": false,
+      "cloudsql_limited_superuser_qualification_claimed": false,
+      "database": "ocean_v1_beta",
+      "extensions": [
+        {
+          "name": "plpgsql",
+          "version": "1.0"
+        },
+        {
+          "name": "vector",
+          "version": "0.8.5"
+        }
+      ],
+      "migration_versions": [],
+      "principal": "postgres",
+      "provider_safety": {
+        "current_principal": {
+          "bypass_rls": false,
+          "create_database": true,
+          "create_role": true,
+          "login": true,
+          "name": "postgres",
+          "oid": 16390,
+          "replication": false,
+          "superuser": false
+        },
+        "database_owner": "postgres",
+        "fixed_settings": [
+          {
+            "context": "user",
+            "name": "debug_print_parse",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "user",
+            "name": "debug_print_plan",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "user",
+            "name": "debug_print_rewritten",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_duration",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_executor_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_min_duration_sample",
+            "pending_restart": false,
+            "source": "default",
+            "unit": "ms",
+            "value": "-1"
+          },
+          {
+            "context": "superuser",
+            "name": "log_min_duration_statement",
+            "pending_restart": false,
+            "source": "default",
+            "unit": "ms",
+            "value": "-1"
+          },
+          {
+            "context": "superuser",
+            "name": "log_min_error_statement",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "panic"
+          },
+          {
+            "context": "superuser",
+            "name": "log_parser_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_planner_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_statement",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "none"
+          },
+          {
+            "context": "superuser",
+            "name": "log_statement_stats",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "superuser",
+            "name": "log_transaction_sample_rate",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "0"
+          },
+          {
+            "context": "user",
+            "name": "password_encryption",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "scram-sha-256"
+          },
+          {
+            "context": "superuser",
+            "name": "pg_stat_statements.track",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "top"
+          },
+          {
+            "context": "superuser",
+            "name": "pg_stat_statements.track_utility",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "off"
+          },
+          {
+            "context": "user",
+            "name": "search_path",
+            "pending_restart": false,
+            "source": "default",
+            "unit": null,
+            "value": "\"$user\", public"
+          },
+          {
+            "context": "postmaster",
+            "name": "shared_preload_libraries",
+            "pending_restart": false,
+            "source": "configuration file",
+            "unit": null,
+            "value": "dbsecurity,google_app_stats,google_dataplex,google_dbheartbeat,google_insights,iamgroup_management,pg_stat_statements,password_validation"
+          }
+        ],
+        "matching_role_database_overrides": [
+          {
+            "database": "ocean_v1_beta",
+            "name": "search_path",
+            "role": "ocean_v1_migrator",
+            "value": "public, pg_catalog"
+          },
+          {
+            "database": "ocean_v1_beta",
+            "name": "search_path",
+            "role": "ocean_v1_serving",
+            "value": "public, pg_catalog"
+          }
+        ],
+        "password_sql_authorized_by_this_readback": false,
+        "protected_values_hidden": false,
+        "public_schema_owner": "pg_database_owner",
+        "qualification": "Metadata only; actual password SQL still requires strict separate attestation",
+        "version": "beta-provider-safety-metadata-v1"
+      },
+      "roles": [
+        {
+          "bypass_rls": false,
+          "create_database": false,
+          "create_role": false,
+          "login": true,
+          "name": "ocean_v1_migrator",
+          "replication": false,
+          "superuser": false
+        },
+        {
+          "bypass_rls": false,
+          "create_database": false,
+          "create_role": false,
+          "login": true,
+          "name": "ocean_v1_serving",
+          "replication": false,
+          "superuser": false
+        }
+      ],
+      "tables": []
+    },
+    "roles": [
+      {
+        "bypass_rls": false,
+        "create_database": false,
+        "create_role": false,
+        "login": true,
+        "name": "ocean_v1_migrator",
+        "replication": false,
+        "superuser": false
+      },
+      {
+        "bypass_rls": false,
+        "create_database": false,
+        "create_role": false,
+        "login": true,
+        "name": "ocean_v1_serving",
+        "replication": false,
+        "superuser": false
+      }
+    ],
+    "stage": "bootstrap"
+  },
+  "source_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "stage": "bootstrap",
+  "state": "stage_completed",
+  "version": "ocean-v1-beta-operator-result-v1"
+}
