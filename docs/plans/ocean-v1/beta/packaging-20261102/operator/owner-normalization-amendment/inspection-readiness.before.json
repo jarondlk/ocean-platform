@@ -1,0 +1,98 @@
+{
+  "version": "beta-provider-inspection-readiness-v1",
+  "state": "readback_and_rollback_qualifier_ready_bootstrap_held",
+  "permitted_next_stages": [
+    "readback",
+    "qualify"
+  ],
+  "prohibited_until_separate_qualification": [
+    "bootstrap",
+    "migrate",
+    "finalize"
+  ],
+  "bootstrap_authorized": false,
+  "ordering_success_qualified": false,
+  "managed_cloudsql_qualification_claimed": false,
+  "cloud_actions": false,
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "ec7d04e1273b7491c3af94528c49dcc28891244827413bf77642dba60e1abc2d",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/probe_checks.py": "0cafc0eb3729eca54c3154edd2fa24e4a3dadf8fb8055285347e24d4e5f79d30",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/probe_native_rehearsal.py": "8c75b255e3d948d22d0a94582a917bc1d79df7da66dd9d70b6fe6e5aaf1fd151",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/verify.py": "63a92bf121dcf77a7005d6c00894ddf27eaf928bbbefe1da4a7662c97c333ede",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/bootstrap-order-amendment/README.md": "4e0f2335c13562741e4ccae4c0278e5149db226a740d60c1f2b20ad91d6c107d"
+  },
+  "artifact_pins": {
+    "REVIEW.md": "1a53afd512a61b0e495ec7875bb09ecdc0a5fbc2c37ada3150b392294fcab396",
+    "auth-guard-regressions.json": "c1f1e76dc87c8027f8a2ee6d670f98e83b3ca44a9d2226270fc5edc831e15351",
+    "frozen-preparation/README.md": "d759bab05decf86d99a2f0c167a7be80f1cd470ae0bcba6084a6e6104f107d49",
+    "frozen-preparation/receipt.json": "4550c97f1f696457521e816f9544b538f5ee19d47f7938ed09914a934fa3cce2",
+    "frozen-preparation/verify.py": "33e25d14f6747572f304b95db17bcd8a7ee69543dcdc80e799a34631603b970a",
+    "native-probe-other-20261102/initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-other-20261102/initdb.stdout": "8cda0dea8dd68e9416d39720c289fa3a2bd0382db9c0d8d9219d42a31cd88caa",
+    "native-probe-other-20261102/native-harness-source.py": "8c75b255e3d948d22d0a94582a917bc1d79df7da66dd9d70b6fe6e5aaf1fd151",
+    "native-probe-other-20261102/pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-other-20261102/pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "native-probe-other-20261102/pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-other-20261102/pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "native-probe-other-20261102/pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-other-20261102/pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "native-probe-other-20261102/receipt.json": "30fd5f67c0fa3d1079253e420e1b1e40ff523e7ea810429932b64f2345c33921",
+    "native-probe-self-20261102/initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-self-20261102/initdb.stdout": "23fb0bbc33b0c9afb38e1b1cf962f0cfcbd51dcbf30b4f692b0fe9607a809090",
+    "native-probe-self-20261102/native-harness-source.py": "8c75b255e3d948d22d0a94582a917bc1d79df7da66dd9d70b6fe6e5aaf1fd151",
+    "native-probe-self-20261102/pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-self-20261102/pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "native-probe-self-20261102/pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-self-20261102/pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "native-probe-self-20261102/pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe-self-20261102/pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "native-probe-self-20261102/receipt.json": "57a228a263327f5732b2898b19b12a961d1f93269b34881d74e2e0581290f053",
+    "native-root-20261102/initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-root-20261102/initdb.stdout": "383e23ec2070b86c8ef33e1b8dd19652688eaae12ab6cb5b7690cd90b3484603",
+    "native-root-20261102/native-harness-source.py": "7c5c2198a4f25c5d34124260a42cb4f64661b9a43deb3973f661494147acde61",
+    "native-root-20261102/pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-root-20261102/pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "native-root-20261102/pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-root-20261102/pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "native-root-20261102/pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-root-20261102/pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "native-root-20261102/postgres.stdout": "3d2102256012854d012dce5410067895b338228bd736b7d9d1367c4c551bb448",
+    "native-root-20261102/receipt.json": "55ae3a2bb511734a6695792de16635661b27b5aaa42ca9955b2f67aad1864921",
+    "native_rehearsal.py": "7c5c2198a4f25c5d34124260a42cb4f64661b9a43deb3973f661494147acde61",
+    "operator.before.py": "aa17c2f2a5d51207bb19c1ed7c1b2e4d3d2af2257c9ed913913423573bd876f9",
+    "operator.ordering-candidate.py": "eb3ff52715bd4fa4f9dd734eeebfdb8484b3c08acf08738e752093bf8569c29f",
+    "password-guard-regressions.json": "e5e86ad21fe19871f94ed3dbf379d9641797bc1984150a26fbfbc36eafc091bf",
+    "password-safety-receipt.before.json": "a5d6b1db671fd0223fa0cf5066683dfe3595293fae9b32677e4a1f16bdb8702a",
+    "predecessor.json": "0ce1306abf2523559e6fea46665d8e396acfa29486ee46e0f2762ea296150809",
+    "preserved-security-functions.json": "926119e538565f2af5232385d408c91fe97780cb8c32e48009257199f0c5ad6c",
+    "probe-checks.json": "3350d8cbea3a3556aa6620fb33d2c88ac7735d1f044ae5e06fda70050ea6ae08",
+    "receipt.json": "4550c97f1f696457521e816f9544b538f5ee19d47f7938ed09914a934fa3cce2",
+    "self-grantor-source-diagnosis.json": "6ffec2e2d9a062092eec0a93f1350f92f4cd952d07af794e5e9ee917e6ca0dd6"
+  },
+  "native_qualifications": {
+    "other-grantor": "native-probe-other-20261102"
+  },
+  "native_failures_preserved": {
+    "initial_order_assumption": "native-root-20261102",
+    "unsupported_stock_postgres_bootstrap_superuser_demotion_fixture": "native-probe-self-20261102"
+  },
+  "evidence_counts": {
+    "probe_pure": 20,
+    "password_privacy_regressions": 32,
+    "target_auth_proxy_regressions": 26,
+    "new_owned_native_unsupported_grantor": 20,
+    "historical_accepted_native_privacy_retains_original_pins": 48
+  },
+  "independent_source_review": {
+    "reviewer": "/root/beta_host_finish",
+    "operator_sha256": "ec7d04e1273b7491c3af94528c49dcc28891244827413bf77642dba60e1abc2d",
+    "verdict": "no blocking inspection-safety issue found",
+    "scope": "read-only production source review; no test/cloud/source edits"
+  },
+  "remaining_gates": [
+    "Actual source-bound private CloudSQL readback and rollback-only qualifier evidence, including both container exits",
+    "Separately qualify actual provider role creation/revocation, extension setup, privacy and least-privilege behavior before bootstrap or password SQL",
+    "Existing C23 and scientific/release acceptance gates remain unchanged"
+  ],
+  "note": "The successful native result proves safe refusal/rollback for an unsupported grantor profile. No supported limited-role bootstrap has been established; the failed B fixture is not counted as a pass. Historical48-check proof is separate and six security source segments remain exactly identical."
+}

@@ -1,0 +1,49 @@
+{
+  "version": "beta-enrollment-exact-apply-parser-amendment-v1",
+  "recorded_at": "2026-11-02T05:54:24.122726+00:00",
+  "state": "local_checks_passed_independent_review_pending",
+  "predecessor_receipt_sha256": "3ae956b1555cd9b92c8073b6d7156f5bc9cbd359b85840e1e720c7c5cb670f50",
+  "source_supersession": {
+    "path": "deploy/gcp/beta/enrollment/enroll.py",
+    "before_sha256": "57e172a595be8d2aee4624247f96b217785b4a31a632a8c587d03dab53848cbb",
+    "after_sha256": "38729b0dfbebcd6ad8b909fc799252f93514bf737a9485b9b2edc9e5a6a70b8f",
+    "reason": "Disable argparse long-option abbreviation so apply selection and exact-flag proxy finalizer cannot disagree",
+    "only_change": "Parser allow_abbrev=False"
+  },
+  "source_pins": {
+    "deploy/gcp/beta/enrollment/enroll.py": "38729b0dfbebcd6ad8b909fc799252f93514bf737a9485b9b2edc9e5a6a70b8f",
+    "docs/plans/ocean-v1/beta/enrollment-20261102/parser-amendment/checks.py": "5b5a3b1a2f507b436c9df4e5220ac4a7dd420506b2e9f634c1a657cf0f53183f",
+    "docs/plans/ocean-v1/beta/enrollment-20261102/parser-amendment/verify.py": "22b75fd8b28a1837c6a4f71eef715d071b7365d78237d7601a9f8323667245f0",
+    "docs/plans/ocean-v1/beta/enrollment-20261102/parser-amendment/README.md": "3efd2df8cd20329e9729daf65f71432d2ae2d0ef7c870305351b962e6dd0245c"
+  },
+  "artifact_pins": {
+    "checks.json": "14ba6f62deeb1fb1e8e2fcfe2c324d641244525ce8f9786c49863deae9882fcf",
+    "original-receipt.json": "3ae956b1555cd9b92c8073b6d7156f5bc9cbd359b85840e1e720c7c5cb670f50",
+    "frozen-original/deploy/gcp/beta/enrollment/prepare_context.py": "7697f4f2e6ebf08809cc9233255e5cf1200a79922a0fbe51559f1ea682ab62b1",
+    "frozen-original/deploy/gcp/beta/enrollment/Dockerfile": "c6660570aa190a9954a56f53a80a6144acf499bb3d5922c9ffc4281e400c98fd",
+    "frozen-original/deploy/gcp/beta/enrollment/enroll.py": "57e172a595be8d2aee4624247f96b217785b4a31a632a8c587d03dab53848cbb",
+    "frozen-original/docs/plans/ocean-v1/beta/enrollment-20261102/checks.py": "ef738ac9528503bd0bbe276eb240bf33af0306e7b0e699544dd8f183522498c3",
+    "frozen-original/docs/plans/ocean-v1/beta/enrollment-20261102/README.md": "42ec335e44cd64dfb933a1bc6d3c9f39fee009ab7f9ec9712a9289feeec5bdd4",
+    "frozen-original/docs/plans/ocean-v1/beta/enrollment-20261102/verify.py": "618672a4c6d2edf036eb0a884c3fb83c7270211dcebf930f4dc5ad26f19cc108"
+  },
+  "new_focused_checks": 6,
+  "original_offline_checks_preserved": 41,
+  "old41_checks_repeated_or_retargeted": false,
+  "actual_network_native_cloud_or_token_actions": false,
+  "other_package_source_changed": false,
+  "ruff": "passed",
+  "reported_user_application_decision": {
+    "role": "admin",
+    "account_type": "internal",
+    "account": "Selected university Google account; exact email remains private deployment input",
+    "authorization_source": "Root reports explicit user decision in this chat",
+    "role_default_introduced": false,
+    "actual_signed_SDK_profile_verified": false
+  },
+  "remaining": [
+    "Independent amendment review",
+    "Accepted source/image/job binding",
+    "Actual current Google user token/profile and official SDK audience verification",
+    "Restricted real PG16 first-account preflight/commit/readback and proxy/container exit"
+  ]
+}

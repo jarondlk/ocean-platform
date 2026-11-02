@@ -1,0 +1,43 @@
+{
+  "version": "beta-owner-normalization-pure-v1",
+  "passed": 23,
+  "checks": [
+    "exact empty beta owner changes to postgres with unchanged public owner",
+    "only one fixed owner DDL and no password/role/grant SQL",
+    "wrong principal refuses before ALTER",
+    "existing independent roles refuses before ALTER",
+    "application objects or migration head refuses before ALTER",
+    "unexpected or absent default extension refuses before ALTER",
+    "unexpected user schema refuses before ALTER",
+    "unexpected current database owner refuses before ALTER",
+    "already normalized owner is not silently accepted refuses before ALTER",
+    "unexpected public schema owner refuses before ALTER",
+    "missing actor CREATEDB refuses before ALTER",
+    "missing inherited old-owner authority refuses before ALTER",
+    "explicit transaction commits once then obtains normal owner readback",
+    "owner/public-owner postcondition failure rolls back ALTER",
+    "owner/public-owner postcondition failure rolls back ALTER",
+    "owner stage validates fixed target/source/postgres without role passwords",
+    "owner stage retains identity/source/legacy/execution rejection",
+    "owner stage retains identity/source/legacy/execution rejection",
+    "owner stage retains identity/source/legacy/execution rejection",
+    "owner stage retains identity/source/legacy/execution rejection",
+    "owner stage retains identity/source/legacy/execution rejection",
+    "explicit CLI stage completes with ordinary proxy finalizer",
+    "all eleven existing bootstrap/privacy/membership/inspection functions are byte-identical"
+  ],
+  "security_function_source_hashes": {
+    "attest_password_logging": "02b78bd9ee6112bbeb3992c3ff27b66d73ec91bfe12041f09a14b6f677f77d6c",
+    "prepare_scram": "0760d830a70c31f2f96b41f4694bb9629baec4455207f7e9a6a65ac2275aafcf",
+    "fresh_database": "fee5bed31d74afed29b8636f485155e33f77c40abb687969e47098fa12e648d6",
+    "create_roles": "52d1c1161707a5807e5c5115d1dc9546dcbc14611f1dd18903e6bb6a99de7324",
+    "assert_restricted_roles": "76ed8be981e0d5d055b9abaa703d93bd749726b145962a2cbb2d32a2c466c9a3",
+    "verify_serving_privileges": "f9a44ece22039c70100567269475a8a9cdd6b7b917516a3ad8bb201299886c1b",
+    "bootstrap": "fd16ef1ceb8c972c202aebae65bd50d19886e6bc0f30cd7c136cb7c87bd48d18",
+    "qualify": "b2e2b2e53c87e5733936d880b41f1d6d52b5495fc7dcf04e83476a0acf5e5094",
+    "provider_safety_readback": "041b813337cfd996d55b1be02925a2a2e27499e09502321a3749c519466d0e62",
+    "readback": "48f267ed5736bce053e39d598585ce5120d1dea9ac5d2ceb4c6f3569e822803e",
+    "stop_proxy": "6e38d3b17417758975505811e9fcdc9ceeca69e807c02cdfc9ebd9f1b1cdd4ad"
+  },
+  "cloud_database_native_or_secret_actions": false
+}

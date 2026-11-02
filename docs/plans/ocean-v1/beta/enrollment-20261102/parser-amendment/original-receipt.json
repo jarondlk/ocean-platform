@@ -1,0 +1,50 @@
+{
+  "version": "beta-first-account-local-preparation-v1",
+  "recorded_at": "2026-11-02T05:46:25.344564+00:00",
+  "state": "local_checks_passed_independent_review_and_actual_profile_pending",
+  "source_pins": {
+    "deploy/gcp/beta/enrollment/enroll.py": "57e172a595be8d2aee4624247f96b217785b4a31a632a8c587d03dab53848cbb",
+    "deploy/gcp/beta/enrollment/Dockerfile": "c6660570aa190a9954a56f53a80a6144acf499bb3d5922c9ffc4281e400c98fd",
+    "deploy/gcp/beta/enrollment/prepare_context.py": "7697f4f2e6ebf08809cc9233255e5cf1200a79922a0fbe51559f1ea682ab62b1",
+    "docs/plans/ocean-v1/beta/enrollment-20261102/README.md": "42ec335e44cd64dfb933a1bc6d3c9f39fee009ab7f9ec9712a9289feeec5bdd4",
+    "docs/plans/ocean-v1/beta/enrollment-20261102/checks.py": "ef738ac9528503bd0bbe276eb240bf33af0306e7b0e699544dd8f183522498c3",
+    "docs/plans/ocean-v1/beta/enrollment-20261102/verify.py": "618672a4c6d2edf036eb0a884c3fb83c7270211dcebf930f4dc5ad26f19cc108"
+  },
+  "artifact_pins": {
+    "checks.json": "f432f4b0b017d7c2e70d3fbdf8bfebef620fda59c460a21ac92ddbcbb99f3a4c",
+    "default-plan.json": "c9055d26e4fa9e4ab998bd59134a8f6da6b549e0733fb8c22674a518cc08bf86"
+  },
+  "accepted_contract_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "accepted_contract_pins": {
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "api/auth.py": "63afb340c13e514d571b30cbee98c1509daf9b424229c374f0d2d1a6a183660b",
+    "api/v1_host.py": "c6b25a222789fdcc9d6b80eeef1da0c74506a6c4e649e386300e5d587f671618"
+  },
+  "api_base_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/api@sha256:f2e73ca98ba915e29a4dd7dc429e34a165475faa7f9000bc8cefaa10e5a6ee4f",
+  "offline_checks": 41,
+  "cryptographic_qualification": "Actual offline RSA signature verification using synthetic ephemeral test keys/tokens and fixed cert transport seam; no genuine Google assertion obtained",
+  "database_qualification": "Actual synthetic SQLite fixed INSERT/first-account rejection with PostgreSQL preflight mocked; no PostgreSQL/Cloud SQL lock or role qualification",
+  "actual_cli_default_plan_passed": true,
+  "ruff": "passed",
+  "real_google_or_sdk_token_acquired": false,
+  "actual_user_enrolled": false,
+  "real_credential_or_secret_manager_operation": false,
+  "cloud_or_native_postgresql_calls": false,
+  "image_build_performed": false,
+  "previous_source_or_receipt_mutation": false,
+  "implementation_refinements": [
+    "Test import path corrected before accepted checks",
+    "Avoid db package import because db/__init__ imports legacy connection/config; use AST-checked typed schema-qualified AppUser contract",
+    "Table lock precedes account ownership/column/data inspection; final unchanged41-case result qualified against current source"
+  ],
+  "external_gates": [
+    "Independent source/API review",
+    "Concrete approved human account/application role/account type",
+    "Expected official SDK audience and actual Google-signed current user token/profile verification",
+    "Source checkpoint, source-only context, immutable image build/audit and exact private job configuration",
+    "Narrow one-time identity-secret access and actual restricted-migrator PG16 preflight/locking/commit/readback",
+    "Actual proxy/container successful exit and manual inspection after uncertain outcome",
+    "Separate OAuth/scientific/queue/worker/C23/release gates"
+  ],
+  "identity_storage_qualification": "Token/DSN/verifier absent from SQL/application output; approved AppUser business identity metadata may appear in protected database operational diagnostics, without a universal no-PII-log claim."
+}

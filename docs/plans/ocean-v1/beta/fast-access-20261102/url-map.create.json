@@ -1,0 +1,40 @@
+{
+  "defaultService": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/backendServices/ocean-v1-beta-serving-backend",
+  "headerAction": {
+    "requestHeadersToAdd": [
+      {
+        "headerName": "X-Forwarded-Host",
+        "headerValue": "beta.oceaninfobio.com",
+        "replace": true
+      },
+      {
+        "headerName": "X-Forwarded-Proto",
+        "headerValue": "https",
+        "replace": true
+      },
+      {
+        "headerName": "X-Forwarded-Port",
+        "headerValue": "443",
+        "replace": true
+      }
+    ],
+    "requestHeadersToRemove": [
+      "Forwarded"
+    ]
+  },
+  "hostRules": [
+    {
+      "hosts": [
+        "beta.oceaninfobio.com"
+      ],
+      "pathMatcher": "beta-only"
+    }
+  ],
+  "name": "ocean-v1-beta-serving-url-map",
+  "pathMatchers": [
+    {
+      "defaultService": "https://www.googleapis.com/compute/v1/projects/ocean-v1-beta-20261101/global/backendServices/ocean-v1-beta-serving-backend",
+      "name": "beta-only"
+    }
+  ]
+}

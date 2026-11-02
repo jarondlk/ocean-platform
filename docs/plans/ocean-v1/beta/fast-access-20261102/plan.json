@@ -1,0 +1,169 @@
+{
+  "version": "beta-fast-login-frontend-only-v1",
+  "recorded_at": "2026-11-02T06:13:29.011547+00:00",
+  "state": "apply_ready_candidate_actual_cloud_gates_pending",
+  "cloud_or_image_or_application_source_actions": false,
+  "priority": "Reachable real beta login page now; full SQL/API/session/release acceptance deferred, not passed",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "service_id": "ocean-v1-beta-serving",
+  "region": "asia-northeast1",
+  "source_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+  "actual_oauth_client_id": "534831104543-4l3hm9dqd60u320mf73ql0d3s9rsuprn.apps.googleusercontent.com",
+  "create_body": "service.create.json",
+  "name_field_in_create_body": false,
+  "create_url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/services?serviceId=ocean-v1-beta-serving",
+  "validate_only_url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/services?serviceId=ocean-v1-beta-serving&validateOnly=true",
+  "service_get_url": "https://run.googleapis.com/v2/projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving",
+  "secret_memberships": [
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-auth",
+      "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "numeric_version": "1",
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-auth",
+        "--project=ocean-v1-beta-20261101",
+        "--member=serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--quiet",
+        "--format=json"
+      ]
+    },
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-internal",
+      "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "numeric_version": "1",
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-internal",
+        "--project=ocean-v1-beta-20261101",
+        "--member=serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--quiet",
+        "--format=json"
+      ]
+    },
+    {
+      "resource": "projects/534831104543/secrets/ocean-v1-beta-oauth",
+      "member": "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/secretmanager.secretAccessor",
+      "numeric_version": "1",
+      "command": [
+        "gcloud",
+        "secrets",
+        "add-iam-policy-binding",
+        "ocean-v1-beta-oauth",
+        "--project=ocean-v1-beta-20261101",
+        "--member=serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--condition=None",
+        "--quiet",
+        "--format=json"
+      ]
+    }
+  ],
+  "database_role_or_cloudsql_client_or_DSN_grants": false,
+  "vpc_required": false,
+  "loopback_api": "unavailable until backend attachment; no remote/legacy fallback",
+  "milestone_acceptance": [
+    "Actual source-bound Ready frontend revision and bounds/private secret refs",
+    "Final beta DNS/IP and trusted TLS certificate/SAN",
+    "Public login200 and one generated CSS asset200",
+    "Root redirects to login; protected runtime401; wrong Host denial",
+    "Direct default URI disabled and actual LB header normalization confirmed",
+    "No callback/session/backend/scientific acceptance inferred"
+  ],
+  "full_login_callback_accepted": false,
+  "full_release_accepted": false,
+  "fresh_preflight_required": [
+    "Exact project ID/number, accepted image and current three ENABLED numeric secret refs",
+    "Existing serving SA/IAM baseline with only reviewed three resource grants; no broad fallback",
+    "Effective org policy permits requested invoker check/ingress/default-URI controls",
+    "Create-only target service/LB names absent or exact preserved root receipts matched",
+    "Actual beta certificate/map ACTIVE and child record set no conflicting A/AAAA/CNAME",
+    "Root sole configuration writer; readback after each mutation"
+  ],
+  "load_balancer": {
+    "address_name": "ocean-v1-beta-serving-ip",
+    "address_value": null,
+    "backend_service": "ocean-v1-beta-serving-backend",
+    "certificate_map": "projects/ocean-v1-beta-20261101/locations/global/certificateMaps/ocean-v1-beta-cert-map",
+    "certificate_name": "ocean-v1-beta-domain-cert",
+    "header_action_scope": "Modern global external managed LB; do not substitute classic EXTERNAL, which does not support this headerAction. Preserve Host and normalize only forwarded metadata. Wrong Host is still rejected by the app.",
+    "health_check_resource_created": false,
+    "network_tier": "PREMIUM",
+    "no_armor_cdn_nat_or_extra_paid_proxy": true,
+    "no_http_forwarding_redirect_rule": true,
+    "one_https_rule": {
+      "name": "ocean-v1-beta-serving-https",
+      "ports": [
+        443
+      ]
+    },
+    "protocol": "HTTP",
+    "scheme": "EXTERNAL_MANAGED",
+    "scope": "global",
+    "serverless_neg": {
+      "cloud_run_service": "ocean-v1-beta-serving",
+      "name": "ocean-v1-beta-serving-neg",
+      "region": "asia-northeast1"
+    },
+    "target_https_proxy": "ocean-v1-beta-serving-https-proxy",
+    "url_map": "url-map.create.json"
+  },
+  "dns": {
+    "create_only_record": {
+      "name": "beta.oceaninfobio.com.",
+      "rrdatas": null,
+      "ttl": 300,
+      "type": "A"
+    },
+    "gate": "Refresh full child record set; require no conflicting A/AAAA/CNAME or existing beta endpoint before adding. Parent delegation is already a separate immutable receipt.",
+    "preserve": [
+      "child NS/SOA/authorization CNAME",
+      "all parent zone records",
+      "apex/www/legacy DNS"
+    ],
+    "project_id": "ocean-v1-beta-20261101",
+    "target": "Only the actual reviewed new beta global IPv4; no invented address",
+    "zone": "ocean-v1-beta-domain"
+  },
+  "cost": {
+    "target_jpy": 50000,
+    "existing_run_cap_all_services_jpy": 3000,
+    "existing744h_scenario_jpy": "35604.045104616",
+    "frontend_billed_hour_jpy": "14.3808300000",
+    "example50h100krequests_before_header_jpy": "725.3696000000",
+    "extra_header_feature100k_jpy": "11.865300000",
+    "scope": "Existing one443 LB/globalIPv4 envelope; no extra HTTP/NAT/CDN/Armor/service",
+    "qualification": "Usage example, no invoice/traffic forecast; monitor actual spend and notify before50000 forecast"
+  },
+  "input_pins": {
+    "docs/plans/ocean-v1/beta/hosting-plan-20261102/serving-service.pending.json": "2623e9837840d4de19572f026827bb53064a52dcc98b731d76df9cb90243db18",
+    "docs/plans/ocean-v1/beta/hosting-plan-20261102/url-map.proposed.json": "ff8d0538b72ba71e5f1703b9b7d25971e500093561f8ac8b3f11d6ed17699410",
+    "docs/plans/ocean-v1/beta/hosting-plan-20261102/plan.json": "908d7029168d4c7b89bbf6d49a6fe6b0daf25f71492df096b026cc2072cbd792",
+    "docs/plans/ocean-v1/beta/oauth-20261102/credential-installation.json": "d89d6b86df96a30af61c4b746032ab4059832e5b8967d0df5741e76b3ff9221d",
+    "docs/plans/ocean-v1/beta/builds-20261102/frontend-final-readback.json": "513c6bbc6a3bffa560b899aae400f105cb175a4e7f58127cb7fa93ef5d0fea36",
+    "docs/plans/ocean-v1/beta/builds-20261102/container-smoke-receipt.json": "d1bb54691237aa433fc64022ddaf28de6b16da23cbea96287f7de616ff39a889",
+    "docs/plans/ocean-v1/beta/dns-20261102/certificate-active-20261102.json": "a463f79844ea68b94d4b8fad270b46c937d2265a81f1d9e5bbf78905cdb8fa78",
+    "docs/plans/ocean-v1/beta/dns-20261102/map-entry-current-readback.json": "ad7f90f4c6a937d00dbd4f4f1f1174abe9a384d6e68bcd894b36331fa1536021",
+    "docs/plans/ocean-v1/beta/dns-20261102/child-zone-readback.json": "3c6ce1a4a1e993de987077dff46ddeffbcc2022ff66613c7f270520f725a252c",
+    "docs/plans/ocean-v1/beta/quotes-20261102/cost-qualification.json": "1cf9f42e075254f9ac3710e77ea39011c7812b544eec58e89789ff16826631db"
+  },
+  "artifact_pins": {
+    "service.create.json": "8a3e72057675ff7982135650ddcca9144aa0da3591c77adfe8473b57c4ad3aa0",
+    "url-map.create.json": "ff8d0538b72ba71e5f1703b9b7d25971e500093561f8ac8b3f11d6ed17699410",
+    "verification.json": "555fc07d406751092e094918609e78410ad077825ec652864c2d1fbe4da1c2d1",
+    "PLAN.md": "a94cc64542636a85b8333fb850f6c2b6c447d80766c1ddb1222d05117d1113fb"
+  }
+}

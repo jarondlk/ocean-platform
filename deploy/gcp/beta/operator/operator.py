@@ -175,7 +175,15 @@ def validate(
     env, *, stage, confirm_project, confirm_database, confirm_source, confirm_operator
 ):
     if (
-        stage not in {"bootstrap", "migrate", "finalize", "readback", "qualify"}
+        stage
+        not in {
+            "bootstrap",
+            "migrate",
+            "finalize",
+            "readback",
+            "qualify",
+            "normalize-owner",
+        }
         or confirm_project != PROJECT
         or confirm_database != DATABASE
         or env.get("DEPLOYMENT_ENV") != "production"
@@ -451,6 +459,80 @@ def bootstrap(connection, env):
         "application_rows_created": False,
         "password_logging_policy": logging_policy,
         "password_preparation": "client-side SCRAM-SHA-256 only",
+    }
+
+
+def normalize_owner(connection):
+    """Change only the fixed empty beta database's owner, with existing authority.
+
+    run_stage supplies one explicit transaction. No role, GRANT/REVOKE,
+    extension, password, schema-owner or application-object SQL is issued.
+    """
+    identity(connection, "postgres")
+    connection.execute(
+        text(
+            "SELECT pg_advisory_xact_lock(hashtextextended('ocean-v1-beta-bootstrap',0))"
+        )
+    )
+    if connection.scalar(
+        text(
+            "SELECT EXISTS(SELECT 1 FROM pg_roles WHERE rolname LIKE 'ocean\\_v1\\_%' ESCAPE '\\')"
+        )
+    ):
+        raise OperatorError("Owner normalization refuses existing independent roles")
+    if connection.scalar(
+        text(
+            "SELECT EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public') "
+            "OR EXISTS(SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public') "
+            "OR to_regclass('public.alembic_version') IS NOT NULL"
+        )
+    ):
+        raise OperatorError(
+            "Owner normalization refuses populated application schema or migration head"
+        )
+    if not connection.scalar(
+        text("SELECT count(*)=1 AND bool_and(extname='plpgsql') FROM pg_extension")
+    ):
+        raise OperatorError(
+            "Owner normalization requires only the default plpgsql extension"
+        )
+    if connection.scalar(
+        text(
+            "SELECT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname NOT IN ('public','pg_catalog','information_schema') "
+            "AND nspname NOT LIKE 'pg_toast%' AND nspname NOT LIKE 'pg_temp_%')"
+        )
+    ):
+        raise OperatorError("Owner normalization refuses unexpected user schema")
+    before = connection.execute(
+        text(
+            "SELECT pg_get_userbyid(d.datdba),pg_get_userbyid(n.nspowner),r.rolcreatedb,"
+            "pg_has_role(current_user,d.datdba,'USAGE') FROM pg_database d "
+            "JOIN pg_namespace n ON n.nspname='public' JOIN pg_roles r ON r.rolname=current_user "
+            "WHERE d.datname=current_database()"
+        )
+    ).one()
+    if tuple(before) != ("cloudsqlsuperuser", "pg_database_owner", True, True):
+        raise OperatorError(
+            "Expected managed empty-database ownership and existing owner authority required"
+        )
+    statement(connection, "ALTER DATABASE {} OWNER TO {}", DATABASE, "postgres")
+    after = connection.execute(
+        text(
+            "SELECT pg_get_userbyid(d.datdba),pg_get_userbyid(n.nspowner) FROM pg_database d "
+            "JOIN pg_namespace n ON n.nspname='public' WHERE d.datname=current_database()"
+        )
+    ).one()
+    if tuple(after) != ("postgres", before[1]):
+        raise OperatorError(
+            "Owner normalization readback failed; transaction must roll back"
+        )
+    return {
+        "stage": "normalize-owner",
+        "previous_database_owner": before[0],
+        "database_owner": after[0],
+        "public_schema_owner": after[1],
+        "public_schema_owner_unchanged": True,
+        "explicit_role_grant_password_or_application_sql_performed": False,
     }
 
 
@@ -950,6 +1032,8 @@ def run_stage(stage, validated, env):
             with engine.begin() as connection:
                 if stage == "bootstrap":
                     result = bootstrap(connection, env)
+                elif stage == "normalize-owner":
+                    result = normalize_owner(connection)
                 elif stage == "finalize":
                     result = finalize(connection)
                 else:
@@ -999,7 +1083,15 @@ def main(argv=None):
 
     parser = Parser(description=__doc__)
     parser.add_argument(
-        "stage", choices=("bootstrap", "migrate", "finalize", "readback", "qualify")
+        "stage",
+        choices=(
+            "bootstrap",
+            "migrate",
+            "finalize",
+            "readback",
+            "qualify",
+            "normalize-owner",
+        ),
     )
     for name in ("project", "database", "source", "operator"):
         parser.add_argument("--confirm-" + name, required=True)

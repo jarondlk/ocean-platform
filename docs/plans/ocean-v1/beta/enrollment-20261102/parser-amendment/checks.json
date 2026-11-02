@@ -1,0 +1,16 @@
+{
+  "version": "beta-enrollment-parser-regressions-v1",
+  "passed": 6,
+  "checks": [
+    "abbreviated apply cannot enter configuration/identity/database/proxy: --app",
+    "abbreviated apply cannot enter configuration/identity/database/proxy: --ap",
+    "abbreviated apply cannot enter configuration/identity/database/proxy: --app",
+    "exact apply still finalizes on configuration failure",
+    "exact apply still finalizes on parser failure",
+    "exact apply shutdown failure remains exit3 and unaccepted"
+  ],
+  "identity_configuration_or_google_proof_used": false,
+  "actual_network_db_or_proxy_calls": false,
+  "role_or_account_default_added": false,
+  "original41_checks_repeated_or_retargeted": false
+}

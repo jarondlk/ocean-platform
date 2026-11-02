@@ -1,0 +1,28 @@
+{
+  "version": "beta-fast-login-local-spec-check-v1",
+  "state": "candidate_checked_not_applied",
+  "create_body_top_level_name_absent": true,
+  "actual_frontend_digest_unchanged": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+  "one_frontend_container_only": true,
+  "no_API_proxy_or_VPC_dependency": true,
+  "application_auth_required_and_mocks_closed": true,
+  "secret_version_refs": {
+    "projects/534831104543/secrets/ocean-v1-beta-auth": "1",
+    "projects/534831104543/secrets/ocean-v1-beta-internal": "1",
+    "projects/534831104543/secrets/ocean-v1-beta-oauth": "1"
+  },
+  "startup_probe": "GET /login exact beta Host/forwarded HTTPS443",
+  "bounds": {
+    "min": 0,
+    "max": 1,
+    "cpu": 1,
+    "memory_mib": 512,
+    "concurrency": 4,
+    "timeout_seconds": 60
+  },
+  "request_based_example_rate_jpy_per_active_hour": "14.3808300000",
+  "example50hours100krequests_jpy_before_header": "725.3696000000",
+  "cloud_or_image_or_application_actions": false,
+  "service_sha256": "8a3e72057675ff7982135650ddcca9144aa0da3591c77adfe8473b57c4ad3aa0",
+  "url_map_sha256": "ff8d0538b72ba71e5f1703b9b7d25971e500093561f8ac8b3f11d6ed17699410"
+}

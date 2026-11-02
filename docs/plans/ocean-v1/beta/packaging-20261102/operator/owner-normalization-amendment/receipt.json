@@ -1,0 +1,35 @@
+{
+  "version": "beta-owner-normalization-amendment-v1",
+  "state": "targeted_pure_checks_and_source_review_passed_managed_execution_pending",
+  "stage": "normalize-owner",
+  "source_pins": {
+    "deploy/gcp/beta/operator/operator.py": "ecb58fbf0bd2e56d4c725777737b3aa17cb2154742947ce4fbbafaffade9aae0",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/owner-normalization-amendment/checks.py": "5c10cf6292703657d7f6fa6e4169a6b18f2f028786486de89841414bb7cb20d0",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/owner-normalization-amendment/verify.py": "f0bd3f31bb8bac8795288eddac638785bbd4b1851a741ca3fc3b8d767fb438b3",
+    "docs/plans/ocean-v1/beta/packaging-20261102/operator/owner-normalization-amendment/README.md": "7e2acb648613c4c1c4efe1486d84a36a44f4d4eef2a6ed264de9f7a680daf3ae"
+  },
+  "artifact_pins": {
+    "operator.before.py": "ec7d04e1273b7491c3af94528c49dcc28891244827413bf77642dba60e1abc2d",
+    "inspection-readiness.before.json": "aba9ad255ceee6441b8432a44479a94f86d68083b8436bdf2d58ab0690695edc",
+    "predecessor.json": "abfeaebe168e858eea9ab27ec7134e205935647e0202395e7155fdae30cd9681",
+    "checks.json": "b367857d6d641e945c6b636fbac0978661b1f86d3e18618a9027fa2075342214",
+    "REVIEW.md": "ceedcf22975311483558dc30e9952f56112fc40313351905e4a67e0bf87b07c3"
+  },
+  "external_evidence_pins": {
+    "docs/plans/ocean-v1/beta/sql-20261102/inspection-jobs-dcde1ef/live/qualify-operator-result.json": "b218f6a1c02538d90716e86d8920a1393fe6d03759038d1c87f84e9b41ea9b2a"
+  },
+  "prior_provider_qualification": "docs/plans/ocean-v1/beta/sql-20261102/inspection-jobs-dcde1ef/live/qualify-operator-result.json",
+  "independent_review": {
+    "reviewer": "/root/beta_host_finish",
+    "operator_sha256": "ecb58fbf0bd2e56d4c725777737b3aa17cb2154742947ce4fbbafaffade9aae0",
+    "verdict": "no blocking issue found in normalize_owner and stage wiring",
+    "mode": "read-only source review; no tests/cloud/edits",
+    "actual_managed_execution_claimed": false
+  },
+  "cloud_actions": false,
+  "native_actions": false,
+  "new_owner_stage_managed_execution_accepted": false,
+  "bootstrap_privacy_membership_gates_unchanged": true,
+  "scope": "One fixed ownership ALTER on the expected empty beta database, using existing principal authority; no role/password/grant/application/science SQL",
+  "remaining_gate": "Root source-bound build, explicit private execution and committed owner readback"
+}
