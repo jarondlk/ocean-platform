@@ -1,0 +1,81 @@
+TAP version 13
+# Subtest: deployment guard refuses every noncanonical context before application startup
+ok 1 - deployment guard refuses every noncanonical context before application startup
+  ---
+  duration_ms: 111.862333
+  ...
+# Subtest: actual loopback HTTP preserves request semantics and removes only canonical RFC Forwarded
+    # Subtest: canonical transport removes Forwarded and preserves every other raw field, cookie, Origin, bearer, method, path and body
+    ok 1 - canonical transport removes Forwarded and preserves every other raw field, cookie, Origin, bearer, method, path and body
+      ---
+      duration_ms: 4.652042
+      ...
+    # Subtest: all case variants and duplicate Forwarded fields are removed only under the canonical transport
+    ok 2 - all case variants and duplicate Forwarded fields are removed only under the canonical transport
+      ---
+      duration_ms: 0.980792
+      ...
+    # Subtest: wrong Host is never normalized
+    ok 3 - wrong Host is never normalized
+      ---
+      duration_ms: 1.097875
+      ...
+    # Subtest: wrong forwarded Host is never normalized
+    ok 4 - wrong forwarded Host is never normalized
+      ---
+      duration_ms: 0.640667
+      ...
+    # Subtest: wrong forwarded protocol is never normalized
+    ok 5 - wrong forwarded protocol is never normalized
+      ---
+      duration_ms: 0.665584
+      ...
+    # Subtest: wrong forwarded port is never normalized
+    ok 6 - wrong forwarded port is never normalized
+      ---
+      duration_ms: 0.680042
+      ...
+    # Subtest: missing forwarded Host is never normalized
+    ok 7 - missing forwarded Host is never normalized
+      ---
+      duration_ms: 0.67825
+      ...
+    # Subtest: duplicate raw Host is never normalized
+    ok 8 - duplicate raw Host is never normalized
+      ---
+      duration_ms: 0.863667
+      ...
+    # Subtest: duplicate forwarded protocol is never normalized
+    ok 9 - duplicate forwarded protocol is never normalized
+      ---
+      duration_ms: 1.450334
+      ...
+    # Subtest: comma ambiguity is never normalized
+    ok 10 - comma ambiguity is never normalized
+      ---
+      duration_ms: 0.6195
+      ...
+    # Subtest: bounded raw-header inventory is never normalized
+    ok 11 - bounded raw-header inventory is never normalized
+      ---
+      duration_ms: 0.815833
+      ...
+    # Subtest: absence of Forwarded leaves canonical request intact
+    ok 12 - absence of Forwarded leaves canonical request intact
+      ---
+      duration_ms: 0.694375
+      ...
+    1..12
+ok 2 - actual loopback HTTP preserves request semantics and removes only canonical RFC Forwarded
+  ---
+  duration_ms: 39.824334
+  ...
+1..2
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 179.01725

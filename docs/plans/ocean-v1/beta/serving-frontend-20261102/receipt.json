@@ -1,0 +1,59 @@
+{
+  "version": "beta-serving-frontend-transport-preparation-v1",
+  "qualification": "Focused local actual Node HTTP proof only; no derived image build, actual cloud revision, Google callback or backend acceptance.",
+  "frontend_source_revision": "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+  "base_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:adb5bc75dbc56d146bdf6e63f83a3dc8b3867b0318de0c2c02ba6fc56023e9dc",
+  "final_adapter_sha256": "a5e46f2cecd3502721e2c62c4ac19df29c15e42596cacd40255a61d788bcd53e",
+  "sources": {
+    "deploy/gcp/beta/serving-frontend/Dockerfile": "d7aec0e594d9cc3da594b5d1f4376353b8f497e84aedc58ce78672d4c2b27e0a",
+    "deploy/gcp/beta/serving-frontend/forwarded-adapter.cjs": "a5e46f2cecd3502721e2c62c4ac19df29c15e42596cacd40255a61d788bcd53e",
+    "deploy/gcp/beta/serving-frontend/prepare_context.py": "c28f2d3f05590aafdbeb961ee018a382d06662bcef37e65f0fe4ad9ef5b2dc33"
+  },
+  "artifacts": {
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/README.md": "2a9ae1883f35c636c4fb7eb73b6d99f6865b130a172b54a3856c4321558e17e0",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/attempt01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/attempt01.stdout": "0eaa906684e9111133b80d2857b396e50ad1cfca0ca0ddf898e5835a69326fa7",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/attempt02.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/attempt02.stdout": "1aee82ac6c66337b932e3d28fa3ba678c67fdeb99b4cc68130bd848e49c792ff",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.stdout": "d59e591cc5fba6cfb158132bcefb717dfed362b8726c9152ede3ad7b2a44330c",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs": "5ebdbeee6ea4b65c6b7aa5537297e896b17c924afa5ad0d7314912b1f29dd455",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/source-before-header-view.cjs": "f3dbef25213ff6aedfb9ad809a96881d408f22ae35e1976c52e9999160ab9823",
+    "docs/plans/ocean-v1/beta/serving-frontend-20261102/verify.py": "c7ca29cce2efbbeebc96892d1672b93f248603ec700156cd6cad2ff26a392ea4"
+  },
+  "unchanged_host_sources": {
+    "frontend-v1/hosting/middleware.ts": "99d7599d4c3f6e023708905523a968a178089b9c5958eddc5c8645a750ea188c",
+    "frontend-v1/hosting/lib/settings.ts": "ea7754cc5c92466f0621ec64eed367c6a474ba59dc3fdb16d9943127a0d01468",
+    "frontend-v1/hosting/lib/auth.ts": "c0c1a2bf081e44108bc4293bf5da639d05ed2faca9e7a62a031588d5ad85268c",
+    "frontend-v1/hosting/lib/auth-config.ts": "47cfe2dbd7672576987efdaea7c71654ac3a19944d96502ccb5ceac007591325",
+    "frontend-v1/hosting/lib/identity.ts": "e3a66de267716906e0ef9b7eb74716abe6ae8ba2d4172ab511ca5300bddb7e60",
+    "frontend-v1/hosting/lib/proxy.ts": "20a0e898c32aea5a704788125feea0ec76a71425edd94649e02a06a7b7fcdaf3",
+    "frontend-v1/hosting/lib/route-proxy.ts": "690608570c7526a313dddefd3f492dfe7ab7a30c8252c71482982b2ca6555606",
+    "frontend-v1/hosting/next.config.mjs": "80cc7e7aa818fe0e9cb2e74e92fd673f91fd774c536a310307afe84b7af555cb"
+  },
+  "focused_http_command": "node --test --test-concurrency=1 docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs",
+  "focused_http_result": {
+    "exit_code": 0,
+    "tests": 14,
+    "pass": 14,
+    "fail": 0,
+    "external_network": false,
+    "values": "synthetic only"
+  },
+  "retained_failed_attempts": [
+    "attempt01.stdout",
+    "attempt01.stderr",
+    "attempt02.stdout",
+    "attempt02.stderr"
+  ],
+  "failed_adapter_sha256": "f3dbef25213ff6aedfb9ad809a96881d408f22ae35e1976c52e9999160ab9823",
+  "mandatory_deployment_readback": [
+    "exact derived image digest",
+    "nonroot and root-owned 0444 adapter/manifest",
+    "embedded source manifest",
+    "effective argv uses preload; diagnostic command and args cleared",
+    "real edge login200 and unauthenticated runtime refusal"
+  ],
+  "cloud_calls": false,
+  "application_or_auth_source_changes": false
+}

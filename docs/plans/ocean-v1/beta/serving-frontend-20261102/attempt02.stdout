@@ -1,0 +1,192 @@
+TAP version 13
+# Subtest: deployment guard refuses every noncanonical context before application startup
+ok 1 - deployment guard refuses every noncanonical context before application startup
+  ---
+  duration_ms: 100.435458
+  ...
+# Subtest: actual loopback HTTP preserves request semantics and removes only canonical RFC Forwarded
+    # Subtest: canonical transport removes Forwarded and preserves every other raw field, cookie, Origin, bearer, method, path and body
+    not ok 1 - canonical transport removes Forwarded and preserves every other raw field, cookie, Origin, bearer, method, path and body
+      ---
+      duration_ms: 4.47725
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:85:13'
+      failureType: 'testCodeFailure'
+      error: 'socket hang up'
+      code: 'ECONNRESET'
+      stack: |-
+        Socket.socketOnEnd (node:_http_client:542:25)
+        Socket.emit (node:events:530:35)
+        endReadableNT (node:internal/streams/readable:1698:12)
+        process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+      ...
+    # Subtest: all case variants and duplicate Forwarded fields are removed only under the canonical transport
+    not ok 2 - all case variants and duplicate Forwarded fields are removed only under the canonical transport
+      ---
+      duration_ms: 1.430084
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:90:13'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: wrong Host is never normalized
+    not ok 3 - wrong Host is never normalized
+      ---
+      duration_ms: 0.594625
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: wrong forwarded Host is never normalized
+    not ok 4 - wrong forwarded Host is never normalized
+      ---
+      duration_ms: 0.483542
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: wrong forwarded protocol is never normalized
+    not ok 5 - wrong forwarded protocol is never normalized
+      ---
+      duration_ms: 0.458958
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: wrong forwarded port is never normalized
+    not ok 6 - wrong forwarded port is never normalized
+      ---
+      duration_ms: 0.670041
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: missing forwarded Host is never normalized
+    not ok 7 - missing forwarded Host is never normalized
+      ---
+      duration_ms: 0.525333
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: duplicate raw Host is never normalized
+    not ok 8 - duplicate raw Host is never normalized
+      ---
+      duration_ms: 0.393583
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: duplicate forwarded protocol is never normalized
+    not ok 9 - duplicate forwarded protocol is never normalized
+      ---
+      duration_ms: 0.759417
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: comma ambiguity is never normalized
+    not ok 10 - comma ambiguity is never normalized
+      ---
+      duration_ms: 0.621625
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: bounded raw-header inventory is never normalized
+    not ok 11 - bounded raw-header inventory is never normalized
+      ---
+      duration_ms: 0.497958
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:108:15'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    # Subtest: absence of Forwarded leaves canonical request intact
+    not ok 12 - absence of Forwarded leaves canonical request intact
+      ---
+      duration_ms: 0.349459
+      location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:115:13'
+      failureType: 'testCodeFailure'
+      error: 'connect ECONNREFUSED 127.0.0.1:50630'
+      code: 'ECONNREFUSED'
+      stack: |-
+        TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+      ...
+    1..12
+not ok 2 - actual loopback HTTP preserves request semantics and removes only canonical RFC Forwarded
+  ---
+  duration_ms: 35.243542
+  location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:27:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:_http_incoming:418
+      field = field.toLowerCase();
+                    ^
+    
+    TypeError: Cannot read properties of undefined (reading 'toLowerCase')
+        at IncomingMessage._addHeaderLineDistinct (node:_http_incoming:418:17)
+        at IncomingMessage.get (node:_http_incoming:137:14)
+        at IncomingMessage.<anonymous> ([eval]:6:70)
+        at IncomingMessage.emit (node:events:518:28)
+        at endReadableNT (node:internal/streams/readable:1698:12)
+        at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    
+    Node.js v22.14.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    IncomingMessage._addHeaderLineDistinct (node:_http_incoming:418:17)
+    IncomingMessage.get (node:_http_incoming:137:14)
+    IncomingMessage.<anonymous> ([eval]:6:70)
+    IncomingMessage.emit (node:events:518:28)
+    endReadableNT (node:internal/streams/readable:1698:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    TestContext.<anonymous> (/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/beta/serving-frontend-20261102/checks.test.cjs:124:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:980:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+1..2
+# tests 14
+# suites 0
+# pass 1
+# fail 13
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.511792
