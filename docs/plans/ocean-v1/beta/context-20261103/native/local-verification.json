@@ -1,0 +1,19 @@
+{
+  "state": "context_grant_operator_locally_qualified",
+  "unit_cases_passed": 35,
+  "unit_command": ".venv/bin/pytest -q tests/test_beta_context_operator.py --no-cov",
+  "ruff_production_and_unit": "pass",
+  "native_checks_passed": 28,
+  "native_receipt": "attempt02/receipt.json",
+  "native_source_pins_verified": true,
+  "cluster_stopped_port_closed_and_private_directory_removed": true,
+  "initial_probe": "Actual AuditEvent INSERT RETURNING created_at fails with SQLSTATE42501 without SELECT(created_at); final column-only grant passes actual C17 transactions",
+  "cloud_calls": false,
+  "cloudsql16_or_actual_gcs_cas_accepted": false,
+  "source_pins": {
+    "deploy/gcp/beta/context-operator/context_operator.py": "b083d085758b49bcf3020ee34d240570165ec51cbc65d9e0c09ea02236a7a82d",
+    "deploy/gcp/beta/context-operator/prepare_context.py": "60841325a8b224fc35e2a97ff08c4b2705b16726eb2023669c12915d048dfe46",
+    "deploy/gcp/beta/context-operator/Dockerfile": "2eefc5764f188ce1a630b0dbfe55d09a32deccadcb02baab7780c266b1aa7540",
+    "tests/test_beta_context_operator.py": "06379f5684ae8859bfa2f26c82038ab5bbd7327daa5243759d68d0c2af4575a9"
+  }
+}

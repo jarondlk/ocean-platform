@@ -1,0 +1,258 @@
+{
+  "version": "beta-context-native-v1",
+  "state": "passed",
+  "checks": [
+    {
+      "name": "native bootstrap vector and restricted roles",
+      "passed": true
+    },
+    {
+      "name": "restricted native migration reaches exact0021",
+      "passed": true
+    },
+    {
+      "name": "existing auth limiter grants accepted before context extension",
+      "passed": true
+    },
+    {
+      "name": "without audit created_at SELECT actual C17 preparation is rejected",
+      "passed": true
+    },
+    {
+      "name": "actual ORM audit INSERT RETURNING created_at requires column SELECT",
+      "passed": true
+    },
+    {
+      "name": "exact context table-column policy succeeds as restricted migrator",
+      "passed": true
+    },
+    {
+      "name": "fresh connection verifies exact effective rights",
+      "passed": true
+    },
+    {
+      "name": "actual restricted serving C17 create succeeds",
+      "passed": true
+    },
+    {
+      "name": "actual C17 idempotent replay returns same immutable revision",
+      "passed": true
+    },
+    {
+      "name": "actual conversation create and versioned rename succeed",
+      "passed": true
+    },
+    {
+      "name": "actual immutable context revision and catalogue attachment succeed",
+      "passed": true
+    },
+    {
+      "name": "actual investigation rename and archive succeed",
+      "passed": true
+    },
+    {
+      "name": "fresh sessions retain immutable context and history",
+      "passed": true
+    },
+    {
+      "name": "account authority UPDATE denied",
+      "passed": true
+    },
+    {
+      "name": "append-only revision UPDATE denied",
+      "passed": true
+    },
+    {
+      "name": "context DELETE denied",
+      "passed": true
+    },
+    {
+      "name": "unrelated retained run reads denied",
+      "passed": true
+    },
+    {
+      "name": "full audit reads denied",
+      "passed": true
+    },
+    {
+      "name": "audit action column reads denied",
+      "passed": true
+    },
+    {
+      "name": "serving DDL denied",
+      "passed": true
+    },
+    {
+      "name": "audit created_at column alone is readable",
+      "passed": true
+    },
+    {
+      "name": "unexpected table UPDATE bypass is refused without automatic reset",
+      "passed": true
+    },
+    {
+      "name": "unexpected forbidden account column is refused without automatic reset",
+      "passed": true
+    },
+    {
+      "name": "unexpected audit private column is refused without automatic reset",
+      "passed": true
+    },
+    {
+      "name": "unexpected allowed column delegation is refused without automatic reset",
+      "passed": true
+    },
+    {
+      "name": "unexpected PUBLIC history ACL is refused without automatic reset",
+      "passed": true
+    },
+    {
+      "name": "idempotent grants pass after restoring only injected native conditions",
+      "passed": true
+    },
+    {
+      "name": "private cluster log contains no generated plaintext credentials",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "initdb",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-start",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stop",
+      "returncode": 0,
+      "expected": 0
+    },
+    {
+      "name": "pg-stopped",
+      "returncode": 3,
+      "expected": 3
+    }
+  ],
+  "native_version": "PostgreSQL18.3/pgvector0.8.7, not CloudSQL16",
+  "cloud_calls": false,
+  "scientific_data": false,
+  "private_owned_directory": "/private/tmp/ocean-beta-context-pg-0i9pgvfo",
+  "initial_audit_returning_probe": [
+    {
+      "sqlstate": "42501",
+      "audit_insert": true,
+      "returning_created_at": true
+    }
+  ],
+  "grant_result": {
+    "stage": "context-grants",
+    "roles": [
+      {
+        "name": "ocean_v1_migrator",
+        "superuser": false,
+        "create_role": false,
+        "create_database": false,
+        "replication": false,
+        "bypass_rls": false,
+        "login": true
+      },
+      {
+        "name": "ocean_v1_serving",
+        "superuser": false,
+        "create_role": false,
+        "create_database": false,
+        "replication": false,
+        "bypass_rls": false,
+        "login": true
+      }
+    ],
+    "table_grants": {
+      "research_investigation": [
+        "INSERT",
+        "SELECT"
+      ],
+      "research_conversation": [
+        "INSERT",
+        "SELECT"
+      ],
+      "research_context_revision": [
+        "INSERT",
+        "SELECT"
+      ],
+      "research_context_operation": [
+        "INSERT",
+        "SELECT"
+      ],
+      "audit_event": [
+        "INSERT"
+      ]
+    },
+    "column_grants": {
+      "research_investigation": {
+        "UPDATE": [
+          "head_revision_id",
+          "legal_hold",
+          "metadata_version",
+          "name",
+          "retired_at",
+          "status",
+          "updated_at"
+        ]
+      },
+      "research_conversation": {
+        "UPDATE": [
+          "metadata_version",
+          "name",
+          "updated_at"
+        ]
+      },
+      "research_context_operation": {
+        "UPDATE": [
+          "error_code",
+          "state",
+          "updated_at"
+        ]
+      },
+      "audit_event": {
+        "SELECT": [
+          "created_at"
+        ]
+      }
+    },
+    "effective_privileges_verified": true,
+    "schema_or_role_mutations": false,
+    "sequence_grants": false,
+    "password_sql_or_account_mutation": false,
+    "application_data_read": false
+  },
+  "cleanup": {
+    "port_closed": true,
+    "postmaster_pid_absent": true,
+    "private_directory_removed": true
+  },
+  "private_log": {
+    "sha256": "69c7d6e5d604dd29752652008bf4d5c9c675af0351cc2f438a2c7741b140ae78",
+    "bytes": 1727,
+    "copied_to_repository": false
+  },
+  "source_pins": {
+    "deploy/gcp/beta/context-operator/context_operator.py": "b083d085758b49bcf3020ee34d240570165ec51cbc65d9e0c09ea02236a7a82d",
+    "docs/plans/ocean-v1/beta/context-20261103/native/native_rehearsal.py": "286fb5c836ceba7057324389f8624b6d1c9571a5b0999e8ecc703f776fa52a4e",
+    "api/v1_beta_research_host.py": "620b8d79bb81b35a3590cdbb391a84dcb6755fb5408a0fcebe8d4040881707a3",
+    "ingestion/beta_catalogue_retention.py": "3ebaf590e272f52c0ac6f01addb6734bfa29f416283f98e1426df69b8a78eb3a"
+  },
+  "artifacts": {
+    "initdb.stdout": "8f8733dfee86f965ebff695079822b4c5f0982d1e21062da94bfa1cf58fab6af",
+    "pg-stopped.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stopped.stdout": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "initdb.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-start.stdout": "66afd0411ccc09366e99fdd99b85f21899c8d2d064f5835126859618802153ad",
+    "pg-stop.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pg-stop.stdout": "ca19178a35ab4153b75b494963b66ce8243e1b94c173107c87b44d09db23652d",
+    "pg-start.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

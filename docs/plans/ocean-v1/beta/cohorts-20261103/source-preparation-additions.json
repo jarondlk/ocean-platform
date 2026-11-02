@@ -1,0 +1,19 @@
+{
+  "predecessor": "0fc4775c5fe181a6dec288b94d6d591cdef7cb63",
+  "source_sha256": {
+    "deploy/gcp/beta/data/prepare_cohorts.py": "09e8d9315523136c6577e7f4fd25e053252901e95e0f3c62a312b84282bb1236",
+    "deploy/gcp/beta/data/prepare_edna.py": "fd407ab01ec0cee44e05a2078ae717f9880b55dc2698d458584ebcea4ff01893",
+    "deploy/gcp/beta/data/publish_append.py": "29bd41e1a7f88f6633f73e6a2968fa26fbd65627c11d05b3fb0e1dd843772089",
+    "tests/test_beta_catalogue_publish_append.py": "d3165dff413e5c3c641e0805ca62dfef0f7d461c9977fa0c3424258609b7938f",
+    "tests/test_beta_context_operator.py": "06379f5684ae8859bfa2f26c82038ab5bbd7327daa5243759d68d0c2af4575a9",
+    "tests/test_beta_edna_preparation.py": "4aa40020de3eb90d78f1d821a2a1f630d4d47ae499818ff2ff89a945bc60a4cb",
+    "deploy/gcp/beta/context-operator/Dockerfile": "2eefc5764f188ce1a630b0dbfe55d09a32deccadcb02baab7780c266b1aa7540",
+    "deploy/gcp/beta/context-operator/README.md": "d74fe27813ef92710f32bb903cd83a04e288277e757d0ac7006fe5e4e2bda3de",
+    "deploy/gcp/beta/context-operator/context_operator.py": "b083d085758b49bcf3020ee34d240570165ec51cbc65d9e0c09ea02236a7a82d",
+    "deploy/gcp/beta/context-operator/prepare_context.py": "60841325a8b224fc35e2a97ff08c4b2705b16726eb2023669c12915d048dfe46"
+  },
+  "additions_only": true,
+  "old_receipts_retargeted": false,
+  "live_data_activation": false,
+  "live_context_grants": false
+}

@@ -1,0 +1,15 @@
+{
+  "edna_focused_tests": 28,
+  "publisher_focused_tests": 26,
+  "operator_focused_tests": 35,
+  "native_postgresql_checks": 28,
+  "native_postgresql_version": "18.3, not CloudSQL16",
+  "native_cluster_stopped_and_removed": true,
+  "audit_insert_returning_requirement": "SELECT audit_event.created_at only, in addition to INSERT; actual restricted-role C17 transactions pass",
+  "source_ruff": "pass",
+  "publisher_conditional_upload_retry": null,
+  "publisher_uncertain_control_outcome": "exact new generation/bytes may reconcile success; all other outcomes uncertain, no retry",
+  "edna_actual_cohort_conversion": "39 bundles/39datasets/3498occurrences/349638detections/61790167exportbytes in20.459s; no failures",
+  "science_approval": false,
+  "live_cloudsql_grant_acceptance": "pending after operator reauthentication"
+}
