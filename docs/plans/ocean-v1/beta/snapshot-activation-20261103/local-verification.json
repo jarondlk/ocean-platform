@@ -1,0 +1,30 @@
+{
+  "state": "local_sealed_catalogue_prepared_for_source_checkpoint",
+  "accepted_runs": [
+    {
+      "count": 231,
+      "scope": "reader,Local lifecycle/reference compatibility,empty host and sealed integration before extraASGI case"
+    },
+    {
+      "count": 13,
+      "scope": "final sealed normalization/host integration including current revocation/source change denial"
+    }
+  ],
+  "distinct_focused_cases": 232,
+  "packaging_boundary_checks": 32,
+  "ruff": "pass",
+  "raw_plan_observed_casts": 162,
+  "raw_plan_observed_depth_rows": 10955,
+  "raw_ctd_sha256": "e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529",
+  "known_initial_local_fixes": [
+    "Explicit dict copy for Local seal input instead of immutable captured mapping",
+    "Activation canonical UTF8 matches producer",
+    "Withdrawn descriptor follows existing hidden-not-found discovery semantics"
+  ],
+  "real_snapshot_store_created": false,
+  "cloud_mutations_this_component": false,
+  "scientific_approval": false,
+  "research_enabled": false,
+  "peer_agents": "reader and packaging initial work complete; two agents hit account usage limit, root completed integration and source review",
+  "full_broad_ci": "deferred per user; source-bound Linux image proof still required"
+}

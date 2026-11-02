@@ -391,10 +391,14 @@ def catalogue_services_from_environment(settings, secret, environ):
     path = environ.get('OCEAN_V1_CATALOGUE_CONFIG')
     if path is None:
         return None
-    from api.v1_catalogue_host import load_empty_catalogue
+    from api.v1_catalogue_host import load_empty_catalogue, load_snapshot_catalogue
+    mode = environ.get('OCEAN_V1_CATALOGUE_MODE', 'empty')
+    if mode not in {'empty', 'sealed-gcs-v1'}:
+        raise HostConfigurationError('Explicit supported catalogue mode required')
     key = hmac.digest(secret.get_secret_value().encode('utf-8'),
         b'ocean-v1-beta:catalogue-discovery-cursor:v1', 'sha256')
-    catalogue, browser = load_empty_catalogue(path, project_id=settings.project_id,
+    loader = load_empty_catalogue if mode == 'empty' else load_snapshot_catalogue
+    catalogue, browser = loader(path, project_id=settings.project_id,
         site_id=settings.site_id, cursor_key=key)
     return V1ReadServices(catalogue_service=catalogue, catalogue_browser=browser)
 

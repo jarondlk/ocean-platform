@@ -1,0 +1,23 @@
+{
+  "version": "beta-sealed-catalogue-source-overlay-v1",
+  "predecessor": "7b4e11fcda676065ead1b569917583677dc72bee",
+  "changes": {
+    "api/v1_host.py": {
+      "from_sha256": "a53eb8d5ee561f159e7b141fa9ac99632c2e29dc8bd01073b8324fd42b7b6387",
+      "to_sha256": "2e84f3150d9684cc5107f7770a0ba7c8e550fd389655169f7158d813b783d10d"
+    },
+    "api/v1_catalogue_host.py": {
+      "from_sha256": "fba7da159c504e27049ca163097298b7b01d77a6ea613b604cb1abceb05a2e55",
+      "to_sha256": "c477da3793e9a22659723127cda80be5e53754bad48204bbda594396e94edf10"
+    }
+  },
+  "additions": {
+    "ingestion/gcs_catalogue_snapshot.py": "ffd2762e021f441e82315830b2685819a42a74c95debaeee4f407a9aa5c82de6",
+    "tests/test_gcs_catalogue_snapshot.py": "3c70e55af489df952af3a38701521b1a1f48c06a08902dcfab2cafbcf3ce9f8b",
+    "tests/test_beta_snapshot_catalogue.py": "086fbb0d4ed719a2325a2e42f3db6ee027602a54795059e62de73bcfaf961c77"
+  },
+  "old_receipts_retargeted": false,
+  "science_approval": false,
+  "research_enabled": false,
+  "scope": "Explicit qualified CTD-only catalogue over private read-only generation-bound beta snapshots"
+}

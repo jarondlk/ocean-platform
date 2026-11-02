@@ -7,6 +7,7 @@ this format deliberately refuses them rather than inventing that authority.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,12 +17,16 @@ from pydantic import TypeAdapter
 
 from orchestration.catalogue_browser import CatalogueBrowser
 from orchestration.catalogue_service import (
-    CatalogueService, CatalogueServiceError, catalogue_access_binding,
+    CataloguePolicy, CatalogueService, CatalogueServiceError, FrozenCatalogueResolver,
+    catalogue_access_binding,
 )
 from schema.context_catalogue import Identifier
 
 PROJECT = "ocean-v1-beta-20261101"
 VERSION = "ocean-v1-empty-catalogue-v1"
+SOURCE_VERSION = "ocean-v1-gcs-catalogue-host-v1"
+ACTIVATION_VERSION = "ocean-v1-catalogue-activation-v1"
+MAX_ACTIVATION_BYTES = 256 * 1024
 MAX_CONFIGURATION_BYTES = 4096
 _identifier = TypeAdapter(Identifier)
 
@@ -155,5 +160,193 @@ def load_empty_catalogue(path, *, project_id, site_id, cursor_key, _allow_test_o
             permitted=lambda user, descriptor: False, revision=revision, cursor_key=cursor_key)
         source.require_current()
         return service, browser
+    except Exception:
+        raise _configuration_error() from None
+
+
+def _canonical(value):
+    return (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode()
+
+
+def _document(raw):
+    return json.loads(raw.decode("utf-8"), object_pairs_hook=_unique,
+        parse_constant=lambda _: (_ for _ in ()).throw(ValueError("Nonfinite catalogue JSON")))
+
+
+def _source_binding(source, project_id, site_id):
+    import re
+    document = _document(source.raw)
+    if (project_id != PROJECT or site_id != "v1:" + PROJECT
+            or type(document) is not dict or set(document) != {
+                "version", "project_id", "site_id", "bucket", "prefix",
+                "activation_object", "activation_sha256"}
+            or document["version"] != SOURCE_VERSION or document["project_id"] != PROJECT
+            or document["site_id"] != site_id or document["bucket"] != PROJECT + "-snapshots"
+            or document["prefix"] != "v1/catalogue"
+            or type(document["activation_sha256"]) is not str
+            or not re.fullmatch(r"[a-f0-9]{64}", document["activation_sha256"])
+            or document["activation_object"] != "v1/catalogue/activations/"
+                + document["activation_sha256"] + ".json"
+            or _canonical(document) != source.raw):
+        raise _configuration_error()
+    return document
+
+
+class _ActivationAuthority:
+    def __init__(self, source, binding, store):
+        self.source, self.binding, self.store = source, binding, store
+        self.initial = self._read()
+
+    def _read(self):
+        self.source.require_current()
+        value = self.store.read(self.binding["activation_object"], max_bytes=MAX_ACTIVATION_BYTES)
+        if (type(value.data) is not bytes or not 0 < len(value.data) <= MAX_ACTIVATION_BYTES
+                or type(value.generation) is not int or value.generation < 1
+                or hashlib.sha256(value.data).hexdigest() != self.binding["activation_sha256"]):
+            raise _unavailable()
+        return value
+
+    def require_current(self):
+        try:
+            value = self._read()
+            if value.data != self.initial.data or value.generation != self.initial.generation:
+                raise ValueError("Activation authority replaced")
+        except Exception:
+            raise _unavailable() from None
+
+
+def _activation(raw):
+    from orchestration.catalogue_registration import ScientificCatalogueRegistration
+    from schema.catalogue_browser import CatalogueSnapshotDescriptor
+    from schema.scientific_catalogue import DatasetBinding
+    document = _document(raw)
+    if (type(document) is not dict or set(document) != {
+            "version", "project_id", "site_id", "policy_revision", "authorization_ref",
+            "access", "scientific_mode", "scientific_approval", "research_enabled",
+            "snapshots", "qualifications"}
+            or document["version"] != ACTIVATION_VERSION or document["project_id"] != PROJECT
+            or document["site_id"] != "v1:" + PROJECT
+            or document["access"] != {"roles": ["admin"], "account_types": ["internal"]}
+            or document["scientific_mode"] != "datasets_only"
+            or document["scientific_approval"] is not False or document["research_enabled"] is not False
+            or type(document["authorization_ref"]) is not str
+            or not 1 <= len(document["authorization_ref"]) <= 4096
+            or type(document["snapshots"]) is not list or not 1 <= len(document["snapshots"]) <= 128
+            or type(document["qualifications"]) is not list
+            or not 1 <= len(document["qualifications"]) <= 32
+            or any(type(v) is not str or not 1 <= len(v) <= 4096 for v in document["qualifications"])
+            or _canonical(document) != raw):
+        raise _configuration_error()
+    _identifier.validate_python(document["policy_revision"], strict=True)
+    descriptors, registrations, datasets, registration_ids = [], {}, {}, set()
+    for entry in document["snapshots"]:
+        if type(entry) is not dict or set(entry) != {"descriptor", "registration", "datasets"}:
+            raise _configuration_error()
+        descriptor = CatalogueSnapshotDescriptor.model_validate(entry["descriptor"])
+        values = entry["registration"]
+        if (type(values) is not dict or set(values) != {
+                "snapshot_id", "child_snapshot_ids", "references", "registration_id"}
+                or type(values["child_snapshot_ids"]) is not list
+                or not 1 <= len(values["child_snapshot_ids"]) <= 128
+                or type(values["references"]) is not list
+                or len(values["references"]) != len(values["child_snapshot_ids"]) + 1
+                or any(type(v) is not list or len(v) != 2 or any(type(s) is not str for s in v)
+                    for v in values["references"])
+                or type(entry["datasets"]) is not list or not 1 <= len(entry["datasets"]) <= 4000):
+            raise _configuration_error()
+        registration = ScientificCatalogueRegistration(snapshot_id=values["snapshot_id"],
+            child_snapshot_ids=tuple(values["child_snapshot_ids"]),
+            references=tuple(tuple(v) for v in values["references"]),
+            registration_id=values["registration_id"])
+        if (registration.snapshot_id != descriptor.snapshot_id
+                or descriptor.snapshot_id in registrations or registration.registration_id in registration_ids):
+            raise _configuration_error()
+        bindings = tuple(DatasetBinding.model_validate(item) for item in entry["datasets"])
+        if (len({item.dataset_id for item in bindings}) != len(bindings)
+                or {item.snapshot_id for item in bindings} != set(registration.child_snapshot_ids)):
+            raise _configuration_error()
+        registrations[descriptor.snapshot_id] = registration
+        registration_ids.add(registration.registration_id)
+        descriptors.append(descriptor)
+        datasets[descriptor.snapshot_id] = bindings
+    return document, tuple(descriptors), registrations, datasets
+
+
+class _CurrentSnapshotResolver(FrozenCatalogueResolver):
+    def __init__(self, *, authority, **kwargs):
+        super().__init__(**kwargs)
+        self.authority = authority
+
+    def _authorization_state(self, user, snapshot_id):
+        catalogue_access_binding(user)
+        if user.role != "admin" or user.account_type != "internal":
+            raise CatalogueServiceError("not_found", "Catalogue object is unavailable", 404)
+        self.authority.require_current()
+        return super()._authorization_state(user, snapshot_id)
+
+
+def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
+                            _allow_test_owner=False, _test_store=None):
+    """Bind explicit sealed GCS sources; never populate or modify their store.
+
+    The image contains only an opaque hash/address. Scientific data and source
+    policy remain in the private bucket. Current registration/lifecycle, source
+    integrity and the current DB account are enforced before catalogue access.
+    """
+    try:
+        from ingestion.artifact_store import BoundedGcsStore
+        from ingestion.gcs_catalogue_snapshot import GcsCatalogueSnapshotStore
+        from ingestion.scientific_catalogue_inputs import load_registry
+        from schema.catalogue_snapshot import manifest_id
+        if type(cursor_key) is not bytes or len(cursor_key) < 32:
+            raise ValueError("Stable cursor key required")
+        if _test_store is not None and os.environ.get("DEPLOYMENT_ENV") != "test":
+            raise ValueError("Test store requires explicit test mode")
+        source = _ConfigurationSource(path, allow_test_owner=_allow_test_owner)
+        binding = _source_binding(source, project_id, site_id)
+        object_store = _test_store if _test_store is not None else BoundedGcsStore(
+            bucket=binding["bucket"], prefix="")
+        authority = _ActivationAuthority(source, binding, object_store)
+        document, descriptors, registrations, datasets = _activation(authority.initial.data)
+        allowed_snapshots = {identity for registration in registrations.values()
+            for identity in (registration.snapshot_id, *registration.child_snapshot_ids)}
+
+        def access_gate(manifest):
+            authority.require_current()
+            return manifest_id(manifest) in allowed_snapshots
+
+        kwargs = {"_test_store": _test_store} if _test_store is not None else {}
+        store = GcsCatalogueSnapshotStore(bucket=binding["bucket"], prefix=binding["prefix"],
+            access_gate=access_gate, **kwargs)
+        for identity, registration in registrations.items():
+            registration.require_current(store)
+            registry = load_registry(*store.read(identity)).metadata
+            if (tuple(registry.datasets) != datasets[identity] or registry.analyses or registry.workflows
+                    or registry.definitions or registry.relationships or registry.superseded_generations):
+                raise ValueError("Exact datasets-only scientific index required")
+
+        def permitted(user, descriptor):
+            authority.require_current()
+            return user.role == "admin" and user.account_type == "internal"
+
+        def policy(user, identity):
+            authority.require_current()
+            allowed = {(item.snapshot_id, item.dataset_id, item.source_id, item.source_family)
+                for item in datasets[identity]}
+
+            def eligible(snapshot, metadata):
+                authority.require_current()
+                return (user.role == "admin" and user.account_type == "internal"
+                    and (snapshot, metadata.dataset_id, metadata.source_id, metadata.family) in allowed)
+
+            return CataloguePolicy(revision=document["policy_revision"], dataset_eligible=eligible,
+                scientific_eligible=lambda snapshot, item: False)
+
+        catalogue = CatalogueService(resolver=_CurrentSnapshotResolver(authority=authority,
+            store=store, policy_resolver=policy, registrations=registrations))
+        browser = _CurrentEmptyBrowser(source=authority, service=catalogue, snapshots=descriptors,
+            permitted=permitted, revision=document["policy_revision"], cursor_key=cursor_key)
+        authority.require_current()
+        return catalogue, browser
     except Exception:
         raise _configuration_error() from None

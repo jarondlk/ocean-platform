@@ -66,3 +66,33 @@ private destination. This raw package is **not** a C09 snapshot/transfer receipt
 catalogue registration, normalization result, eligibility review or scientific
 approval. Existing analysis/reliability outputs, serving embeddings, database
 backups, operational manifests/logs, accounts/history and credentials are excluded.
+
+
+## Qualified CTD catalogue preparation
+
+`prepare_catalogue.py` reads the exact verified private quarantine archive and
+normalizes only the pinned original CTD source. It retains every supported depth
+row, actual source days, source labels and signed depths, with existing OCEAN
+unit conventions explicitly qualified. It creates no cross-source pairing or
+independent scientific approval. Metagenome, SST, eDNA and derived outputs stay
+pending their separate source-specific conversions.
+
+After the source checkpoint, use an explicit full current revision and a new
+private directory outside the checkout. Default mode validates without output;
+only exact `--prepare` seals/registers the local C09 child/index and writes the
+private activation and upload manifest:
+
+```sh
+.venv/bin/python deploy/gcp/beta/data/prepare_catalogue.py \
+  --raw-package /private/tmp/ocean-beta-existing-raw-quarantine-20261102 \
+  --source-root /Users/jaronchai/Documents/GitHub/provenance-eco-rag \
+  --revision FULL_SOURCE_COMMIT \
+  --output /private/tmp/NEW_PRIVATE_CTD_CATALOGUE \
+  --prepare
+```
+
+Cloud upload remains separate: immutable content/manifests/activation first,
+verified lifecycle control last, then a source-bound serving update after exact
+GCS read authority is installed. No archive, table, activation document or full
+private upload manifest belongs in Git or the application image. The image may
+contain only a nonsecret beta namespace/opaque activation-hash binding.
