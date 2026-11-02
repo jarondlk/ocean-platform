@@ -26,6 +26,7 @@ MIGRATOR = "ocean_v1_migrator"
 SERVING = "ocean_v1_serving"
 HEAD = "20261027_0021"
 ROLES = (MIGRATOR, SERVING)
+PROBE_ROLE = "ocean_v1_beta_setup_probe"
 FLAGS = (
     "ENABLE_V1_RESEARCH_CONTROLLER",
     "ENABLE_V1_RESEARCH_DISPATCH",
@@ -174,7 +175,7 @@ def validate(
     env, *, stage, confirm_project, confirm_database, confirm_source, confirm_operator
 ):
     if (
-        stage not in {"bootstrap", "migrate", "finalize", "readback"}
+        stage not in {"bootstrap", "migrate", "finalize", "readback", "qualify"}
         or confirm_project != PROJECT
         or confirm_database != DATABASE
         or env.get("DEPLOYMENT_ENV") != "production"
@@ -411,15 +412,15 @@ def create_roles(connection, env):
             parameters=(verifier,),
         )
         verifier = None
-        # PostgreSQL may automatically make a non-superuser role creator a member.
-        # Remove only the newly created role's creator membership, never a pre-existing role.
-        statement(connection, "REVOKE {} FROM {}", role, "postgres")
         statement(
             connection,
             "ALTER ROLE {} IN DATABASE {} SET search_path TO public, pg_catalog",
             role,
             DATABASE,
         )
+        # PostgreSQL16+ requires the creator's ADMIN OPTION for another role's
+        # defaults. Finish that setup before removing only this new membership.
+        statement(connection, "REVOKE {} FROM {}", role, "postgres")
     statement(connection, "REVOKE ALL ON DATABASE {} FROM PUBLIC", DATABASE)
     statement(
         connection,
@@ -450,6 +451,88 @@ def bootstrap(connection, env):
         "application_rows_created": False,
         "password_logging_policy": logging_policy,
         "password_preparation": "client-side SCRAM-SHA-256 only",
+    }
+
+
+def provider_safety_readback(connection):
+    """Finite provider qualification metadata, with no password/query catalogues.
+
+    pg_settings may hide protected values from a limited principal. Preserve
+    that fact rather than bypassing permissions or asserting a privacy pass.
+    The strict password-SQL attestation remains independently enforced.
+    """
+    names = list(PASSWORD_LOGGING_POLICY) + [
+        "shared_preload_libraries",
+        "pg_stat_statements.track",
+        "pg_stat_statements.track_utility",
+        "pgaudit.log",
+        "auto_explain.log_min_duration",
+        "search_path",
+    ]
+    owners = connection.execute(
+        text(
+            "SELECT pg_get_userbyid(d.datdba),pg_get_userbyid(n.nspowner) FROM pg_database d "
+            "JOIN pg_namespace n ON n.nspname='public' WHERE d.datname=current_database()"
+        )
+    ).one()
+    principal = connection.execute(
+        text(
+            "SELECT rolname,oid,rolsuper,rolcreaterole,rolcreatedb,rolreplication,rolbypassrls,rolcanlogin "
+            "FROM pg_roles WHERE rolname=current_user"
+        )
+    ).one()
+    settings = [
+        dict(
+            zip(("name", "value", "unit", "source", "context", "pending_restart"), row)
+        )
+        for row in connection.execute(
+            text(
+                "SELECT name,setting,unit,source,context,pending_restart FROM pg_settings "
+                "WHERE name=ANY(:names) ORDER BY name"
+            ),
+            {"names": names},
+        )
+    ]
+    overrides = [
+        dict(zip(("database", "role", "name", "value"), row))
+        for row in connection.execute(
+            text(
+                "SELECT CASE WHEN s.setdatabase=0 THEN '*' ELSE d.datname END,"
+                "CASE WHEN s.setrole=0 THEN '*' ELSE r.rolname END,split_part(v.setting,'=',1),"
+                "substring(v.setting FROM position('=' IN v.setting)+1) FROM pg_db_role_setting s "
+                "LEFT JOIN pg_database d ON d.oid=s.setdatabase LEFT JOIN pg_roles r ON r.oid=s.setrole "
+                "CROSS JOIN LATERAL unnest(s.setconfig) AS v(setting) "
+                "WHERE (s.setdatabase=0 OR d.datname=current_database()) "
+                "AND (s.setrole=0 OR r.rolname=current_user OR r.rolname=ANY(:roles)) "
+                "AND split_part(v.setting,'=',1)=ANY(:names) ORDER BY 1,2,3"
+            ),
+            {"names": names, "roles": list(ROLES)},
+        )
+    ]
+    return {
+        "version": "beta-provider-safety-metadata-v1",
+        "database_owner": owners[0],
+        "public_schema_owner": owners[1],
+        "current_principal": dict(
+            zip(
+                (
+                    "name",
+                    "oid",
+                    "superuser",
+                    "create_role",
+                    "create_database",
+                    "replication",
+                    "bypass_rls",
+                    "login",
+                ),
+                principal,
+            )
+        ),
+        "fixed_settings": settings,
+        "matching_role_database_overrides": overrides,
+        "protected_values_hidden": any(row["value"] is None for row in settings),
+        "password_sql_authorized_by_this_readback": False,
+        "qualification": "Metadata only; actual password SQL still requires strict separate attestation",
     }
 
 
@@ -484,7 +567,169 @@ def readback(connection, expected_user):
         ],
         "C23_execution_enabled": False,
         "cloudsql_limited_superuser_qualification_claimed": False,
+        "provider_safety": provider_safety_readback(connection),
     }
+
+
+def probe_memberships(connection):
+    """Only memberships involving the fixed probe; never password catalogues."""
+    rows = connection.execute(
+        text(
+            "SELECT r.rolname,u.rolname,g.rolname,m.admin_option,m.inherit_option,m.set_option,"
+            "r.oid,u.oid,g.oid "
+            "FROM pg_auth_members m JOIN pg_roles r ON r.oid=m.roleid "
+            "JOIN pg_roles u ON u.oid=m.member JOIN pg_roles g ON g.oid=m.grantor "
+            "WHERE r.rolname=:probe OR u.rolname=:probe ORDER BY 1,2,3"
+        ),
+        {"probe": PROBE_ROLE},
+    )
+    return [
+        dict(
+            zip(
+                (
+                    "role",
+                    "member",
+                    "grantor",
+                    "admin",
+                    "inherit",
+                    "set",
+                    "role_oid",
+                    "member_oid",
+                    "grantor_oid",
+                ),
+                row,
+            )
+        )
+        for row in rows
+    ]
+
+
+def qualify(engine):
+    """Rollback-only NOLOGIN capability observation; never authorizes bootstrap.
+
+    A creator's automatic ADMIN membership can be granted by another principal.
+    Observe that provider behavior instead of assuming REVOKE removes it or
+    changing grantors/privileges to force the existing role guard to pass.
+    """
+    result = {
+        "stage": "qualify",
+        "probe_role": PROBE_ROLE,
+        "sequence_supported": False,
+        "bootstrap_authorized": False,
+        "password_sql_performed": False,
+        "application_roles_created": False,
+        "attempted_steps": [],
+    }
+    with engine.connect() as connection:
+        if connection.connection.driver_connection.autocommit is not False:
+            raise OperatorError("Qualification requires a real explicit transaction")
+        transaction = connection.begin()
+        before = None
+        try:
+            identity(connection, "postgres")
+            if connection.scalar(
+                text("SELECT EXISTS(SELECT 1 FROM pg_roles WHERE rolname=:probe)"),
+                {"probe": PROBE_ROLE},
+            ):
+                raise OperatorError(
+                    "Existing fixed capability probe is refused; it will not be changed"
+                )
+            before = readback(connection, "postgres")
+            result["provider_before"] = before["provider_safety"]
+            result["attempted_steps"].append("create_nologin_probe")
+            statement(
+                connection,
+                "CREATE ROLE {} NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS",
+                PROBE_ROLE,
+            )
+            row = connection.execute(
+                text(
+                    "SELECT rolname,rolsuper,rolcreaterole,rolcreatedb,rolreplication,rolbypassrls,rolcanlogin FROM pg_roles WHERE rolname=:probe"
+                ),
+                {"probe": PROBE_ROLE},
+            ).one()
+            result["probe_attributes"] = dict(
+                zip(
+                    (
+                        "name",
+                        "superuser",
+                        "create_role",
+                        "create_database",
+                        "replication",
+                        "bypass_rls",
+                        "login",
+                    ),
+                    row,
+                )
+            )
+            result["memberships_after_create"] = probe_memberships(connection)
+            result["attempted_steps"].append("alter_probe_database_defaults")
+            statement(
+                connection,
+                "ALTER ROLE {} IN DATABASE {} SET search_path TO public, pg_catalog",
+                PROBE_ROLE,
+                DATABASE,
+            )
+            result["defaults_set"] = True
+            result["attempted_steps"].append("revoke_creator_probe_membership")
+            statement(connection, "REVOKE {} FROM {}", PROBE_ROLE, "postgres")
+            result["memberships_after_revoke"] = probe_memberships(connection)
+            result["sequence_supported"] = (
+                not any(row[1:]) and not result["memberships_after_revoke"]
+            )
+            if not result["sequence_supported"]:
+                result["refusal_reason"] = (
+                    "Restricted probe attributes or zero-membership guard not satisfied"
+                )
+        except OperatorError:
+            raise
+        except Exception as error:
+            value = getattr(getattr(error, "orig", error), "pgcode", None)
+            result["error_code"] = (
+                value
+                if isinstance(value, str) and re.fullmatch(r"[0-9A-Z]{5}", value)
+                else "unclassified"
+            )
+            result["refusal_reason"] = (
+                "Provider refused a scoped capability step; no error text is exported"
+            )
+        finally:
+            transaction.rollback()
+            result["transaction_rolled_back"] = not transaction.is_active
+        if before is None:
+            raise OperatorError(
+                "Qualification baseline could not be read; no capability claim is permitted"
+            )
+    # A distinct physical session must verify absence, not a pooled old snapshot.
+    engine.dispose()
+    with engine.connect() as connection:
+        identity(connection, "postgres")
+        result["probe_absent_after_rollback"] = not connection.scalar(
+            text("SELECT EXISTS(SELECT 1 FROM pg_roles WHERE rolname=:probe)"),
+            {"probe": PROBE_ROLE},
+        )
+        after = readback(connection, "postgres")
+        result["application_role_inventory_unchanged"] = (
+            after["roles"] == before["roles"]
+        )
+        result["application_table_inventory_unchanged"] = (
+            after["tables"] == before["tables"]
+        )
+        result["readback"] = after
+    if not all(
+        result.get(name) is True
+        for name in (
+            "transaction_rolled_back",
+            "probe_absent_after_rollback",
+            "application_role_inventory_unchanged",
+            "application_table_inventory_unchanged",
+        )
+    ):
+        result["sequence_supported"] = False
+        result["refusal_reason"] = (
+            "Rollback/absence or unchanged inventory not established; inspect target"
+        )
+    return result
 
 
 def verify_serving_privileges(connection, allowed):
@@ -645,6 +890,12 @@ def finalize(connection):
 
 
 def run_stage(stage, validated, env):
+    if stage == "qualify":
+        engine = connect(validated["dsn"])
+        try:
+            return qualify(engine)
+        finally:
+            engine.dispose()
     if stage == "migrate":
         engine = connect(validated["dsn"])
         try:
@@ -748,7 +999,7 @@ def main(argv=None):
 
     parser = Parser(description=__doc__)
     parser.add_argument(
-        "stage", choices=("bootstrap", "migrate", "finalize", "readback")
+        "stage", choices=("bootstrap", "migrate", "finalize", "readback", "qualify")
     )
     for name in ("project", "database", "source", "operator"):
         parser.add_argument("--confirm-" + name, required=True)
@@ -776,7 +1027,14 @@ def main(argv=None):
             validated["operator"],
         )
         report["result"] = run_stage(args.stage, validated, os.environ)
-        report["state"], code = "stage_completed", 0
+        if args.stage == "qualify":
+            report["state"], code = (
+                ("qualification_observed", 0)
+                if report["result"]["sequence_supported"]
+                else ("qualification_refused", 2)
+            )
+        else:
+            report["state"], code = "stage_completed", 0
     except OperatorError as exc:
         report["error"] = str(exc)
     except Exception:
