@@ -1,0 +1,39 @@
+{
+  "version": "beta-private-setup-local-v1",
+  "state": "local_checks_passed; independent_review_pending; do_not_apply_until_review",
+  "independent_review": "pending",
+  "source_pins": {
+    "deploy/gcp/beta/setup/prepare_credentials.py": "ac91c5b2b3ef0e6c6dc93ca325bf268cc3b86c4eeb4136891b70530fd6c5e23d",
+    "deploy/gcp/beta/setup/render_jobs.py": "3370b02b00a2d60c32c309bc267c0238d61f9c607294e02f6016a5e3eace8a76",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/README.md": "8c05ce8c904c482f4bb2697b957e93ec5add54224ac4ddc2b0f32fae2e2a8a2b",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/checks.py": "81c67244c775db0b204bf2e2c7007ab93c799a9a6fe217cb06bee748a8f734fa",
+    "docs/plans/ocean-v1/beta/sql-20261102/setup/verify.py": "301e6b6ef31774b596266c3053f36a2bf6a27dffa11d0247b8a29ddb463a8608"
+  },
+  "artifact_pins": {
+    "checks.json": "ee374dadc94a2d3b45bb5173ec0a447c097d0c1d9c9c6056a0d3225ad663779a",
+    "default-plan.json": "42bcccc5998f7433b4539ea68448377ae7a8b951e37c77629ff9c96039c7eaa4",
+    "rendered-synthetic/INPUT_QUALIFICATION.json": "7f21d16bf6a11bb9d322096b25e73c402d6a9ae2e3a73a415a07435be009e655",
+    "rendered-synthetic/ocean-v1-beta-db-bootstrap.json": "1d9e83f61775e9d3bdca962f99eb51a517179a4a16c783e3ba3a4e026c3e2cf8",
+    "rendered-synthetic/ocean-v1-beta-db-finalize.json": "b2be77e32b68c23e7eab9d3427e1a9919c19a7409009c01b8fa7a73dd35212b3",
+    "rendered-synthetic/ocean-v1-beta-db-migrate.json": "d56b16a26dfb68ffde07eb4d0b505b662bf6288a951710affb17503ed210e37d",
+    "rendered-synthetic/ocean-v1-beta-db-readback.json": "1ae7a135e64008d8331cb27766eb77ab2661b8963b844ab8e27c2bcf0d068d17"
+  },
+  "pure_checks": 50,
+  "token_or_real_secret_generation_performed": false,
+  "cloud_calls_performed": false,
+  "image_or_job_actions_performed": false,
+  "previous_source_or_receipts_changed": false,
+  "actual_live_references_claimed": false,
+  "static_input_pins": {
+    "docs/plans/ocean-v1/beta/sql-20261102/instance-final-readback.json": "f954406a3c57c00f8baaa1125968dd7bb89db3ab15eb5ec103e7176075401be8",
+    "docs/plans/ocean-v1/beta/sql-20261102/proxy-image.json": "f76693bba9a56f2913466ba1a8aadd1735a586cf7348c4e90c98250759d27f10"
+  },
+  "remaining": [
+    "Independenthelper/rendererreview",
+    "WorkingSDKtokenandfreshlivepreflight",
+    "Rootchosenapplyandactualsevenversion/passwordoperationreadbacks",
+    "SeparatenarrowSA/IAMgrantsandactualv2jobprovideracceptance",
+    "Explicitprivatebootstrap/migration/finalizestageresultsandproxyexit",
+    "OAuth/accounts/scientific/C23/releasegates"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "version": "beta-private-credentials-plan-v1",
+  "state": "plan_only",
+  "project_id": "ocean-v1-beta-20261101",
+  "project_number": "534831104543",
+  "instance": "ocean-v1-beta-sql",
+  "database": "ocean_v1_beta",
+  "existing_empty_containers": [
+    "ocean-v1-beta-auth",
+    "ocean-v1-beta-internal",
+    "ocean-v1-beta-serving-database"
+  ],
+  "new_containers_if_absent": [
+    "ocean-v1-beta-bootstrap-database",
+    "ocean-v1-beta-migrator-database",
+    "ocean-v1-beta-migrator-password",
+    "ocean-v1-beta-serving-password"
+  ],
+  "values_installed": [
+    "ocean-v1-beta-auth",
+    "ocean-v1-beta-internal",
+    "ocean-v1-beta-serving-database",
+    "ocean-v1-beta-bootstrap-database",
+    "ocean-v1-beta-migrator-database",
+    "ocean-v1-beta-migrator-password",
+    "ocean-v1-beta-serving-password"
+  ],
+  "postgres_password_update": "last mutation after seven verified versions",
+  "value_generation": false,
+  "token_acquisition": false,
+  "cloud_calls": false,
+  "automatic_retry_resume_overwrite": false
+}
