@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+import hmac
 import json
 import math
 import os
@@ -380,6 +381,24 @@ def _unique(items):
     return result
 
 
+def catalogue_services_from_environment(settings, secret, environ):
+    """Bind only an explicitly configured, operator-owned catalogue inventory.
+
+    The initial production registry is empty. It attests no scientific data,
+    creates no snapshots or registrations, and enables no research execution.
+    Missing configuration retains the existing unavailable-service behavior.
+    """
+    path = environ.get('OCEAN_V1_CATALOGUE_CONFIG')
+    if path is None:
+        return None
+    from api.v1_catalogue_host import load_empty_catalogue
+    key = hmac.digest(secret.get_secret_value().encode('utf-8'),
+        b'ocean-v1-beta:catalogue-discovery-cursor:v1', 'sha256')
+    catalogue, browser = load_empty_catalogue(path, project_id=settings.project_id,
+        site_id=settings.site_id, cursor_key=key)
+    return V1ReadServices(catalogue_service=catalogue, catalogue_browser=browser)
+
+
 def create_from_environment():
     """Separate production factory: never reads DATABASE_URL or api.main."""
     engine = None
@@ -410,7 +429,9 @@ def create_from_environment():
         secret = SecretStr(os.environ['OCEAN_V1_INTERNAL_AUTH_SECRET'])
         engine = create_engine(dsn, pool_pre_ping=True, connect_args={'connect_timeout': 10})
         factory = sessionmaker(bind=engine, expire_on_commit=False)
-        app = create_host_app(settings=settings, session_factory=factory, internal_secret=secret, _owned_engine=engine)
+        services = catalogue_services_from_environment(settings, secret, os.environ)
+        app = create_host_app(settings=settings, session_factory=factory, internal_secret=secret,
+            services=services, _owned_engine=engine)
         app.state.v1_owned_engine = engine
         return app
     except Exception:

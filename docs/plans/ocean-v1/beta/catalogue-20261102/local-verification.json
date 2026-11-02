@@ -1,0 +1,19 @@
+{
+  "state": "local_catalogue_binding_verified",
+  "host_and_authority_tests_passed": 69,
+  "packaging_boundary_checks_passed": 14,
+  "ruff": "pass",
+  "independent_review": "no blocking findings; final Linux image smoke remains required",
+  "scope": "real explicitly empty catalogue discovery; no snapshot/data registration or research enablement",
+  "no_database_migration_or_privilege_change": true,
+  "user_data_direction": "Lets do all; all eligible existing data preparation authorized, raw staging separate from scientific publication",
+  "intentional_source_supersessions": [
+    "api/v1_host.py",
+    "tests/test_v1_host.py"
+  ],
+  "new_application_source": [
+    "api/v1_catalogue_host.py"
+  ],
+  "raw_data_transferred": false,
+  "broader_ci": "deferred per user preference; focused source-bound image proof planned"
+}

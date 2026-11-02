@@ -1,0 +1,25 @@
+{
+  "version": "beta-catalogue-source-supersession-v1",
+  "predecessor": "afaf769c3eec11c4a2b9d48f234b096a5ce6414c",
+  "changes": {
+    "api/v1_host.py": {
+      "from_sha256": "c6b25a222789fdcc9d6b80eeef1da0c74506a6c4e649e386300e5d587f671618",
+      "to_sha256": "a53eb8d5ee561f159e7b141fa9ac99632c2e29dc8bd01073b8324fd42b7b6387",
+      "reason": "Explicit empty catalogue composition and authenticated integration checks"
+    },
+    "tests/test_v1_host.py": {
+      "from_sha256": "1757e3b73a2387d988957fb15fbf3d7be37503a85a30809c91ae3906b69c736d",
+      "to_sha256": "3a75388531adebfdbfa58995d875a97f7a674c2467796f6e99f50bb665b0be4a",
+      "reason": "Explicit empty catalogue composition and authenticated integration checks"
+    }
+  },
+  "additions": {
+    "api/v1_catalogue_host.py": "fba7da159c504e27049ca163097298b7b01d77a6ea613b604cb1abceb05a2e55",
+    "tests/test_v1_catalogue_host.py": "12d7ef357dee79336e4c9e7a68db599853133c9c41856f848ff31293fd48da60"
+  },
+  "existing_receipts_rewritten": false,
+  "base_image_sources_unchanged": 170,
+  "old_hosted_ci_remains_bound_to": "50566b7cfa4a0d8ee19686f0109e74f3a2a45d45",
+  "new_focused_checks": "69 host/authority tests;14 packaging checks;Ruff;independentreview",
+  "broad_full_ci": "deferred per user, sourcebound Linux build proof remains required"
+}

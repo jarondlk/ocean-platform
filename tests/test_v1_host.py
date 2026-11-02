@@ -325,3 +325,54 @@ def test_service_bundle_rejects_any_executing_wiring(independent, tmp_path, monk
     with pytest.raises(HostConfigurationError, match='typed v1'):
         replace(bundle, research_run_service=object()).validate(
             session_factory=fixture.retained.factory, site_id=fixture.retained.service.site_id, allow_test=True)
+
+
+def test_configured_empty_production_catalogue_through_authenticated_host(independent, tmp_path, monkeypatch):
+    import json
+    from api import v1_catalogue_host
+    from schema.catalogue_adapter_fixtures import adapter_scope
+    _, factory = independent
+    project = v1_catalogue_host.PROJECT
+    host_settings = settings(project_id=project, site_id='v1:' + project)
+    source = tmp_path / 'catalogue.json'
+    source.write_text(json.dumps({'version': v1_catalogue_host.VERSION,
+        'project_id': project, 'site_id': 'v1:' + project,
+        'revision': 'beta-empty-registry-v1', 'snapshots': []}))
+    source.chmod(0o444)
+    load = v1_catalogue_host.load_empty_catalogue
+    # Only this explicit test-mode fixture relaxes the production root owner.
+    monkeypatch.setattr(v1_catalogue_host, 'load_empty_catalogue',
+        lambda *a, **kw: load(*a, **kw, _allow_test_owner=True))
+    services = v1_host.catalogue_services_from_environment(host_settings, SecretStr(SECRET),
+        {'OCEAN_V1_CATALOGUE_CONFIG': str(source)})
+    hosted = create_host_app(settings=host_settings, session_factory=factory,
+        internal_secret=SecretStr(SECRET), services=services, _allow_test_sqlite=True)
+    scope = adapter_scope('ctd').model_dump(mode='json')
+    with TestClient(hosted, base_url='http://127.0.0.1:8000') as client:
+        auth = headers()
+        assert client.post('/catalogue/snapshots', json={'scope': scope}).status_code == 401
+        runtime = client.get('/v1/runtime', headers=auth)
+        assert runtime.status_code == 200
+        assert runtime.json()['capabilities']['catalogue']['status'] == 'ready'
+        assert runtime.json()['capabilities']['research']['status'] == 'unavailable'
+        result = client.post('/catalogue/snapshots', json={'scope': scope}, headers=auth)
+        assert result.status_code == 200, result.text
+        assert result.json()['snapshots'] == [] and result.json()['total'] == 0
+        assert result.json()['latest_snapshot_id'] is None
+        unknown = client.post('/catalogue/overview',
+            json={'scope': scope, 'snapshot_id': 'a' * 64}, headers=auth)
+        assert unknown.status_code == 404
+        assert client.post('/research/investigations/create', json={}, headers=auth).status_code == 403
+        source.chmod(0o644)
+        assert client.post('/catalogue/snapshots', json={'scope': scope}, headers=auth).status_code == 503
+        with factory.begin() as session:
+            session.scalar(select(AppUser)).status = 'suspended'
+        assert client.post('/catalogue/snapshots', json={'scope': scope}, headers=auth).status_code == 403
+
+
+def test_absent_catalogue_authority_retains_unavailable_host(monkeypatch):
+    from api import v1_catalogue_host
+    def forbidden(*args, **kwargs):
+        raise AssertionError('No catalogue may be discovered without explicit configuration')
+    monkeypatch.setattr(v1_catalogue_host, 'load_empty_catalogue', forbidden)
+    assert v1_host.catalogue_services_from_environment(settings(), SecretStr(SECRET), {}) is None
