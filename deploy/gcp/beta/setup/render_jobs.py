@@ -22,7 +22,7 @@ from prepare_credentials import (
 )
 
 API_REVISION = "7924a28e919b1fb751890c694f7b1f9b26b104ff"
-OPERATOR_REVISION = "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089"
+OPERATOR_REVISION = "dcde1ef2c5332e9543c826b6185c5e746fbde410"
 PROXY = "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
 
 
@@ -140,7 +140,6 @@ def render(*, image, receipt):
         }
         name = "ocean-v1-beta-db-" + stage
         jobs[name] = {
-            "name": "projects/" + PROJECT + "/locations/" + REGION + "/jobs/" + name,
             "labels": {
                 "environment": "beta",
                 "managed-by": "overhaul",

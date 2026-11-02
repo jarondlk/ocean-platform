@@ -1,0 +1,130 @@
+{
+  "labels": {
+    "environment": "beta",
+    "managed-by": "overhaul",
+    "system": "ocean-v1",
+    "purpose": "inspection-only"
+  },
+  "template": {
+    "taskCount": 1,
+    "parallelism": 1,
+    "template": {
+      "serviceAccount": "ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "maxRetries": 0,
+      "timeout": "600s",
+      "executionEnvironment": "EXECUTION_ENVIRONMENT_GEN2",
+      "containers": [
+        {
+          "name": "operator",
+          "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator@sha256:4fa2ac46743ef0a07109e4a3b07a306a2e59894833eba710d24fa952391df17d",
+          "args": [
+            "readback",
+            "--confirm-project",
+            "ocean-v1-beta-20261101",
+            "--confirm-database",
+            "ocean_v1_beta",
+            "--confirm-source",
+            "7924a28e919b1fb751890c694f7b1f9b26b104ff",
+            "--confirm-operator",
+            "dcde1ef2c5332e9543c826b6185c5e746fbde410"
+          ],
+          "env": [
+            {
+              "name": "DEPLOYMENT_ENV",
+              "value": "production"
+            },
+            {
+              "name": "OCEAN_V1_PROJECT_ID",
+              "value": "ocean-v1-beta-20261101"
+            },
+            {
+              "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+              "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+            },
+            {
+              "name": "OCEAN_V1_SOURCE_REVISION",
+              "value": "7924a28e919b1fb751890c694f7b1f9b26b104ff"
+            },
+            {
+              "name": "OCEAN_V1_OPERATOR_REVISION",
+              "value": "dcde1ef2c5332e9543c826b6185c5e746fbde410"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_SYNTHESIS",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "OCEAN_V1_OPERATOR_DATABASE_URL",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "ocean-v1-beta-bootstrap-database",
+                  "version": "1"
+                }
+              }
+            }
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "dependsOn": [
+            "sql-proxy"
+          ]
+        },
+        {
+          "name": "sql-proxy",
+          "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+          "args": [
+            "--private-ip",
+            "--address=127.0.0.1",
+            "--port=5432",
+            "--quitquitquit",
+            "--admin-port=9091",
+            "--health-check",
+            "--http-address=0.0.0.0",
+            "--http-port=9090",
+            "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "1",
+              "memory": "256Mi"
+            }
+          },
+          "startupProbe": {
+            "httpGet": {
+              "path": "/readiness",
+              "port": 9090
+            },
+            "periodSeconds": 5,
+            "timeoutSeconds": 2,
+            "failureThreshold": 24
+          }
+        }
+      ],
+      "vpcAccess": {
+        "egress": "PRIVATE_RANGES_ONLY",
+        "networkInterfaces": [
+          {
+            "network": "projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network",
+            "subnetwork": "projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet"
+          }
+        ]
+      }
+    }
+  }
+}

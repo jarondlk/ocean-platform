@@ -1,0 +1,28 @@
+{
+  "version": "beta-inspection-source-binding-v1",
+  "state": "prepared_inspection_only",
+  "before_sha256": "8a1e7c2f5a93de00e6e1ccbcafc00894affe89c6b69831834eae34f07bf1b4a4",
+  "after_sha256": "95d32894438f867ab6ec96bae5f970f317bd24ed2bb1cfa5f9f2c9cc4326029c",
+  "source_revision": "dcde1ef2c5332e9543c826b6185c5e746fbde410",
+  "previous_operator_revision": "8b06a1b993cbca53ded0a9e79e1acb5ba58f3089",
+  "operator_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/operator@sha256:4fa2ac46743ef0a07109e4a3b07a306a2e59894833eba710d24fa952391df17d",
+  "operator_build": "bdc92ee0-e0b8-4eaa-9152-df12c2f6495f",
+  "four_canonical_stage_policy_comparisons_passed": true,
+  "allowed_actual_jobs": [
+    "ocean-v1-beta-db-readback",
+    "ocean-v1-beta-db-qualify"
+  ],
+  "actual_execution_order": [
+    "readback",
+    "qualify"
+  ],
+  "only_secret_mounted": "ocean-v1-beta-bootstrap-database:1",
+  "new_permissions": false,
+  "bootstrap_migrate_finalize_permitted": false,
+  "initial_four_job_plan_amendment": "Prepare only two inspection jobs now; real role/bootstrap jobs wait for managed qualification. No older-stage receipt is retargeted.",
+  "original_create_body_receipt_immutable": true,
+  "rendered_pins": {
+    "docs/plans/ocean-v1/beta/sql-20261102/inspection-jobs-dcde1ef/rendered/ocean-v1-beta-db-readback.json": "b3b7197bfa5d243871cda151ecb7540135b31af9664a86f32cb14b646a632ad6",
+    "docs/plans/ocean-v1/beta/sql-20261102/inspection-jobs-dcde1ef/rendered/ocean-v1-beta-db-qualify.json": "a4b3700edc6c60860bd8ba4df7e1cd59a0eae2c5370fc613f6bfe583de95adf3"
+  }
+}
