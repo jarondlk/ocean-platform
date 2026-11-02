@@ -1,0 +1,21 @@
+{
+  "predecessor": "1d20cf2f8ae625b1fdcf79a3be896a16c5d1560b",
+  "state": "current_explicit_user_authorization_reference_supported",
+  "changes": {
+    "deploy/gcp/beta/snapshot-api/render_configuration.py": {
+      "from_sha256": "9cd9deabdce343c34370c09094e5ba37c782dee9e4963b615fc48f06f500267f",
+      "to_sha256": "7324c0209a035dc5ccc4c79d89f70a053e87fd61af1b76cd2d6139140617e40d"
+    },
+    "deploy/gcp/beta/snapshot-api/checks.py": {
+      "from_sha256": "f56cbb55b6047397c7b27eb3f014e56732b3379768bb20264f690ecf790b78af",
+      "to_sha256": "5bb9426e9c05eab7cb4b15be0fcc9577e3fcf817e2f2d6526f0b121d5788b5c5"
+    }
+  },
+  "old_authorization_still_accepted": true,
+  "new_authorization": "chat-20261103-all-beta-deployment-and-scientific-data",
+  "arbitrary_reference_denied": true,
+  "offline_packaging_checks": 34,
+  "initial_attempt": "renderer refused the new Nov3 authorization reference before creating binding/context or making cloud call; empty submission receipt retained",
+  "scientific_or_role_authority_expanded": false,
+  "runtime_application_sources_unchanged": true
+}

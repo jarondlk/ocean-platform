@@ -75,7 +75,10 @@ def validate_activation(data, *, expected_sha256):
         and document['scientific_mode'] == 'datasets_only'
         and document['scientific_approval'] is False and document['research_enabled'] is False)
     identity(document['policy_revision'])
-    require(document['authorization_ref'] == 'chat-20261102-all-eligible-existing-data')
+    require(document['authorization_ref'] in {
+        'chat-20261102-all-eligible-existing-data',
+        'chat-20261103-all-beta-deployment-and-scientific-data',
+    })
     exact_keys(document['access'], {'roles', 'account_types'})
     require(document['access']['roles'] == ['admin'] and document['access']['account_types'] == ['internal'])
     qualifications = document['qualifications']

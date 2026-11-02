@@ -82,6 +82,10 @@ def main():
         data = renderer.canonical(value)
         return renderer.validate_activation(data, expected_sha256=hashlib.sha256(data).hexdigest())
     check('bounded_metadata_activation_valid', lambda: validate(activation))
+    check('current_explicit_user_authorization_valid', lambda: validate({**activation,
+        'authorization_ref': 'chat-20261103-all-beta-deployment-and-scientific-data'}))
+    check('unrecognized_authorization_ref_refused', lambda: validate({**activation,
+        'authorization_ref': 'unrecognized-authorization'}), rejects=True)
     for name, key, value in [
         ('scientific_approval_claim_refused', 'scientific_approval', True),
         ('research_enablement_refused', 'research_enabled', True),
