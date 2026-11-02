@@ -2,10 +2,15 @@ import { hostIdentity, mintInternalToken } from "./identity.ts";
 import { requestAllowed, type HostSettings } from "./settings.ts";
 
 const MAX_BODY = 65536, MAX_RESPONSE = 8 * 1024 * 1024;
-const READ_PATHS = new Set([
+// Context mutations use the same authenticated, exact-origin and bounded JSON
+// transport. The independent API's explicit durable mode is the final capability
+// fence; forwarding these paths never enables models, synthesis or execution.
+const ALLOWED_PATHS = new Set([
   "/v1/runtime", "/catalogue/snapshots", "/catalogue/overview", "/catalogue/list", "/catalogue/open",
   "/catalogue/coverage", "/catalogue/query", "/catalogue/relationships", "/catalogue/analysis/get-published",
-  ...["list", "get", "conversations/list", "conversations/get", "context/get", "operations/get"].map(p => "/research/investigations/" + p),
+  ...["list", "get", "conversations/list", "conversations/get", "context/get", "operations/get",
+    "create", "rename", "archive", "conversations/create", "conversations/rename", "context/change",
+    "refresh", "operations/retry"].map(p => "/research/investigations/" + p),
   ...["status", "events", "list", "cancel"].map(p => "/research/runs/" + p),
   ...["status", "events", "list", "cancel"].map(p => "/research/answers/" + p),
   ...["list", "open", "page", "export"].map(p => "/research/evidence/" + p),
@@ -13,7 +18,7 @@ const READ_PATHS = new Set([
   ...["capability", "status", "events", "cancel", "artifact"].map(p => "/research/experiment-executions/" + p),
 ]);
 export function proxyPath(path: string, method: string): boolean {
-  return READ_PATHS.has(path) && (path === "/v1/runtime" ? method === "GET" : method === "POST");
+  return ALLOWED_PATHS.has(path) && (path === "/v1/runtime" ? method === "GET" : method === "POST");
 }
 function error(status: number, code: string) {
   return Response.json({ error: { code, message: "The independent v1 service is unavailable" } }, {

@@ -272,7 +272,8 @@ def _failure(status, code, message):
 
 
 def create_host_app(*, settings: V1HostSettings, session_factory, internal_secret: SecretStr,
-                    services: V1ReadServices | None = None, _allow_test_sqlite=False, _owned_engine=None):
+                    services: V1ReadServices | None = None, context_mutations=False,
+                    _allow_test_sqlite=False, _owned_engine=None):
     """Compose trusted explicit dependencies. Only tests may request SQLite."""
     if not isinstance(settings, V1HostSettings) or not callable(session_factory):
         raise HostConfigurationError('Explicit validated settings and independent session factory required')
@@ -286,6 +287,19 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
     if not isinstance(services, V1ReadServices):
         raise HostConfigurationError('Explicit v1 service bundle required')
     services.validate(session_factory=session_factory, site_id=settings.site_id, allow_test=_allow_test_sqlite)
+    mutation_paths = frozenset()
+    if type(context_mutations) is not bool:
+        raise HostConfigurationError('Explicit context mutation selection required')
+    if context_mutations:
+        from api.v1_beta_research_host import CONTEXT_MUTATION_PATHS, compose_beta_context_services
+        # Validate the exact durable composition, never a feature flag alone.
+        expected = compose_beta_context_services(session_factory=session_factory,
+            site_id=settings.site_id, catalogue_service=services.catalogue_service,
+            catalogue_browser=services.catalogue_browser)
+        if (services.investigation_service is None
+                or services.investigation_service.store is not expected.investigation_service.store):
+            raise HostConfigurationError('Durable context store binding required')
+        mutation_paths = CONTEXT_MUTATION_PATHS
     limiter = InMemoryRateLimiter() if _allow_test_sqlite else PostgresRateLimiter(engine_factory=lambda: bind)
 
     @asynccontextmanager
@@ -323,7 +337,7 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
                 internal_secret.get_secret_value())
             await checkpoint()
             if not ((request.method == 'GET' and request.url.path in {'/me', '/v1/runtime'})
-                    or request.method == 'POST' and request.url.path in READ_POST_PATHS):
+                    or request.method == 'POST' and request.url.path in READ_POST_PATHS | mutation_paths):
                 return _failure(403, 'readonly_stage', 'This action is unavailable in the read-only v1 stage')
             permission = route_permission(request.method, request.url.path)
             if permission is None or permission not in user.permissions:
@@ -381,7 +395,7 @@ def _unique(items):
     return result
 
 
-def catalogue_services_from_environment(settings, secret, environ):
+def catalogue_services_from_environment(settings, secret, environ, *, session_factory=None):
     """Bind only an explicitly configured, operator-owned catalogue inventory.
 
     The initial production registry is empty. It attests no scientific data,
@@ -393,13 +407,18 @@ def catalogue_services_from_environment(settings, secret, environ):
         return None
     from api.v1_catalogue_host import load_empty_catalogue, load_snapshot_catalogue
     mode = environ.get('OCEAN_V1_CATALOGUE_MODE', 'empty')
-    if mode not in {'empty', 'sealed-gcs-v1'}:
+    if mode not in {'empty', 'sealed-gcs-v1', 'sealed-gcs-context-v1'}:
         raise HostConfigurationError('Explicit supported catalogue mode required')
     key = hmac.digest(secret.get_secret_value().encode('utf-8'),
         b'ocean-v1-beta:catalogue-discovery-cursor:v1', 'sha256')
     loader = load_empty_catalogue if mode == 'empty' else load_snapshot_catalogue
+    kwargs = {'context_retention': True} if mode == 'sealed-gcs-context-v1' else {}
     catalogue, browser = loader(path, project_id=settings.project_id,
-        site_id=settings.site_id, cursor_key=key)
+        site_id=settings.site_id, cursor_key=key, **kwargs)
+    if mode == 'sealed-gcs-context-v1':
+        from api.v1_beta_research_host import compose_beta_context_services
+        return compose_beta_context_services(session_factory=session_factory, site_id=settings.site_id,
+            catalogue_service=catalogue, catalogue_browser=browser)
     return V1ReadServices(catalogue_service=catalogue, catalogue_browser=browser)
 
 
@@ -433,9 +452,10 @@ def create_from_environment():
         secret = SecretStr(os.environ['OCEAN_V1_INTERNAL_AUTH_SECRET'])
         engine = create_engine(dsn, pool_pre_ping=True, connect_args={'connect_timeout': 10})
         factory = sessionmaker(bind=engine, expire_on_commit=False)
-        services = catalogue_services_from_environment(settings, secret, os.environ)
+        services = catalogue_services_from_environment(settings, secret, os.environ, session_factory=factory)
         app = create_host_app(settings=settings, session_factory=factory, internal_secret=secret,
-            services=services, _owned_engine=engine)
+            services=services, _owned_engine=engine,
+            context_mutations=os.environ.get('OCEAN_V1_CATALOGUE_MODE') == 'sealed-gcs-context-v1')
         app.state.v1_owned_engine = engine
         return app
     except Exception:

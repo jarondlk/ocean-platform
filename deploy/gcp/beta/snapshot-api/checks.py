@@ -56,7 +56,7 @@ def main():
     check('foreign_base_project_refused', lambda: package.validate_base_manifest(
         json.dumps({**document, 'project_id': 'data-infra-infobio'}).encode()), rejects=True)
     check('checkout_path_escape_refused', lambda: package.committed_bytes(package.BASE_REVISION, '../config.py'), rejects=True)
-    pins = {**document['sources'], 'ingestion/gcs_catalogue_snapshot.py': '0' * 64}
+    pins = {**document['sources'], **{name: '0' * 64 for name in package.ADDED}}
     package.validate_closure(pins)
     CHECKS.append('current_static_import_closure_present_in_base_or_overlay')
     activation_id, child_id = 'a' * 64, 'b' * 64

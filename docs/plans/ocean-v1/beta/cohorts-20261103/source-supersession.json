@@ -1,0 +1,58 @@
+{
+  "predecessor": "67ff1904b5b000376bbfeffb5d3a841239e88ba7",
+  "changes": {
+    "api/v1_host.py": {
+      "from_sha256": "2e84f3150d9684cc5107f7770a0ba7c8e550fd389655169f7158d813b783d10d",
+      "to_sha256": "6dd6792c30f860bd007346793027ce69f7506aeaab8f1ceceb3157a3cafe25e1"
+    },
+    "api/v1_catalogue_host.py": {
+      "from_sha256": "c477da3793e9a22659723127cda80be5e53754bad48204bbda594396e94edf10",
+      "to_sha256": "abfcb34a35b7c17f3d41a3857919e85fd36355f7451937e94535daa7bfc2d9d2"
+    },
+    "frontend-v1/hosting/lib/proxy.ts": {
+      "from_sha256": "20a0e898c32aea5a704788125feea0ec76a71425edd94649e02a06a7b7fcdaf3",
+      "to_sha256": "e0ea53d485d5cab727c78290b03a140fca78d065b6db1c77a25b0a657958d937"
+    },
+    "frontend-v1/hosting/tests/proxy.test.ts": {
+      "from_sha256": "513ac2064a802c24688202e0addf8f60ee5c60a88007b690486c45622b620e6a",
+      "to_sha256": "d540f6148b098515602c1e12a034ce09370d134133a88dcda88f41571dca4c1d"
+    },
+    "deploy/gcp/beta/frontend/Dockerfile": {
+      "from_sha256": "e39faa9d4ba507c6bc7db2813a50aad7d098c2a44fa82af984855ee4a79b955d",
+      "to_sha256": "3ef79659e019432cf57b4aa0f7168362a9bedfcf5d43169c6e8dbc5b031ea63b"
+    },
+    "deploy/gcp/beta/frontend/prepare_context.py": {
+      "from_sha256": "50d4b0fdabf00be262d17ba5310584a14146f3bcfaa6bec2ada9e112ee01bde4",
+      "to_sha256": "91c7c10dde49106851c537d188037c81552da86f84ae5d6d3f24e509fea83f73"
+    },
+    "deploy/gcp/beta/snapshot-api/Dockerfile": {
+      "from_sha256": "560a45fe2f60f78a4b00f34970272cb39e2cf2bdeb2b4121c59d9f04d1152d4f",
+      "to_sha256": "210a0e760d671960cddcdd7d0ef815fed2cd936ce3bbaed1f1b60300405bd799"
+    },
+    "deploy/gcp/beta/snapshot-api/checks.py": {
+      "from_sha256": "e7b28e765b7611ba563c359fa752696991bb4bf4e99552564b66610dabb14f1a",
+      "to_sha256": "f56cbb55b6047397c7b27eb3f014e56732b3379768bb20264f690ecf790b78af"
+    },
+    "deploy/gcp/beta/snapshot-api/prepare_context.py": {
+      "from_sha256": "c6232d8e1dd3634c9da1c065b881347a45d2a156d2d27a6e096270dcc926d97a",
+      "to_sha256": "1351a4664f94708611de3534c2cb81b8196f19efd0c3d06c5178695b9a8f30bd"
+    }
+  },
+  "additions": {
+    "api/v1_beta_research_host.py": "620b8d79bb81b35a3590cdbb391a84dcb6755fb5408a0fcebe8d4040881707a3",
+    "ingestion/beta_catalogue_retention.py": "3ebaf590e272f52c0ac6f01addb6734bfa29f416283f98e1426df69b8a78eb3a",
+    "deploy/gcp/beta/data/append_catalogue.py": "bf0d01a5b702a68a89245de62e36b6c8723c68fc7994bd59870a4b8a619b3ed2",
+    "deploy/gcp/beta/data/prepare_metagenome.py": "d59f78c427088e52bebc13e11d9be6b6b7f5574c9ff0460f9fbc7bcd3677fab6",
+    "deploy/gcp/beta/data/prepare_sst.py": "fcab5a025e9a8d9f544d978fb47f816785935bed8c6d20eeb2d8b91ecb0682d9",
+    "tests/test_beta_catalogue_append.py": "3036c1e85b8e29fe9c05cbb43835b3f7fcc3a0d9ef7bcbed4cc0c4592f427f75",
+    "tests/test_beta_catalogue_retention.py": "becd7fb251cf3d7c1500cffce0896b530f9d9983ab56634f2517afa0f61d4795",
+    "tests/test_beta_context_http.py": "a28c991ce8a215c12f55184692bd52df3976a4d580e9d4e367f2cb7546f6b77e",
+    "tests/test_beta_metagenome_preparation.py": "de1c8ca86d0d93f9a210d3035cdb3c41c9da35a4724f57314019f9c490dce413",
+    "tests/test_beta_research_host.py": "de5ff3baace0c0e48fbdcfbd7f60d7f4cc4aab04683cd9809c9575bcfc11ff16",
+    "tests/test_beta_sst_preparation.py": "11b83a7a2589781631164476f6cd4e0f6f3c1cccc62c95215fcd5b9e579eacca"
+  },
+  "old_receipts_retargeted": false,
+  "science_approval": false,
+  "context_activation": "prepared, exact SQL/GCS grants and live acceptance still required",
+  "full_ci": "deferred per user; focused checks and actual source-bound image proof required"
+}

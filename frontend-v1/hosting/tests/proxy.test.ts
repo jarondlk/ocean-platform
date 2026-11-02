@@ -29,8 +29,8 @@ test("actual proxy replaces caller auth/cookies and limits outgoing headers to t
   assert.equal(response.headers.get("x-private-diagnostic"), null); assert.match(response.headers.get("content-disposition")!, /test.json/);
 });
 
-for (const path of ["/research/runs/submit", "/research/runs/clarify", "/research/runs/continue", "/research/answers/submit", "/research/experiments/approve", "/research/experiments/dispatch", "/research/investigations/create", "/research/investigations/context/change", "/admin", "/me", "/chat", "/catalogue/list?target=legacy"]) {
-  test(`read-only host denies unconfigured write/admin/proxy destination ${path}`, async () => {
+for (const path of ["/research/runs/submit", "/research/runs/clarify", "/research/runs/continue", "/research/answers/submit", "/research/experiments/approve", "/research/experiments/dispatch", "/admin", "/me", "/chat", "/catalogue/list?target=legacy"]) {
+  test(`host denies dispatch/admin/unconfigured proxy destination ${path}`, async () => {
     let called = false;
     const response = await proxyRequest(post(path), SETTINGS, session, (async () => { called = true; throw new Error(); }) as typeof fetch);
     assert.equal(response.status, 404); assert.equal(called, false);
@@ -67,4 +67,38 @@ test("body reader cancels a stalled request and rejects streamed overflow within
   let overflowCancelled = false;
   const overflow = new ReadableStream<Uint8Array>({ start(c) { c.enqueue(new Uint8Array(101)); }, cancel() { overflowCancelled = true; } });
   await assert.rejects(boundedBytes(overflow, 100), RangeError); assert(overflowCancelled);
+});
+
+const CONTEXT_WRITES = ["create", "rename", "archive", "conversations/create", "conversations/rename", "context/change", "refresh", "operations/retry"];
+for (const operation of CONTEXT_WRITES) {
+  test(`context mutation ${operation} uses authenticated JSON transport and preserves API capability denial`, async () => {
+    const path = "/research/investigations/" + operation;
+    assert(proxyPath(path, "POST"));
+    assert.equal(proxyPath(path, "GET"), false); assert.equal(proxyPath(path, "DELETE"), false);
+    let count = 0;
+    const response = await proxyRequest(post(path, '{"idempotency_key":"test-request"}', {
+      Authorization: "Bearer attacker", Cookie: "legacy-session=never-forward",
+    }), SETTINGS, session, (async (url, init) => {
+      count++; assert.equal(url, "http://127.0.0.1:8000" + path);
+      const outgoing = new Headers(init!.headers);
+      assert.equal(outgoing.get("cookie"), null); assert.notEqual(outgoing.get("authorization"), "Bearer attacker");
+      const { payload } = await jwtVerify(outgoing.get("authorization")!.slice(7), new TextEncoder().encode(SETTINGS.internalSecret), { issuer: SETTINGS.issuer, audience: SETTINGS.audience });
+      assert.equal(payload.sub, IDENTITY.subject);
+      assert.equal(new TextDecoder().decode(init!.body as Uint8Array), '{"idempotency_key":"test-request"}');
+      return Response.json({ error: { code: "readonly_stage" } }, { status: 403 });
+    }) as typeof fetch);
+    assert.equal(count, 1); assert.equal(response.status, 403);
+    assert.equal((await response.json()).error.code, "readonly_stage");
+    assert.equal(response.headers.get("cache-control"), "no-store");
+  });
+}
+test("context writes retain exact-origin, authentication, media and streamed-body bounds", async () => {
+  let count = 0; const fetcher = (async () => { count++; return Response.json({}); }) as typeof fetch;
+  const path = "/research/investigations/create";
+  assert.equal((await proxyRequest(post(path), SETTINGS, async () => null, fetcher)).status, 401);
+  assert.equal((await proxyRequest(post(path, "{}", { Origin: "https://oceaninfobio.com" }), SETTINGS, session, fetcher)).status, 403);
+  assert.equal((await proxyRequest(post(path, "{}", { "Content-Type": "text/plain" }), SETTINGS, session, fetcher)).status, 415);
+  assert.equal((await proxyRequest(post(path, "x".repeat(65537)), SETTINGS, session, fetcher)).status, 413);
+  assert.equal((await proxyRequest(post(path + "?target=legacy"), SETTINGS, session, fetcher)).status, 404);
+  assert.equal(count, 0);
 });

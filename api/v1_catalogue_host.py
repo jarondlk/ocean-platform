@@ -1,9 +1,8 @@
-"""Explicit empty production catalogue authority for the independent beta.
+"""Explicit empty or sealed production catalogue authority for the beta.
 
-This binds a genuine, configured zero-snapshot inventory. It does not discover
-files, create a snapshot store, load fixtures, or approve/import scientific data.
-Nonempty registries need a separate sealed-registration/current-policy binding;
-this format deliberately refuses them rather than inventing that authority.
+Exact private activation, current lifecycle and current account policy bind
+nonempty snapshots. Durable context mode adds reference-only C09 retention;
+neither mode imports data, discovers sources or grants scientific approval.
 """
 from __future__ import annotations
 
@@ -286,7 +285,7 @@ class _CurrentSnapshotResolver(FrozenCatalogueResolver):
 
 
 def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
-                            _allow_test_owner=False, _test_store=None):
+                            context_retention=False, _allow_test_owner=False, _test_store=None):
     """Bind explicit sealed GCS sources; never populate or modify their store.
 
     The image contains only an opaque hash/address. Scientific data and source
@@ -298,6 +297,8 @@ def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
         from ingestion.gcs_catalogue_snapshot import GcsCatalogueSnapshotStore
         from ingestion.scientific_catalogue_inputs import load_registry
         from schema.catalogue_snapshot import manifest_id
+        if type(context_retention) is not bool:
+            raise ValueError("Explicit context-retention selection required")
         if type(cursor_key) is not bytes or len(cursor_key) < 32:
             raise ValueError("Stable cursor key required")
         if _test_store is not None and os.environ.get("DEPLOYMENT_ENV") != "test":
@@ -316,7 +317,11 @@ def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
             return manifest_id(manifest) in allowed_snapshots
 
         kwargs = {"_test_store": _test_store} if _test_store is not None else {}
-        store = GcsCatalogueSnapshotStore(bucket=binding["bucket"], prefix=binding["prefix"],
+        store_type = GcsCatalogueSnapshotStore
+        if context_retention:
+            from ingestion.beta_catalogue_retention import BetaCatalogueRetentionStore
+            store_type = BetaCatalogueRetentionStore
+        store = store_type(bucket=binding["bucket"], prefix=binding["prefix"],
             access_gate=access_gate, **kwargs)
         for identity, registration in registrations.items():
             registration.require_current(store)

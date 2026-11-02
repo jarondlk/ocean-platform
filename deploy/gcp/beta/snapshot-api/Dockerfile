@@ -3,6 +3,8 @@ FROM asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/catalog
 COPY --chown=0:0 --chmod=0444 application/api/v1_host.py /opt/ocean/api/v1_host.py
 COPY --chown=0:0 --chmod=0444 application/api/v1_catalogue_host.py /opt/ocean/api/v1_catalogue_host.py
 COPY --chown=0:0 --chmod=0444 application/ingestion/gcs_catalogue_snapshot.py /opt/ocean/ingestion/gcs_catalogue_snapshot.py
+COPY --chown=0:0 --chmod=0444 application/api/v1_beta_research_host.py /opt/ocean/api/v1_beta_research_host.py
+COPY --chown=0:0 --chmod=0444 application/ingestion/beta_catalogue_retention.py /opt/ocean/ingestion/beta_catalogue_retention.py
 COPY --chown=0:0 --chmod=0444 source-manifest.json /opt/ocean/source-manifest.json
 COPY --chown=0:0 --chmod=0444 beta-host-config.json /opt/ocean/beta-host-config.json
 COPY --chown=0:0 --chmod=0444 catalogue-source.json /opt/ocean/beta-catalogue-source.json

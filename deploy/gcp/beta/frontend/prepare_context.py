@@ -74,10 +74,16 @@ def source_context(revision: str, output: Path) -> dict:
     if packaging != (HERE / "Dockerfile").read_bytes() or own_source != Path(__file__).read_bytes():
         raise ValueError("Packaging bytes must equal the explicit source commit")
     (output / "Dockerfile").write_bytes(packaging)
+    adapter_path = 'deploy/gcp/beta/serving-frontend/forwarded-adapter.cjs'
+    adapter = git('show', revision + ':' + adapter_path)
+    if (ROOT / adapter_path).is_symlink() or (ROOT / adapter_path).read_bytes() != adapter:
+        raise ValueError('Serving transport adapter must equal the selected committed source')
+    (output / 'forwarded-adapter.cjs').write_bytes(adapter)
     files = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(selected.items())}
     manifest = {"version": "beta-frontend-source-context-v1", "source_commit": revision,
                 "source_files": files, "dockerfile_sha256": hashlib.sha256(packaging).hexdigest(),
                 "packager_sha256": hashlib.sha256(own_source).hexdigest(),
+                "serving_adapter_sha256": hashlib.sha256(adapter).hexdigest(),
                 "synthetic_preview_graph_included": False, "credentials_or_generated_files_included": False}
     (output / "source-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest

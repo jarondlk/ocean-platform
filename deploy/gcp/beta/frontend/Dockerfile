@@ -18,6 +18,7 @@ ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=8080
 WORKDIR /opt/ocean
 COPY --from=build --chown=node:node /opt/ocean/frontend-v1/hosting/.next/standalone/ ./
 COPY --chown=node:node source-manifest.json ./source-manifest.json
+COPY --chown=0:0 --chmod=0444 forwarded-adapter.cjs /opt/ocean/serving-frontend-adapter.cjs
 USER node
 EXPOSE 8080
-CMD ["node", "hosting/server.js"]
+CMD ["node", "--require", "/opt/ocean/serving-frontend-adapter.cjs", "hosting/server.js"]
