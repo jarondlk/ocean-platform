@@ -1,0 +1,30 @@
+{
+  "state": "latency_audit_only_no_production_implementation",
+  "private_scripts": {
+    "/private/tmp/ocean-beta-edna-latency-audit-20261103.py": "e9e52a4ff66d545c08159b55b7babf096e4d1c5914e91b06fa1fd89a7d6a0c80",
+    "/private/tmp/ocean-beta-edna-cache-prototype-attempt01-20261103.py": "e457ec7b84cc5ac564aad1e4b8ae613fe9ef66ef19c750afd2a4849ea30762f9",
+    "/private/tmp/ocean-beta-edna-cache-prototype-attempt02-20261103.py": "8b3eeea867e2c9d239b7744319f1a8162afbaca5f3f2e011f246621fa270fc0f",
+    "/private/tmp/ocean-beta-edna-cache-prototype-20261103.py": "556f2506989cb82572425f9cfc212f9a5d40aac64686d3bd255ac7b55d7fc448"
+  },
+  "prototype_attempts": [
+    {
+      "attempt": 1,
+      "state": "bounded_prototype_did_not_complete",
+      "reason": "512MiB retained DataFrame budget cannot hold complete707492049-byte cohort; request failed without publishing any source or returning partial data"
+    },
+    {
+      "attempt": 2,
+      "state": "overview_phases_completed_query_harness_invalid",
+      "reason": "query omitted required public c13-v1 operation_version; no query result accepted"
+    },
+    {
+      "attempt": 3,
+      "state": "private_local_prototype_measurements_complete",
+      "reason": "fixed query contract; exact source fingerprints unchanged throughout"
+    }
+  ],
+  "scientific_approvals_or_output_values_inferred": false,
+  "scientific_rows_or_private_activation_copied_to_git": false,
+  "actual_gcp_request_latency_measured": false,
+  "shared_application_source_changed_by_audit": false
+}

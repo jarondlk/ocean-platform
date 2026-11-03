@@ -1,0 +1,56 @@
+{
+  "state": "private_inputs_remain_outside_git",
+  "new_cloud_upload": false,
+  "inputs": [
+    {
+      "kind": "raw_quarantine",
+      "main_mac_path": "/private/tmp/ocean-beta-existing-raw-quarantine-20261102",
+      "recovery_receipt": "../raw-quarantine-20261102/upload-complete.json",
+      "archive_sha256": "e62eb0e62ad1a1b0b9354944cb46b3b1d818fd12b5076b1e2749fb317cf471cb"
+    },
+    {
+      "kind": "ctd_base",
+      "main_mac_path": "/private/tmp/ocean-beta-ctd-catalogue-a4923c4",
+      "recovery_receipt": "../snapshot-activation-20261103/data-upload-complete.json",
+      "objects": 8
+    },
+    {
+      "kind": "mur_sst",
+      "main_mac_path": "/private/tmp/ocean-beta-origin-edna-publication-20261102",
+      "recovery_receipt": "../raw-quarantine-20261102/regional-publication-source-readback.json",
+      "objects": 5
+    },
+    {
+      "kind": "edna_metadata",
+      "main_mac_path": "/private/tmp/ocean-beta-origin-edna-metadata-20261103",
+      "index_uri": "gs://data-infra-infobio-ocean-data/edna/normalized/index.json",
+      "generation": "1790740062783615",
+      "sha256": "76d89bc641b739f3b5648287f24e947bdd6b6a7f3f8bbbf31020f7d516fd4d86",
+      "objects": 42
+    },
+    {
+      "kind": "edna_normalized",
+      "main_mac_path": "/private/tmp/ocean-beta-origin-edna-normalized-20261103",
+      "recovery_receipt": "edna-private-source-readback-summary.json",
+      "objects": 328,
+      "bytes": 127885817
+    },
+    {
+      "kind": "held_full_preparation",
+      "main_mac_path": "/private/tmp/ocean-beta-multi-catalogue-prepared-20261103",
+      "activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+      "uploaded": false,
+      "objects": 250,
+      "bytes": 68844098
+    },
+    {
+      "kind": "origin_inventory",
+      "main_mac_path": "/private/tmp/ocean-beta-origin-inventory-20261102"
+    },
+    {
+      "kind": "failed_empty_preflight",
+      "main_mac_path": "/private/tmp/ocean-beta-multi-catalogue-20261103",
+      "accepted_input": false
+    }
+  ]
+}

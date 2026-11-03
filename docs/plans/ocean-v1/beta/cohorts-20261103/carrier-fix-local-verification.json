@@ -1,0 +1,15 @@
+{
+  "state": "exact_global_family_carrier_fix_passed_local_regressions",
+  "combined_scientific_and_multisource_regressions": 197,
+  "new_multisource_shadow_cases": 21,
+  "ruff": "pass",
+  "scope": "Only exact canonical c11:sst and c12:edna directories with full canonical shape may share family ownership; source/scientific/shadow identities stay denied",
+  "runtime_source_sha256": {
+    "orchestration/frozen_scientific_catalogue.py": "6ebfbf3dcbd7aa55aa28dda10d12659f85cb3f08a67e0255351d1bdfa12d8109",
+    "tests/test_beta_multisource_edna_catalogue.py": "f5bf6fded6cff5536f290488a48cd781e389e668ff3a6a999505f9905618341f"
+  },
+  "actual_full_cohort_correctness": "All four indexes and five-row raw pages pass local explicit test-transport rehearsal",
+  "latency_gate": "FAIL: local raw detections15.076610s before GCS cost; full cohort must remain held",
+  "scientific_approval": false,
+  "cloud_deployment": false
+}

@@ -24,7 +24,8 @@ BASE_REVISION = 'abcdff79d8695be2e493efa29dc92c454d5b6dfe'
 BASE_IMAGE = ('asia-northeast1-docker.pkg.dev/' + PROJECT + '/ocean-v1-beta/catalogue-api@sha256:'
     '0de4842308efeef1b64c3e51b9c225d2ce0dbdd5b4b321ea4c65c1b6e37de13d')
 BASE_SOURCE_DIGEST = 'dcf27a4644f53fe014fa4f0c3eb4fd3969a66866b0dd1ddaad1b2d1164aeaf92'
-SUPERSEDED = ('api/v1_host.py', 'api/v1_catalogue_host.py')
+SUPERSEDED = ('api/v1_host.py', 'api/v1_catalogue_host.py',
+    'orchestration/frozen_scientific_catalogue.py')
 ADDED = ('ingestion/gcs_catalogue_snapshot.py', 'api/v1_beta_research_host.py',
     'ingestion/beta_catalogue_retention.py')
 OVERLAYS = SUPERSEDED + ADDED
@@ -201,7 +202,7 @@ def prepare(*, revision, output, binding, binding_sha256, activation_sha256):
         'version': 'ocean-v1-beta-api-context-v1', 'project_id': PROJECT, 'revision': revision,
         'sources': pins,
         'source_manifest_sha256': digest(json.dumps(pins, sort_keys=True, separators=(',', ':')).encode()),
-        'selection': '172 pinned catalogue base sources, two host supersessions and three explicit GCS/context additions',
+        'selection': '172 pinned catalogue base sources, three host/catalogue supersessions and three explicit GCS/context additions',
         'composition': {'base_revision': BASE_REVISION, 'base_serving_image': BASE_IMAGE,
             'base_source_manifest_sha256': BASE_SOURCE_DIGEST,
             'superseded_sources': list(SUPERSEDED), 'added_sources': list(ADDED)},
@@ -221,7 +222,7 @@ def prepare(*, revision, output, binding, binding_sha256, activation_sha256):
         'activation_object': PREFIX + '/activations/' + activation_sha256 + '.json',
         'runtime_activation_document_included': False, 'access_policy_or_dataset_ids_included': False,
         'scientific_data_or_credentials_included': False,
-        'unchanged_base_source_count': 170, 'superseded_sources': list(SUPERSEDED),
+        'unchanged_base_source_count': len(base['sources']) - len(SUPERSEDED), 'superseded_sources': list(SUPERSEDED),
         'added_sources': list(ADDED), 'base_entrypoint_and_user_preserved': True,
         'inherited_runtime_user': '10001:10001', 'cloud_build_performed': False,
     }
@@ -235,7 +236,7 @@ def prepare(*, revision, output, binding, binding_sha256, activation_sha256):
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(data)
     return {'revision': revision, 'base_serving_image': BASE_IMAGE,
-        'context_files': sorted(files), 'unchanged_base_sources': 170,
+        'context_files': sorted(files), 'unchanged_base_sources': len(base['sources']) - len(SUPERSEDED),
         'composed_api_sources': len(pins), 'runtime_activation_document_included': False,
         'opaque_source_binding_included': True, 'source_binding_sha256': binding_sha256,
         'activation_sha256': activation_sha256,

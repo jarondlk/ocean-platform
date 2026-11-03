@@ -1,6 +1,15 @@
 # Implementation status
 
 Updated: 2026-11-03 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
+
+**Current beta checkpoint (2026-11-03 JST):** The three-hour schedule is paused
+for the switch to a second Mac. Authenticated CTD remains live on generation 9
+(`ocean-v1-beta-serving-00009-rn7`). The C13 carrier fix and staged cohort
+selector passed focused local verification and have not been deployed. The
+full eDNA candidate failed the 15-second local latency gate. The next increment
+is metagenome/SST while retaining CTD; durable context grants and verification
+remain pending. Resume with a fresh GCP login and pinned input recovery from
+the [second Mac handoff](handoffs/SECONDARY_MAC_HANDOFF.md).
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -295,3 +304,6 @@ Beta first raw cohort staged (2026-11-02 JST): reviewed preparer/sourceb34a62a a
 
 
 Beta CTD activation delivered (2026-11-03 JST): **real authenticated CTD catalogue and both tables are live** at https://beta.oceaninfobio.com. Pushed sourcea4923c4, actual build4b8fa356 and network-none Linux image proof pass; Ready revision00008-ngj uses immutable snapshot-api877b1b3. Exact user approval precedes eight create-only generation/SHA256-verified private snapshot objects and one conditional beta-prefix Object Viewer grant. Actual Google browser discovery/inspector/cast and depth tables show162casts/10955observations with100-row first pages and explicit qualifications. Descriptive/unpublished/scientific approvalfalse; other raw columns/families and Research/queue/model/worker remain gated.232distinct focused cases across retained231+13runs,32packaging probes/Ruff/review pass;885sources/5368original receipts/90C27artifacts/42protected paths verify. Only API image/two source selectors changed; frontend/proxy/auth/network/secrets/scale preserved. HTTPS200/TLSverified, unauthenticatedruntime401. Broad CI deferred per user; old CI source50566b7 remains unchanged. Next: remaining scientific family qualification and durable retention/context integration before Research. SchedulerPAUSED. [Current handoff](handoffs/BETA_DEPLOYMENT.md), [activation receipts](beta/snapshot-activation-20261103/).
+
+
+Earlier iterative beta continuation (2026-11-03 JST; superseded by the paused checkpoint above): user reauthorizes remaining scientific data/GCP deployment and three-hour same-chat automation (existing automation updated ACTIVE). Frontend0fc4775 actual build6b48b628 and Linux proof pass; generation9 revision00009-rn7 is live with image005eda32, ONLY frontendimage changed, CTD/API/auth/proxy/network/scale preserved; HTTPS200/TLSverified, unauthenticatedruntime401. Backend remains catalogue-only. Source1d20cf2 prepares eDNA/append publication/exact context grants; b3db9e9 accepts the new explicit authorization ref.279backend+57hosting/typecheck, publisher26/eDNA28/operator35 focused tests,34packagingprobes and28actual nativePG checks pass. Private41additional datasets/250immutablefiles/68844098bytes are sealed, not uploaded.39eDNA bundles retain3155unknown+343negativecontrols and unresolved physical identities; no environmental/scienceapproval claim. Actual offline integration found a C13globalfamilycarrier collision across39eDNAsources; owningfix/performance rehearsal is in progress and APIcandidate799c034a remains undeployed. Corrected contextoperatora9be3b94 image/proof passes; no realDBgrant/job executed. Personaloperator auth expired beforefreshcontrolread; the earlier main Mac SDK sign-in was cancelled at handoff. The dedicated identity remains available on that Mac within its scopes. Keep execution closed and preserve original receipts. [Current handoff](handoffs/BETA_DEPLOYMENT.md).

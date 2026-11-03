@@ -4,8 +4,107 @@ State: **Authenticated beta is LIVE at https://beta.oceaninfobio.com. The
 first real CTD catalogue is deployed and browser-verified:162 casts and10,955
 depth observations. Other scientific families, durable Research/queue/worker
 integration and full release acceptance remain unfinished.**
-Root is the sole cloud writer. Branch `overhaul`; scheduler remains PAUSED.
-The user prioritizes usable access and explicitly defers lengthy broader checks.
+Branch `overhaul`. **The three-hour schedule is paused for the user’s switch
+to a second Mac.** The pending main Mac SDK sign-in was cancelled. Continue
+manually from the [second Mac handoff](SECONDARY_MAC_HANDOFF.md), which covers
+local sign-in and recovery of pinned private inputs from existing GCS objects.
+No cloud changes were made for this handoff.
+
+## Paused checkpoint — 2026-11-03 JST
+
+The live service remains generation 9, with the updated frontend and the
+original CTD-only API. The C13 carrier fix passed 197 local regressions;
+explicit staged cohort selection passed 16 tests, and packaging passed 34
+probes. The fix is checkpointed in source and has not been built or deployed.
+The full cohort passed local catalogue correctness after the fix, but raw eDNA
+paging took 15.076610 seconds before network cost, failing the existing
+15-second gate. The cache experiment is a local diagnostic only. Resume with
+a fresh `meta-sst` append; no new bundle was prepared during the pause.
+Context grants and actual Cloud SQL/GCS/browser acceptance remain pending.
+[Source receipt](../beta/cohorts-20261103/secondary-mac-source-checkpoint.json).
+
+## Earlier iterative continuation — 2026-11-03 JST
+
+The user explicitly requested iterative deployment of all remaining beta work,
+authorized all project scientific data/GCP use, and reactivated a three-hour
+same-chat continuation. Existing automation `continue-ocean-overhaul-checkpoints`
+was updated, not duplicated. It notifies only on meaningful progress/failure or
+required action, checks existing work before continuing, and retains the beta-only
+¥50,000 target/notice boundary. No legacy mutation or independent scientific
+approval is inferred. [Authorization](../beta/cohorts-20261103/automation-and-authorization.json).
+
+Actual frontend source0fc4775 build6b48b628 succeeded with network-none/nonroot
+image proof; immutable image `context-frontend@sha256:005eda32b803676c17a4cdc72ffda3dedc447f4cf73b7533161b43f55d695ea3`
+is now Ready generation9 revision `ocean-v1-beta-serving-00009-rn7`. Exact
+readback verifies ONLY the frontend image changed. API/proxy/identity/secrets/
+network/scale/flags preserved. HTTPS login200/TLSverified and unauthenticated
+runtime401; refreshed authenticated browser still renders the CTD catalogue.
+The frontend forwards exactly eight C17 context paths through existing auth/
+origin/body guards, but the API remains catalogue-only, so context writes remain
+unavailable until their actual grants and host composition pass. Do not confuse
+this live frontend increment with complete Research deployment.
+
+Pushed source checkpoints:0fc4775 (279 focused backend/57 hosting/typecheck,
+32packaging probes/Ruff; qualified meta/SST and context-only source),1d20cf2
+(eDNA/append publisher/exact context-grant operator and private aggregate driver),
+b3db9e9 (renderer accepts the user’s new Nov3 authorization reference;34probes).
+New publisher26tests, eDNA28tests, operator35tests and actual disposable native
+PostgreSQL28checks pass. Native C17 transactions reproduced that audit INSERT
+RETURNING needs SELECT(created_at); only that column is added, full audit reads
+remain denied. Native cluster is stopped/removed. No real SQL grants or jobs run.
+
+All328normalized eDNA artifacts/127885817bytes were read at exact existing source
+generations and registry SHA/CRC verified into private staging.39current bundles
+normalize to39datasets/3498occurrences/3498assays/349638detections;2older bundles
+are excluded.3155classifications are unknown and343negative controls; all3498
+physical identities remain unresolved. This allows raw inventory, not an eligible
+environmental detection-frequency/association cohort. MUR1455observations and
+sixgaps remain an unreviewed regional preview. Metagenome82source-column keys,
+106runQC records and125952method-separated cells retain unknown abundance units/
+denominators and all zero cells. No calibration/reclassification or science review.
+Raw JCOPE remains separate:1837valid source-time grids plus one malformed all-fill
+placeholder repeated11paths; missing SST cells remain missing and no dates invented.
+
+Actual private aggregate `/private/tmp/ocean-beta-multi-catalogue-prepared-20261103`
+source1d20cf2 seals41additional datasets into three new indices while preserving
+the original CTD entry. Activation SHA3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6;
+250immutable files/68844098bytes, controlrev4→92. This uses the LAST accepted
+basecontrol generation1793637712460705/hash276e0190, not a fresh cloud-read claim.
+Publisher must recheck the exact current generation/bytes before any upload and
+CAS control last, preserving all refs/audits. Local preparation/publication manifests
+and data remain private; nothing from this new cohort is uploaded or activated.
+
+**Actual integration gate discovered:** offline all-family discovery on the new
+package fails for eDNA with “Scientific/source canonical identities collide”.
+CTD/metagenome/SST per-index overview succeeds. C13 incorrectly reserves the
+shared canonical c12:edna directory under each distinct source owner;39legitimate
+sources collide. The owning runtime fix and adversarial/multisource regression
+checks were in progress at that point. The paused checkpoint above records
+the fix and the subsequent latency failure; do not activate this candidate.
+Old private preparation and failed diagnostic receipts remain immutable.
+
+API candidateb3db9e9 build896039e7 and network-none source proof succeed, image
+`snapshot-api@sha256:799c034a10366ea6ed1e736cc03986c6c979607ff4a77447ac508517e06f87c2`.
+It is UNDEPLOYED and gated by the C13 defect; its source/binding must be superseded
+explicitly after the fix, not retargeted. Context-operator1d20cf2 corrected build
+6b0cba18 and offline source proof succeed, image
+`context-operator@sha256:a9be3b94b156c9d1260c609fb5958c4e503772d3564b95c097fa9f3d47bb1340`.
+First operator build2b08f03a failed only because its image-proof script had an
+invalid broad text substitution; the correction/source-unchanged receipt and
+first failure are retained. Initial API binding renderer also refused the new
+Nov3 authorization reference locally; the explicit allowlist amendment and empty
+preflight submission receipt are retained. Neither failure touched data or DB.
+
+**Earlier authentication gate:** personal GCP authentication expired before a
+fresh control read. No upload, grant or job attempt occurred. The automation
+identity still worked within its read/build/existing-service update scopes.
+The main Mac sign-in has since been cancelled; start a fresh sign-in on the
+second Mac. Preserve the empty local preflight directory at
+`/private/tmp/ocean-beta-multi-catalogue-20261103`.
+
+Broad CI is deferred per user; the older receipt remains bound to 50566b7.
+[New receipts](../beta/cohorts-20261103/),
+[context operator/native checks](../beta/context-20261103/).
 
 ## Current CTD activation — 2026-11-03 JST
 

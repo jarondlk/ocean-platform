@@ -1,0 +1,30 @@
+{
+  "state": "offline_rehearsal_running",
+  "source_commit": "b3db9e9fefd2973a4506967b955b007812f0bc89",
+  "activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+  "production_auth_or_GCP_proof": false,
+  "transport": "explicit DEPLOYMENT_ENV=test +BoundedLocalStore",
+  "actor": "synthetic fixture_user(role=admin), internal",
+  "frontend_deadline_seconds": 15,
+  "steps": [
+    {
+      "name": "load_snapshot_catalogue",
+      "state": "success",
+      "seconds": 0.084212,
+      "peak_rss_bytes": 164167680,
+      "services_loaded": 2
+    },
+    {
+      "name": "first_all_family_discovery",
+      "state": "failed",
+      "seconds": 0.890239,
+      "peak_rss_bytes": 323076096,
+      "error_type": "CatalogueServiceError",
+      "domain_code": "catalogue_unavailable"
+    }
+  ],
+  "scientific_approval": false,
+  "cloud_calls": false,
+  "peak_rss_bytes": 323076096,
+  "baseline_after_import_peak_rss_bytes": 163135488
+}

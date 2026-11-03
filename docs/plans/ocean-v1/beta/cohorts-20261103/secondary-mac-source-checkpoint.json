@@ -1,0 +1,43 @@
+{
+  "state": "source_checkpoint_only_no_new_image_or_activation",
+  "previous_source": "b3db9e9fefd2973a4506967b955b007812f0bc89",
+  "supersessions": {
+    "orchestration/frozen_scientific_catalogue.py": {
+      "previous_sha256": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+      "checkpoint_sha256": "6ebfbf3dcbd7aa55aa28dda10d12659f85cb3f08a67e0255351d1bdfa12d8109"
+    },
+    "deploy/gcp/beta/snapshot-api/Dockerfile": {
+      "previous_sha256": "210a0e760d671960cddcdd7d0ef815fed2cd936ce3bbaed1f1b60300405bd799",
+      "checkpoint_sha256": "8d08ddb40c7c41f4709bc6055c4824ee13876df30185c95cdf068e44d36f8237"
+    },
+    "deploy/gcp/beta/snapshot-api/prepare_context.py": {
+      "previous_sha256": "1351a4664f94708611de3534c2cb81b8196f19efd0c3d06c5178695b9a8f30bd",
+      "checkpoint_sha256": "af3d3cc3f8f27a25fb167c3b89c5517f91165e82c3a108d2875aa6754137ca8a"
+    },
+    "deploy/gcp/beta/data/prepare_cohorts.py": {
+      "previous_sha256": "09e8d9315523136c6577e7f4fd25e053252901e95e0f3c62a312b84282bb1236",
+      "checkpoint_sha256": "94182189b565f209c29e8c140bc7cf9a04de6e8377726c2a4737c080fd901d4a"
+    }
+  },
+  "new_regression_source_sha256": {
+    "tests/test_beta_cohort_stages.py": "963d957f0d799f0986d28c8c78655f7fffe3be89abbbe4b99b4c1c92e8004a81",
+    "tests/test_beta_multisource_edna_catalogue.py": "a529f27ac44dfec944b36a4b6fb2840c0ece08bb4694e841b969fdc705533699"
+  },
+  "verification": {
+    "carrier_regressions_passed": 197,
+    "stage_selection_tests_passed": 16,
+    "packaging_probes_passed": 34,
+    "ruff": "pass",
+    "fresh_hosted_ci": "deferred",
+    "full_cohort_latency": "failed"
+  },
+  "superseded_api_candidate_build": "896039e7-734b-495a-94bd-27c75701eefb",
+  "original_receipts_retargeted": false,
+  "cloud_mutation": false,
+  "test_source_whitespace_only_supersession": {
+    "path": "tests/test_beta_multisource_edna_catalogue.py",
+    "verified_sha256": "f5bf6fded6cff5536f290488a48cd781e389e668ff3a6a999505f9905618341f",
+    "checkpoint_sha256": "a529f27ac44dfec944b36a4b6fb2840c0ece08bb4694e841b969fdc705533699",
+    "change": "Removed one trailing blank line; test body unchanged."
+  }
+}

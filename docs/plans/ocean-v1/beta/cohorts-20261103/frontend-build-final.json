@@ -1,0 +1,146 @@
+{
+  "artifacts": {
+    "images": [
+      "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775"
+    ]
+  },
+  "createTime": "2026-11-02T17:14:18.377579575Z",
+  "finishTime": "2026-11-02T17:17:09.828598Z",
+  "id": "6b48b628-177b-4926-8a0b-83ef32042e24",
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775"
+  ],
+  "logUrl": "https://console.cloud.google.com/cloud-build/builds;region=asia-northeast1/6b48b628-177b-4926-8a0b-83ef32042e24?project=534831104543",
+  "name": "projects/534831104543/locations/asia-northeast1/builds/6b48b628-177b-4926-8a0b-83ef32042e24",
+  "options": {
+    "diskSizeGb": "100",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "pool": {},
+    "workerRelease": "legacy"
+  },
+  "projectId": "ocean-v1-beta-20261101",
+  "queueTtl": "3600s",
+  "results": {
+    "buildStepImages": [
+      "sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    ],
+    "buildStepOutputs": [
+      "",
+      ""
+    ],
+    "images": [
+      {
+        "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/context-frontend/versions/sha256:005eda32b803676c17a4cdc72ffda3dedc447f4cf73b7533161b43f55d695ea3",
+        "digest": "sha256:005eda32b803676c17a4cdc72ffda3dedc447f4cf73b7533161b43f55d695ea3",
+        "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775",
+        "pushTiming": {
+          "endTime": "2026-11-02T17:17:09.281310718Z",
+          "startTime": "2026-11-02T17:17:01.123368303Z"
+        }
+      }
+    ]
+  },
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793639658191802",
+      "object": "source/1793639657.880689-9a52662cc70c475e8d6e758848a24d92.tgz"
+    }
+  },
+  "sourceProvenance": {
+    "fileHashes": {
+      "gs://ocean-v1-beta-20261101-build-source/source/1793639657.880689-9a52662cc70c475e8d6e758848a24d92.tgz#1793639658191802": {
+        "fileHash": [
+          {
+            "type": "MD5",
+            "value": "E2W5pUhVFGRJqhqQpX1Ydw=="
+          },
+          {
+            "type": "SHA256",
+            "value": "5ThpjxO8MSNkRtBOSzdBPWjBNbtk8RcPozzokFJcNek="
+          }
+        ]
+      }
+    },
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793639658191802",
+      "object": "source/1793639657.880689-9a52662cc70c475e8d6e758848a24d92.tgz"
+    }
+  },
+  "startTime": "2026-11-02T17:14:19.632909797Z",
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775",
+        "."
+      ],
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "pullTiming": {
+        "endTime": "2026-11-02T17:14:45.199628252Z",
+        "startTime": "2026-11-02T17:14:23.370208418Z"
+      },
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-02T17:16:59.786295385Z",
+        "startTime": "2026-11-02T17:14:23.370208418Z"
+      }
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--entrypoint=node",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775",
+        "-e",
+        "const fs=require('node:fs'),crypto=require('node:crypto'); const m=JSON.parse(fs.readFileSync('/opt/ocean/source-manifest.json')); if(!m.source_commit.startsWith('0fc4775')||process.getuid()!==1000)process.exit(2);const s=fs.statSync('/opt/ocean/serving-frontend-adapter.cjs');if(s.uid!==0||(s.mode&511)!==292)process.exit(3);const h=crypto.createHash('sha256').update(fs.readFileSync('/opt/ocean/serving-frontend-adapter.cjs')).digest('hex');if(h!==m.serving_adapter_sha256)process.exit(4);for(const k of ['V1_AUTH_SECRET','V1_INTERNAL_AUTH_SECRET','V1_GOOGLE_CLIENT_SECRET','GOOGLE_APPLICATION_CREDENTIALS'])if(process.env[k])process.exit(5);if(!fs.statSync('/opt/ocean/hosting/server.js').isFile())process.exit(6);console.log(JSON.stringify({state:'context_frontend_image_verified',revision:m.source_commit,nonroot:true,adapter_root_owned_0444:true,source_bound_build:true,credentials_present:false,network:'none'}));"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "pullTiming": {
+        "endTime": "2026-11-02T17:16:59.788991539Z",
+        "startTime": "2026-11-02T17:16:59.786933826Z"
+      },
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-02T17:17:01.086429043Z",
+        "startTime": "2026-11-02T17:16:59.786933826Z"
+      }
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "context-frontend-source-0fc4775"
+  ],
+  "timeout": "900s",
+  "timing": {
+    "BUILD": {
+      "endTime": "2026-11-02T17:17:01.123202400Z",
+      "startTime": "2026-11-02T17:14:22.778339270Z"
+    },
+    "FETCHSOURCE": {
+      "endTime": "2026-11-02T17:14:22.778113565Z",
+      "startTime": "2026-11-02T17:14:19.849610461Z"
+    },
+    "PUSH": {
+      "endTime": "2026-11-02T17:17:09.284086882Z",
+      "startTime": "2026-11-02T17:17:01.123347922Z"
+    },
+    "STORAGE_SOURCE": {
+      "endTime": "2026-11-02T17:14:22.778113565Z",
+      "startTime": "2026-11-02T17:14:19.849610461Z"
+    }
+  }
+}

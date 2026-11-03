@@ -5,6 +5,13 @@ C24 prepares configuration and local validation for the proposed
 DNS/IAM, builds an image, creates a secret or enables dispatch. The legacy
 `deploy/gcp/` entry points and their environment files are not consumed.
 
+For unattended beta status checks, image builds, and updates to the existing
+beta service on the operator's Mac, see
+[CLI automation](CLI_AUTOMATION.md) and
+[`scripts/gcloud_beta.sh`](../../scripts/gcloud_beta.sh). This uses a
+dedicated service account in `ocean-v1-beta-20261101`; it is independent
+of the offline configuration renderer below.
+
 ## Validate and render offline
 
 From the repository environment:

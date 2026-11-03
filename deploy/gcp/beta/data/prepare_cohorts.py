@@ -3,6 +3,8 @@
 This performs no cloud IO. The base generation is the last accepted receipt,
 not a claim of a fresh cloud read. The publisher must verify that exact current
 control again before any immutable upload and before its final generation CAS.
+An explicit cohort set is required: meta-sst preserves the eDNA latency gate,
+while all-qualified selects all locally qualified inputs without passing live gates.
 """
 from __future__ import annotations
 
@@ -18,6 +20,10 @@ ROOT = Path(__file__).resolve().parents[4]
 PROJECT = 'ocean-v1-beta-20261101'
 BASE_SOURCE = 'a4923c4e41fba694f77ebb60c1d3f768390e8b1b'
 BASE_RECEIPT = 'docs/plans/ocean-v1/beta/snapshot-activation-20261103/data-upload-complete.json'
+COHORT_SETS = ('meta-sst', 'all-qualified')
+DEFERRED_EDNA_REASON = (
+    'eDNA is deferred from the explicitly selected meta-sst deployment. The full-cohort raw detection page measured15.076610seconds locally, exceeding the then-current15second frontend deadline; cloud latency remains unaccepted. Retained normalized eDNA data are unchanged.'
+)
 
 
 def sha(data):
@@ -54,10 +60,47 @@ def source_pins(revision):
     return pins
 
 
-def prepare(*, revision, output, base_catalogue, raw_package, sst_publication,
+def selected_cohort_set(value):
+    if type(value) is not str or value not in COHORT_SETS:
+        raise ValueError('Explicit supported cohort set required: meta-sst or all-qualified')
+    return value
+
+
+def cohort_receipt(cohort_set):
+    cohort_set = selected_cohort_set(cohort_set)
+    return {'cohort_set': cohort_set,
+        'deferred_families': {'edna_metabarcoding': DEFERRED_EDNA_REASON} if cohort_set == 'meta-sst' else {}}
+
+
+def qualified_groups(*, cohort_set, raw_package, sst_publication, edna_metadata, edna_normalized):
+    # Selection is mandatory before any imports or source/data/output access.
+    cohort_set = selected_cohort_set(cohort_set)
+    from deploy.gcp.beta.data import prepare_metagenome as meta, prepare_sst as sst
+    inputs, _provenance = meta.verified_metagenome_bytes(Path(raw_package), ROOT)
+    metagenome = meta.planned_metagenome(inputs)
+    sst_triple = sst.regional_dataset(sst.verified_publication_bytes(Path(sst_publication)))
+    groups = [
+        {'label': {'en': 'Metagenome source matrices — unknown abundance denominator', 'ja': 'メタゲノム生行列 — 存在量分母は不明'},
+            'qualifications': meta.QUALIFICATIONS,
+            'datasets': [(metagenome['dataset'], metagenome['frames'], metagenome['captured'])]},
+        {'label': {'en': 'MUR regional SST — unreviewed descriptive preview', 'ja': 'MUR地域SST — 未審査の記述的プレビュー'},
+            'qualifications': sst.QUALIFICATIONS, 'datasets': [sst_triple]},
+    ]
+    if cohort_set == 'all-qualified':
+        from deploy.gcp.beta.data import prepare_edna as edna
+        def edna_triples():
+            for bundle in edna.verified_bundles(Path(edna_metadata), Path(edna_normalized)):
+                yield from edna.normalized_datasets(bundle)
+        groups.append({
+            'label': {'en': 'ANEMONE raw inventory — unknown and negative controls', 'ja': 'ANEMONE生インベントリ — 未分類と陰性対照'},
+            'qualifications': edna.QUALIFICATIONS, 'datasets': edna_triples()})
+    return groups
+
+
+def prepare(*, cohort_set, revision, output, base_catalogue, raw_package, sst_publication,
             edna_metadata, edna_normalized):
-    from deploy.gcp.beta.data import prepare_catalogue as ctd, prepare_metagenome as meta
-    from deploy.gcp.beta.data import prepare_sst as sst, prepare_edna as edna
+    cohort_set = selected_cohort_set(cohort_set)
+    from deploy.gcp.beta.data import prepare_catalogue as ctd
     from deploy.gcp.beta.data.append_catalogue import append_groups
     from deploy.gcp.beta.data.publish_append import validate_bundle
     from ingestion.catalogue_snapshot import LocalCatalogueSnapshotStore
@@ -93,21 +136,8 @@ def prepare(*, revision, output, base_catalogue, raw_package, sst_publication,
     activation_item = next(v for v in accepted['objects'] if '/activations/' in v['name'])
     before = validated_lifecycle(checked['v1/catalogue/control.json'])
     activation = json.loads(checked[activation_item['name']])
-    inputs, _provenance = meta.verified_metagenome_bytes(Path(raw_package), ROOT)
-    metagenome = meta.planned_metagenome(inputs)
-    sst_triple = sst.regional_dataset(sst.verified_publication_bytes(Path(sst_publication)))
-    def edna_triples():
-        for bundle in edna.verified_bundles(Path(edna_metadata), Path(edna_normalized)):
-            yield from edna.normalized_datasets(bundle)
-    groups = [
-        {'label': {'en': 'Metagenome source matrices — unknown abundance denominator', 'ja': 'メタゲノム生行列 — 存在量分母は不明'},
-            'qualifications': meta.QUALIFICATIONS,
-            'datasets': [(metagenome['dataset'], metagenome['frames'], metagenome['captured'])]},
-        {'label': {'en': 'MUR regional SST — unreviewed descriptive preview', 'ja': 'MUR地域SST — 未審査の記述的プレビュー'},
-            'qualifications': sst.QUALIFICATIONS, 'datasets': [sst_triple]},
-        {'label': {'en': 'ANEMONE raw inventory — unknown and negative controls', 'ja': 'ANEMONE生インベントリ — 未分類と陰性対照'},
-            'qualifications': edna.QUALIFICATIONS, 'datasets': edna_triples()},
-    ]
+    groups = qualified_groups(cohort_set=cohort_set, raw_package=raw_package,
+        sst_publication=sst_publication, edna_metadata=edna_metadata, edna_normalized=edna_normalized)
     output.mkdir(mode=0o700)
     def write(relative, data):
         target = output / relative
@@ -148,6 +178,7 @@ def prepare(*, revision, output, base_catalogue, raw_package, sst_publication,
     verified = validate_bundle(output, manifest)
     raw.private_bytes(output / 'publication-manifest.json', canonical_bytes(manifest))
     summary.update({'state': 'qualified_cohorts_private_append_prepared', 'source_revision': revision,
+        **cohort_receipt(cohort_set),
         'cloud_calls': False, 'base_current_in_cloud_verified': False,
         'publication_requires_fresh_base_control_and_final_cas': True,
         'snapshot_count': len(new_activation['snapshots']), 'new_datasets': sum(len(s['datasets']) for s in summary['new_groups']),
@@ -158,6 +189,7 @@ def prepare(*, revision, output, base_catalogue, raw_package, sst_publication,
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    parser.add_argument('--cohort-set', choices=COHORT_SETS, required=True)
     parser.add_argument('--revision', required=True)
     for name in ('output', 'base-catalogue', 'raw-package', 'sst-publication', 'edna-metadata', 'edna-normalized'):
         parser.add_argument('--' + name, required=True, type=Path)

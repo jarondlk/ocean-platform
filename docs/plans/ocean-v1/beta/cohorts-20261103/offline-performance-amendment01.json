@@ -1,0 +1,87 @@
+{
+  "state": "actual_local_all_family_catalogue_rehearsal_complete",
+  "source_commit": "b3db9e9fefd2973a4506967b955b007812f0bc89",
+  "activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+  "production_auth_or_GCP_proof": false,
+  "transport": "explicit DEPLOYMENT_ENV=test +BoundedLocalStore",
+  "actor": "synthetic fixture_user(role=admin), internal",
+  "frontend_deadline_seconds": 15,
+  "steps": [
+    {
+      "name": "load_snapshot_catalogue",
+      "state": "success",
+      "seconds": 0.083862,
+      "peak_rss_bytes": 164118528,
+      "services_loaded": 2
+    },
+    {
+      "name": "first_all_family_discovery",
+      "state": "success",
+      "seconds": 14.727266,
+      "peak_rss_bytes": 1106919424,
+      "snapshot_count": 4,
+      "returned_snapshots": 4
+    },
+    {
+      "name": "warm_all_family_discovery",
+      "state": "success",
+      "seconds": 14.955101,
+      "peak_rss_bytes": 1139441664,
+      "snapshot_count": 4,
+      "returned_snapshots": 4
+    },
+    {
+      "name": "first_edna_overview",
+      "state": "success",
+      "seconds": 14.204838,
+      "peak_rss_bytes": 1139441664,
+      "root_count": 5
+    },
+    {
+      "name": "warm_edna_overview",
+      "state": "success",
+      "seconds": 14.264558,
+      "peak_rss_bytes": 1139441664,
+      "root_count": 5
+    },
+    {
+      "name": "edna_raw_occurrences_first_page",
+      "state": "success",
+      "seconds": 14.897244,
+      "peak_rss_bytes": 1195065344,
+      "returned_rows": 5,
+      "total_rows": 128,
+      "query_completion": "complete",
+      "availability": "available"
+    },
+    {
+      "name": "edna_raw_detections_first_page",
+      "state": "success",
+      "seconds": 15.07661,
+      "peak_rss_bytes": 1266237440,
+      "returned_rows": 5,
+      "total_rows": 18480,
+      "query_completion": "complete",
+      "availability": "available"
+    }
+  ],
+  "scientific_approval": false,
+  "cloud_calls": false,
+  "original_failure_receipt": "/private/tmp/ocean-beta-cohort-offline-performance-20261103/receipt.json",
+  "runtime_source_sha256": {
+    "orchestration/frozen_scientific_catalogue.py": "6ebfbf3dcbd7aa55aa28dda10d12659f85cb3f08a67e0255351d1bdfa12d8109",
+    "api/v1_catalogue_host.py": "abfcb34a35b7c17f3d41a3857919e85fd36355f7451937e94535daa7bfc2d9d2",
+    "orchestration/catalogue_service.py": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a"
+  },
+  "runtime_source_uncommitted_at_measurement": {
+    "orchestration/frozen_scientific_catalogue.py": true,
+    "api/v1_catalogue_host.py": false,
+    "orchestration/catalogue_service.py": false
+  },
+  "peak_rss_bytes": 1266237440,
+  "baseline_after_import_peak_rss_bytes": 163151872,
+  "discovery_within_existing_frontend_deadline": true,
+  "all_measured_requests_within_existing_frontend_deadline": false,
+  "peak_below_4GiB_api_memory_limit": true,
+  "actual_GCP_request_latency_accepted": false
+}

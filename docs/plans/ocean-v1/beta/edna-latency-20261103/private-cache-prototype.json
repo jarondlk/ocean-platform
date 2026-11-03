@@ -1,0 +1,28 @@
+{
+  "state": "private_detached_input_cache_prototype_only",
+  "activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+  "source_pins": {
+    "ingestion/edna_catalogue_inputs.py": "3942dd82de8319d114bbeae39848aa1ca9b7565ae9af61b80d0352bee88d42a5",
+    "orchestration/frozen_edna_catalogue.py": "9adbfb504c968795db8df2971842b780e1af95ebff3fcda1b93703b68c4b2781",
+    "orchestration/frozen_scientific_catalogue.py": "6ebfbf3dcbd7aa55aa28dda10d12659f85cb3f08a67e0255351d1bdfa12d8109",
+    "orchestration/catalogue_service.py": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a",
+    "ingestion/gcs_catalogue_snapshot.py": "ffd2762e021f441e82315830b2685819a42a74c95debaeee4f407a9aa5c82de6",
+    "api/v1_catalogue_host.py": "abfcb34a35b7c17f3d41a3857919e85fd36355f7451937e94535daa7bfc2d9d2"
+  },
+  "cache_fill_overview_seconds": 14.80175,
+  "cache_warm_overview_seconds": 1.89137,
+  "cache_warm_five_detection_query_seconds": 1.58246,
+  "overview_exact_response_equal": true,
+  "cache_entries": 39,
+  "cache_hits": 79,
+  "cache_misses": 39,
+  "dataframe_deep_memory_bytes": 707492049,
+  "memory_budget_bytes": 1073741824,
+  "peak_rss_bytes": 1234436096,
+  "per_dataset_unique_taxonomy_rows_sum": 18497,
+  "detection_taxonomy_rows": 349638,
+  "scientific_rows_emitted": false,
+  "cloud_calls": false,
+  "production_security_eviction_and_concurrency_tests_implemented": false,
+  "actual_production_acceptance": false
+}

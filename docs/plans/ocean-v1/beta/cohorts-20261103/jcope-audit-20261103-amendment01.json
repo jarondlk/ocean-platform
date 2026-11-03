@@ -1,0 +1,45 @@
+{
+  "state": "complete_local_raw_jcope_content_audit_not_normalized",
+  "files": 1848,
+  "bytes": 52609972,
+  "distinct_embedded_instants": 1837,
+  "embedded_min": "2025-12-05T00:00:00Z",
+  "embedded_max": "2026-02-26T23:00:00Z",
+  "month_granules": {
+    "2025-12": 644,
+    "2026-01": 739,
+    "2026-02": 454
+  },
+  "grid_shapes": {
+    "(36, 36)": 1837
+  },
+  "product_attributes": [
+    {
+      "title": "Product name: JCOPE-T DA Best Estimate",
+      "version_reference": "Version: v20180705.v27",
+      "units": "degC",
+      "unique_granules": 1837
+    }
+  ],
+  "grid_cells": 2380752,
+  "finite_values": 1524710,
+  "missing_values": 856042,
+  "filename_embedded_mismatches": 0,
+  "mismatches": [],
+  "cloud_calls": false,
+  "scientific_approval": false,
+  "catalogue_normalized": false,
+  "full_input_distinct_hashes": 1838,
+  "full_input_duplicate_paths": 10,
+  "successfully_parsed_distinct_granules": 1837,
+  "invalid_placeholder_distinct_hashes": 1,
+  "invalid_placeholder_paths": 11,
+  "filename_embedded_time_comparisons": 1837,
+  "source_quarantine_archive_sha256": "e62eb0e62ad1a1b0b9354944cb46b3b1d818fd12b5076b1e2749fb317cf471cb",
+  "qualification": "One all-fill placeholder repeats under11weekly23:00filenames; unrepresentable time/depth, no product title and zero finite SSTcells. Do not invent times or observations. Other1837NetCDFgrids have sourceembeddedtimes matchingfilename instants; missing SSTcells remain missing. No reclassification as satellite/MUR or scientific quality approval. Raw population requires bounded partition/materialization before normalization/publication.",
+  "invalid_placeholder_sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+  "supersedes_parsed_only_counter_labels_in": {
+    "private_receipt": "ocean-beta-jcope-audit-20261103.json",
+    "sha256": "6ab9f7d1dab92aa7f845d90cd783a75da150e3d3be54fb0f80a300fff003f966"
+  }
+}

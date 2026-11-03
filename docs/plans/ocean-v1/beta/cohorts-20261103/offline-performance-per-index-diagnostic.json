@@ -1,0 +1,54 @@
+{
+  "state": "per_index_debug_no_cloud_or_production_acceptance",
+  "results": [
+    {
+      "family": "ctd",
+      "state": "success",
+      "root_count": 5,
+      "seconds": 0.09575304109603167
+    },
+    {
+      "family": "metagenome",
+      "state": "success",
+      "root_count": 5,
+      "seconds": 0.6326790838502347
+    },
+    {
+      "family": "remote_sensing",
+      "state": "success",
+      "root_count": 5,
+      "seconds": 0.08971179183572531
+    },
+    {
+      "family": "edna_metabarcoding",
+      "state": "failed",
+      "error_type": "CatalogueServiceError",
+      "code": "catalogue_unavailable",
+      "seconds": 0.07322112517431378,
+      "underlying_type": "ValueError",
+      "underlying_fixed_first_line": "Scientific/source canonical identities collide",
+      "stack": [
+        {
+          "file": "ocean_beta_cohort_offline_diagnose.py",
+          "line": 27,
+          "function": "<module>"
+        },
+        {
+          "file": "ocean_beta_cohort_offline_diagnose.py",
+          "line": 22,
+          "function": "unwrapped"
+        },
+        {
+          "file": "frozen_scientific_catalogue.py",
+          "line": 291,
+          "function": "_load"
+        },
+        {
+          "file": "frozen_scientific_catalogue.py",
+          "line": 179,
+          "function": "reserve"
+        }
+      ]
+    }
+  ]
+}

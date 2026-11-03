@@ -1,0 +1,45 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-operator:beta-1d20cf2",
+        "."
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--entrypoint=python",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-operator:beta-1d20cf2",
+        "-c",
+        "import os,json,stat,sys\nfrom pathlib import Path\nassert os.getuid()==10001 and os.getgid()==10001\nfor name in ('context_operator.py','context-operator-manifest.json'):\n p=Path('/opt/ocean')/name;s=p.stat();assert s.st_uid==0 and stat.S_IMODE(s.st_mode)==0o444\nassert not any(os.environ.get(k) for k in ('DATABASE_URL','OCEAN_V1_OPERATOR_DATABASE_URL','OCEAN_V1_DATABASE_URL','GOOGLE_APPLICATION_CREDENTIALS'))\nimport context_operator as c\nm=json.loads(Path('/opt/ocean/context-operator-manifest.json').read_bytes())\nassert m['revision']=='1d20cf2f8ae625b1fdcf79a3be896a16c5d1560b'\nbase=c.load_base_operator()\nenv={'DEPLOYMENT_ENV':'production','OCEAN_V1_PROJECT_ID':c.PROJECT,'OCEAN_V1_SQL_CONNECTION_NAME':c.CONNECTION,'OCEAN_V1_CONTEXT_OPERATOR_REVISION':m['revision'],'OCEAN_V1_OPERATOR_DATABASE_URL':'postgresql+psycopg2://ocean_v1_migrator:offline-placeholder@127.0.0.1:5432/ocean_v1_beta'}\ns=c.configuration(env,confirm_project=c.PROJECT,confirm_database=c.DATABASE,confirm_source=m['revision'],confirm_operator=c.BASE_OPERATOR_REVISION)\nassert s.revision==m['revision'] and 'config' not in sys.modules and 'api.main' not in sys.modules\nprint(json.dumps({'state':'context_operator_image_source_verified','revision':s.revision,'uid':os.getuid(),'base_operator_source_verified':True,'root_owned_0444':True,'synthetic_configuration_only':True,'database_or_secrets_accessed':False,'network':'none'}))\n"
+      ]
+    }
+  ],
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-operator:beta-1d20cf2"
+  ],
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "diskSizeGb": 100
+  },
+  "timeout": "600s",
+  "tags": [
+    "ocean-v1-beta",
+    "context-operator-source-1d20cf2"
+  ]
+}

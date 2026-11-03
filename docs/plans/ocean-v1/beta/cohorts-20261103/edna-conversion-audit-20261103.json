@@ -1,0 +1,29 @@
+{
+  "state": "complete_eDNA_normalized_C12_conversion_audit",
+  "counts": {
+    "bundles": 39,
+    "datasets": 39,
+    "occurrences": 3498,
+    "classifications": 3498,
+    "assays": 3498,
+    "detections": 349638,
+    "export_bytes": 61790167
+  },
+  "classifications": {
+    "unknown": 3155,
+    "negative_control": 343
+  },
+  "identity_status": {
+    "unresolved_physical_sample": 3498
+  },
+  "assignment_methods": {
+    "qcauto_target": 174819,
+    "qcauto_95pct_3nn_target": 174819
+  },
+  "failures": [],
+  "elapsed_seconds": 20.459,
+  "excluded_older_bundles": 2,
+  "scientific_approval": false,
+  "cloud_calls": false,
+  "sealed_or_registered": false
+}

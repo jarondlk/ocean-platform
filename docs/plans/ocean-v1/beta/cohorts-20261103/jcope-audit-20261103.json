@@ -1,0 +1,80 @@
+{
+  "state": "raw_jcope_time_and_identity_audit_only",
+  "files": 1848,
+  "bytes": 52609972,
+  "distinct_hashes": 1837,
+  "duplicate_paths": 11,
+  "distinct_embedded_instants": 1837,
+  "embedded_min": "2025-12-05T00:00:00Z",
+  "embedded_max": "2026-02-26T23:00:00Z",
+  "month_granules": {
+    "2025-12": 644,
+    "2026-01": 739,
+    "2026-02": 454
+  },
+  "grid_shapes": {
+    "(36, 36)": 1837
+  },
+  "product_attributes": [
+    {
+      "title": "Product name: JCOPE-T DA Best Estimate",
+      "version_reference": "Version: v20180705.v27",
+      "units": "degC",
+      "unique_granules": 1837
+    }
+  ],
+  "grid_cells": 2380752,
+  "finite_values": 1524710,
+  "missing_values": 856042,
+  "filename_embedded_mismatches": 0,
+  "mismatches": [],
+  "parse_exceptions": [
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    },
+    {
+      "sha256": "ddb39f0c05d36a71920f7e1db4722a06af4ce9e13a624c356e5645f068595804",
+      "error_type": "ValueError"
+    }
+  ],
+  "cloud_calls": false,
+  "scientific_approval": false,
+  "catalogue_normalized": false
+}

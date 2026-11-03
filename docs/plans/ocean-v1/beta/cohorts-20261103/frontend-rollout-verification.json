@@ -1,0 +1,9 @@
+{
+  "state": "frontend_only_rollout_verified",
+  "source_revision": "0fc4775c5fe181a6dec288b94d6d591cdef7cb63",
+  "revision": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving/revisions/ocean-v1-beta-serving-00009-rn7",
+  "image_digest": "sha256:005eda32b803676c17a4cdc72ffda3dedc447f4cf73b7533161b43f55d695ea3",
+  "only_frontend_image_changed": true,
+  "api_proxy_identity_secrets_flags_network_scaling_preserved": true,
+  "context_mutations_live": false
+}

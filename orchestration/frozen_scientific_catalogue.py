@@ -52,6 +52,47 @@ OPERATIONS = (
     "c13.operation",
 )
 _identifier = TypeAdapter(Identifier)
+_FAMILY_CARRIERS = {
+    "c11:sst": ("remote_sensing", {"en": "SST products", "ja": "海面水温プロダクト"}),
+    "c12:edna": ("edna_metabarcoding", {"en": "Canonical eDNA", "ja": "正規eDNA"}),
+}
+
+
+def _family_carrier_owner(node, metadata, obj, request):
+    """Recognize only the two source-independent native family directories.
+
+    C11/C12 emit these exact carriers once per hierarchy, including across
+    independent providers. Their children remain owned by each actual source.
+    Source-owned metadata cannot claim a carrier merely by reusing its ID.
+    """
+    family, title = _FAMILY_CARRIERS[node.id]
+    if (obj.source_family != family or metadata.family != family
+            or metadata.dataset_id != obj.dataset_id or metadata.source_id != obj.source_id):
+        raise ValueError("Canonical source-family carrier ownership mismatch")
+    expected = CatalogueNode.model_validate({
+        "snapshot_id": request.snapshot_id, "scope": request.scope,
+        "id": node.id, "kind": "directory", "root": "data", "parent_id": "root:data",
+        "title": title, "purpose": title, "availability": {"status": "available"},
+        "authority": "descriptive", "lifecycle": {
+            "ingestion": "complete", "publication": "unpublished",
+            "scientific_approval": "not_reviewed", "query_readiness": "ready",
+            "embedding_readiness": "unknown"}, "provenance": {},
+    })
+    if node != expected:
+        raise ValueError("Canonical source-family carrier shape or label mismatch")
+    return ("source_family_hierarchy", family)
+
+
+def _reject_family_carrier_claims(metadata):
+    identities = [metadata.dataset_id, metadata.collection_id]
+    if hasattr(metadata, "product_node_id"):
+        identities.append(metadata.product_node_id)
+    specs = getattr(metadata, "tables", ())
+    if hasattr(metadata, "table"):
+        specs = (*specs, metadata.table)
+    identities.extend(spec.object_id for spec in specs if spec.object_id is not None)
+    if any(identity in _FAMILY_CARRIERS for identity in identities):
+        raise ValueError("Source-owned canonical identity collides with a family carrier")
 
 
 def _operations(*operations):
@@ -173,6 +214,8 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
             f"root:{root}": ("root", root)
             for root in ("data", "analyses", "statistics", "metadata", "relationships")
         }
+        owners.update({identity: ("source_family_hierarchy", values[0])
+            for identity, values in _FAMILY_CARRIERS.items()})
 
         def reserve(identity, owner):
             if identity in owners and owners[identity] != owner:
@@ -264,6 +307,7 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
                     if parser is None:
                         continue
                     metadata = parser(payloads[obj.object_id])
+                    _reject_family_carrier_claims(metadata)
                     source_objects = tuple(
                         item
                         for item in child.objects
@@ -288,15 +332,13 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
                             or any(item.object_id == node.id for item in source_objects)
                         ):
                             continue
-                        reserve(
-                            node.id,
-                            (
+                        owner = _family_carrier_owner(node, metadata, obj, pure_request) if node.id in _FAMILY_CARRIERS else (
                                 "source_hierarchy",
                                 obj.source_id,
                                 node.kind,
                                 node.parent_id,
-                            ),
-                        )
+                            )
+                        reserve(node.id, owner)
                 child_snapshots[key] = child
             child = child_snapshots[key]
             matching = [

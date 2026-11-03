@@ -1,0 +1,44 @@
+{
+  "state": "local_correctness_passes_live_latency_gate_remains_closed",
+  "activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+  "measured_source_commit": "b3db9e9fefd2973a4506967b955b007812f0bc89",
+  "actual_runtime_source_sha256": {
+    "orchestration/frozen_scientific_catalogue.py": "6ebfbf3dcbd7aa55aa28dda10d12659f85cb3f08a67e0255351d1bdfa12d8109",
+    "api/v1_catalogue_host.py": "abfcb34a35b7c17f3d41a3857919e85fd36355f7451937e94535daa7bfc2d9d2",
+    "orchestration/catalogue_service.py": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a"
+  },
+  "runtime_source_uncommitted_at_measurement": {
+    "orchestration/frozen_scientific_catalogue.py": true,
+    "api/v1_catalogue_host.py": false,
+    "orchestration/catalogue_service.py": false
+  },
+  "runtime_source_unchanged_after_measurement": {
+    "orchestration/frozen_scientific_catalogue.py": true,
+    "api/v1_catalogue_host.py": true,
+    "orchestration/catalogue_service.py": true
+  },
+  "peak_rss_bytes": 1266237440,
+  "peak_rss_gib": 1.1792755126953125,
+  "api_memory_limit_bytes": 4294967296,
+  "local_discovery_times_seconds": [
+    14.727266,
+    14.955101
+  ],
+  "local_edna_raw_table_times_seconds": {
+    "edna_raw_occurrences_first_page": 14.897244,
+    "edna_raw_detections_first_page": 15.07661
+  },
+  "current_frontend_proxy_deadline_seconds": 15,
+  "all_local_requests_below_frontend_deadline": false,
+  "reason": "Local raw detection-page request takes15.076610seconds, already exceeding15seconds; local discovery14.727266/14.955101seconds provides negligible margin beforeGCSnetwork. No production latency proof.",
+  "initial_failure_and_narrow_runtime_fix": "InitialeDNAglobalfamilydirectorycollidesacross39sources; originalfailureisretained. NarrowowningC13fixappliedtothemeasuredworkingbytes permitsall4indexes.",
+  "first_page_population": "Oneactual128occurrence/18480detectiondataset selectedwithin39dataset eDNAindex; fullindexmaterializationincludes349638detections. Both5-rowresponsesavailable/querycomplete.",
+  "test_transport": "ExplicitDEPLOYMENT_ENV=test, BoundedLocalStore, private0444opaqueconfig",
+  "actor": "Syntheticfixtureadmin/internal; notproductionGoogleauthentication",
+  "GCP_or_network_latency_accepted": false,
+  "live_activation_accepted": false,
+  "cloud_calls": false,
+  "scientific_approval": false,
+  "source_scientific_data_modified": false,
+  "receipt_sha256": "9c739659178476c2cfe13fb2babb86d96b38adacfe2491f4841eff8c1e9044db"
+}

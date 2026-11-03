@@ -1,0 +1,17 @@
+{
+  "state": "blocked_before_live_activation_by_runtime_identity_collision",
+  "activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+  "original_rehearsal_receipt_sha256": "9d0c126b28b16b4ced4c6b2f92121881f2ae9191917cc7052b0727848c6945c6",
+  "per_index_diagnostic_sha256": "8be20674d96890d56d22dd5aebeb1eaeef6da0ad91cc547d0374d00f63c3328a",
+  "scientific_data_regeneration_required_by_this_diagnosis": false,
+  "owner": "orchestration/frozen_scientific_catalogue.py canonical source-hierarchy reservation",
+  "fixed_diagnostic": "Scientific/source canonical identities collide",
+  "issue": "C12 global family directory c12:edna is canonical and shared across distinct source IDs; C13 incorrectly gives it source-specific ownership",
+  "latency_gate": "not accepted; full discovery failed before all datasets materialized",
+  "test_only_context": "DEPLOYMENT_ENV=test,private0444config,BoundedLocalStore,syntheticadmin/internalactor",
+  "cloud_or_production_authentication_proof": false,
+  "cloud_calls": false,
+  "live_beta_changed": false,
+  "scientific_approval": false,
+  "next": "Narrow owning runtime fix preserving all other collision protections; repeat failed all-family discovery and measure eDNA tables with correct C13 outer paging"
+}

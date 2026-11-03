@@ -1,0 +1,293 @@
+{
+  "state": "local_transport_profile_only",
+  "source_activation_sha256": "3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6",
+  "largest_dataset_detection_rows": 20360,
+  "largest_profiled_load_wall_seconds": 1.92531,
+  "largest_profile_functions": [
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:388:load_dataset",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.00455,
+      "cumulative_seconds": 1.92527
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:243:validate_rows",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.07942,
+      "cumulative_seconds": 1.63136
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:104:_json_object",
+      "primitive_calls": 20488,
+      "calls": 20488,
+      "self_seconds": 0.01184,
+      "cumulative_seconds": 0.52856
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/preprocessing/edna_taxonomy.py:50:deepest_resolved_assignment",
+      "primitive_calls": 20360,
+      "calls": 20360,
+      "self_seconds": 0.06048,
+      "cumulative_seconds": 0.44267
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:150:_validate_primitives",
+      "primitive_calls": 8,
+      "calls": 8,
+      "self_seconds": 0.30606,
+      "cumulative_seconds": 0.40269
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/schema/context_catalogue.py:110:_finite_json",
+      "primitive_calls": 20489,
+      "calls": 754793,
+      "self_seconds": 0.19937,
+      "cumulative_seconds": 0.38501
+    },
+    {
+      "function": "~:0:<built-in method builtins.any>",
+      "primitive_calls": 41437,
+      "calls": 41437,
+      "self_seconds": 0.06493,
+      "cumulative_seconds": 0.31032
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:189:parse_table",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 0.06534,
+      "cumulative_seconds": 0.28792
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/preprocessing/edna_taxonomy.py:28:resolved_name",
+      "primitive_calls": 432555,
+      "calls": 432555,
+      "self_seconds": 0.13307,
+      "cumulative_seconds": 0.24755
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/preprocessing/edna_taxonomy.py:38:resolved_lineage",
+      "primitive_calls": 20360,
+      "calls": 20360,
+      "self_seconds": 0.06421,
+      "cumulative_seconds": 0.21089
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:350:<genexpr>",
+      "primitive_calls": 753320,
+      "calls": 753320,
+      "self_seconds": 0.11758,
+      "cumulative_seconds": 0.17181
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:171:_frame_records",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 0.00343,
+      "cumulative_seconds": 0.13559
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/util/_decorators.py:325:wrapper",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 0.0,
+      "cumulative_seconds": 0.13167
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/core/frame.py:2072:to_dict",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 1e-05,
+      "cumulative_seconds": 0.13167
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/core/methods/to_dict.py:78:to_dict",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 0.02137,
+      "cumulative_seconds": 0.13096
+    },
+    {
+      "function": "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py:299:loads",
+      "primitive_calls": 20489,
+      "calls": 20489,
+      "self_seconds": 0.01287,
+      "cumulative_seconds": 0.12695
+    },
+    {
+      "function": "~:0:<built-in method builtins.isinstance>",
+      "primitive_calls": 2928426,
+      "calls": 2928426,
+      "self_seconds": 0.12209,
+      "cumulative_seconds": 0.12235
+    },
+    {
+      "function": "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py:332:decode",
+      "primitive_calls": 20489,
+      "calls": 20489,
+      "self_seconds": 0.01152,
+      "cumulative_seconds": 0.10099
+    },
+    {
+      "function": "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py:343:raw_decode",
+      "primitive_calls": 20489,
+      "calls": 20489,
+      "self_seconds": 0.06041,
+      "cumulative_seconds": 0.08072
+    },
+    {
+      "function": "~:0:<method 'strip' of 'str' objects>",
+      "primitive_calls": 1579627,
+      "calls": 1579627,
+      "self_seconds": 0.07523,
+      "cumulative_seconds": 0.07523
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/schema/context_catalogue.py:128:<genexpr>",
+      "primitive_calls": 755053,
+      "calls": 755053,
+      "self_seconds": 0.05201,
+      "cumulative_seconds": 0.07349
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/core/methods/to_dict.py:222:<genexpr>",
+      "primitive_calls": 289904,
+      "calls": 289904,
+      "self_seconds": 0.02257,
+      "cumulative_seconds": 0.0725
+    },
+    {
+      "function": "~:0:<method 'get' of 'dict' objects>",
+      "primitive_calls": 888089,
+      "calls": 888089,
+      "self_seconds": 0.0572,
+      "cumulative_seconds": 0.0572
+    },
+    {
+      "function": "~:0:<method 'match' of 're.Pattern' objects>",
+      "primitive_calls": 473533,
+      "calls": 473533,
+      "self_seconds": 0.05621,
+      "cumulative_seconds": 0.05621
+    },
+    {
+      "function": "~:0:<method 'casefold' of 'str' objects>",
+      "primitive_calls": 898725,
+      "calls": 898725,
+      "self_seconds": 0.05446,
+      "cumulative_seconds": 0.05446
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/core/dtypes/cast.py:182:maybe_box_native",
+      "primitive_calls": 269160,
+      "calls": 269160,
+      "self_seconds": 0.0401,
+      "cumulative_seconds": 0.04993
+    },
+    {
+      "function": "~:0:<built-in method builtins.len>",
+      "primitive_calls": 1188846,
+      "calls": 1189102,
+      "self_seconds": 0.03976,
+      "cumulative_seconds": 0.03979
+    },
+    {
+      "function": "~:0:<method 'encode' of 'str' objects>",
+      "primitive_calls": 434648,
+      "calls": 434648,
+      "self_seconds": 0.03704,
+      "cumulative_seconds": 0.03704
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/core/methods/to_dict.py:218:<genexpr>",
+      "primitive_calls": 20748,
+      "calls": 20748,
+      "self_seconds": 0.03357,
+      "cumulative_seconds": 0.03357
+    },
+    {
+      "function": "~:0:<method 'fullmatch' of 're.Pattern' objects>",
+      "primitive_calls": 82976,
+      "calls": 82976,
+      "self_seconds": 0.0247,
+      "cumulative_seconds": 0.0247
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/ingestion/edna_catalogue_inputs.py:95:_unique",
+      "primitive_calls": 20756,
+      "calls": 20756,
+      "self_seconds": 0.02032,
+      "cumulative_seconds": 0.02032
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pyarrow/parquet/core.py:596:read",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 0.01659,
+      "cumulative_seconds": 0.01659
+    },
+    {
+      "function": "~:0:<method 'add' of 'set' objects>",
+      "primitive_calls": 189591,
+      "calls": 189591,
+      "self_seconds": 0.01368,
+      "cumulative_seconds": 0.01368
+    },
+    {
+      "function": "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py:284:__init__",
+      "primitive_calls": 20489,
+      "calls": 20489,
+      "self_seconds": 0.0106,
+      "cumulative_seconds": 0.0106
+    },
+    {
+      "function": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/pandas/core/frame.py:698:__init__",
+      "primitive_calls": 4,
+      "calls": 4,
+      "self_seconds": 6e-05,
+      "cumulative_seconds": 0.00678
+    }
+  ],
+  "startup_seconds": 0.09146,
+  "edna_overview_seconds": 14.4921,
+  "overview_root_items": 5,
+  "aggregate_timers": {
+    "store.lifecycle": {
+      "calls": 2,
+      "seconds": 0.00843
+    },
+    "store.read": {
+      "calls": 79,
+      "seconds": 1.82996
+    },
+    "edna._validate_primitives": {
+      "calls": 312,
+      "seconds": 3.3588
+    },
+    "edna.parse_table": {
+      "calls": 156,
+      "seconds": 3.07734
+    },
+    "edna._frame_records": {
+      "calls": 156,
+      "seconds": 0.91377
+    },
+    "edna._json_object": {
+      "calls": 353136,
+      "seconds": 3.20418
+    },
+    "edna.validate_rows": {
+      "calls": 39,
+      "seconds": 9.30071
+    },
+    "edna.load_dataset": {
+      "calls": 39,
+      "seconds": 12.40006
+    }
+  },
+  "scientific_rows_emitted": false,
+  "cloud_calls": false,
+  "actual_authenticated_production_acceptance": false
+}

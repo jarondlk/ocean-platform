@@ -1,0 +1,74 @@
+{
+  "artifacts": {
+    "images": [
+      "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-b3db9e9"
+    ]
+  },
+  "createTime": "2026-11-02T23:16:23.071026266Z",
+  "id": "896039e7-734b-495a-94bd-27c75701eefb",
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-b3db9e9"
+  ],
+  "logUrl": "https://console.cloud.google.com/cloud-build/builds;region=asia-northeast1/896039e7-734b-495a-94bd-27c75701eefb?project=534831104543",
+  "name": "projects/534831104543/locations/asia-northeast1/builds/896039e7-734b-495a-94bd-27c75701eefb",
+  "options": {
+    "diskSizeGb": "100",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "pool": {},
+    "workerRelease": "legacy"
+  },
+  "projectId": "ocean-v1-beta-20261101",
+  "queueTtl": "3600s",
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793661382755108",
+      "object": "source/1793661382.573257-9e93d65ffe8a47a78b458980e3b60b44.tgz"
+    }
+  },
+  "sourceProvenance": {
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1793661382755108",
+      "object": "source/1793661382.573257-9e93d65ffe8a47a78b458980e3b60b44.tgz"
+    }
+  },
+  "status": "QUEUED",
+  "steps": [
+    {
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-b3db9e9",
+        "."
+      ],
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--entrypoint=python",
+        "--env=DEPLOYMENT_ENV=production",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:beta-b3db9e9",
+        "-c",
+        "\nimport os,json,stat,hashlib,sys\nfrom pathlib import Path\nassert os.getuid()==10001 and os.getgid()==10001\nfor name in ('beta-host-config.json','beta-catalogue-source.json','source-manifest.json'):\n p=Path('/opt/ocean')/name;s=p.stat()\n assert p.is_file() and not p.is_symlink() and s.st_uid==0 and stat.S_IMODE(s.st_mode)==0o444 and s.st_nlink==1\nassert not any(os.environ.get(k) for k in ('DATABASE_URL','OCEAN_V1_DATABASE_URL','OCEAN_V1_INTERNAL_AUTH_SECRET','V1_AUTH_SECRET','V1_GOOGLE_CLIENT_SECRET','GOOGLE_APPLICATION_CREDENTIALS'))\na=json.loads(Path('/opt/ocean/source-manifest.json').read_bytes())\nassert a['revision']=='b3db9e9fefd2973a4506967b955b007812f0bc89' and len(a['sources'])==175\nfor name in ('api/v1_host.py','api/v1_catalogue_host.py','ingestion/gcs_catalogue_snapshot.py','api/v1_beta_research_host.py','ingestion/beta_catalogue_retention.py'):\n assert hashlib.sha256((Path('/opt/ocean')/name).read_bytes()).hexdigest()==a['sources'][name]\nimport beta_entry\nbeta_entry.validate_serving_source(os.environ)\nfrom api.v1_catalogue_host import _ConfigurationSource,_source_binding\nsource=_ConfigurationSource('/opt/ocean/beta-catalogue-source.json')\nbinding=_source_binding(source,'ocean-v1-beta-20261101','v1:ocean-v1-beta-20261101')\nassert binding['activation_sha256']=='3fee1baeb47d9d4b9df323ba8041aa661574b8f1e5233fc67498c1f6fcae07c6'\nassert set(binding)=={'version','project_id','site_id','bucket','prefix','activation_object','activation_sha256'}\nfrom ingestion.gcs_catalogue_snapshot import GcsCatalogueSnapshotStore\ntry:GcsCatalogueSnapshotStore(access_gate=lambda m:True,_test_store=object())\nexcept ValueError:pass\nelse:raise AssertionError('Production transport injection allowed')\nassert 'api.main' not in sys.modules\nprint(json.dumps({'state':'sealed_snapshot_image_verified','revision':a['revision'],'uid':os.getuid(),'configuration_root_owned_0444':True,'source_bound_modules':5,'opaque_binding_only':True,'database_data_authority_or_credentials_accessed':False,'production_test_transport_injection_denied':True,'network':'none'}))\n"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "qualified-cohorts-source-b3db9e9"
+  ],
+  "timeout": "600s"
+}

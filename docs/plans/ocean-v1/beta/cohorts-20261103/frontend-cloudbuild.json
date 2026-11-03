@@ -1,0 +1,45 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775",
+        "."
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36",
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--entrypoint=node",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775",
+        "-e",
+        "const fs=require('node:fs'),crypto=require('node:crypto'); const m=JSON.parse(fs.readFileSync('/opt/ocean/source-manifest.json')); if(!m.source_commit.startsWith('0fc4775')||process.getuid()!==1000)process.exit(2);const s=fs.statSync('/opt/ocean/serving-frontend-adapter.cjs');if(s.uid!==0||(s.mode&511)!==292)process.exit(3);const h=crypto.createHash('sha256').update(fs.readFileSync('/opt/ocean/serving-frontend-adapter.cjs')).digest('hex');if(h!==m.serving_adapter_sha256)process.exit(4);for(const k of ['V1_AUTH_SECRET','V1_INTERNAL_AUTH_SECRET','V1_GOOGLE_CLIENT_SECRET','GOOGLE_APPLICATION_CREDENTIALS'])if(process.env[k])process.exit(5);if(!fs.statSync('/opt/ocean/hosting/server.js').isFile())process.exit(6);console.log(JSON.stringify({state:'context_frontend_image_verified',revision:m.source_commit,nonroot:true,adapter_root_owned_0444:true,source_bound_build:true,credentials_present:false,network:'none'}));"
+      ]
+    }
+  ],
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:beta-0fc4775"
+  ],
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2",
+    "diskSizeGb": 100
+  },
+  "timeout": "900s",
+  "tags": [
+    "ocean-v1-beta",
+    "context-frontend-source-0fc4775"
+  ]
+}

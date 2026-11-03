@@ -1,0 +1,412 @@
+{
+  "apiVersion": "serving.knative.dev/v1",
+  "kind": "Service",
+  "metadata": {
+    "annotations": {
+      "run.googleapis.com/default-url-disabled": "true",
+      "run.googleapis.com/description": "Independent authenticated beta shell; scientific capabilities and dispatch unavailable",
+      "run.googleapis.com/ingress": "internal-and-cloud-load-balancing",
+      "run.googleapis.com/ingress-status": "internal-and-cloud-load-balancing",
+      "run.googleapis.com/invoker-iam-disabled": "true",
+      "run.googleapis.com/maxScale": "1",
+      "run.googleapis.com/operation-id": "50414d6a-2cb1-4a53-8b19-f8edd0648da4",
+      "run.googleapis.com/scalingMode": "automatic",
+      "serving.knative.dev/creator": "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp",
+      "serving.knative.dev/lastModifier": "ocean-v1-beta-cli@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+    },
+    "creationTimestamp": "2026-11-02T06:15:29.484651Z",
+    "generation": 9,
+    "labels": {
+      "cloud.googleapis.com/location": "asia-northeast1",
+      "environment": "beta",
+      "managed-by": "overhaul",
+      "system": "ocean-v1"
+    },
+    "name": "ocean-v1-beta-serving",
+    "namespace": "534831104543",
+    "resourceVersion": "AAZfUyTnD8M",
+    "selfLink": "/apis/serving.knative.dev/v1/namespaces/534831104543/services/ocean-v1-beta-serving",
+    "uid": "e425c401-bb6e-445f-8487-cda4d5744676"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "autoscaling.knative.dev/maxScale": "1",
+          "autoscaling.knative.dev/minScale": "0",
+          "run.googleapis.com/container-dependencies": "{\"frontend\":[\"sql-proxy\"],\"api\":[\"sql-proxy\"]}",
+          "run.googleapis.com/cpu-throttling": "true",
+          "run.googleapis.com/execution-environment": "gen2",
+          "run.googleapis.com/network-interfaces": "[{\"network\":\"projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network\",\"subnetwork\":\"projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet\"}]",
+          "run.googleapis.com/secrets": "secret-alias-1:projects/534831104543/secrets/ocean-v1-beta-auth,secret-alias-2:projects/534831104543/secrets/ocean-v1-beta-internal,secret-alias-3:projects/534831104543/secrets/ocean-v1-beta-oauth,secret-alias-4:projects/534831104543/secrets/ocean-v1-beta-serving-database",
+          "run.googleapis.com/sessionAffinity": "false",
+          "run.googleapis.com/vpc-access-egress": "private-ranges-only"
+        },
+        "labels": {
+          "run.googleapis.com/startupProbeType": "Custom"
+        }
+      },
+      "spec": {
+        "containerConcurrency": 4,
+        "containers": [
+          {
+            "args": [
+              "--require",
+              "/opt/ocean/serving-frontend-adapter.cjs",
+              "-e",
+              "\"use strict\";\n\n// Deployment startup gate: retain request-based billing while keeping startup\n// CPU allocated until the private API is ready. No application/auth changes.\nconst http = require(\"node:http\");\nconst deadline = Date.now() + 150000;\nfunction ready() {\n  return new Promise(resolve => {\n    const request = http.get(\"http://127.0.0.1:8000/health/live\", response => {\n      let data = \"\";\n      response.setEncoding(\"utf8\");\n      response.on(\"data\", chunk => {\n        data += chunk;\n        if (data.length > 2048) response.destroy();\n      });\n      response.on(\"error\", () => resolve(false));\n      response.on(\"end\", () => {\n        try {\n          const value = JSON.parse(data);\n          resolve(response.statusCode === 200 && value.status === \"live\"\n            && value.execution_enabled === false);\n        } catch { resolve(false); }\n      });\n    });\n    request.setTimeout(1500, () => request.destroy());\n    request.on(\"error\", () => resolve(false));\n  });\n}\n(async () => {\n  while (Date.now() < deadline) {\n    if (await ready()) {\n      console.info(\"Independent beta API ready; starting frontend\");\n      require(\"/opt/ocean/hosting/server.js\");\n      return;\n    }\n    await new Promise(resolve => setTimeout(resolve, 500));\n  }\n  console.error(\"Independent beta API startup deadline exceeded\");\n  process.exit(1);\n})();\n"
+            ],
+            "command": [
+              "node"
+            ],
+            "env": [
+              {
+                "name": "DEPLOYMENT_ENV",
+                "value": "production"
+              },
+              {
+                "name": "AUTH_MODE",
+                "value": "required"
+              },
+              {
+                "name": "ENABLE_MOCK_LOGIN",
+                "value": "false"
+              },
+              {
+                "name": "PERSIST_LOCAL_CHAT",
+                "value": "false"
+              },
+              {
+                "name": "AUTH_URL",
+                "value": "https://beta.oceaninfobio.com"
+              },
+              {
+                "name": "V1_PUBLIC_ORIGIN",
+                "value": "https://beta.oceaninfobio.com"
+              },
+              {
+                "name": "V1_API_ORIGIN",
+                "value": "http://127.0.0.1:8000"
+              },
+              {
+                "name": "V1_INTERNAL_AUTH_ISSUER",
+                "value": "ocean-v1-frontend"
+              },
+              {
+                "name": "V1_INTERNAL_AUTH_AUDIENCE",
+                "value": "ocean-v1-api"
+              },
+              {
+                "name": "V1_GOOGLE_CLIENT_ID",
+                "value": "534831104543-4l3hm9dqd60u320mf73ql0d3s9rsuprn.apps.googleusercontent.com"
+              },
+              {
+                "name": "V1_AUTH_SECRET",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "secret-alias-1"
+                  }
+                }
+              },
+              {
+                "name": "V1_INTERNAL_AUTH_SECRET",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "secret-alias-2"
+                  }
+                }
+              },
+              {
+                "name": "V1_GOOGLE_CLIENT_SECRET",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "secret-alias-3"
+                  }
+                }
+              },
+              {
+                "name": "ENABLE_V1_CATALOGUE",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_CATALOGUE_BROWSER",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_SHELL",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_INVESTIGATIONS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_RUNS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EVIDENCE",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_SYNTHESIS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENTS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_WORKSPACE",
+                "value": "false"
+              }
+            ],
+            "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:005eda32b803676c17a4cdc72ffda3dedc447f4cf73b7533161b43f55d695ea3",
+            "name": "frontend",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "http1"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "512Mi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 36,
+              "httpGet": {
+                "httpHeaders": [
+                  {
+                    "name": "Host",
+                    "value": "beta.oceaninfobio.com"
+                  },
+                  {
+                    "name": "X-Forwarded-Host",
+                    "value": "beta.oceaninfobio.com"
+                  },
+                  {
+                    "name": "X-Forwarded-Proto",
+                    "value": "https"
+                  },
+                  {
+                    "name": "X-Forwarded-Port",
+                    "value": "443"
+                  }
+                ],
+                "path": "/login",
+                "port": 8080
+              },
+              "periodSeconds": 5,
+              "timeoutSeconds": 2
+            }
+          },
+          {
+            "args": [
+              "serve"
+            ],
+            "env": [
+              {
+                "name": "DEPLOYMENT_ENV",
+                "value": "production"
+              },
+              {
+                "name": "AUTH_MODE",
+                "value": "required"
+              },
+              {
+                "name": "ENABLE_MOCK_LOGIN",
+                "value": "false"
+              },
+              {
+                "name": "PERSIST_LOCAL_CHAT",
+                "value": "false"
+              },
+              {
+                "name": "OCEAN_V1_PROJECT_ID",
+                "value": "ocean-v1-beta-20261101"
+              },
+              {
+                "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+                "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+              },
+              {
+                "name": "OCEAN_V1_DATABASE_USER",
+                "value": "ocean_v1_serving"
+              },
+              {
+                "name": "OCEAN_V1_HOST_CONFIG",
+                "value": "/opt/ocean/beta-host-config.json"
+              },
+              {
+                "name": "OCEAN_V1_DATABASE_URL",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "secret-alias-4"
+                  }
+                }
+              },
+              {
+                "name": "OCEAN_V1_INTERNAL_AUTH_SECRET",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "secret-alias-2"
+                  }
+                }
+              },
+              {
+                "name": "ENABLE_V1_CATALOGUE",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_CATALOGUE_BROWSER",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_SHELL",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_INVESTIGATIONS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_RUNS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EVIDENCE",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_SYNTHESIS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENTS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_WORKSPACE",
+                "value": "false"
+              },
+              {
+                "name": "OCEAN_V1_CATALOGUE_CONFIG",
+                "value": "/opt/ocean/beta-catalogue-source.json"
+              },
+              {
+                "name": "OCEAN_V1_CATALOGUE_MODE",
+                "value": "sealed-gcs-v1"
+              }
+            ],
+            "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:877b1b3f7db703f5a8e9fedc3cca30f4a5aa67d238201cb5e9159482561e7eb9",
+            "name": "api",
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "4Gi"
+              }
+            }
+          },
+          {
+            "args": [
+              "--private-ip",
+              "--address=127.0.0.1",
+              "--port=5432",
+              "--health-check",
+              "--http-address=0.0.0.0",
+              "--http-port=9090",
+              "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+            ],
+            "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+            "name": "sql-proxy",
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "256Mi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 24,
+              "httpGet": {
+                "path": "/readiness",
+                "port": 9090
+              },
+              "periodSeconds": 5,
+              "timeoutSeconds": 2
+            }
+          }
+        ],
+        "serviceAccountName": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "timeoutSeconds": 60
+      }
+    },
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100
+      }
+    ]
+  },
+  "status": {
+    "address": {},
+    "conditions": [
+      {
+        "lastTransitionTime": "2026-11-02T23:02:46.310851Z",
+        "status": "True",
+        "type": "Ready"
+      },
+      {
+        "lastTransitionTime": "2026-11-02T23:02:18.351686Z",
+        "status": "True",
+        "type": "ConfigurationsReady"
+      },
+      {
+        "lastTransitionTime": "2026-11-02T23:02:46.272485Z",
+        "status": "True",
+        "type": "RoutesReady"
+      }
+    ],
+    "latestCreatedRevisionName": "ocean-v1-beta-serving-00009-rn7",
+    "latestReadyRevisionName": "ocean-v1-beta-serving-00009-rn7",
+    "observedGeneration": 9,
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "ocean-v1-beta-serving-00009-rn7"
+      }
+    ]
+  }
+}
