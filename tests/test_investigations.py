@@ -65,6 +65,32 @@ def test_create_distinct_conversations_reload_and_recover_idempotent_reply(fixtu
     assert invoke(fixture, "get", {"investigation_id": identity})["legacy_history_import"] == "unavailable"
 
 
+def test_context_verification_loads_one_view_per_stage_for_multiple_references(fixture, monkeypatch):
+    from orchestration.catalogue_service import _FrozenBackend
+    original = _FrozenBackend.view
+    reads = []
+    def counted(backend, request):
+        reads.append(request.snapshot_id)
+        return original(backend, request)
+    monkeypatch.setattr(_FrozenBackend, "view", counted)
+    created = create(fixture)
+    created = invoke(fixture, "context/change", change(fixture, created, "attach", reference(fixture)))
+    reads.clear()
+    attached = invoke(fixture, "context/change", change(fixture, created, "pin", reference(fixture, "remote_sensing")))
+    # Keep all four existing prepare/apply/commit/response verification stages.
+    assert len(reads) == 4
+    reads.clear()
+    current = invoke(fixture, "get", {"investigation_id": attached["investigation"]["id"]})
+    assert len(reads) == 1
+    assert len(current["context"]["resolution"]) == 2
+    assert all(entry["status"] == "available" for entry in current["context"]["resolution"])
+    fixture.policy[fixture.snapshots[0]].add(fixture.source_dataset_ids["ctd"])
+    withdrawn = invoke(fixture, "get", {"investigation_id": attached["investigation"]["id"]})
+    assert {entry["reference"]["id"]: entry["status"] for entry in withdrawn["context"]["resolution"]} == {
+        reference(fixture)["id"]: "unavailable", reference(fixture, "remote_sensing")["id"]: "available",
+    }
+
+
 def test_attachments_and_pins_are_distinct_scope_unchanged_and_revisions_retained(fixture):
     initial = create(fixture)
     attached = invoke(fixture, "context/change", change(fixture, initial, "attach", reference(fixture)))

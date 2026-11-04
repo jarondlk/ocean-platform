@@ -26,6 +26,7 @@ from schema.scientific_catalogue import ScientificResponse
 
 MAX_NAVIGATION_OBJECTS = 150_000
 MAX_ANCESTRY_DEPTH = 128
+MAX_REFERENCE_LOOKUPS = 512
 _identifier = TypeAdapter(Identifier)
 
 
@@ -257,6 +258,26 @@ class CatalogueService:
             request = model.model_validate(payload.model_dump(mode="json", warnings=False) if hasattr(payload, "model_dump") else payload)
         except (ValueError, TypeError):
             raise _error("invalid_request") from None
+        return self._execute_request(name, request, user)
+
+    def reference_availability(self, payload, object_ids, user):
+        """Resolve bounded context membership against one fully verified view.
+
+        This internal operation returns no inspector payload and introduces no
+        cache. Each call still resolves current authority and verifies the same
+        complete node graph as an ordinary catalogue open without details.
+        """
+        _authorize(user)
+        try:
+            request = REQUEST_MODELS["catalogue.overview"].model_validate(payload)
+            if not isinstance(object_ids, (list, tuple)) or len(object_ids) > MAX_REFERENCE_LOOKUPS:
+                raise ValueError("Bounded reference identities required")
+            identities = tuple(_identifier.validate_python(value) for value in object_ids)
+        except (ValueError, TypeError):
+            raise _error("invalid_request") from None
+        return self._execute_request(None, request, user, reference_ids=identities)
+
+    def _execute_request(self, name, request, user, *, reference_ids=None):
         try:
             resolved = self.resolver.resolve(user, request.snapshot_id)
             if not isinstance(resolved, ResolvedCatalogue):
@@ -268,6 +289,10 @@ class CatalogueService:
         except Exception:
             raise _error("catalogue_unavailable") from None
         try:
+            if reference_ids is not None:
+                internal = self._internal(request, user, resolved)
+                nodes = self._view(internal, resolved).nodes
+                return {identity: identity in nodes for identity in reference_ids}
             return self._execute(name, request, user, resolved)
         except CatalogueServiceError:
             raise

@@ -200,18 +200,19 @@ class InvestigationService:
             target_type="research_investigation", target_id=str(target), metadata_json=metadata,
         ))
 
-    def _snapshot(self, snapshot_id, scope, user):
+    def _snapshot(self, snapshot_id, scope, user, reference_ids=()):
         registration = self.registrations.get(snapshot_id)
         if registration is None:
             raise _error("unavailable")
         try:
             registration.require_current(self.store)
-            self.catalogue.overview({"snapshot_id": snapshot_id, "scope": scope}, user)
+            available = self.catalogue.reference_availability(
+                {"snapshot_id": snapshot_id, "scope": scope}, reference_ids, user)
         except CatalogueServiceError as exc:
             raise _error("not_found" if exc.status_code == 404 else "unavailable") from None
         except Exception:
             raise _error("unavailable") from None
-        return registration
+        return available
 
     def _bindings(self, snapshot_id, investigation_id):
         registration = self.registrations.get(snapshot_id)
@@ -229,25 +230,22 @@ class InvestigationService:
             authorize(session, user)
 
     def _resolve(self, payload, user, session=None):
-        self._snapshot(payload["snapshot_id"], payload["scope"], user)
-        artifact_keys = {_key(reference) for reference in [*payload["attachments"], *payload["pins"]] if reference["kind"] == "artifact"}
-        resolution, artifact_bindings = [], {key: value for key, value in payload.get("artifact_bindings", {}).items() if key in artifact_keys}
-        for reference in [*payload["attachments"], *payload["pins"]]:
-            reference = ContextReference.model_validate(reference).model_dump(mode="json")
-            status = "available"
+        references = [ContextReference.model_validate(reference).model_dump(mode="json")
+            for reference in [*payload["attachments"], *payload["pins"]]]
+        catalogue_ids = []
+        for reference in references:
             if reference["kind"] == "catalogue":
                 if reference["snapshot_id"] != payload["snapshot_id"]:
                     raise _error("unavailable")
-                try:
-                    self.catalogue.open({
-                        "snapshot_id": reference["snapshot_id"], "scope": payload["scope"],
-                        "object_id": reference["id"],
-                    }, user)
-                except CatalogueServiceError as exc:
-                    if exc.status_code in (403, 404):
-                        status = "unavailable"
-                    else:
-                        raise _error("unavailable") from None
+                catalogue_ids.append(reference["id"])
+        available = self._snapshot(payload["snapshot_id"], payload["scope"], user, catalogue_ids)
+        artifact_keys = {_key(reference) for reference in [*payload["attachments"], *payload["pins"]] if reference["kind"] == "artifact"}
+        resolution, artifact_bindings = [], {key: value for key, value in payload.get("artifact_bindings", {}).items() if key in artifact_keys}
+        for reference in references:
+            status = "available"
+            if reference["kind"] == "catalogue":
+                if not available[reference["id"]]:
+                    status = "unavailable"
             elif self.artifact_resolver is None:
                 status = "artifact_capability_unavailable"
             else:
@@ -338,9 +336,9 @@ class InvestigationService:
             revision, context = self._revision(session, item, uuid.UUID(data["revision_id"]) if data.get("revision_id") else None)
             if name == "context/get":
                 return {"context": self._context(revision, context, user, session)}
-            self._snapshot(revision.snapshot_id, context["scope"], user)
             if name == "get":
                 return {"investigation": self._metadata(item), "context": self._context(revision, context, user, session), "legacy_history_import": "unavailable"}
+            self._snapshot(revision.snapshot_id, context["scope"], user)
             query = select(ResearchConversation).where(ResearchConversation.investigation_id == item.id)
             if name == "conversations/get":
                 conversation = session.scalar(query.where(ResearchConversation.id == uuid.UUID(data["conversation_id"])))

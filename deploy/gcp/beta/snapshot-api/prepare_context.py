@@ -26,7 +26,7 @@ BASE_IMAGE = ('asia-northeast1-docker.pkg.dev/' + PROJECT + '/ocean-v1-beta/cata
 BASE_SOURCE_DIGEST = 'dcf27a4644f53fe014fa4f0c3eb4fd3969a66866b0dd1ddaad1b2d1164aeaf92'
 SUPERSEDED = ('api/v1_host.py', 'api/v1_catalogue_host.py',
     'orchestration/frozen_scientific_catalogue.py', 'orchestration/catalogue_service.py',
-    'orchestration/frozen_catalogue.py')
+    'orchestration/frozen_catalogue.py', 'orchestration/investigations.py')
 ADDED = ('ingestion/gcs_catalogue_snapshot.py', 'api/v1_beta_research_host.py',
     'ingestion/beta_catalogue_retention.py')
 OVERLAYS = SUPERSEDED + ADDED
@@ -203,7 +203,7 @@ def prepare(*, revision, output, binding, binding_sha256, activation_sha256):
         'version': 'ocean-v1-beta-api-context-v1', 'project_id': PROJECT, 'revision': revision,
         'sources': pins,
         'source_manifest_sha256': digest(json.dumps(pins, sort_keys=True, separators=(',', ':')).encode()),
-        'selection': '172 pinned catalogue base sources, three host/catalogue supersessions and three explicit GCS/context additions',
+        'selection': '172 pinned catalogue base sources, six explicit host/catalogue/context supersessions and three GCS/context additions',
         'composition': {'base_revision': BASE_REVISION, 'base_serving_image': BASE_IMAGE,
             'base_source_manifest_sha256': BASE_SOURCE_DIGEST,
             'superseded_sources': list(SUPERSEDED), 'added_sources': list(ADDED)},

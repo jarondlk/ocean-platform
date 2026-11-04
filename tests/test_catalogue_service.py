@@ -101,6 +101,30 @@ def test_cached_return_values_cannot_mutate_later_inventory():
     assert service.list(body, fixture_user()) == before
 
 
+def test_reference_availability_shares_one_verified_view_and_rechecks_policy():
+    catalogue, resolver, service = synthetic_service(8)
+    user = fixture_user()
+    identities = [dataset_id(0), dataset_id(7), "synthetic:missing"]
+    assert service.reference_availability(payload(catalogue), identities, user) == {
+        identities[0]: True, identities[1]: True, identities[2]: False,
+    }
+    assert sum(backend.view_calls for backend in resolver.backends) == 1
+    resolver.revoke(user, identities[0])
+    assert service.reference_availability(payload(catalogue), identities, user) == {
+        identities[0]: False, identities[1]: True, identities[2]: False,
+    }
+    assert resolver.calls == 2
+
+
+@pytest.mark.parametrize("identities", [["synthetic:x"] * 513, [None], "synthetic:x"])
+def test_reference_availability_rejects_invalid_identity_sets_before_resolution(identities):
+    catalogue, resolver, service = synthetic_service(4)
+    with pytest.raises(CatalogueServiceError) as failure:
+        service.reference_availability(payload(catalogue), identities, fixture_user())
+    assert failure.value.status_code == 422
+    assert resolver.calls == 0
+
+
 def test_blocked_backend_view_does_not_serialize_another_authenticated_request():
     catalogue, resolver, _ = synthetic_service(4)
     entered, release = Event(), Event()
