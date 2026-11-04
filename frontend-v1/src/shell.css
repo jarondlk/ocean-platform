@@ -15,7 +15,7 @@
 .runtime-page { max-width: 980px; margin: 0 auto; padding: 44px 40px; }
 .runtime-page-heading { padding: 32px 34px 25px; flex-shrink: 0; }
 .runtime-page .runtime-page-heading { padding: 0 0 23px; }
-.runtime-page-heading h1 { font-size: 31px; line-height: 1.25; font-weight: 550; margin-top: 8px; }
+.runtime-page-heading h1 { font-size: 31px; line-height: 1.25; font-weight: 550; margin-top: 0; }
 .runtime-intro { color: var(--muted); max-width: 680px; font-size: 15px; margin-bottom: 30px; }
 .runtime-state { min-height: 290px; padding: 46px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
 .runtime-state > svg { color: var(--blue-ink); }

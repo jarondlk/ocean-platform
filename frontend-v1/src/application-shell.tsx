@@ -8,10 +8,10 @@ import "./shell.css";
 export type ShellLink = { id: string; href: string; label: string; icon?: ReactNode };
 
 export function ShellWordmark({ onHome, href = "/" }: { onHome?: () => void; href?: string }) {
-  const wordmark = <span>OCEAN<span className="brand-subtitle">Platform</span></span>;
+  const wordmark = <span>OCEAN</span>;
   return onHome
-    ? <button className="brand" onClick={onHome} aria-label="OCEAN Platform">{wordmark}</button>
-    : <a className="brand" href={href} aria-label="OCEAN Platform">{wordmark}</a>;
+    ? <button className="brand" onClick={onHome} aria-label="OCEAN">{wordmark}</button>
+    : <a className="brand" href={href} aria-label="OCEAN">{wordmark}</a>;
 }
 
 export function ShellNavigation({ links, current, locale, onNavigate }: {

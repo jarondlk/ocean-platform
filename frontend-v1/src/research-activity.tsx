@@ -22,8 +22,8 @@ export type ResearchActivityProps = {
 /** Controlled presentation. Handlers and actual transport stay with the owner. */
 export function ResearchActivity({ locale, runs, busy = false, executionAvailable = false, onStatus, onEvents, onCancel, onClarify, onContinue, onOpenEvidence }: ResearchActivityProps) {
   return <section className="ra-activity" aria-label={say(locale, "Conversation activity", "会話の実行履歴")}>
-    {!executionAvailable && <p className="ra-unavailable" role="status">{say(locale, "Research execution is unavailable. You can still review saved activity.", "リサーチの実行は利用できません。保存された履歴は確認できます。")}</p>}
-    {runs.length === 0 ? <div className="ra-empty"><h3>{say(locale, "No submitted activity", "実行履歴はありません")}</h3><p>{say(locale, "Review the snapshot, attachments and restrictions before a future submission. No result has been generated.", "送信する前にスナップショット、添付、制約を確認してください。結果はまだ生成されていません。")}</p></div>
+    {!executionAvailable && runs.length > 0 && <p className="ra-unavailable" role="status">{say(locale, "Execution unavailable.", "実行は利用できません。")}</p>}
+    {runs.length === 0 ? <div className="ra-empty"><h3>{say(locale, "No submitted activity", "実行履歴はありません")}</h3></div>
       : <ol className="ra-runs">{runs.map((run) => <li key={run.id}><RunCard {...{ locale, run, busy, onStatus, onEvents, onCancel, onClarify, onContinue, onOpenEvidence }} /></li>)}</ol>}
   </section>;
 }
@@ -69,14 +69,14 @@ function ResultBody({ locale, run, onOpenEvidence }: { locale: Locale; run: Rese
 }
 
 export function ResearchResults({ locale, runs, onOpenEvidence }: { locale: Locale; runs: readonly ResearchRun[]; onOpenEvidence?: EvidenceAction }) {
-  if (!runs.length) return <div className="ra-empty"><h3>{say(locale, "No results", "結果はありません")}</h3><p>{say(locale, "Submitted activity and retained outputs will appear here.", "実行履歴と保持された出力をここに表示します。")}</p></div>;
+  if (!runs.length) return <div className="ra-empty"><h3>{say(locale, "No results", "結果はありません")}</h3></div>;
   return <section className="ra-results" aria-label={say(locale, "Results", "結果")}>{runs.map((run) => <article key={run.id}><h3>{run.question}</h3><p className="ra-status">{statuses[run.status][locale === "en" ? 0 : 1]}</p>{run.synthetic && <p className="ra-synthetic">{say(locale, "Synthetic development output", "合成された開発用の出力")}</p>}{run.result ? <ResultBody {...{ locale, run, onOpenEvidence }} /> : <p className={run.error ? "ra-error" : "ra-unavailable"}>{run.error?.[locale] ?? (isRunActive(run.status) ? say(locale, "Activity is running; output is not available yet.", "処理中です。出力はまだありません。") : run.status === "awaiting_clarification" ? say(locale, "Clarification is required before activity can continue.", "処理を続ける前に確認への回答が必要です。") : run.status === "completed" ? say(locale, "Exploration finished. An answer is not available yet.", "探索が完了しました。回答はまだありません。") : run.status === "awaiting_approval" ? say(locale, "Approval is required before activity can continue.", "処理を続ける前に承認が必要です。") : run.status === "cancelled" ? say(locale, "Cancelled without output.", "出力なしでキャンセルされました。") : say(locale, "No output is available.", "出力はありません。"))}</p>}</article>)}</section>;
 }
 
 /** Evidence selection is supplied by the caller; this never reads a legacy URL. */
 export function ResearchEvidence({ locale, evidence }: { locale: Locale; evidence: RunEvidence | null }) {
-  if (!evidence) return <div className="ra-empty"><h3>{say(locale, "No evidence selected", "エビデンスが選択されていません")}</h3><p>{say(locale, "Open a result citation to inspect its retained identity, authority and limitations.", "結果の引用を開くと、保持された識別情報、位置付け、制約を確認できます。")}</p></div>;
+  if (!evidence) return <div className="ra-empty"><h3>{say(locale, "No evidence selected", "エビデンスが選択されていません")}</h3></div>;
   return <article className="ra-evidence"><h3>{evidence.title[locale]}</h3><p className="ra-authority">{authorities[evidence.authority][locale === "en" ? 0 : 1]}</p>{evidence.synthetic && <p className="ra-synthetic">{say(locale, "Synthetic development example", "合成された開発用の例")}</p>}<p>{evidence.qualification[locale]}</p><p className="ra-unavailable">{evidence.availability === "retained" ? say(locale, "Retained evidence identity. Its content view is not available yet.", "保持されたエビデンスの識別情報です。内容の表示はまだ利用できません。") : say(locale, "Retained artifact content is unavailable. This identity is not scientific verification.", "保持された成果物の内容は利用できません。この識別情報は科学的な検証を意味しません。")}</p><dl>
     <div><dt>{say(locale, "Snapshot", "スナップショット")}</dt><dd><code>{evidence.snapshot_id}</code></dd></div><div><dt>{say(locale, "Context revision", "コンテキストの版")}</dt><dd><code>{evidence.revision_id}</code></dd></div><div><dt>{say(locale, "Artifact", "成果物")}</dt><dd><code>{evidence.artifact_id ?? say(locale, "Unavailable", "利用不可")}</code></dd></div>
-  </dl><p className="ra-qualification">{say(locale, "Publication, descriptive query output and experimental output have different authority. Publication alone does not establish independent scientific approval.", "公開済みの解析、記述的なクエリの出力、実験的な出力は異なる位置付けです。公開されていることだけで独立した科学的な承認があるとは限りません。")}</p></article>;
+  </dl></article>;
 }
