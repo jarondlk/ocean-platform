@@ -2,7 +2,9 @@
 
 The authenticated beta serves saved investigations alongside the CTD,
 metagenome, and MUR regional SST catalogues on revision
-`ocean-v1-beta-serving-00015-m2d`. The [collection-browsing rollout](../beta/context-20261103/catalogue-browsing-20261104.md)
+`ocean-v1-beta-serving-00016-sfb`. The [copy cleanup](../beta/context-20261103/copy-cleanup-20261104.md)
+removes promotional and repeated explanatory text while retaining controls,
+errors and source-specific scientific qualifications. The [collection-browsing rollout](../beta/context-20261103/catalogue-browsing-20261104.md)
 adds visible links to all three authorized collections and clears stale filters
 when switching. Search stays within the selected collection; no new data was
 activated. Discovery still occasionally reaches its 15-second timeout.
