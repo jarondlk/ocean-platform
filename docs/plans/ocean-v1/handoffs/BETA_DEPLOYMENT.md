@@ -1,7 +1,9 @@
 # Beta deployment continuation — 2026-11-04 JST
 
-The authenticated beta serves the CTD, metagenome, and MUR regional SST
-catalogues on Cloud Run revision `ocean-v1-beta-serving-00011-wrb`.
+The authenticated beta serves saved investigations alongside the CTD,
+metagenome, and MUR regional SST catalogues on revision
+`ocean-v1-beta-serving-00012-hxz`. The [saved investigations receipt](../beta/context-20261103/live-20261104.md)
+records the approved grants, browser workflow, and confirmation timing issue.
 The [metagenome/SST rollout receipt](../beta/cohorts-20261103/meta-sst-live-20261104.md)
 records the active image, browser checks, and remaining latency limits.
 The branch is `overhaul`, and the three-hour schedule remains paused.
