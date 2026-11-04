@@ -54,6 +54,8 @@ class BetaCatalogueRetentionStore(GcsCatalogueSnapshotStore):
         return state["revision"] if existing == identity else None
 
     def add_reference(self, identity, reference):
+        if self._active_read_scope() is not None:
+            raise ValueError("Retention writes cannot share a catalogue read scope")
         validate_id(identity)
         self._reference(reference)
         for _ in range(MAX_REFERENCE_ATTEMPTS):

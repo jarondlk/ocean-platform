@@ -191,3 +191,31 @@ test("statistics aliases retain exact source dataset dependency identity", async
 // Compile-time public API anchors: no server-owned authorization fields are required.
 type PublicRequests = CatalogueBaseRequest | CatalogueCoverageRequest | CatalogueListRequest | CatalogueOpenRequest | CataloguePublishedRequest | CatalogueQueryRequest | CatalogueRelationshipsRequest | CatalogueSnapshotsRequest;
 const publicRequest: PublicRequests = { snapshot_id: "synthetic-snapshot-1", scope: defaultCatalogueScope() }; void publicRequest;
+
+
+function withNavigationPath() {
+  const raw = structuredClone(detail.expected) as { node: Record<string, unknown>; details: Record<string, unknown> };
+  const root = { ...raw.node, id: "root:data", kind: "root", parent_id: null,
+    source_family: null, descriptor: null, sections: [], operations: [], related_ids: [] };
+  raw.details.navigation_path = [root, structuredClone(raw.node)];
+  return raw;
+}
+
+test("inspector ancestry is verified with its response, without extra requests", async () => {
+  const raw = withNavigationPath(); let calls = 0;
+  const client = createCatalogueClient({ fetcher: async () => { calls++; return response(raw); } });
+  const result = await invoke(client, detail) as { navigationPath: { id: string }[] };
+  assert.deepEqual(result.navigationPath.map(node => node.id), ["root:data", raw.node.id]);
+  assert.equal(calls, 1);
+});
+
+for (const change of ["missing-root", "duplicate", "foreign-snapshot", "different-leaf", "oversized"]) test(`rejects invalid inspector ancestry: ${change}`, async () => {
+  const raw = withNavigationPath(); const path = raw.details.navigation_path as Record<string, unknown>[];
+  if (change === "missing-root") raw.details.navigation_path = [path[1]];
+  if (change === "duplicate") raw.details.navigation_path = [path[0], path[0], path[1]];
+  if (change === "foreign-snapshot") path[0].snapshot_id = "f".repeat(64);
+  if (change === "different-leaf") path[1].title = { en: "Different leaf", ja: "別の項目" };
+  if (change === "oversized") raw.details.navigation_path = Array.from({ length: 129 }, () => path[0]);
+  const client = createCatalogueClient({ fetcher: async () => response(raw) });
+  await assert.rejects(invoke(client, detail), CatalogueClientError);
+});

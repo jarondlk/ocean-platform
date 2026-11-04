@@ -73,6 +73,7 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
   const [error, setError] = useState<number | null>(null); const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false); const [checking, setChecking] = useState(false);
   const [tick, setTick] = useState(0); const [listTick, setListTick] = useState(0);
+  const [snapshotTick, setSnapshotTick] = useState(0);
   const [pending, setPending] = useState<InvestigationMutationIntent | null>(null);
   const [pendingRun, setPendingRun] = useState<RunMutationIntent | null>(null);
   const [historyVerified, setHistoryVerified] = useState(false);
@@ -133,15 +134,22 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     return () => { mounted.current = false; selectionAbort.current?.abort(); mutationAbort.current?.abort(); runAbort.current?.abort(); historyScheduler.current?.dispose(); ++historyEpoch.current; clearInterval(timer); narrow.removeEventListener("change", resizeNavigation); window.removeEventListener("popstate", restore); window.removeEventListener("focus", refresh); };
   }, [transition]);
   useEffect(() => {
+    const abort = new AbortController(); const timer = setTimeout(() => { abort.abort(); setInvestigations([]); setError(503); }, 8_000);
+    void loadInvestigationPages(client, investigationPages, abort.signal).then(page => {
+      if (abort.signal.aborted) return; setInvestigations(page.items); setNextInvestigation(page.next_after_id);
+    }).catch(e => { if (!abort.signal.aborted) { setInvestigations([]); fail(e); } }).finally(() => clearTimeout(timer));
+    return () => { abort.abort(); clearTimeout(timer); };
+  }, [client, listTick, accessKey, fail, investigationPages]);
+  useEffect(() => {
     setCatalogueStatus("loading");
-    const abort = new AbortController(); const timer = setTimeout(() => { abort.abort(); setInvestigations([]); setSnapshots([]); setCatalogueStatus("error"); setError(503); }, 8_000);
-    void Promise.all([loadInvestigationPages(client, investigationPages, abort.signal), catalogue.snapshots({ scope: defaultCatalogueScope(), limit: 500 }, abort.signal)]).then(([page, available]) => {
-      if (abort.signal.aborted) return; setInvestigations(page.items); setNextInvestigation(page.next_after_id); setSnapshots(available.snapshots); setCatalogueStatus("ready");
+    const abort = new AbortController(); const timer = setTimeout(() => { abort.abort(); setSnapshots([]); setCatalogueStatus("error"); setError(503); }, 8_000);
+    void catalogue.snapshots({ scope: defaultCatalogueScope(), limit: 500 }, abort.signal).then(available => {
+      if (abort.signal.aborted) return; setSnapshots(available.snapshots); setCatalogueStatus("ready");
       setNewSnapshot(current => available.snapshots.some(item => item.snapshot_id === current) ? current : "");
       setRefreshSnapshot(current => available.snapshots.some(item => item.snapshot_id === current) ? current : "");
-    }).catch(e => { if (!abort.signal.aborted) { setInvestigations([]); setSnapshots([]); setCatalogueStatus("error"); fail(e); } }).finally(() => clearTimeout(timer));
+    }).catch(e => { if (!abort.signal.aborted) { setSnapshots([]); setCatalogueStatus("error"); fail(e); } }).finally(() => clearTimeout(timer));
     return () => { abort.abort(); clearTimeout(timer); };
-  }, [client, catalogue, listTick, accessKey, fail, investigationPages]);
+  }, [catalogue, snapshotTick, accessKey, fail]);
   useEffect(() => {
     if (!located) return;
     selectionAbort.current?.abort(); const abort = new AbortController(); selectionAbort.current = abort;
@@ -304,7 +312,7 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     {conversation && <details className="rw-management"><summary>{say(locale, "Rename conversation", "チャットの名前を変更")}</summary><label>{say(locale, "Conversation name", "チャット名")}<input maxLength={200} value={chatRename} onChange={e => setChatRename(e.target.value)} /></label><button className="button secondary" disabled={blocked || archived || !chatRename.trim()} onClick={() => void mutate({ method: "renameConversation", request: { investigation_id: conversation.investigation_id, conversation_id: conversation.id, name: chatRename.trim(), expected_version: conversation.metadata_version, idempotency_key: requestKey() } })}>{say(locale, "Save name", "名前を保存")}</button></details>}
   </div>;
   return <section className="research-workspace"><header className="runtime-page-heading"><h1>{say(locale, "Research", "リサーチ")}</h1></header>
-    {error && <div className="rw-alert" role="alert"><strong>{say(locale, error === 409 ? "A newer version exists. Review current context before applying your change." : error === 404 ? "This investigation or conversation is unavailable." : error === 422 ? "Check the selection or change and try again." : "The research service could not verify this request.", error === 409 ? "新しい版があります。現在のコンテキストを確認してから変更してください。" : error === 404 ? "この調査またはチャットを利用できません。" : error === 422 ? "選択や変更内容を確認してください。" : "リサーチサービスでリクエストを確認できませんでした。")}</strong><button className="button secondary" onClick={() => { setTick(v => v + 1); setListTick(v => v + 1); historyScheduler.current?.request(); }}>{say(locale, "Reload current state", "現在の状態を再読込")}</button></div>}
+    {error && <div className="rw-alert" role="alert"><strong>{say(locale, error === 409 ? "A newer version exists. Review current context before applying your change." : error === 404 ? "This investigation or conversation is unavailable." : error === 422 ? "Check the selection or change and try again." : "The research service could not verify this request.", error === 409 ? "新しい版があります。現在のコンテキストを確認してから変更してください。" : error === 404 ? "この調査またはチャットを利用できません。" : error === 422 ? "選択や変更内容を確認してください。" : "リサーチサービスでリクエストを確認できませんでした。")}</strong><button className="button secondary" onClick={() => { setError(null); setTick(v => v + 1); setListTick(v => v + 1); setSnapshotTick(v => v + 1); historyScheduler.current?.request(); }}>{say(locale, "Reload current state", "現在の状態を再読込")}</button></div>}
     {pending && !busy && <div className="rw-alert"><p>{say(locale, "The last change may have reached the service. Retry the same request safely.", "前の変更がサービスに届いた可能性があります。同じリクエストを安全に再試行できます。")}</p><button className="button secondary" onClick={() => void mutate(pending)}>{say(locale, "Retry last change", "前の変更を再試行")}</button></div>}
     {conflict?.method === "changeContext" && active && <button className="button secondary" disabled={blocked || checking} onClick={() => void mutate({ ...conflict, request: { ...conflict.request, expected_revision_id: active.context.id, idempotency_key: requestKey() } })}>{say(locale, "Apply intended change to this reviewed revision", "確認した版にこの変更を適用")}</button>}
     {notice && <p className="rw-notice" role="status">{notice}</p>}{checking && <p className="muted" role="status">{say(locale, "Checking shared context…", "共有コンテキストを確認中…")}</p>}

@@ -11,6 +11,9 @@ import json
 import os
 from pathlib import Path
 import stat
+from contextlib import contextmanager
+from contextvars import ContextVar
+from threading import get_ident
 
 from pydantic import TypeAdapter
 
@@ -126,10 +129,11 @@ class _CurrentEmptyBrowser(CatalogueBrowser):
 
     def discover(self, payload, user):
         catalogue_access_binding(user)
-        self._source.require_current()
-        response = super().discover(payload, user)
-        self._source.require_current()
-        return response
+        with self.service.read_scope():
+            self._source.require_current()
+            response = super().discover(payload, user)
+            self._source.require_current()
+            return response
 
 
 def load_empty_catalogue(path, *, project_id, site_id, cursor_key, _allow_test_owner=False):
@@ -195,6 +199,7 @@ class _ActivationAuthority:
     def __init__(self, source, binding, store):
         self.source, self.binding, self.store = source, binding, store
         self.initial = self._read()
+        self._scope = ContextVar("catalogue_activation_scope", default=None)
 
     def _read(self):
         self.source.require_current()
@@ -206,12 +211,35 @@ class _ActivationAuthority:
         return value
 
     def require_current(self):
+        scope = self._scope.get()
+        if scope and scope["active"] and scope["thread"] == get_ident():
+            self.source.require_current()
+            return
+        self._verify_current()
+
+    def _verify_current(self):
         try:
             value = self._read()
             if value.data != self.initial.data or value.generation != self.initial.generation:
                 raise ValueError("Activation authority replaced")
         except Exception:
             raise _unavailable() from None
+
+    @contextmanager
+    def read_scope(self):
+        scope = self._scope.get()
+        if scope and scope["active"] and scope["thread"] == get_ident():
+            yield
+            return
+        self._verify_current()
+        scope = {"active": True, "thread": get_ident()}
+        token = self._scope.set(scope)
+        try:
+            yield
+            self._verify_current()
+        finally:
+            scope["active"] = False
+            self._scope.reset(token)
 
 
 def _activation(raw):
@@ -275,6 +303,11 @@ class _CurrentSnapshotResolver(FrozenCatalogueResolver):
     def __init__(self, *, authority, **kwargs):
         super().__init__(**kwargs)
         self.authority = authority
+
+    @contextmanager
+    def request_scope(self):
+        with self.authority.read_scope(), self.store.read_scope():
+            yield
 
     def _authorization_state(self, user, snapshot_id):
         catalogue_access_binding(user)

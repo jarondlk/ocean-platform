@@ -4,7 +4,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEven
 import { ArrowLeft, ArrowRight, ChevronDown, ChevronRight, Database, FileText, Folder, Layers3, Search, X } from "lucide-react";
 import type { CatalogueFilters, CatalogueListing, CatalogueNode, EvidenceScope } from "./catalogue-contract";
 import { createCatalogueClient, defaultCatalogueScope, type CatalogueClient, type CatalogueDetails, type CatalogueSnapshotPage, type ScientificResponse } from "./catalogue-service";
-import { browseCatalogueCollection, catalogueLocationUrl, parseCatalogueLocation, updateCatalogueLocation, type CatalogueLocation, type CatalogueSelectionEvent, type DatasetSection } from "./catalogue-browser-state";
+import { browseCatalogueCollection, catalogueListingRequest, catalogueLocationUrl, parseCatalogueLocation, updateCatalogueLocation, type CatalogueLocation, type CatalogueSelectionEvent, type DatasetSection } from "./catalogue-browser-state";
 import { ScientificContextLabels } from "./shell-panels";
 import type { Locale } from "./model";
 import "./catalogue-browser.css";
@@ -153,20 +153,18 @@ export function CatalogueBrowser({ locale, accessKey, client: providedClient, sc
   const rootsLoad = useLoad(base && eligibilityVerified ? contextKey : null, async (signal) => {
     return acceptListing(await guarded(() => client.overview(base!, signal)));
   });
-  const listingKey = JSON.stringify([contextKey, location.parentId, location.nodeId, location.section, location.filters, location.cursor, location.limit]);
-  const listing = useLoad(base && eligibilityVerified ? listingKey : null, async (signal) => {
-    return acceptListing(await guarded(async () => {
-      const filters = location.filters;
-      if (location.parentId === null && !filters.search && !filters.roots?.length && !filters.kinds?.length && !filters.source_families?.length && !filters.authorities?.length && location.cursor === null) return await client.overview(base!, signal);
-      return await client.list({ ...base!, parent_id: location.parentId, filters, limit: location.limit, ...(location.cursor ? { cursor: location.cursor } : {}) }, signal);
-    }));
+  const listRequest = catalogueListingRequest(location);
+  const listingKey = JSON.stringify([contextKey, listRequest]);
+  const filteredListing = useLoad(base && eligibilityVerified && listRequest ? listingKey : null, async (signal) => {
+    return acceptListing(await guarded(() => client.list({ ...base!, ...listRequest! }, signal)));
   });
+  const listing = listRequest ? filteredListing : rootsLoad;
   const selectedId = location.nodeId ?? location.parentId;
   const detailKey = JSON.stringify([contextKey, selectedId]);
   const details = useLoad(base && selectedId && eligibilityVerified ? detailKey : null, async (signal) => {
     return await guarded(() => client.open({ ...base!, object_id: selectedId!, include_details: true }, signal));
   });
-  const breadcrumbs = useLoad(base && selectedId && eligibilityVerified ? detailKey : null, async (signal) => {
+  const legacyBreadcrumbs = useLoad(base && selectedId && eligibilityVerified && details?.status === "ready" && !details.data.navigationPath ? detailKey : null, async (signal) => {
     const path: CatalogueNode[] = []; let current: string | null = selectedId;
     while (current) {
       if (path.length >= 128 || path.some((item) => item.id === current)) throw new Error("Invalid catalogue ancestry");
@@ -176,6 +174,8 @@ export function CatalogueBrowser({ locale, accessKey, client: providedClient, sc
     }
     return path;
   });
+  const breadcrumbs = details?.status === "ready" && details.data.navigationPath
+    ? { key: detailKey, status: "ready" as const, data: details.data.navigationPath } : legacyBreadcrumbs;
   const openNode = (node: CatalogueNode) => {
     setPreviousPages([]);
     if (isDirectory(node)) navigate({ parentId: node.id, nodeId: node.id, section: "overview", filters: { ...location.filters, search: null }, cursor: null });

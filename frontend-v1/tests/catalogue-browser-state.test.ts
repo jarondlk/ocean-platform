@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { browseCatalogueCollection, CatalogueLocationError, DATASET_SECTIONS, catalogueLocationUrl, parseCatalogueLocation, updateCatalogueLocation } from "../src/catalogue-browser-state.ts";
+import { browseCatalogueCollection, catalogueListingRequest, CatalogueLocationError, DATASET_SECTIONS, catalogueLocationUrl, parseCatalogueLocation, updateCatalogueLocation } from "../src/catalogue-browser-state.ts";
 import type { CatalogueSelectionEvent } from "../src/catalogue-browser-state.ts";
 import { defaultCatalogueScope } from "../src/catalogue-service.ts";
 
@@ -68,4 +68,15 @@ test("browsing another collection clears filters and inspector state from the pr
     filters: { roots: ["data"], kinds: ["dataset"], source_families: [], authorities: [], search: null } });
   assert.deepEqual(parseCatalogueLocation(new URL(catalogueLocationUrl(next), "https://v1.invalid").search), next);
   assert.deepEqual(current, before);
+});
+
+
+test("inspector tabs and selection share the same list request; root overview is reused", () => {
+  assert.equal(catalogueListingRequest(parseCatalogueLocation("")), null);
+  const page = parseCatalogueLocation("?snapshot=one&kinds=dataset&cursor=page-two");
+  const selected = updateCatalogueLocation(page, { nodeId: "dataset:one" });
+  const table = updateCatalogueLocation(selected, { section: "tables" });
+  assert.deepEqual(catalogueListingRequest(page), catalogueListingRequest(selected));
+  assert.deepEqual(catalogueListingRequest(page), catalogueListingRequest(table));
+  assert.notDeepEqual(catalogueListingRequest(page), catalogueListingRequest(updateCatalogueLocation(page, { filters: { search: "other" } })));
 });

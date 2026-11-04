@@ -301,6 +301,9 @@ def test_detailed_open_exposes_actual_source_and_scientific_content(frozen, iden
     actual = service.open(request(sid, object_id=identity, include_details=True), user)
     expected = CatalogueService._json(adapter.inspect(identity, listing(sid)))
     assert actual["node"]["id"] == identity
+    path = actual["details"].pop("navigation_path")
+    assert path[0]["parent_id"] is None and path[-1] == actual["node"]
+    assert all(child["parent_id"] == parent["id"] for parent, child in zip(path, path[1:]))
     assert actual["details"] == expected
     if "record" in expected and "comparison_authorized" in expected["record"]:
         assert expected["record"]["comparison_authorized"] is False

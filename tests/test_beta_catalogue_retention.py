@@ -58,6 +58,16 @@ def retained(tmp_path, monkeypatch):
     return local, store, memory, identity
 
 
+def test_retention_write_cannot_reuse_read_scope_observation(retained):
+    _, store, memory, identity = retained
+    with store.read_scope():
+        with pytest.raises(ValueError, match="cannot share"):
+            store.add_reference(identity, reference())
+    assert memory.writes == []
+    store.add_reference(identity, reference())
+    assert store.lifecycle()["references"][reference()] == identity
+
+
 def test_same_c09_control_reopens_after_restart_without_split_authority(retained):
     local, store, memory, identity = retained
     before = store.lifecycle()

@@ -10,6 +10,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from contextlib import contextmanager
+from contextvars import ContextVar
+from copy import deepcopy
+from threading import get_ident
 
 from ingestion.artifact_store import BoundedGcsStore, safe_key
 from ingestion.catalogue_snapshot import (
@@ -23,6 +27,7 @@ from schema.catalogue_snapshot import (
 
 BUCKET = "ocean-v1-beta-20261101-snapshots"
 PREFIX = "v1/catalogue"
+MAX_READ_SCOPE_SNAPSHOTS = 256
 
 
 def _unique(pairs):
@@ -146,6 +151,7 @@ class GcsCatalogueSnapshotStore:
         else:
             self._store = BoundedGcsStore(bucket=bucket, prefix="", client=client)
         self.bucket_name, self.prefix, self.access_gate = bucket, prefix, access_gate
+        self._control_scope = ContextVar("catalogue_control_scope", default=None)
 
     def _key(self, suffix):
         return safe_key(self.prefix + "/" + safe_key(suffix))
@@ -157,12 +163,47 @@ class GcsCatalogueSnapshotStore:
             raise ValueError("Bounded generation-identified catalogue object required")
         return result
 
-    def _state(self):
+    def _fresh_state(self):
         try:
             obj = self._read("control.json", MAX_CONTROL_BYTES)
         except SnapshotNotFound:
             raise ValueError("Current catalogue control is unavailable") from None
         return validated_lifecycle(obj.data), obj
+
+    def _active_read_scope(self):
+        scope = self._control_scope.get()
+        return scope if scope and scope["active"] and scope["thread"] == get_ident() else None
+
+    def _state(self):
+        scope = self._active_read_scope()
+        if scope is None:
+            return self._fresh_state()
+        # Consumers receive detached state; no caller can mutate the shared fence.
+        return deepcopy(scope["state"]), StoredObject(scope["object"].data, scope["object"].generation)
+
+    @contextmanager
+    def read_scope(self):
+        """One current control observation, fenced again before returning work.
+
+        Immutable manifest/payload reads and hashes remain fresh. No state is
+        retained across operations, threads or the lifetime of an exited scope.
+        Nested read operations share the same generation-consistent observation.
+        """
+        if self._active_read_scope() is not None:
+            yield
+            return
+        state, before = self._fresh_state()
+        scope = {"active": True, "thread": get_ident(), "state": state, "object": before, "manifests": {}}
+        token = self._control_scope.set(scope)
+        try:
+            yield
+            current, after = self._fresh_state()
+            self._same_control(before, after)
+            for identity, manifest in tuple(scope["manifests"].items()):
+                self._access(current, identity, manifest)
+        finally:
+            scope["active"] = False
+            self._control_scope.reset(token)
 
     @staticmethod
     def _registered(state, identity):
@@ -175,8 +216,14 @@ class GcsCatalogueSnapshotStore:
 
     def _access(self, state, identity, manifest):
         self._registered(state, identity)
-        if self.access_gate(validated_manifest(manifest)) is not True:
+        checked = validated_manifest(manifest)
+        if self.access_gate(checked) is not True:
             raise SnapshotAccessDenied("Current snapshot access denied")
+        scope = self._active_read_scope()
+        if scope is not None and identity not in scope["manifests"]:
+            if len(scope["manifests"]) >= MAX_READ_SCOPE_SNAPSHOTS:
+                raise ValueError("Catalogue read scope snapshot bound exceeded")
+            scope["manifests"][identity] = checked.model_copy(deep=True)
 
     @staticmethod
     def _same_control(before, after):

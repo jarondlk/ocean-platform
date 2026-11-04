@@ -78,6 +78,63 @@ def test_actual_sealed_dataset_discovery_and_inventory(sealed):
     assert len(response['items']) == 1 and response['items'][0]['source_family'] == 'ctd'
 
 
+def test_request_scopes_fence_authority_and_control_twice_without_cross_request_reuse(sealed, monkeypatch):
+    service, browser = load(sealed)
+    original, reads = BoundedLocalStore.read, []
+    def counted(store, key, **kwargs):
+        reads.append(key)
+        return original(store, key, **kwargs)
+    monkeypatch.setattr(BoundedLocalStore, 'read', counted)
+    actor = fixture_user(role='admin')
+    payload = {'scope': PREPARE.scope().model_dump(mode='json')}
+    browser.discover(payload, actor)
+    assert sum('/activations/' in key for key in reads) == 2
+    assert sum(key.endswith('/control.json') for key in reads) == 2
+    reads.clear()
+    service.overview({'snapshot_id': sealed[2]['index_id'], **payload}, actor)
+    assert sum('/activations/' in key for key in reads) == 2
+    assert sum(key.endswith('/control.json') for key in reads) == 2
+
+
+@pytest.mark.parametrize('change', ['removed', 'generation', 'bytes'])
+def test_activation_change_during_verified_operation_is_rejected_at_return(sealed, monkeypatch, change):
+    service, _ = load(sealed)
+    path = sealed[1] / 'store' / sealed[3]['activation_object_key']
+    original, changed = BoundedLocalStore.read, False
+    def changing(store, key, **kwargs):
+        nonlocal changed
+        result = original(store, key, **kwargs)
+        if '/objects/' in key and not changed:
+            changed = True
+            if change == 'removed': path.unlink()
+            elif change == 'generation': path.write_bytes(path.read_bytes())
+            else: path.write_bytes(path.read_bytes() + b' ')
+        return result
+    monkeypatch.setattr(BoundedLocalStore, 'read', changing)
+    with pytest.raises(CatalogueServiceError):
+        service.overview({'snapshot_id': sealed[2]['index_id'],
+            'scope': PREPARE.scope().model_dump(mode='json')}, fixture_user(role='admin'))
+    assert changed
+    assert service.resolver.authority._scope.get() is None
+    assert service.resolver.store._active_read_scope() is None
+
+
+def test_concurrent_scopes_do_not_share_control_or_activation_observations(sealed, monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    service, _ = load(sealed)
+    original, reads = BoundedLocalStore.read, []
+    def counted(store, key, **kwargs):
+        reads.append(key)
+        return original(store, key, **kwargs)
+    monkeypatch.setattr(BoundedLocalStore, 'read', counted)
+    payload = {'snapshot_id': sealed[2]['index_id'], 'scope': PREPARE.scope().model_dump(mode='json')}
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        calls = [pool.submit(service.overview, payload, fixture_user(role='admin')) for _ in range(2)]
+        assert all(call.result()['items'] for call in calls)
+    assert sum('/activations/' in key for key in reads) == 4
+    assert sum(key.endswith('/control.json') for key in reads) == 4
+
+
 def test_sealed_mode_reaches_authenticated_host_without_enabling_research(sealed, independent, monkeypatch):
     from fastapi.testclient import TestClient
     from pydantic import SecretStr

@@ -223,6 +223,9 @@ def test_details_prune_denied_related_identities_recursively_in_models_and_lists
 
     service = CatalogueService(resolver=Resolver())
     response = service.open(payload(catalogue, object_id=allowed, include_details=True), user)
+    path = response["details"].pop("navigation_path")
+    assert path[-1] == response["node"]
+    assert all(node["id"] != denied and denied not in node["related_ids"] for node in path)
     assert response["details"] == {
         "related_ids": [allowed], "nested": [{"metadata": {"related_ids": [allowed]}}],
         "qualification": "Retained source qualification stays unchanged",

@@ -66,3 +66,12 @@ export function browseCatalogueCollection(current: CatalogueLocation, snapshotId
   return updateCatalogueLocation(current, { snapshotId, nodeId: null, parentId: null,
     cursor: null, section: "overview", filters: { roots: ["data"], kinds: ["dataset"] } });
 }
+
+/** Inspector selection and tabs do not change list membership or its request. */
+export function catalogueListingRequest(current: CatalogueLocation) {
+  const value = normalize(current), f = value.filters;
+  if (value.parentId === null && !f.search && !f.roots?.length && !f.kinds?.length
+      && !f.source_families?.length && !f.authorities?.length && value.cursor === null) return null;
+  return { parent_id: value.parentId, filters: f, limit: value.limit,
+    ...(value.cursor ? { cursor: value.cursor } : {}) };
+}

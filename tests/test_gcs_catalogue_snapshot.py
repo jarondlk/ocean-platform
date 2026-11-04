@@ -66,6 +66,80 @@ def test_exact_nonempty_local_snapshot_reopens_through_readonly_reader(setup):
     assert sum(key.endswith("control.json") for key, _ in memory.calls) >= 2
 
 
+def test_read_scope_shares_only_control_and_returns_detached_state(setup):
+    _, reader, memory, identity, _, _ = setup
+    memory.calls.clear()
+    with reader.read_scope():
+        first = reader.lifecycle()
+        first["references"].clear()
+        with reader.read_scope():
+            assert reader.lifecycle()["references"]
+            reader.read(identity)
+            reader.read(identity)
+    assert sum(key.endswith("control.json") for key, _ in memory.calls) == 2
+    assert sum("/manifests/" in key for key, _ in memory.calls) == 2
+    reader.lifecycle()
+    assert sum(key.endswith("control.json") for key, _ in memory.calls) == 3
+
+
+@pytest.mark.parametrize("change", ["generation", "revoke"])
+def test_read_scope_closing_fence_rejects_control_changes(setup, change):
+    local, reader, memory, identity, _, _ = setup
+    key = PREFIX + "/control.json"
+    with pytest.raises(SnapshotConflict):
+        with reader.read_scope():
+            reader.read(identity)
+            previous = memory.objects[key]
+            if change == "revoke":
+                local.revoke(identity)
+                data = (local.root / key).read_bytes()
+            else:
+                data = previous.data
+            memory.objects[key] = StoredObject(data, previous.generation + 1)
+    assert reader._active_read_scope() is None
+    if change == "revoke":
+        with pytest.raises(SnapshotAccessDenied):
+            reader.read(identity)
+
+
+def test_read_scope_never_reuses_payload_or_escapes_into_copied_context(setup):
+    from contextvars import copy_context
+    from concurrent.futures import ThreadPoolExecutor
+    _, reader, memory, identity, manifest, _ = setup
+    with reader.read_scope():
+        reader.read(identity)
+        captured = copy_context()
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            assert pool.submit(captured.run, reader._active_read_scope).result() is None
+    assert captured.run(reader._active_read_scope) is None
+    key = PREFIX + "/objects/" + manifest.objects[0].sha256
+    old = memory.objects[key]
+    memory.objects[key] = StoredObject(b"tampered", old.generation + 1)
+    with pytest.raises(ValueError):
+        with reader.read_scope():
+            reader.read(identity)
+
+
+def test_read_scope_rechecks_current_manifest_gate_before_return(setup):
+    _, reader, _, identity, _, _ = setup
+    allowed = True
+    reader.access_gate = lambda _: allowed
+    with pytest.raises(SnapshotAccessDenied):
+        with reader.read_scope():
+            reader.read(identity)
+            allowed = False
+
+
+def test_read_scope_manifest_retention_is_bounded_and_cleared_on_failure(setup, monkeypatch):
+    import ingestion.gcs_catalogue_snapshot as module
+    _, reader, _, identity, _, _ = setup
+    monkeypatch.setattr(module, "MAX_READ_SCOPE_SNAPSHOTS", 0)
+    with pytest.raises(ValueError, match="snapshot bound"):
+        with reader.read_scope():
+            reader.read(identity)
+    assert reader._active_read_scope() is None
+
+
 def test_control_contract_replays_all_real_local_mutations(tmp_path):
     local = LocalCatalogueSnapshotStore(root=tmp_path.resolve(), access_gate=lambda _: True)
     a = local.seal(*example())

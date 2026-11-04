@@ -12,7 +12,7 @@ export type CatalogueRelationshipsRequest = CatalogueListRequest & { object_id?:
 export type CataloguePublishedRequest = CatalogueBaseRequest & { analysis_id: string; table?: string | null; workflow_kind?: string | null; protocol_id?: string | null; limit?: number; offset?: number };
 export type CatalogueSnapshotsRequest = { schema_version?: "context-catalogue-v1"; scope: EvidenceScope; limit?: number; cursor?: string | null };
 export type CatalogueSnapshotPage = { version: "catalogue-browser-v1"; scope: EvidenceScope; snapshots: { snapshot_id: string; label: LocalizedText }[]; latest_snapshot_id: string | null; total: number; next_cursor: string | null; access_revision: string };
-export type CatalogueDetails = { node: CatalogueNode; details: Record<string, JsonValue> };
+export type CatalogueDetails = { node: CatalogueNode; details: Record<string, JsonValue>; navigationPath?: CatalogueNode[] };
 export type ScientificResponse = QueryResult & { adapter_version: "c13-v1"; offset: number; next_offset: number | null; qualifications: string[] };
 export type CatalogueClient = {
   snapshots(request: CatalogueSnapshotsRequest, signal?: AbortSignal): Promise<CatalogueSnapshotPage>;
@@ -100,6 +100,18 @@ async function requestPayload(method: Method, supplied: unknown): Promise<Record
   } catch { return badRequest(); }
 }
 function context(value: { snapshot_id: string; scope: EvidenceScope }, p: Record<string, unknown>): void { if (value.snapshot_id !== p.snapshot_id || !equal(value.scope, p.scope)) return invalid(); }
+async function navigationPath(raw: unknown, node: CatalogueNode, payload: Record<string, unknown>): Promise<CatalogueNode[]> {
+  if (!Array.isArray(raw) || raw.length < 1 || raw.length > 128) return invalid();
+  const path = await Promise.all(raw.map(value => parseCatalogueContractModel("CatalogueNode", value)));
+  const ids = new Set<string>();
+  for (const [index, item] of path.entries()) {
+    context(item, payload);
+    if (item.membership !== "global" || ids.has(item.id) || item.parent_id !== (index ? path[index - 1].id : null)) return invalid();
+    ids.add(item.id);
+  }
+  if (!equal(path.at(-1), node)) return invalid();
+  return path;
+}
 async function parseSnapshots(raw: unknown, p: Record<string, unknown>): Promise<CatalogueSnapshotPage> {
   const v = shape(raw, ["version", "scope", "snapshots", "latest_snapshot_id", "total", "next_cursor", "access_revision"], ["version", "scope", "snapshots", "latest_snapshot_id", "total", "access_revision"]);
   if (v.version !== "catalogue-browser-v1") return invalid();
@@ -215,7 +227,13 @@ export function createCatalogueClient(options: { fetcher?: (input: string, init?
       if (method === "snapshots") parsed = await parseSnapshots(raw, payload);
       else if (["overview", "list", "relationships"].includes(method)) parsed = await parseListing(raw, payload, method);
       else if (method === "open") {
-        if (payload.include_details) { const detail = shape(raw, ["node", "details"], ["node", "details"]); const node = await parseCatalogueContractModel("CatalogueNode", detail.node); context(node, payload); if (node.id !== payload.object_id || !object(detail.details)) return invalid(); parsed = { node, details: detail.details }; }
+        if (payload.include_details) {
+          const detail = shape(raw, ["node", "details"], ["node", "details"]);
+          const node = await parseCatalogueContractModel("CatalogueNode", detail.node); context(node, payload);
+          if (node.id !== payload.object_id || !object(detail.details)) return invalid();
+          const path = detail.details.navigation_path === undefined ? undefined : await navigationPath(detail.details.navigation_path, node, payload);
+          parsed = { node, details: detail.details, ...(path ? { navigationPath: path } : {}) };
+        }
         else { const node = await parseCatalogueContractModel("CatalogueNode", raw); context(node, payload); if (node.id !== payload.object_id) return invalid(); parsed = node; }
       } else parsed = await parseScientific(raw, payload, method);
       aborted(signal); return parsed;

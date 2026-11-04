@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from dataclasses import dataclass
+from contextlib import nullcontext
 import hashlib
 from threading import RLock
 from typing import Callable, Mapping
@@ -279,6 +280,21 @@ class CatalogueService:
 
     def _execute_request(self, name, request, user, *, reference_ids=None):
         try:
+            with self.read_scope():
+                return self._execute_scoped(name, request, user, reference_ids=reference_ids)
+        except CatalogueServiceError:
+            raise
+        except (SnapshotAccessDenied, SnapshotNotFound, AdapterAccessDenied, PermissionError):
+            raise _error("not_found") from None
+        except Exception:
+            raise _error("catalogue_unavailable") from None
+
+    def read_scope(self):
+        scope = getattr(self.resolver, "request_scope", None)
+        return scope() if callable(scope) else nullcontext()
+
+    def _execute_scoped(self, name, request, user, *, reference_ids=None):
+        try:
             resolved = self.resolver.resolve(user, request.snapshot_id)
             if not isinstance(resolved, ResolvedCatalogue):
                 raise _error("catalogue_unavailable")
@@ -368,7 +384,19 @@ class CatalogueService:
             if node is None:
                 raise _error("not_found")
             if request.include_details:
-                return {"node": node.model_dump(mode="json"), "details": self._json(details, permitted_ids=set(nodes))}
+                details = self._json(details, permitted_ids=set(nodes))
+                if not isinstance(details, dict):
+                    raise _error("catalogue_unavailable")
+                # Use this same verified graph for ancestry; clients need not
+                # reopen the full source separately for every breadcrumb.
+                chain, current = [], node
+                while current is not None:
+                    if len(chain) >= MAX_ANCESTRY_DEPTH or current.id in chain:
+                        raise _error("catalogue_unavailable")
+                    chain.append(current.id)
+                    current = nodes.get(current.parent_id) if current.parent_id is not None else None
+                details["navigation_path"] = [nodes[key].model_dump(mode="json") for key in reversed(chain)]
+                return {"node": node.model_dump(mode="json"), "details": details}
             return node.model_dump(mode="json")
         if name == "catalogue.query":
             identity, operation, parameters = request.input_ids, request.operation_id, request.parameters
