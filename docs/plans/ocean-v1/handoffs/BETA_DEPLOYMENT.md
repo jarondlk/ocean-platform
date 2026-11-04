@@ -1,14 +1,12 @@
-# Beta deployment continuation — 2026-11-03 JST
+# Beta deployment continuation — 2026-11-04 JST
 
-State: **Authenticated beta is LIVE at https://beta.oceaninfobio.com. The
-first real CTD catalogue is deployed and browser-verified:162 casts and10,955
-depth observations. Other scientific families, durable Research/queue/worker
-integration and full release acceptance remain unfinished.**
-Branch `overhaul`. **The three-hour schedule is paused for the user’s switch
-to a second Mac.** The pending main Mac SDK sign-in was cancelled. Continue
-manually from the [second Mac handoff](SECONDARY_MAC_HANDOFF.md), which covers
-local sign-in and recovery of pinned private inputs from existing GCS objects.
-No cloud changes were made for this handoff.
+The authenticated beta serves the CTD, metagenome, and MUR regional SST
+catalogues on Cloud Run revision `ocean-v1-beta-serving-00011-wrb`.
+The [metagenome/SST rollout receipt](../beta/cohorts-20261103/meta-sst-live-20261104.md)
+records the active image, browser checks, and remaining latency limits.
+The branch is `overhaul`, and the three-hour schedule remains paused.
+The [second Mac handoff](SECONDARY_MAC_HANDOFF.md) describes pinned input
+recovery and the earlier CTD-only checkpoint.
 
 ## Paused checkpoint — 2026-11-03 JST
 
