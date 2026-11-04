@@ -576,6 +576,9 @@ class FrozenCatalogueAdapter:
         data = datasets.get(request.input_ids[0])
         if data is None:
             raise AdapterAccessDenied("Catalogue identity unavailable")
+        return self._query_dataset(data, request, params)
+
+    def _query_dataset(self, data, request, params):
         spec = next((t for t in data.metadata.tables if t.name == params.table), None)
         try:
             if not getattr(request.scope.sources, data.metadata.family).enabled:
@@ -781,11 +784,15 @@ class FrozenCatalogueAdapter:
             else request
         )
         datasets = self._membership(self._load(request), request.scope)
+        return self._inspect_datasets(identity, request, datasets)
+
+    def _inspect_datasets(self, identity, request, datasets):
         if identity not in datasets:
             raise AdapterAccessDenied("Catalogue identity unavailable")
         data = datasets[identity]
         node = self._nodes(datasets, request)[identity]
-        coverage = self.query(
+        coverage = self._query_dataset(
+            data,
             OperationRequest(
                 snapshot_id=request.snapshot_id,
                 scope=request.scope,
@@ -794,7 +801,8 @@ class FrozenCatalogueAdapter:
                 input_ids=[identity],
                 access_binding=request.access_binding,
                 access_revision=request.access_revision,
-            )
+            ),
+            Parameters(),
         )
         return {
             "node": node,

@@ -109,6 +109,11 @@ class _FrozenBackend:
     def inspect(self, identity, request):
         return self.adapter.inspect(identity, request)
 
+    def inspect_view(self, identity, request):
+        # The inspector and its node inventory must describe the same verified read.
+        context = self.adapter._load(request)
+        return context.nodes, self.adapter._inspect_context(identity, context)
+
 
 class _IntegrityBoundary:
     """Distinguish frozen input verification from public operation parameters."""
@@ -323,16 +328,22 @@ class CatalogueService:
             return self._page(view, internal).model_dump(mode="json")
         if name == "catalogue.open":
             internal = self._internal(request, user, resolved)
-            view = self._view(internal, resolved)
-            node = view.nodes.get(request.object_id)
+            backend = resolved.backend
+            if request.include_details and isinstance(backend, _FrozenBackend):
+                supplied, details = backend.inspect_view(request.object_id, internal)
+                nodes = self._materialize(internal, lambda _: supplied).nodes
+            else:
+                nodes = self._view(internal, resolved).nodes
+                if request.include_details and request.object_id in nodes:
+                    inspect = getattr(backend, "inspect", None)
+                    details = inspect(request.object_id, internal) if callable(inspect) else {
+                        "availability": {"status": "unavailable", "reason": "This backend does not expose object details"},
+                    }
+            node = nodes.get(request.object_id)
             if node is None:
                 raise _error("not_found")
             if request.include_details:
-                inspect = getattr(resolved.backend, "inspect", None)
-                details = inspect(request.object_id, internal) if callable(inspect) else {
-                    "availability": {"status": "unavailable", "reason": "This backend does not expose object details"},
-                }
-                return {"node": node.model_dump(mode="json"), "details": self._json(details, permitted_ids=set(view.nodes))}
+                return {"node": node.model_dump(mode="json"), "details": self._json(details, permitted_ids=set(nodes))}
             return node.model_dump(mode="json")
         if name == "catalogue.query":
             identity, operation, parameters = request.input_ids, request.operation_id, request.parameters
@@ -407,7 +418,7 @@ class CatalogueService:
                 while len(self._bases) >= self.maximum_cached_views:
                     self._evict_base()
         if base is None:
-            base = self._materialize(request, resolved)
+            base = self._materialize(request, resolved.backend.view)
             if base_key is not None:
                 with self._lock:
                     self._bases[base_key] = base
@@ -445,10 +456,10 @@ class CatalogueService:
         for key in [key for key, view in self._cache.items() if view.nodes is base.nodes]:
             del self._cache[key]
 
-    def _materialize(self, request, resolved):
+    def _materialize(self, request, load_nodes):
         try:
             retained_scope = EvidenceScope.model_validate(request.scope.model_dump(mode="json"))
-            supplied = resolved.backend.view(request)
+            supplied = load_nodes(request)
             if not isinstance(supplied, Mapping) or len(supplied) > MAX_NAVIGATION_OBJECTS:
                 raise ValueError("Bounded complete permitted node map required")
             nodes, metadata = {}, {}

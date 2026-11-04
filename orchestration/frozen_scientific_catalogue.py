@@ -153,6 +153,7 @@ class _Context:
     bindings: dict
     adapters: dict
     requests: dict
+    inspection_datasets: dict
     analyses: dict
     records: dict
     relationships: dict
@@ -352,6 +353,7 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
                 raise ValueError("Frozen scientific dataset/source binding mismatch")
 
         loaded, data, requests, selected_adapters = {}, {}, {}, {}
+        inspection_datasets = {}
         for binding in registry.metadata.datasets:
             adapter = self.adapters[binding.source_family]
             native = _request(request, binding)
@@ -367,6 +369,8 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
                 data[binding.dataset_id] = value
                 requests[binding.dataset_id] = native
                 selected_adapters[binding.dataset_id] = adapter
+                if binding.source_family in {"ctd", "metagenome"}:
+                    inspection_datasets[binding.dataset_id] = selected
         actual = sum(
             frame.attrs.get("decoded_bytes", 0)
             for values in loaded.values()
@@ -408,6 +412,7 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
             bindings,
             selected_adapters,
             requests,
+            inspection_datasets,
             analyses,
             visible,
             relationships,
@@ -1063,14 +1068,18 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
             if isinstance(request, ListingRequest)
             else request
         )
-        context = self._load(request)
+        return self._inspect_context(identity, self._load(request))
+
+    def _inspect_context(self, identity, context):
         if identity not in context.nodes:
             raise AdapterAccessDenied("Catalogue identity unavailable")
         node = context.nodes[identity]
         if identity in context.data:
-            value = context.adapters[identity].inspect(
-                identity, context.requests[identity]
-            )
+            adapter, request = context.adapters[identity], context.requests[identity]
+            if identity in context.inspection_datasets:
+                value = adapter._inspect_datasets(identity, request, context.inspection_datasets[identity])
+            else:
+                value = adapter.inspect(identity, request)
             return {
                 **value,
                 "node": node,

@@ -309,6 +309,32 @@ def test_detailed_open_exposes_actual_source_and_scientific_content(frozen, iden
         assert expected["record"]["provider_endorsement"] is False
 
 
+def test_metagenome_inspector_reads_one_index_and_rechecks_access(frozen, monkeypatch):
+    store, sid, _, _, fixtures, _, policy, service, user = frozen
+    identity = fixtures["metagenome"][0].dataset_id
+    index_reads = 0
+    original_read = store.read
+
+    def count_index_reads(snapshot):
+        nonlocal index_reads
+        if snapshot == sid:
+            index_reads += 1
+        return original_read(snapshot)
+
+    monkeypatch.setattr(store, "read", count_index_reads)
+    payload = request(sid, object_id=identity, include_details=True)
+    result = service.open(payload, user)
+    assert result["node"]["id"] == identity
+    assert result["details"]["coverage"]["result"]["receipt"]["operation_id"] == "c10.coverage"
+    assert index_reads == 1
+
+    monkeypatch.setitem(policy, "datasets", {identity})
+    with pytest.raises(CatalogueServiceError) as denied:
+        service.open(payload, user)
+    assert denied.value.code == "not_found"
+    assert index_reads == 2
+
+
 @pytest.mark.parametrize("method,route,extra", [
     ("overview", "/overview", {}),
     ("list", "/list", {"filters": {"kinds": ["dataset"]}, "limit": 2}),

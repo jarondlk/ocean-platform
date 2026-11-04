@@ -25,7 +25,8 @@ BASE_IMAGE = ('asia-northeast1-docker.pkg.dev/' + PROJECT + '/ocean-v1-beta/cata
     '0de4842308efeef1b64c3e51b9c225d2ce0dbdd5b4b321ea4c65c1b6e37de13d')
 BASE_SOURCE_DIGEST = 'dcf27a4644f53fe014fa4f0c3eb4fd3969a66866b0dd1ddaad1b2d1164aeaf92'
 SUPERSEDED = ('api/v1_host.py', 'api/v1_catalogue_host.py',
-    'orchestration/frozen_scientific_catalogue.py')
+    'orchestration/frozen_scientific_catalogue.py', 'orchestration/catalogue_service.py',
+    'orchestration/frozen_catalogue.py')
 ADDED = ('ingestion/gcs_catalogue_snapshot.py', 'api/v1_beta_research_host.py',
     'ingestion/beta_catalogue_retention.py')
 OVERLAYS = SUPERSEDED + ADDED
