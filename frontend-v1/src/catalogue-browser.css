@@ -5,6 +5,19 @@
 .cb-snapshot { max-width: 270px; min-width: 170px; display: grid; gap: 7px; }
 .cb-snapshot label, .cb-table-select { display: grid; gap: 7px; font-size: 11px; color: var(--muted); }
 .cb-snapshot select { width: 100%; max-width: 270px; }
+.cb-collections { margin: 0 30px 22px; }
+.cb-collections h2 { margin: 0; font-size: 14px; font-weight: 550; }
+.cb-collections > p { margin: 7px 0 12px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.cb-collections ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 10px; padding: 0; margin: 0; list-style: none; }
+.cb-collections li { min-width: 0; }
+.cb-collections li > button { display: flex; align-items: flex-start; gap: 10px; width: 100%; height: 100%; min-height: 84px; padding: 14px; text-align: left; border: 1px solid var(--control-line); border-radius: 8px; background: var(--surface); }
+.cb-collections li > button:hover, .cb-collections li > button[aria-pressed="true"] { border-color: var(--blue-ink); background: var(--blue-wash); }
+.cb-collections li > button > svg { flex-shrink: 0; margin-top: 2px; color: var(--blue-ink); }
+.cb-collections li > button > svg:last-child { margin-left: auto; }
+.cb-collections li > button > span { display: grid; gap: 9px; min-width: 0; }
+.cb-collections strong { font-size: 12px; font-weight: 550; line-height: 1.5; overflow-wrap: anywhere; }
+.cb-collections li > button > span > span { font-size: 11px; color: var(--blue-ink); }
+.cb-current-collection { font-weight: 550; }
 .cb-search { margin: 0 30px 14px; display: flex; align-items: center; gap: 10px; padding-left: 14px; border: 1px solid var(--control-line); border-radius: 8px; background: var(--surface); }
 .cb-search > svg { color: var(--muted); flex-shrink: 0; }
 .cb-search input { min-width: 0; width: 100%; border: 0; background: transparent; padding: 13px 0; font-size: 13px; }
@@ -104,7 +117,7 @@
   .cb-heading h1 { font-size: 25px; }
   .cb-snapshot { width: 100%; max-width: 100%; }
   .cb-snapshot select { max-width: 100%; }
-  .cb-search, .cb-filters, .cb-active-filters, .cb-page-size { margin-left: 18px; margin-right: 18px; }
+  .cb-collections, .cb-search, .cb-filters, .cb-active-filters, .cb-page-size { margin-left: 18px; margin-right: 18px; }
   .cb-filters { gap: 8px; }
   .cb-filters label { flex: 1; min-width: 95px; }
   .cb-filters select { min-width: 0; width: 100%; }

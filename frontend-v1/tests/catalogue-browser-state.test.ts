@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { CatalogueLocationError, DATASET_SECTIONS, catalogueLocationUrl, parseCatalogueLocation, updateCatalogueLocation } from "../src/catalogue-browser-state.ts";
+import { browseCatalogueCollection, CatalogueLocationError, DATASET_SECTIONS, catalogueLocationUrl, parseCatalogueLocation, updateCatalogueLocation } from "../src/catalogue-browser-state.ts";
 import type { CatalogueSelectionEvent } from "../src/catalogue-browser-state.ts";
 import { defaultCatalogueScope } from "../src/catalogue-service.ts";
 
@@ -57,4 +57,15 @@ test("selection is an explicit event contract without attach or pin mutation", (
 });
 test("state patch rejects authority fields rather than persisting them", () => {
   assert.throws(() => updateCatalogueLocation(parseCatalogueLocation(""), { role: "admin" } as never), CatalogueLocationError);
+});
+
+test("browsing another collection clears filters and inspector state from the previous collection", () => {
+  const current = parseCatalogueLocation("?snapshot=ctd-old&node=ctd-leaf&parent=ctd-directory&sources=ctd&search=CTD&authorities=published&cursor=old-page&section=tables&limit=25");
+  const before = structuredClone(current);
+  const next = browseCatalogueCollection(current, "sst-new");
+  assert.deepEqual(next, { snapshotId: "sst-new", nodeId: null, parentId: null,
+    cursor: null, section: "overview", limit: 25,
+    filters: { roots: ["data"], kinds: ["dataset"], source_families: [], authorities: [], search: null } });
+  assert.deepEqual(parseCatalogueLocation(new URL(catalogueLocationUrl(next), "https://v1.invalid").search), next);
+  assert.deepEqual(current, before);
 });

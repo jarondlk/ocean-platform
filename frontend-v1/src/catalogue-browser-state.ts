@@ -60,3 +60,9 @@ export function updateCatalogueLocation(current: CatalogueLocation, patch: Parti
   if (before.nodeId !== merged.nodeId && !Object.hasOwn(patch, "section")) merged.section = "overview";
   return merged;
 }
+
+/** Explicit collection switches start at its datasets, with no stale filters. */
+export function browseCatalogueCollection(current: CatalogueLocation, snapshotId: string): CatalogueLocation {
+  return updateCatalogueLocation(current, { snapshotId, nodeId: null, parentId: null,
+    cursor: null, section: "overview", filters: { roots: ["data"], kinds: ["dataset"] } });
+}
