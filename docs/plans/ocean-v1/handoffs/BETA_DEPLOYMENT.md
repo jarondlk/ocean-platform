@@ -5,7 +5,8 @@ metagenome, and MUR regional SST catalogues on revision
 `ocean-v1-beta-serving-00015-m2d`. The [collection-browsing rollout](../beta/context-20261103/catalogue-browsing-20261104.md)
 adds visible links to all three authorized collections and clears stale filters
 when switching. Search stays within the selected collection; no new data was
-activated. The [reference-verification follow-up](../beta/context-20261103/reference-verification-20261104.md)
+activated. Discovery still occasionally reaches its 15-second timeout.
+The [reference-verification follow-up](../beta/context-20261103/reference-verification-20261104.md)
 records the deployed API optimization: context changes returned 200 in 8.286
 and 8.887 seconds; sampled context reads took 1.504–3.472 seconds. ANEMONE's
 separate raw-data latency/integrity acceptance remains open.

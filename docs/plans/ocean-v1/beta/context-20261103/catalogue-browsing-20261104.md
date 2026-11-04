@@ -49,6 +49,12 @@ correct snapshot and dataset listing directly. The metagenome collection URL
 was then reloaded to verify that the selected collection and dataset view are
 restorable.
 
+A bounded live log sample recorded 26 catalogue responses with status 200 and
+one `/catalogue/snapshots` response with status 503 at 15.031 seconds. Discovery
+already had little headroom in the earlier metagenome/SST receipt; this frontend
+rollout does not resolve that backend latency limit. All three collection
+navigation checks and the final metagenome reload completed successfully.
+
 ANEMONE/eDNA remains behind its separate latency/integrity acceptance. The
 three-hour schedule remains paused, model/dispatch/worker execution remains
 disabled, and the ¥50,000/month notice threshold is unchanged.
