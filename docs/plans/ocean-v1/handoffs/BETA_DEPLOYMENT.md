@@ -2,8 +2,12 @@
 
 The authenticated beta serves saved investigations alongside the CTD,
 metagenome, and MUR regional SST catalogues on revision
-`ocean-v1-beta-serving-00012-hxz`. The [saved investigations receipt](../beta/context-20261103/live-20261104.md)
-records the approved grants, browser workflow, and confirmation timing issue.
+`ocean-v1-beta-serving-00013-trn`. The [confirmation follow-up](../beta/context-20261103/save-confirmation-20261104.md)
+records the deployed frontend fix and live verification: a committed change
+confirmed correctly, while reattachment persisted despite a 15-second 503.
+Backend read/mutation latency remains open and must be addressed before ANEMONE.
+The [saved investigations receipt](../beta/context-20261103/live-20261104.md)
+records the approved grants and initial browser workflow.
 The [metagenome/SST rollout receipt](../beta/cohorts-20261103/meta-sst-live-20261104.md)
 records the active image, browser checks, and remaining latency limits.
 The branch is `overhaul`, and the three-hour schedule remains paused.
