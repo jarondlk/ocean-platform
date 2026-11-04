@@ -212,15 +212,16 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     try {
       session.drafts.rememberMutation(slot, intent); setPending(intent);
       const result = await executeInvestigationMutation(client, intent, abort.signal);
-      const fresh = "investigation" in result ? await client.get({ investigation_id: result.investigation.id }, abort.signal) : null;
       if (!mounted.current || guard.current !== mine) return false;
       session.drafts.forgetMutation(slot); setPending(null); setListTick(v => v + 1);
-      if ("investigation" in result && "context" in result) {
-        if (fresh) setActive(fresh);
+      if ("investigation" in result) {
+        // A committed reply resolves retry uncertainty. Revalidate through the
+        // selection effect before exposing the next mutable context.
+        setActive(null); setChecking(true);
         if (intent.method === "create" || intent.method === "refresh") navigate({ investigationId: result.investigation.id, conversationId: null, workspaceTab: "context" });
       }
       if ("conversation" in result) { setConversationName(""); navigate({ conversationId: result.conversation.id }); }
-      setTick(v => v + 1); setNotice(say(locale, "Saved to this private investigation; current shared context is refreshed.", "この非公開の調査に保存し、現在の共有コンテキストを確認しました。")); return true;
+      setTick(v => v + 1); setNotice(say(locale, "Saved to this private investigation.", "この非公開の調査に保存しました。")); return true;
     } catch (e) {
       if (!mounted.current || guard.current !== mine) return false;
       if (code(e) < 500) { session.drafts.forgetMutation(slot); setPending(null); }
