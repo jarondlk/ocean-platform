@@ -135,6 +135,26 @@ def test_concurrent_scopes_do_not_share_control_or_activation_observations(seale
     assert sum(key.endswith('/control.json') for key in reads) == 4
 
 
+def test_discovery_closing_control_conflict_has_a_safe_retry_response(sealed, monkeypatch):
+    import os
+    _, browser = load(sealed)
+    original, changed = BoundedLocalStore.read, False
+    def changing(store, key, **kwargs):
+        nonlocal changed
+        result = original(store, key, **kwargs)
+        if '/objects/' in key and not changed:
+            changed = True
+            path = sealed[1] / 'store/v1/catalogue/control.json'
+            info = path.stat()
+            os.utime(path, ns=(info.st_atime_ns, info.st_mtime_ns + 1_000_000_000))
+        return result
+    monkeypatch.setattr(BoundedLocalStore, 'read', changing)
+    with pytest.raises(CatalogueServiceError) as failure:
+        browser.discover({'scope': PREPARE.scope().model_dump(mode='json')}, fixture_user(role='admin'))
+    assert changed and failure.value.status_code == 503
+    assert failure.value.message == 'Catalogue is unavailable'
+
+
 def test_sealed_mode_reaches_authenticated_host_without_enabling_research(sealed, independent, monkeypatch):
     from fastapi.testclient import TestClient
     from pydantic import SecretStr

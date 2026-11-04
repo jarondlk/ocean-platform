@@ -129,11 +129,16 @@ class _CurrentEmptyBrowser(CatalogueBrowser):
 
     def discover(self, payload, user):
         catalogue_access_binding(user)
-        with self.service.read_scope():
-            self._source.require_current()
-            response = super().discover(payload, user)
-            self._source.require_current()
-            return response
+        try:
+            with self.service.read_scope():
+                self._source.require_current()
+                response = super().discover(payload, user)
+                self._source.require_current()
+                return response
+        except CatalogueServiceError:
+            raise
+        except Exception:
+            raise _unavailable() from None
 
 
 def load_empty_catalogue(path, *, project_id, site_id, cursor_key, _allow_test_owner=False):
