@@ -1,13 +1,20 @@
-# Beta deployment continuation — 2026-11-04 JST
+# Beta deployment continuation — 2026-11-05 JST
 
 The authenticated beta serves saved investigations alongside the CTD,
 metagenome, and MUR regional SST catalogues on revision
-`ocean-v1-beta-serving-00016-sfb`. The [copy cleanup](../beta/context-20261103/copy-cleanup-20261104.md)
+`ocean-v1-beta-serving-00017-kvz` at 100% traffic. The
+[request latency update](../beta/context-20261103/request-latency-20261105.md)
+removes duplicate listings, ancestor requests and repeated Research discovery
+polling. Backend reads verify activation/lifecycle at request boundaries while
+preserving per-operation payload verification. Live collection discovery sampled
+5.142–5.727 seconds; initial loading still takes several seconds, and scale-to-zero
+can add startup delay. The [copy cleanup](../beta/context-20261103/copy-cleanup-20261104.md)
 removes promotional and repeated explanatory text while retaining controls,
 errors and source-specific scientific qualifications. The [collection-browsing rollout](../beta/context-20261103/catalogue-browsing-20261104.md)
 adds visible links to all three authorized collections and clears stale filters
 when switching. Search stays within the selected collection; no new data was
-activated. Discovery still occasionally reaches its 15-second timeout.
+activated. The preceding rollout occasionally reached its 15-second discovery
+timeout; the latency receipt records the subsequent optimization and its limits.
 The [reference-verification follow-up](../beta/context-20261103/reference-verification-20261104.md)
 records the deployed API optimization: context changes returned 200 in 8.286
 and 8.887 seconds; sampled context reads took 1.504–3.472 seconds. ANEMONE's

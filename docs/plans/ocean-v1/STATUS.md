@@ -2,14 +2,15 @@
 
 Updated: 2026-11-03 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
 
-**Current beta checkpoint (2026-11-03 JST):** The three-hour schedule is paused
-for the switch to a second Mac. Authenticated CTD remains live on generation 9
-(`ocean-v1-beta-serving-00009-rn7`). The C13 carrier fix and staged cohort
-selector passed focused local verification and have not been deployed. The
-full eDNA candidate failed the 15-second local latency gate. The next increment
-is metagenome/SST while retaining CTD; durable context grants and verification
-remain pending. Resume with a fresh GCP login and pinned input recovery from
-the [second Mac handoff](handoffs/SECONDARY_MAC_HANDOFF.md).
+**Current beta checkpoint (2026-11-05 JST):** Authenticated CTD, metagenome,
+MUR regional SST and saved investigations are live on
+`ocean-v1-beta-serving-00017-kvz` at 100% traffic. The latest increment removes
+duplicate catalogue requests and repeated authority reads within an operation,
+while preserving fresh access checks and payload verification. Initial discovery
+still takes several seconds. ANEMONE/eDNA remains gated on its separate latency
+and integrity acceptance; model/worker execution remains disabled. The three-hour
+schedule remains paused. See the [current deployment handoff](handoffs/BETA_DEPLOYMENT.md)
+and [latency receipt](beta/context-20261103/request-latency-20261105.md).
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
