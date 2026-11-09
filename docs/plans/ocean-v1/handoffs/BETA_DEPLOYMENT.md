@@ -9,6 +9,13 @@ stays paused. Read the portable handoff amendment in the Research review before
 selecting an activation/image; it supersedes the missing temporary private file
 through an explicit new metadata identity.
 
+The user explicitly deferred GitHub sign-in and the remaining PostgreSQL retry
+to the receiving Mac. The Desktop package includes `CONTINUE_PROMPT.txt`,
+`ACCESS.md`, an offline `overhaul.bundle`, private scientific inputs and a hash
+verifier. Its `MANIFEST.json` records the exact bundled commit. Require a
+successful `verify_handoff.py` run and `TRANSFER_READY.txt` before using it.
+No main-Mac continuation or three-hour scheduling is selected by this handoff.
+
 All 318 hosted PostgreSQL cases passed, but final backup/restore exposed an
 Ubuntu26 client/server-version mismatch. The workflow now selects Ubuntu24 and
 explicit version16 backup clients. A fresh hosted restore pass remains required.
