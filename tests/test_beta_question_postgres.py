@@ -44,7 +44,7 @@ def native(monkeypatch):
     with admin.begin() as c:
         assert 160000 <= int(c.scalar(text("SHOW server_version_num"))) < 170000
         c.execute(text("CREATE EXTENSION vector"))
-        for role in ("ocean_v1_migrator", "ocean_v1_serving", "ocean_v1_research_controller"):
+        for role in ("ocean_v1_migrator", "ocean_v1_serving"):
             c.exec_driver_sql(f'CREATE ROLE "{role}" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS')
         c.execute(text("ALTER DATABASE ocean_v1_beta OWNER TO ocean_v1_migrator"))
         c.execute(text("ALTER SCHEMA public OWNER TO ocean_v1_migrator"))
@@ -67,8 +67,32 @@ def native(monkeypatch):
     load("privileges", "privileges.py")
     operator = load("native_research_operator", "research_operator.py")
     package = load("native_research_operator_package", "prepare_context.py")
+    credential = load("native_controller_credential", "controller_credential.py")
+    base = load("native_password_base", "../operator/operator.py")
+    class MemorySecret:
+        def __init__(self):
+            self._dsn = None
+            self.adds = 0
+        def empty(self):
+            return self._dsn is None
+        def add(self, value):
+            assert self.empty()
+            self._dsn = value
+            self.adds += 1
+            return "1"
+        def access(self, version):
+            assert version == "1"
+            return self._dsn
+    secret = MemorySecret()
     with admin.begin() as c:
         c.execute(text("REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM PUBLIC"))
+        version, controller_dsn = credential.initialize(c, store=secret, base=base)
+        assert version == "1" and secret.adds == 1
+    with pytest.raises(ValueError, match="refuses existing"), admin.begin() as c:
+        credential.initialize(c, store=secret, base=base)
+    with admin.begin() as c:
+        same_version, same_dsn = credential.initialize(c, store=secret, base=base, version="1")
+        assert same_version == version and same_dsn == controller_dsn and secret.adds == 1
     with owner.begin() as c:
         assert c.scalar(text("SELECT version_num FROM alembic_version")) == "20261027_0021"
         for table, rights in CONTEXT_TABLE_PRIVILEGES.items():
@@ -84,7 +108,14 @@ def native(monkeypatch):
     with pytest.raises(ValueError, match="already exists"), owner.begin() as c:
         operator.apply(c, package.schema_contract())
     serving = create_engine(url.set(username="ocean_v1_serving"), pool_pre_ping=True)
-    controller = create_engine(url.set(username="ocean_v1_research_controller"), pool_pre_ping=True)
+    controller_url = make_url(controller_dsn).set(host=url.host)
+    controller = create_engine(controller_url, pool_pre_ping=True, hide_parameters=True)
+    # The qualification container's first HBA rule requires SCRAM for this role.
+    bad = create_engine(controller_url.set(password="synthetic-wrong-password"), hide_parameters=True)
+    with pytest.raises(DBAPIError):
+        with bad.connect():
+            pytest.fail("Wrong controller password must never authenticate")
+    bad.dispose()
     owner_factory = sessionmaker(bind=owner, expire_on_commit=False)
     with owner_factory.begin() as s:
         actor = AppUser(id=uuid.uuid4(), auth_subject="subject-1", auth_provider="oidc", email="owner@beta.invalid",

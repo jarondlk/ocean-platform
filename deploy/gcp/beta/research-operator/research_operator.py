@@ -43,7 +43,7 @@ def configuration(env, *, confirm_project, confirm_source):
             if path.is_symlink() or hashlib.sha256(path.read_bytes()).hexdigest() != manifest["source_pins"][name]:
                 raise ValueError()
         connection = env["OCEAN_V1_SQL_CONNECTION_NAME"]
-        if re.fullmatch(re.escape(PROJECT) + r":asia-northeast1:ocean-v1-beta-[a-z0-9-]+", connection) is None:
+        if connection != PROJECT + ":asia-northeast1:ocean-v1-beta-sql":
             raise ValueError()
         dsn = env["OCEAN_V1_OPERATOR_DATABASE_URL"]
         u = make_url(dsn)
@@ -77,6 +77,14 @@ def policies(manifest):
 
 
 def verify(connection, manifest, *, complete):
+    if complete:
+        function = connection.execute(text("SELECT p.prosecdef,p.proconfig,pg_get_userbyid(p.proowner),p.prosrc,"
+            "p.prorettype='pg_catalog.void'::regtype FROM pg_proc p WHERE "
+            "p.oid=to_regprocedure('public.ocean_v1_beta_research_owner_lock(uuid)')")).first()
+        expected_body = privileges.OWNER_LOCK_SQL.split("$body$")[1].strip()
+        if (function is None or function[0] is not True or function[1] != ["search_path=pg_catalog"]
+                or function[2] != MIGRATOR or function[3].strip() != expected_body or function[4] is not True):
+            raise ValueError("Exact restricted owner-lock function required")
     if connection.scalar(text("SELECT EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace "
             "CROSS JOIN LATERAL aclexplode(c.relacl) a WHERE n.nspname='public' AND a.grantee=0) OR "
             "EXISTS(SELECT 1 FROM pg_attribute c JOIN pg_class t ON t.oid=c.attrelid "
@@ -153,28 +161,47 @@ def apply(connection, manifest):
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description=__doc__)
+    class Parser(argparse.ArgumentParser):
+        def error(self, message):
+            raise ValueError("Exact Research operator arguments required")
+    parser = Parser(description=__doc__)
     parser.add_argument("--confirm-project", required=True)
     parser.add_argument("--confirm-source", required=True)
-    args = parser.parse_args()
-    engine = None
+    parser.add_argument("--verify-only", action="store_true")
+    engine = base = None
+    code, report = 2, {"state": "rejected_or_uncertain"}
     try:
+        from context_operator import load_base_operator
+        base = load_base_operator()
+        args = parser.parse_args()
         selected = configuration(os.environ, confirm_project=args.confirm_project, confirm_source=args.confirm_source)
         engine = create_engine(selected.dsn, hide_parameters=True, pool_pre_ping=True,
             connect_args={"connect_timeout": 10, "options": "-c statement_timeout=60000 -c lock_timeout=10000"})
         with engine.begin() as connection:
-            apply(connection, selected.manifest)
+            if args.verify_only:
+                if tuple(connection.execute(text("SELECT current_database(),current_user")).one()) != (DATABASE, MIGRATOR):
+                    raise ValueError("Exact verification identity required")
+                verify(connection, selected.manifest, complete=True)
+            else:
+                apply(connection, selected.manifest)
         with engine.connect() as connection:
             verify(connection, selected.manifest, complete=True)
-        print(json.dumps({"state": "research_grants_verified", "revision": selected.revision,
-            "account_writes_granted": False, "password_sql_or_data_mutation": False}))
-        return 0
+        report = {"state": "research_grants_verified", "revision": selected.revision,
+            "account_writes_granted": False, "password_sql_or_data_mutation": False,
+            "grant_application_requested": not args.verify_only, "fresh_connection_readback_verified": True}
+        code = 0
     except Exception:
         print("Beta Research grant operation rejected or uncertain; inspect the target before retrying", file=sys.stderr)
-        return 2
     finally:
         if engine is not None:
             engine.dispose()
+        if base is not None:
+            try:
+                report["proxy"] = base.stop_proxy()
+            except Exception:
+                code, report["state"] = 2, "proxy_shutdown_uncertain"
+    print(json.dumps(report))
+    return code
 
 
 if __name__ == "__main__":

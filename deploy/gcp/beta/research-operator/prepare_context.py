@@ -63,9 +63,33 @@ def prepare(*, revision, output):
     return {"revision": revision, "base_image": BASE_IMAGE, "cloud_calls": False}
 
 
+def prepare_credential(*, revision, output):
+    output = Path(output).absolute()
+    if (not re.fullmatch(r"[a-f0-9]{40}", revision) or output.exists() or output.is_relative_to(ROOT)
+            or output.is_symlink() or any(p.is_symlink() for p in output.parents)):
+        raise ValueError("Exact credential source and new private output required")
+    sources = {}
+    for name in ("credential.Dockerfile", "controller_credential.py", "prepare_context.py"):
+        path = HERE / name
+        data = subprocess.check_output(["git", "show", revision + ":" + path.relative_to(ROOT).as_posix()], cwd=ROOT)
+        if path.is_symlink() or path.read_bytes() != data:
+            raise ValueError("Credential initializer differs from selected source")
+        sources[name] = data
+    output.mkdir(mode=0o700)
+    (output / "Dockerfile").write_bytes(sources["credential.Dockerfile"])
+    (output / "controller_credential.py").write_bytes(sources["controller_credential.py"])
+    (output / "controller-credential-manifest.json").write_text(json.dumps({
+        "version": "ocean-v1-beta-controller-credential-v1", "project_id": PROJECT, "revision": revision,
+        "base_image": BASE_IMAGE, "controller_credential_sha256": hashlib.sha256(sources["controller_credential.py"]).hexdigest(),
+        "credentials_or_scientific_data_included": False}, indent=2) + "\n")
+    return {"revision": revision, "credential_initializer_prepared": True, "cloud_calls": False}
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--revision", required=True)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--credential", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(prepare(revision=args.revision, output=args.output)))
+    method = prepare_credential if args.credential else prepare
+    print(json.dumps(method(revision=args.revision, output=args.output)))
