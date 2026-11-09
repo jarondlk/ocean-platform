@@ -1,0 +1,45 @@
+{
+  "archive": {
+    "bytes": 21498063,
+    "sha256": "ac44ac66cfcbbe35a71797d9fa87c00ada3b64a7b6f60f7925634ff6f8edd172"
+  },
+  "directory_mode": "0700",
+  "file_mode": "0600",
+  "gcs_recovery_required": false,
+  "local_uncommitted_work": {
+    "file_count": 31,
+    "metadata_receipt_sha256": "6382f413009ce45d7c2ce296de1425f8715134a304fe90525e198e4ed7228382",
+    "state": "preserved_separately_not_applied"
+  },
+  "manifest_file_count": 35,
+  "manifest_sha256": "ab5b1b4c474079fa6de9f9490db73dda060f7db3f1cd8da98ed8b8c3ad9865ac",
+  "private_member_hash_receipt": "SCIENTIFIC_MANIFEST.json (not copied into Git)",
+  "private_restore_directory": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261109",
+  "research_activation": {
+    "changed_fields": [
+      "authorization_ref",
+      "policy_revision",
+      "research_enabled"
+    ],
+    "original_live_activation_sha256": "464b018099db5975c5ba74ded879e0af5080ad8c4f29541cbaa77397d1af5001",
+    "other_fields_unchanged": true,
+    "repository_canonical_serialization_verified": true,
+    "sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "uploaded_or_activated": false
+  },
+  "restored_member_readback": "all_sizes_and_sha256_match",
+  "safety": {
+    "duplicate_members": 0,
+    "extraction": "explicit_exclusive_regular_file_writes_after_complete_archive_validation",
+    "hard_links": 0,
+    "hash_mismatches": 0,
+    "missing_members": 0,
+    "symlinks": 0,
+    "unexpected_members": 0,
+    "unsafe_paths": 0
+  },
+  "scientific_approval": false,
+  "state": "scientific_handoff_verified_and_restored_privately",
+  "verified_at_utc": "2026-11-09T13:11:23.293141+00:00",
+  "verified_regular_members": 35
+}

@@ -1,0 +1,319 @@
+{
+  "apis": {
+    "enabled_api_count": 40,
+    "scheduler_enabled": false,
+    "vertex_ai_enabled": false
+  },
+  "authorization": {
+    "cloud_changes_claimed_by_this_receipt": false,
+    "incremental_validation_budget_jpy": 500,
+    "manual_validation_question_limit": 20,
+    "monthly_target_jpy": 50000,
+    "notify_before_forecast_exceeds_target": true,
+    "scope": "Concrete beta Research activation package approved, including scoped credential/grant jobs, private controller, listed API/IAM changes, immutable activation publication and serving rollout after prerequisite gates pass.",
+    "source": "user_resume_prompt_20261109",
+    "stated_upper_budget_jpy": 100000,
+    "three_hour_development_schedule": "PAUSED"
+  },
+  "catalogue": {
+    "audit_count": 14,
+    "canonical_lifecycle_and_full_audit_replay": "passed",
+    "control_written": false,
+    "current_activation_matches_verified_archive_bytes": true,
+    "current_activation_sha256": "464b018099db5975c5ba74ded879e0af5080ad8c4f29541cbaa77397d1af5001",
+    "current_control_generation": "1793758432247371",
+    "current_control_sha256": "65ea4c9ac9c26d800fe6ac1719feec20f3e94e18ed7880f0e20397a3d29e5073",
+    "matches_verified_archive_bytes": true,
+    "no_catalogue_ids_or_payloads_in_receipt": true,
+    "prospective_activation_published": false,
+    "prospective_activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "reference_count": 8,
+    "revision": 14,
+    "scientific_approval": false,
+    "snapshot_count": 3
+  },
+  "cloud_read_window_utc": {
+    "first": "2026-11-09T13:12:53.402691+00:00",
+    "last": "2026-11-09T13:13:05.380400+00:00"
+  },
+  "controller": {
+    "credential_version_count": 0,
+    "identity_exists": true,
+    "new_service_created": false,
+    "secret_iam_binding_count": 0,
+    "task_invoker_iam_binding_count": 0,
+    "task_invoker_identity_source": "primary_agent_supplemental_readback",
+    "task_invoker_unique_id": "105490365082123397320"
+  },
+  "evidence_sha256": {
+    "activation-current.json": "464b018099db5975c5ba74ded879e0af5080ad8c4f29541cbaa77397d1af5001",
+    "bucket-iam.json": "3c74769db56bf53981d151e3b436d4c06ccb8e763b7e4d8d84307435dfcf88f4",
+    "control-current.json": "65ea4c9ac9c26d800fe6ac1719feec20f3e94e18ed7880f0e20397a3d29e5073",
+    "control-metadata.json": "b4343c45d662f984e44ee3eb32c4f7f7404cf92ae405270edb44b7054e0ed28a",
+    "controller-identity.json": "7f2522bde8f8902d647d7268c60a1d70d7844932bdddb332a275a855165271c9",
+    "controller-versions.json": "c5c8ad3285916594e07003bac8c1140f66a79686318e8e24b1d19a4abf6c6bdd",
+    "enabled-apis.json": "d5536137e9830bd91f5aeac167957fad0579c862731761db7b38df0116c27fcd",
+    "executions.json": "e936666173056e5517181b6e49d6e840b71ad14227b7b782ed6d2c8eb1ae1700",
+    "jobs.json": "1181bce469b868e522a4c69c9e4e8d50b669303af8300c4291a4bbb7eb7645e2",
+    "project-iam.json": "f43796009a8abd4ff9f49d8c7686838ff9789a9c26bee796478f100c18970812",
+    "qualified-build.json": "334ccd3db416818aa56f690ef798595c25e034a227a2a2c60910c74d14be4aa4",
+    "queue.json": "d4ecad27ba20c7f2a02bb5e2fea448d7088e1333dd711b74a0920d39d4ae694b",
+    "role-oceanBetaCatalogueControlWriter.json": "4ef02f7dfc124e0d4b134e55fa8bcf52a4d0e249ee209f28f4f1a63dcd131915",
+    "role-oceanBetaControllerCredential.json": "5fca691276dd127158a16e1f7c5259ddc039f0186fc91df4cd388c3ffa31f706",
+    "role-oceanBetaResearchPredict.json": "f43bed2a6222ee902f2f22d6bb9ccb0c1b886dbcab50ca509fb72b9deb5043ed",
+    "role-oceanBetaResearchTaskProducer.json": "fe016db21ed3be8bfafa35ca6e0d55ff8d8724306968598c40c34272d550149a",
+    "secret-iam-bootstrap-database.json": "902530ce1a011f7a1ab22eed2a78783de48a9804435bd5477540f4af09b1b4fa",
+    "secret-iam-controller-database.json": "17be10175087ec24631d49af4c7ba1d1580494d4ed583e50fc3a98ab71d5ed29",
+    "secret-iam-internal.json": "d0f4a568f6883e11efbcc6cdee95b45141bd40a669afe8c8a1340c40bf3b2e3a",
+    "secret-iam-migrator-database.json": "e9e27b33304f6f788fd38a337780a153cf6a8e15c6746a1a58119689f61a0de9",
+    "secret-metadata.json": "2b4ec66c3e4e45069e99a8221f9678cebb1eb907211c98a6e416d2419a49b399",
+    "services.json": "3be17a62540fb57d0f9a80b56914ba26d6bd6b7378e93f4a506a08ab063ef8de",
+    "serving-iam.json": "81fce9767ab6362140413e0715c2351d8b949565851c7dfc75fbbb8f158379fa",
+    "serving.json": "e20056ec72309b97fdf187e0b96f22762d9cc3546aad27a0c4939b52dccc0764",
+    "sql.json": "f3c970045675d400732d445c650ace2d5785cf2ff7e597df8a4274642a2bae0d",
+    "task-invoker-iam.json": "664fc96effc66e34e0d516e6ffd0dfde78c4ac1a13cb827631d644e65fbb7ab1",
+    "tasks.json": "90b63f3906f9662c648f80863a31ec483fe46bed6d5e483c95d2266cc3b5cb3f"
+  },
+  "gates_remaining": [
+    "PostgreSQL hosted native cases and successful backup/restore",
+    "current JPY cost forecast and bounded live validation allocation",
+    "scoped credential/grant jobs and private-controller acceptance",
+    "immutable activation publication and serving rollout",
+    "real signed-in Gemini cited answer and persistence/cancellation/duplicate/recovery acceptance",
+    "runtime sweep remains paused until live and budget acceptance"
+  ],
+  "iam": {
+    "bindings_changed": false,
+    "catalogue_control_writer": {
+      "bucket_iam_etag": "CAM=",
+      "condition": {
+        "expression": "resource.name == 'projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/control.json'",
+        "title": "BetaCatalogueControlOnly"
+      },
+      "members": [
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "permissions": [
+        "storage.objects.create",
+        "storage.objects.delete"
+      ],
+      "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaCatalogueControlWriter"
+    },
+    "catalogue_read_scope": "v1/catalogue/ prefix only for serving identity",
+    "research_custom_roles_not_found": [
+      "oceanBetaControllerCredential",
+      "oceanBetaResearchPredict",
+      "oceanBetaResearchTaskProducer"
+    ],
+    "serving_service_iam_binding_count": 1
+  },
+  "legacy_resources_changed": false,
+  "prepared_at_utc": "2026-11-09T13:22:10.267764+00:00",
+  "prior_jobs": {
+    "bootstrap_migration_enrollment_retried": false,
+    "count": 8,
+    "latest_execution_success_count": 8,
+    "latest_executions": [
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-04T02:10:43.306171Z",
+        "creationTimestamp": "2026-11-04T02:10:20.270770Z",
+        "job": "ocean-v1-beta-context-grants",
+        "name": "ocean-v1-beta-context-grants-s8r5k"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T07:08:10.455884Z",
+        "creationTimestamp": "2026-11-02T07:07:48.521772Z",
+        "job": "ocean-v1-beta-db-bootstrap",
+        "name": "ocean-v1-beta-db-bootstrap-mktnv"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T07:31:43.695490Z",
+        "creationTimestamp": "2026-11-02T07:31:27.036202Z",
+        "job": "ocean-v1-beta-db-finalize",
+        "name": "ocean-v1-beta-db-finalize-kbwr5"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T07:22:49.541824Z",
+        "creationTimestamp": "2026-11-02T07:22:23.817483Z",
+        "job": "ocean-v1-beta-db-migrate",
+        "name": "ocean-v1-beta-db-migrate-wvzh4"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T06:43:42.584036Z",
+        "creationTimestamp": "2026-11-02T06:43:20.167830Z",
+        "job": "ocean-v1-beta-db-normalize-owner",
+        "name": "ocean-v1-beta-db-normalize-owner-rljsn"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T05:48:57.776509Z",
+        "creationTimestamp": "2026-11-02T05:48:33.329908Z",
+        "job": "ocean-v1-beta-db-qualify",
+        "name": "ocean-v1-beta-db-qualify-xk4cm"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T05:58:52.605755Z",
+        "creationTimestamp": "2026-11-02T05:58:27.480414Z",
+        "job": "ocean-v1-beta-db-readback",
+        "name": "ocean-v1-beta-db-readback-8gmbv"
+      },
+      {
+        "completionStatus": "EXECUTION_SUCCEEDED",
+        "completionTimestamp": "2026-11-02T07:37:17.965115Z",
+        "creationTimestamp": "2026-11-02T07:36:50.509849Z",
+        "job": "ocean-v1-beta-enrollment-first-account",
+        "name": "ocean-v1-beta-enrollment-first-account-g58sh"
+      }
+    ],
+    "no_uncertain_prior_execution_found": true,
+    "retained_execution_count": 9,
+    "retained_execution_success_count": 9
+  },
+  "private_evidence_directory": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261109/cloud-preflight",
+  "project_id": "ocean-v1-beta-20261101",
+  "qualified_api": {
+    "build_id": "f5d0d58d-9431-4049-881f-5a037d6dd080",
+    "finish_time": "2026-11-09T09:37:39.835691Z",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:c326fcbe223f38326928bbe93f989a53d8e27cce55432d3e37af68f00e12896a",
+    "matches_handoff_amendment02": true,
+    "status": "SUCCESS"
+  },
+  "region": "asia-northeast1",
+  "research_queue": {
+    "purged_or_resumed": false,
+    "queue_iam": {
+      "binding_count": 0,
+      "etag": "ACAB",
+      "source": "primary_agent_supplemental_readback"
+    },
+    "rate_limits": {
+      "maxBurstSize": 10,
+      "maxConcurrentDispatches": 1,
+      "maxDispatchesPerSecond": 1.0
+    },
+    "retry_config": {
+      "maxAttempts": 3,
+      "maxBackoff": "300s",
+      "maxDoublings": 16,
+      "maxRetryDuration": "3600s",
+      "minBackoff": "10s"
+    },
+    "state": "PAUSED",
+    "task_count": 0
+  },
+  "scientific_approval": false,
+  "serving": {
+    "application_auth_mode": "required",
+    "container_concurrency": 4,
+    "containers": [
+      {
+        "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:f2354f38c4412cb7c58efbbd3f47be77e2bba707e3d8c43499c9eef008b2c4a1",
+        "name": "frontend",
+        "resources": {
+          "limits": {
+            "cpu": "1",
+            "memory": "512Mi"
+          }
+        },
+        "secret_reference_count": 3
+      },
+      {
+        "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:c4c15379db125dfe506d728a6f17fbcb60fd88613d7cffdcf771e48b2111bc77",
+        "name": "api",
+        "resources": {
+          "limits": {
+            "cpu": "1",
+            "memory": "4Gi"
+          }
+        },
+        "secret_reference_count": 2
+      },
+      {
+        "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+        "name": "sql-proxy",
+        "resources": {
+          "limits": {
+            "cpu": "1",
+            "memory": "256Mi"
+          }
+        },
+        "secret_reference_count": 0
+      }
+    ],
+    "default_url_disabled": "true",
+    "experiments_enabled": false,
+    "generation": 26,
+    "ingress": "internal-and-cloud-load-balancing",
+    "invoker_iam_disabled": "true",
+    "max_instances": 1,
+    "min_instances": 0,
+    "mock_login": false,
+    "name": "ocean-v1-beta-serving",
+    "preservation_required_on_future_rollout": [
+      "runtime_identity",
+      "secret_references",
+      "private_proxy_image_and_arguments",
+      "networking",
+      "ingress",
+      "authentication",
+      "resource_and_scaling_settings",
+      "unrelated_environment_settings"
+    ],
+    "private_sql_proxy": true,
+    "proxy_listens_on_loopback": true,
+    "ready_revision": "ocean-v1-beta-serving-00017-kvz",
+    "research_flags": {
+      "ENABLE_V1_EVIDENCE": "false",
+      "ENABLE_V1_RESEARCH_CONTROLLER": "false",
+      "ENABLE_V1_RESEARCH_DISPATCH": "false",
+      "ENABLE_V1_RESEARCH_RUNS": "false",
+      "ENABLE_V1_SYNTHESIS": "false"
+    },
+    "service_account": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "timeout_seconds": 60,
+    "traffic": [
+      {
+        "percent": 100,
+        "revisionName": "ocean-v1-beta-serving-00017-kvz"
+      }
+    ],
+    "vpc_egress": "private-ranges-only"
+  },
+  "sql": {
+    "availability_type": "ZONAL",
+    "backup_enabled": true,
+    "database_flags": [
+      {
+        "name": "log_min_error_statement",
+        "value": "panic"
+      },
+      {
+        "name": "log_statement",
+        "value": "none"
+      },
+      {
+        "name": "pg_stat_statements.track_utility",
+        "value": "off"
+      }
+    ],
+    "database_version": "POSTGRES_16",
+    "deletion_protection": true,
+    "direct_database_or_secret_value_access_performed": false,
+    "installed_version": "POSTGRES_16_15",
+    "ip_types": [
+      "PRIVATE"
+    ],
+    "point_in_time_recovery_enabled": true,
+    "public_ipv4_enabled": false,
+    "ssl_mode": "ENCRYPTED_ONLY",
+    "state": "RUNNABLE",
+    "tier": "db-custom-2-7680"
+  },
+  "state": "fresh_read_only_beta_preflight_no_activation_writes"
+}

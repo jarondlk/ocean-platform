@@ -1,0 +1,36 @@
+{
+  "jobs_created_or_executed": false,
+  "persisted_cloud_changes": false,
+  "prepared_requests_private_directory": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261109/activation-requests-v3",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "remaining_gate": "successful PostgreSQL job including backup/restore before activation",
+  "request_source_sha256": "4166ba6e5c10f5abc6347665f5b8bfb766a35505fcd22022c6b3c4430b283707",
+  "requests": [
+    {
+      "http_status": 200,
+      "observed_utc": "2026-11-09T13:28:18.603237+00:00",
+      "request": "serving-stage-zero-traffic",
+      "request_sha256": "2e97293218970327457ec00fec633da6ca52b285771a3d409d4018e829c703e9"
+    },
+    {
+      "http_status": 200,
+      "observed_utc": "2026-11-09T13:29:09.140347+00:00",
+      "request": "credential-job",
+      "request_sha256": "1a31e872bfbdfbc90708a7153335d1e515ca92630b4fb9f5606dd54eaa8b05ca"
+    },
+    {
+      "http_status": 200,
+      "observed_utc": "2026-11-09T13:29:10.638538+00:00",
+      "request": "grants-job",
+      "request_sha256": "0057187e468c54bfe78f7ccccb8877a3f0262e2d571d8970e46c2dc3c38dddd3"
+    }
+  ],
+  "requires_fresh_preflight_before_apply": true,
+  "serving_resource_version": "AAZfbssOFTs",
+  "serving_revision_or_traffic_changed": false,
+  "serving_unrelated_settings_preservation": "all assertions pass; proxy/identities/secrets/network/scale/traffic preserved",
+  "serving_update_strategy": "fresh GET and unchanged resourceVersion, exact regional v1 PUT; no automatic retry; gcloud replace alone does not fence stale templates",
+  "state": "cloud_run_request_validation_passed_only",
+  "version": "ocean-beta-secondary-mac-dry-run-v1"
+}

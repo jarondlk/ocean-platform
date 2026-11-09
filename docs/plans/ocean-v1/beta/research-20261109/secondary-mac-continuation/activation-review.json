@@ -1,0 +1,93 @@
+{
+  "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+  "api_build_id": "f5d0d58d-9431-4049-881f-5a037d6dd080",
+  "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:c326fcbe223f38326928bbe93f989a53d8e27cce55432d3e37af68f00e12896a",
+  "cloud_mutations_performed": false,
+  "cost_review": {
+    "actual_usage_method": "Inspect available billing export/report or current provider usage metrics; catalogue public price is not actual spend",
+    "historical_31day_jpy_including_contingency": "35604.045104616",
+    "historical_quote_includes_models": false,
+    "historical_quote_is_current_bill": false,
+    "initial_incremental_jpy_max": 500,
+    "initial_manual_questions_max": 20,
+    "model_bounds": "Default controller permits up to14 model calls (12tool actions+1repair+1), context65536bytes and output4096 each, plus up to2 synthesis calls; byte/time/question bounds are not a currency cap",
+    "monthly_target_jpy": 50000,
+    "public_price_refresh_method": "Cloud Billing Catalogue services.skus.list with currencyCode=JPY for existing baseline SKU IDs plus selected Gemini3.8 Flash input/output and Cloud Scheduler; exact unit conversion and effective times retained",
+    "required_budget_evidence": "Conservative per-question reserve from live JPY rates plus actual provider usage and controller compute; keep total validation belowJPY500 and notify before forecast exceedsJPY50000",
+    "run_capacity": "Controller and proxy total2vCPU/4.25GiB during request; price both containers, startup, sweeps and serving activity within aggregate allocation",
+    "run_monthly_aggregate_allocation_jpy": 3000,
+    "stated_upper_budget_jpy": 100000,
+    "sweep_gate": "Measure idle dispatch duration and include its compute/storage/secret/task effects before enabling recurring sweep",
+    "sweep_monthly_invocations_31day": 8928
+  },
+  "cost_review_receipt": "cost-review.json",
+  "cost_review_status": "CurrentJPYcatalogue and observed usage captured; bounded monthly scenarioJPY36480.84; runtime sweep still requires live duration/cost gate.",
+  "effective_proposals": "handoff-amendment02",
+  "live_release_accepted": false,
+  "operator_source_revision_to_preserve": "84fe01714e426a66ee7b30559b69ebe05ef8f04f",
+  "ordered_activation": [
+    "Use only missing exact reviewed custom roles/resource grants and the two reviewed API enablements; preserve unrelated IAM bindings/conditions",
+    "Inspect controller credential secret versions and existing credential/grants job executions; never rerun original bootstrap/migration/enrollment",
+    "Run source84fe017 credential job once only when current empty-secret/no-role conditions hold; require numeric version and fresh SQL login plus proxy termination",
+    "Run source84fe017 Research grants job once; require exact ACL/owner-lock verification and physical successful operator/proxy termination",
+    "Remove temporary bootstrap secret access after verification",
+    "Validate replacement activation using render_configuration canonical contract and original inventory equality; publish only activations/4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694.json create-only; verify generation/hash",
+    "Create reviewed min0/max1 private controller; verify actual default URL/audience and task-invoker subject; require Ready/internal ingress/IAM and unauthenticated denial",
+    "Patch freshly read serving template with effective application images/Research fields only; retain numeric secret refs, proxy, identities, ingress/network/scale and current traffic; stage zero traffic and compare before promote",
+    "Reinspect queue tasks and preserve them; apply reviewed bounded retry policy and resume only after private target verification",
+    "Run signed-in deterministic and real Gemini-backed cited-answer checks, persistence/reload, cancellation, duplicate delivery and durable recovery, plus existing catalogue/investigation checks",
+    "Create runtime outbox schedule paused; resume only after measured idle sweep/question cost and recovery proof"
+  ],
+  "prerequisites": [
+    "Actual successful PostgreSQL CI retry, including PostgreSQL16 backup and restore",
+    "Fresh explicit-project cloud access, service templates, IAM etags, API status, secret-version metadata, job/execution outcomes and queue tasks",
+    "Fresh catalogue control generation/hash and validation of current references/audits before any lifecycle write",
+    "Current JPY price/usage forecast and bounded initial validation allocation before activation"
+  ],
+  "preserved_gates": {
+    "answer_history_latency_seconds": 15,
+    "codex_three_hour_schedule": "PAUSED",
+    "edna_anemone": "separate_acceptance",
+    "experiments": "disabled_separate_acceptance",
+    "legacy_mutations": false,
+    "p2_d26_07": "open_until_measured",
+    "research_queue_until_preflight": "PAUSED",
+    "runtime_outbox_sweep_initial": "PAUSED",
+    "scientific_approval": false,
+    "workers": "separate_acceptance"
+  },
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "review_date_jst": "2026-11-09",
+  "review_notes": [
+    "The historical activation-supersession image_rebinding=pending field is stale after effective buildf5d0d58d and current handoff-amendment02 image/source proof; preserve historical receipt and use effective selection rather than treating that original flag as live acceptance.",
+    "Current controller CloudSQL Client grant proposal is project-level without condition. Root selects the same exact-instance condition used by existing beta identities; this narrows the proposal to the intended single SQL instance. Read back actual condition and preserve unrelated bindings.",
+    "Controller env pins secret version1 and predicted URL/task-invoker subject. Read actual credential numeric version, default URL and identity uniqueId before create/rollout; adapt only if verified current metadata requires it.",
+    "Keep private controller Run IAM enforcement enabled and require internal ingress plus application OIDC audience/email/subject validation. No public invoker or broad token creator grant.",
+    "Current canonical control must remain authoritative. Initial immutable metadata publication needs no lifecycle-control replacement; subsequent retention references use fresh generation CAS.",
+    "Existing service maxScale1 is revision scoped; zero-traffic staging may briefly overlap old/new warm instances. Include bounded staging/startup in validation allocation; preserve service identities/secrets/proxy/networks and traffic before promotion.",
+    "Cloud Scheduler Job.state is output-only, so atomic paused creation is unavailable. Avoid immediate five-minute creation: create with a verified far-future cron such as Jan1 yearly while current dateNov9, verify future scheduleTime, pause/read back PAUSED, then patch to */5 while retaining PAUSED and admission/queue fences. Scheduler must remain paused until measured live/cost gates pass."
+  ],
+  "reviewed_file_sha256": {
+    "README.md": "156865db169b42fc0cb25fa281df7e8204be8158392a64e07deb49f7214c99bd",
+    "cloud-changes.proposed.json": "38a355086ffdddb3373c3ccb701bfca91854101c8133c4d68b26834811f41c67",
+    "controller-credential-job.proposed.json": "1a31e872bfbdfbc90708a7153335d1e515ca92630b4fb9f5606dd54eaa8b05ca",
+    "handoff-amendment02/activation-supersession.json": "c6d1f99d11ae8b80f2cc85fd4e7a5a8fad61ce718512b85eeeecc0650d48fc0f",
+    "handoff-amendment02/build.json": "691fbf9d00e5ea050fa713700d199fc933cdf7ba0a8d1804d3fad73574830f61",
+    "handoff-amendment02/controller-service.proposed.json": "36c7586e748745f5fd41a184e21c921b833f9347db917eaefe003faf2551993d",
+    "handoff-amendment02/images.json": "8d889c46c01a0bae9cda355e3fefd2d267f43217a7412e2ef06d169347d3e103",
+    "handoff-amendment02/serving-changes.proposed.json": "2f0a04cd8f64767387e3e01788f761b1a8e7109649cbd4faf2ed4eb536132ca3",
+    "research-grants-job.proposed.json": "0057187e468c54bfe78f7ccccb8877a3f0262e2d571d8970e46c2dc3c38dddd3",
+    "research-grants.proposed.sql": "567d6b3c84db9bab15f7b75898acc3d2630c439dac4fcf72ecde748eb53d008b"
+  },
+  "scheduler_initialization_source": "https://docs.cloud.google.com/scheduler/docs/reference/rest/v1/projects.locations.jobs",
+  "source_checkpoint": "4f4b6166370f475bf27801531e8b1ce0ec587250",
+  "state": "offline_review_complete_live_preflight_pending",
+  "uncertain_outcomes": {
+    "activation": "Read exact content-addressed object and verify hash/generation; an existing exact object is a readback condition, never overwrite",
+    "control": "Preserve current control references/audits; no archived control blob replacement",
+    "credential": "Inspect secret-version metadata and execution outcome first; explicit --reconcile-version selects the retained numeric credential, never silently creates a replacement",
+    "grants": "Inspect outcome and use --verify-only rather than blind replay"
+  },
+  "version": "ocean-beta-secondary-mac-activation-review-v1"
+}

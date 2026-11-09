@@ -1,0 +1,62 @@
+{
+  "all_other_writable_service_settings_preserved": true,
+  "base_serving_generation": 26,
+  "base_serving_resource_version": "AAZfbssOFTs",
+  "base_serving_revision": "ocean-v1-beta-serving-00017-kvz",
+  "cloud_calls_performed": false,
+  "credential_values_included": false,
+  "package_manifest_sha256": "9e9de6d045a38f58822c93434c9b777d5553ee62d9ff86622352b33b94b768cf",
+  "pending_gates": [
+    "ActualsuccessfulPostgreSQLjobincludingbackup_restore",
+    "Freshpolicyetags_afterAPIactivation_and_immediateprewrite_compares",
+    "Credential_grantoperator_cloudreadbacks_and_proxytermination",
+    "Activationcreateonlygeneration_hashreadback",
+    "PrivatecontrollerReady_internalIAM_exactURLsubjectandunauthenticateddenial",
+    "ServingReady_exactdiff_zeroinitialtraffic_thenverifiedpromotion",
+    "Signed_in_question_and_citedanswer_persistence_cancellation_duplicate_recovery",
+    "RuntimeSweep_paused_until_measuredlive_costgate"
+  ],
+  "preparation_script_sha256": "4166ba6e5c10f5abc6347665f5b8bfb766a35505fcd22022c6b3c4430b283707",
+  "prepared_request_sha256": {
+    "REVIEW.md": "af6b3ab2c11ea991eb65f37174265612ce82208c5d860cc9cc1b79e65293490f",
+    "activation-publication.json": "6d5a6c3645ecc215a940f1a525b7ae3da590c5b53e1a75213d4ff23d2533ae03",
+    "apply_serving_stage.py": "8f79a2081653dbaaf4a2d33180af411afbf832f59d2fea5c005eba197ea6357a",
+    "bucket-iam.after.json": "5be15d08859bd21a7eb309119f31512d73923645049444a5f2213188920bc3c7",
+    "controller-invoker.additions.json": "79fba9f9dd27f6c2714ac29184624f5d2760a5d8243170c3dbb0f53a5204b41a",
+    "controller-service.json": "36c7586e748745f5fd41a184e21c921b833f9347db917eaefe003faf2551993d",
+    "credential-job.json": "1a31e872bfbdfbc90708a7153335d1e515ca92630b4fb9f5606dd54eaa8b05ca",
+    "credential-temporary-cleanup.json": "950a41feb97fdc4bca5ee6ab79a0a1e509768b023346f1d6db1a001404f00ecb",
+    "execution-steps.json": "86c0b004b5d8c2f952d559aa559e23ad4ab9a7846ac7c701ae639495a98e0ad8",
+    "grants-job.json": "0057187e468c54bfe78f7ccccb8877a3f0262e2d571d8970e46c2dc3c38dddd3",
+    "prepare_beta_activation.py": "4166ba6e5c10f5abc6347665f5b8bfb766a35505fcd22022c6b3c4430b283707",
+    "project-iam.after.json": "a6abf1a219d0e9b72b34c055ee1312742d5bc453bb85dbac75ffae535741954f",
+    "queue-iam.controller-initial.after.json": "2c67a604af1b69b9965b73b1e0488f8a857a6ecbe24c2d9a9d9472e5239ac2e3",
+    "queue-iam.final.preview.json": "85bed34761598d765295858048f61fbac7a30ab85add083fa1c9c98d1b958041",
+    "queue-iam.serving-final.addition.json": "044a51a317c9bd80a6b47dd97a329840a72069a4c3aa6b4f0daec5ad7ba66ed5",
+    "queue-settings.json": "4aed7d6b3f33ec1d532f976e23230d4d1e0a5160583848d09ffefe0b163bc670",
+    "role-oceanBetaControllerCredential.create.json": "d876da889330e2cbc7c11dfe85f2a7490bc6f522caf3ecc9ac75f64ed62b0bc9",
+    "role-oceanBetaResearchPredict.create.json": "d15e0165f5c271ac0af12e931afcb0180e11478d16af4a7a27155830325ee69e",
+    "role-oceanBetaResearchTaskProducer.create.json": "99b73dc592174115f60242ff660807b74871c596d8b0e0776702d6dd3e0a1099",
+    "secret-controller-database-iam.after.json": "bce65739ed265f6f6d1595a8ac9d9d69f9dfecaae317a9ce1e290cd1651e63d9",
+    "secret-internal-iam.after.json": "0650328e3124658e10b03cda04e5c836eb338fc5030a085bab8d796b873f4736",
+    "serving-preservation.json": "7cf9314c3c3a9ba747b674d9405e4f61fabddbcc3e7d7eeffb9a26b3762a2074",
+    "serving-stage-zero-traffic.json": "2e97293218970327457ec00fec633da6ca52b285771a3d409d4018e829c703e9",
+    "task-invoker-iam.after.json": "1ae082d7f93eb6e11b6711d39060c60422ded1f85beda82bd7c7c47e411a471d"
+  },
+  "private_package_location": "ApplicationSupport/OCEAN/private-handoff-20261109/activation-requests-v3",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "scheduler": "Deferred;futurecroncreate_thenpauseverify_thenpatchfive_minutewhilepaused; stateisoutputonly",
+  "serving_update_method": "Exactregionalv1PUT with preserved metadata.resourceVersion; installedgcloudReplaceServiceChange overwrites suppliedversion and is not a stale-templatefence",
+  "source_checkpoint": "4f4b6166370f475bf27801531e8b1ce0ec587250",
+  "state": "offline_exact_requests_prepared_not_applied",
+  "temporary_acceptance_queue_configuration": "Applycontrollerproducerbindinginitially;intentionallydeferservingproducerbindinguntildurablependingoutboxrecovery; queuePAUSED. Finalservingbindingmustbereadbackbeforegrantacceptance.",
+  "temporary_cleanup": "RemoveonlynewcustomcontrollercredentialbindingfrombootstrapSA; preexistingbootstrapdatabaseaccessorpreserved",
+  "traffic_during_stage": [
+    {
+      "percent": 100,
+      "revisionName": "ocean-v1-beta-serving-00017-kvz"
+    }
+  ],
+  "version": "ocean-beta-secondary-mac-activation-request-preparation-v1"
+}

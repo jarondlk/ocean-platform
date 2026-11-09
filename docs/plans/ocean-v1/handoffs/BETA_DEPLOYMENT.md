@@ -1,5 +1,57 @@
 # Beta deployment continuation — 2026-11-09 JST
 
+## Receiving Mac continuation
+
+The receiving checkout was clean at `ad0c313` and fast-forwarded to fetched
+`origin/overhaul` `4f4b6166370f475bf27801531e8b1ce0ec587250`. No newer local
+commits or uncommitted checkout changes were lost. The older Desktop AirDrop
+folder contains the scientific archive, manifest, `local-uncommitted-work` and
+`PREPARING.txt`; the newer package files described below were never required
+to reconstruct this checkpoint because the repository and the user's exact
+continuation instructions supply their replacement evidence.
+
+All 35 regular scientific members passed size/hash verification after unsafe
+paths, links, duplicates and unexpected members were rejected. Archive SHA256
+`ac44ac66cfcbbe35a71797d9fa87c00ada3b64a7b6f60f7925634ff6f8edd172`,
+manifest SHA256 `ab5b1b4c474079fa6de9f9490db73dda060f7db3f1cd8da98ed8b8c3ad9865ac`.
+Durable owner-only restoration is under
+`~/Library/Application Support/OCEAN/private-handoff-20261109/scientific`.
+The 31 older local-work files are preserved separately and have not been applied.
+The replacement Research activation has exact hash `4843e61b…`; canonical
+serialization and all unchanged scientific inventories/qualifications pass.
+
+This Mac has no dedicated automation credential configuration. A fresh personal
+Google CLI sign-in succeeded with the requested Tohoku account, and explicit
+beta-project access was verified. GitHub CLI is signed in as `jarondlk` through
+this Mac's browser. No credential values enter repository receipts. The SDK is
+installed in `~/Library/Application Support/OCEAN/tools/google-cloud-sdk`;
+GitHub CLI is `/opt/homebrew/bin/gh`. The Homebrew SDK installation encountered
+an existing certificate-link conflict; the downloaded vendor SDK runs with the
+existing Python without altering unrelated Homebrew links.
+
+Fresh cloud metadata matches revision `ocean-v1-beta-serving-00017-kvz`,
+generation26, 100% traffic, empty PAUSED Research queue and zero controller
+secret versions. Private encrypted PostgreSQL16, successful prior setup jobs,
+scoped control writes and qualified build `f5d0d58d`/digest `c326fc…` are verified.
+Current catalogue control is generation `1793758432247371`, SHA256 `65ea4c9a…`;
+the full canonical14-audit chain and8references pass and equal restored bytes.
+No old bootstrap/migration/enrollment job is rerun.
+
+The user explicitly approved the concrete beta Research scope in the receiving
+Mac continuation prompt. PostgreSQL run `42594709784` is retrying only its failed
+job; actual backup/restore remains a required gate. The expanded current JPY
+scenario is ¥36,480.84/month with10% contingency. Initial model validation
+reserves ¥450 for one question at a time and reconciles actual usage before
+admitting another, within20manual questions/¥500 total incremental spend.
+Runtime sweep stays paused until live duration/cost checks pass. A safe
+Scheduler initialization must avoid creating an immediately active five-minute
+job: its state is output-only, so create with verified future cron, pause/read
+back, then patch the five-minute schedule while paused.
+
+[Continuation receipts](../beta/research-20261109/secondary-mac-continuation/)
+record verification and remaining gates. Research is not yet live. The
+three-hour Codex schedule remains PAUSED; scientific approval remains false.
+
 ## Current portable handoff
 
 The user is preparing to continue on another Mac. A private AirDrop package is

@@ -1,0 +1,22 @@
+{
+  "branch": "overhaul",
+  "checkpoint_sources": {
+    "functional_source": "3cdecc01290f519533351fc03055fc6dcd6a7736",
+    "main_mac_checkpoint": "4f4b6166370f475bf27801531e8b1ce0ec587250"
+  },
+  "fetched_and_reconciled_head": "4f4b6166370f475bf27801531e8b1ce0ec587250",
+  "head_reflog_confirms_fast_forward": true,
+  "legacy_boundary_preserved": true,
+  "local_only_commits": 0,
+  "local_work_discarded": false,
+  "older_airdrop_local_work": {
+    "receipt": "scientific-recovery.json",
+    "state": "31 files preserved separately for review; not applied"
+  },
+  "original_checkout_tracked_and_untracked_changes": 0,
+  "original_head": "ad0c31381fb21c289b973ae675b26b31a4cf7afa",
+  "reconciliation": "git fetch origin overhaul; git merge --ff-only origin/overhaul",
+  "remote": "https://github.com/jarondlk/ocean-platform.git",
+  "reset_rebase_stash_or_cherry_pick_performed": false,
+  "state": "clean_checkout_fast_forward_reconciled_without_loss"
+}

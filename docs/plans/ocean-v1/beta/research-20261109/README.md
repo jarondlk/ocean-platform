@@ -1,5 +1,17 @@
 # Research questions activation review — 2026-11-09 JST
 
+## Receiving Mac continuation
+
+[Recovery, cloud preflight, current JPY forecast and acceptance
+receipts](secondary-mac-continuation/) record the receiving Mac's verified
+continuation. The user explicitly authorized this documented beta-only
+activation scope. The failed PostgreSQL job is being retried through this Mac's
+signed-in GitHub CLI; successful unchanged backend/frontend evidence is reused.
+Cloud activation remains gated on actual PostgreSQL16 backup/restore success
+and fresh live checks. Effective image/activation selection remains
+`handoff-amendment02`; scientific approval remains false and the three-hour
+Codex schedule stays PAUSED.
+
 ## Portable handoff amendment
 
 The expired temporary folders on this Mac are empty. Existing catalogue objects,

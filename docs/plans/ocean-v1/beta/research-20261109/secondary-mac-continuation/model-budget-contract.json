@@ -1,0 +1,20 @@
+{
+  "cloud_calls": false,
+  "controller_action_schema_sha256": "d802d59a7942af01bef3fb4d77d91d5445c75f75bdeab121347d3f76100d9721",
+  "controller_action_schema_utf8_bytes": 1583,
+  "default_limits": {
+    "active_seconds": 180.0,
+    "listing_default": 100,
+    "listing_maximum": 500,
+    "malformed_repairs": 1,
+    "model_context_bytes": 65536,
+    "observation_preview_rows": 20,
+    "tool_actions": 12
+  },
+  "import_qualification": "Pure repository contracts loaded with eager retrieval/orchestration package initializers bypassed; unrelated dependencies not needed; no runtime acceptance claimed",
+  "model_calls_maximum": 14,
+  "provider_token_count_measured": false,
+  "pydantic_version": "2.13.5",
+  "research_synthesis_maximum_calls": 2,
+  "version": "ocean-beta-controller-schema-budget-v1"
+}

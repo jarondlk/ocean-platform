@@ -1,0 +1,26 @@
+{
+  "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+  "api_build_id": "f5d0d58d-9431-4049-881f-5a037d6dd080",
+  "api_build_readback_utc": "2026-11-09T13:13:01.490970+00:00",
+  "api_build_status": "SUCCESS",
+  "api_qualified_source": "3cdecc01290f519533351fc03055fc6dcd6a7736",
+  "checkpoint": "4f4b6166370f475bf27801531e8b1ce0ec587250",
+  "ci_gate": "PostgreSQL retry and actual PostgreSQL16 backup/restore pending",
+  "effective_receipt_sha256": {
+    "build.json": "691fbf9d00e5ea050fa713700d199fc933cdf7ba0a8d1804d3fad73574830f61",
+    "controller-service.proposed.json": "36c7586e748745f5fd41a184e21c921b833f9347db917eaefe003faf2551993d",
+    "images.json": "8d889c46c01a0bae9cda355e3fefd2d267f43217a7412e2ef06d169347d3e103",
+    "serving-changes.proposed.json": "2f0a04cd8f64767387e3e01788f761b1a8e7109649cbd4faf2ed4eb536132ca3"
+  },
+  "images": {
+    "api": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:c326fcbe223f38326928bbe93f989a53d8e27cce55432d3e37af68f00e12896a",
+    "credential": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/controller-credential@sha256:e6d67cc2857e9b171a2cae7d77fe0bdc027783d967b21189a1551ef1607af27f",
+    "frontend": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:188cf1d5be346b97e2434ee636d20354cd8ff3eb887657ea6072a1718b2e839c",
+    "operator": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/research-operator@sha256:ae053d3be65c0727cab545f5121248db457b519e3c91c87528abcd43e6873db5"
+  },
+  "live_activation": false,
+  "new_images_built": false,
+  "scientific_payloads_or_credentials_in_images": false,
+  "state": "qualified_existing_images_reused_no_rebuild",
+  "version": "ocean-beta-secondary-mac-source-image-v1"
+}

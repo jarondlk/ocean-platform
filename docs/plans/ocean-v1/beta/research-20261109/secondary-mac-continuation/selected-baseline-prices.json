@@ -1,0 +1,2137 @@
+{
+  "official_records": {
+    "build_e2_standard_2": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Build",
+        "serviceDisplayName": "Cloud Build",
+        "usageType": "OnDemand"
+      },
+      "description": "Build time e2-standard-2",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/8B5D-EF7D-EB12/skus/A464-9020-6404",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 60,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 2500,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 949229999,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "min",
+            "usageUnitDescription": "minute"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "A464-9020-6404"
+    },
+    "dns_queries": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "DNS",
+        "serviceDisplayName": "Cloud DNS",
+        "usageType": "OnDemand"
+      },
+      "description": "DNS Query (port 53)",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/FA26-5236-B8B5/skus/6DFF-5025-A128",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1000000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 63281,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 1000000000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 31640,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "6DFF-5025-A128"
+    },
+    "dns_zone": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "DNS",
+        "serviceDisplayName": "Cloud DNS",
+        "usageType": "OnDemand"
+      },
+      "description": "ManagedZone",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/FA26-5236-B8B5/skus/8C22-6FC3-D478",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 2595600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 640999998,
+                  "units": "31"
+                }
+              },
+              {
+                "startUsageAmount": 25,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 820499999,
+                  "units": "15"
+                }
+              },
+              {
+                "startUsageAmount": 10000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 746149999,
+                  "units": "4"
+                }
+              }
+            ],
+            "usageUnit": "mo",
+            "usageUnitDescription": "month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "8C22-6FC3-D478"
+    },
+    "global_https_forwarding_minimum": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "LoadBalancing",
+        "serviceDisplayName": "Networking",
+        "usageType": "OnDemand"
+      },
+      "description": "Cloud Load Balancer Forwarding Rule Minimum Global",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/E505-1604-58F8/skus/DEE3-C42E-3E4D",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 955124999,
+                  "units": "3"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "DEE3-C42E-3E4D"
+    },
+    "internet_worst_selected_destination": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "PremiumInternetEgress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Network Internet Data Transfer Out from Japan to China",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/0D27-F4FA-E8E0",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 387149998,
+                  "units": "36"
+                }
+              },
+              {
+                "startUsageAmount": 1024,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 805099998,
+                  "units": "34"
+                }
+              },
+              {
+                "startUsageAmount": 10240,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 640999998,
+                  "units": "31"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "0D27-F4FA-E8E0"
+    },
+    "lb_inbound_tokyo": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "LoadBalancing",
+        "serviceDisplayName": "Networking",
+        "usageType": "OnDemand"
+      },
+      "description": "Global External Application Load Balancer Inbound Data Processing for Tokyo (asia-northeast1)",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/E505-1604-58F8/skus/4445-66EE-8E07",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 898459999,
+                  "units": "1"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "4445-66EE-8E07"
+    },
+    "lb_outbound_tokyo": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "LoadBalancing",
+        "serviceDisplayName": "Networking",
+        "usageType": "OnDemand"
+      },
+      "description": "Global External Application Load Balancer Outbound Data Processing for Tokyo (asia-northeast1)",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/E505-1604-58F8/skus/86C9-AD43-1809",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 898459999,
+                  "units": "1"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "86C9-AD43-1809"
+    },
+    "logging_extra_retention": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Logs",
+        "serviceDisplayName": "Cloud Logging",
+        "usageType": "OnDemand"
+      },
+      "description": "Log Retention cost",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/5490-F7B7-8DF6/skus/F4AE-5A52-ACE3",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2787004278374400.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 582049999,
+                  "units": "1"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "F4AE-5A52-ACE3"
+    },
+    "logging_ingestion": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Logs",
+        "serviceDisplayName": "Cloud Logging",
+        "usageType": "OnDemand"
+      },
+      "description": "Log Storage cost",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/5490-F7B7-8DF6/skus/143F-A1B0-E0BE",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "PROJECT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 50,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 102499997,
+                  "units": "79"
+                }
+              }
+            ],
+            "usageUnit": "GiBy",
+            "usageUnitDescription": "gibibyte"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "asia-southeast2",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east7",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4"
+      ],
+      "skuId": "143F-A1B0-E0BE"
+    },
+    "object_class_a": {
+      "category": {
+        "resourceFamily": "Storage",
+        "resourceGroup": "RegionalOps",
+        "serviceDisplayName": "Cloud Storage",
+        "usageType": "OnDemand"
+      },
+      "description": "Regional Standard Class A Operations",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/95FF-2EF5-5EA1/skus/4DBF-185F-A415",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 5000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 791024,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "4DBF-185F-A415"
+    },
+    "object_class_b": {
+      "category": {
+        "resourceFamily": "Storage",
+        "resourceGroup": "RegionalOps",
+        "serviceDisplayName": "Cloud Storage",
+        "usageType": "OnDemand"
+      },
+      "description": "Regional Standard Class B Operations",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/95FF-2EF5-5EA1/skus/7870-010B-2763",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 50000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 63281,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "7870-010B-2763"
+    },
+    "object_standard_tokyo": {
+      "category": {
+        "resourceFamily": "Storage",
+        "resourceGroup": "RegionalStorage",
+        "serviceDisplayName": "Cloud Storage",
+        "usageType": "OnDemand"
+      },
+      "description": "Standard Storage Tokyo",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/95FF-2EF5-5EA1/skus/1845-1496-2891",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2787004278374400.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 638714999,
+                  "units": "3"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "1845-1496-2891"
+    },
+    "registry_storage": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Storage",
+        "serviceDisplayName": "Artifact Registry",
+        "usageType": "OnDemand"
+      },
+      "description": "Artifact Registry Storage",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/149C-F9EC-3994/skus/8502-299A-ABAF",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-08T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2787004278374400.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 0.5,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 820499999,
+                  "units": "15"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "8502-299A-ABAF"
+    },
+    "run_request_cpu": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Compute",
+        "serviceDisplayName": "Cloud Run",
+        "usageType": "OnDemand"
+      },
+      "description": "Services CPU (Request-based billing)",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/152E-C115-5142/skus/4856-B847-F1EB",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 3796919,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "s",
+            "usageUnitDescription": "second"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-east1",
+        "asia-northeast1",
+        "asia-northeast2",
+        "europe-north1",
+        "europe-north2",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-south1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west8",
+        "asia-south1",
+        "asia-southeast3",
+        "africa-south1",
+        "asia-southeast4"
+      ],
+      "skuId": "4856-B847-F1EB"
+    },
+    "run_request_ram": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Compute",
+        "serviceDisplayName": "Cloud Run",
+        "usageType": "OnDemand"
+      },
+      "description": "Services Memory (Request-based billing)",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/152E-C115-5142/skus/02A2-9231-36A6",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 1073741824,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 395512,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.s",
+            "usageUnitDescription": "gibibyte second"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-east1",
+        "asia-northeast1",
+        "asia-northeast2",
+        "europe-north1",
+        "europe-north2",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-south1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west8",
+        "asia-south1",
+        "asia-southeast3",
+        "africa-south1",
+        "asia-southeast4"
+      ],
+      "skuId": "02A2-9231-36A6"
+    },
+    "run_requests": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Compute",
+        "serviceDisplayName": "Cloud Run",
+        "usageType": "OnDemand"
+      },
+      "description": "Requests",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/152E-C115-5142/skus/2DA5-55D3-E679",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1000000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 2000000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 63281,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "2DA5-55D3-E679"
+    },
+    "secret_access": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "SecretManager",
+        "serviceDisplayName": "Secret Manager",
+        "usageType": "OnDemand"
+      },
+      "description": "Secret access operations",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/EE82-7A5E-871C/skus/EBA7-264F-2D2C",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 10000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 10000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 474614,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "africa-south1",
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west10",
+        "europe-west12",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "me-central1",
+        "me-central2",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4",
+        "us-west8",
+        "northamerica-south1",
+        "europe-north2",
+        "europe-north3",
+        "asia-southeast2",
+        "asia-southeast3",
+        "eu",
+        "us",
+        "us-central6",
+        "in",
+        "ca"
+      ],
+      "skuId": "EBA7-264F-2D2C"
+    },
+    "secret_version_replica": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "SecretManager",
+        "serviceDisplayName": "Secret Manager",
+        "usageType": "OnDemand"
+      },
+      "description": "Secret version replica storage",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/EE82-7A5E-871C/skus/7756-ADEF-84F4",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 2595600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 6,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 492299999,
+                  "units": "9"
+                }
+              }
+            ],
+            "usageUnit": "mo",
+            "usageUnitDescription": "month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "africa-south1",
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west10",
+        "europe-west12",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "global",
+        "me-central1",
+        "me-central2",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4",
+        "us-west8",
+        "northamerica-south1",
+        "europe-north2",
+        "europe-north3",
+        "asia-southeast2",
+        "asia-southeast3",
+        "eu",
+        "us",
+        "us-central6",
+        "in",
+        "ca"
+      ],
+      "skuId": "7756-ADEF-84F4"
+    },
+    "sql_backups": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "PDSnapshot",
+        "serviceDisplayName": "Cloud SQL",
+        "usageType": "OnDemand"
+      },
+      "description": "Cloud SQL: Backups in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/9662-B51E-5089/skus/F8BE-1CC3-FDF3",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2787004278374400.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 453319999,
+                  "units": "16"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "F8BE-1CC3-FDF3"
+    },
+    "sql_cpu": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "SQLGen2InstancesCPU",
+        "serviceDisplayName": "Cloud SQL",
+        "usageType": "OnDemand"
+      },
+      "description": "Cloud SQL for PostgreSQL: Zonal - vCPU in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/9662-B51E-5089/skus/D34E-ED22-3AA3",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 495608499,
+                  "units": "8"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "D34E-ED22-3AA3"
+    },
+    "sql_ram": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "SQLGen2InstancesRAM",
+        "serviceDisplayName": "Cloud SQL",
+        "usageType": "OnDemand"
+      },
+      "description": "Cloud SQL for PostgreSQL: Zonal - RAM in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/9662-B51E-5089/skus/9AE6-50FF-E3A7",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 3865470566400,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 439665499,
+                  "units": "1"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.h",
+            "usageUnitDescription": "gibibyte hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "9AE6-50FF-E3A7"
+    },
+    "sql_ssd": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "SSD",
+        "serviceDisplayName": "Cloud SQL",
+        "usageType": "OnDemand"
+      },
+      "description": "Cloud SQL for PostgreSQL: Zonal - Standard storage in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/9662-B51E-5089/skus/A593-7E26-0880",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2787004278374400.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 963304998,
+                  "units": "34"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "A593-7E26-0880"
+    },
+    "standard_vm_ipv4": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "IpAddress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "External IP Charge on a Standard VM",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/6F81-5844-456A/skus/C054-7F72-A02E",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 721,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 791024999,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "C054-7F72-A02E"
+    },
+    "tasks_operations": {
+      "category": {
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "CloudTasks",
+        "serviceDisplayName": "Cloud Tasks",
+        "usageType": "OnDemand"
+      },
+      "description": "Operations",
+      "geoTaxonomy": {
+        "regions": [],
+        "type": "GLOBAL"
+      },
+      "name": "services/F3A6-D7B7-9BDA/skus/378A-D762-1F74",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "count",
+            "baseUnitConversionFactor": 1,
+            "baseUnitDescription": "count",
+            "displayQuantity": 1000000,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 1000000,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 63281,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "count",
+            "usageUnitDescription": "count"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "global"
+      ],
+      "skuId": "378A-D762-1F74"
+    },
+    "unused_regional_ipv4_reference": {
+      "category": {
+        "resourceFamily": "Network",
+        "resourceGroup": "IpAddress",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Static Ip Charge in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/7A91-88CA-899A",
+      "pricingInfo": [
+        {
+          "aggregationInfo": {
+            "aggregationCount": 1,
+            "aggregationInterval": "MONTHLY",
+            "aggregationLevel": "ACCOUNT"
+          },
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 0,
+                  "units": "0"
+                }
+              },
+              {
+                "startUsageAmount": 1,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 373074999,
+                  "units": "2"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "7A91-88CA-899A"
+    },
+    "worker_balanced_disk": {
+      "category": {
+        "resourceFamily": "Storage",
+        "resourceGroup": "SSD",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Balanced PD Capacity in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/6D8C-DF09-314D",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2787004278374400.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 566649999,
+                  "units": "20"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "6D8C-DF09-314D"
+    },
+    "worker_cpu": {
+      "category": {
+        "resourceFamily": "Compute",
+        "resourceGroup": "CPU",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "E2 Instance Core running in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/EAED-8A05-843B",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 433919775,
+                  "units": "4"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "EAED-8A05-843B"
+    },
+    "worker_ram": {
+      "category": {
+        "resourceFamily": "Compute",
+        "resourceGroup": "RAM",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "E2 Instance Ram running in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/CB4B-B875-93B4",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 158.2049999949849,
+          "effectiveTime": "2026-11-09T08:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 3865470566400,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "JPY",
+                  "nanos": 591545897,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.h",
+            "usageUnitDescription": "gibibyte hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "CB4B-B875-93B4"
+    }
+  },
+  "public_list_not_account_contract": true,
+  "quote_date": "2026-11-09 JST",
+  "selection": {
+    "build_e2_standard_2": {
+      "currency": "JPY",
+      "description": "Build time e2-standard-2",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.949229999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "A464-9020-6404",
+      "usage_unit": "min"
+    },
+    "dns_queries": {
+      "currency": "JPY",
+      "description": "DNS Query (port 53)",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "6DFF-5025-A128",
+      "usage_unit": "count"
+    },
+    "dns_zone": {
+      "currency": "JPY",
+      "description": "ManagedZone",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "31.640999998",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "8C22-6FC3-D478",
+      "usage_unit": "mo"
+    },
+    "global_https_forwarding_minimum": {
+      "currency": "JPY",
+      "description": "Cloud Load Balancer Forwarding Rule Minimum Global",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "3.955124999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "DEE3-C42E-3E4D",
+      "usage_unit": "h"
+    },
+    "internet_worst_selected_destination": {
+      "currency": "JPY",
+      "description": "Network Internet Data Transfer Out from Japan to China",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "36.387149998",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "0D27-F4FA-E8E0",
+      "usage_unit": "GiBy"
+    },
+    "lb_inbound_tokyo": {
+      "currency": "JPY",
+      "description": "Global External Application Load Balancer Inbound Data Processing for Tokyo (asia-northeast1)",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "1.898459999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "4445-66EE-8E07",
+      "usage_unit": "GiBy"
+    },
+    "lb_outbound_tokyo": {
+      "currency": "JPY",
+      "description": "Global External Application Load Balancer Outbound Data Processing for Tokyo (asia-northeast1)",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "1.898459999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "86C9-AD43-1809",
+      "usage_unit": "GiBy"
+    },
+    "logging_extra_retention": {
+      "currency": "JPY",
+      "description": "Log Retention cost",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "1.582049999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "F4AE-5A52-ACE3",
+      "usage_unit": "GiBy.mo"
+    },
+    "logging_ingestion": {
+      "currency": "JPY",
+      "description": "Log Storage cost",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "79.102499997",
+      "regions": [
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "asia-southeast2",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east7",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4"
+      ],
+      "sku_id": "143F-A1B0-E0BE",
+      "usage_unit": "GiBy"
+    },
+    "object_class_a": {
+      "currency": "JPY",
+      "description": "Regional Standard Class A Operations",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000791024",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "4DBF-185F-A415",
+      "usage_unit": "count"
+    },
+    "object_class_b": {
+      "currency": "JPY",
+      "description": "Regional Standard Class B Operations",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "7870-010B-2763",
+      "usage_unit": "count"
+    },
+    "object_standard_tokyo": {
+      "currency": "JPY",
+      "description": "Standard Storage Tokyo",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "3.638714999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "1845-1496-2891",
+      "usage_unit": "GiBy.mo"
+    },
+    "registry_storage": {
+      "currency": "JPY",
+      "description": "Artifact Registry Storage",
+      "effective_time": "2026-11-08T08:00:00Z",
+      "no_free_credit_rate_jpy": "15.820499999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "8502-299A-ABAF",
+      "usage_unit": "GiBy.mo"
+    },
+    "run_request_cpu": {
+      "currency": "JPY",
+      "description": "Services CPU (Request-based billing)",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.003796919",
+      "regions": [
+        "asia-east1",
+        "asia-northeast1",
+        "asia-northeast2",
+        "europe-north1",
+        "europe-north2",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-south1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west8",
+        "asia-south1",
+        "asia-southeast3",
+        "africa-south1",
+        "asia-southeast4"
+      ],
+      "sku_id": "4856-B847-F1EB",
+      "usage_unit": "s"
+    },
+    "run_request_ram": {
+      "currency": "JPY",
+      "description": "Services Memory (Request-based billing)",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000395512",
+      "regions": [
+        "asia-east1",
+        "asia-northeast1",
+        "asia-northeast2",
+        "europe-north1",
+        "europe-north2",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west4",
+        "europe-west8",
+        "europe-west9",
+        "me-west1",
+        "northamerica-south1",
+        "us-central1",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west8",
+        "asia-south1",
+        "asia-southeast3",
+        "africa-south1",
+        "asia-southeast4"
+      ],
+      "sku_id": "02A2-9231-36A6",
+      "usage_unit": "GiBy.s"
+    },
+    "run_requests": {
+      "currency": "JPY",
+      "description": "Requests",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "2DA5-55D3-E679",
+      "usage_unit": "count"
+    },
+    "secret_access": {
+      "currency": "JPY",
+      "description": "Secret access operations",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000474614",
+      "regions": [
+        "africa-south1",
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west10",
+        "europe-west12",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "me-central1",
+        "me-central2",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4",
+        "us-west8",
+        "northamerica-south1",
+        "europe-north2",
+        "europe-north3",
+        "asia-southeast2",
+        "asia-southeast3",
+        "eu",
+        "us",
+        "us-central6",
+        "in",
+        "ca"
+      ],
+      "sku_id": "EBA7-264F-2D2C",
+      "usage_unit": "count"
+    },
+    "secret_version_replica": {
+      "currency": "JPY",
+      "description": "Secret version replica storage",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "9.492299999",
+      "regions": [
+        "africa-south1",
+        "asia-east1",
+        "asia-east2",
+        "asia-northeast1",
+        "asia-northeast2",
+        "asia-northeast3",
+        "asia-south1",
+        "asia-south2",
+        "asia-southeast1",
+        "australia-southeast1",
+        "australia-southeast2",
+        "europe-central2",
+        "europe-north1",
+        "europe-southwest1",
+        "europe-west1",
+        "europe-west10",
+        "europe-west12",
+        "europe-west2",
+        "europe-west3",
+        "europe-west4",
+        "europe-west6",
+        "europe-west8",
+        "europe-west9",
+        "global",
+        "me-central1",
+        "me-central2",
+        "me-west1",
+        "northamerica-northeast1",
+        "northamerica-northeast2",
+        "southamerica-east1",
+        "southamerica-west1",
+        "us-central1",
+        "us-central2",
+        "us-east1",
+        "us-east4",
+        "us-east5",
+        "us-east7",
+        "us-south1",
+        "us-west1",
+        "us-west2",
+        "us-west3",
+        "us-west4",
+        "us-west8",
+        "northamerica-south1",
+        "europe-north2",
+        "europe-north3",
+        "asia-southeast2",
+        "asia-southeast3",
+        "eu",
+        "us",
+        "us-central6",
+        "in",
+        "ca"
+      ],
+      "sku_id": "7756-ADEF-84F4",
+      "usage_unit": "mo"
+    },
+    "sql_backups": {
+      "currency": "JPY",
+      "description": "Cloud SQL: Backups in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "16.453319999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "F8BE-1CC3-FDF3",
+      "usage_unit": "GiBy.mo"
+    },
+    "sql_cpu": {
+      "currency": "JPY",
+      "description": "Cloud SQL for PostgreSQL: Zonal - vCPU in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "8.495608499",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "D34E-ED22-3AA3",
+      "usage_unit": "h"
+    },
+    "sql_ram": {
+      "currency": "JPY",
+      "description": "Cloud SQL for PostgreSQL: Zonal - RAM in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "1.439665499",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "9AE6-50FF-E3A7",
+      "usage_unit": "GiBy.h"
+    },
+    "sql_ssd": {
+      "currency": "JPY",
+      "description": "Cloud SQL for PostgreSQL: Zonal - Standard storage in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "34.963304998",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "A593-7E26-0880",
+      "usage_unit": "GiBy.mo"
+    },
+    "standard_vm_ipv4": {
+      "currency": "JPY",
+      "description": "External IP Charge on a Standard VM",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.791024999",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "C054-7F72-A02E",
+      "usage_unit": "h"
+    },
+    "tasks_operations": {
+      "currency": "JPY",
+      "description": "Operations",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.000063281",
+      "regions": [
+        "global"
+      ],
+      "sku_id": "378A-D762-1F74",
+      "usage_unit": "count"
+    },
+    "unused_regional_ipv4_reference": {
+      "currency": "JPY",
+      "description": "Static Ip Charge in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "2.373074999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "7A91-88CA-899A",
+      "usage_unit": "h"
+    },
+    "worker_balanced_disk": {
+      "currency": "JPY",
+      "description": "Balanced PD Capacity in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "20.566649999",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "6D8C-DF09-314D",
+      "usage_unit": "GiBy.mo"
+    },
+    "worker_cpu": {
+      "currency": "JPY",
+      "description": "E2 Instance Core running in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "4.433919775",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "EAED-8A05-843B",
+      "usage_unit": "h"
+    },
+    "worker_ram": {
+      "currency": "JPY",
+      "description": "E2 Instance Ram running in Japan",
+      "effective_time": "2026-11-09T08:00:00Z",
+      "no_free_credit_rate_jpy": "0.591545897",
+      "regions": [
+        "asia-northeast1"
+      ],
+      "sku_id": "CB4B-B875-93B4",
+      "usage_unit": "GiBy.h"
+    }
+  },
+  "version": "ocean-beta-secondary-mac-selected-baseline-public-jpy-v1"
+}

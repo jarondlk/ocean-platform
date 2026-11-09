@@ -1,0 +1,3137 @@
+{
+  "billing_export_dataset_discovery": {
+    "dataset_ids": [],
+    "next_page_present": false,
+    "status": 200
+  },
+  "captured_utc": "2026-11-09T13:13:28.989479Z",
+  "credential_values_saved": false,
+  "metrics": [
+    {
+      "metric": "run.googleapis.com/container/billable_instance_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:16:00Z",
+            "startTime": "2026-11-04T02:15:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:11:00Z",
+            "startTime": "2026-11-04T02:10:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.06999548041109854,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:14:00Z",
+            "startTime": "2026-11-02T07:13:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:09:00Z",
+            "startTime": "2026-11-02T07:08:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.09954286301093865,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:32:00Z",
+            "startTime": "2026-11-02T07:31:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 7,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.1,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:28:00Z",
+            "startTime": "2026-11-02T07:27:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:23:00Z",
+            "startTime": "2026-11-02T07:22:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 60.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:49:00Z",
+            "startTime": "2026-11-02T06:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:44:00Z",
+            "startTime": "2026-11-02T06:43:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 60.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T05:54:00Z",
+            "startTime": "2026-11-02T05:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T05:49:00Z",
+            "startTime": "2026-11-02T05:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.1,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:05:00Z",
+            "startTime": "2026-11-02T06:04:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T05:42:00Z",
+            "startTime": "2026-11-02T05:41:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 14,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 60.1,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:43:00Z",
+            "startTime": "2026-11-02T07:42:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.1,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:36:00Z",
+            "startTime": "2026-11-02T06:35:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:16:00Z",
+            "startTime": "2026-11-02T06:15:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00001-rnd",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 6.9,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:54:00Z",
+            "startTime": "2026-11-02T06:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:30:00Z",
+            "startTime": "2026-11-02T06:29:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 25,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00002-8g6",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 24.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:07:00Z",
+            "startTime": "2026-11-02T07:06:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 33,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 4.3999999999999995,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:44:00Z",
+            "startTime": "2026-11-02T07:43:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:34:00Z",
+            "startTime": "2026-11-02T07:33:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00004-prr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 13.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 9,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 18.15814341888184,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 180,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 141.3,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T16:53:00Z",
+            "startTime": "2026-11-02T16:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T11:25:00Z",
+            "startTime": "2026-11-02T11:24:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 185,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 170.29999999999998,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T20:42:00Z",
+            "startTime": "2026-11-02T20:41:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:48:00Z",
+            "startTime": "2026-11-02T16:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 155,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 177.6987889173829,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:04:00Z",
+            "startTime": "2026-11-04T02:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:03:00Z",
+            "startTime": "2026-11-02T23:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 263,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 394.58314425614645,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:54:00Z",
+            "startTime": "2026-11-04T01:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:43:00Z",
+            "startTime": "2026-11-04T01:42:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 12,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00010-v76",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 143.1594588239544,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:18:00Z",
+            "startTime": "2026-11-04T02:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:59:00Z",
+            "startTime": "2026-11-04T01:58:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 20,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00011-wrb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 408.4,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:13:00Z",
+            "startTime": "2026-11-04T02:12:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 266,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00012-hxz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 9887.9,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:32:00Z",
+            "startTime": "2026-11-04T06:31:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 22,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 760.9853644978025,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:08:00Z",
+            "startTime": "2026-11-04T07:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:47:00Z",
+            "startTime": "2026-11-04T06:46:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 22,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00014-xzr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 599.356562955,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:26:00Z",
+            "startTime": "2026-11-04T07:25:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:03:00Z",
+            "startTime": "2026-11-04T07:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 24,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00015-m2d",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 434.97786672853226,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T08:08:00Z",
+            "startTime": "2026-11-04T08:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:21:00Z",
+            "startTime": "2026-11-04T07:20:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 48,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00016-sfb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 438.6,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T10:04:00Z",
+            "startTime": "2026-11-09T10:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T08:02:00Z",
+            "startTime": "2026-11-04T08:01:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 946,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1385.907491937094,
+          "unit": null,
+          "value_type": "DOUBLE"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "metric": "run.googleapis.com/container/cpu/allocation_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:16:00Z",
+            "startTime": "2026-11-04T02:15:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:12:00Z",
+            "startTime": "2026-11-04T02:11:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 5,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:13:00Z",
+            "startTime": "2026-11-02T07:12:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:09:00Z",
+            "startTime": "2026-11-02T07:08:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 5,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.2,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:32:00Z",
+            "startTime": "2026-11-02T07:31:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 7,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.2,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:28:00Z",
+            "startTime": "2026-11-02T07:27:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:24:00Z",
+            "startTime": "2026-11-02T07:23:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 5,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 102.47076755906198,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:49:00Z",
+            "startTime": "2026-11-02T06:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:45:00Z",
+            "startTime": "2026-11-02T06:44:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 5,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 116.82857356501135,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T05:54:00Z",
+            "startTime": "2026-11-02T05:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T05:50:00Z",
+            "startTime": "2026-11-02T05:49:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 5,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.10588428527495877,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:05:00Z",
+            "startTime": "2026-11-02T06:04:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T05:42:00Z",
+            "startTime": "2026-11-02T05:41:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 13,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 110.55634629382261,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:43:00Z",
+            "startTime": "2026-11-02T07:42:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.2,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:36:00Z",
+            "startTime": "2026-11-02T06:35:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:16:00Z",
+            "startTime": "2026-11-02T06:15:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00001-rnd",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 6.90000430469843,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:54:00Z",
+            "startTime": "2026-11-02T06:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:31:00Z",
+            "startTime": "2026-11-02T06:30:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 24,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00002-8g6",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 17.645025563398228,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:07:00Z",
+            "startTime": "2026-11-02T07:06:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 33,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 4.3999999999999995,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:44:00Z",
+            "startTime": "2026-11-02T07:43:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:34:00Z",
+            "startTime": "2026-11-02T07:33:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00004-prr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 39.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 9,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 54.47443022020555,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 180,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 423.9,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T16:53:00Z",
+            "startTime": "2026-11-02T16:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T11:25:00Z",
+            "startTime": "2026-11-02T11:24:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 183,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 450.3395481973789,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T20:42:00Z",
+            "startTime": "2026-11-02T20:41:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:48:00Z",
+            "startTime": "2026-11-02T16:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 153,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 470.02804755769836,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:04:00Z",
+            "startTime": "2026-11-04T02:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:03:00Z",
+            "startTime": "2026-11-02T23:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 261,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1144.5051140399337,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:54:00Z",
+            "startTime": "2026-11-04T01:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:44:00Z",
+            "startTime": "2026-11-04T01:43:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00010-v76",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 417.29999999999995,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:18:00Z",
+            "startTime": "2026-11-04T02:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:59:00Z",
+            "startTime": "2026-11-04T01:58:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 20,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00011-wrb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1225.2,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:14:00Z",
+            "startTime": "2026-11-04T02:13:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 265,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00012-hxz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 29629.179807248223,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2217.2999999999997,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:08:00Z",
+            "startTime": "2026-11-04T07:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:48:00Z",
+            "startTime": "2026-11-04T06:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00014-xzr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1745.4547675369975,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:26:00Z",
+            "startTime": "2026-11-04T07:25:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:04:00Z",
+            "startTime": "2026-11-04T07:03:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 23,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00015-m2d",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1245.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T08:08:00Z",
+            "startTime": "2026-11-04T08:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:21:00Z",
+            "startTime": "2026-11-04T07:20:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 48,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00016-sfb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1315.8,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T10:04:00Z",
+            "startTime": "2026-11-09T10:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T08:03:00Z",
+            "startTime": "2026-11-04T08:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 935,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3788.605452678582,
+          "unit": null,
+          "value_type": "DOUBLE"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "metric": "run.googleapis.com/container/memory/allocation_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:16:00Z",
+            "startTime": "2026-11-04T02:15:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:11:00Z",
+            "startTime": "2026-11-04T02:10:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.08749434131036798,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:13:00Z",
+            "startTime": "2026-11-02T07:12:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:08:00Z",
+            "startTime": "2026-11-02T07:07:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.125,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:32:00Z",
+            "startTime": "2026-11-02T07:31:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 7,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.125,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:28:00Z",
+            "startTime": "2026-11-02T07:27:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:23:00Z",
+            "startTime": "2026-11-02T07:22:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 75.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:49:00Z",
+            "startTime": "2026-11-02T06:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:44:00Z",
+            "startTime": "2026-11-02T06:43:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 75.0,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T05:54:00Z",
+            "startTime": "2026-11-02T05:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T05:49:00Z",
+            "startTime": "2026-11-02T05:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.125,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:05:00Z",
+            "startTime": "2026-11-02T06:04:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T05:42:00Z",
+            "startTime": "2026-11-02T05:41:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 14,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 75.125,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:43:00Z",
+            "startTime": "2026-11-02T07:42:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:38:00Z",
+            "startTime": "2026-11-02T07:37:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_job",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 0.125,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:36:00Z",
+            "startTime": "2026-11-02T06:35:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:16:00Z",
+            "startTime": "2026-11-02T06:15:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00001-rnd",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3.45000215234972,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:54:00Z",
+            "startTime": "2026-11-02T06:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:31:00Z",
+            "startTime": "2026-11-02T06:30:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 24,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00002-8g6",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 9.74623250004268,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:07:00Z",
+            "startTime": "2026-11-02T07:06:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 33,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.1999999999999997,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:44:00Z",
+            "startTime": "2026-11-02T07:43:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:34:00Z",
+            "startTime": "2026-11-02T07:33:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00004-prr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 61.75,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 8,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 57.95,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 180,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 671.1750023749914,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T16:53:00Z",
+            "startTime": "2026-11-02T16:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T11:25:00Z",
+            "startTime": "2026-11-02T11:24:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 181,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 553.1416409484344,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T20:42:00Z",
+            "startTime": "2026-11-02T20:41:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:49:00Z",
+            "startTime": "2026-11-02T16:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 152,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 724.6983342243273,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:04:00Z",
+            "startTime": "2026-11-04T02:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:03:00Z",
+            "startTime": "2026-11-02T23:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 260,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1861.985076054288,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:54:00Z",
+            "startTime": "2026-11-04T01:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:44:00Z",
+            "startTime": "2026-11-04T01:43:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00010-v76",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 660.7250000000001,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:18:00Z",
+            "startTime": "2026-11-04T02:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:59:00Z",
+            "startTime": "2026-11-04T01:58:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 20,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00011-wrb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1939.8999999999999,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:14:00Z",
+            "startTime": "2026-11-04T02:13:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 265,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00012-hxz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 46920.89091576933,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3510.725,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:08:00Z",
+            "startTime": "2026-11-04T07:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:48:00Z",
+            "startTime": "2026-11-04T06:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00014-xzr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2812.1454954588644,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:26:00Z",
+            "startTime": "2026-11-04T07:25:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:04:00Z",
+            "startTime": "2026-11-04T07:03:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 23,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00015-m2d",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1971.2499999999998,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T08:08:00Z",
+            "startTime": "2026-11-04T08:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:21:00Z",
+            "startTime": "2026-11-04T07:20:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 48,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00016-sfb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2083.35,
+          "unit": null,
+          "value_type": "DOUBLE"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T10:04:00Z",
+            "startTime": "2026-11-09T10:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T08:03:00Z",
+            "startTime": "2026-11-04T08:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 929,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 5705.869690339468,
+          "unit": null,
+          "value_type": "DOUBLE"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "metric": "run.googleapis.com/request_count",
+      "next_page_present": false,
+      "series": [
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:36:00Z",
+            "startTime": "2026-11-02T06:35:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:26:00Z",
+            "startTime": "2026-11-02T06:25:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00001-rnd",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T06:54:00Z",
+            "startTime": "2026-11-02T06:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T06:33:00Z",
+            "startTime": "2026-11-02T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 22,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00002-8g6",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:10:00Z",
+            "startTime": "2026-11-02T07:09:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 30,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 24.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:12:00Z",
+            "startTime": "2026-11-02T07:11:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 28,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:12:00Z",
+            "startTime": "2026-11-02T07:11:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 28,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:28:00Z",
+            "startTime": "2026-11-02T07:27:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 12,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:21:00Z",
+            "startTime": "2026-11-02T07:20:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 19,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:12:00Z",
+            "startTime": "2026-11-02T07:11:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 28,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 5.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:12:00Z",
+            "startTime": "2026-11-02T07:11:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 28,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00003-frs",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:44:00Z",
+            "startTime": "2026-11-02T07:43:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:35:00Z",
+            "startTime": "2026-11-02T07:34:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 10,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00004-prr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 8,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 5.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 8,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 8,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T07:46:00Z",
+            "startTime": "2026-11-02T07:45:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:39:00Z",
+            "startTime": "2026-11-02T07:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 8,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00005-f8s",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 149,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 51.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T09:18:00Z",
+            "startTime": "2026-11-02T09:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T08:30:00Z",
+            "startTime": "2026-11-02T08:29:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 49,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T09:18:00Z",
+            "startTime": "2026-11-02T09:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:53:00Z",
+            "startTime": "2026-11-02T07:52:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 86,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 180,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 8.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 159,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T11:29:00Z",
+            "startTime": "2026-11-02T11:28:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T07:40:00Z",
+            "startTime": "2026-11-02T07:39:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 159,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 439.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T09:18:00Z",
+            "startTime": "2026-11-02T09:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T08:21:00Z",
+            "startTime": "2026-11-02T08:20:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 58,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00006-sd9",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T16:53:00Z",
+            "startTime": "2026-11-02T16:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T11:26:00Z",
+            "startTime": "2026-11-02T11:25:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 156,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 84.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T12:59:00Z",
+            "startTime": "2026-11-02T12:58:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T12:39:00Z",
+            "startTime": "2026-11-02T12:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T12:59:00Z",
+            "startTime": "2026-11-02T12:58:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T12:39:00Z",
+            "startTime": "2026-11-02T12:38:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T16:53:00Z",
+            "startTime": "2026-11-02T16:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T12:18:00Z",
+            "startTime": "2026-11-02T12:17:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 83,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 9.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T16:53:00Z",
+            "startTime": "2026-11-02T16:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:48:00Z",
+            "startTime": "2026-11-02T16:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T15:41:00Z",
+            "startTime": "2026-11-02T15:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T12:18:00Z",
+            "startTime": "2026-11-02T12:17:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 63,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T15:41:00Z",
+            "startTime": "2026-11-02T15:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T12:18:00Z",
+            "startTime": "2026-11-02T12:17:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 104,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 170.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T14:14:00Z",
+            "startTime": "2026-11-02T14:13:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T14:09:00Z",
+            "startTime": "2026-11-02T14:08:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 6,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00007-lxt",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T20:42:00Z",
+            "startTime": "2026-11-02T20:41:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:49:00Z",
+            "startTime": "2026-11-02T16:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 116,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 101.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T17:33:00Z",
+            "startTime": "2026-11-02T17:32:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:49:00Z",
+            "startTime": "2026-11-02T16:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 45,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T17:33:00Z",
+            "startTime": "2026-11-02T17:32:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:49:00Z",
+            "startTime": "2026-11-02T16:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 45,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T19:55:00Z",
+            "startTime": "2026-11-02T19:54:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:49:00Z",
+            "startTime": "2026-11-02T16:48:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 94,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 6.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T17:33:00Z",
+            "startTime": "2026-11-02T17:32:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T16:50:00Z",
+            "startTime": "2026-11-02T16:49:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 44,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-02T20:42:00Z",
+            "startTime": "2026-11-02T20:41:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T17:55:00Z",
+            "startTime": "2026-11-02T17:54:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 106,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00008-ngj",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 4.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:04:00Z",
+            "startTime": "2026-11-04T02:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:04:00Z",
+            "startTime": "2026-11-02T23:03:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 109,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 184.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:49:00Z",
+            "startTime": "2026-11-04T01:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:37:00Z",
+            "startTime": "2026-11-02T23:36:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 41,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:49:00Z",
+            "startTime": "2026-11-04T01:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:37:00Z",
+            "startTime": "2026-11-02T23:36:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 41,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:49:00Z",
+            "startTime": "2026-11-04T01:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:37:00Z",
+            "startTime": "2026-11-02T23:36:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 181,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 12.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:04:00Z",
+            "startTime": "2026-11-04T02:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-02T23:04:00Z",
+            "startTime": "2026-11-02T23:03:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 45,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-03T19:04:00Z",
+            "startTime": "2026-11-03T19:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-03T18:43:00Z",
+            "startTime": "2026-11-03T18:42:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 22,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:49:00Z",
+            "startTime": "2026-11-04T01:48:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-03T00:54:00Z",
+            "startTime": "2026-11-03T00:53:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 75,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00009-rn7",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 275.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:54:00Z",
+            "startTime": "2026-11-04T01:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:43:00Z",
+            "startTime": "2026-11-04T01:42:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 12,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00010-v76",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 57.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:54:00Z",
+            "startTime": "2026-11-04T01:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:44:00Z",
+            "startTime": "2026-11-04T01:43:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 11,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00010-v76",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T01:54:00Z",
+            "startTime": "2026-11-04T01:53:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:47:00Z",
+            "startTime": "2026-11-04T01:46:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 8,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00010-v76",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:18:00Z",
+            "startTime": "2026-11-04T02:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:59:00Z",
+            "startTime": "2026-11-04T01:58:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 20,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00011-wrb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 267.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:18:00Z",
+            "startTime": "2026-11-04T02:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T01:59:00Z",
+            "startTime": "2026-11-04T01:58:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 20,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00011-wrb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T02:18:00Z",
+            "startTime": "2026-11-04T02:17:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:06:00Z",
+            "startTime": "2026-11-04T02:05:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 13,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00011-wrb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:14:00Z",
+            "startTime": "2026-11-04T02:13:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 265,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00012-hxz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 6632.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:14:00Z",
+            "startTime": "2026-11-04T02:13:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 265,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00012-hxz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T02:14:00Z",
+            "startTime": "2026-11-04T02:13:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 265,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00012-hxz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 369.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:33:00Z",
+            "startTime": "2026-11-04T06:32:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 5.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T06:53:00Z",
+            "startTime": "2026-11-04T06:52:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:38:00Z",
+            "startTime": "2026-11-04T06:37:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 16,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00013-trn",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:08:00Z",
+            "startTime": "2026-11-04T07:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:48:00Z",
+            "startTime": "2026-11-04T06:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00014-xzr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 351.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:08:00Z",
+            "startTime": "2026-11-04T07:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T06:48:00Z",
+            "startTime": "2026-11-04T06:47:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 21,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00014-xzr",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:26:00Z",
+            "startTime": "2026-11-04T07:25:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:04:00Z",
+            "startTime": "2026-11-04T07:03:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 23,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00015-m2d",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 150.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:26:00Z",
+            "startTime": "2026-11-04T07:25:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:04:00Z",
+            "startTime": "2026-11-04T07:03:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 23,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00015-m2d",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T07:26:00Z",
+            "startTime": "2026-11-04T07:25:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:05:00Z",
+            "startTime": "2026-11-04T07:04:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 22,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00015-m2d",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T08:08:00Z",
+            "startTime": "2026-11-04T08:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:21:00Z",
+            "startTime": "2026-11-04T07:20:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 48,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00016-sfb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 202.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-04T08:08:00Z",
+            "startTime": "2026-11-04T08:07:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T07:22:00Z",
+            "startTime": "2026-11-04T07:21:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 47,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00016-sfb",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 1.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T10:04:00Z",
+            "startTime": "2026-11-09T10:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T08:03:00Z",
+            "startTime": "2026-11-04T08:02:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 565,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 586.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T09:11:00Z",
+            "startTime": "2026-11-09T09:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-05T03:47:00Z",
+            "startTime": "2026-11-05T03:46:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 358,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 7.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T09:11:00Z",
+            "startTime": "2026-11-09T09:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-05T03:47:00Z",
+            "startTime": "2026-11-05T03:46:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 367,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 7.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T10:04:00Z",
+            "startTime": "2026-11-09T10:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T17:59:00Z",
+            "startTime": "2026-11-04T17:58:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 801,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 35.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T09:11:00Z",
+            "startTime": "2026-11-09T09:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-05T03:47:00Z",
+            "startTime": "2026-11-05T03:46:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 54,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 3.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-05T23:47:00Z",
+            "startTime": "2026-11-05T23:46:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-04T17:10:00Z",
+            "startTime": "2026-11-04T17:09:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 43,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 2.0,
+          "unit": null,
+          "value_type": "INT64"
+        },
+        {
+          "container_name": null,
+          "database_id": null,
+          "first_point_interval": {
+            "endTime": "2026-11-09T10:04:00Z",
+            "startTime": "2026-11-09T10:03:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-05T03:44:00Z",
+            "startTime": "2026-11-05T03:43:00.001Z"
+          },
+          "last_value": 0.0,
+          "metric_kind": "DELTA",
+          "points": 552,
+          "resource_type": "cloud_run_revision",
+          "revision_name": "ocean-v1-beta-serving-00017-kvz",
+          "service_name": "ocean-v1-beta-serving",
+          "sum_values": 306.0,
+          "unit": null,
+          "value_type": "INT64"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "metric": "cloudsql.googleapis.com/database/disk/bytes_used",
+      "next_page_present": false,
+      "series": [
+        {
+          "container_name": null,
+          "database_id": "ocean-v1-beta-20261101:ocean-v1-beta-sql",
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:11:00Z",
+            "startTime": "2026-11-09T13:11:00Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-01T16:10:00Z",
+            "startTime": "2026-11-01T16:10:00Z"
+          },
+          "last_value": 112357376.0,
+          "metric_kind": "GAUGE",
+          "points": 11342,
+          "resource_type": "cloudsql_database",
+          "revision_name": null,
+          "service_name": null,
+          "sum_values": 1269140762624.0,
+          "unit": null,
+          "value_type": "INT64"
+        }
+      ],
+      "status": 200
+    }
+  ],
+  "period_start_utc": "2026-11-01T00:00:00Z",
+  "project": "ocean-v1-beta-20261101",
+  "scope": "Cloud Monitoring observed usage; not invoice/actual billed JPY",
+  "version": "ocean-beta-secondary-mac-observed-usage-v1"
+}

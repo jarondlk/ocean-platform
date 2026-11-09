@@ -2,6 +2,24 @@
 
 Updated: 2026-11-09 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
 
+**Secondary Mac continuation (2026-11-09 JST):** The clean receiving checkout
+was fast-forwarded from `ad0c313` to the fetched `overhaul` checkpoint `4f4b616`;
+no local work was discarded. All 35 scientific archive members and the manifest
+match the supplied exact hashes and are restored in durable private storage
+outside Git. The 31 files of older unrelated local work are preserved separately
+for review, without applying them. Replacement activation `4843e61b…` is verified.
+Fresh personal Google CLI sign-in and GitHub CLI sign-in succeeded on this Mac.
+Fresh cloud reads retain revision `00017-kvz`, an empty PAUSED queue, zero
+controller secret versions and no Research activation writes. The single failed
+PostgreSQL job is being retried in run `42594709784`; successful backend and
+frontend evidence is reused, and actual backup/restore acceptance remains open.
+The refreshed bounded monthly scenario is ¥36,480.84 including contingency;
+runtime sweep activation still requires live timing and budget evidence.
+The user explicitly authorized the documented beta Research activation scope;
+execution remains conditional on its CI, fresh-state and live acceptance gates.
+[Continuation receipts](beta/research-20261109/secondary-mac-continuation/),
+[current handoff](handoffs/BETA_DEPLOYMENT.md). Three-hour scheduling stays PAUSED.
+
 **Portable checkpoint (2026-11-09 JST):** The user is moving to another Mac.
 Private scientific inputs were recovered from pinned existing GCS objects for
 an AirDrop folder, and the missing unpublished Research activation was

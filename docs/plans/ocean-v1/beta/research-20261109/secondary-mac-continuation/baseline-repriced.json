@@ -1,0 +1,41 @@
+{
+  "inherited_usage_assumptions": true,
+  "is_current_bill": false,
+  "original_arithmetic_source": "docs/plans/ocean-v1/beta/quotes-20261102/build_quote.py",
+  "quote_date": "2026-11-09 JST",
+  "scenario_31day_744h": {
+    "contingency_is_tax_claim": false,
+    "contingency_jpy": "3236.731373147",
+    "cost_contingency_factor": "0.10",
+    "fixed_resource_hours": 744,
+    "gross_before_contingency_jpy": "32367.313731469",
+    "headroom_to_50000_jpy": "14395.954895384",
+    "line_items_jpy": {
+      "dns_100000_queries": "6.328100000",
+      "dns_one_managed_zone": "32.650352286",
+      "eight_single_region_secret_versions": "78.360845484",
+      "internet_10gib_max_selected_destination_rate": "363.871499980",
+      "ipv4_attached_to_forwarding_rule": "0E-9",
+      "lb_processing_10gib_in_and_10gib_out": "37.969199980",
+      "logging_ingestion_5gib_no_free_assumption": "395.512499985",
+      "object_operations_10000_class_a_100000_class_b": "14.238340000",
+      "object_storage_10gib_including_soft_deleted_versions": "37.547905121",
+      "one_global_https_forwarding_minimum": "2942.612999256",
+      "registry_5gib": "81.625880716",
+      "run_aggregate_monthly_budget_allocation": "3000.000000000",
+      "secret_access_10000_operations": "4.746140000",
+      "sql_enterprise_zonal_compute_2vcpu_7_5gib": "20674.798930932",
+      "sql_pitr_log_allowance_10gib_at_ssd_rate": "360.786392767",
+      "sql_retained_backups_20gib": "339.563663780",
+      "sql_ssd_20gib": "721.572785534",
+      "tasks_100000_operations": "6.328100000",
+      "two_builds_20_minutes_each_e2_standard_2": "37.969199960",
+      "unbound_address_transition_allowance_not_exact_global_sku": "100.000000000",
+      "worker_50gib_balanced_disk_scenario": "1061.136449324",
+      "worker_e2_standard_8_37_5_active_hours": "2040.031008900",
+      "worker_ephemeral_external_ipv4_37_5h_if_used": "29.663437462"
+    },
+    "total_with_contingency_jpy": "35604.045104616"
+  },
+  "version": "ocean-beta-secondary-mac-baseline-repriced-v1"
+}

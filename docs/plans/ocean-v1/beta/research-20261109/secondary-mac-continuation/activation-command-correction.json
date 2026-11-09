@@ -1,0 +1,29 @@
+{
+  "affected_phase": "8a-pending-outbox-recovery",
+  "cloud_calls": false,
+  "credential_values_included": false,
+  "manual_run_source": "https://docs.cloud.google.com/tasks/docs/reference/rest/v2/projects.locations.queues.tasks/run",
+  "original_package_manifest_preserved": true,
+  "paused_queue_acceptance_note": "CloudTasks tasks.run can force one exact manually selected task even whilequeuePAUSED. Use sequential explicitmanualsweep/recovery/deterministic/duplicate/cancellation checks whilekeepingqueuePAUSED; resumeonlyafterfinalgrantandlivebudgetgates.",
+  "private_package": "activation-requests-v3",
+  "reason": "Installed gcloud tasks queues add-iam-policy-binding exposes only --member and --role; --condition=None is unsupported for this queue command. Queue producer binding is unconditional as reviewed.",
+  "replace_command_with": [
+    "/Users/jaronchai/Library/Application Support/OCEAN/tools/google-cloud-sdk/bin/gcloud",
+    "tasks",
+    "queues",
+    "add-iam-policy-binding",
+    "ocean-v1-beta-research",
+    "--location=asia-northeast1",
+    "--member=serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "--role=projects/ocean-v1-beta-20261101/roles/oceanBetaResearchTaskProducer",
+    "--project=ocean-v1-beta-20261101"
+  ],
+  "runtime_request_bodies_changed": false,
+  "state": "local_cli_syntax_correction_no_cloud_call",
+  "validation": [
+    "InstalledSDKhelpconfirmsqueuesaddiamflags",
+    "Controller-onlyinitialpolicyexactlyonecontrollerproducer",
+    "ServingstageHTTP200validationreportedbyrootwithbodySHA2562e97293218970327457ec00fec633da6ca52b285771a3d409d4018e829c703e9"
+  ],
+  "version": "ocean-beta-secondary-mac-activation-command-correction-v1"
+}
