@@ -247,7 +247,7 @@ jobs:
 
   postgres-integration:
     name: PostgreSQL migration and metadata integration
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
 
     services:
@@ -545,10 +545,15 @@ jobs:
         env:
           DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
           DATABASE_BACKUP_CONTAINER: ""
-        run: >-
-          python scripts/database_backup.py create
-          --output-dir "${RUNNER_TEMP}/database-backup"
-          --label ci
+        run: |
+          # Match client tools to the PostgreSQL 16 service. Newer pg_restore
+          # versions can emit settings that PostgreSQL 16 cannot restore.
+          export PATH="/usr/lib/postgresql/16/bin:$PATH"
+          pg_dump --version | grep -E 'PostgreSQL\) 16\.'
+          pg_restore --version | grep -E 'PostgreSQL\) 16\.'
+          python scripts/database_backup.py create \
+          --output-dir "${RUNNER_TEMP}/database-backup" \
+          --label ci \
           --restore-test
 
   dependency-review:

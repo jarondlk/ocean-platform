@@ -1,0 +1,20 @@
+{
+  "application_postgres_tests_passed": 318,
+  "correction": "Pin PostgreSQL integration to ubuntu-24.04 and explicitly verify/select /usr/lib/postgresql/16/bin clients for the pg16 service",
+  "diagnostic": "pg_restore emitted SET transaction_timeout = 0 against PostgreSQL16",
+  "expected_isolation_skips": 16,
+  "failed_gate": "final_backup_and_restore",
+  "failed_job_id": 129073095807,
+  "failed_run": "https://github.com/jarondlk/ocean-platform/actions/runs/42591207998",
+  "fresh_hosted_backup_restore": "pending",
+  "live_database_action": false,
+  "local_checks": [
+    "workflow_yaml_parsed",
+    "service_and_client_major_16_asserted",
+    "backup_shell_syntax_valid",
+    "restore_gate_retained"
+  ],
+  "runner_before": "ubuntu-latest resolved to ubuntu-26.04",
+  "runner_primary_source": "https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md",
+  "runtime_sources_changed": false
+}

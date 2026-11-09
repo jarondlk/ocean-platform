@@ -1,5 +1,28 @@
 # Research questions activation review — 2026-11-09 JST
 
+## Portable handoff amendment
+
+The expired temporary folders on this Mac are empty. Existing catalogue objects,
+the raw quarantine and the five regional SST inputs are being recovered at exact
+GCS generations for the user's private Desktop/AirDrop package. Application
+credentials are retrieved on the receiving Mac through fresh Google sign-in and
+the existing Secret Manager resources.
+
+The unpublished `653f1c…` activation file is unavailable here. A new private
+activation is intentionally superseding it, starting from the hash-verified live
+`464b0180…` activation. Only the Research flag, authorization reference and policy
+revision change. All three snapshot inventories and scientific qualifications
+are preserved. The original hashes, images and receipts remain historical.
+[Supersession](handoff-amendment02/activation-supersession.json).
+A replacement image is being bound to the new activation for portable continuation.
+
+The next full CI run also corrects a runner/toolchain mismatch. All 318 actual
+PostgreSQL cases passed, followed by a failed backup restore because the newer
+runner's client emitted `transaction_timeout` against server16. The PostgreSQL
+job now selects Ubuntu24.04 and explicitly checks the version16 client tools.
+The restore gate remains mandatory.
+[Correction](handoff-amendment02/postgres-ci-correction.json).
+
 ## Compatibility amendment
 
 The beta Gemini adapter now omits the deprecated `temperature` field. The

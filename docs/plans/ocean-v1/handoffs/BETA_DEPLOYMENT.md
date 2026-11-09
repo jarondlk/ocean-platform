@@ -1,5 +1,19 @@
 # Beta deployment continuation — 2026-11-09 JST
 
+## Current portable handoff
+
+The user is preparing to continue on another Mac. A private AirDrop package is
+being assembled on the Desktop with verified cloud-recovered scientific inputs,
+source checkpoint and a complete continuation prompt. The three-hour schedule
+stays paused. Read the portable handoff amendment in the Research review before
+selecting an activation/image; it supersedes the missing temporary private file
+through an explicit new metadata identity.
+
+All 318 hosted PostgreSQL cases passed, but final backup/restore exposed an
+Ubuntu26 client/server-version mismatch. The workflow now selects Ubuntu24 and
+explicit version16 backup clients. A fresh hosted restore pass remains required.
+The main application's runtime sources are unchanged by this CI correction.
+
 ## Current compatibility amendment
 
 The Gemini adapter now omits deprecated sampling configuration. All 67 focused
