@@ -1,0 +1,136 @@
+{
+  "builds": [
+    {
+      "finish_time": "2026-11-09T08:29:05.079202Z",
+      "id": "c757fb2e-10a9-4f89-851e-b7701db83da0",
+      "images": [
+        {
+          "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/snapshot-api/versions/sha256:a26c98ad30de95ea5cd71d8ea7980b7055721372d320a60e102298b2cd3d7d70",
+          "digest": "sha256:a26c98ad30de95ea5cd71d8ea7980b7055721372d320a60e102298b2cd3d7d70",
+          "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:research-fd41f7c466be",
+          "pushTiming": {
+            "endTime": "2026-11-09T08:29:04.593660530Z",
+            "startTime": "2026-11-09T08:29:01.856571718Z"
+          }
+        }
+      ],
+      "log_sha256": "301a7bb99fdf27996c4df42aadff6412a1b9432a211d2e97cc4f8c91fedb13b3",
+      "purpose": "api",
+      "source": {
+        "storageSource": {
+          "bucket": "ocean-v1-beta-20261101-build-source",
+          "generation": "1794212903645173",
+          "object": "source/1794212903.307478-105438d239e64d9e955a483ce70337e4.tgz"
+        }
+      },
+      "status": "SUCCESS"
+    },
+    {
+      "finish_time": "2026-11-09T08:30:27.351576Z",
+      "id": "a32c0729-2baa-4831-99ea-6092456414d6",
+      "images": [
+        {
+          "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/context-frontend/versions/sha256:188cf1d5be346b97e2434ee636d20354cd8ff3eb887657ea6072a1718b2e839c",
+          "digest": "sha256:188cf1d5be346b97e2434ee636d20354cd8ff3eb887657ea6072a1718b2e839c",
+          "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:research-fd41f7c466be",
+          "pushTiming": {
+            "endTime": "2026-11-09T08:30:26.582733181Z",
+            "startTime": "2026-11-09T08:30:17.891033215Z"
+          }
+        }
+      ],
+      "log_sha256": "7922f01e17ef0d687e63329e3efbdde1836ac07ef6c824b1b505387d594eb419",
+      "purpose": "frontend",
+      "source": {
+        "storageSource": {
+          "bucket": "ocean-v1-beta-20261101-build-source",
+          "generation": "1794212887183114",
+          "object": "source/1794212886.037384-117bc3240da34c708cfae2c7b82d0250.tgz"
+        }
+      },
+      "status": "SUCCESS"
+    },
+    {
+      "finish_time": "2026-11-09T08:33:22.741168Z",
+      "id": "b66fb506-b560-4734-948d-a698d0d8d7e3",
+      "images": [
+        {
+          "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/research-operator/versions/sha256:ae053d3be65c0727cab545f5121248db457b519e3c91c87528abcd43e6873db5",
+          "digest": "sha256:ae053d3be65c0727cab545f5121248db457b519e3c91c87528abcd43e6873db5",
+          "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/research-operator:research-84fe01714e42",
+          "pushTiming": {
+            "endTime": "2026-11-09T08:33:22.261881310Z",
+            "startTime": "2026-11-09T08:33:20.802929190Z"
+          }
+        }
+      ],
+      "log_sha256": "351cc0d52e46cbc5955c2be43387c9222d718712a938cfe4aaf97a9bedb24ed2",
+      "purpose": "operator",
+      "source": {
+        "storageSource": {
+          "bucket": "ocean-v1-beta-20261101-build-source",
+          "generation": "1794213173135114",
+          "object": "source/1794213172.887649-e2c7c307bcc74ea9b1d8858284db7ec5.tgz"
+        }
+      },
+      "status": "SUCCESS"
+    },
+    {
+      "finish_time": "2026-11-09T08:33:25.016411Z",
+      "id": "e8bbcde0-0d9f-4ebf-b1b5-a66159d6b9d7",
+      "images": [
+        {
+          "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/controller-credential/versions/sha256:e6d67cc2857e9b171a2cae7d77fe0bdc027783d967b21189a1551ef1607af27f",
+          "digest": "sha256:e6d67cc2857e9b171a2cae7d77fe0bdc027783d967b21189a1551ef1607af27f",
+          "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/controller-credential:research-84fe01714e42",
+          "pushTiming": {
+            "endTime": "2026-11-09T08:33:24.539200767Z",
+            "startTime": "2026-11-09T08:33:23.026888399Z"
+          }
+        }
+      ],
+      "log_sha256": "b197ced1ce6e8a8d319112204e50760cbf231904cd9eaa659a425fc6a6c7d1cb",
+      "purpose": "credential",
+      "source": {
+        "storageSource": {
+          "bucket": "ocean-v1-beta-20261101-build-source",
+          "generation": "1794213174907951",
+          "object": "source/1794213174.756816-aecc74fb73a44bf6aa78051dd1238131.tgz"
+        }
+      },
+      "status": "SUCCESS"
+    },
+    {
+      "finish_time": "2026-11-09T08:37:46.804977Z",
+      "id": "0ff6da45-c968-4b5b-b641-0d1a91f77d61",
+      "images": [],
+      "log_sha256": "16c0ae002f87da48f38966d7289888254a85acf8f51a305f36978480719f7b37",
+      "purpose": "qualification",
+      "source": {
+        "storageSource": {
+          "bucket": "ocean-v1-beta-20261101-build-source",
+          "generation": "1794213393879839",
+          "object": "source/1794213392.548917-352ec41f205e419ea69aa426a0478589.tgz"
+        }
+      },
+      "status": "SUCCESS"
+    },
+    {
+      "finish_time": "2026-11-09T06:43:08.839980Z",
+      "id": "98dd68e3-2a0d-4187-80a3-e028fcf1a5b3",
+      "images": [],
+      "log_sha256": "586597069eb4f9ac6788f1adc6f92693ead156462774c7de7c6896ccbec1824e",
+      "purpose": "priorqualification",
+      "source": {
+        "storageSource": {
+          "bucket": "ocean-v1-beta-20261101-build-source",
+          "generation": "1794206511409475",
+          "object": "source/1794206510.220486-98d69b8727d04e93930dda7f46d50546.tgz"
+        }
+      },
+      "status": "SUCCESS"
+    }
+  ],
+  "live_deployment": false,
+  "version": 1
+}

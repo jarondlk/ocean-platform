@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "live_acceptance": false,
+  "logs": [
+    {
+      "name": "integration-final-tests.log",
+      "sha256": "120722c974ae22ad69a0545cfa79fdc3e9a3abd71361dab52c0e49f4b660ebf0",
+      "result_lines": [
+        "340 passed, 1 warning in 27.47s"
+      ]
+    },
+    {
+      "name": "research-final-tests.log",
+      "sha256": "c42d40cb2bf8db4eef0f87c0f265d1a7d2da49cd064d7822d5edd5f22e27a87e",
+      "result_lines": [
+        "90 passed, 1 warning in 223.50s (0:03:43)"
+      ]
+    },
+    {
+      "name": "frontend-host-tests.log",
+      "sha256": "b9416ba9cdb1d4aaae24f07a0535e66d72c7d90b1eefb8e7341913a8ec2f21a4",
+      "result_lines": [
+        "# tests 60",
+        "# pass 60",
+        "# fail 0"
+      ]
+    },
+    {
+      "name": "frontend-host-typecheck.log",
+      "sha256": "a2bc6cd414c5469248a2d5944bfda3686ea5463f203dbf3ee942fc8865a43b02",
+      "result_lines": []
+    },
+    {
+      "name": "frontend-startup-test.log",
+      "sha256": "d29a14092ae622ca031e13483ee4239b59a7bf55beeac5ad9f91a716e4e820b2",
+      "result_lines": [
+        "# tests 1",
+        "# pass 1",
+        "# fail 0"
+      ]
+    },
+    {
+      "name": "controller-credential-boundary-tests.log",
+      "sha256": "c66bcfd723c1932fd21f409cabb7a7997926b08715b5f6f52c69b15b2c61fcd8",
+      "result_lines": [
+        "9 passed in 0.30s"
+      ]
+    },
+    {
+      "name": "accepted-qualification.log",
+      "sha256": "16c0ae002f87da48f38966d7289888254a85acf8f51a305f36978480719f7b37",
+      "result_lines": [
+        "Step #4: 1 passed, 1 warning in 19.08s"
+      ]
+    },
+    {
+      "name": "accepted-api.log",
+      "sha256": "301a7bb99fdf27996c4df42aadff6412a1b9432a211d2e97cc4f8c91fedb13b3",
+      "result_lines": [
+        "Step #1: Research API source hashes, bounded Gemini SDK and private host imports verified; no credentials or network"
+      ]
+    },
+    {
+      "name": "accepted-frontend.log",
+      "sha256": "7922f01e17ef0d687e63329e3efbdde1836ac07ef6c824b1b505387d594eb419",
+      "result_lines": [
+        "Step #1: Research frontend, source-bound startup gate and question routes verified without network"
+      ]
+    },
+    {
+      "name": "accepted-operator.log",
+      "sha256": "351cc0d52e46cbc5955c2be43387c9222d718712a938cfe4aaf97a9bedb24ed2",
+      "result_lines": [
+        "Step #1: Research operator source and account-write denial verified; no credentials, SQL connection or network"
+      ]
+    },
+    {
+      "name": "accepted-credential.log",
+      "sha256": "b197ced1ce6e8a8d319112204e50760cbf231904cd9eaa659a425fc6a6c7d1cb",
+      "result_lines": [
+        "Step #1: Credential initializer and accepted password-safe helper verified without network, credentials or SQL"
+      ]
+    }
+  ]
+}

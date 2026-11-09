@@ -1,4 +1,19 @@
-# Beta deployment continuation — 2026-11-05 JST
+# Beta deployment continuation — 2026-11-09 JST
+
+Research questions are prioritized, with the user selecting Gemini through
+Vertex AI. The [Research activation review](../beta/research-20261109/README.md)
+contains four successfully built immutable images, scoped cloud changes,
+private-controller/one-shot-job configurations and rollback. The final disposable
+PostgreSQL16 qualification passes credential initialization/SCRAM denial, exact
+runtime grants and the saved cited-answer journey with synthetic data/provider
+transport. It is not live Cloud SQL/Gemini acceptance. Live revision remains
+`ocean-v1-beta-serving-00017-kvz`, 100% traffic; Research execution is disabled
+and its Cloud Tasks queue is PAUSED at fresh readback. New-service, IAM, database,
+job execution, API enablement and runtime outbox scheduling require the specific
+activation scope documented in that review. No such writes have been applied.
+The three-hour Codex schedule stays PAUSED; legacy and eDNA gates are unchanged.
+
+## Live catalogue checkpoint — 2026-11-05 JST
 
 The authenticated beta serves saved investigations alongside the CTD,
 metagenome, and MUR regional SST catalogues on revision

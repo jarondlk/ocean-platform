@@ -1,0 +1,205 @@
+{
+  "apiVersion": "serving.knative.dev/v1",
+  "kind": "Service",
+  "metadata": {
+    "annotations": {
+      "run.googleapis.com/ingress": "internal"
+    },
+    "name": "ocean-v1-beta-research-controller",
+    "namespace": "534831104543"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "autoscaling.knative.dev/maxScale": "1",
+          "autoscaling.knative.dev/minScale": "0",
+          "run.googleapis.com/container-dependencies": "{\"controller\":[\"sql-proxy\"]}",
+          "run.googleapis.com/cpu-throttling": "true",
+          "run.googleapis.com/execution-environment": "gen2",
+          "run.googleapis.com/network-interfaces": "[{\"network\":\"projects/ocean-v1-beta-20261101/global/networks/ocean-v1-beta-network\",\"subnetwork\":\"projects/ocean-v1-beta-20261101/regions/asia-northeast1/subnetworks/ocean-v1-beta-subnet\"}]",
+          "run.googleapis.com/vpc-access-egress": "private-ranges-only"
+        }
+      },
+      "spec": {
+        "containerConcurrency": 1,
+        "containers": [
+          {
+            "args": [
+              "-m",
+              "api.v1_beta_question_entry",
+              "controller"
+            ],
+            "command": [
+              "python"
+            ],
+            "env": [
+              {
+                "name": "DEPLOYMENT_ENV",
+                "value": "production"
+              },
+              {
+                "name": "AUTH_MODE",
+                "value": "required"
+              },
+              {
+                "name": "ENABLE_MOCK_LOGIN",
+                "value": "false"
+              },
+              {
+                "name": "PERSIST_LOCAL_CHAT",
+                "value": "false"
+              },
+              {
+                "name": "OCEAN_V1_PROJECT_ID",
+                "value": "ocean-v1-beta-20261101"
+              },
+              {
+                "name": "OCEAN_V1_SQL_CONNECTION_NAME",
+                "value": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+              },
+              {
+                "name": "OCEAN_V1_DATABASE_USER",
+                "value": "ocean_v1_research_controller"
+              },
+              {
+                "name": "OCEAN_V1_HOST_CONFIG",
+                "value": "/opt/ocean/beta-host-config.json"
+              },
+              {
+                "name": "OCEAN_V1_DATABASE_URL",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "ocean-v1-beta-controller-database"
+                  }
+                }
+              },
+              {
+                "name": "OCEAN_V1_INTERNAL_AUTH_SECRET",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "ocean-v1-beta-internal"
+                  }
+                }
+              },
+              {
+                "name": "ENABLE_V1_CATALOGUE",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_CATALOGUE_BROWSER",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_SHELL",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_INVESTIGATIONS",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_RUNS",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_RESEARCH_DISPATCH",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_EVIDENCE",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_SYNTHESIS",
+                "value": "true"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENTS",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+                "value": "false"
+              },
+              {
+                "name": "ENABLE_V1_EXPERIMENT_WORKSPACE",
+                "value": "false"
+              },
+              {
+                "name": "OCEAN_V1_CATALOGUE_CONFIG",
+                "value": "/opt/ocean/beta-catalogue-source.json"
+              },
+              {
+                "name": "OCEAN_V1_CATALOGUE_MODE",
+                "value": "sealed-gcs-research-v1"
+              },
+              {
+                "name": "OCEAN_V1_RESEARCH_CONFIG_JSON",
+                "value": "{\"cloud\":{\"version\":\"ocean-v1-beta-research-cloud-v1\",\"project_id\":\"ocean-v1-beta-20261101\",\"region\":\"asia-northeast1\",\"queue_id\":\"ocean-v1-beta-research\",\"controller_origin\":\"https://ocean-v1-beta-research-controller-534831104543.asia-northeast1.run.app\",\"task_invoker_email\":\"ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com\",\"task_invoker_subject\":\"105490365082123397320\"},\"model\":{\"model\":\"gemini-3.8-flash\",\"location\":\"global\",\"max_output_tokens\":4096}}"
+              }
+            ],
+            "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:a26c98ad30de95ea5cd71d8ea7980b7055721372d320a60e102298b2cd3d7d70",
+            "name": "controller",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "http1"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "4Gi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 36,
+              "periodSeconds": 5,
+              "tcpSocket": {
+                "port": 8080
+              },
+              "timeoutSeconds": 2
+            }
+          },
+          {
+            "args": [
+              "--private-ip",
+              "--address=127.0.0.1",
+              "--port=5432",
+              "--health-check",
+              "--http-address=0.0.0.0",
+              "--http-port=9090",
+              "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql"
+            ],
+            "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+            "name": "sql-proxy",
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "256Mi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 24,
+              "httpGet": {
+                "path": "/readiness",
+                "port": 9090
+              },
+              "periodSeconds": 5,
+              "timeoutSeconds": 2
+            }
+          }
+        ],
+        "serviceAccountName": "ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "timeoutSeconds": 240
+      }
+    }
+  }
+}

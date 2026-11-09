@@ -1,0 +1,160 @@
+{
+  "apply": false,
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101",
+      "role": "roles/cloudsql.client"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101",
+      "role": "roles/serviceusage.serviceUsageConsumer"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101",
+      "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaResearchPredict"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/queues/ocean-v1-beta-research",
+      "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaResearchTaskProducer"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "ocean-v1-beta-research-controller Cloud Run service",
+      "role": "roles/run.invoker"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101/secrets/ocean-v1-beta-controller-database",
+      "role": "roles/secretmanager.secretAccessor"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101/secrets/ocean-v1-beta-internal",
+      "role": "roles/secretmanager.secretAccessor"
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101/secrets/ocean-v1-beta-controller-database",
+      "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaControllerCredential",
+      "temporary": true
+    },
+    {
+      "members": [
+        "serviceAccount:ocean-v1-beta-db-bootstrap@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "projects/ocean-v1-beta-20261101/secrets/ocean-v1-beta-bootstrap-database",
+      "role": "roles/secretmanager.secretAccessor",
+      "temporary_if_missing": true
+    },
+    {
+      "condition": "resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/')",
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "gs://ocean-v1-beta-20261101-snapshots",
+      "role": "roles/storage.objectViewer"
+    },
+    {
+      "condition": "resource.name == 'projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/control.json'",
+      "members": [
+        "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "resource": "gs://ocean-v1-beta-20261101-snapshots",
+      "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaCatalogueControlWriter"
+    }
+  ],
+  "custom_roles": {
+    "oceanBetaControllerCredential": [
+      "secretmanager.versions.add",
+      "secretmanager.versions.get",
+      "secretmanager.versions.list",
+      "secretmanager.versions.access"
+    ],
+    "oceanBetaResearchPredict": [
+      "aiplatform.endpoints.predict"
+    ],
+    "oceanBetaResearchTaskProducer": [
+      "cloudtasks.tasks.create",
+      "cloudtasks.tasks.get",
+      "cloudtasks.tasks.fullView"
+    ]
+  },
+  "enable_apis": [
+    "aiplatform.googleapis.com",
+    "cloudscheduler.googleapis.com"
+  ],
+  "legacy_writes": false,
+  "new_service_account_keys": false,
+  "oidc_service_agents": "Read existing Cloud Tasks and Scheduler service-agent grants. Retain standard service-agent roles. If required OIDC issuance is absent, stop and prepare only getOpenIdToken on the exact task-invoker account; no broad token creator grant.",
+  "operator_jobs": [
+    "ocean-v1-beta-controller-credential",
+    "ocean-v1-beta-research-grants"
+  ],
+  "operator_max_retries": 0,
+  "operator_task_count": 1,
+  "project": "ocean-v1-beta-20261101",
+  "queue": {
+    "inspect_existing_tasks": true,
+    "name": "ocean-v1-beta-research",
+    "purge": false,
+    "rateLimits": {
+      "maxConcurrentDispatches": 1,
+      "maxDispatchesPerSecond": 1
+    },
+    "resume_only_after_private_target_and_verification": true,
+    "retryConfig": {
+      "maxAttempts": 10,
+      "maxBackoff": "300s",
+      "maxDoublings": 4,
+      "maxRetryDuration": "3600s",
+      "minBackoff": "30s"
+    }
+  },
+  "region": "asia-northeast1",
+  "runtime_outbox_sweep": {
+    "attemptDeadline": "240s",
+    "audience": "exact verified controller default run.app origin",
+    "body": {
+      "version": "research-cloud-dispatch-v1"
+    },
+    "httpMethod": "POST",
+    "initially_paused": true,
+    "name": "ocean-v1-beta-research-outbox",
+    "oidc_service_account": "ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "path": "/internal/research/dispatch",
+    "resume_after_live_question_and_budget_check": true,
+    "retryCount": 0,
+    "schedule": "*/5 * * * *",
+    "timeZone": "Asia/Tokyo"
+  },
+  "three_hour_codex_schedule": "PAUSED"
+}

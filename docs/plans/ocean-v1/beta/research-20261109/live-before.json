@@ -1,0 +1,25 @@
+{
+  "api_research_flags": {
+    "ENABLE_V1_CATALOGUE": "true",
+    "ENABLE_V1_CATALOGUE_BROWSER": "true",
+    "ENABLE_V1_EVIDENCE": "false",
+    "ENABLE_V1_EXPERIMENTS": "false",
+    "ENABLE_V1_EXPERIMENT_DISPATCH": "false",
+    "ENABLE_V1_EXPERIMENT_WORKSPACE": "false",
+    "ENABLE_V1_INVESTIGATIONS": "true",
+    "ENABLE_V1_RESEARCH_CONTROLLER": "false",
+    "ENABLE_V1_RESEARCH_DISPATCH": "false",
+    "ENABLE_V1_RESEARCH_RUNS": "false",
+    "ENABLE_V1_SHELL": "true",
+    "ENABLE_V1_SYNTHESIS": "false"
+  },
+  "queue_state": "PAUSED",
+  "revision": "ocean-v1-beta-serving-00017-kvz",
+  "service_generation": 26,
+  "traffic": [
+    {
+      "percent": 100,
+      "revisionName": "ocean-v1-beta-serving-00017-kvz"
+    }
+  ]
+}

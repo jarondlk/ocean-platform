@@ -2,7 +2,17 @@
 
 Updated: 2026-11-03 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
 
-**Current beta checkpoint (2026-11-05 JST):** Authenticated CTD, metagenome,
+**Research preparation checkpoint (2026-11-09 JST):** The user prioritized
+Research questions and chose Gemini through Vertex AI. Four pinned images pass
+build/image checks; disposable PostgreSQL16 verifies credential creation,
+restricted grants and a saved cited-answer journey with synthetic data and
+provider transport. [Activation review](beta/research-20261109/README.md) includes
+the exact private controller, job, IAM, queue and runtime recovery proposals.
+Research is not live: revision00017-kvz remains at100% traffic, model execution
+off, Research queue PAUSED. New cloud scopes await specific activation approval.
+Three-hour scheduling stays PAUSED; no legacy or scientific-data change.
+
+**Live catalogue checkpoint (2026-11-05 JST):** Authenticated CTD, metagenome,
 MUR regional SST and saved investigations are live on
 `ocean-v1-beta-serving-00017-kvz` at 100% traffic. The latest increment removes
 duplicate catalogue requests and repeated authority reads within an operation,

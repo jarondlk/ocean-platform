@@ -1,0 +1,16 @@
+{
+  "cloud": {
+    "controller_origin": "https://ocean-v1-beta-research-controller-534831104543.asia-northeast1.run.app",
+    "project_id": "ocean-v1-beta-20261101",
+    "queue_id": "ocean-v1-beta-research",
+    "region": "asia-northeast1",
+    "task_invoker_email": "ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "task_invoker_subject": "105490365082123397320",
+    "version": "ocean-v1-beta-research-cloud-v1"
+  },
+  "model": {
+    "location": "global",
+    "max_output_tokens": 4096,
+    "model": "gemini-3.8-flash"
+  }
+}
