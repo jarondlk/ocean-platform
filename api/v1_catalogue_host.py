@@ -247,6 +247,13 @@ class _ActivationAuthority:
             self._scope.reset(token)
 
 
+def _activation_serialization_matches(raw, document):
+    # Historical activations use UTF-8; the portable renderer escapes Unicode.
+    # Accept only those exact serializations after the authority pins raw bytes.
+    return raw == _canonical(document) or raw == (
+        json.dumps(document, indent=2, sort_keys=True, ensure_ascii=True) + "\n").encode()
+
+
 def _activation(raw, *, research_enabled=False):
     from orchestration.catalogue_registration import ScientificCatalogueRegistration
     from schema.catalogue_browser import CatalogueSnapshotDescriptor
@@ -267,7 +274,7 @@ def _activation(raw, *, research_enabled=False):
             or type(document["qualifications"]) is not list
             or not 1 <= len(document["qualifications"]) <= 32
             or any(type(v) is not str or not 1 <= len(v) <= 4096 for v in document["qualifications"])
-            or _canonical(document) != raw):
+            or not _activation_serialization_matches(raw, document)):
         raise _configuration_error()
     _identifier.validate_python(document["policy_revision"], strict=True)
     descriptors, registrations, datasets, registration_ids = [], {}, {}, set()
