@@ -115,7 +115,7 @@ class V1ReadServices:
     research_experiment_service: ResearchExperimentService | None = None
     experiment_workspace_service: ExperimentWorkspaceService | None = None
 
-    def validate(self, *, session_factory, site_id, allow_test=False):
+    def validate(self, *, session_factory, site_id, allow_test=False, research_execution=False):
         pairs = (
             ('catalogue_service', CatalogueService), ('catalogue_browser', CatalogueBrowser),
             ('investigation_service', InvestigationService), ('research_run_service', ResearchRunService),
@@ -143,9 +143,9 @@ class V1ReadServices:
             if service and service.investigations is not investigations:
                 raise HostConfigurationError('Retained service investigation binding mismatch')
         runs, answers, experiments = self.research_run_service, self.research_answer_service, self.research_experiment_service
-        if runs and (runs.queue is not None or runs.controller_factory is not None):
+        if not research_execution and runs and (runs.queue is not None or runs.controller_factory is not None):
             raise HostConfigurationError('Read-only host cannot contain research execution wiring')
-        if answers and (answers.queue is not None or answers.runtime is not None):
+        if not research_execution and answers and (answers.queue is not None or answers.runtime is not None):
             raise HostConfigurationError('Read-only host cannot contain synthesis wiring')
         if experiments and experiments.executor is not None:
             raise HostConfigurationError('Read-only host cannot contain experiment dispatch wiring')
@@ -273,6 +273,7 @@ def _failure(status, code, message):
 
 def create_host_app(*, settings: V1HostSettings, session_factory, internal_secret: SecretStr,
                     services: V1ReadServices | None = None, context_mutations=False,
+                    research_execution=False,
                     _allow_test_sqlite=False, _owned_engine=None):
     """Compose trusted explicit dependencies. Only tests may request SQLite."""
     if not isinstance(settings, V1HostSettings) or not callable(session_factory):
@@ -281,12 +282,21 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
         raise HostConfigurationError('SQLite or synthetic host injection requires explicit test environment')
     if not isinstance(internal_secret, SecretStr) or len(internal_secret.get_secret_value()) < 32:
         raise HostConfigurationError('Independent signing secret requires at least 32 characters')
-    _execution_fence()
+    if type(research_execution) is not bool:
+        raise HostConfigurationError('Explicit research mode required')
+    execution_fence = _execution_fence
+    if research_execution:
+        from api.v1_beta_question_services import BetaQuestionServices, question_execution_fence
+        if not isinstance(services, BetaQuestionServices):
+            raise HostConfigurationError('Explicit durable beta question bundle required')
+        execution_fence = question_execution_fence
+    execution_fence()
     bind = _schema_ready(session_factory, settings, allow_test=_allow_test_sqlite)
     services = services or V1ReadServices()
     if not isinstance(services, V1ReadServices):
         raise HostConfigurationError('Explicit v1 service bundle required')
-    services.validate(session_factory=session_factory, site_id=settings.site_id, allow_test=_allow_test_sqlite)
+    services.validate(session_factory=session_factory, site_id=settings.site_id, allow_test=_allow_test_sqlite,
+        research_execution=research_execution)
     mutation_paths = frozenset()
     if type(context_mutations) is not bool:
         raise HostConfigurationError('Explicit context mutation selection required')
@@ -300,6 +310,11 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
                 or services.investigation_service.store is not expected.investigation_service.store):
             raise HostConfigurationError('Durable context store binding required')
         mutation_paths = CONTEXT_MUTATION_PATHS
+    if research_execution:
+        from api.v1_beta_question_services import QUESTION_MUTATION_PATHS
+        if not context_mutations:
+            raise HostConfigurationError('Question mode requires durable context mutations')
+        mutation_paths = mutation_paths | QUESTION_MUTATION_PATHS
     limiter = InMemoryRateLimiter() if _allow_test_sqlite else PostgresRateLimiter(engine_factory=lambda: bind)
 
     @asynccontextmanager
@@ -313,6 +328,7 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
     for name in services.__dataclass_fields__:
         setattr(app.state, name, getattr(services, name))
+    app.state.v1_services = services
     initial = V1RuntimeConfiguration(site_id=settings.site_id, revision=settings.revision)
     capabilities = dict(initial.capabilities)
     if services.catalogue_service and services.catalogue_browser:
@@ -330,9 +346,9 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
         if request.query_params:
             return _failure(422, 'invalid_request', 'Query parameters are not accepted')
         if request.method in {'GET', 'HEAD'} and request.url.path == '/health/live':
-            return JSONResponse({'status': 'live', 'execution_enabled': False})
+            return JSONResponse({'status': 'live', 'execution_enabled': research_execution})
         try:
-            _execution_fence()
+            execution_fence()
             user = await run_in_threadpool(_authenticate, request, session_factory, settings,
                 internal_secret.get_secret_value())
             await checkpoint()
@@ -371,7 +387,7 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
 
     @app.get('/health/live')
     def live():
-        return {'status': 'live', 'execution_enabled': False}
+        return {'status': 'live', 'execution_enabled': research_execution}
 
     @app.get('/me')
     def me(request: Request):
@@ -407,14 +423,23 @@ def catalogue_services_from_environment(settings, secret, environ, *, session_fa
         return None
     from api.v1_catalogue_host import load_empty_catalogue, load_snapshot_catalogue
     mode = environ.get('OCEAN_V1_CATALOGUE_MODE', 'empty')
-    if mode not in {'empty', 'sealed-gcs-v1', 'sealed-gcs-context-v1'}:
+    if mode not in {'empty', 'sealed-gcs-v1', 'sealed-gcs-context-v1', 'sealed-gcs-research-v1'}:
         raise HostConfigurationError('Explicit supported catalogue mode required')
     key = hmac.digest(secret.get_secret_value().encode('utf-8'),
         b'ocean-v1-beta:catalogue-discovery-cursor:v1', 'sha256')
     loader = load_empty_catalogue if mode == 'empty' else load_snapshot_catalogue
-    kwargs = {'context_retention': True} if mode == 'sealed-gcs-context-v1' else {}
+    kwargs = {'context_retention': True} if mode in {'sealed-gcs-context-v1', 'sealed-gcs-research-v1'} else {}
+    if mode == 'sealed-gcs-research-v1':
+        kwargs['research_retention'] = True
     catalogue, browser = loader(path, project_id=settings.project_id,
         site_id=settings.site_id, cursor_key=key, **kwargs)
+    if mode == 'sealed-gcs-research-v1':
+        from api.v1_beta_question_services import load_question_configuration, compose_beta_question_services
+        cloud_settings, model_settings = load_question_configuration(environ.get('OCEAN_V1_RESEARCH_CONFIG'),
+            document_json=environ.get('OCEAN_V1_RESEARCH_CONFIG_JSON'))
+        return compose_beta_question_services(session_factory=session_factory,
+            catalogue_service=catalogue, catalogue_browser=browser,
+            cloud_settings=cloud_settings, model_settings=model_settings)
     if mode == 'sealed-gcs-context-v1':
         from api.v1_beta_research_host import compose_beta_context_services
         return compose_beta_context_services(session_factory=session_factory, site_id=settings.site_id,
@@ -455,7 +480,8 @@ def create_from_environment():
         services = catalogue_services_from_environment(settings, secret, os.environ, session_factory=factory)
         app = create_host_app(settings=settings, session_factory=factory, internal_secret=secret,
             services=services, _owned_engine=engine,
-            context_mutations=os.environ.get('OCEAN_V1_CATALOGUE_MODE') == 'sealed-gcs-context-v1')
+            context_mutations=os.environ.get('OCEAN_V1_CATALOGUE_MODE') in {'sealed-gcs-context-v1', 'sealed-gcs-research-v1'},
+            research_execution=os.environ.get('OCEAN_V1_CATALOGUE_MODE') == 'sealed-gcs-research-v1')
         app.state.v1_owned_engine = engine
         return app
     except Exception:

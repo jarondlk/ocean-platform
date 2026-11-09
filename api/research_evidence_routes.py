@@ -104,7 +104,9 @@ def research_evidence_response(user, evidence, answers, investigations, group, n
             result = service.invoke(name, data, user)
         result = responses[name].model_validate(result).model_dump(mode='json')
         _bound(group, name, data, result)
-        response = JSONResponse(content=result)
+        from orchestration.cloud_research_dispatch import accepted_delivery_background
+        background = accepted_delivery_background(answers, result['job']['id']) if group == 'answers' and name == 'submit' else None
+        response = JSONResponse(content=result, background=background)
         if len(response.body) > MAX_RESPONSE_BYTES:
             return _error('response_unavailable', 'Research response exceeds its supported bound')
         return response

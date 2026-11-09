@@ -615,10 +615,17 @@ class ResearchAnswerService:
         except SynthesisInvalid:
             return self._finish(lease, reason='evidence_pack_unavailable')
 
-    def dispatch_outbox(self):
+    def dispatch_outbox(self, *, limit=25, job_id=None):
         self._enabled(dispatch=True)
+        if type(limit) is not int or not 1 <= limit <= 100:
+            raise ValueError('Bounded outbox batch required')
         with self._transaction() as session:
-            ids = list(session.scalars(select(ResearchAnswerOutbox.id).where(ResearchAnswerOutbox.state == 'pending').order_by(ResearchAnswerOutbox.id)))
+            query = select(ResearchAnswerOutbox.id).join(ResearchAnswerJob,
+                ResearchAnswerJob.id == ResearchAnswerOutbox.job_id).where(
+                    ResearchAnswerOutbox.state == 'pending', ResearchAnswerJob.status.in_(('queued', 'running')))
+            if job_id is not None:
+                query = query.where(ResearchAnswerOutbox.job_id == uuid.UUID(str(job_id)))
+            ids = list(session.scalars(query.order_by(ResearchAnswerOutbox.attempts, ResearchAnswerOutbox.id).limit(limit)))
         count = 0
         for identity in ids:
             self._enabled(dispatch=True)
@@ -627,12 +634,15 @@ class ResearchAnswerService:
                 if row.state != 'pending':
                     continue
                 job = session.get(ResearchAnswerJob, row.job_id)
-                actor = self._actor(session, owner_id=job.user_id)
                 if job.status not in {'queued', 'running'}:
                     continue
-                self._source(session, actor, self._address(job), active=True)
-                job_id, delivery_id = str(job.id), str(row.delivery_id)
                 row.attempts += 1
+                try:
+                    actor = self._actor(session, owner_id=job.user_id)
+                    self._source(session, actor, self._address(job), active=True)
+                except ResearchAnswerError:
+                    continue
+                job_id, delivery_id = str(job.id), str(row.delivery_id)
             self.queue.enqueue(job_id=job_id, delivery_id=delivery_id)
             with self._transaction() as session:
                 row = session.get(ResearchAnswerOutbox, identity)

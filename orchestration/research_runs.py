@@ -82,7 +82,7 @@ class RunLease:
 class ResearchRunService:
     def __init__(self, *, session_factory, site_id, investigations,
                  controller_factory=None, queue=None, enabled=None,
-                 dispatch_enabled=None, lease_seconds=180, db_clock=None):
+                 dispatch_enabled=None, lease_seconds=180, db_clock=None, owner_locker=None):
         if (not callable(session_factory) or not isinstance(site_id, str)
                 or not site_id.startswith("v1:") or investigations.site_id != site_id
                 or investigations.session_factory is not session_factory
@@ -92,6 +92,8 @@ class ResearchRunService:
             raise ValueError("Controller factory must be explicit")
         if queue is not None and not callable(getattr(queue, "enqueue", None)):
             raise ValueError("Queue must implement enqueue")
+        if owner_locker is not None and not callable(owner_locker):
+            raise ValueError("Explicit owner lock capability required")
         if type(lease_seconds) not in (int, float) or not 0 < lease_seconds <= 180:
             raise ValueError("Lease must be bounded by the active execution limit")
         self.session_factory, self.site_id, self.investigations = session_factory, site_id, investigations
@@ -99,6 +101,7 @@ class ResearchRunService:
         self.enabled = enabled if enabled is not None else config.v1_research_runs_enabled
         self.dispatch_enabled = dispatch_enabled if dispatch_enabled is not None else config.v1_research_dispatch_enabled
         self.lease_seconds, self.db_clock = float(lease_seconds), db_clock
+        self.owner_locker = owner_locker
 
     @property
     def dispatch_available(self):
@@ -126,7 +129,15 @@ class ResearchRunService:
         identity = user.id if user is not None else owner_id
         # NO KEY UPDATE fences role/status changes while allowing C17 audit/FK
         # KEY SHARE checks, avoiding an owner/investigation lock-order cycle.
-        current = session.scalar(select(AppUser).where(AppUser.id == identity).with_for_update(key_share=True))
+        query = select(AppUser).where(AppUser.id == identity)
+        if self.owner_locker is not None and session.bind.dialect.name == "postgresql":
+            # A reviewed narrow DB capability can lock without granting the
+            # runtime UPDATE on account columns. Other hosts retain their
+            # existing owner-lock protocol.
+            self.owner_locker(session, identity)
+        else:
+            query = query.with_for_update(key_share=True)
+        current = session.scalar(query.execution_options(populate_existing=True))
         if current is None:
             raise ResearchRunError("access_denied", 403)
         actor = current_user_from_model(current)
@@ -538,11 +549,19 @@ class ResearchRunService:
             run = session.get(ResearchRun, uuid.UUID(lease.run_id))
             return run is None or run.cancellation_requested or run.lease_epoch != lease.epoch
 
-    def dispatch_outbox(self, queue=None):
+    def dispatch_outbox(self, queue=None, *, limit=25, run_id=None):
         self._dispatch_required()
+        if type(limit) is not int or not 1 <= limit <= 100:
+            raise ValueError("Bounded outbox batch required")
         target = queue if queue is not None else self.queue
         with self._transaction() as session:
-            ids = list(session.scalars(select(ResearchRunOutbox.id).where(ResearchRunOutbox.state == "pending").order_by(ResearchRunOutbox.created_at, ResearchRunOutbox.id)))
+            query = select(ResearchRunOutbox.id).join(ResearchRun, ResearchRun.id == ResearchRunOutbox.run_id).where(
+                ResearchRunOutbox.state == "pending", ResearchRun.status.in_(("queued", "running")),
+                ResearchRun.input_version == ResearchRunOutbox.input_version)
+            if run_id is not None:
+                query = query.where(ResearchRunOutbox.run_id == uuid.UUID(str(run_id)))
+            ids = list(session.scalars(query.order_by(ResearchRunOutbox.attempts,
+                ResearchRunOutbox.created_at, ResearchRunOutbox.id).limit(limit)))
         count = 0
         for identity in ids:
             self._dispatch_required()
@@ -553,13 +572,15 @@ class ResearchRunService:
                 run = session.get(ResearchRun, row.run_id)
                 if run.status not in {"queued", "running"} or run.input_version != row.input_version:
                     continue
+                # A denied old row must not monopolize each bounded sweep.
+                # Count dispatch admission attempts, including safe denials.
+                row.attempts += 1
                 try:
                     actor = self._principal(session, owner_id=run.user_id)
                     self._check_context(run, actor, require_active=True, session=session)
                 except ResearchRunError:
                     continue
                 run_id, delivery_id = str(row.run_id), str(row.delivery_id)
-                row.attempts += 1
             target.enqueue(run_id=run_id, delivery_id=delivery_id)
             with self._transaction() as session:
                 row = session.get(ResearchRunOutbox, identity)

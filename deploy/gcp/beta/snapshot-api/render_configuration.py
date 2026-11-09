@@ -62,7 +62,7 @@ def text(value):
     require(type(value) is str and 1 <= len(value) <= 4000 and bool(value.strip()))
 
 
-def validate_activation(data, *, expected_sha256):
+def validate_activation(data, *, expected_sha256, research_enabled=False):
     sha(expected_sha256)
     require(0 < len(data) <= MAX_ACTIVATION_BYTES and hashlib.sha256(data).hexdigest() == expected_sha256)
     document = json.loads(data.decode('utf-8'), object_pairs_hook=unique,
@@ -73,11 +73,13 @@ def validate_activation(data, *, expected_sha256):
     require(document['version'] == 'ocean-v1-catalogue-activation-v1'
         and document['project_id'] == PROJECT and document['site_id'] == 'v1:' + PROJECT
         and document['scientific_mode'] == 'datasets_only'
-        and document['scientific_approval'] is False and document['research_enabled'] is False)
+        and document['scientific_approval'] is False and type(research_enabled) is bool
+        and document['research_enabled'] is research_enabled)
     identity(document['policy_revision'])
     require(document['authorization_ref'] in {
         'chat-20261102-all-eligible-existing-data',
         'chat-20261103-all-beta-deployment-and-scientific-data',
+        'chat-20261105-prioritize-beta-research-questions',
     })
     exact_keys(document['access'], {'roles', 'account_types'})
     require(document['access']['roles'] == ['admin'] and document['access']['account_types'] == ['internal'])
@@ -127,7 +129,7 @@ def validate_activation(data, *, expected_sha256):
     return document
 
 
-def read_activation(path, *, expected_sha256):
+def read_activation(path, *, expected_sha256, research_enabled=False):
     path = path.absolute()
     require(not path.is_relative_to(ROOT) and not path.is_symlink()
         and all(not parent.is_symlink() for parent in path.parents))
@@ -143,7 +145,7 @@ def read_activation(path, *, expected_sha256):
             (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns))
     finally:
         os.close(descriptor)
-    validate_activation(data, expected_sha256=expected_sha256)
+    validate_activation(data, expected_sha256=expected_sha256, research_enabled=research_enabled)
     return data
 
 
@@ -157,11 +159,11 @@ def binding_document(activation_sha256):
     }
 
 
-def render(*, activation, activation_sha256, output):
+def render(*, activation, activation_sha256, output, research_enabled=False):
     output = output.absolute()
     require(not output.is_relative_to(ROOT) and not output.exists() and not output.is_symlink()
         and all(not parent.is_symlink() for parent in output.parents))
-    read_activation(activation, expected_sha256=activation_sha256)
+    read_activation(activation, expected_sha256=activation_sha256, research_enabled=research_enabled)
     data = canonical(binding_document(activation_sha256))
     descriptor = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
     with os.fdopen(descriptor, 'wb') as target:
@@ -179,10 +181,12 @@ if __name__ == '__main__':
     parser.add_argument('--activation', type=Path, required=True)
     parser.add_argument('--activation-sha256', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--research-enabled', action='store_true')
     args = parser.parse_args()
     try:
         print(json.dumps(render(activation=args.activation,
-            activation_sha256=args.activation_sha256, output=args.output), indent=2))
+            activation_sha256=args.activation_sha256, output=args.output,
+            research_enabled=args.research_enabled), indent=2))
     except Exception:
         print(json.dumps({'state': 'rejected', 'error': 'Selected activation metadata or output rejected', 'cloud_calls': False}))
         raise SystemExit(2) from None

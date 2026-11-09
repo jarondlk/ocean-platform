@@ -29,7 +29,7 @@ test("actual proxy replaces caller auth/cookies and limits outgoing headers to t
   assert.equal(response.headers.get("x-private-diagnostic"), null); assert.match(response.headers.get("content-disposition")!, /test.json/);
 });
 
-for (const path of ["/research/runs/submit", "/research/runs/clarify", "/research/runs/continue", "/research/answers/submit", "/research/experiments/approve", "/research/experiments/dispatch", "/admin", "/me", "/chat", "/catalogue/list?target=legacy"]) {
+for (const path of ["/research/experiments/approve", "/research/experiments/dispatch", "/internal/research/run", "/internal/research/answer", "/internal/research/dispatch", "/admin", "/me", "/chat", "/catalogue/list?target=legacy"]) {
   test(`host denies dispatch/admin/unconfigured proxy destination ${path}`, async () => {
     let called = false;
     const response = await proxyRequest(post(path), SETTINGS, session, (async () => { called = true; throw new Error(); }) as typeof fetch);
@@ -69,10 +69,10 @@ test("body reader cancels a stalled request and rejects streamed overflow within
   await assert.rejects(boundedBytes(overflow, 100), RangeError); assert(overflowCancelled);
 });
 
-const CONTEXT_WRITES = ["create", "rename", "archive", "conversations/create", "conversations/rename", "context/change", "refresh", "operations/retry"];
-for (const operation of CONTEXT_WRITES) {
-  test(`context mutation ${operation} uses authenticated JSON transport and preserves API capability denial`, async () => {
-    const path = "/research/investigations/" + operation;
+const CONTEXT_WRITES = ["create", "rename", "archive", "conversations/create", "conversations/rename", "context/change", "refresh", "operations/retry"].map(p => "/research/investigations/" + p);
+const QUESTION_WRITES = ["/research/runs/submit", "/research/runs/clarify", "/research/runs/continue", "/research/answers/submit"];
+for (const path of [...CONTEXT_WRITES, ...QUESTION_WRITES]) {
+  test(`mutation ${path} uses authenticated JSON transport and preserves API capability denial`, async () => {
     assert(proxyPath(path, "POST"));
     assert.equal(proxyPath(path, "GET"), false); assert.equal(proxyPath(path, "DELETE"), false);
     let count = 0;

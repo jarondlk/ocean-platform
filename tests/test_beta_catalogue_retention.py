@@ -3,7 +3,7 @@ import hashlib
 
 import pytest
 
-from ingestion.beta_catalogue_retention import BetaCatalogueRetentionStore
+from ingestion.beta_catalogue_retention import BetaCatalogueRetentionStore, BetaResearchRetentionStore
 from ingestion.catalogue_snapshot import LocalCatalogueSnapshotStore, SnapshotAccessDenied, SnapshotCommitUncertain
 from ingestion.gcs_catalogue_snapshot import PREFIX, GcsCatalogueSnapshotStore, validated_lifecycle
 from ingestion.provenance_snapshot import SnapshotConflict, StoredObject
@@ -66,6 +66,22 @@ def test_retention_write_cannot_reuse_read_scope_observation(retained):
     assert memory.writes == []
     store.add_reference(identity, reference())
     assert store.lifecycle()["references"][reference()] == identity
+
+
+def test_research_retention_explicitly_adds_evidence_holds_without_widening_context_mode(retained):
+    _, context, memory, identity = retained
+    evidence = "c21:dependency:" + "e" * 64
+    with pytest.raises(ValueError):
+        context.add_reference(identity, evidence)
+    store = BetaResearchRetentionStore(access_gate=lambda _: True, _test_store=memory)
+    before = context.lifecycle()
+    store.add_reference(identity, evidence)
+    after = context.lifecycle()
+    assert after["references"] == {**before["references"], evidence: identity}
+    assert after["snapshots"] == before["snapshots"]
+    assert len(memory.writes) == 1
+    with store.read_scope(), pytest.raises(ValueError, match="cannot share"):
+        store.add_reference(identity, "c21:dependency:" + "d" * 64)
 
 
 def test_same_c09_control_reopens_after_restart_without_split_authority(retained):

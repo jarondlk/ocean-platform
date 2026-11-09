@@ -247,12 +247,12 @@ class _ActivationAuthority:
             self._scope.reset(token)
 
 
-def _activation(raw):
+def _activation(raw, *, research_enabled=False):
     from orchestration.catalogue_registration import ScientificCatalogueRegistration
     from schema.catalogue_browser import CatalogueSnapshotDescriptor
     from schema.scientific_catalogue import DatasetBinding
     document = _document(raw)
-    if (type(document) is not dict or set(document) != {
+    if (type(research_enabled) is not bool or type(document) is not dict or set(document) != {
             "version", "project_id", "site_id", "policy_revision", "authorization_ref",
             "access", "scientific_mode", "scientific_approval", "research_enabled",
             "snapshots", "qualifications"}
@@ -260,7 +260,7 @@ def _activation(raw):
             or document["site_id"] != "v1:" + PROJECT
             or document["access"] != {"roles": ["admin"], "account_types": ["internal"]}
             or document["scientific_mode"] != "datasets_only"
-            or document["scientific_approval"] is not False or document["research_enabled"] is not False
+            or document["scientific_approval"] is not False or document["research_enabled"] is not research_enabled
             or type(document["authorization_ref"]) is not str
             or not 1 <= len(document["authorization_ref"]) <= 4096
             or type(document["snapshots"]) is not list or not 1 <= len(document["snapshots"]) <= 128
@@ -323,7 +323,7 @@ class _CurrentSnapshotResolver(FrozenCatalogueResolver):
 
 
 def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
-                            context_retention=False, _allow_test_owner=False, _test_store=None):
+                            context_retention=False, research_retention=False, _allow_test_owner=False, _test_store=None):
     """Bind explicit sealed GCS sources; never populate or modify their store.
 
     The image contains only an opaque hash/address. Scientific data and source
@@ -335,7 +335,7 @@ def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
         from ingestion.gcs_catalogue_snapshot import GcsCatalogueSnapshotStore
         from ingestion.scientific_catalogue_inputs import load_registry
         from schema.catalogue_snapshot import manifest_id
-        if type(context_retention) is not bool:
+        if type(context_retention) is not bool or type(research_retention) is not bool or research_retention and not context_retention:
             raise ValueError("Explicit context-retention selection required")
         if type(cursor_key) is not bytes or len(cursor_key) < 32:
             raise ValueError("Stable cursor key required")
@@ -346,7 +346,8 @@ def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
         object_store = _test_store if _test_store is not None else BoundedGcsStore(
             bucket=binding["bucket"], prefix="")
         authority = _ActivationAuthority(source, binding, object_store)
-        document, descriptors, registrations, datasets = _activation(authority.initial.data)
+        document, descriptors, registrations, datasets = _activation(authority.initial.data,
+            research_enabled=research_retention)
         allowed_snapshots = {identity for registration in registrations.values()
             for identity in (registration.snapshot_id, *registration.child_snapshot_ids)}
 
@@ -359,6 +360,9 @@ def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
         if context_retention:
             from ingestion.beta_catalogue_retention import BetaCatalogueRetentionStore
             store_type = BetaCatalogueRetentionStore
+            if research_retention:
+                from ingestion.beta_catalogue_retention import BetaResearchRetentionStore
+                store_type = BetaResearchRetentionStore
         store = store_type(bucket=binding["bucket"], prefix=binding["prefix"],
             access_gate=access_gate, **kwargs)
         for identity, registration in registrations.items():

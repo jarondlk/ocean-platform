@@ -105,7 +105,9 @@ def research_run_response(user, service, investigations, name, payload):
         result = service.invoke(name, parsed.model_dump(mode="json", exclude_none=True), user)
         # This validates the complete public DTO, including consecutive event
         # cursors and the requested binding. Private journal fields cannot leak.
-        return JSONResponse(content=validate_run_response(name, result, parsed))
+        from orchestration.cloud_research_dispatch import accepted_delivery_background
+        background = accepted_delivery_background(service, result["run"]["id"]) if name in DISPATCH_ACTIONS else None
+        return JSONResponse(content=validate_run_response(name, result, parsed), background=background)
     except ResearchRunError as exc:
         return _error(exc.code, exc.message, exc.status_code)
     except Exception:

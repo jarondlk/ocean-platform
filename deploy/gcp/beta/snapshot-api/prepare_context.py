@@ -26,9 +26,13 @@ BASE_IMAGE = ('asia-northeast1-docker.pkg.dev/' + PROJECT + '/ocean-v1-beta/cata
 BASE_SOURCE_DIGEST = 'dcf27a4644f53fe014fa4f0c3eb4fd3969a66866b0dd1ddaad1b2d1164aeaf92'
 SUPERSEDED = ('api/v1_host.py', 'api/v1_catalogue_host.py',
     'orchestration/frozen_scientific_catalogue.py', 'orchestration/catalogue_service.py',
-    'orchestration/frozen_catalogue.py', 'orchestration/investigations.py')
+    'orchestration/frozen_catalogue.py', 'orchestration/investigations.py',
+    'orchestration/research_runs.py', 'orchestration/research_answers.py',
+    'api/research_run_routes.py', 'api/research_evidence_routes.py')
 ADDED = ('ingestion/gcs_catalogue_snapshot.py', 'api/v1_beta_research_host.py',
-    'ingestion/beta_catalogue_retention.py')
+    'ingestion/beta_catalogue_retention.py', 'orchestration/cloud_research_dispatch.py',
+    'api/v1_beta_question_services.py', 'api/v1_research_controller_host.py',
+    'orchestration/beta_vertex_research.py', 'api/v1_beta_question_entry.py')
 OVERLAYS = SUPERSEDED + ADDED
 PACKAGE_SOURCES = ('Dockerfile', 'base-api-source-manifest.json', 'prepare_context.py', 'render_configuration.py')
 CONFIGURATION_PATH = '/opt/ocean/beta-catalogue-source.json'
@@ -203,7 +207,7 @@ def prepare(*, revision, output, binding, binding_sha256, activation_sha256):
         'version': 'ocean-v1-beta-api-context-v1', 'project_id': PROJECT, 'revision': revision,
         'sources': pins,
         'source_manifest_sha256': digest(json.dumps(pins, sort_keys=True, separators=(',', ':')).encode()),
-        'selection': '172 pinned catalogue base sources, six explicit host/catalogue/context supersessions and three GCS/context additions',
+        'selection': f'172 pinned catalogue base sources, {len(SUPERSEDED)} explicit supersessions and {len(ADDED)} GCS/context/research additions',
         'composition': {'base_revision': BASE_REVISION, 'base_serving_image': BASE_IMAGE,
             'base_source_manifest_sha256': BASE_SOURCE_DIGEST,
             'superseded_sources': list(SUPERSEDED), 'added_sources': list(ADDED)},

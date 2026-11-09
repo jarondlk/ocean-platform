@@ -105,3 +105,16 @@ class BetaCatalogueRetentionStore(GcsCatalogueSnapshotStore):
                 raise self._uncertain(identity, reference, state) from None
             return revision
         raise SnapshotConflict("Catalogue retention control is busy; retry under current authority")
+
+
+class BetaResearchRetentionStore(BetaCatalogueRetentionStore):
+    """Research mode adds C21 evidence holds through the same C09 CAS.
+
+    Context-only deployments retain their C17-only namespace. Neither mode can
+    release references or write scientific payloads and activation objects.
+    """
+    @staticmethod
+    def _reference(reference):
+        if type(reference) is not str or re.fullmatch(r"c(?:17|21):dependency:[a-f0-9]{64}", reference) is None:
+            raise ValueError("Only explicit context/evidence dependency references are supported")
+        return reference
