@@ -1,5 +1,29 @@
 # Research questions activation review — 2026-11-09 JST
 
+## Compatibility amendment
+
+The beta Gemini adapter now omits the deprecated `temperature` field. The
+regression checks cover both the complete runtime request and serialization
+through the installed Google SDK with a synthetic credential and mock HTTP
+transport. All 67 focused Research checks and Ruff pass. Google's detailed
+rules describe this field as ignored, while its migration checklist calls for
+removing it. This correction does not establish that every previous call would
+have failed. [Guidance](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-8-flash),
+[source verification](compatibility-amendment01/verification.json).
+
+The previous API image in `images.json` is superseded for future Research
+activation. A replacement source-bound API image is being built. Use the new
+amendment's image selection and proposals once its image proof passes. The
+original build receipts and proposals retain their historical identities.
+
+Personal CLI sign-in is restored. Fresh readback confirms the queue is paused
+and empty, SQL uses private networking and encrypted connections, and serving
+storage writes are limited to `control.json`. Controller credential versions
+remain empty. The recorded three-attempt queue retry policy is the current
+policy; the ten-attempt Research policy remains a proposal. Direct SQL role
+and live provider/delivery acceptance are still pending.
+[Readback](compatibility-amendment01/cloud-readback.json).
+
 **Prepared and qualified; not live.** The user prioritized Research questions
 and selected Gemini through Vertex AI. Live beta remains revision
 `ocean-v1-beta-serving-00017-kvz`, 100% traffic, with Research execution disabled.

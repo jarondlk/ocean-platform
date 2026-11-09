@@ -1,0 +1,80 @@
+{
+  "activation_research_enabled": false,
+  "activation_sha256": "464b018099db5975c5ba74ded879e0af5080ad8c4f29541cbaa77397d1af5001",
+  "cloud_mutations": false,
+  "control_object_metadata": {
+    "bucket": "ocean-v1-beta-20261101-snapshots",
+    "generation": "1793758432247371",
+    "name": "v1/catalogue/control.json",
+    "size": 4381
+  },
+  "control_writer_permissions": [
+    "storage.objects.create",
+    "storage.objects.delete"
+  ],
+  "controller_secret_versions": 0,
+  "current_serving_revision": "ocean-v1-beta-serving-00017-kvz",
+  "direct_sql_application_grant_revalidation": "pending_the_documented_runtime_operator",
+  "observed_date_jst": "2026-11-09",
+  "personal_cli_sign_in": "restored",
+  "project_id": "ocean-v1-beta-20261101",
+  "research_queue": {
+    "observed_tasks": 0,
+    "rateLimits": {
+      "maxBurstSize": 10,
+      "maxConcurrentDispatches": 1,
+      "maxDispatchesPerSecond": 1.0
+    },
+    "retryConfig": {
+      "maxAttempts": 3,
+      "maxBackoff": "300s",
+      "maxDoublings": 16,
+      "maxRetryDuration": "3600s",
+      "minBackoff": "10s"
+    },
+    "state": "PAUSED"
+  },
+  "snapshot_serving_bindings": [
+    {
+      "condition": {
+        "expression": "resource.name == 'projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/control.json'",
+        "title": "BetaCatalogueControlOnly"
+      },
+      "members": [
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaCatalogueControlWriter"
+    },
+    {
+      "condition": {
+        "expression": "resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-snapshots/objects/v1/catalogue/')",
+        "title": "ocean-v1-beta-catalogue-only"
+      },
+      "members": [
+        "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.objectViewer"
+    }
+  ],
+  "sql": {
+    "database_flags": [
+      {
+        "name": "log_min_error_statement",
+        "value": "panic"
+      },
+      {
+        "name": "log_statement",
+        "value": "none"
+      },
+      {
+        "name": "pg_stat_statements.track_utility",
+        "value": "off"
+      }
+    ],
+    "ipv4_enabled": false,
+    "region": "asia-northeast1",
+    "ssl_mode": "ENCRYPTED_ONLY",
+    "state": "RUNNABLE",
+    "version": "POSTGRES_16"
+  }
+}

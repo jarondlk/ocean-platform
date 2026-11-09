@@ -1,5 +1,19 @@
 # Beta deployment continuation — 2026-11-09 JST
 
+## Current compatibility amendment
+
+The Gemini adapter now omits deprecated sampling configuration. All 67 focused
+Research checks pass, including real SDK request serialization against mock HTTP
+transport. The replacement API image must pass its source-bound image proof
+before selection for Research activation. Preserve the previous API build and
+its original receipts. See the
+[compatibility amendment](../beta/research-20261109/README.md#compatibility-amendment).
+
+Fresh personal CLI sign-in and cloud readback confirm an empty paused Research
+queue, private encrypted SQL and the exact control-only serving storage write
+grant. The controller secret has zero versions. Live SQL role/provider/task
+acceptance remains pending. The corrected SDK flow is not a real model call.
+
 Research questions are prioritized, with the user selecting Gemini through
 Vertex AI. The [Research activation review](../beta/research-20261109/README.md)
 contains four successfully built immutable images, scoped cloud changes,

@@ -1,6 +1,13 @@
 # Implementation status
 
-Updated: 2026-11-03 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
+Updated: 2026-11-09 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
+
+**Research compatibility amendment (2026-11-09 JST):** The Gemini request now
+omits deprecated sampling configuration. All 67 focused Research checks and
+Ruff pass, including SDK serialization against mock HTTP transport. Personal
+GCP login is restored; current queue, private SQL and control-only storage
+permissions were read back. A replacement API image is being qualified.
+[Amendment](beta/research-20261109/README.md#compatibility-amendment).
 
 **Research preparation checkpoint (2026-11-09 JST):** The user prioritized
 Research questions and chose Gemini through Vertex AI. Four pinned images pass

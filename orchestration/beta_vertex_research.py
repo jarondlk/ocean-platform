@@ -22,7 +22,7 @@ class BetaVertexResearchRuntime(VertexRuntime):
             return _generate_result(provider="vertex", model=model, max_output_tokens=max_output_tokens,
                 call=lambda: client.models.generate_content(model=model, contents=prompt, config={
                     "response_mime_type": "application/json", "response_json_schema": schema,
-                    "temperature": 1, "max_output_tokens": max_output_tokens,
+                    "max_output_tokens": max_output_tokens,
                     "thinking_config": {"thinking_level": "LOW", "include_thoughts": False},
                 }))
         finally:

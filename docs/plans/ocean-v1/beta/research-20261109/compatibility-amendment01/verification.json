@@ -1,0 +1,26 @@
+{
+  "baseline_revision": "ad0c31381fb21c289b973ae675b26b31a4cf7afa",
+  "checks": {
+    "diff_check": "passed",
+    "focused_research_tests_passed": 67,
+    "real_sdk_serialization": "passed_with_synthetic_credentials_and_mock_http_transport",
+    "ruff": "passed"
+  },
+  "live_research_acceptance": false,
+  "original_receipts_preserved": true,
+  "provider_guidance": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-8-flash",
+  "provider_guidance_qualification": "Detailed rules describe temperature as deprecated/ignored; migration guidance calls for removing it. No claim that all prior requests would fail.",
+  "real_model_call": false,
+  "source_supersessions": {
+    "orchestration/beta_vertex_research.py": {
+      "corrected_sha256": "64e9a22ad36bc1b6f3d326e0b4a82125b1912d6aaefd442260021aba7039edec",
+      "previous_sha256": "c6dab25c13ed69f76120abe151edd15d64e86e50fbfc4214ebb5cd9c4fa03a87"
+    },
+    "tests/test_beta_vertex_research.py": {
+      "corrected_sha256": "d554123b055dfb34c943287199c1622a8c3d92c791e6d8c6123e70a8634cafdc",
+      "previous_sha256": "c079edd60472572dafd54201e9e1a3ebe617e1dc8c73dc5718b5a4e178878823"
+    }
+  },
+  "state": "local_compatibility_fix_verified_replacement_image_pending",
+  "superseded_research_api_image": "sha256:a26c98ad30de95ea5cd71d8ea7980b7055721372d320a60e102298b2cd3d7d70"
+}
