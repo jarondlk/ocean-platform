@@ -3,7 +3,7 @@
 ## Current portable handoff
 
 The user is preparing to continue on another Mac. A private AirDrop package is
-being assembled on the Desktop with verified cloud-recovered scientific inputs,
+being finalized at `~/Desktop/OCEAN-Handoff-2026-11-09` with verified cloud-recovered scientific inputs,
 source checkpoint and a complete continuation prompt. The three-hour schedule
 stays paused. Read the portable handoff amendment in the Research review before
 selecting an activation/image; it supersedes the missing temporary private file
@@ -13,6 +13,13 @@ All 318 hosted PostgreSQL cases passed, but final backup/restore exposed an
 Ubuntu26 client/server-version mismatch. The workflow now selects Ubuntu24 and
 explicit version16 backup clients. A fresh hosted restore pass remains required.
 The main application's runtime sources are unchanged by this CI correction.
+Source `3cdecc0` passes the full backend and three frontend jobs. PostgreSQL
+attempt01 subsequently crashed in the native C23 artifact case with exit139;
+backup/restore was not reached. Retry permission through the GitHub connector
+was denied; a browser sign-in is pending. Retain this gate in the receiving
+Mac's continuation prompt. The portable image build `f5d0d58d` passes and is
+bound to the included replacement activation `4843e61b…`. Use the effective
+handoff-amendment02 proposals, preserving all original receipts.
 
 ## Current compatibility amendment
 

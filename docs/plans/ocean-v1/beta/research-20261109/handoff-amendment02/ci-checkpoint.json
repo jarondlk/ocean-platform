@@ -1,0 +1,31 @@
+{
+  "live_research_acceptance": false,
+  "passed_jobs": [
+    "Backend tests and security boundary",
+    "OCEAN v1 prototype tests and build",
+    "OCEAN v1 authenticated host tests and build",
+    "Frontend typecheck and build"
+  ],
+  "postgres_attempt01": {
+    "backup_restore_reached": false,
+    "conclusion": "failure",
+    "diagnostic_frames": [
+      "inspect._check_instance",
+      "inspect.getattr_static",
+      "typing.__instancecheck__"
+    ],
+    "job_id": 129084531504,
+    "last_test": "tests/integration/test_experimental_artifact_postgres.py::test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen",
+    "reason": "Timeout followed by exit139 in native C23 experimental artifact test; no assertion result recorded"
+  },
+  "postgres_rerun_request": {
+    "accepted": false,
+    "attempted": true,
+    "reason": "GitHub connector returned403 Resource not accessible by integration; browser GitHub sign-in requested"
+  },
+  "postgres_rerun_requested": false,
+  "remaining_gate": "Actual successful PostgreSQL job including version16 backup/restore",
+  "run_id": 42594709784,
+  "source_revision": "3cdecc01290f519533351fc03055fc6dcd6a7736",
+  "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42594709784"
+}

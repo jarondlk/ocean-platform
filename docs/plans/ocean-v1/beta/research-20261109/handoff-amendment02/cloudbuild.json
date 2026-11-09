@@ -1,0 +1,47 @@
+{
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:research-3cdecc01290f"
+  ],
+  "options": {
+    "diskSizeGb": 100,
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2"
+  },
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "steps": [
+    {
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag=asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:research-3cdecc01290f",
+        "."
+      ],
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    },
+    {
+      "args": [
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--user",
+        "10001:10001",
+        "--entrypoint=python",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:research-3cdecc01290f",
+        "-c",
+        "import hashlib,json,os,pathlib\np=pathlib.Path('/opt/ocean')\nassert os.geteuid()==10001 and os.getegid()==10001\nm=json.loads((p/'source-manifest.json').read_text())\nassert m['revision']=='3cdecc01290f519533351fc03055fc6dcd6a7736'\nbuild_only={'deploy/gcp/beta/api/Dockerfile','deploy/gcp/beta/api/prepare_context.py','requirements/runtime.txt'}\nassert build_only<=set(m['sources'])\nfor name,sha in m['sources'].items():\n if name in build_only: continue\n actual=p/('beta_entry.py' if name=='deploy/gcp/beta/api/entry.py' else name)\n assert hashlib.sha256(actual.read_bytes()).hexdigest()==sha,name\ns=json.loads((p/'snapshot-serving-manifest.json').read_text())\nb=json.loads((p/'beta-catalogue-source.json').read_text())\nassert b['activation_sha256']==s['activation_sha256']\nassert not (p/'data').exists() and not (p/'activation.json').exists()\nimport api.v1_beta_question_entry,api.v1_research_controller_host,api.v1_beta_question_services\nfrom google.genai.types import ThinkingConfig\nassert ThinkingConfig(thinking_level='LOW').thinking_level is not None\nprint('Research API source hashes, bounded Gemini SDK and private host imports verified; no credentials or network')\n\nimport httpx\nfrom google import genai\nfrom google.genai import types\nfrom google.oauth2.credentials import Credentials\nfrom orchestration.beta_vertex_research import BetaVertexResearchRuntime\nrequests=[]\ndef respond(request):\n requests.append(request)\n return httpx.Response(200,json={'candidates':[{'content':{'role':'model','parts':[{'text':'{\"synthetic\":true}'}]},'finishReason':'STOP'}]})\nwith genai.Client(vertexai=True,project='ocean-v1-beta-20261101',location='global',credentials=Credentials(token='synthetic-test-only'),http_options=types.HttpOptions(api_version='v1',retry_options=types.HttpRetryOptions(attempts=1),client_args={'transport':httpx.MockTransport(respond)})) as client:\n runtime=BetaVertexResearchRuntime(project='ocean-v1-beta-20261101',location='global',embedding_dim=768,max_attempts=1,client=client)\n result=runtime.structured_chat_result(model='gemini-3.8-flash',prompt='Synthetic test only',schema={'type':'object'},max_output_tokens=4096,timeout=10)\nassert result.status=='completed' and len(requests)==1\nassert requests[0].url.host=='aiplatform.googleapis.com'\nbody=json.loads(requests[0].content)\nassert set(body['generationConfig'])=={'responseMimeType','responseJsonSchema','maxOutputTokens','thinkingConfig'}\nassert body['generationConfig']['thinkingConfig']=={'thinking_level':'LOW','include_thoughts':False}\nassert body['generationConfig']['maxOutputTokens']==4096\nprint('Corrected Gemini SDK request serialization verified with synthetic credentials and mock HTTP, network disabled')\n"
+      ],
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    }
+  ],
+  "tags": [
+    "ocean-v1-beta",
+    "research-portable-3cdecc01290f"
+  ],
+  "timeout": "600s"
+}

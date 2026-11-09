@@ -2,6 +2,16 @@
 
 Updated: 2026-11-09 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
 
+**Portable checkpoint (2026-11-09 JST):** The user is moving to another Mac.
+Private scientific inputs were recovered from pinned existing GCS objects for
+an AirDrop folder, and the missing unpublished Research activation was
+intentionally superseded by metadata hash `4843e61b…`. Portable API build
+`f5d0d58d` passes. Full backend and all three frontend jobs pass on source
+`3cdecc0`; the PostgreSQL job requires retry after an exit139 native artifact
+test crash, and its final backup/restore gate is still open. The Desktop
+folder's README and complete prompt carry the exact continuation.
+[Current handoff](handoffs/BETA_DEPLOYMENT.md).
+
 **Research compatibility amendment (2026-11-09 JST):** The Gemini request now
 omits deprecated sampling configuration. All 67 focused Research checks and
 Ruff pass, including SDK serialization against mock HTTP transport. Personal

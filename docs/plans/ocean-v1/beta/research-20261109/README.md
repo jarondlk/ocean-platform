@@ -14,13 +14,24 @@ activation is intentionally superseding it, starting from the hash-verified live
 revision change. All three snapshot inventories and scientific qualifications
 are preserved. The original hashes, images and receipts remain historical.
 [Supersession](handoff-amendment02/activation-supersession.json).
-A replacement image is being bound to the new activation for portable continuation.
+Build `f5d0d58d-9431-4049-881f-5a037d6dd080` passes its source and offline SDK
+proof. The [effective images](handoff-amendment02/images.json),
+[controller proposal](handoff-amendment02/controller-service.proposed.json) and
+[serving proposal](handoff-amendment02/serving-changes.proposed.json) bind the
+private replacement activation `4843e61b…`. These supersede the earlier
+compatibility amendment's selections for future Research activation.
 
 The next full CI run also corrects a runner/toolchain mismatch. All 318 actual
 PostgreSQL cases passed, followed by a failed backup restore because the newer
 runner's client emitted `transaction_timeout` against server16. The PostgreSQL
 job now selects Ubuntu24.04 and explicitly checks the version16 client tools.
-The restore gate remains mandatory.
+The restore gate remains mandatory. On source `3cdecc0`, full backend CI
+passed the 100,000-object gate, 17 shared integration cases and the remaining
+7,218 cases with 627 explicit skips and 83.88% coverage. All three frontend
+jobs passed. PostgreSQL's subsequent attempt crashed with exit139 during the
+native C23 artifact test before reaching backup/restore. Its retry and actual
+restore acceptance remain open. The connector's retry request was denied with
+HTTP403; browser GitHub sign-in was opened. [CI checkpoint](handoff-amendment02/ci-checkpoint.json).
 [Correction](handoff-amendment02/postgres-ci-correction.json).
 
 ## Compatibility amendment

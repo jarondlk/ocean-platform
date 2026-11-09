@@ -1,0 +1,22 @@
+{
+  "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+  "build_id": "f5d0d58d-9431-4049-881f-5a037d6dd080",
+  "finish_time": "2026-11-09T09:37:39.835691Z",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:c326fcbe223f38326928bbe93f989a53d8e27cce55432d3e37af68f00e12896a",
+  "live_activation": false,
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1794217020727424",
+      "object": "source/1794217020.224024-a17c2963db4646c6a40d34f001888bb6.tgz"
+    }
+  },
+  "source_manifest_sha256": "8154e3a4dcff659c5db72474666014587793abbdaec9f1bccac052f6dc0808fa",
+  "source_revision": "3cdecc01290f519533351fc03055fc6dcd6a7736",
+  "state": "portable_research_api_image_qualified",
+  "status": "SUCCESS",
+  "step_statuses": [
+    "SUCCESS",
+    "SUCCESS"
+  ]
+}
