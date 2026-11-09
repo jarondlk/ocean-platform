@@ -1,0 +1,43 @@
+{
+  "apply": false,
+  "base_revision": "ocean-v1-beta-serving-00017-kvz",
+  "changes": {
+    "api": {
+      "args": [
+        "-m",
+        "api.v1_beta_question_entry",
+        "api"
+      ],
+      "command": [
+        "python"
+      ],
+      "environment": {
+        "ENABLE_V1_EVIDENCE": "true",
+        "ENABLE_V1_RESEARCH_CONTROLLER": "true",
+        "ENABLE_V1_RESEARCH_DISPATCH": "true",
+        "ENABLE_V1_RESEARCH_RUNS": "true",
+        "ENABLE_V1_SYNTHESIS": "true",
+        "OCEAN_V1_CATALOGUE_MODE": "sealed-gcs-research-v1",
+        "OCEAN_V1_RESEARCH_CONFIG_JSON": "{\"cloud\":{\"version\":\"ocean-v1-beta-research-cloud-v1\",\"project_id\":\"ocean-v1-beta-20261101\",\"region\":\"asia-northeast1\",\"queue_id\":\"ocean-v1-beta-research\",\"controller_origin\":\"https://ocean-v1-beta-research-controller-534831104543.asia-northeast1.run.app\",\"task_invoker_email\":\"ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com\",\"task_invoker_subject\":\"105490365082123397320\"},\"model\":{\"model\":\"gemini-3.8-flash\",\"location\":\"global\",\"max_output_tokens\":4096}}"
+      },
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:8a317733a7021a81d82c402a467e03e307ef97c69045e04b95e37151b2397a39"
+    },
+    "frontend": {
+      "args": [
+        "--require",
+        "/opt/ocean/serving-frontend-adapter.cjs",
+        "/opt/ocean/beta-wait-api.cjs"
+      ],
+      "command": [
+        "node"
+      ],
+      "environment": {
+        "OCEAN_V1_EXPECT_RESEARCH_API": "true"
+      },
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:188cf1d5be346b97e2434ee636d20354cd8ff3eb887657ea6072a1718b2e839c"
+    }
+  },
+  "new_revision_initial_traffic_percent": 0,
+  "preserve_all_other_fields": true,
+  "service": "ocean-v1-beta-serving"
+}

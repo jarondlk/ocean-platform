@@ -6,7 +6,9 @@ Updated: 2026-11-09 JST. **P00 and C01–C26 are Complete within their documente
 omits deprecated sampling configuration. All 67 focused Research checks and
 Ruff pass, including SDK serialization against mock HTTP transport. Personal
 GCP login is restored; current queue, private SQL and control-only storage
-permissions were read back. A replacement API image is being qualified.
+permissions were read back. The replacement API image and offline SDK wire
+check pass. Full CI exposed test/lint mismatches that now pass locally; fresh
+hosted follow-up is pending.
 [Amendment](beta/research-20261109/README.md#compatibility-amendment).
 
 **Research preparation checkpoint (2026-11-09 JST):** The user prioritized

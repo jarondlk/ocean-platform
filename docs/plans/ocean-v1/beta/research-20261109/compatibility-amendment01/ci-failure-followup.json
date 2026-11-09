@@ -1,0 +1,30 @@
+{
+  "failures": [
+    {
+      "cause": "Three E701 formatting violations in the catalogue boundary regression",
+      "fix": "Expanded test branches; behavior unchanged",
+      "job_id": 129070486430
+    },
+    {
+      "cause": "English and Japanese tests still expected prose intentionally removed by the approved copy cleanup",
+      "fix": "Verify the current empty state and unavailable/enabled indicators alongside existing activity",
+      "job_id": 129070486671
+    },
+    {
+      "cause": "Standalone test still expected submission route to be absent after explicit proxy routing was added",
+      "fix": "Verify authenticated API capability denial and current revocation denial before upstream submission",
+      "job_id": 129070486675
+    }
+  ],
+  "fresh_hosted_followup": "pending",
+  "initial_run": "https://github.com/jarondlk/ocean-platform/actions/runs/42590443975",
+  "initial_source": "f26fa7a421f3ea0b9606c5149a7794fd650607a2",
+  "local_followup": {
+    "all_active_python_lint": "pass",
+    "catalogue_boundary_tests": 19,
+    "full_prototype_tests": 1064,
+    "host_build": "pass",
+    "prototype_result": "pass",
+    "standalone_actual_http_test": "pass"
+  }
+}

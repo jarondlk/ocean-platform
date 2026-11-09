@@ -10,7 +10,7 @@ import { ACCOUNT, ENV, IDENTITY, SETTINGS } from "../tests/fixtures.ts";
 import { SESSION_COOKIE } from "../lib/auth-config.ts";
 
 test("built Next host performs guarded login, encrypted session, private proxy, revocation and logout over actual HTTP", { timeout: 45000 }, async () => {
-  let active = true, meCalls = 0, runtimeCalls = 0;
+  let active = true, meCalls = 0, runtimeCalls = 0, submissionCalls = 0;
   const backend = createServer(async (req, res) => {
     try {
       assert.equal(req.headers.host, "127.0.0.1:8000");
@@ -22,6 +22,11 @@ test("built Next host performs guarded login, encrypted session, private proxy, 
       res.setHeader("Content-Type", "application/json");
       if (req.url === "/me") { meCalls++; res.statusCode = active ? 200 : 403; res.end(JSON.stringify(active ? ACCOUNT : { detail: "Suspended" })); }
       else if (req.url === "/v1/runtime") { runtimeCalls++; res.end(JSON.stringify({ fixture: "actual-private-http-boundary-only" })); }
+      else if (req.url === "/research/runs/submit") {
+        submissionCalls++;
+        res.statusCode = 403;
+        res.end(JSON.stringify({ error: { code: "readonly_stage" } }));
+      }
       else { res.statusCode = 404; res.end("{}"); }
     } catch { res.statusCode = 401; res.end("{}"); }
   });
@@ -95,6 +100,10 @@ test("built Next host performs guarded login, encrypted session, private proxy, 
     assert.deepEqual((await signedIn.json()).v1Identity, IDENTITY);
     const runtime = await call("/v1/runtime", { headers: sessionHeaders }); assert.equal(runtime.status, 200);
     assert.deepEqual(await runtime.json(), { fixture: "actual-private-http-boundary-only" }); assert.equal(runtimeCalls, 1); assert(meCalls >= 2);
+    const submission = await call("/research/runs/submit", { method: "POST", headers: { ...sessionHeaders, Origin: SETTINGS.origin, "Content-Type": "application/json" }, body: "{}" });
+    assert.equal(submission.status, 403);
+    assert.deepEqual(await submission.json(), { error: { code: "readonly_stage" } });
+    assert.equal(submissionCalls, 1);
     const page = await call("/", { headers: sessionHeaders }); assert.equal(page.status, 200);
     const html = await page.text(); assert.match(html, /Sign out/); assert.doesNotMatch(html, /Local C26 acceptance|synthetic TEST accounts/);
     const signout = html.match(/name="(\$ACTION_ID_[^"]+)"/); assert(signout);
@@ -106,7 +115,9 @@ test("built Next host performs guarded login, encrypted session, private proxy, 
     assert(loggedOut.headers.getSetCookie().some(c => c.startsWith(SESSION_COOKIE + "=") && /Max-Age=0/i.test(c)));
     active = false;
     const revoked = await call("/v1/runtime", { headers: sessionHeaders }); assert.equal(revoked.status, 401); assert.equal(runtimeCalls, 1);
-    const savedClosed = await call("/research/runs/submit", { method: "POST", headers: { ...sessionHeaders, Origin: SETTINGS.origin, "Content-Type": "application/json" }, body: "{}" }); assert.equal(savedClosed.status, 404);
+    const revokedSubmission = await call("/research/runs/submit", { method: "POST", headers: { ...sessionHeaders, Origin: SETTINGS.origin, "Content-Type": "application/json" }, body: "{}" });
+    assert.equal(revokedSubmission.status, 401);
+    assert.equal(submissionCalls, 1);
   } finally {
     child.kill("SIGTERM");
     if (child.exitCode === null && child.signalCode === null) await Promise.race([once(child, "exit"), new Promise(resolve => setTimeout(resolve, 5000))]);

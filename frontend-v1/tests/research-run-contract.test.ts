@@ -189,13 +189,17 @@ const { ResearchActivity, ResearchResults, ResearchEvidence } = activityModule.e
 
 for (const locale of ["en", "ja"] as const) test(`actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (${locale})`, async () => {
   const empty = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs: [] }));
-  assert.match(empty, locale === "en" ? /No submitted activity/ : /実行履歴はありません/); assert.match(empty, locale === "en" ? /Research execution is unavailable/ : /リサーチの実行は利用できません/); assert.doesNotMatch(empty, /C\d{2}/);
+  assert.match(empty, locale === "en" ? /No submitted activity/ : /実行履歴はありません/);
+  assert.doesNotMatch(empty, /ra-unavailable|C\d{2}/);
   const runs: contract.ResearchRun[] = [];
   for (const scenario of ["running", "failed", "partial", "clarification"] as const) {
     const fixture = createC18RunFixture({ scenario }); const run = await fixture.submit(request()); await fixture.status(address(run)); runs.push(await fixture.status(address(run)));
   }
   const cancelledFixture = createC18RunFixture(); const started = await cancelledFixture.submit(request()); runs.push(await cancelledFixture.cancel(address(started)));
   const html = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs }));
+  assert.match(html, locale === "en" ? /Execution unavailable\./ : /実行は利用できません。/);
+  const enabled = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs, executionAvailable: true }));
+  assert.doesNotMatch(enabled, locale === "en" ? /Execution unavailable\./ : /実行は利用できません。/);
   for (const status of ["running", "failed", "partial", "awaiting_clarification", "cancelled"]) assert.match(html, new RegExp(`data-status="${status}"`));
   assert.match(html, locale === "en" ? /Synthetic development activity/ : /合成された開発用の処理/);
   assert.match(html, locale === "en" ? /Incomplete output/ : /未完了の出力/); assert.match(html, /textarea/); assert.match(html, /disabled=""/);

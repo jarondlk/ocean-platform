@@ -106,9 +106,12 @@ def test_activation_change_during_verified_operation_is_rejected_at_return(seale
         result = original(store, key, **kwargs)
         if '/objects/' in key and not changed:
             changed = True
-            if change == 'removed': path.unlink()
-            elif change == 'generation': path.write_bytes(path.read_bytes())
-            else: path.write_bytes(path.read_bytes() + b' ')
+            if change == 'removed':
+                path.unlink()
+            elif change == 'generation':
+                path.write_bytes(path.read_bytes())
+            else:
+                path.write_bytes(path.read_bytes() + b' ')
         return result
     monkeypatch.setattr(BoundedLocalStore, 'read', changing)
     with pytest.raises(CatalogueServiceError):

@@ -4,10 +4,14 @@
 
 The Gemini adapter now omits deprecated sampling configuration. All 67 focused
 Research checks pass, including real SDK request serialization against mock HTTP
-transport. The replacement API image must pass its source-bound image proof
-before selection for Research activation. Preserve the previous API build and
-its original receipts. See the
+transport. Replacement API build `1e7fc1c3` passes its source-bound nonroot
+image proof and offline SDK wire check. The amendment records the effective
+image and proposals while preserving the original receipts. See the
 [compatibility amendment](../beta/research-20261109/README.md#compatibility-amendment).
+
+Fresh full CI exposed earlier test/lint mismatches. Their corrections pass
+1,064 prototype tests, the actual standalone host test, production host build
+and complete active Python lint locally. Hosted follow-up is pending.
 
 Fresh personal CLI sign-in and cloud readback confirm an empty paused Research
 queue, private encrypted SQL and the exact control-only serving storage write

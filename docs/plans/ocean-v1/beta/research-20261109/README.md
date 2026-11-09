@@ -12,9 +12,12 @@ have failed. [Guidance](https://docs.cloud.google.com/gemini-enterprise-agent-pl
 [source verification](compatibility-amendment01/verification.json).
 
 The previous API image in `images.json` is superseded for future Research
-activation. A replacement source-bound API image is being built. Use the new
-amendment's image selection and proposals once its image proof passes. The
-original build receipts and proposals retain their historical identities.
+activation. Replacement build `1e7fc1c3-422c-442f-9166-4fb8b58e7463` passed
+its source-bound nonroot image proof and real SDK wire check with network
+disabled. Use the [effective image selection](compatibility-amendment01/images.json),
+[controller proposal](compatibility-amendment01/controller-service.proposed.json)
+and [serving proposal](compatibility-amendment01/serving-changes.proposed.json).
+The original build receipts and proposals retain their historical identities.
 
 Personal CLI sign-in is restored. Fresh readback confirms the queue is paused
 and empty, SQL uses private networking and encrypted connections, and serving
@@ -23,6 +26,16 @@ remain empty. The recorded three-attempt queue retry policy is the current
 policy; the ten-attempt Research policy remains a proposal. Direct SQL role
 and live provider/delivery acceptance are still pending.
 [Readback](compatibility-amendment01/cloud-readback.json).
+
+A fresh full CI run on the corrected runtime source exposed three earlier
+verification gaps. The catalogue regression had lint-only formatting errors.
+Two UI tests still expected prose removed by the approved copy cleanup. The
+standalone host test expected a submission route to be absent after the explicit
+Research proxy was added. The tests now verify current availability, API
+capability denial and revoked-account denial. All 1,064 prototype tests,
+the actual standalone HTTP check, production host build, 19 catalogue regressions
+and complete active Python lint pass locally. Fresh hosted follow-up is pending.
+[Failure and correction record](compatibility-amendment01/ci-failure-followup.json).
 
 **Prepared and qualified; not live.** The user prioritized Research questions
 and selected Gemini through Vertex AI. Live beta remains revision
