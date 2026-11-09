@@ -79,11 +79,17 @@ def source_context(revision: str, output: Path) -> dict:
     if (ROOT / adapter_path).is_symlink() or (ROOT / adapter_path).read_bytes() != adapter:
         raise ValueError('Serving transport adapter must equal the selected committed source')
     (output / 'forwarded-adapter.cjs').write_bytes(adapter)
+    startup_path = 'deploy/gcp/beta/serving-frontend/wait-api.cjs'
+    startup = git('show', revision + ':' + startup_path)
+    if (ROOT / startup_path).is_symlink() or (ROOT / startup_path).read_bytes() != startup:
+        raise ValueError('Startup gate must equal the selected committed source')
+    (output / 'wait-api.cjs').write_bytes(startup)
     files = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(selected.items())}
     manifest = {"version": "beta-frontend-source-context-v1", "source_commit": revision,
                 "source_files": files, "dockerfile_sha256": hashlib.sha256(packaging).hexdigest(),
                 "packager_sha256": hashlib.sha256(own_source).hexdigest(),
                 "serving_adapter_sha256": hashlib.sha256(adapter).hexdigest(),
+                "startup_gate_sha256": hashlib.sha256(startup).hexdigest(),
                 "synthetic_preview_graph_included": False, "credentials_or_generated_files_included": False}
     (output / "source-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest

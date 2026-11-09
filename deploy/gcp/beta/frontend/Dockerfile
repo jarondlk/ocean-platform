@@ -19,6 +19,7 @@ WORKDIR /opt/ocean
 COPY --from=build --chown=node:node /opt/ocean/frontend-v1/hosting/.next/standalone/ ./
 COPY --chown=node:node source-manifest.json ./source-manifest.json
 COPY --chown=0:0 --chmod=0444 forwarded-adapter.cjs /opt/ocean/serving-frontend-adapter.cjs
+COPY --chown=0:0 --chmod=0444 wait-api.cjs /opt/ocean/beta-wait-api.cjs
 USER node
 EXPOSE 8080
-CMD ["node", "--require", "/opt/ocean/serving-frontend-adapter.cjs", "hosting/server.js"]
+CMD ["node", "--require", "/opt/ocean/serving-frontend-adapter.cjs", "/opt/ocean/beta-wait-api.cjs"]

@@ -57,19 +57,32 @@ def native(monkeypatch):
     subprocess.run([sys.executable, "-m", "alembic", "upgrade", "head"], cwd=ROOT, env=env,
         check=True, stdout=subprocess.DEVNULL)
     owner = create_engine(migrator)
-    spec = importlib.util.spec_from_file_location("research_grant_policy", ROOT / "deploy/gcp/beta/research-operator/privileges.py")
-    policy = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(policy)
+    directory = ROOT / "deploy/gcp/beta/research-operator"
+    def load(name, filename):
+        spec = importlib.util.spec_from_file_location(name, directory / filename)
+        module = importlib.util.module_from_spec(spec)
+        monkeypatch.setitem(sys.modules, name, module)
+        spec.loader.exec_module(module)
+        return module
+    load("privileges", "privileges.py")
+    operator = load("native_research_operator", "research_operator.py")
+    package = load("native_research_operator_package", "prepare_context.py")
+    with admin.begin() as c:
+        c.execute(text("REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM PUBLIC"))
     with owner.begin() as c:
         assert c.scalar(text("SELECT version_num FROM alembic_version")) == "20261027_0021"
-        for statement in policy.statements():
-            c.exec_driver_sql(statement)
         for table, rights in CONTEXT_TABLE_PRIVILEGES.items():
             c.exec_driver_sql('GRANT ' + ', '.join(sorted(rights)) + ' ON TABLE public."' + table + '" TO ocean_v1_serving')
         for table, columns in CONTEXT_UPDATE_COLUMNS.items():
             c.exec_driver_sql('GRANT UPDATE (' + ', '.join('"' + s + '"' for s in sorted(columns)) + ') ON TABLE public."' + table + '" TO ocean_v1_serving')
         c.execute(text("GRANT SELECT(created_at) ON public.audit_event TO ocean_v1_serving"))
         c.execute(text("GRANT SELECT, INSERT, UPDATE ON public.rate_limit_bucket TO ocean_v1_serving"))
+        c.execute(text("GRANT CONNECT ON DATABASE ocean_v1_beta TO ocean_v1_serving"))
+        operator.apply(c, package.schema_contract())
+    # An uncertain outcome must be inspected; the operator cannot blindly replay
+    # CREATE/GRANT or replace an existing security-definer function.
+    with pytest.raises(ValueError, match="already exists"), owner.begin() as c:
+        operator.apply(c, package.schema_contract())
     serving = create_engine(url.set(username="ocean_v1_serving"), pool_pre_ping=True)
     controller = create_engine(url.set(username="ocean_v1_research_controller"), pool_pre_ping=True)
     owner_factory = sessionmaker(bind=owner, expire_on_commit=False)
@@ -88,6 +101,8 @@ def native(monkeypatch):
             cloud_settings=api.cloud_settings, model_settings=api.model_settings)
         for service in (worker.research_run_service, worker.research_answer_service):
             service.queue._session = Transport()
+        monkeypatch.setattr(worker.research_answer_service.runtime, "structured_chat_result",
+            lambda **kw: pytest.fail("No live provider call in qualification"))
         return create_controller_app(settings=worker.cloud_settings, runs=worker.research_run_service,
             answers=worker.research_answer_service,
             token_verifier=lambda token, audience: journey.invoker(worker.cloud_settings, **claims))

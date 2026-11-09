@@ -3,6 +3,11 @@
 // Deployment startup gate: retain request-based billing while keeping startup
 // CPU allocated until the private API is ready. No application/auth changes.
 const http = require("node:http");
+const researchMode = process.env.OCEAN_V1_EXPECT_RESEARCH_API ?? "false";
+if (researchMode !== "true" && researchMode !== "false") {
+  throw new Error("Explicit beta API startup mode required");
+}
+const expectedExecution = researchMode === "true";
 const deadline = Date.now() + 150000;
 function ready() {
   return new Promise(resolve => {
@@ -18,7 +23,7 @@ function ready() {
         try {
           const value = JSON.parse(data);
           resolve(response.statusCode === 200 && value.status === "live"
-            && value.execution_enabled === false);
+            && value.execution_enabled === expectedExecution);
         } catch { resolve(false); }
       });
     });
