@@ -24,21 +24,33 @@ export function useResearchAnswers(props: Props) {
   const [selection, setSelection] = useState<AnswerSelection>(emptySelection), [views, setViews] = useState<AnswerView[]>([]), [discovery, setDiscovery] = useState<AnswerListResponse | null>(null);
   const [receipts, setReceipts] = useState<EvidenceReceipt[]>([]), [opened, setOpened] = useState<EvidenceResponse | null>(null), [page, setPage] = useState<EvidencePageResponse | null>(null);
   const [pages, setPages] = useState(1), [next, setNext] = useState<string | null>(null), [receiptLimit, setReceiptLimit] = useState(100), [moreReceipts, setMoreReceipts] = useState(false);
-  const [offset, setOffset] = useState(0), [section, setSection] = useState<"rows" | "inputs">("rows"), [refresh, setRefresh] = useState(0), [busy, setBusy] = useState(false), [error, setError] = useState<number | null>(null), [notice, setNotice] = useState("");
+  const [offset, setOffset] = useState(0), [section, setSection] = useState<"rows" | "inputs">("rows"), [refresh, setRefresh] = useState(0), [busy, setBusy] = useState(false), [historyError, setHistoryError] = useState<number | null>(null), [receiptError, setReceiptError] = useState<number | null>(null), [notice, setNotice] = useState("");
   const [pending, setPending] = useState<AnswerMutationIntent | null>(null);
   const epoch = useRef(0), pollEpoch = useRef(0), mounted = useRef(false), cache = useRef<AnswerView[]>([]), scheduler = useRef<ResearchHistoryScheduler | null>(null), receiptScheduler = useRef<ResearchHistoryScheduler | null>(null), actionAbort = useRef<AbortController | null>(null);
   const actionLock = useRef(false), selectionRef = useRef(selection); selectionRef.current = selection;
   const answerPolicy = useRef<string | null>(null), receiptPolicy = useRef<{ id: string; revision: string; receipt: EvidenceReceipt } | null>(null);
   const slot = investigationId && conversationId ? `${investigationId}:${conversationId}` : null;
   const callbacks = useRef(props); callbacks.current = props;
-  const clearViews = () => { cache.current = []; setViews([]); setDiscovery(null); setReceipts([]); setOpened(null); setPage(null); answerPolicy.current = null; receiptPolicy.current = null; };
+  const clearHistory = () => { cache.current = []; setViews([]); setDiscovery(null); setReceipts([]); setNext(null); setMoreReceipts(false); answerPolicy.current = null; };
+  const clearReceipt = () => { setOpened(null); setPage(null); receiptPolicy.current = null; };
+  const clearViews = () => { clearHistory(); clearReceipt(); };
   const failure = (error: unknown) => {
-    const code = statusCode(error); ++epoch.current; ++pollEpoch.current; scheduler.current?.dispose(); receiptScheduler.current?.dispose(); actionAbort.current?.abort(); actionLock.current = false; setBusy(false); clearViews(); setError(code);
+    const code = statusCode(error); ++epoch.current; ++pollEpoch.current; scheduler.current?.dispose(); receiptScheduler.current?.dispose(); actionAbort.current?.abort(); actionLock.current = false; setBusy(false); clearViews(); setHistoryError(code); setReceiptError(code);
     if (code === 401 || code === 403) { ++epoch.current; scheduler.current?.dispose(); actionAbort.current?.abort(); drafts.clear(); setPending(null); setSelection(emptySelection()); callbacks.current.onAccessLost(); }
+  };
+  // A read deadline clears its own private values. Access/policy failures and actions
+  // still invalidate both surfaces; each surface keeps its own fresh read checks.
+  const historyFailure = (error: unknown) => {
+    if (statusCode(error) !== 503) return failure(error);
+    ++pollEpoch.current; scheduler.current?.dispose(); clearHistory(); setHistoryError(503);
+  };
+  const receiptFailure = (error: unknown) => {
+    if (statusCode(error) !== 503) return failure(error);
+    receiptScheduler.current?.dispose(); clearReceipt(); setReceiptError(503);
   };
   const select = (value: AnswerSelection) => { if (investigationId && conversationId) drafts.selectAnswer(investigationId, conversationId, value); selectionRef.current = value; setSelection(value); };
   useEffect(() => {
-    mounted.current = true; ++epoch.current; actionAbort.current?.abort(); scheduler.current?.dispose(); receiptScheduler.current?.dispose(); clearViews(); setBusy(false); actionLock.current = false; setError(null); setNotice(""); setPages(1); setReceiptLimit(100); setOffset(0);
+    mounted.current = true; ++epoch.current; actionAbort.current?.abort(); scheduler.current?.dispose(); receiptScheduler.current?.dispose(); clearViews(); setBusy(false); actionLock.current = false; setHistoryError(null); setReceiptError(null); setNotice(""); setPages(1); setReceiptLimit(100); setOffset(0);
     const saved = investigationId && conversationId ? drafts.answerSelection(investigationId, conversationId) : emptySelection(); setSelection(saved); selectionRef.current = saved;
     setPending(slot ? drafts.pendingAnswerMutation(slot) : null);
     return () => { mounted.current = false; ++epoch.current; scheduler.current?.dispose(); receiptScheduler.current?.dispose(); actionAbort.current?.abort(); };
@@ -49,7 +61,7 @@ export function useResearchAnswers(props: Props) {
     select({ runId: run.id, jobId: null, receiptId: null });
   }, [key, props.runs, selection.runId]);
   useEffect(() => {
-    setViews([]); setDiscovery(null); setReceipts([]); setError(null);
+    setViews([]); setDiscovery(null); setReceipts([]); setHistoryError(null);
     if (!answers || !evidence || !investigationId || !conversationId || !selection.runId) return;
     const mine = epoch.current, runId = selection.runId, address = { investigation_id: investigationId, conversation_id: conversationId, run_id: runId };
     const current = () => mounted.current && epoch.current === mine && selectionRef.current.runId === runId;
@@ -59,7 +71,7 @@ export function useResearchAnswers(props: Props) {
         cached: cache.current, expectedAccessRevision: answerPolicy.current, signal, isCurrent: () => current() && pollEpoch.current === tick });
       fresh(); answerPolicy.current = result.listing.access_revision; cache.current = result.views; setViews(result.views); setDiscovery(result.listing); setNext(result.next); setReceipts(result.receipts); setMoreReceipts(result.moreReceipts);
       if (result.unavailableJobId && selectionRef.current.jobId === result.unavailableJobId) select({ ...selectionRef.current, jobId: null });
-    }, onFailure: error => { if (current()) failure(error); }, onTimeout: () => { if (current()) failure({ status_code: 503 }); } });
+    }, onFailure: error => { if (current()) historyFailure(error); }, onTimeout: () => { if (current()) historyFailure({ status_code: 503 }); } });
     scheduler.current = poll; if (actionLock.current || props.externalBusy) poll.pause(); poll.request();
     return () => { poll.dispose(); ++pollEpoch.current; if (scheduler.current === poll) scheduler.current = null; };
   }, [key, selection.runId, answers, evidence, pages, receiptLimit, refresh, props.contextRevision, props.externalBusy]);
@@ -69,7 +81,7 @@ export function useResearchAnswers(props: Props) {
     return () => { clearInterval(timer); window.removeEventListener("focus", check); };
   }, [views]);
   useEffect(() => {
-    setOpened(null); setPage(null); if (!evidence || !selection.receiptId) return;
+    setOpened(null); setPage(null); setReceiptError(null); if (!evidence || !selection.receiptId) return;
     const id = selection.receiptId, mine = epoch.current, runId = selection.runId;
     const current = () => mounted.current && epoch.current === mine && selectionRef.current.runId === runId && selectionRef.current.receiptId === id;
     const poll = new ResearchHistoryScheduler({ run: async signal => {
@@ -78,7 +90,7 @@ export function useResearchAnswers(props: Props) {
       const result = await evidence.page({ ...receiptAddress(id), section, offset, limit: 100 }, signal); if (!current() || signal.aborted) return;
       if (result.access_revision !== opened.access_revision || JSON.stringify(result.receipt) !== JSON.stringify(opened.receipt)) throw { status_code: 409 };
       receiptPolicy.current = { id, revision: opened.access_revision, receipt: opened.receipt }; setOpened(opened); setPage(result);
-    }, onFailure: error => { if (current()) failure(error); }, onTimeout: () => { if (current()) failure({ status_code: 503 }); } });
+    }, onFailure: error => { if (current()) receiptFailure(error); }, onTimeout: () => { if (current()) receiptFailure({ status_code: 503 }); } });
     receiptScheduler.current = poll; if (actionLock.current || props.externalBusy) poll.pause(); poll.request();
     const timer = setInterval(() => { if (document.visibilityState !== "hidden") poll.request(); }, 10000);
     return () => { poll.dispose(); clearInterval(timer); if (receiptScheduler.current === poll) receiptScheduler.current = null; };
@@ -86,7 +98,7 @@ export function useResearchAnswers(props: Props) {
   const openReceipt = (id: string) => { setOffset(0); setSection("rows"); select({ ...selectionRef.current, receiptId: id }); callbacks.current.onOpenEvidence(); };
   const mutate = async (intent: AnswerMutationIntent) => {
     if (!answers || !slot || actionLock.current) return; const mine = epoch.current, abort = new AbortController(); actionAbort.current?.abort(); actionAbort.current = abort;
-    actionLock.current = true; setBusy(true); setError(null); scheduler.current?.pause(); receiptScheduler.current?.pause(); ++pollEpoch.current; const timer = setTimeout(() => abort.abort(), 15000);
+    actionLock.current = true; setBusy(true); setHistoryError(null); setReceiptError(null); scheduler.current?.pause(); receiptScheduler.current?.pause(); ++pollEpoch.current; const timer = setTimeout(() => abort.abort(), 15000);
     try {
       drafts.rememberAnswerMutation(slot, intent); setPending(intent);
       const response = await executeAnswerMutation(answers, intent, abort.signal);
@@ -125,16 +137,16 @@ export function useResearchAnswers(props: Props) {
       <button type="button" className="button primary" onClick={prepare} disabled={!discovery?.eligible || !props.submitEnabled || busy || !!pending || props.externalBusy}>{say(locale, "Prepare answer", "回答を準備")}</button>
       {discovery && (!discovery.eligible || !props.submitEnabled) && <p>{discovery.reason?.[locale] ?? say(locale, "New answers are unavailable. Permitted retained evidence remains readable.", "新しい回答は利用できません。アクセス可能な保持済みエビデンスは確認できます。")}</p>}
       {pending && !busy && <div role="alert"><p>{say(locale, "The last answer action may have been saved. Retry the same request to recover it.", "前の回答操作が保存された可能性があります。同じリクエストで復旧できます。")}</p><button className="button secondary" onClick={() => void mutate(pending)}>{say(locale, "Retry last answer action", "前の回答操作を再試行")}</button></div>}
-      {error && <div role="alert"><p>{say(locale, error === 409 ? "Answer or evidence access changed. Reload the current view." : "The answer or evidence could not be verified.", error === 409 ? "回答またはエビデンスのアクセス条件が変わりました。現在のビューを再読込してください。" : "回答またはエビデンスを確認できませんでした。")}</p><button className="button secondary" onClick={() => setRefresh(value => value + 1)}>{say(locale, "Reload answers and evidence", "回答・エビデンスを再読込")}</button></div>}
+      {historyError && <div role="alert"><p>{say(locale, historyError === 409 ? "Answer or evidence access changed. Reload the current view." : "The saved answers could not be verified.", historyError === 409 ? "回答またはエビデンスのアクセス条件が変わりました。現在のビューを再読込してください。" : "保存された回答を確認できませんでした。")}</p><button className="button secondary" onClick={() => setRefresh(value => value + 1)}>{say(locale, "Reload answers and evidence", "回答・エビデンスを再読込")}</button></div>}
       {notice && <p role="status">{notice}</p>}
-      {!views.length && !error && <p role="status">{say(locale, discovery ? "No prepared answer for this exploration." : "Checking saved answers…", discovery ? "この探索の回答はまだありません。" : "保存された回答を確認しています…")}</p>}
+      {!views.length && !historyError && <p role="status">{say(locale, discovery ? "No prepared answer for this exploration." : "Checking saved answers…", discovery ? "この探索の回答はまだありません。" : "保存された回答を確認しています…")}</p>}
       {views.map(view => <AnswerCard key={view.job.id} locale={locale} view={view} busy={busy || !!pending || props.externalBusy} onCancel={() => cancel(view.job)} onCitation={openReceipt} receipts={receipts} />)}
       {next && pages < 20 && <button className="button secondary" disabled={busy} onClick={() => setPages(value => Math.min(20, value + 1))}>{say(locale, "More saved answers", "保存された回答をさらに表示")}</button>}
       <h4>{say(locale, "Retained evidence", "保持済みエビデンス")}</h4><ul>{receipts.map(receipt => <li key={receipt.id}><button className="text-button" onClick={() => openReceipt(receipt.id)}>{receipt.operation_id ?? receipt.observation_id}</button> · {receipt.authority}</li>)}</ul>
       {moreReceipts && receiptLimit < 2000 && <button className="button secondary" onClick={() => setReceiptLimit(value => Math.min(2000, value + 100))}>{say(locale, "More retained evidence", "保持済みエビデンスをさらに表示")}</button>}
     </>}
   </section>;
-  const evidencePanel = !selection.receiptId ? <p>{say(locale, "Open an answer citation or retained evidence receipt.", "回答の引用または保持済みエビデンスを開いてください。")}</p> : !opened || !page ? <div role="status"><p>{say(locale, error ? "Retained evidence is unavailable. Reload to check current access." : "Checking retained evidence…", error ? "保持済みエビデンスを利用できません。現在のアクセス条件を再確認してください。" : "保持済みエビデンスを確認しています…")}</p>{error && <button className="button secondary" onClick={() => setRefresh(value => value + 1)}>{say(locale, "Reload evidence", "エビデンスを再読込")}</button>}</div> : <RetainedEvidence locale={locale} value={page} section={section} busy={busy || props.externalBusy} canExport={props.canExport} canAttach={props.canAttach} onSection={value => { setOffset(0); setSection(value); }} onPage={setOffset} onExport={format => void exportPage(format)} onAttach={() => void attach()} />;
+  const evidencePanel = !selection.receiptId ? <p>{say(locale, "Open an answer citation or retained evidence receipt.", "回答の引用または保持済みエビデンスを開いてください。")}</p> : !opened || !page ? <div role="status"><p>{say(locale, receiptError ? "Retained evidence is unavailable. Reload to check current access." : "Checking retained evidence…", receiptError ? "保持済みエビデンスを利用できません。現在のアクセス条件を再確認してください。" : "保持済みエビデンスを確認しています…")}</p>{receiptError && <button className="button secondary" onClick={() => setRefresh(value => value + 1)}>{say(locale, "Reload evidence", "エビデンスを再読込")}</button>}</div> : <RetainedEvidence locale={locale} value={page} section={section} busy={busy || props.externalBusy} canExport={props.canExport} canAttach={props.canAttach} onSection={value => { setOffset(0); setSection(value); }} onPage={setOffset} onExport={format => void exportPage(format)} onAttach={() => void attach()} />;
   return { controls, evidencePanel, active: !!selection.receiptId };
 }
 
