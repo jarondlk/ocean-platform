@@ -9,17 +9,17 @@ const id = (index: number) => `00000000-0000-0000-0000-${index.toString(16).padS
 function harness() {
   const jobs = Array.from({ length: 31 }, (_, index) => f.job("completed", id(index + 1))); jobs[30] = f.job("queued", id(31)); jobs[30].latest_event_cursor = 1;
   const calls: { path: string; body: any }[] = []; let current = true, denied = 0, revision = f.policy;
-  let pause: Promise<void> | undefined;
+  let pause: Promise<void> | undefined, eventsGate: Promise<void> | undefined, receiptsGate: Promise<void> | undefined, eventStatus = 200, eventRevision = f.policy;
   const fetcher = async (path: string, init?: RequestInit) => {
     const body = JSON.parse(init!.body as string); calls.push({ path, body }); if (pause) await pause;
     if (path.endsWith("answers/list")) return new Response(JSON.stringify({ ...f.listing(jobs.slice(body.cursor ? 25 : 0, body.cursor ? 31 : 25)), access_revision: revision, next_cursor: body.cursor ? null : "next25" }));
     if (path.endsWith("answers/status")) return denied ? new Response("untrusted malformed private error", { status: denied }) : new Response(JSON.stringify(f.response(jobs.find(job => job.id === body.job_id)!)));
-    if (path.endsWith("answers/events")) return new Response(JSON.stringify(f.events(body.job_id, body.after_cursor, jobs[30].latest_event_cursor - body.after_cursor, jobs[30].latest_event_cursor)));
-    if (path.endsWith("evidence/list")) { const original = f.receipt(); original.run_id = f.key; original.binding.conversation_id = f.key; original.input_version = 7; return new Response(JSON.stringify({ version: "research-evidence-v1", access_revision: f.evidencePolicy, run_id: f.run, input_version: 1, offset: 0, items: [original], next_offset: null, total: 1 })); }
+    if (path.endsWith("answers/events")) { if (eventsGate) await eventsGate; if (eventStatus !== 200) return new Response(null, { status: eventStatus }); return new Response(JSON.stringify({ ...f.events(body.job_id, body.after_cursor, jobs[30].latest_event_cursor - body.after_cursor, jobs[30].latest_event_cursor), access_revision: eventRevision })); }
+    if (path.endsWith("evidence/list")) { if (receiptsGate) await receiptsGate; const original = f.receipt(); original.run_id = f.key; original.binding.conversation_id = f.key; original.input_version = 7; return new Response(JSON.stringify({ version: "research-evidence-v1", access_revision: f.evidencePolicy, run_id: f.run, input_version: 1, offset: 0, items: [original], next_offset: null, total: 1 })); }
     throw new Error("Read must never dispatch generation or mutation");
   };
   const options = { answers: createAnswerClient({ fetcher }), evidence: createEvidenceClient({ fetcher }), address: f.runAddress, pages: 1, receiptLimit: 100, selectedJobId: id(31), cached: [mergeAnswerSnapshot(undefined, jobs[30])], expectedAccessRevision: null, signal: new AbortController().signal, isCurrent: () => current };
-  return { options, jobs, calls, setCurrent: (value: boolean) => { current = value; }, deny: (status: number) => { denied = status; }, revision: (value: string) => { revision = value; }, pause: (value: Promise<void>) => { pause = value; } };
+  return { options, jobs, calls, gateEvents: (value: Promise<void>) => { eventsGate = value; }, gateReceipts: (value: Promise<void>) => { receiptsGate = value; }, eventPolicy: (value: string) => { eventRevision = value; }, denyEvents: (value: number) => { eventStatus = value; }, setCurrent: (value: boolean) => { current = value; }, deny: (status: number) => { denied = status; }, revision: (value: string) => { revision = value; }, pause: (value: Promise<void>) => { pause = value; } };
 }
 test("31 server answers keep the freshly acknowledged off-page active job and poll its separate event cursor", async () => {
   const h = harness(), first = await loadAnswerHistory(h.options);
@@ -47,3 +47,40 @@ test("answer policy changes require reauthorization; independent evidence resour
   h.revision(f.sha); const before = h.calls.length; await assert.rejects(loadAnswerHistory({ ...h.options, expectedAccessRevision: f.policy }), error => error instanceof ResearchEvidenceClientError && error.status_code === 409); assert.equal(h.calls.length, before + 1);
 });
 test("bounded public read window rejects invalid page counts before contacting a service", async () => { const h = harness(); for (const pages of [0, 21, NaN]) await assert.rejects(loadAnswerHistory({ ...h.options, pages })); for (const receiptLimit of [0, 2001, 1.5]) await assert.rejects(loadAnswerHistory({ ...h.options, receiptLimit })); assert.equal(h.calls.length, 0); });
+
+test("independent event and evidence reads overlap but neither publishes without the other", async () => {
+  const h = harness(); let events!: () => void, receipts!: () => void, published = false;
+  h.gateEvents(new Promise(resolve => { events = resolve; })); h.gateReceipts(new Promise(resolve => { receipts = resolve; }));
+  const read = loadAnswerHistory(h.options); void read.then(() => { published = true; });
+  try {
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(h.calls.some(call => call.path.endsWith("answers/events")), true);
+    assert.equal(h.calls.some(call => call.path.endsWith("evidence/list")), true);
+    events(); await new Promise(resolve => setImmediate(resolve)); assert.equal(published, false);
+    receipts(); const result = await read; assert.equal(result.views.at(-1)?.event_cursor, 1); assert.equal(result.receipts.length, 1);
+  } finally { events(); receipts(); await read; }
+});
+
+for (const status of [401, 403, 503]) test(`parallel event ${status} cannot publish independently successful evidence or cached answers`, async () => {
+  const h = harness(); let release!: () => void; h.gateEvents(new Promise(resolve => { release = resolve; }));
+  const read = loadAnswerHistory(h.options);
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(h.calls.some(call => call.path.endsWith("evidence/list")), true);
+  h.denyEvents(status); release();
+  await assert.rejects(read, error => error instanceof ResearchEvidenceClientError && error.status_code === status);
+});
+
+test("a late event policy conflict still rejects the combined parallel result", async () => {
+  const h = harness(); let release!: () => void; h.gateEvents(new Promise(resolve => { release = resolve; }));
+  const read = loadAnswerHistory(h.options); await new Promise(resolve => setImmediate(resolve));
+  assert.equal(h.calls.some(call => call.path.endsWith("evidence/list")), true); h.eventPolicy(f.sha); release();
+  await assert.rejects(read, error => error instanceof ResearchEvidenceClientError && error.status_code === 409);
+});
+
+test("navigation after both reads start prevents combined publication", async () => {
+  const h = harness(); let events!: () => void, receipts!: () => void;
+  h.gateEvents(new Promise(resolve => { events = resolve; })); h.gateReceipts(new Promise(resolve => { receipts = resolve; }));
+  const read = loadAnswerHistory(h.options); await new Promise(resolve => setImmediate(resolve));
+  assert.equal(h.calls.some(call => call.path.endsWith("evidence/list")), true);
+  h.setCurrent(false); events(); receipts(); await assert.rejects(read, { name: "AbortError" });
+});

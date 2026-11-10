@@ -34,23 +34,33 @@ export async function loadAnswerHistory(options: Options) {
       jobs.push(result.job);
     } catch (error) { fresh(); if (!(error instanceof ResearchEvidenceClientError) || error.status_code !== 404) throw error; unavailableJobId = options.selectedJobId; }
   }
-  const views: AnswerView[] = [];
-  for (const job of jobs) {
-    let view = mergeAnswerSnapshot(options.cached.find(value => value.job.id === job.id), job);
-    for (let index = 0; index < 20 && view.event_cursor < view.job.latest_event_cursor; index++) {
-      const result = await answers.events({ ...answerAddress(job), after_cursor: view.event_cursor, limit: 100 }, signal); fresh();
-      if (result.access_revision !== listing.access_revision) return changed();
-      view = mergeAnswerEvents(view, result);
+  const accessRevision = listing.access_revision, inputVersion = listing.input_version;
+  // Independent reads share the existing deadline and publish only together.
+  // Each branch still validates its own current binding/policy and cancellation.
+  const readViews = async () => {
+    const views: AnswerView[] = [];
+    for (const job of jobs) {
+      let view = mergeAnswerSnapshot(options.cached.find(value => value.job.id === job.id), job);
+      for (let index = 0; index < 20 && view.event_cursor < view.job.latest_event_cursor; index++) {
+        const result = await answers.events({ ...answerAddress(job), after_cursor: view.event_cursor, limit: 100 }, signal); fresh();
+        if (result.access_revision !== accessRevision) return changed();
+        view = mergeAnswerEvents(view, result);
+      }
+      views.push(view);
     }
-    views.push(view);
-  }
-  const receipts: EvidenceReceipt[] = []; let offset = 0, evidenceRevision: string | null = null, moreReceipts = false;
-  while (receipts.length < options.receiptLimit) {
-    const result = await evidence.list({ ...address, input_version: listing.input_version, offset, limit: Math.min(100, options.receiptLimit - receipts.length) }, signal); fresh();
-    if (evidenceRevision !== null && evidenceRevision !== result.access_revision) return changed(); evidenceRevision = result.access_revision;
-    for (const receipt of result.items) { if (receipts.some(value => value.id === receipt.id)) return invalid(); receipts.push(receipt); }
-    moreReceipts = result.next_offset !== null; if (!moreReceipts) break;
-    if (!result.items.length || result.next_offset! <= offset) return invalid(); offset = result.next_offset!;
-  }
+    return views;
+  };
+  const readReceipts = async () => {
+    const receipts: EvidenceReceipt[] = []; let offset = 0, evidenceRevision: string | null = null, moreReceipts = false;
+    while (receipts.length < options.receiptLimit) {
+      const result = await evidence.list({ ...address, input_version: inputVersion, offset, limit: Math.min(100, options.receiptLimit - receipts.length) }, signal); fresh();
+      if (evidenceRevision !== null && evidenceRevision !== result.access_revision) return changed(); evidenceRevision = result.access_revision;
+      for (const receipt of result.items) { if (receipts.some(value => value.id === receipt.id)) return invalid(); receipts.push(receipt); }
+      moreReceipts = result.next_offset !== null; if (!moreReceipts) break;
+      if (!result.items.length || result.next_offset! <= offset) return invalid(); offset = result.next_offset!;
+    }
+    return { receipts, moreReceipts };
+  };
+  const [views, { receipts, moreReceipts }] = await Promise.all([readViews(), readReceipts()]);
   fresh(); return { views, listing, next: cursor, receipts, moreReceipts, unavailableJobId };
 }
