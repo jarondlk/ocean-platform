@@ -1,0 +1,54 @@
+{
+  "actual_partial_cause_established": false,
+  "answer_job_id": "3b1885a1-e5b1-4f85-9495-8cf4e333020c",
+  "captured_utc": "2026-11-10T15:10:26.853729+00:00",
+  "cloud_mutations": false,
+  "prepared_private_diagnostic_review": {
+    "before_execution": "Rootmustreviewexactprivatepackage andfreshreadresourceabsence/targetmetadata beforecreate-onlyjob andsingleexecution.",
+    "controller_model_counter_maximum": 14,
+    "cumulative_answer_model_counter_maximum": 16,
+    "failure_observability": "OptionalstrictfiveuppercasealphanumericSQLSTATEandfixedstageenumonly. Noexceptiontext,credentials,queriesorprovidercontent.",
+    "job_name": "ocean-v1-beta-research-diagnostics-20261110",
+    "job_request_sha256": "feaf8eae7f25e8e38a9c0d246f3375b4db4b1cee75413cd320c8fe856ce56df6",
+    "model_calls": false,
+    "new_iam_or_secret_grants": false,
+    "no_raw_prompt_content_selected": true,
+    "offline_tests_passed": 19,
+    "read_only_repeatable_read": true,
+    "same_existing_controller_role_and_numeric_DBsecret": true,
+    "source_sha256": "5bd60f6cd09e3cdd51801e9cc255dad457a213b040e89db84d149ccb0fb76990",
+    "state": "prepared_not_created_or_executed_by_this_agent",
+    "unexecuted_initial_draft_preserved": true
+  },
+  "private_content_or_credentials_read_on_mac": false,
+  "run_id": "91f567bc-a9a2-4f38-84c4-54d789972115",
+  "source_edits": false,
+  "source_findings": {
+    "answer_truth": "research_answer_job.reason_code/status/active_elapsed_ms/modelcounter and matchingresearch_answer existence establish outcome. ControllerHTTP200 proves delivery completion, not successfulanswerpublication.",
+    "durable_truth": "research_run.reason_code/controller_result_json and committed research_run_step/payload hold exactprivateexecutionoutcome and GenerationResult.diagnostics. Modelrequest/sourcegeneration content remains private.",
+    "partial_paths": [
+      "generation_output_limited/refused/failed/unknown",
+      "repair_budget",
+      "time_budget/invalid_clock",
+      "premature_finish/completion_unresolved",
+      "runtime/tool/contextbudget errors",
+      "invalid_observation"
+    ],
+    "pricing_rule_if_closed": "Priceinput_tokens atinputrate and(total_tokens-input_tokens) atoutputrate. This conservativelyprices anytool-useprompt atoutput rate andincludesproviderreportedthinking; neverpriceonlycandidates_token_count.",
+    "provider_total_documentation": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/v1/GenerateContentResponse",
+    "public_runs": "ResearchRunService._public deliberately projects result:null plus status/elapsed and genericlocalizedeventsummary. ResearchRunDTO disallows extra private journal fields. PublictwoHTTP200modelrequests/143seconds/oneinventoryobservation do not establish the stopcause.",
+    "safe_reconciliation": "Read fixedrun/answerheadmetadata plus SQLJSON-path generationdiagnostics only. Verifyterminalleases, eachphysicalmodelattempt hasonecommittedresult, retainedrequest/payloadhashes, andmodelcountbudgetfloors beforeaggregatinginput/total. Missingusage/uncertainattempt retainsreserve.",
+    "total_definition_verified_by_parent": "OfficialUsageMetadata totalTokenCount=sum(promptTokenCount,candidatesTokenCount,toolUsePromptTokenCount,thoughtsTokenCount), updated2026-11-10UTC.",
+    "usage_capture": "model_runtime._usage retains provider prompt_token_count,candidates_token_count,total_token_count as input_tokens/output_tokens/total_tokens. Runtime generation diagnostics excludes content. research_controller_replay persists bothdiagnostics andcontent privately."
+  },
+  "source_sha256": {
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+    "orchestration/research_answers.py": "751c941216bdbf50afc71607dff58c371ea3254f3f4ea4713a8624fcc79281bb",
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+    "orchestration/research_runs.py": "a2a8835c7c32b8c9496d1a2da8d6ee05d8ae33be2666af3f4fb2840e9baef3f6",
+    "schema/research_runs.py": "080080703d0d758ebf5c301cb2c33d7e7a7f2f1511f0f084caa4208ac2548dfb"
+  },
+  "version": "ocean-beta-question03-observability-source-audit-v1"
+}

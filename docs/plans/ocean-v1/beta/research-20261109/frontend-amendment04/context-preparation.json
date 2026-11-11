@@ -1,0 +1,49 @@
+{
+  "actual_source_staging_bucket": "ocean-v1-beta-20261101-build-source",
+  "actual_source_staging_prefix": "source",
+  "affected_frontend_gates_run_in_tokyo_cloudbuild": true,
+  "backend_and_postgres_unchanged": true,
+  "baseline_commit": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "build_id": "f612c37f-dee6-4d40-806f-ecc7a9676ea8",
+  "build_receipt": "build.json",
+  "changed_paths": [
+    "frontend-v1/src/research-answers.tsx",
+    "frontend-v1/tests/research-answer-read-ownership.test.ts"
+  ],
+  "cli": "signed-in personal CLI with explicit beta project",
+  "cloudbuild_config_sha256": "d6a81674f835e45fc01d9bc2ece2a313d07a3345bf21ab50f8bd2235e1874f0e",
+  "cost_cap": {
+    "machine_type": "E2_STANDARD_2",
+    "max_jpy": 18.98,
+    "remaining_jpy_before_build": 35.44,
+    "timeout_seconds": 1200
+  },
+  "dedicated_wrapper_configuration_present": false,
+  "github_workflow_skipped_for_frontend_only_change": true,
+  "helper_sha256": "508e631af218ff6da2e4b063225fe0eda5525c656965ac02d3e0e382aaf9f74c",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:answer-read-a77ea38b79e4",
+  "image_proof_sha256": "a28d39e61cd633ab8436d73cc4988dad2d9478a2e639b0058526e89121d526e6",
+  "logging": "CLOUD_LOGGING_ONLY",
+  "production_dependency_graph_only": true,
+  "production_manifest_sha256": "99904a252a000bfaef94c467e60fa0e7cf61ba4b74421721d9d6f11d4992cf39",
+  "production_source_file_count": 71,
+  "qualification_manifest_sha256": "0985a2e8a7a2ae98a84e685c6d3700a5c8f98775bcd63a52dca19b44b01b5236",
+  "qualification_source_file_count": 172,
+  "qualification_uses_committed_synthetic_test_fixtures": true,
+  "region": "asia-northeast1",
+  "runtime_expectation": {
+    "gid": 1000,
+    "network": "none",
+    "real_credentials": false,
+    "research_api_execution_enabled": true,
+    "source_commit": "a77ea38b79e448197702fada5a16ec2b9bb24bd8",
+    "uid": 1000,
+    "user": "node"
+  },
+  "scientific_payloads_and_credentials_included": false,
+  "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source_commit": "a77ea38b79e448197702fada5a16ec2b9bb24bd8",
+  "state": "source_context_prepared_and_qualified",
+  "unchanged_backend_postgres_evidence": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508",
+  "version": "beta-frontend-qualification-plan-v1"
+}

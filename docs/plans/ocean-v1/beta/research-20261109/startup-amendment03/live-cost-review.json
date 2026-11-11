@@ -1,0 +1,130 @@
+{
+  "acceptance_not_claimed": [
+    "Signed-in Gemini question/answer",
+    "Evidence-pane UI fix live readback",
+    "Final persistence/reload and source/image qualification",
+    "Scheduled sweep enabled or first actual scheduled runs",
+    "Complete beta/release/scientific approval"
+  ],
+  "bounded_sweep_projection": {
+    "all_sweeps_charged_at_observed_cold20_5seconds_jpy": "1698.069388032",
+    "conservative25seconds_per_sweep_jpy": "2070.692306496",
+    "conservative25seconds_plus_serving_plus_reserve_jpy": "2858.061536804",
+    "extra_run_reserve_jpy": "100",
+    "fits3000_aggregate_run_allocation": true,
+    "gross_compute_jpy_per_billable_second": "0.00927476400",
+    "invocations_per31days": 8928,
+    "previous_all_run31day_projection_used_as_additional_serving_allowance_jpy": "687.369230308",
+    "qualification": "All-cold-per-invocation envelope deliberately avoids relying on a warm instance at5-minute cadence.25s includes startup and request compute. One sample supports this bounded initial plan, not a hard cap or long-term latency guarantee. Recheck actual billable DELTA after first scheduled runs; pause new schedule admission if sustained average including startup exceeds25s or aggregate forecast escapes allocation.",
+    "resources_gib": "4.25",
+    "resources_vcpu": 2
+  },
+  "captured_utc": "2026-11-10T09:47:01.920682+00:00",
+  "cloud_mutations": false,
+  "credentials_or_prompt_payloads_saved": false,
+  "currency": "JPY",
+  "delivery_and_scope_readback": {
+    "already_cancelled_delivery_controller_http": 200,
+    "already_cancelled_delivery_seconds": "2.239639686",
+    "already_cancelled_delivery_timestamp_utc": "2026-11-10T09:38:30.400446Z",
+    "already_cancelled_task_lookup_http": 404,
+    "broad_token_creator_added": false,
+    "cancelled_run_id": "0c732c35-35e5-4ce6-9813-98d2014eb0bf",
+    "captured_utc": "2026-11-10T09:44:13.945736Z",
+    "queue_rate_limits": {
+      "maxBurstSize": 10,
+      "maxConcurrentDispatches": 1,
+      "maxDispatchesPerSecond": 1
+    },
+    "queue_retry_config": {
+      "maxAttempts": 10,
+      "maxBackoff": "300s",
+      "maxDoublings": 4,
+      "maxRetryDuration": "3600s",
+      "minBackoff": "30s"
+    },
+    "queue_state": "PAUSED",
+    "rest_failure_does_not_mean_gcloud_readback_failed": true,
+    "rest_project_iam_initial_attempt_http403_retained": true,
+    "scheduler_job_count": 0,
+    "service_agents_fresh_gcloud_readback": {
+      "etag": "BwZf2BQCTfQ=",
+      "exit_code": 0,
+      "service_agent_bindings": [
+        {
+          "members": [
+            "serviceAccount:service-534831104543@gcp-sa-cloudscheduler.iam.gserviceaccount.com"
+          ],
+          "role": "roles/cloudscheduler.serviceAgent"
+        },
+        {
+          "members": [
+            "serviceAccount:service-534831104543@gcp-sa-cloudtasks.iam.gserviceaccount.com"
+          ],
+          "role": "roles/cloudtasks.serviceAgent"
+        }
+      ]
+    },
+    "standard_service_agent_roles_present": true,
+    "task_count": 0,
+    "task_list_http200": true
+  },
+  "incremental_nonmodel_validation_observation": {
+    "cloud_validation_allowance_jpy": 50,
+    "entire_project_run_gib_seconds": "4857.76970249437357503",
+    "entire_project_run_gross_jpy": "13.912539085",
+    "entire_project_run_requests": "1470.0",
+    "entire_project_run_vcpu_seconds": "3133.6481853396449323",
+    "interval_end_utc": "2026-11-10T09:45:51.275191Z",
+    "interval_start_utc": "2026-11-09T13:13:28Z",
+    "new_build_gross_jpy": "0.645434238",
+    "new_finished_build_minutes": "0.6799555833333333333333333333",
+    "qualification": "Conservatively attributes all project Run increments to validation, including unrelated serving traffic. Read-only currency estimate, not invoice. New frontend tests/build and logging/storage/network overhead are pending; parent must reserve and reconcile them before claiming total validation<=500.",
+    "remaining_allowance_before_pending_frontend_builds_and_other_cloud_overhead_jpy": "35.442026678",
+    "run_plus_build_observed_jpy": "14.557973322"
+  },
+  "input_sha256": {
+    "secondary-mac-continuation/cost-refresh-20261110/cost-review.json": "43589a5f91da237e192a34a99db97258f1860b2f06734b0c452e25f823be01f0",
+    "secondary-mac-continuation/cost-refresh-20261110/selected-default-jpy-prices.json": "9ba9e6dff6da41c3382e2e8fe65427acce4ccc3c0291549a2959cc8b2f5f909e",
+    "startup-amendment03/live-cost-readonly-evidence.json": "7d703ab2b50d193695682017bf4030fdccb7c2fcf6bbcf7610beb14a2552099d",
+    "startup-amendment03/live-nonmodel-cost-evidence.json": "1445edfec5927da686a63198fa3461ba9c0dcaf83c7930b3955effca1306b47b"
+  },
+  "model_validation": {
+    "actual_paid_question_not_started_at_this_capture": true,
+    "maximum_initial_total_jpy": 500,
+    "maximum_manual_questions": 20,
+    "no_second_paid_question_until_usage_reconciled": true,
+    "reserve_before_one_question_jpy": 450,
+    "retain_full_model450_reserve_if_usage_incomplete": true,
+    "thinking_token_inclusion_not_attested_by_native_token_count_descriptor": true
+  },
+  "monthly_plan": {
+    "aggregate_run_allocation_jpy": 3000,
+    "headroom_jpy": "13519.158308688",
+    "initial_validation_allocation_jpy": 500,
+    "ongoing_unbounded_model_volume_selected": false,
+    "target_jpy": 50000,
+    "total_with_contingency_jpy": "36480.841691312"
+  },
+  "project": "ocean-v1-beta-20261101",
+  "rate_source": "31 official current public JPY SKU prices retained in cost-refresh-20261110; Default consumption, no free tiers/credits/negotiated reductions assumed",
+  "state": "measured_sweep_cost_fits_bounded_plan_other_live_gates_pending",
+  "sweep_measurement": {
+    "actual_cold_dispatch_http200_latency_seconds": "20.429574593",
+    "all_controller_calls_observed_http200": true,
+    "billable_instance_time_cold_window_seconds": "20.5",
+    "cold_cpu_seconds": "41.0",
+    "cold_gib_seconds": "87.125",
+    "cold_window_definition": "2026-11-10T09:01:00.001Z to09:03:00Z; includes both adjacent60-second DELTA points. No other request in this combined window.",
+    "metric_descriptor_includes_startup_and_request_time": true,
+    "observed_warm_pending_recovery_http200_seconds": "1.827354970",
+    "observed_warm_recovery_billable_seconds": "1.9",
+    "observed_warm_repeat_http200_seconds": "0.063528667",
+    "one_cold_sample_is_future_guarantee": false,
+    "revision": "ocean-v1-beta-research-controller-00002-mcw",
+    "startup_distribution_mean_seconds": "20.157168",
+    "startup_is_not_added_twice": true,
+    "startup_sample_count": 1
+  },
+  "version": "ocean-beta-live-sweep-and-nonmodel-cost-review-v1"
+}

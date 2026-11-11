@@ -1,0 +1,106 @@
+{
+  "edna_anemone_experiments_workers": "Separate acceptance gates retained",
+  "effective_selection": {
+    "future_updates": "Read current resources and rebase only the explicit image/configuration changes; archived templates are not a replacement for fresh state.",
+    "images": "images.json",
+    "supersedes": "Only the API image in handoff-amendment02 and its controller/serving API selections; other three image pins and original receipts remain valid."
+  },
+  "fix": {
+    "exact_raw_hash_and_generation_fences_preserved": true,
+    "noncanonical_mixed_duplicate_and_hash_mismatch_inputs_still_rejected": true,
+    "normalization_before_hash_check": false,
+    "original_utf8_activation_still_accepted": true,
+    "path": "api/v1_catalogue_host.py",
+    "private_activation_bytes_or_hash_changed": false,
+    "replacement_activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "scope": "Accept exactly the two established canonical activation serializations; leave source-binding and catalogue-control serialization unchanged.",
+    "strict_schema_access_scientific_and_lifecycle_checks_preserved": true
+  },
+  "full_release_accepted": false,
+  "hosted_source_ci": {
+    "conclusion": "success",
+    "receipt": "ci.json",
+    "run_id": 42721324508,
+    "source_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3"
+  },
+  "live_acceptance_scope": {
+    "complete_live_research_acceptance_claimed_by_this_receipt": false,
+    "deterministic_question_is_not_gemini_proof": true,
+    "gates_requiring_separate_results": [
+      "actual Gemini-backed cited answer",
+      "persistence and hard reload",
+      "cancellation",
+      "duplicate terminal delivery",
+      "durable pending-outbox recovery",
+      "answer-history latency",
+      "runtime sweep recovery and measured aggregate cost"
+    ],
+    "receipt_owner": "root",
+    "separate_receipt": "live-acceptance.json"
+  },
+  "local_verification": {
+    "after_fix_focused_log_sha256": "4c6c286590eb6882e91b97f74d3ad52618016b466a7f8cd77c5dbca351b24b43",
+    "before_fix_log_sha256": "d7c9f511eb8c1eef7ec7a3cae66664a1b5e575d79bf64bbcae0323574c09f96c",
+    "before_fix_new_regression_result": {
+      "failed": 2,
+      "passed": 7
+    },
+    "diff_check": "passed",
+    "focused_tests_passed": 98,
+    "new_regression_cases_passed": 9,
+    "ruff": "passed",
+    "ruff_paths": [
+      "api/v1_catalogue_host.py",
+      "tests/test_beta_activation_serialization.py"
+    ]
+  },
+  "original_failure": {
+    "api_build": "f5d0d58d-9431-4049-881f-5a037d6dd080",
+    "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:c326fcbe223f38326928bbe93f989a53d8e27cce55432d3e37af68f00e12896a",
+    "cause": "Portable renderer produced canonical ASCII-escaped Unicode while runtime activation validation required the historical UTF-8 canonical form.",
+    "controller_revision": "ocean-v1-beta-research-controller-00001-vcj",
+    "failure_logs_retained": true,
+    "observed_result": "Proxy startup succeeded; application factory rejected catalogue startup and controller exited1.",
+    "serving_traffic_changed_by_failed_controller_startup": false
+  },
+  "prepared_from_retained_records_at_utc": "2026-11-10T09:37:53.193071+00:00",
+  "qualified_image": {
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "receipt": "build.json",
+    "source_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3"
+  },
+  "real_private_controller_startup": {
+    "actual_role_specific_sql_and_gcs_factory_reached_ready": true,
+    "authenticated_idle_dispatch_http_status": 200,
+    "authenticated_idle_dispatch_latency_seconds": "20.429574593s",
+    "idle_dispatch_provider_call_claimed": false,
+    "internal_ingress_and_exact_invoker_iam_verified": true,
+    "ready": true,
+    "ready_revision": "ocean-v1-beta-research-controller-00002-mcw",
+    "single_idle_measurement_is_recurring_cost_acceptance": false,
+    "unauthenticated_status": 404
+  },
+  "record_preparer_cloud_calls_or_mutations": false,
+  "scientific_approval": false,
+  "serving_rollout": {
+    "all_unrelated_writable_settings_preserved": true,
+    "base_revision": "ocean-v1-beta-serving-00017-kvz",
+    "identities_secret_refs_proxy_network_ingress_resources_and_scale_preserved": true,
+    "initial_traffic_percent": 0,
+    "initial_update_acknowledgment": "uncertain; current service readback reconciled the applied template instead of redeploying",
+    "new_revision": "ocean-v1-beta-serving-00018-9nd",
+    "new_revision_ready_verified_before_promotion": true,
+    "observed_promotion_traffic_percent": 100,
+    "promotion_record_sha256": "ae05b92dd6261f8004d2c35dfce8dcbbf6b834655aa8bdddc79b9a9e839e62e4",
+    "readback_confirmed_original_traffic_preserved": true,
+    "reconciled_service_generation": 27,
+    "request_sha256": "7f353bbb70273bf9d476e49442b8741f06cf8a45c1776ef803438d05e82273b7",
+    "staged_instance_initially_retired_without_ready_new_revision": true,
+    "temporary_tag_removed_on_promotion": true,
+    "temporary_zero_traffic_tag": "research-stage-20261110",
+    "validation_only_http_status": 200
+  },
+  "source_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "state": "source_image_and_real_startup_verified_live_acceptance_separate",
+  "version": "ocean-beta-research-startup-amendment-v1"
+}

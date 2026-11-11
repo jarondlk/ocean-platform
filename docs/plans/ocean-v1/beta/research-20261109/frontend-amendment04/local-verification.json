@@ -1,0 +1,296 @@
+{
+  "actual_local_hosted_bundle": {
+    "build_is_deployed_image_or_live_serving_proof": false,
+    "bytes": 390959,
+    "changed_saved_answers_message_found_in_compiled_chunk": true,
+    "chunk_path": "frontend-v1/hosting/.next/static/chunks/736-1a42195a9ac74232.js",
+    "compiled_and_packaged_bytes_equal": true,
+    "rebuilt_from_changed_source": true,
+    "sha256": "9a3cbb66be0e40a6068c5b5795872c81ff02e20690c147f44575e40f901d0019",
+    "standalone_packaged_chunk_path": "frontend-v1/hosting/.next/standalone/hosting/.next/static/chunks/736-1a42195a9ac74232.js"
+  },
+  "checks": {
+    "diff_check": {
+      "command": "git diff --check",
+      "cwd": ".",
+      "exit_code": 0
+    },
+    "focused_regressions": {
+      "command": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/research-answer-read-ownership.test.ts",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 15,
+      "skipped": 0,
+      "tests": 15
+    },
+    "host_audit": {
+      "command": "npm audit --omit=dev --audit-level=moderate",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0,
+      "reported_vulnerabilities": 0
+    },
+    "host_build": {
+      "command": "npm run build",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0,
+      "optimized_production_build_and_standalone_packaging": true
+    },
+    "host_standalone_http": {
+      "command": "npm run test:server",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0,
+      "failed": 0,
+      "initial_sandbox_attempt": "Blocked by listen EPERM on loopback 127.0.0.1:8000 before the test; repeated with loopback permission and passed.",
+      "passed": 1,
+      "scope": "Actual locally built standalone Next host: guarded login, encrypted session, private proxy, revocation and logout over loopback HTTP using synthetic provider/backend fixtures. No live Google sign-in or live cloud/backend acceptance claimed.",
+      "skipped": 0,
+      "tests": 1
+    },
+    "host_tests": {
+      "command": "npm test",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 61,
+      "skipped": 0,
+      "tests": 61
+    },
+    "host_typecheck": {
+      "command": "npm run typecheck",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0
+    },
+    "prototype_audit": {
+      "command": "npm audit --omit=dev --audit-level=moderate",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "reported_vulnerabilities": 0
+    },
+    "prototype_build": {
+      "command": "npm run build",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "optimized_production_build": true
+    },
+    "prototype_tests": {
+      "command": "npm test",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 1079,
+      "skipped": 0,
+      "tests": 1079
+    },
+    "prototype_typecheck": {
+      "command": "npm run typecheck",
+      "cwd": "frontend-v1",
+      "exit_code": 0
+    }
+  },
+  "correction": {
+    "authorization_polling_paused_to_preserve_visible_data": false,
+    "cached_bytes_alone_authorize_display": false,
+    "deadline_ms_each_reader": 15000,
+    "deadlines_raised_or_deferred": false,
+    "explicit_reload": "Restarts both readers and reauthorizes their data before republication.",
+    "failed_surface_retains_private_values": false,
+    "global_failures_preserved": "401, 403, 409 and every other non-503 read failure retain the global failure path. All mutation/export/attachment failures retain global invalidation, including 503. Account/access, investigation/conversation/run navigation and context changes retain their existing cancellation/clearing fences.",
+    "history_503_or_timeout": "Dispose the history scheduler, increment its poll epoch, clear cached/history/discovery/receipt-list values and answer-policy state, and show its own error. Do not change the global epoch, cancel the receipt scheduler, clear the verified receipt/page or clear its policy proof.",
+    "history_and_receipt_have_separate_error_states": true,
+    "legacy_boundary_changed": false,
+    "local_isolation_status_code": 503,
+    "receipt_503_or_timeout": "Dispose only the receipt scheduler and clear opened/page/receipt-policy state; show its own error without erasing separately verified history.",
+    "receipt_poll_interval_ms_unchanged": 10000,
+    "scientific_approval": false,
+    "strict_payload_binding_sha_and_access_revision_checks_changed": false
+  },
+  "failure_reproduction": {
+    "baseline_runtime_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+    "baseline_test_definition": "Initial nine-case version of the new regression harness; expanded to fifteen cases after the baseline run. The baseline log is retained by hash; its test-file bytes were not separately archived.",
+    "baseline_tests": 9,
+    "cause": "Answer-history hydration and retained-receipt open/page had independent schedulers but shared global error/epoch invalidation, so an unavailable history read erased a separately verified receipt and stopped its polling.",
+    "failed": 2,
+    "failed_cases": [
+      {
+        "name": "history's unchanged 15s timeout cannot erase a receipt freshly verified by its own poll",
+        "observed": "History reached its unchanged 15-second deadline, then the shared failure path erased the independently verified retained page and displayed Retained evidence is unavailable."
+      },
+      {
+        "name": "receipt's unchanged 15s deadline clears its own private page without erasing freshly verified answers",
+        "observed": "Receipt reached its unchanged 15-second deadline, then the shared failure path erased the freshly verified saved answer."
+      }
+    ],
+    "passed": 7,
+    "passing_baseline_guards": "Both surfaces 401/403/409 global invalidation and account/access transition abortion/clearing.",
+    "skipped": 0
+  },
+  "local_environment": {
+    "architecture": "arm64",
+    "dependency_install": {
+      "host": "npm ci --ignore-scripts --no-audit --no-fund",
+      "lockfiles_changed": false,
+      "npm_user_configuration": "Disabled for these installs/audits; isolated temporary cache.",
+      "prototype": "npm ci --ignore-scripts --no-audit --no-fund"
+    },
+    "node": "22.23.3",
+    "node_archive_checked_against_official_shasums": true,
+    "node_download_archive_sha256": "23b25245dcfb9af7262f8ff142e9e2e0af025368117329e7a7458a51e5922f53",
+    "node_installation": "Isolated official Node22 release; no system runtime/profile mutation.",
+    "npm": "10.9.9",
+    "os": "Darwin"
+  },
+  "local_logs": {
+    "records": {
+      "baseline_regressions": {
+        "bytes": 4804,
+        "local_log_basename": "ocean-answer-read-ownership-before.log",
+        "sha256": "bc5213a0046ab5af8d3fcf24ad8fe0fd8bd90b56beca8fbd185cf46a9cb4ce2e"
+      },
+      "focused_regressions": {
+        "bytes": 3402,
+        "local_log_basename": "ocean-answer-read-ownership-after.log",
+        "sha256": "7ef9c60cb65a37184245d425a84221283f27d0d8c7fd233b6164dd78f830856e"
+      },
+      "host_audit": {
+        "bytes": 24,
+        "local_log_basename": "ocean-frontend-host-audit.log",
+        "sha256": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+      },
+      "host_build": {
+        "bytes": 1533,
+        "local_log_basename": "ocean-frontend-host-build.log",
+        "sha256": "645c13976878fc399209fb95f35ffc44db3207d180479d5e35f4c87aa3108525"
+      },
+      "host_standalone_http": {
+        "bytes": 831,
+        "local_log_basename": "ocean-frontend-host-server.log",
+        "sha256": "76e82737d5ab6f2d6384e24718d25db02861d94017dac26ea6ad636621ca9755"
+      },
+      "host_tests": {
+        "bytes": 14400,
+        "local_log_basename": "ocean-frontend-host-tests.log",
+        "sha256": "a6a8a4f7d94dacce26e1e5c0a6323f544ac2fc755275014caf51d2f1ffe5fd20"
+      },
+      "host_typecheck": {
+        "bytes": 177,
+        "local_log_basename": "ocean-frontend-host-typecheck.log",
+        "sha256": "a2bc6cd414c5469248a2d5944bfda3686ea5463f203dbf3ee942fc8865a43b02"
+      },
+      "prototype_audit": {
+        "bytes": 24,
+        "local_log_basename": "ocean-frontend-v1-audit.log",
+        "sha256": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+      },
+      "prototype_build": {
+        "bytes": 1263,
+        "local_log_basename": "ocean-frontend-v1-build.log",
+        "sha256": "bd61e59a52c7ff902dd1d00be7800250d7f18356fee58231eabd540c32c5db4a"
+      },
+      "prototype_tests": {
+        "bytes": 208740,
+        "local_log_basename": "ocean-frontend-v1-tests.log",
+        "sha256": "d7745b0499343073e6547482e2e5bdf9acbe07757b786a45a96b1935110e6993"
+      },
+      "prototype_typecheck": {
+        "bytes": 175,
+        "local_log_basename": "ocean-frontend-v1-typecheck.log",
+        "sha256": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936"
+      }
+    },
+    "storage": "Temporary operator-local logs retained by basename and SHA256; raw logs are not included in Git. Hashes refer to the complete local log bytes, not a redacted copy."
+  },
+  "prepared_at_utc": "2026-11-10T09:48:58.741265+00:00",
+  "regression_method": {
+    "cases": [
+      "history's unchanged 15s timeout cannot erase a receipt freshly verified by its own poll",
+      "receipt's unchanged 15s deadline clears its own private page without erasing freshly verified answers",
+      "history 503 clears only its own verified private values",
+      "receipt 503 clears only its own verified private values",
+      "history 401 still clears both surfaces and cancels their readers",
+      "history 403 still clears both surfaces and cancels their readers",
+      "history 409 still clears both surfaces and cancels their readers",
+      "receipt 401 still clears both surfaces and cancels their readers",
+      "receipt 403 still clears both surfaces and cancels their readers",
+      "receipt 409 still clears both surfaces and cancels their readers",
+      "a account/access transition still aborts both readers and removes their private values",
+      "a conversation transition still aborts both readers and removes their private values",
+      "a context revision transition still aborts both readers and removes their private values",
+      "an answer mutation 503 still clears both surfaces rather than applying read-only isolation",
+      "explicit reload reauthorizes both surfaces after an isolated timeout"
+    ],
+    "controlled_time": "Scheduler timer injection; verifies history has not timed out at 14999ms and does time out at 15000ms. Re-verifies the other surface independently before a timeout.",
+    "implementation_under_test": "Actual useResearchAnswers TSX hook, transpiled with the existing TypeScript dependency; its state/effects driven by a controlled hook dispatcher. Uses the real ResearchHistoryScheduler, loadAnswerHistory, strict answer/evidence clients and fixtures, and real React server rendering.",
+    "network_and_data": "Synthetic HTTP Response fixtures only; no user records, live secrets, provider calls or cloud mutations.",
+    "test_path": "frontend-v1/tests/research-answer-read-ownership.test.ts"
+  },
+  "remaining_gates": {
+    "P2D26-07_first_history_latency": "Open. This correction does not make serial first-history hydration meet the unchanged 15-second deadline; its own failure still clears its private values and reports an error. Separate backend performance measurement/optimization is required.",
+    "gemini_cited_answer_and_persistence_cancellation_duplicate_delivery_recovery": "Separate live gates remain; this local frontend receipt does not establish them.",
+    "immutable_frontend_image": "Pending; local .next output is not an immutable deployed image.",
+    "runtime_outbox_sweep": "No sweep activation or cost acceptance established here.",
+    "serving_update_and_signed_in_ui_acceptance": "Pending; requires fresh resource inspection, image rollout/readback and observed signed-in evidence persistence.",
+    "source_bound_linux_cloudbuild": "Pending; no CloudBuild execution is established by this receipt."
+  },
+  "repository": "jarondlk/ocean-platform",
+  "reproducible_hosted_gate_requirements": {
+    "host_sequence": [
+      "Install shared frontend-v1 dependencies with npm ci --ignore-scripts",
+      "In frontend-v1/hosting: npm ci --ignore-scripts",
+      "npm audit --omit=dev --audit-level=moderate",
+      "npm test",
+      "npm run typecheck",
+      "npm run build",
+      "npm run test:server"
+    ],
+    "prototype_sequence": [
+      "npm ci",
+      "npm audit --omit=dev --audit-level=moderate",
+      "npm test",
+      "npm run typecheck",
+      "npm run build"
+    ],
+    "runtime": "Node22; Linux source-bound build remains pending.",
+    "secrets_needed": false,
+    "source_context": [
+      "frontend-v1 source, tests, scripts, hosting and both package/lockfile pairs",
+      "frontend/lib/csv.ts"
+    ],
+    "standalone_test_port_contract": "Test owns synthetic loopback 127.0.0.1:8000 and an ephemeral host port; it fails instead of replacing an existing listener."
+  },
+  "scope_limits": {
+    "backend_hour_long_suite_or_postgres_rerun_for_this_frontend_correction": false,
+    "cloud_calls_or_mutations_for_this_receipt": false,
+    "commit_push_or_handoff_edits_performed": false,
+    "credential_values_or_user_scientific_payloads_included": false,
+    "existing_backend_postgres_evidence_reference": "../startup-amendment03/ci.json; source applicability must be preserved by the source owner when recording the final frontend-only commit.",
+    "full_beta_or_research_acceptance": false
+  },
+  "source": {
+    "backend_postgres_and_workflow_source_unchanged_from_base": true,
+    "base_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+    "base_to_correction_changed_paths": [
+      "frontend-v1/src/research-answers.tsx",
+      "frontend-v1/tests/research-answer-read-ownership.test.ts"
+    ],
+    "baseline_runtime_source_sha256": "08eeb168d067080396acbfbd08eae4b80ddd8d9e1b65131fc76637284bfba57f",
+    "committed_source_verified_at_utc": "2026-11-10T09:49:44.241326+00:00",
+    "correction_commit_revision": "a77ea38b79e448197702fada5a16ec2b9bb24bd8",
+    "correction_commit_status": "Source owner committed the two tested files after local validation; their committed bytes match the SHA256 values in this receipt. This receipt preparer did not commit or push.",
+    "files": [
+      {
+        "bytes": 31650,
+        "path": "frontend-v1/src/research-answers.tsx",
+        "sha256": "d015ee6ecb9d3e1b42d758b61f759e6201b5539d96cdd5a8f1ca0a519b1a465c"
+      },
+      {
+        "bytes": 13580,
+        "path": "frontend-v1/tests/research-answer-read-ownership.test.ts",
+        "sha256": "446d0bc79a1b86eb5f67f4130177ece1622547e56213ef54acc9aa121574b5f1"
+      }
+    ],
+    "local_runtime_change_scope": "frontend-v1/src/research-answers.tsx only; the other changed implementation artifact is the new frontend hook regression test. No backend, PostgreSQL, workflow, credential or cloud configuration changes are part of this correction."
+  },
+  "state": "local_source_and_production_bundle_verified_cloud_and_live_acceptance_pending",
+  "version": "ocean-beta-frontend-read-ownership-local-verification-v1"
+}

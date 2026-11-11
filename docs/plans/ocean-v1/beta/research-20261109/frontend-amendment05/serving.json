@@ -1,0 +1,201 @@
+{
+  "fresh_baseline_before_update": {
+    "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:01156885758a834bdf013fa88772e8ea2b78cbebb4b14468b68425714b192f0d",
+    "generation": 31,
+    "ready": true,
+    "revision": "ocean-v1-beta-serving-00019-skn",
+    "tags": [],
+    "traffic_percent": 100
+  },
+  "full_writable_settings_preservation": {
+    "before_normalized_writable_sha256": "59bd3a5c0e3fecd14643eabd5dc36ea7966d4ee74c37ad685a45db5775b3246f",
+    "comparisons": [
+      {
+        "all_other_writable_fields_equal_before": true,
+        "complete_request_template_equal": true,
+        "difference_paths_after_restoring_frontend_image_and_traffic": [],
+        "record": "request.json",
+        "restored_writable_sha256": "59bd3a5c0e3fecd14643eabd5dc36ea7966d4ee74c37ad685a45db5775b3246f"
+      },
+      {
+        "all_other_writable_fields_equal_before": true,
+        "complete_request_template_equal": true,
+        "difference_paths_after_restoring_frontend_image_and_traffic": [],
+        "record": "ready-readback.json",
+        "restored_writable_sha256": "59bd3a5c0e3fecd14643eabd5dc36ea7966d4ee74c37ad685a45db5775b3246f"
+      },
+      {
+        "all_other_writable_fields_equal_before": true,
+        "complete_request_template_equal": true,
+        "difference_paths_after_restoring_frontend_image_and_traffic": [],
+        "record": "promoted-readback.json",
+        "restored_writable_sha256": "59bd3a5c0e3fecd14643eabd5dc36ea7966d4ee74c37ad685a45db5775b3246f"
+      }
+    ],
+    "preserved_fields_include": [
+      "API and SQL proxy containers and all of their settings",
+      "serving identity",
+      "all environment values and secret references",
+      "all container commands, args, ports, resources and probes",
+      "container dependencies and startup behavior",
+      "service and template annotations/labels",
+      "network interfaces, egress and ingress",
+      "concurrency, timeouts and scale settings"
+    ],
+    "proof": "Independent deep equality of complete writable service objects after restoring only the frontend image and intended traffic to baseline, for retained request, staged Ready service and promoted service. Exact complete request template equality is additionally verified for both provider readbacks. No allow-list of application settings replaces the comparison.",
+    "server_owned_exclusions": {
+      "metadata": [
+        "creationTimestamp",
+        "generation",
+        "selfLink",
+        "uid",
+        "managedFields",
+        "resourceVersion"
+      ],
+      "metadata_annotations": [
+        "run.googleapis.com/operation-id",
+        "run.googleapis.com/ingress-status"
+      ],
+      "top_level": [
+        "status"
+      ]
+    },
+    "service_iam_write_performed_by_stage_request": false
+  },
+  "prepared_from_retained_records_at_utc": "2026-11-11T01:32:12.812119+00:00",
+  "project": "ocean-v1-beta-20261101",
+  "promoted_readback": {
+    "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+    "generation": 33,
+    "latest_created_revision": "ocean-v1-beta-serving-00020-n7s",
+    "latest_ready_revision": "ocean-v1-beta-serving-00020-n7s",
+    "observed_generation": 33,
+    "ready": true,
+    "sql_proxy_image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+    "tags": [],
+    "traffic": [
+      {
+        "percent": 100,
+        "revisionName": "ocean-v1-beta-serving-00020-n7s"
+      }
+    ]
+  },
+  "promotion": {
+    "automatic_retry": false,
+    "command_exit_code": 0,
+    "finished_utc": "2026-11-11T01:09:33.714226+00:00",
+    "prior_quota_approval_failure_action_executed": false,
+    "revision": "ocean-v1-beta-serving-00020-n7s",
+    "started_utc": "2026-11-11T01:09:29.590140+00:00",
+    "state": "acknowledged_then_verified_by_full_service_readback",
+    "temporary_stage_tag_removed": true,
+    "traffic_percent": 100
+  },
+  "qualification": {
+    "both_typechecks_builds_and_production_audits_passed": true,
+    "build_id": "cc67b713-828d-4f4e-ba46-f403a843f4b5",
+    "bytes": 3833,
+    "hosted_host_tests": 61,
+    "hosted_prototype_tests": 1085,
+    "hosted_standalone_http_tests": 1,
+    "immutable_frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+    "local_source_and_regressions": "local-verification.json",
+    "packaged_nonroot_network_disabled_runtime_and_startup_proof_passed": true,
+    "receipt": "build.json",
+    "sha256": "afaec7f76b8c4b0c9312b0584937dc0da3b35d3e672ed555c62c3f11fb1de101",
+    "source_commit": "7fe5e1342e586dd994020683c3e3fb227d4b287a",
+    "status": "SUCCESS"
+  },
+  "region": "asia-northeast1",
+  "remaining_work": "Signed-in live answer-history/evidence latency, actual valid Gemini question and cited answer, persistence/reload and aggregate cost admission remain separate. Successful frontend rollout does not establish those gates; existing cancellation, duplicate delivery and outbox recovery evidence remains separately scoped.",
+  "retained_private_records": [
+    {
+      "bytes": 14538,
+      "private_relative_path": "serving-stage/before.json",
+      "sha256": "b7b28921623fd209ff0ef057f452eb7d25351301b11664bd43e0f40361cac5b5"
+    },
+    {
+      "bytes": 13484,
+      "private_relative_path": "serving-stage/request.json",
+      "sha256": "5e8e95594be7a16e8f6955bafbc96b54c189c2846b68485ce7ed0e028adb5a57"
+    },
+    {
+      "bytes": 16140,
+      "private_relative_path": "serving-stage/dry-run-response.json",
+      "sha256": "b8037c0bb3652814cf6e1592aadacd8a03df24262f0eb4c0a96105a58c0a9c49"
+    },
+    {
+      "bytes": 16154,
+      "private_relative_path": "serving-stage/apply-response.json",
+      "sha256": "510aa435f7b3a90cff07f58a36872098a963a6aa5979ba17b7eda74354c6fa36"
+    },
+    {
+      "bytes": 14781,
+      "private_relative_path": "serving-stage/ready-readback.json",
+      "sha256": "b3fb42ee70e8f5e0a321245b7127e04db7d7879e59817e63f15dcf7571864ece"
+    },
+    {
+      "bytes": 1268,
+      "private_relative_path": "serving-stage/promotion.json",
+      "sha256": "94eac7dc7c907be15bae8340ad8a2e8207134049085db4688b2854ad8f97ef37"
+    },
+    {
+      "bytes": 14538,
+      "private_relative_path": "serving-stage/promoted-readback.json",
+      "sha256": "59d7c12d4cd4a7747ff2b92a450a5c1e323493d3ae9c2455db2804085d5dee52"
+    },
+    {
+      "bytes": 13390,
+      "private_relative_path": "build-readback.json",
+      "sha256": "2abf9ee3e658b91644110b26d94d8beac711588f323fa8bc3f2238b5ef0dfa33"
+    }
+  ],
+  "scope_limits": {
+    "answer_history_latency_gate_closed": false,
+    "code_changes_commit_or_push_by_receipt_preparer": false,
+    "complete_gemini_backed_research_acceptance": false,
+    "credential_values_or_user_scientific_payloads_included": false,
+    "legacy_edna_anemone_experiments_and_workers_gates_changed": false,
+    "new_cloud_calls_or_mutations_by_receipt_preparer": false,
+    "provider_call_citation_persistence_reload_acceptance_established_by_this_receipt": false,
+    "scientific_approval": false
+  },
+  "service": "ocean-v1-beta-serving",
+  "source_commit": "7fe5e1342e586dd994020683c3e3fb227d4b287a",
+  "stage_validation_and_update": {
+    "apply_finished_utc": "2026-11-10T15:35:42.576923+00:00",
+    "apply_http_status": 200,
+    "apply_started_utc": "2026-11-10T15:35:41.172807+00:00",
+    "automatic_retry": false,
+    "base_revision_kept_at_percent": 100,
+    "dry_run_finished_utc": "2026-11-10T15:32:32.374588+00:00",
+    "dry_run_http_status": 200,
+    "dry_run_query": "dryRun=all",
+    "dry_run_started_utc": "2026-11-10T15:32:30.920333+00:00",
+    "method": "Cloud Run v1 resourceVersion-fenced service PUT",
+    "only_frontend_image_and_zero_traffic_tag_changed": true,
+    "request_file_newline_difference_explained": "Retained request.json has no final newline; transmitted bytes were json.dumps(request, indent=2) plus one final newline. Both response receipts bind the transmitted SHA256.",
+    "request_resource_version_matches_fresh_before": true,
+    "retained_request_file_bytes_sha256": "5e8e95594be7a16e8f6955bafbc96b54c189c2846b68485ce7ed0e028adb5a57",
+    "stage_tag": "frontend-history-20261110",
+    "stage_target_latest_revision": true,
+    "transmitted_pretty_json_with_final_newline_sha256": "340c7176fa2d708787ef92c7b7ac16c96afa626fca14e6590ead798dfc9b34e6",
+    "validation_and_apply_bound_identical_request_bytes": true
+  },
+  "staged_ready_readback": {
+    "generation": 32,
+    "latest_created_revision": "ocean-v1-beta-serving-00020-n7s",
+    "latest_ready_revision": "ocean-v1-beta-serving-00020-n7s",
+    "main_traffic_percent": 100,
+    "main_traffic_revision": "ocean-v1-beta-serving-00019-skn",
+    "observed_generation": 32,
+    "ready": true,
+    "source_image_verified": true,
+    "tagged_new_revision": "ocean-v1-beta-serving-00020-n7s",
+    "tagged_new_revision_percent": 0
+  },
+  "state": "frontend_rollout_delivered_separate_research_acceptance_gates_remain",
+  "version": "ocean-beta-frontend-amendment05-serving-receipt-v1"
+}

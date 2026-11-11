@@ -1,0 +1,86 @@
+{
+  "affected_source_delta": [
+    "frontend-v1/src/research-answers.tsx",
+    "frontend-v1/tests/research-answer-read-ownership.test.ts"
+  ],
+  "backend_and_postgres_unchanged": true,
+  "baseline_commit": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "both_production_audits_zero_vulnerabilities": true,
+  "both_typechecks_and_builds_passed": true,
+  "build_id": "f612c37f-dee6-4d40-806f-ecc7a9676ea8",
+  "build_log_sha256": "8af7b063ea517858e98c917bdad64fa0aa9b5da9c780d61e2ebb27e971545c84",
+  "cloudbuild_config_sha256": "d6a81674f835e45fc01d9bc2ece2a313d07a3345bf21ab50f8bd2235e1874f0e",
+  "finish_time": "2026-11-10T14:15:44.491729Z",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:01156885758a834bdf013fa88772e8ea2b78cbebb4b14468b68425714b192f0d",
+  "legacy_frontend_unchanged": true,
+  "logging": "CLOUD_LOGGING_ONLY",
+  "machine_type": "E2_STANDARD_2",
+  "no_complete_beta_or_latency_approval": true,
+  "packaged_runtime_proof": {
+    "all_capabilities_dropped": true,
+    "gid": 1000,
+    "network": "none",
+    "no_new_privileges": true,
+    "packaged_login_http": 200,
+    "passed": true,
+    "read_only": true,
+    "real_credentials": false,
+    "startup_wait_for_research_api": true,
+    "uid": 1000
+  },
+  "passed_tests": {
+    "host": 61,
+    "prototype": 1079,
+    "standalone_http": 1
+  },
+  "project": "ocean-v1-beta-20261101",
+  "reuse_backend_postgres_ci": {
+    "expected_pg_skips": 16,
+    "native_postgres": 318,
+    "postgres_dump_and_restore_clients": "16.15",
+    "restored_tables": 74,
+    "run_id": 42721324508,
+    "source": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508"
+  },
+  "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source_archive": {
+    "bucket": "ocean-v1-beta-20261101-build-source",
+    "generation": "1794319757972617",
+    "object": "source/1794319757.412407-19346e60b603440cb4255602eb4af80b.tgz"
+  },
+  "source_commit": "a77ea38b79e448197702fada5a16ec2b9bb24bd8",
+  "source_manifests": {
+    "production": "99904a252a000bfaef94c467e60fa0e7cf61ba4b74421721d9d6f11d4992cf39",
+    "qualification": "0985a2e8a7a2ae98a84e685c6d3700a5c8f98775bcd63a52dca19b44b01b5236"
+  },
+  "start_time": "2026-11-10T14:09:19.776208644Z",
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "id": "affected-frontend-source-gates",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-10T14:13:37.227247638Z",
+        "startTime": "2026-11-10T14:09:23.733543367Z"
+      }
+    },
+    {
+      "id": "production-finite-source-image",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-10T14:15:33.272060483Z",
+        "startTime": "2026-11-10T14:13:37.228412518Z"
+      }
+    },
+    {
+      "id": "packaged-runtime-and-api-startup-proof",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-10T14:15:35.827030095Z",
+        "startTime": "2026-11-10T14:15:33.272362696Z"
+      }
+    }
+  ],
+  "version": "beta-frontend-hosted-qualification-v1"
+}

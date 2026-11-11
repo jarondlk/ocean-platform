@@ -1,0 +1,72 @@
+{
+  "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+  "actual_provider_called_by_image_proof": false,
+  "build_id": "c9f4bb42-c54b-403e-b7d2-3cce0d400931",
+  "build_log_sha256": "d0d8027c6178aaa1be6382e991d040a92b0ed11962beb72bc7d3194c45e785b6",
+  "build_readback_sha256": "40afdeb35faf4c5faadc00bda6e53ceabdcecf9635abdc7394bfb4957edac5e6",
+  "composed_api_sources": 180,
+  "context_manifest_sha256": "f07baecf9596fbea8b82497c6db6852fd59f45bd6e955cbb290782462fcd5a5a",
+  "finish_time": "2026-11-09T23:43:41.596738Z",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+  "logging": "CLOUD_LOGGING_ONLY",
+  "opaque_binding_sha256": "3aa35972d4fda7f0aa4842a58ee6f05b4a36d6172fbf54a72c0f2f50cb853f5a",
+  "previous_api_build_retained": "f5d0d58d-9431-4049-881f-5a037d6dd080",
+  "production_role_entry_configurations_verified": [
+    "api",
+    "controller"
+  ],
+  "proof_capabilities_dropped": "ALL",
+  "proof_network": "none",
+  "proof_no_new_privileges": true,
+  "proof_read_only": true,
+  "proof_runtime_uid_gid": "10001:10001",
+  "proof_success_messages": [
+    "Research API source hashes, bounded Gemini SDK and private host imports verified; no credentials or network",
+    "Corrected Gemini SDK request serialization verified with synthetic credentials and mock HTTP, network disabled",
+    "Packaged Unicode activation compatibility and both production role entries verified; synthetic inputs, no credentials or network"
+  ],
+  "region": "asia-northeast1",
+  "runtime_activation_document_included": false,
+  "scientific_data_or_credentials_included": false,
+  "scope": "Source/image qualification; actual signed-in Gemini, cancellation, reload and recurring recovery acceptance are separate.",
+  "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source": {
+    "storageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1794267778750672",
+      "object": "source/1794267777.958373-2c23d491d19745f6a0a2019ece932662.tgz"
+    }
+  },
+  "source_manifest_sha256": "063bfe5fee7af29d915ec345c0124fa8af5133e9c4d481d3a0080f3cfea46b5b",
+  "source_provenance": {
+    "fileHashes": {
+      "gs://ocean-v1-beta-20261101-build-source/source/1794267777.958373-2c23d491d19745f6a0a2019ece932662.tgz#1794267778750672": {
+        "fileHash": [
+          {
+            "type": "MD5",
+            "value": "6HJFvHvUSIlpWbxr4OmC1w=="
+          },
+          {
+            "type": "SHA256",
+            "value": "mWQJesK9WyLUhAWgNjheYzStIwdt_rDTk_LfL9esYYk="
+          }
+        ]
+      }
+    },
+    "resolvedStorageSource": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1794267778750672",
+      "object": "source/1794267777.958373-2c23d491d19745f6a0a2019ece932662.tgz"
+    }
+  },
+  "source_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "start_time": "2026-11-09T23:43:00.799403417Z",
+  "state": "immutable_research_api_build_qualified",
+  "status": "SUCCESS",
+  "step_statuses": [
+    "SUCCESS",
+    "SUCCESS"
+  ],
+  "unchanged_base_sources": 162,
+  "verified_from_retained_records_at_utc": "2026-11-10T09:37:53.193071+00:00"
+}

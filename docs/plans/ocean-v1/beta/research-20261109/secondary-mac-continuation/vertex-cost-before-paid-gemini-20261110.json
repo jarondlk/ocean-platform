@@ -1,0 +1,932 @@
+{
+  "capture_label": "before-paid-gemini-20261110",
+  "captured_utc": "2026-11-10T14:11:49.280992+00:00",
+  "cloud_mutations": false,
+  "credential_values_or_prompt_payloads_saved": false,
+  "expected_model": "gemini-3.8-flash",
+  "inference_metadata_logging_readonly_state": [
+    {
+      "http_status": 404,
+      "inference_event_logging_state": "unavailable",
+      "target": "projects/ocean-v1-beta-20261101"
+    },
+    {
+      "http_status": 404,
+      "inference_event_logging_state": "unavailable",
+      "target": "projects/ocean-v1-beta-20261101/locations/global/publishers/google/models/gemini-3.8-flash"
+    }
+  ],
+  "interval_end_utc": "2026-11-10T14:11:49.280992Z",
+  "interval_start_utc": "2026-11-09T13:13:28Z",
+  "metric_descriptors": [
+    {
+      "descriptor": {
+        "description": "Accumulated input/output token count.",
+        "displayName": "Token count",
+        "labels": [
+          {
+            "description": "The bucketized max size of number of tokens in the prediction request/response.",
+            "key": "max_token_size"
+          },
+          {
+            "description": "Type of token (input/output).",
+            "key": "type"
+          },
+          {
+            "description": "The type of traffic of the request (dedicated/shared).",
+            "key": "request_type"
+          },
+          {
+            "description": "The breakdown of shared requests, such as priority/flex/standard.",
+            "key": "shared_request_type"
+          },
+          {
+            "description": "Whether the request uses explicit caching feature.",
+            "key": "explicit_caching"
+          },
+          {
+            "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only.",
+            "key": "accounting_resource"
+          },
+          {
+            "description": "Modality of the input/output tokens.",
+            "key": "modality"
+          },
+          {
+            "description": "The source/surface that the token consumption is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown.",
+            "key": "source"
+          }
+        ],
+        "launchStage": "BETA",
+        "metadata": {
+          "timeSeriesResourceHierarchyLevel": [
+            "PROJECT"
+          ]
+        },
+        "metricKind": "DELTA",
+        "monitoredResourceTypes": [
+          "aiplatform.googleapis.com/PublisherModel"
+        ],
+        "name": "projects/ocean-v1-beta-20261101/metricDescriptors/aiplatform.googleapis.com/publisher/online_serving/token_count",
+        "type": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+        "unit": "1",
+        "valueType": "INT64"
+      },
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/token_count"
+    },
+    {
+      "descriptor": {
+        "description": "Number of model invocations (prediction requests).",
+        "displayName": "Model invocation count",
+        "labels": [
+          {
+            "description": "The bucketized size of number of tokens in the prediction request.",
+            "key": "input_token_size"
+          },
+          {
+            "description": "The bucketized size of number of tokens in the prediction response.",
+            "key": "output_token_size"
+          },
+          {
+            "description": "The bucketized max size of number of tokens in the prediction request/response.",
+            "key": "max_token_size"
+          },
+          {
+            "description": "Responce code of prediction request.",
+            "key": "response_code"
+          },
+          {
+            "description": "The type of traffic of the request (dedicated/shared).",
+            "key": "request_type"
+          },
+          {
+            "description": "The breakdown of shared requests, such as priority/flex/standard.",
+            "key": "shared_request_type"
+          },
+          {
+            "description": "The type of method of the request (RawPredict/StreamRawPredict/ChatCompletions/etc).",
+            "key": "method"
+          },
+          {
+            "description": "Response error category of the request (user/system/capacity).",
+            "key": "error_category"
+          },
+          {
+            "description": "Whether the request uses explicit caching feature.",
+            "key": "explicit_caching"
+          },
+          {
+            "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only.",
+            "key": "accounting_resource"
+          },
+          {
+            "description": "The source/surface that the request is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown.",
+            "key": "source"
+          }
+        ],
+        "launchStage": "BETA",
+        "metadata": {
+          "timeSeriesResourceHierarchyLevel": [
+            "PROJECT"
+          ]
+        },
+        "metricKind": "DELTA",
+        "monitoredResourceTypes": [
+          "aiplatform.googleapis.com/PublisherModel"
+        ],
+        "name": "projects/ocean-v1-beta-20261101/metricDescriptors/aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+        "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+        "unit": "1",
+        "valueType": "INT64"
+      },
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count"
+    },
+    {
+      "descriptor": {
+        "description": "Overall throughput used (accounting for burndown rate) in terms of tokens.",
+        "displayName": "Token Throughput",
+        "labels": [
+          {
+            "description": "Type of request (dedicated/shared).",
+            "key": "request_type"
+          },
+          {
+            "description": "The breakdown of shared requests, such as priority/flex/standard.",
+            "key": "shared_request_type"
+          },
+          {
+            "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only.",
+            "key": "accounting_resource"
+          },
+          {
+            "description": "Modality of the consumed tokens.",
+            "key": "modality"
+          }
+        ],
+        "launchStage": "BETA",
+        "metadata": {
+          "timeSeriesResourceHierarchyLevel": [
+            "PROJECT"
+          ]
+        },
+        "metricKind": "DELTA",
+        "monitoredResourceTypes": [
+          "aiplatform.googleapis.com/PublisherModel"
+        ],
+        "name": "projects/ocean-v1-beta-20261101/metricDescriptors/aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+        "type": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+        "unit": "1",
+        "valueType": "INT64"
+      },
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput"
+    }
+  ],
+  "metric_qualification": "DELTA values are observed monitoring data, not currency invoice. consumed_token_throughput includes model burndown weighting; do not price it as raw tokens. token_count descriptor does not explicitly define thinking-token inclusion; retain reserve until complete evidence.",
+  "metrics": [
+    {
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+      "next_page_present": false,
+      "series": []
+    },
+    {
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+      "next_page_present": false,
+      "series": []
+    },
+    {
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+      "next_page_present": false,
+      "series": []
+    },
+    {
+      "http_status": 200,
+      "metric": "run.googleapis.com/container/cpu/allocation_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:47:00Z",
+            "startTime": "2026-11-09T13:46:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:42:00Z",
+            "startTime": "2026-11-09T13:41:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 6,
+          "resource": {
+            "labels": {
+              "job_name": "ocean-v1-beta-controller-credential",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101"
+            },
+            "type": "cloud_run_job"
+          },
+          "sum_values": 0.1917902262616523,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:51:00Z",
+            "startTime": "2026-11-09T13:50:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:45:00Z",
+            "startTime": "2026-11-09T13:44:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 7,
+          "resource": {
+            "labels": {
+              "job_name": "ocean-v1-beta-research-grants",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101"
+            },
+            "type": "cloud_run_job"
+          },
+          "sum_values": 120.0,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:55:00Z",
+            "startTime": "2026-11-09T13:54:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:49:00Z",
+            "startTime": "2026-11-09T13:48:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 7,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-research-controller",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-research-controller-00001-vcj",
+              "service_name": "ocean-v1-beta-research-controller"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 40.6,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T09:59:00Z",
+            "startTime": "2026-11-10T09:58:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T23:46:00Z",
+            "startTime": "2026-11-09T23:45:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 79,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-research-controller",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-research-controller-00002-mcw",
+              "service_name": "ocean-v1-beta-research-controller"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 218.69614910612694,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T23:47:00Z",
+            "startTime": "2026-11-09T23:46:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:24:00Z",
+            "startTime": "2026-11-09T13:23:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 119,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 282.26024600725634,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:01:00Z",
+            "startTime": "2026-11-10T09:00:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 311,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 7577.550925305463,
+          "value_type": "DOUBLE"
+        }
+      ]
+    },
+    {
+      "http_status": 200,
+      "metric": "run.googleapis.com/container/memory/allocation_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:47:00Z",
+            "startTime": "2026-11-09T13:46:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:42:00Z",
+            "startTime": "2026-11-09T13:41:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 6,
+          "resource": {
+            "labels": {
+              "job_name": "ocean-v1-beta-controller-credential",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101"
+            },
+            "type": "cloud_run_job"
+          },
+          "sum_values": 0.11986889095210503,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:51:00Z",
+            "startTime": "2026-11-09T13:50:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:45:00Z",
+            "startTime": "2026-11-09T13:44:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 7,
+          "resource": {
+            "labels": {
+              "job_name": "ocean-v1-beta-research-grants",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101"
+            },
+            "type": "cloud_run_job"
+          },
+          "sum_values": 75.0,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:55:00Z",
+            "startTime": "2026-11-09T13:54:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:49:00Z",
+            "startTime": "2026-11-09T13:48:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 7,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-research-controller",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-research-controller-00001-vcj",
+              "service_name": "ocean-v1-beta-research-controller"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 86.2751176063496,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T09:59:00Z",
+            "startTime": "2026-11-10T09:58:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T23:47:00Z",
+            "startTime": "2026-11-09T23:46:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 78,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-research-controller",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-research-controller-00002-mcw",
+              "service_name": "ocean-v1-beta-research-controller"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 394.8249912024621,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T23:47:00Z",
+            "startTime": "2026-11-09T23:46:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:24:00Z",
+            "startTime": "2026-11-09T13:23:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 118,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 390.19972479461023,
+          "value_type": "DOUBLE"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:01:00Z",
+            "startTime": "2026-11-10T09:00:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 311,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 11930.57337552845,
+          "value_type": "DOUBLE"
+        }
+      ]
+    },
+    {
+      "http_status": 200,
+      "metric": "run.googleapis.com/request_count",
+      "next_page_present": false,
+      "series": [
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T09:59:00Z",
+            "startTime": "2026-11-10T09:58:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:02:00Z",
+            "startTime": "2026-11-10T09:01:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "200",
+            "response_code_class": "2xx",
+            "route": ""
+          },
+          "points_count": 58,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-research-controller",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-research-controller-00002-mcw",
+              "service_name": "ocean-v1-beta-research-controller"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 8.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T21:41:00Z",
+            "startTime": "2026-11-09T21:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:24:00Z",
+            "startTime": "2026-11-09T13:23:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "200",
+            "response_code_class": "2xx",
+            "route": ""
+          },
+          "points_count": 76,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 209.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T23:47:00Z",
+            "startTime": "2026-11-09T23:46:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T18:07:00Z",
+            "startTime": "2026-11-09T18:06:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "307",
+            "response_code_class": "3xx",
+            "route": ""
+          },
+          "points_count": 65,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 4.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T21:41:00Z",
+            "startTime": "2026-11-09T21:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T21:19:00Z",
+            "startTime": "2026-11-09T21:18:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "403",
+            "response_code_class": "4xx",
+            "route": ""
+          },
+          "points_count": 23,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 1.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T21:41:00Z",
+            "startTime": "2026-11-09T21:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:24:00Z",
+            "startTime": "2026-11-09T13:23:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "404",
+            "response_code_class": "4xx",
+            "route": ""
+          },
+          "points_count": 76,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 2.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:04:00Z",
+            "startTime": "2026-11-10T09:03:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "200",
+            "response_code_class": "2xx",
+            "route": ""
+          },
+          "points_count": 308,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 3644.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:04:00Z",
+            "startTime": "2026-11-10T09:03:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "302",
+            "response_code_class": "3xx",
+            "route": ""
+          },
+          "points_count": 308,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 1.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:04:00Z",
+            "startTime": "2026-11-10T09:03:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "303",
+            "response_code_class": "3xx",
+            "route": ""
+          },
+          "points_count": 308,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 1.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:04:00Z",
+            "startTime": "2026-11-10T09:03:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "307",
+            "response_code_class": "3xx",
+            "route": ""
+          },
+          "points_count": 308,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 2.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:23:00Z",
+            "startTime": "2026-11-10T09:22:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "403",
+            "response_code_class": "4xx",
+            "route": ""
+          },
+          "points_count": 289,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 1.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:04:00Z",
+            "startTime": "2026-11-10T09:03:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "404",
+            "response_code_class": "4xx",
+            "route": ""
+          },
+          "points_count": 308,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 1.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:09:00Z",
+            "startTime": "2026-11-10T09:08:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "409",
+            "response_code_class": "4xx",
+            "route": ""
+          },
+          "points_count": 303,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 3.0,
+          "value_type": "INT64"
+        },
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-10T14:11:00Z",
+            "startTime": "2026-11-10T14:10:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-10T09:23:00Z",
+            "startTime": "2026-11-10T09:22:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {
+            "response_code": "503",
+            "response_code_class": "5xx",
+            "route": ""
+          },
+          "points_count": 289,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00018-9nd",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 4.0,
+          "value_type": "INT64"
+        }
+      ]
+    }
+  ],
+  "project": "ocean-v1-beta-20261101",
+  "publisher_resource_descriptor": {
+    "descriptor": {
+      "description": "A Vertex AI Model Garden Publisher Model.",
+      "displayName": "Vertex AI Model Garden Publisher Model",
+      "labels": [
+        {
+          "description": "The identifier of the GCP Project owning the Endpoint.",
+          "key": "resource_container"
+        },
+        {
+          "description": "The region in which the service is running.",
+          "key": "location"
+        },
+        {
+          "description": "The publisher of the model.",
+          "key": "publisher"
+        },
+        {
+          "description": "The resource ID of the PublisherModel.",
+          "key": "model_user_id"
+        },
+        {
+          "description": "The version ID of the PublisherModel.",
+          "key": "model_version_id"
+        }
+      ],
+      "launchStage": "BETA",
+      "name": "projects/ocean-v1-beta-20261101/monitoredResourceDescriptors/aiplatform.googleapis.com/PublisherModel",
+      "type": "aiplatform.googleapis.com/PublisherModel"
+    },
+    "http_status": 200
+  },
+  "version": "ocean-beta-readonly-vertex-cost-snapshot-v1"
+}

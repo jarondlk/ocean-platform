@@ -1,0 +1,20 @@
+{
+  "version": "beta-validation-allocation-amendment-v1",
+  "recorded_utc": "2026-11-10T14:40:26.347729+00:00",
+  "user_total_limit_jpy": 500,
+  "user_limit_changed": false,
+  "previous_internal_model_reserve_jpy": 450,
+  "previous_internal_cloud_allowance_jpy": 50,
+  "updated_model_reserve_jpy": 425,
+  "updated_cloud_allowance_jpy": 75,
+  "reason": "Whole-project Run counters conservatively attributed to validation exceeded the original internal50JPYcloudsplit after prolonged browser polling during the pause. Browser polling was stopped. Reallocate within the unchanged500JPY user ceiling; the unchanged runtime full16-call conservative double-output estimate417.392093281JPY remains below425, without assuming measured thinking-token completeness.",
+  "unchanged_full_question_conservative_model_bound_jpy": "417.392093281",
+  "model_bound_source": "secondary-mac-continuation/cost-refresh-20261110/cost-review.json",
+  "observed_model_counters_only_estimate_jpy": "3.706500041",
+  "observed_model_estimate_is_not_invoice_or_complete_usage_attestation": true,
+  "paid_questions_admitted": 1,
+  "additional_paid_questions_admitted": 0,
+  "continue_only_same_question_answer_with_existing_shared180second_budget": true,
+  "additional_builds_require_remaining_cloud_allowance_recheck": true,
+  "reserve_not_provider_hard_cap": true
+}

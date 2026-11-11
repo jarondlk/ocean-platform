@@ -1,6 +1,73 @@
 # Implementation status
 
-Updated: 2026-11-09 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Live release acceptance remains gated.**
+Updated: 2026-11-11 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
+
+**Current beta checkpoint — 2026-11-11 JST:** Research prerequisites have been
+applied and bounded manual validation has begun. The successful morning
+promotion is verified: serving generation 33, Ready revision `00020-n7s` at
+100% traffic, no tags, amendment05 frontend `be709b49…` and unchanged startup03
+API `4b24ca90…`. The complete writable request/settings comparison passes;
+API/proxy, identities, secrets, ingress and all unrelated settings are preserved.
+The earlier quota-rejected promotion attempt did not execute; the later
+authorized attempt succeeded at 01:09 UTC. Live read acceptance remains open.
+[Live frontend receipt](beta/research-20261109/frontend-amendment05/serving.json),
+[qualified build](beta/research-20261109/frontend-amendment05/build.json).
+
+Deployed frontend source `7fe5e134` passes all affected Linux gates: 1,085 prototype, 61 host
+and 1 standalone HTTP test, both audits/typechecks/builds and the packaged
+nonroot Research-startup proof. Unchanged backend/PostgreSQL evidence is reused
+from source `9969feb2`, [full CI 42721324508](beta/research-20261109/startup-amendment03/ci.json):
+all jobs pass, including 318 PostgreSQL cases, 16 expected skips and actual
+version 16.15 backup/restore of 74 tables. The original failed-job retry also
+passed as job 129184649747; its earlier exit139 cause remains unknown.
+[Retained retry](beta/research-20261109/secondary-mac-continuation/ci.json).
+
+Scoped IAM, both one-shot credential/grant jobs, numeric controller-secret
+version 1 and temporary-grant cleanup are verified. Exact activation `4843e61b…`
+is published at generation 1794232040589985; scientific bytes and approval=false
+are preserved. Private controller `00002-mcw` permits only the task-invoker IAM
+identity. The Research queue is PAUSED with 0 tasks, runtime Scheduler job is
+absent, and the three-hour Codex schedule remains PAUSED.
+[Cloud prerequisites](beta/research-20261109/startup-amendment03/cloud-prerequisites.json).
+
+The deterministic count question completed without model calls and retained a
+native cited answer. Queued cancellation, terminal duplicate delivery and
+pending-outbox recovery passed. Paid question03 ended partial with
+`repair_budget` after 143 seconds and two STOP model responses; its saved partial
+answer used no synthesis model. The actual Gemini-backed cited-answer gate,
+signed-in persistence/reload and complete live latency acceptance remain open.
+Read-only native diagnostics verified closed leases and priced all provider usage,
+including thoughts, at an estimated ¥3.706505842 (10,599 input / 11,603 total
+tokens). [Model reconciliation](beta/research-20261109/startup-amendment03/question03-model-cost-reconciled.json).
+
+The Nov11 01:30 UTC [validation ledger](beta/research-20261109/secondary-mac-continuation/cost-refresh-20261111/validation-ledger.json)
+estimates ¥91.721211491 observed or reserved within the unchanged
+20-question/¥500 limit. A 600-second API build ceiling plus a rounded ¥370
+reserve for one future question would leave ¥28.786488519 for additional
+verification; refresh after the brief subsequent UI reads and before admission.
+The independently checked shared 14-call bound is ¥365.885449638 with the new
+wire schema. The [bounded monthly scenario](beta/research-20261109/secondary-mac-continuation/cost-refresh-20261111/monthly-scenario.json)
+is ¥36,810.84 including contingency; the ¥50,000 target and ¥100,000 upper
+budget remain unchanged. These are estimates, not invoices or spend caps.
+Read-only
+action-shape execution `-d466m` succeeded: both hash-bound JSON objects selected
+`catalogue.open` with matching target/fact_ids and no extra fields, but their
+`kind` strings were outside `tool`/`finish`/`clarify` (safe enum output=null).
+This establishes the structural mismatch, not a provider causal explanation.
+A beta-only adapter `const`→`enum` correction is committed as source
+`77c1517f9c996544d08d3dbd7cafcae868e8d78a`; [normal CI 42939381842](https://github.com/jarondlk/ocean-platform/actions/runs/42939381842), image qualification
+and new valid live question/cited-answer proof remain pending. It is not the
+deployed API; old replays remain preserved and no new question is admitted.
+Legacy, eDNA/ANEMONE, experiments and workers retain separate
+gates. Fresh signed-in frontend05 history still misses the 15-second gate:
+evidence/list took 13.907 seconds after answer-list took 2.473 seconds. Server
+read-path diagnosis continues; no deadline or authorization guard was relaxed.
+[Shared cap proof](beta/research-20261109/startup-amendment03/shared-model-cap-proof.json),
+[current handoff](handoffs/BETA_DEPLOYMENT.md).
+
+**Historical checkpoints below:** These dated records preserve the sequence of
+work. Their Research-off/revision17, empty-secret and pending PostgreSQL-retry
+statements describe earlier states; effective pins and open gates are above.
 
 **Secondary Mac continuation (2026-11-09 JST):** The clean receiving checkout
 was fast-forwarded from `ad0c313` to the fetched `overhaul` checkpoint `4f4b616`;

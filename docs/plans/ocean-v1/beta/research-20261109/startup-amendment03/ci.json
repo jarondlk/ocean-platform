@@ -1,0 +1,199 @@
+{
+  "backend": {
+    "combined_coverage_percent": "83.88",
+    "explicit_skips": 627,
+    "isolated_100000_object_gate_passed": true,
+    "isolated_gate_tests_passed": 1,
+    "new_unicode_activation_regression_cases_passed": 9,
+    "remaining_tests_passed": 7227,
+    "required_coverage_percent": "70",
+    "shared_integration_cases_passed": 17,
+    "stage_seconds": [
+      71.73,
+      1197.68,
+      3157.81
+    ],
+    "total_backend_cases_passed": 7245
+  },
+  "conclusion": "success",
+  "dependency_review_skip_reason": "Expected for push trigger; workflow restricts this job to qualifying pull_request events.",
+  "documentation_only_followups_require_full_backend_repeat": false,
+  "frontends": {
+    "actual_standalone_host_tests": 1,
+    "all_builds_typechecks_audits_passed": true,
+    "authenticated_host_tests": 61,
+    "legacy_frontend_tests": 132,
+    "prototype_tests": 1064
+  },
+  "job_reruns_requested": false,
+  "jobs": [
+    {
+      "completed_at": "2026-11-09T23:49:41Z",
+      "conclusion": "success",
+      "job_id": 129515730821,
+      "name": "PostgreSQL migration and metadata integration",
+      "started_at": "2026-11-09T23:32:55Z",
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508/job/129515730821"
+    },
+    {
+      "completed_at": "2026-11-09T23:34:08Z",
+      "conclusion": "success",
+      "job_id": 129515731130,
+      "name": "OCEAN v1 authenticated host tests and build",
+      "started_at": "2026-11-09T23:32:55Z",
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508/job/129515731130"
+    },
+    {
+      "completed_at": "2026-11-09T23:33:39Z",
+      "conclusion": "success",
+      "job_id": 129515731182,
+      "name": "Frontend typecheck and build",
+      "started_at": "2026-11-09T23:32:55Z",
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508/job/129515731182"
+    },
+    {
+      "completed_at": "2026-11-09T23:33:52Z",
+      "conclusion": "success",
+      "job_id": 129515731185,
+      "name": "OCEAN v1 prototype tests and build",
+      "started_at": "2026-11-09T23:32:55Z",
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508/job/129515731185"
+    },
+    {
+      "completed_at": "2026-11-10T00:47:40Z",
+      "conclusion": "success",
+      "job_id": 129515731235,
+      "name": "Backend tests and security boundary",
+      "started_at": "2026-11-09T23:32:55Z",
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508/job/129515731235"
+    },
+    {
+      "completed_at": "2026-11-09T23:32:53Z",
+      "conclusion": "skipped",
+      "job_id": 129515732894,
+      "name": "Dependency review",
+      "started_at": "2026-11-09T23:32:53Z",
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508/job/129515732894"
+    }
+  ],
+  "live_cloud_or_provider_acceptance_established_by_ci": false,
+  "postgres": {
+    "backup_restore": {
+      "archive_sha256": "e3300ffa2ffedbdc0f1bcdac9fc933e11875d64e2a51acc5ef36316d1b8fffe7",
+      "archive_size_bytes": 1919700,
+      "archive_table_count": 74,
+      "pg_dump_version": "16.15 (Ubuntu 16.15-1.pgdg24.04+2)",
+      "pg_restore_version": "16.15 (Ubuntu 16.15-1.pgdg24.04+2)",
+      "restore_test_ok": true,
+      "restored_table_count": 74,
+      "scope": "Disposable GitHub Actions PostgreSQL16; not live Cloud SQL backup/restore.",
+      "temporary_database_removed": true,
+      "toc_entries": 685
+    },
+    "expected_capability_skips": 16,
+    "groups": [
+      {
+        "passed": 82,
+        "seconds": 45.6,
+        "skipped": 0
+      },
+      {
+        "passed": 12,
+        "seconds": 1.95,
+        "skipped": 0
+      },
+      {
+        "passed": 12,
+        "seconds": 2.27,
+        "skipped": 0
+      },
+      {
+        "passed": 21,
+        "seconds": 1.97,
+        "skipped": 0
+      },
+      {
+        "passed": 60,
+        "seconds": 37.8,
+        "skipped": 0
+      },
+      {
+        "passed": 44,
+        "seconds": 145.2,
+        "skipped": 0
+      },
+      {
+        "passed": 23,
+        "seconds": 137.43,
+        "skipped": 0
+      },
+      {
+        "passed": 21,
+        "seconds": 116.23,
+        "skipped": 0
+      },
+      {
+        "passed": 43,
+        "seconds": 420.05,
+        "skipped": 16
+      }
+    ],
+    "native_case_pass_lines": [
+      "2026-11-09T23:47:04.8394418Z tests/integration/test_experimental_artifact_postgres.py::test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen PASSED",
+      "2026-11-09T23:48:26.8538170Z tests/integration/test_experimental_artifact_postgres.py::test_native_pg_native_first_foreign_second_then_new_run_and_answer PASSED"
+    ],
+    "postgres_tests_passed": 318
+  },
+  "prior_failure_and_original_retry_receipt": "../secondary-mac-continuation/ci.json",
+  "prior_failure_cause": "Original exit139 remains unknown; prior failure logs and successful retry are retained.",
+  "private_log_directory": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261109/ci/source-9969feb",
+  "repository": "jarondlk/ocean-platform",
+  "retained_logs": [
+    {
+      "bytes": 49247,
+      "file": "host.log",
+      "job_id": 129515731130,
+      "sha256": "0c9f9776ac803fceb29f323693b43ac1e94dfda67f2999027cc23b3dd5ca0327"
+    },
+    {
+      "bytes": 73931,
+      "file": "frontend.log",
+      "job_id": 129515731182,
+      "sha256": "9a7f92390dc1482b488a2bd7834a3732defa7686d4ff5733e818cb3517164c38"
+    },
+    {
+      "bytes": 412622,
+      "file": "prototype.log",
+      "job_id": 129515731185,
+      "sha256": "d78ba51a8ee1b0a34a0acbbd88434b164f9c69ddd89051f3185fb34de66b59f7"
+    },
+    {
+      "bytes": 396601,
+      "file": "postgres.log",
+      "job_id": 129515730821,
+      "sha256": "e42a3af5ac6cf6ac4d9f8633fd942dc5085a8eacaa0d26539a39640ab57ed658"
+    },
+    {
+      "bytes": 8237177,
+      "file": "backend.log",
+      "job_id": 129515731235,
+      "sha256": "cfb70791e0d769da5c340f10f04e3f2852b810a88f990d2f7005728b21bff15e"
+    }
+  ],
+  "run_attempt": 1,
+  "run_completed_at": "2026-11-10T00:47:41Z",
+  "run_id": 42721324508,
+  "run_started_at": "2026-11-09T23:32:51Z",
+  "runtime_change_justifies_this_fresh_ci": true,
+  "scientific_approval": false,
+  "source_sha256": {
+    ".github/workflows/tests.yml": "60848d40908c66aa3832c31943376350a465a7f5958b5c562e18eaa4ce402cb0",
+    "api/v1_catalogue_host.py": "9f29d380ecf2603b873459dfc4a765c9248c69e6d0017673688883d4d304549e",
+    "tests/test_beta_activation_serialization.py": "b7fe82d7b43d3fecbcb0a5262eb67246b1630dbc7f62e10d6d5e3c7de7acca6c"
+  },
+  "state": "all_required_source_bound_ci_jobs_passed",
+  "tested_source_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508",
+  "verified_at_utc": "2026-11-10T09:02:03.751751+00:00",
+  "version": "ocean-beta-startup-amendment-ci-v1"
+}

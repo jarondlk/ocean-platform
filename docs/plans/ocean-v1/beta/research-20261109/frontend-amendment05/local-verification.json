@@ -1,0 +1,207 @@
+{
+  "failure_reproduction": {
+    "baseline_log_record": "baseline_overlap",
+    "baseline_revision": "a77ea38b79e448197702fada5a16ec2b9bb24bd8",
+    "case": "independent event and evidence reads overlap but neither publishes without the other",
+    "failed": 1,
+    "observed": "While the event request was held, the evidence/list request had not started. The overlap assertion expected true and received false.",
+    "owner": "root",
+    "passed": 0,
+    "result_scope": "Filtered new overlap regression against the retained serial implementation; the complete local baseline log is bound below.",
+    "tests": 1
+  },
+  "independent_readonly_review": {
+    "blocking_findings": [],
+    "conclusion": "No blocking access-freshness, event/paging, binding or cancellation findings in the reviewed two-file change.",
+    "evidence": [
+      "All answer-list pages and selected off-page status are validated before either independent branch starts.",
+      "Each branch keeps its own fresh() checks after responses, plus existing policy/binding/input/cursor/duplicate validation; final combined publication also calls fresh().",
+      "Promise.all rejection prevents publication of the independently successful sibling. Both promises have rejection handlers through Promise.all, so a later sibling rejection cannot create an unhandled rejection.",
+      "In the actual hook, failure disposal aborts the history scheduler shared signal. The strict HTTP clients cancel or discard late responses and the current/signal checks prevent late navigation results from publishing.",
+      "An independently returned evidence resource access revision remains permitted; evidence pages must agree with each other while answer events must agree with the validated answer-list revision.",
+      "The scheduler still owns one overall 15-second deadline; starting branches does not reset or extend it."
+    ],
+    "reviewer_made_source_edits_or_cloud_calls": false
+  },
+  "local_checks": {
+    "diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    "host_tests": {
+      "command": "npm test",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0,
+      "failed": 0,
+      "owner": "root; log independently inspected",
+      "passed": 61,
+      "skipped": 0,
+      "tests": 61
+    },
+    "host_typecheck": {
+      "command": "npm run typecheck",
+      "cwd": "frontend-v1/hosting",
+      "exit_code": 0,
+      "owner": "root; log independently inspected",
+      "route_type_generation_and_tsc_passed": true
+    },
+    "independent_focused_review": {
+      "amendment04_actual_hook_cases": 15,
+      "command": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/research-answer-history.test.ts tests/research-answer-read-ownership.test.ts",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "failed": 0,
+      "history_cases": 19,
+      "included_in_full_prototype_count": true,
+      "owner": "independent reviewer",
+      "passed": 34,
+      "skipped": 0,
+      "tests": 34
+    },
+    "prototype_tests": {
+      "command": "npm test",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "failed": 0,
+      "owner": "root; log independently inspected",
+      "passed": 1085,
+      "skipped": 0,
+      "tests": 1085
+    },
+    "prototype_typecheck": {
+      "command": "npm run typecheck",
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "owner": "root; log independently inspected",
+      "route_type_generation_and_tsc_passed": true
+    }
+  },
+  "local_environment": {
+    "architecture": "arm64",
+    "fixture_scope": "Synthetic service responses only; no user records, provider calls or credential values.",
+    "node": "22.23.3",
+    "os": "Darwin"
+  },
+  "local_logs": {
+    "records": {
+      "baseline_overlap": {
+        "bytes": 997,
+        "local_log_basename": "ocean-history-parallel-baseline.log",
+        "sha256": "60dd574ed4fa59a2d2c019be3bc0342f38e9689d16c48c7d64bc6f42bb1bd9e1"
+      },
+      "host_tests": {
+        "bytes": 14392,
+        "local_log_basename": "ocean-history-parallel-host-tests.log",
+        "sha256": "8916060395fc5db56561e45879b18b57432568515c4ae0f420d7802e943d251b"
+      },
+      "host_typecheck": {
+        "bytes": 177,
+        "local_log_basename": "ocean-history-parallel-host-typecheck.log",
+        "sha256": "a2bc6cd414c5469248a2d5944bfda3686ea5463f203dbf3ee942fc8865a43b02"
+      },
+      "independent_focused_review": {
+        "bytes": 7664,
+        "local_log_basename": "ocean-history-parallel-review.log",
+        "sha256": "0e5ed12fd545d12b156a581d6b04c5235518813ff4eb0a60fa253ec0f6eefc23"
+      },
+      "prototype_tests": {
+        "bytes": 210176,
+        "local_log_basename": "ocean-history-parallel-v1-tests.log",
+        "sha256": "784449ef46e9250c7c704a244fcb403f0222b7483bcdeb98e00a23df6dcda4dd"
+      },
+      "prototype_typecheck": {
+        "bytes": 175,
+        "local_log_basename": "ocean-history-parallel-v1-typecheck.log",
+        "sha256": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936"
+      }
+    },
+    "storage": "Temporary operator-local logs retained by basename and SHA256; raw logs are not copied into Git. These hashes refer to the complete local log bytes."
+  },
+  "prepared_at_utc": "2026-11-10T14:54:05.674347+00:00",
+  "prior_unchanged_evidence": {
+    "backend_and_postgres": "../startup-amendment03/ci.json",
+    "backend_and_postgres_rerun_for_this_frontend_only_change": false,
+    "independent_failure_ownership": "../frontend-amendment04/local-verification.json",
+    "prior_builds_are_fresh_build_acceptance_for_this_revision": false,
+    "source_applicability": "The cumulative git delta from 9969 contains only four frontend runtime/test paths listed above; backend, PostgreSQL, workflow and legacy frontend bytes are unchanged."
+  },
+  "problem_and_correction": {
+    "binding_input_version_cursor_duplicate_and_response_schema_checks_preserved": true,
+    "branch_values_published_directly_to_ui": false,
+    "cached_private_bytes_alone_authorize_display": false,
+    "correction": "Start event hydration and retained-evidence listing as independent async branches after listing/status validation; await both with Promise.all and then perform the existing final freshness check before returning any combined result.",
+    "current_selection_and_abort_signal_checks_preserved": true,
+    "deadlines_raised_or_reset_for_branches": false,
+    "each_branches_pagination_remains_ordered_and_bounded": true,
+    "event_and_receipt_policy_checks_preserved": true,
+    "generation_mutation_or_provider_call_added_to_reads": false,
+    "independent_receipt_viewer_failure_ownership_from_amendment04_preserved": true,
+    "listing_and_status_validation_still_precedes_independent_reads": true,
+    "overall_history_deadline_ms": 15000,
+    "problem": "After authorized answer listing and optional selected-job status checks, event-history hydration and retained-evidence listing ran serially. Their combined latency could exhaust the existing 15-second history-read deadline.",
+    "promise_all_returns_partial_success": false,
+    "scientific_approval": false
+  },
+  "regressions": {
+    "method": "Controlled promises hold the actual strict answer/evidence HTTP clients at the event and evidence branches. Tests observe request overlap, reject early publication, and enforce denial/policy/navigation rejection.",
+    "new_case_count": 6,
+    "new_cases": [
+      "independent event and evidence reads overlap but neither publishes without the other",
+      "parallel event 401 cannot publish independently successful evidence or cached answers",
+      "parallel event 403 cannot publish independently successful evidence or cached answers",
+      "parallel event 503 cannot publish independently successful evidence or cached answers",
+      "a late event policy conflict still rejects the combined parallel result",
+      "navigation after both reads start prevents combined publication"
+    ],
+    "prior_guards_reused": "Existing answer-history tests retain off-page selected-job authorization, pagination, cached-history restrictions, policy changes, abort and account/permission/navigation/mutation freshness checks. Amendment04 actual-hook tests retain independent reader ownership and global-denial behavior."
+  },
+  "remaining_gates": {
+    "P2D26-07_history_latency": "Open until measured in the signed-in deployed application. Parallelization removes avoidable serial latency but does not itself prove the complete live history read fits the unchanged 15-second deadline.",
+    "fresh_service_inspection_preserving_all_unrelated_settings_then_staged_rollout": "Pending for this correction; root owns the current serving baseline and cloud operations.",
+    "new_immutable_frontend_image": "Pending; this receipt does not establish a built or deployed image for 7fe5e134.",
+    "remaining_beta_acceptance": "Cancellation, duplicate delivery, recovery, sweep and aggregate cost gates remain separately owned live acceptance work.",
+    "signed_in_gemini_answer_history_and_evidence_persistence_reload": "Pending after the corrected image; previous provider/model evidence is separate and is not replaced by local fixtures.",
+    "source_bound_linux_cloudbuild_and_all_affected_build_audit_server_gates": "Pending for this revision in this local receipt; source owner will append separate hosted qualification receipts."
+  },
+  "repository": "jarondlk/ocean-platform",
+  "scope_limits": {
+    "cloud_calls_or_mutations_for_this_receipt": false,
+    "credential_values_or_user_scientific_payloads_included": false,
+    "full_beta_or_research_acceptance": false,
+    "handoff_or_status_edits": false,
+    "new_questions_or_model_calls": 0
+  },
+  "source": {
+    "backend_postgres_workflow_and_legacy_frontend_source_changed": false,
+    "changed_paths_from_previous_frontend_revision": [
+      "frontend-v1/src/research-answer-history.ts",
+      "frontend-v1/tests/research-answer-history.test.ts"
+    ],
+    "commit_or_push_performed_by_receipt_preparer": false,
+    "committed_source_bytes_match_locally_reviewed_and_tested_bytes": true,
+    "cumulative_changed_paths_from_unchanged_backend_revision": [
+      "frontend-v1/src/research-answer-history.ts",
+      "frontend-v1/src/research-answers.tsx",
+      "frontend-v1/tests/research-answer-history.test.ts",
+      "frontend-v1/tests/research-answer-read-ownership.test.ts"
+    ],
+    "files": [
+      {
+        "bytes": 5122,
+        "path": "frontend-v1/src/research-answer-history.ts",
+        "sha256": "2b73d028588fbeb134de85e82f0605773ce62cf33fafe2216dde470ccaa2738b"
+      },
+      {
+        "bytes": 9957,
+        "path": "frontend-v1/tests/research-answer-history.test.ts",
+        "sha256": "5d91d55c059c612b1f09490d2c2b6dfdcbc491001f89987c9ace8c0ac88f4090"
+      }
+    ],
+    "previous_frontend_revision": "a77ea38b79e448197702fada5a16ec2b9bb24bd8",
+    "previous_serial_history_source_sha256": "274446b0fd48bccb0d5a82d516f35e54fa33f7be53cd739e711db8fe05cabc07",
+    "revision": "7fe5e1342e586dd994020683c3e3fb227d4b287a",
+    "unchanged_backend_revision": "9969feb23a1c15af6d6459e02beab0ce56ef9be3"
+  },
+  "state": "committed_source_local_tests_and_independent_review_verified_cloud_image_and_live_acceptance_pending",
+  "version": "ocean-beta-frontend-history-parallel-local-verification-v1"
+}

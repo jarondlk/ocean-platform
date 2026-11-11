@@ -1,0 +1,147 @@
+{
+  "cap": 14,
+  "captured_utc": "2026-11-11T01:31:18.503742+00:00",
+  "cloud_mutations": false,
+  "conclusion": "For one admitted run/input budget segment and its one canonical answer job, the default cumulative model generation admission cap is14, not controller14 plus a separate answer2 reserve.",
+  "default_malformed_repairs": 1,
+  "default_tool_actions": 12,
+  "future_conservative_planning": {
+    "assumption": "Retains the existing one token per bounded UTF8 byte,2048-token wrapper and double4096-output envelope; any added provider-side system/schema content requires renewed review of this envelope.",
+    "cumulative_calls": 14,
+    "gross_jpy_at_retained_public_rates": "365.885449637894816",
+    "input_tokens": 968380,
+    "larger_controller_input_bound_applied_to_all_calls": true,
+    "output_tokens_double_4096_each": 114688,
+    "proportional14_over16_scaling_used": false,
+    "provider_count_tokens_proof": false,
+    "provider_currency_hard_cap": false,
+    "renew_prices_before_admission": true,
+    "round_up_reserve_jpy": 370
+  },
+  "local_checks": {
+    "command": "PYTHONPATH=<repository> <qualified-local-venv>/bin/python -m pytest -q -o addopts= /private/tmp/test_ocean_shared_model_budget_review.py tests/test_research_answers.py tests/test_research_controller_replay.py tests/test_beta_vertex_research.py",
+    "existing_proofs": "Controller committed/uncertain replay, answer committed/uncertain replay, one shared repair, cancellation, idempotent terminal delivery and full SDK serialization tests.",
+    "log_basename": "ocean-shared-model-budget-review.log",
+    "log_sha256": "b5586ef8ba9abba4b2e86655272954afe77b55ad969576906afc0a73855e95d2",
+    "new_disposable_actual_sdk_proof": "Pinned Google GenAI client with mockHTTP503 receives exactly1 physical generateContent request and returns failed, with no network access.",
+    "new_disposable_boundary_proof": "Actual controller uses1 model call. Lose13 physical answer responses after durable reservation, recovering the same job after lease expiry each time. Counter reaches14; next delivery becomes unavailable without a15th callback. Terminal duplicate and new submit key reuse the same exhausted job.",
+    "passed": 67,
+    "seconds": "161.41",
+    "temporary_test_source_sha256": "7ff0b0b9cd8c87e28db3acae9dcecc52834f947d5f64fa7d3a6c65b8ad4bdd71"
+  },
+  "local_proof_log_sha256": "b5586ef8ba9abba4b2e86655272954afe77b55ad969576906afc0a73855e95d2",
+  "model_calls": 0,
+  "original_proof_sha256": "14caa7616b2b10e6ad3de01321c7507fee8303aed41db5d841289a0560de89da",
+  "original_proof_source_sha256": {
+    "api/v1_beta_question_services.py": "706738e6a32842831dd9695c6dc07c8947e623134a669cbb80771559cd1ea562",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+    "orchestration/beta_vertex_research.py": "64e9a22ad36bc1b6f3d326e0b4a82125b1912d6aaefd442260021aba7039edec",
+    "orchestration/research_answers.py": "751c941216bdbf50afc71607dff58c371ea3254f3f4ea4713a8624fcc79281bb",
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_runs.py": "a2a8835c7c32b8c9496d1a2da8d6ee05d8ae33be2666af3f4fb2840e9baef3f6",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634"
+  },
+  "project": "ocean-v1-beta-20261101",
+  "proof_references": [
+    {
+      "claim": "Default limits12 tools/1 repair imply the same12+1+1 model cap.",
+      "line": 125,
+      "path": "schema/research_controller.py"
+    },
+    {
+      "claim": "Durable model branch checks cumulative cap and reserves before calling runtime.",
+      "line": 1109,
+      "path": "orchestration/research_controller.py"
+    },
+    {
+      "claim": "Durable database prepare_step validates cap and an exact+1 model reservation, persisted before callback.",
+      "line": 674,
+      "path": "orchestration/research_runs.py"
+    },
+    {
+      "claim": "One existing answer job per run/input version is reused; locale change conflicts.",
+      "line": 261,
+      "path": "orchestration/research_answers.py"
+    },
+    {
+      "claim": "SQL uniqueness enforces one answer job per run/input version.",
+      "line": 1182,
+      "path": "db/app_models.py"
+    },
+    {
+      "claim": "Answer creation initializes counters from the controller run budget.",
+      "line": 277,
+      "path": "orchestration/research_answers.py"
+    },
+    {
+      "claim": "Bind adopts retained run counter high-water using max; it does not refund previous attempts.",
+      "line": 391,
+      "path": "orchestration/research_answers.py"
+    },
+    {
+      "claim": "Committed payload lookup replays without another reservation/provider call.",
+      "line": 419,
+      "path": "orchestration/research_answers.py"
+    },
+    {
+      "claim": "Every uncommitted model callback reserves against cumulative cap before leaving the transaction.",
+      "line": 428,
+      "path": "orchestration/research_answers.py"
+    },
+    {
+      "claim": "Up to two synthesis positions go through _effect, not outside shared budget.",
+      "line": 584,
+      "path": "orchestration/research_answers.py"
+    },
+    {
+      "claim": "Beta requires max_attempts1, creates bounded45-second independent client and invokes generate_content once.",
+      "line": 13,
+      "path": "orchestration/beta_vertex_research.py"
+    },
+    {
+      "claim": "Client SDK retry options attempts1 disable its transient retry multiplier.",
+      "line": 465,
+      "path": "model_runtime.py"
+    },
+    {
+      "claim": "Generation result wrapper invokes callback once; exceptions become failed result, no retry loop.",
+      "line": 271,
+      "path": "model_runtime.py"
+    },
+    {
+      "claim": "Actual beta composition supplies the same one-attempt runtime to controller and answer services.",
+      "line": 105,
+      "path": "api/v1_beta_question_services.py"
+    }
+  ],
+  "provider_wire_followup": {
+    "beta_adapter_followup_checks": {
+      "beta_adapter_tests_passed": 27,
+      "diff_check": "passed",
+      "focused_contract_model_replay_and_retained_projection_tests_passed": 178,
+      "focused_seconds": "16.63",
+      "ruff": "passed"
+    },
+    "beta_adapter_sha256": "063aac4b7600cb883af5ea15b2534ba35a26d9957f04c5cf09347b37685ce1aa",
+    "beta_source_changed_since_original_cap_proof": true,
+    "controller_schema_logical_bytes": 1583,
+    "controller_schema_wire_bytes": 1586,
+    "input_schemas_and_strict_host_parser_unchanged": true,
+    "local_wire_verification_sha256": "618f9f67a3056fde14fa558d4aaca56321fe2fcd135a6055f96e32e11d5d096f",
+    "logical_controller_answer_caps_and_generic_runtime_unchanged": true,
+    "original_beta_reference_line_now_historical": true,
+    "synthesis_schema_wire_bytes": 1899
+  },
+  "question_admitted": false,
+  "scientific_approval": false,
+  "scope": "Read-only source audit plus synthetic local SQLite and actual SDK mock-HTTP tests. No real cloud/provider calls; no source edits.",
+  "scope_limits": [
+    "A deliberate new continuation/new question creates a new segment and requires separate admission.",
+    "The cap governs runtime generation submissions; this source proof is not a provider currency/invoice cap.",
+    "Unknown outcomes consume reservations; recovery does not refund them.",
+    "No model or question was admitted by this audit."
+  ],
+  "state": "independent_local_boundary_and_sdk_proof_no_question_admitted",
+  "version": "ocean-beta-shared-model-cap-proof-receipt-v1"
+}

@@ -1,0 +1,118 @@
+{
+  "additional_model_question_admitted": false,
+  "captured_utc": "2026-11-10T15:34:49.077682+00:00",
+  "closed_question_model": {
+    "gross_model_estimate_jpy": "3.706505842",
+    "no_future_model_work_admitted_by_release": true,
+    "non_input_tokens_including_thoughts_priced_at_output": 1004,
+    "previous425reserve_retained": false,
+    "provider_input_tokens": 10599,
+    "provider_total_tokens": 11603,
+    "release_only_this_fully_closed_question": true,
+    "run_id": "91f567bc-a9a2-4f38-84c4-54d789972115"
+  },
+  "cloud_mutations": false,
+  "currency": "JPY",
+  "existing_three_questions": "Twozero-modelcountquestions(onecancelled),onepaidquestion03; noquestion04admittedhere.",
+  "input_sha256": {
+    "live-nonmodel-cost-question03-reconciled-evidence.json": "24d7a65888e0aba22b019e488db2574825535ffa75310681241028e1334fb970",
+    "live-validation-overhead-question03-reconciled.json": "50d4058bdcff76fd1b1b8ddd39937a2f4a3962b08f9bf23c08606dfc1c85f386",
+    "question03-model-cost-reconciled.json": "47de653a4a3e990aca45f2f6f9c7f7260d988b4f8e31357294ad08114e74d963",
+    "selected-default-jpy-prices.json": "9ba9e6dff6da41c3382e2e8fe65427acce4ccc3c0291549a2959cc8b2f5f909e"
+  },
+  "model_calls_by_this_audit": false,
+  "network_scope": {
+    "all1_85GB_storage_sent_priced_as_internet": false,
+    "monitoring_sent_bytes_alone_does_not_attest_destination": true,
+    "official_same_location_rule": "https://cloud.google.com/storage/pricing#network-pricing",
+    "operator_attestation_from_parent": "AfterNov9 13:13thisMac downloadedtin ycontrol/activation/buildmetadataonly; sciencearchivealreadyDesktop, notdownloadedagain.",
+    "residual_operator_egress_in_ancillary_reserve": true,
+    "sameTokyo_GCS_to_Run_and_CloudBuild_expected_zero_transfer_rate": true
+  },
+  "observed_and_conservative_cloud": {
+    "all_other_storage_ops_priced_as_class_a_count": "62",
+    "allproject_attribution_includes_unrelated_serving_and_inspection_traffic": true,
+    "builds": [
+      {
+        "duration_seconds": "377.973775",
+        "id": "cc67b713-828d-4f4e-ba46-f403a843f4b5",
+        "planning_minutes_rounded_up": "7"
+      },
+      {
+        "duration_seconds": "384.715521",
+        "id": "f612c37f-dee6-4d40-806f-ecc7a9676ea8",
+        "planning_minutes_rounded_up": "7"
+      },
+      {
+        "duration_seconds": "40.797335",
+        "id": "c9f4bb42-c54b-403e-b7d2-3cce0d400931",
+        "planning_minutes_rounded_up": "1"
+      }
+    ],
+    "cloud_estimate_including_minimums_and_rounded_builds_jpy": "81.117082021",
+    "extra_job_minimum_envelope_jpy": "0.957157331",
+    "finished_builds_exact_duration_gross_jpy": "12.711560232",
+    "finished_builds_wholeminute_ceiling_planning_jpy": "14.238449985",
+    "job_minimum_corrections": [
+      {
+        "additional_conservative_floor_jpy": "0.484518058",
+        "job": "ocean-v1-beta-controller-credential",
+        "minimum60second_resource_envelope_at_higher_request_rates_jpy": "0.485293680",
+        "observed_gross_jpy": "0.000775622"
+      },
+      {
+        "additional_conservative_floor_jpy": "0E-9",
+        "job": "ocean-v1-beta-research-grants",
+        "minimum60second_resource_envelope_at_higher_request_rates_jpy": "0.485293680",
+        "observed_gross_jpy": "0.485293680"
+      },
+      {
+        "additional_conservative_floor_jpy": "0.472639273",
+        "job": "ocean-v1-beta-research-diagnostics-20261110",
+        "minimum60second_resource_envelope_at_higher_request_rates_jpy": "0.473428320",
+        "observed_gross_jpy": "0.000789047"
+      }
+    ],
+    "logging_larger_ordinary_or_billing_counter_gross_jpy": "0.977292069",
+    "no_free_tier_promo_or_accountdiscount_assumed": true,
+    "storage_ops_class_b_count": "189754",
+    "storage_ops_gross_jpy": "12.057055988",
+    "wholeproject_run_at_request_rates_jpy": "52.887126648"
+  },
+  "official_sources": [
+    "https://cloud.google.com/run/pricing#billable-time",
+    "https://cloud.google.com/storage/pricing",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/v1/GenerateContentResponse"
+  ],
+  "overhead_snapshot_utc": "2026-11-10T15:30:42.534034Z",
+  "project": "ocean-v1-beta-20261101",
+  "qualifications": [
+    "Currencyestimatesarepubliclistgrossnotinvoice.",
+    "Jobminimum60s isaccountedwithhigherrequest-basedrateasanenvelope; actualjobsuseinstance-basedrates.",
+    "Buildminutesceilingsareaconservativeplanningallowance, notassertedinvoicegranularity.",
+    "FixedSQL/LBbaselinecoststhatcontinueindependentofvalidationremaininmonthlyscenario; thisledgertracksincrementalvalidationcategories.",
+    "NoqueueorSchedulerenablementorcompleteGeminiansweracceptanceclaimed."
+  ],
+  "readback_start_utc": "2026-11-09T13:13:28Z",
+  "remaining_allocations": {
+    "future_build_or_question_requires_new_admission_recheck": true,
+    "pending_readonly_structural_job_planning_reserve_jpy": "1.500000000",
+    "planning_reserves_are_provider_hard_caps": false,
+    "registry_storage_residence_metadata_internet_tasks_secrets_and_ingestion_lag_reserve_jpy": "5.000000000",
+    "remaining_to500_jpy": "408.676412137",
+    "total_observed_or_reserved_jpy": "91.323587863"
+  },
+  "run_build_snapshot_utc": "2026-11-10T15:30:43.296947Z",
+  "shared_model_bound_candidate": {
+    "conservative_gross_planning_jpy": "365.875482723",
+    "current14bound_is_provider_hard_currency_cap": false,
+    "double_output_planning_tokens": 114688,
+    "independent_parent_review_required_before_using_for_admission": true,
+    "maximum_combined_controller_and_synthesis_physical_model_calls": 14,
+    "why": "ResearchAnswerJob copiesrunbudgetfloor; _effect capscumulativejobmodel_calls attool_actions+malformed_repairs+1=14, incrementsbeforeeachphysicalmodelattempt; checkpointpersistedfloorandretrychargespreventfreshsynthesisbudget. Runtimecounter/dbconstraintremain14.",
+    "worst14calls_prompt_plus_schema_plus_wrapper_tokens": 968338
+  },
+  "state": "closed_model_usage_reconciled_fresh_cloud_costs_fit500",
+  "user_limit_jpy": 500,
+  "version": "ocean-beta-question03-reconciled-validation-ledger-v1"
+}

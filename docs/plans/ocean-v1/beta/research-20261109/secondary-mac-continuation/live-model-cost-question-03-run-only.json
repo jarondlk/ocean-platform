@@ -1,0 +1,100 @@
+{
+  "capture_interval_end_utc": "2026-11-10T14:31:49.560733Z",
+  "capture_interval_start_utc": "2026-11-09T13:13:28Z",
+  "captured_utc": "2026-11-10T14:31:49.560733+00:00",
+  "cloud_mutations": false,
+  "credits_free_tiers_or_negotiated_prices_assumed": false,
+  "currency_invoice_measured": false,
+  "input_sha256": {
+    "public-jpy-prices.json": "51f372b8f32bd6cc8956c2eac8e51384f6fee4bc476ab2497bd89fdbc42b475c",
+    "vertex-cost-after-gemini-run-03.json": "631e3eae984480b6f8739d7c34972fb67734126db629e44773d899405c61953a"
+  },
+  "input_tokens_observed": "10599",
+  "model_invocations": [
+    {
+      "count": "1",
+      "metric_labels": {
+        "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_5K_TO_10K",
+        "method": "GenerateContent",
+        "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_300_TO_500",
+        "request_type": "shared",
+        "response_code": "200",
+        "shared_request_type": "standard",
+        "source": "global"
+      },
+      "points": 1,
+      "resource": {
+        "labels": {
+          "location": "global",
+          "model_user_id": "gemini-3.8-flash",
+          "model_version_id": "",
+          "project_id": "ocean-v1-beta-20261101",
+          "publisher": "google"
+        },
+        "type": "aiplatform.googleapis.com/PublisherModel"
+      }
+    },
+    {
+      "count": "1",
+      "metric_labels": {
+        "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_5K_TO_10K",
+        "method": "GenerateContent",
+        "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_500_TO_1K",
+        "request_type": "shared",
+        "response_code": "200",
+        "shared_request_type": "standard",
+        "source": "global"
+      },
+      "points": 1,
+      "resource": {
+        "labels": {
+          "location": "global",
+          "model_user_id": "gemini-3.8-flash",
+          "model_version_id": "",
+          "project_id": "ocean-v1-beta-20261101",
+          "publisher": "google"
+        },
+        "type": "aiplatform.googleapis.com/PublisherModel"
+      }
+    }
+  ],
+  "observed_counter_based_gross_model_estimate_jpy": "3.706500041",
+  "observed_successful_invocation_count": "2",
+  "output_or_thought_tokens_observed": "1004",
+  "project": "ocean-v1-beta-20261101",
+  "public_jpy_input_rate_per_token": "0.000237307",
+  "public_jpy_output_rate_per_token": "0.001186537",
+  "qualification": "Native monitoring token_count describes input/output but does not explicitly attest hidden-thought inclusion. Report observed estimate separately; retain full reserve. Counter aggregation can include other calls in the window; isolate using parent-recorded question and no-overlap assertions. Empty counters do not prove a zero-cost completed request.",
+  "question_end_utc": "2026-11-10T14:29:00Z",
+  "question_start_utc": "2026-11-10T14:24:13.542Z",
+  "reserve_jpy_retained_until_complete_usage_evidence": 450,
+  "state": "observed_counters_not_invoice",
+  "thinking_token_inclusion_attested": false,
+  "token_count_by_type": {
+    "input": "10599",
+    "output": "1004"
+  },
+  "unclassified_tokens_priced_at_output_rate": "0",
+  "unexpected_model_ids": [],
+  "version": "ocean-beta-live-model-observed-cost-v1",
+  "weighted_throughput_not_priced_as_raw_tokens": [
+    {
+      "count": "15619",
+      "metric_labels": {
+        "request_type": "shared",
+        "shared_request_type": "standard"
+      },
+      "points": 2,
+      "resource": {
+        "labels": {
+          "location": "global",
+          "model_user_id": "gemini-3.8-flash",
+          "model_version_id": "",
+          "project_id": "ocean-v1-beta-20261101",
+          "publisher": "google"
+        },
+        "type": "aiplatform.googleapis.com/PublisherModel"
+      }
+    }
+  ]
+}

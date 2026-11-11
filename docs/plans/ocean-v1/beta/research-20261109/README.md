@@ -1,6 +1,84 @@
 # Research questions activation review — 2026-11-09 JST
 
-## Receiving Mac continuation
+## Current checkpoint — 2026-11-11 JST
+
+Research infrastructure is activated for bounded manual validation; full live
+acceptance remains open. Deployed frontend source is `7fe5e1342e586dd994020683c3e3fb227d4b287a`.
+Effective selections are unchanged startup03 API `4b24ca90…` and amendment05
+frontend `be709b49…`, now live on Ready `00020-n7s` at 100% traffic, generation 33,
+with no tags. Full promoted readback verifies exact preservation of all unrelated
+writable settings, including API/proxy, identity, secrets and ingress. The
+earlier quota-rejected attempt did not execute; the later promotion succeeded
+at 01:09 UTC on Nov11.
+[Live frontend receipt](frontend-amendment05/serving.json),
+[effective images](frontend-amendment05/images.json).
+
+The [amendment05 exact-source build](frontend-amendment05/build.json) passed
+all affected Linux gates: 1,085 prototype, 61 host and 1 standalone HTTP test,
+both production audits/typechecks/builds and actual packaged startup/login with
+UID/GID1000, network disabled and Research API expected=true. It includes
+independent reader-failure ownership and parallel event/evidence reads without
+changing the overall 15-second history deadline or policy checks. Reuse
+[source 9969 full CI 42721324508](startup-amendment03/ci.json), all jobs passed,
+for unchanged backend/PostgreSQL: 318 native cases, 16 expected skips and actual
+version 16.15 restore of 74 tables. The [original retry](secondary-mac-continuation/ci.json)
+also succeeded as job 129184649747 in run 42594709784; the prior exit139 is retained
+with cause unknown. The narrow activation serialization correction preserves
+the exact replacement hash and all generation/access/scientific guards.
+
+[Applied cloud prerequisites](startup-amendment03/cloud-prerequisites.json)
+record scoped IAM, successful credential/grant jobs, enabled numeric controller
+secret version 1 and temporary-grant cleanup. The exact immutable activation
+`4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694`
+is published at generation 1794232040589985. Private controller `00002-mcw`
+is Ready, internal and IAM-restricted to the task-invoker. The queue is PAUSED
+with 0 tasks, runtime Scheduler job absent and three-hour Codex schedule PAUSED.
+Scientific approval remains false and all original scientific bytes remain
+preserved. Legacy, eDNA/ANEMONE, experiments and workers retain separate gates.
+
+Deterministic count completed with 0 model calls and a persistent native cited
+answer; queued cancellation, terminal duplicate delivery and outbox recovery
+passed. Actual Gemini question03 ended partial/`repair_budget` after 143 seconds
+and two STOP responses. Its saved native partial answer used 0 synthesis calls,
+so the Gemini-backed cited-answer gate remains open alongside signed-in
+history/evidence latency and persistence/reload. Read-only diagnostic execution
+`ocean-v1-beta-research-diagnostics-20261110-ssdgb` verified both leases were
+closed and 2 physical calls: 10,599 input / 11,603 total tokens, including thoughts,
+estimated ¥3.706505842. [Reconciliation](startup-amendment03/question03-model-cost-reconciled.json).
+
+The Nov11 01:30 UTC [validation ledger](secondary-mac-continuation/cost-refresh-20261111/validation-ledger.json)
+estimates ¥91.721211491 observed or reserved. One 600-second API build ceiling
+plus a rounded ¥370 future-question reserve would leave ¥28.786488519 for
+verification. Refresh after subsequent UI reads and before admission. The
+20-question/¥500 initial limit remains unchanged. The independently checked
+cumulative 14-call bound with the normalized wire schema is ¥365.885449638;
+no new question is admitted. The [fresh bounded monthly scenario](secondary-mac-continuation/cost-refresh-20261111/monthly-scenario.json)
+is ¥36,810.84 including contingency, within the unchanged ¥50,000/month target
+and ¥100,000 upper budget. These are estimates, not invoices or spend caps.
+Structural action-shape
+execution `-d466m` succeeded read-only. Both hash-bound JSON results selected
+`catalogue.open` with the correct target and matching single fact_id, no extra
+fields, but `kind` was a string outside `tool`/`finish`/`clarify` (safe enum=null).
+That establishes a structural mismatch rather than its provider cause. The
+beta-only adapter `const`→`enum` correction is committed as source
+`77c1517f9c996544d08d3dbd7cafcae868e8d78a`. [Normal CI 42939381842](https://github.com/jarondlk/ocean-platform/actions/runs/42939381842), image qualification
+and new valid live question/cited-answer proof remain pending; this source is
+distinct from the deployed `9969feb2` API.
+Historical replays stay preserved and no new question is admitted. The recurring
+outbox sweep remains gated.
+
+Fresh signed-in frontend05 still misses the 15-second history gate:
+evidence/list took 13.907 seconds after answer-list took 2.473 seconds. Server
+read-path diagnosis continues without relaxing deadlines or access guards.
+[Shared model cap proof](startup-amendment03/shared-model-cap-proof.json),
+[structural diagnostic receipt](startup-amendment03/action-shape-diagnostic.json).
+
+## Historical receiving Mac continuation — 2026-11-09 JST
+
+The original review and amendments below preserve chronology and proposal
+identities. Their Research-off/revision17, empty-secret, pending PostgreSQL retry
+and unperformed-write descriptions are earlier states. Select current API and
+frontend pins from the checkpoint above; the historical proposals remain evidence.
 
 [Recovery, cloud preflight, current JPY forecast and acceptance
 receipts](secondary-mac-continuation/) record the receiving Mac's verified

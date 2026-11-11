@@ -1,0 +1,196 @@
+{
+  "controller_sql_client_condition": {
+    "expression": "resource.name == 'projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql' && resource.service == 'sqladmin.googleapis.com'",
+    "title": "ocean-v1-beta-sql-only"
+  },
+  "credential_job": {
+    "automatic_retries": 0,
+    "completed_at": "2026-11-09T13:41:19.356822Z",
+    "credential_value_read_by_operator_mac": false,
+    "execution": "ocean-v1-beta-controller-credential-dv7t7",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/controller-credential@sha256:e6d67cc2857e9b171a2cae7d77fe0bdc027783d967b21189a1551ef1607af27f",
+    "job": "ocean-v1-beta-controller-credential",
+    "proxy_exit_zero_log_verified": true,
+    "safe_report": {
+      "application_data_read": false,
+      "plaintext_in_sql_or_output": false,
+      "proxy": {
+        "http_status": 200,
+        "proxy_process_exit_observation": "requires Cloud Run per-container execution readback",
+        "shutdown_requested": true
+      },
+      "revision": "84fe01714e426a66ee7b30559b69ebe05ef8f04f",
+      "secret_version": "1",
+      "state": "controller_credential_verified"
+    },
+    "source_revision": "84fe01714e426a66ee7b30559b69ebe05ef8f04f",
+    "succeeded_count": 1,
+    "task_count": 1,
+    "task_terminal_success_verified": true
+  },
+  "custom_roles": [
+    {
+      "name": "projects/ocean-v1-beta-20261101/roles/oceanBetaControllerCredential",
+      "permissions": [
+        "secretmanager.versions.access",
+        "secretmanager.versions.add",
+        "secretmanager.versions.get",
+        "secretmanager.versions.list"
+      ],
+      "stage": "GA"
+    },
+    {
+      "name": "projects/ocean-v1-beta-20261101/roles/oceanBetaResearchPredict",
+      "permissions": [
+        "aiplatform.endpoints.predict"
+      ],
+      "stage": "GA"
+    },
+    {
+      "name": "projects/ocean-v1-beta-20261101/roles/oceanBetaResearchTaskProducer",
+      "permissions": [
+        "cloudtasks.tasks.create",
+        "cloudtasks.tasks.fullView",
+        "cloudtasks.tasks.get"
+      ],
+      "stage": "GA"
+    }
+  ],
+  "exit_evidence_qualification": "Task Completed=SUCCEEDED with zero retries plus explicit sql-proxy exit(0) logs; task API omits default zero-valued exit/status fields.",
+  "grants_job": {
+    "automatic_retries": 0,
+    "completed_at": "2026-11-09T13:45:13.613434Z",
+    "execution": "ocean-v1-beta-research-grants-vvmzc",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/research-operator@sha256:ae053d3be65c0727cab545f5121248db457b519e3c91c87528abcd43e6873db5",
+    "job": "ocean-v1-beta-research-grants",
+    "proxy_exit_zero_log_verified": true,
+    "safe_report": {
+      "account_writes_granted": false,
+      "fresh_connection_readback_verified": true,
+      "grant_application_requested": true,
+      "password_sql_or_data_mutation": false,
+      "proxy": {
+        "http_status": 200,
+        "proxy_process_exit_observation": "requires Cloud Run per-container execution readback",
+        "shutdown_requested": true
+      },
+      "revision": "84fe01714e426a66ee7b30559b69ebe05ef8f04f",
+      "state": "research_grants_verified"
+    },
+    "source_revision": "84fe01714e426a66ee7b30559b69ebe05ef8f04f",
+    "succeeded_count": 1,
+    "task_count": 1,
+    "task_terminal_success_verified": true
+  },
+  "immutable_activation": {
+    "bytes": 5887,
+    "catalogue_control_written_by_publication": false,
+    "create_only_if_generation_match": 0,
+    "exact_source_bytes_read_back": true,
+    "generation": "1794232040589985",
+    "scientific_approval": false,
+    "sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694"
+  },
+  "legacy_mutations": false,
+  "new_service_account_keys_created": false,
+  "newly_enabled_apis": [
+    "aiplatform.googleapis.com",
+    "cloudscheduler.googleapis.com"
+  ],
+  "original_bootstrap_migration_finalizer_enrollment_jobs_rerun": false,
+  "pending_outbox_acceptance_configuration": {
+    "existing_grants_revoked_for_test": false,
+    "final_queue_binding": [
+      {
+        "members": [
+          "serviceAccount:ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+          "serviceAccount:ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+        ],
+        "role": "projects/ocean-v1-beta-20261101/roles/oceanBetaResearchTaskProducer"
+      }
+    ],
+    "final_serving_queue_producer_grant_applied_after_pending_question": true,
+    "initial_serving_queue_producer_grant_deferred": true,
+    "live_recovery_details_recorded_separately": "live-acceptance.json"
+  },
+  "preexisting_bootstrap_database_accessor_preserved": true,
+  "prepared_from_retained_records_at_utc": "2026-11-10T09:37:53.193071+00:00",
+  "private_controller": {
+    "concurrency": 1,
+    "configured_origin": "https://ocean-v1-beta-research-controller-534831104543.asia-northeast1.run.app",
+    "configured_origin_verified_in_provider_urls": true,
+    "controller_resources": {
+      "limits": {
+        "cpu": "1",
+        "memory": "4Gi"
+      }
+    },
+    "iam_enforced": true,
+    "identity": "ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "image_only_update_verified": true,
+    "ingress": "internal",
+    "max_instances": 1,
+    "min_instances": 0,
+    "proxy_resources": {
+      "limits": {
+        "cpu": "1",
+        "memory": "256Mi"
+      }
+    },
+    "ready_revision": "ocean-v1-beta-research-controller-00002-mcw",
+    "reported_primary_url": "https://ocean-v1-beta-research-controller-7zuimarvfq-an.a.run.app",
+    "request_timeout_seconds": 240,
+    "service": "ocean-v1-beta-research-controller",
+    "service_generation": 2,
+    "unauthenticated_denial": [
+      {
+        "unauthenticated_http_status": 404,
+        "url": "https://ocean-v1-beta-research-controller-534831104543.asia-northeast1.run.app"
+      },
+      {
+        "unauthenticated_http_status": 404,
+        "url": "https://ocean-v1-beta-research-controller-7zuimarvfq-an.a.run.app"
+      }
+    ]
+  },
+  "project": "ocean-v1-beta-20261101",
+  "record_preparer_cloud_calls_or_mutations": false,
+  "region": "asia-northeast1",
+  "resource_scope": {
+    "catalogue_reads": "Existing v1/catalogue/ prefix condition; controller added without broad bucket writes.",
+    "catalogue_writes": "Existing custom writer role limited by exact control.json object condition.",
+    "controller_secret": "Numeric version1 of the existing controller database secret; controller accessor only after cleanup.",
+    "internal_secret": "Existing version1; controller accessor added alongside serving.",
+    "oidc_act_as": "Serving and controller have serviceAccountUser only on the existing task-invoker account.",
+    "prediction": "Only aiplatform.endpoints.predict for the controller identity; no blanket AI user/editor role.",
+    "private_invocation": [
+      {
+        "members": [
+          "serviceAccount:ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com"
+        ],
+        "role": "roles/run.invoker"
+      }
+    ],
+    "tasks": "Producer permissions scoped to the existing Research queue; final members are controller and serving."
+  },
+  "retained_record_sha256": {
+    "cloud-live/activation-publication-readback.json": "c4d721dfb99cad47cc881099a99884f3dc37c4132bbbf3cac4be90eecf161b7b",
+    "cloud-live/bootstrap-secret-iam-preserved.json": "50eb99ca1758c1343acd1f92b713fc3f36d7cc0d100f4560244d77de0a76a53b",
+    "cloud-live/controller-secret-iam-after-cleanup.json": "f2ff87824e2c585d8b5112df0bbd07179bbbf25346cc47cce99996ba8f7e64fb",
+    "cloud-live/execute-credential-job-once.json": "14d8946c45e6e861d4fc504166f69704a057e06866177459701e6899975c256b",
+    "cloud-live/execute-research-grants-once.json": "29196417cb1ec0d9010cbf2f6083656b54e9d18d361b5fb41c111cad84abbcd6",
+    "startup-amendment03/controller-iam-after.json": "9caa905cf618cb4ea995a071f3ac1d3c0ac7b03406a7b5a06990ba69c90ca5d8",
+    "startup-amendment03/controller-readback.json": "46987db04b0f1d0992797404ae09cd374183a2c5b9570cbfea5542ce72ceec73",
+    "startup-amendment03/live-acceptance/queue-iam-after-recovery.json": "a7be54b0cc7ec137358b2b599eeeb195c983fb3c0ccc7cd16903cd76edebe559",
+    "startup-amendment03/private-denial.json": "c834de7bfb6bc450390ffd5fcb39da456b06629b993343595382fffd79d36c66"
+  },
+  "runtime_sweep_admission": "Recurring sweep activation remains subject to actual live recovery and aggregate cost/timing gates in the root-owned live acceptance receipt.",
+  "scientific_approval": false,
+  "standard_tasks_and_scheduler_service_agent_roles_retained": true,
+  "state": "scoped_prerequisites_applied_and_verified",
+  "temporary_controller_secret_bootstrap_grant_removed": true,
+  "three_hour_codex_schedule_changed": false,
+  "unrelated_iam_bindings_preserved": true,
+  "version": "ocean-beta-research-cloud-prerequisites-v1"
+}

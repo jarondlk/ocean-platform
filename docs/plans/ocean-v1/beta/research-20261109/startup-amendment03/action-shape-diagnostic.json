@@ -1,0 +1,71 @@
+{
+  "IAM_changes": false,
+  "application_data_writes": false,
+  "binding": {
+    "offline_tests_passed": 17,
+    "private_execution_logs_sha256": "12fa6d6e8c9658233d18544c7addab098ecc97d875e75814bbf5c93b90b8b750",
+    "private_execution_response_sha256": "59f54010d08a0891cd769948d16775de6121934ca4c0ddd4b1727103362bd22e",
+    "private_report_sha256": "07855011eaa51b29cc0020db4967fbd341a844a905e29980dcfb390f8ca3738e",
+    "request_sha256": "d36a0126528fd300fd950713b6e328ba66efc9891fd5867602964c88d4b74394",
+    "run_id": "91f567bc-a9a2-4f38-84c4-54d789972115",
+    "source_sha256": "25fbfad6b036aa6d0ba2abcb2e901726c873165fa30a3626e36de0fed3047238"
+  },
+  "captured_utc": "2026-11-11T01:31:18.503742+00:00",
+  "execution": {
+    "completed": true,
+    "completion_utc": "2026-11-11T01:13:29.514523Z",
+    "execution_count": 1,
+    "max_retries": 0,
+    "name": "ocean-v1-beta-research-action-shape-20261111-d466m",
+    "start_utc": "2026-11-11T01:13:11.711677Z",
+    "succeeded_tasks": 1,
+    "timeout_seconds": 120
+  },
+  "model_calls_by_diagnostic": 0,
+  "observation": {
+    "both_generation_results": {
+      "all_fact_ids_match_requested_fact": true,
+      "arguments_object_id_matches_fixed_ctd": true,
+      "fact_ids_array_count": 1,
+      "fact_ids_distinct_count": 1,
+      "json_valid_object": true,
+      "kind_is_one_of_tool_finish_clarify": false,
+      "kind_json_type": "string",
+      "payload_and_request_hashes_verified": true,
+      "physical_attempts_each": 1,
+      "root_keys": [
+        "arguments",
+        "fact_ids",
+        "kind",
+        "tool"
+      ],
+      "root_or_argument_scope_snapshot_id_schema_version_fields_present": false,
+      "tool": "catalogue.open",
+      "unknown_root_or_argument_keys": 0
+    },
+    "fixed_two_committed_model_results_verified": true,
+    "json_parsed_only_inside_database_after_pg_input_is_valid": true,
+    "proxy_shutdown_verified": true,
+    "run_reason": "repair_budget",
+    "run_status": "partial",
+    "transaction_read_only_verified": true
+  },
+  "privacy": {
+    "credential_values_in_receipt": false,
+    "duplicate_json_keys_proven_absent": false,
+    "kind_value_in_public_receipt": false,
+    "only_source_owned_known_names_types_bools_bounded_counts_and_hashes": true,
+    "raw_prompts_generated_content_unknown_keys_unknown_values_selected_or_emitted": false
+  },
+  "project": "ocean-v1-beta-20261101",
+  "qualifications": [
+    "This establishes invalid discriminator strings, not that the provider ignored const.",
+    "Beta-only const to singleton-enum wire compatibility and actual successful new live generation need their own source/image/CI/provider gates.",
+    "This observation did not call a model, submit a question or change scientific/application rows.",
+    "Existing first diagnostic job and all durable receipts were preserved; no job rerun."
+  ],
+  "region": "asia-northeast1",
+  "scientific_approval": false,
+  "state": "successful_read_only_observation_wrong_discriminators_verified",
+  "version": "ocean-beta-action-shape-diagnostic-completed-v1"
+}

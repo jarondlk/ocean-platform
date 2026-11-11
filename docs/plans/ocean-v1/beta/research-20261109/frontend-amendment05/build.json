@@ -1,0 +1,98 @@
+{
+  "affected_source_delta": [
+    "frontend-v1/src/research-answer-history.ts",
+    "frontend-v1/src/research-answers.tsx",
+    "frontend-v1/tests/research-answer-history.test.ts",
+    "frontend-v1/tests/research-answer-read-ownership.test.ts"
+  ],
+  "backend_and_postgres_unchanged": true,
+  "baseline_commit": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "both_production_audits_zero_vulnerabilities": true,
+  "both_typechecks_and_builds_passed": true,
+  "build_id": "cc67b713-828d-4f4e-ba46-f403a843f4b5",
+  "build_log_bytes": 555252,
+  "build_log_sha256": "280e0478293187d839fffd6bddf9f51567faad5f70dca0afeec981cc0fac8ef3",
+  "build_readback_sha256": "2abf9ee3e658b91644110b26d94d8beac711588f323fa8bc3f2238b5ef0dfa33",
+  "cloudbuild_config_sha256": "f178d16f9820987d164fc121b498eb8c83bff45f0cbfd665db77f0c37c21313f",
+  "failed_tests": 0,
+  "finish_time": "2026-11-10T15:02:42.620467Z",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+  "legacy_frontend_unchanged": true,
+  "live_acceptance": "Separate signed-in deployed history, evidence, persistence/reload, cancellation, duplicate delivery, recovery, sweep and cost gates remain required.",
+  "logging": "CLOUD_LOGGING_ONLY",
+  "machine_type": "E2_STANDARD_2",
+  "no_complete_beta_or_latency_approval": true,
+  "node": "22.23.4",
+  "packaged_runtime_proof": {
+    "all_capabilities_dropped": true,
+    "changed_history_and_hook_source_hashes_bound": true,
+    "gid": 1000,
+    "network": "none",
+    "no_new_privileges": true,
+    "packaged_login_http": 200,
+    "passed": true,
+    "read_only": true,
+    "real_credentials": false,
+    "source_manifest_sha256": "69881e708c01a0b7f4345f654fb662139cee9542840f63c5beab2d66c8ff71cd",
+    "startup_wait_for_research_api": true,
+    "uid": 1000
+  },
+  "passed_tests": {
+    "host": 61,
+    "prototype": 1085,
+    "standalone_http": 1
+  },
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "reuse_backend_postgres_ci": {
+    "expected_pg_skips": 16,
+    "native_postgres": 318,
+    "postgres_dump_and_restore_clients": "16.15",
+    "restored_tables": 74,
+    "run_id": 42721324508,
+    "source": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42721324508"
+  },
+  "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "skipped_tests": 0,
+  "source_archive": {
+    "bucket": "ocean-v1-beta-20261101-build-source",
+    "generation": "1794322582919144",
+    "object": "source/1794322581.358405-0bb94eec9934460eab202c6c963af596.tgz"
+  },
+  "source_commit": "7fe5e1342e586dd994020683c3e3fb227d4b287a",
+  "source_manifests": {
+    "production": "69881e708c01a0b7f4345f654fb662139cee9542840f63c5beab2d66c8ff71cd",
+    "qualification": "aad62d5726e9ae9852a33145896e09816e877ecc8b618e5824f12b0fea09cf73"
+  },
+  "start_time": "2026-11-10T14:56:24.646692939Z",
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "id": "affected-frontend-source-gates",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-10T15:00:39.301263515Z",
+        "startTime": "2026-11-10T14:56:28.185627482Z"
+      }
+    },
+    {
+      "id": "production-finite-source-image",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-10T15:02:31.876475391Z",
+        "startTime": "2026-11-10T15:00:39.302237615Z"
+      }
+    },
+    {
+      "id": "packaged-runtime-and-api-startup-proof",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-10T15:02:34.199352705Z",
+        "startTime": "2026-11-10T15:02:31.876722388Z"
+      }
+    }
+  ],
+  "timeout_seconds": 600,
+  "version": "beta-frontend-hosted-qualification-v1"
+}

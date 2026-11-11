@@ -1,0 +1,112 @@
+{
+  "state": "passed_with_retained_prior_failure",
+  "verified_at": "2026-11-09T22:35:32+09:00",
+  "repository": "jarondlk/ocean-platform",
+  "run_id": 42594709784,
+  "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42594709784/attempts/2",
+  "tested_source_revision": "3cdecc01290f519533351fc03055fc6dcd6a7736",
+  "receiving_checkpoint": "4f4b6166370f475bf27801531e8b1ce0ec587250",
+  "receiving_checkpoint_diff": "Only docs/** paths differ from tested source; runtime, tests and workflow are unchanged.",
+  "authentication": "Receiving Mac GitHub CLI, authorized jarondlk browser/device sign-in; no connector rerun used.",
+  "retry": {
+    "command": "gh run rerun 42594709784 --repo jarondlk/ocean-platform --job 129084531504",
+    "job_database_id_validated_before_retry": true,
+    "single_job_only": true,
+    "request_accepted": true,
+    "attempt": 2,
+    "job_id": 129184649747,
+    "job_url": "https://github.com/jarondlk/ocean-platform/actions/runs/42594709784/job/129184649747",
+    "conclusion": "success",
+    "started_at": "2026-11-09T13:19:44Z",
+    "run_completed_at": "2026-11-09T13:32:31Z",
+    "duration_seconds": 766,
+    "postgres_tests_passed": 318,
+    "expected_capability_skips": 16,
+    "native_foreign_attachment_case": "passed",
+    "native_foreign_attachment_case_completed_at": "2026-11-09T13:30:29.6952288Z",
+    "native_first_foreign_second_case": "passed",
+    "native_first_foreign_second_case_completed_at": "2026-11-09T13:31:30.7290461Z",
+    "c23_c25_group": {
+      "passed": 43,
+      "skipped": 16,
+      "duration_seconds": 309.80
+    },
+    "code_changes_required": false
+  },
+  "backup_restore": {
+    "reached": true,
+    "step_conclusion": "success",
+    "client_bin_directory": "/usr/lib/postgresql/16/bin",
+    "pg_dump_version": "16.15 (Ubuntu 16.15-1.pgdg24.04+2)",
+    "pg_restore_version": "16.15 (Ubuntu 16.15-1.pgdg24.04+2)",
+    "archive_sha256": "b3af1b4afa7651e06ed50a614cb59b6937c393435da205500b27f3325bbdb995",
+    "archive_size_bytes": 1919706,
+    "archive_table_count": 74,
+    "restored_table_count": 74,
+    "toc_entries": 685,
+    "restore_test_ok": true,
+    "temporary_database_removed": true,
+    "scope": "Disposable GitHub Actions PostgreSQL16 service; not a live Cloud SQL backup/restore."
+  },
+  "prior_attempt": {
+    "attempt": 1,
+    "job_id": 129084531504,
+    "conclusion": "failure",
+    "failed_case": "tests/integration/test_experimental_artifact_postgres.py::test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen",
+    "observed_failure": "120-second faulthandler timeout, inspect._check_instance/getattr_static and typing.__instancecheck__ frames, followed by exit139; backup/restore skipped.",
+    "cause": "Unknown. A passing retry does not establish the cause of the prior native crash.",
+    "raw_log_file": "postgres-attempt01.log",
+    "raw_log_bytes": 322854,
+    "raw_log_sha256": "fbecae1e5d12675bef332d1a819879f250a0d7be55e30ae93075b23da8837493"
+  },
+  "reused_successful_jobs": [
+    {
+      "name": "Backend tests and security boundary",
+      "original_job_id": 129084531355,
+      "carried_forward_job_id": 129184698073,
+      "started_at": "2026-11-09T09:36:37Z",
+      "completed_at": "2026-11-09T10:36:17Z",
+      "conclusion": "success"
+    },
+    {
+      "name": "OCEAN v1 authenticated host tests and build",
+      "original_job_id": 129084531205,
+      "carried_forward_job_id": 129184699660,
+      "started_at": "2026-11-09T09:36:36Z",
+      "completed_at": "2026-11-09T09:37:51Z",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frontend typecheck and build",
+      "original_job_id": 129084531426,
+      "carried_forward_job_id": 129184652898,
+      "started_at": "2026-11-09T09:36:37Z",
+      "completed_at": "2026-11-09T09:37:31Z",
+      "conclusion": "success"
+    },
+    {
+      "name": "OCEAN v1 prototype tests and build",
+      "original_job_id": 129084531556,
+      "carried_forward_job_id": 129184651532,
+      "started_at": "2026-11-09T09:36:37Z",
+      "completed_at": "2026-11-09T09:37:25Z",
+      "conclusion": "success"
+    }
+  ],
+  "successful_evidence_reused_without_execution": true,
+  "private_log_directory": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261109/ci",
+  "successful_postgres_log": {
+    "file": "postgres-attempt02.log",
+    "bytes": 391359,
+    "sha256": "394cf89300ff0c33db7d4f6004a8ee773c4690a7a1e94b8b9b4b4845238a8f89"
+  },
+  "source_hashes": {
+    ".github/workflows/tests.yml": "60848d40908c66aa3832c31943376350a465a7f5958b5c562e18eaa4ce402cb0",
+    "tests/integration/test_experimental_artifact_postgres.py": "7024c2d5b5e675b8f76acd22c172ccac031992e72265fd1de84597ea6bfb25d9",
+    "tests/system_acceptance_support.py": "01d384e8a0b8990a6ea9c21e5d3db49b3bfd4fb014a1e8f122ddc2e29362b640",
+    "tests/experiment_execution_postgres_support.py": "364bae2bc0247f9124d8f51abce34487a93c701e46d14f44507041eee85cbb8e"
+  },
+  "live_research_acceptance": false,
+  "scientific_approval": false,
+  "remaining_gate": "Proceed through the separately documented current-cloud, budget and real signed-in Research activation/acceptance gates."
+}

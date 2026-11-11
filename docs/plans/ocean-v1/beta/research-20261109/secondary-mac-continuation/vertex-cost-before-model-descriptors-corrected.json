@@ -1,0 +1,312 @@
+{
+  "capture_label": "before-model-descriptors-corrected",
+  "captured_utc": "2026-11-09T13:41:18.322484+00:00",
+  "cloud_mutations": false,
+  "credential_values_or_prompt_payloads_saved": false,
+  "expected_model": "gemini-3.8-flash",
+  "inference_metadata_logging_readonly_state": [
+    {
+      "http_status": 404,
+      "inference_event_logging_state": "unavailable",
+      "target": "projects/ocean-v1-beta-20261101"
+    },
+    {
+      "http_status": 404,
+      "inference_event_logging_state": "unavailable",
+      "target": "projects/ocean-v1-beta-20261101/locations/global/publishers/google/models/gemini-3.8-flash"
+    }
+  ],
+  "interval_end_utc": "2026-11-09T13:41:18.322484Z",
+  "interval_start_utc": "2026-11-09T13:40:04Z",
+  "metric_descriptors": [
+    {
+      "descriptor": {
+        "description": "Accumulated input/output token count.",
+        "displayName": "Token count",
+        "labels": [
+          {
+            "description": "The bucketized max size of number of tokens in the prediction request/response.",
+            "key": "max_token_size"
+          },
+          {
+            "description": "Type of token (input/output).",
+            "key": "type"
+          },
+          {
+            "description": "The type of traffic of the request (dedicated/shared).",
+            "key": "request_type"
+          },
+          {
+            "description": "The breakdown of shared requests, such as priority/flex/standard.",
+            "key": "shared_request_type"
+          },
+          {
+            "description": "Whether the request uses explicit caching feature.",
+            "key": "explicit_caching"
+          },
+          {
+            "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only.",
+            "key": "accounting_resource"
+          },
+          {
+            "description": "Modality of the input/output tokens.",
+            "key": "modality"
+          },
+          {
+            "description": "The source/surface that the token consumption is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown.",
+            "key": "source"
+          }
+        ],
+        "launchStage": "BETA",
+        "metadata": {
+          "timeSeriesResourceHierarchyLevel": [
+            "PROJECT"
+          ]
+        },
+        "metricKind": "DELTA",
+        "monitoredResourceTypes": [
+          "aiplatform.googleapis.com/PublisherModel"
+        ],
+        "name": "projects/ocean-v1-beta-20261101/metricDescriptors/aiplatform.googleapis.com/publisher/online_serving/token_count",
+        "type": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+        "unit": "1",
+        "valueType": "INT64"
+      },
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/token_count"
+    },
+    {
+      "descriptor": {
+        "description": "Number of model invocations (prediction requests).",
+        "displayName": "Model invocation count",
+        "labels": [
+          {
+            "description": "The bucketized size of number of tokens in the prediction request.",
+            "key": "input_token_size"
+          },
+          {
+            "description": "The bucketized size of number of tokens in the prediction response.",
+            "key": "output_token_size"
+          },
+          {
+            "description": "The bucketized max size of number of tokens in the prediction request/response.",
+            "key": "max_token_size"
+          },
+          {
+            "description": "Responce code of prediction request.",
+            "key": "response_code"
+          },
+          {
+            "description": "The type of traffic of the request (dedicated/shared).",
+            "key": "request_type"
+          },
+          {
+            "description": "The breakdown of shared requests, such as priority/flex/standard.",
+            "key": "shared_request_type"
+          },
+          {
+            "description": "The type of method of the request (RawPredict/StreamRawPredict/ChatCompletions/etc).",
+            "key": "method"
+          },
+          {
+            "description": "Response error category of the request (user/system/capacity).",
+            "key": "error_category"
+          },
+          {
+            "description": "Whether the request uses explicit caching feature.",
+            "key": "explicit_caching"
+          },
+          {
+            "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only.",
+            "key": "accounting_resource"
+          },
+          {
+            "description": "The source/surface that the request is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown.",
+            "key": "source"
+          }
+        ],
+        "launchStage": "BETA",
+        "metadata": {
+          "timeSeriesResourceHierarchyLevel": [
+            "PROJECT"
+          ]
+        },
+        "metricKind": "DELTA",
+        "monitoredResourceTypes": [
+          "aiplatform.googleapis.com/PublisherModel"
+        ],
+        "name": "projects/ocean-v1-beta-20261101/metricDescriptors/aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+        "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+        "unit": "1",
+        "valueType": "INT64"
+      },
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count"
+    },
+    {
+      "descriptor": {
+        "description": "Overall throughput used (accounting for burndown rate) in terms of tokens.",
+        "displayName": "Token Throughput",
+        "labels": [
+          {
+            "description": "Type of request (dedicated/shared).",
+            "key": "request_type"
+          },
+          {
+            "description": "The breakdown of shared requests, such as priority/flex/standard.",
+            "key": "shared_request_type"
+          },
+          {
+            "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only.",
+            "key": "accounting_resource"
+          },
+          {
+            "description": "Modality of the consumed tokens.",
+            "key": "modality"
+          }
+        ],
+        "launchStage": "BETA",
+        "metadata": {
+          "timeSeriesResourceHierarchyLevel": [
+            "PROJECT"
+          ]
+        },
+        "metricKind": "DELTA",
+        "monitoredResourceTypes": [
+          "aiplatform.googleapis.com/PublisherModel"
+        ],
+        "name": "projects/ocean-v1-beta-20261101/metricDescriptors/aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+        "type": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+        "unit": "1",
+        "valueType": "INT64"
+      },
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput"
+    }
+  ],
+  "metric_qualification": "DELTA values are observed monitoring data, not currency invoice. consumed_token_throughput includes model burndown weighting; do not price it as raw tokens. token_count descriptor does not explicitly define thinking-token inclusion; retain reserve until complete evidence.",
+  "metrics": [
+    {
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+      "next_page_present": false,
+      "series": []
+    },
+    {
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+      "next_page_present": false,
+      "series": []
+    },
+    {
+      "http_status": 200,
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+      "next_page_present": false,
+      "series": []
+    },
+    {
+      "http_status": 200,
+      "metric": "run.googleapis.com/container/cpu/allocation_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:41:00Z",
+            "startTime": "2026-11-09T13:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:41:00Z",
+            "startTime": "2026-11-09T13:40:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 1,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 1.7999999999999972,
+          "value_type": "DOUBLE"
+        }
+      ]
+    },
+    {
+      "http_status": 200,
+      "metric": "run.googleapis.com/container/memory/allocation_time",
+      "next_page_present": false,
+      "series": [
+        {
+          "first_point_interval": {
+            "endTime": "2026-11-09T13:41:00Z",
+            "startTime": "2026-11-09T13:40:00.001Z"
+          },
+          "last_point_interval": {
+            "endTime": "2026-11-09T13:41:00Z",
+            "startTime": "2026-11-09T13:40:00.001Z"
+          },
+          "metric_kind": "DELTA",
+          "metric_labels": {},
+          "points_count": 1,
+          "resource": {
+            "labels": {
+              "configuration_name": "ocean-v1-beta-serving",
+              "location": "asia-northeast1",
+              "project_id": "ocean-v1-beta-20261101",
+              "revision_name": "ocean-v1-beta-serving-00017-kvz",
+              "service_name": "ocean-v1-beta-serving"
+            },
+            "type": "cloud_run_revision"
+          },
+          "sum_values": 2.8500000000000227,
+          "value_type": "DOUBLE"
+        }
+      ]
+    },
+    {
+      "http_status": 200,
+      "metric": "run.googleapis.com/request_count",
+      "next_page_present": false,
+      "series": []
+    }
+  ],
+  "project": "ocean-v1-beta-20261101",
+  "publisher_resource_descriptor": {
+    "descriptor": {
+      "description": "A Vertex AI Model Garden Publisher Model.",
+      "displayName": "Vertex AI Model Garden Publisher Model",
+      "labels": [
+        {
+          "description": "The identifier of the GCP Project owning the Endpoint.",
+          "key": "resource_container"
+        },
+        {
+          "description": "The region in which the service is running.",
+          "key": "location"
+        },
+        {
+          "description": "The publisher of the model.",
+          "key": "publisher"
+        },
+        {
+          "description": "The resource ID of the PublisherModel.",
+          "key": "model_user_id"
+        },
+        {
+          "description": "The version ID of the PublisherModel.",
+          "key": "model_version_id"
+        }
+      ],
+      "launchStage": "BETA",
+      "name": "projects/ocean-v1-beta-20261101/monitoredResourceDescriptors/aiplatform.googleapis.com/PublisherModel",
+      "type": "aiplatform.googleapis.com/PublisherModel"
+    },
+    "http_status": 200
+  },
+  "version": "ocean-beta-readonly-vertex-cost-snapshot-v1"
+}

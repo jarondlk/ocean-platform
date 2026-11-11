@@ -1,6 +1,87 @@
-# Beta deployment continuation — 2026-11-09 JST
+# Beta deployment continuation — 2026-11-11 JST
 
-## Receiving Mac continuation
+## Current durable checkpoint
+
+Branch `overhaul`, deployed frontend source `7fe5e1342e586dd994020683c3e3fb227d4b287a`.
+The current effective API is startup-amendment03 digest `4b24ca90…` from
+source `9969feb2`; amendment05 frontend is now live on
+`ocean-v1-beta-serving-00020-n7s`. The morning promotion succeeded and full
+readback verifies Ready, generation 33, 100% traffic and no tags. Its frontend is
+`asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3`;
+its API, proxy and all unrelated writable settings exactly match the prior
+template after restoring only the intended frontend image/traffic changes.
+The earlier quota-rejected attempt did not execute; the later attempt completed
+at 2026-11-11T01:09:33Z and removed the temporary tag.
+[Live frontend and preservation proof](../beta/research-20261109/frontend-amendment05/serving.json),
+[image/build](../beta/research-20261109/frontend-amendment05/build.json),
+[effective image pins](../beta/research-20261109/frontend-amendment05/images.json).
+
+The exact-source amendment05 Tokyo build passed 1,085 prototype, 61 host and 1
+standalone HTTP test, both production audits/typechecks/builds and the actual
+packaged nonroot startup/login proof with Research API expected=true.
+Unchanged backend/PostgreSQL gates are reused from
+[full CI 42721324508](../beta/research-20261109/startup-amendment03/ci.json),
+all jobs successful on `9969feb2`, including 318 PostgreSQL cases / 16 expected
+skips and version 16.15 backup/restore of 74 tables. The original retry in
+run 42594709784 passed as job 129184649747; retain its earlier exit139 failure
+without claiming its cause was established.
+[Original retry receipt](../beta/research-20261109/secondary-mac-continuation/ci.json).
+Documentation changes do not require repeating the unchanged backend suite.
+
+The authorized scoped IAM and both one-shot jobs succeeded. Controller-secret
+numeric version 1 is enabled, temporary bootstrap access is removed, and the
+original bootstrap/migration/enrollment jobs were not rerun. Exact activation
+`4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694`
+was published create-only at generation 1794232040589985. Private controller
+`ocean-v1-beta-research-controller-00002-mcw` is Ready with internal ingress
+and only the task-invoker `roles/run.invoker` binding. The queue remains PAUSED
+with 0 tasks; no runtime Scheduler job exists. Three-hour Codex scheduling stays
+PAUSED. [Applied prerequisites](../beta/research-20261109/startup-amendment03/cloud-prerequisites.json).
+
+Manual live validation completed a deterministic count question with 0 model
+calls and a persistent native cited answer. Queued cancellation, terminal
+duplicate delivery and pending-outbox recovery passed. Question03's actual
+Gemini execution ended partial/`repair_budget` after 143 seconds and two STOP
+responses; the saved native partial answer used 0 synthesis calls. This does
+not pass the actual Gemini-backed cited-answer gate. Signed-in history/evidence
+latency and persistence/reload still require deployed acceptance. Read-only
+diagnostic execution `ocean-v1-beta-research-diagnostics-20261110-ssdgb` verified
+closed leases and all physical-call usage: 10,599 input, 11,603 total tokens,
+including thoughts, estimated ¥3.706505842.
+[Closed-model reconciliation](../beta/research-20261109/startup-amendment03/question03-model-cost-reconciled.json).
+
+The Nov11 01:30 UTC ledger is ¥91.721211491 observed or reserved under the
+unchanged 20-question/¥500 incremental limit. One 600-second API build ceiling
+and a rounded ¥370 future-question reserve would leave ¥28.786488519 for
+verification. Refresh after subsequent UI reads and before admission. The
+independently checked cumulative 14-call model bound with the new wire schema
+is ¥365.885449638. The fresh bounded monthly scenario is ¥36,810.84 including
+contingency; these estimates are not invoices or provider spend caps. The
+monthly target remains ¥50,000, with ¥100,000 the stated upper budget.
+Read-only action-shape execution `-d466m` succeeded and verified
+both hash-bound committed JSON results. Each selected `catalogue.open`, the
+correct target and one matching fact_id, with no extra fields; each `kind` was
+a string outside `tool`/`finish`/`clarify`, reported only as safe enum=null.
+The observed structural mismatch does not establish why the provider produced
+it. Latest runtime source fix `77c1517f9c996544d08d3dbd7cafcae868e8d78a` commits
+the beta-only adapter `const`→`enum` correction. [Normal CI 42939381842](https://github.com/jarondlk/ocean-platform/actions/runs/42939381842), a qualified immutable
+image and new valid live question/cited-answer proof remain pending; deployed
+API source is still `9969feb2`. Historical replay behavior stays preserved;
+no new model question is admitted.
+Runtime sweep activation remains gated. Scientific approval remains false;
+original scientific bytes, legacy, eDNA/ANEMONE, experiments and worker gates
+are preserved. Fresh signed-in frontend05 still misses the 15-second history
+gate: evidence/list took 13.907 seconds after answer-list took 2.473 seconds.
+Server read-path diagnosis continues without relaxing deadlines or access checks.
+[Fresh ledger and forecast](../beta/research-20261109/secondary-mac-continuation/cost-refresh-20261111/),
+[Shared cap proof](../beta/research-20261109/startup-amendment03/shared-model-cap-proof.json),
+[Research checkpoint](../beta/research-20261109/README.md).
+
+## Historical receiving Mac continuation — 2026-11-09 JST
+
+The sections below retain earlier checkpoints and proposals. Their revision17,
+Research-off, zero-secret and pending-retry statements are historical; the
+effective pins and remaining gates are recorded above.
 
 The receiving checkout was clean at `ad0c313` and fast-forwarded to fetched
 `origin/overhaul` `4f4b6166370f475bf27801531e8b1ce0ec587250`. No newer local
@@ -52,7 +133,7 @@ back, then patch the five-minute schedule while paused.
 record verification and remaining gates. Research is not yet live. The
 three-hour Codex schedule remains PAUSED; scientific approval remains false.
 
-## Current portable handoff
+## Historical portable handoff — 2026-11-09 JST
 
 The user is preparing to continue on another Mac. A private AirDrop package is
 being finalized at `~/Desktop/OCEAN-Handoff-2026-11-09` with verified cloud-recovered scientific inputs,
@@ -80,7 +161,7 @@ Mac's continuation prompt. The portable image build `f5d0d58d` passes and is
 bound to the included replacement activation `4843e61b…`. Use the effective
 handoff-amendment02 proposals, preserving all original receipts.
 
-## Current compatibility amendment
+## Historical compatibility amendment — 2026-11-09 JST
 
 The Gemini adapter now omits deprecated sampling configuration. All 67 focused
 Research checks pass, including real SDK request serialization against mock HTTP

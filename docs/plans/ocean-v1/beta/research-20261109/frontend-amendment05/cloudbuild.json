@@ -1,0 +1,52 @@
+{
+  "images": [
+    "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:history-read-7fe5e1342e58"
+  ],
+  "options": {
+    "diskSizeGb": 100,
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machineType": "E2_STANDARD_2"
+  },
+  "serviceAccount": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "steps": [
+    {
+      "args": [
+        "-ceu",
+        "node --version\nnode -e 'const fs=require(\"node:fs\"),c=require(\"node:crypto\"),a=require(\"node:assert/strict\");a.equal(process.versions.node.split(\".\")[0],\"22\");const m=JSON.parse(fs.readFileSync(\"source-manifest.json\"));for(const [p,h]of Object.entries(m.source_files)){a.equal(c.createHash(\"sha256\").update(fs.readFileSync(p)).digest(\"hex\"),h,p)}console.log(JSON.stringify({source_commit:m.source_commit,verified_files:Object.keys(m.source_files).length}));'\ncd frontend-v1\nnpm ci --ignore-scripts --no-audit --no-fund\nnpm audit --omit=dev --audit-level=moderate\nnpm test\nnpm run typecheck\nnpm run build\ncd hosting\nnpm ci --ignore-scripts --no-audit --no-fund\nnpm audit --omit=dev --audit-level=moderate\nnpm test\nnpm run typecheck\nnpm run build\nnpm run test:server"
+      ],
+      "dir": "qualification",
+      "entrypoint": "bash",
+      "env": [
+        "NEXT_TELEMETRY_DISABLED=1"
+      ],
+      "id": "affected-frontend-source-gates",
+      "name": "node:22-bookworm-slim@sha256:9f0dde62d10e7ff7a310ecaebd66225f6b46c17e6cb778449a77b05d3541bea2"
+    },
+    {
+      "args": [
+        "build",
+        "--platform=linux/amd64",
+        "--tag",
+        "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:history-read-7fe5e1342e58",
+        "."
+      ],
+      "dir": "production",
+      "env": [
+        "DOCKER_BUILDKIT=1"
+      ],
+      "id": "production-finite-source-image",
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    },
+    {
+      "args": [
+        "-ceuo",
+        "pipefail",
+        "docker image inspect asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:history-read-7fe5e1342e58 --format '{{.Config.User}}' | grep -Fx node\ndocker image inspect asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:history-read-7fe5e1342e58 --format '{{json .Config.Cmd}}' | grep -Fx '[\"node\",\"--require\",\"/opt/ocean/serving-frontend-adapter.cjs\",\"/opt/ocean/beta-wait-api.cjs\"]'\ndocker run --rm --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --cap-drop=ALL --security-opt=no-new-privileges --env OCEAN_V1_EXPECT_RESEARCH_API=true --entrypoint node asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend:history-read-7fe5e1342e58 -e '\n\"use strict\";\nconst assert = require(\"node:assert/strict\");\nconst fs = require(\"node:fs\");\nconst crypto = require(\"node:crypto\");\nconst http = require(\"node:http\");\nconst {spawn} = require(\"node:child_process\");\nconst expected = {\"source_commit\":\"7fe5e1342e586dd994020683c3e3fb227d4b287a\",\"manifest_sha256\":\"69881e708c01a0b7f4345f654fb662139cee9542840f63c5beab2d66c8ff71cd\",\"hook_sha256\":\"d015ee6ecb9d3e1b42d758b61f759e6201b5539d96cdd5a8f1ca0a519b1a465c\",\"history_sha256\":\"2b73d028588fbeb134de85e82f0605773ce62cf33fafe2216dde470ccaa2738b\"};\nconst hash = data => crypto.createHash(\"sha256\").update(data).digest(\"hex\");\nconst delay = ms => new Promise(resolve => setTimeout(resolve, ms));\n(async () => {\n  assert.equal(process.getuid(), 1000);\n  assert.equal(process.getgid(), 1000);\n  assert.equal(process.env.OCEAN_V1_EXPECT_RESEARCH_API, \"true\");\n  const raw = fs.readFileSync(\"/opt/ocean/source-manifest.json\");\n  assert.equal(hash(raw), expected.manifest_sha256);\n  const manifest = JSON.parse(raw);\n  assert.equal(manifest.source_commit, expected.source_commit);\n  assert.equal(manifest.source_files[\"frontend-v1/src/research-answers.tsx\"], expected.hook_sha256);\n  assert.equal(manifest.source_files[\"frontend-v1/src/research-answer-history.ts\"], expected.history_sha256);\n  assert.equal(manifest.synthetic_preview_graph_included, false);\n  assert.equal(manifest.credentials_or_generated_files_included, false);\n  for (const name of [\"frontend-v1/src/fixtures.ts\", \"frontend-v1/src/adapter.ts\", \"frontend-v1/src/v1-entry.tsx\", \"frontend-v1/src/research-app.tsx\"]) assert.equal(manifest.source_files[name], undefined);\n  for (const [name, digest] of [[\"serving-frontend-adapter.cjs\", manifest.serving_adapter_sha256], [\"beta-wait-api.cjs\", manifest.startup_gate_sha256]]) {\n    const file = \"/opt/ocean/\" + name;\n    assert.equal(hash(fs.readFileSync(file)), digest);\n    assert.equal(fs.statSync(file).mode & 0o777, 0o444);\n  }\n  assert(fs.statSync(\"/opt/ocean/hosting/server.js\").isFile());\n  assert(fs.readdirSync(\"/opt/ocean/hosting/.next/static\").length > 0);\n  let healthCalls = 0;\n  const api = http.createServer((req, res) => {\n    if (req.url === \"/health/live\") {\n      healthCalls += 1;\n      res.writeHead(200, {\"content-type\":\"application/json\"});\n      res.end(JSON.stringify({status:\"live\", execution_enabled:true}));\n    } else { res.writeHead(404); res.end(); }\n  });\n  await new Promise((resolve, reject) => { api.once(\"error\", reject); api.listen(8000, \"127.0.0.1\", resolve); });\n  const env = {...process.env, K_SERVICE:\"ocean-v1-beta-serving\", DEPLOYMENT_ENV:\"production\", AUTH_MODE:\"required\", ENABLE_MOCK_LOGIN:\"false\", PERSIST_LOCAL_CHAT:\"false\", V1_PUBLIC_ORIGIN:\"https://beta.oceaninfobio.com\", AUTH_URL:\"https://beta.oceaninfobio.com\", V1_API_ORIGIN:\"http://127.0.0.1:8000\", V1_AUTH_SECRET:\"a\".repeat(64), V1_INTERNAL_AUTH_SECRET:\"b\".repeat(64), V1_INTERNAL_AUTH_ISSUER:\"ocean-v1-frontend\", V1_INTERNAL_AUTH_AUDIENCE:\"ocean-v1-api\", V1_GOOGLE_CLIENT_ID:\"synthetic-client.apps.googleusercontent.com\", V1_GOOGLE_CLIENT_SECRET:\"synthetic-provider-secret\", OCEAN_V1_EXPECT_RESEARCH_API:\"true\", HOSTNAME:\"127.0.0.1\", PORT:\"8080\", NODE_ENV:\"production\", NEXT_TELEMETRY_DISABLED:\"1\"};\n  const child = spawn(process.execPath, [\"--require\", \"/opt/ocean/serving-frontend-adapter.cjs\", \"/opt/ocean/beta-wait-api.cjs\"], {env, stdio:[\"ignore\", \"pipe\", \"pipe\"]});\n  let output = \"\", failure;\n  child.on(\"error\", error => { failure = error; });\n  for (const stream of [child.stdout, child.stderr]) stream.on(\"data\", value => { output = (output + value).slice(-20000); });\n  try {\n    const deadline = Date.now() + 25000;\n    while (!output.includes(\"Ready in\") && Date.now() < deadline) {\n      if (failure) throw failure;\n      if (child.exitCode !== null) throw new Error(\"Packaged frontend exited: \" + output);\n      await delay(100);\n    }\n    assert(output.includes(\"Independent beta API ready; starting frontend\"), output);\n    assert(output.includes(\"Ready in\"), output);\n    const response = await new Promise((resolve, reject) => {\n      const request = http.get({host:\"127.0.0.1\", port:8080, path:\"/login\", headers:{host:\"beta.oceaninfobio.com\", \"x-forwarded-host\":\"beta.oceaninfobio.com\", \"x-forwarded-proto\":\"https\", \"x-forwarded-port\":\"443\"}}, res => {\n        let body = \"\";\n        res.setEncoding(\"utf8\");\n        res.on(\"data\", chunk => { body += chunk; if (body.length > 1000000) res.destroy(); });\n        res.on(\"error\", reject);\n        res.on(\"end\", () => resolve({status:res.statusCode, body}));\n      });\n      request.setTimeout(15000, () => request.destroy(new Error(\"Packaged login timeout\")));\n      request.on(\"error\", reject);\n    });\n    assert.equal(response.status, 200);\n    assert(response.body.includes(\"Sign in with Google\"));\n    assert(healthCalls >= 1);\n    console.log(JSON.stringify({result:\"passed\", source_commit:manifest.source_commit, manifest_sha256:expected.manifest_sha256, uid:process.getuid(), gid:process.getgid(), expected_research_api:true, startup_health_execution_enabled:true, packaged_startup:true, packaged_login_status:response.status, network:\"none\", real_credentials:false}));\n  } finally {\n    child.kill(\"SIGTERM\");\n    const deadline = Date.now() + 3000;\n    while (child.exitCode === null && child.signalCode === null && Date.now() < deadline) await delay(50);\n    if (child.exitCode === null && child.signalCode === null) child.kill(\"SIGKILL\");\n    api.closeAllConnections();\n    await new Promise(resolve => api.close(resolve));\n  }\n})().catch(error => { console.error(error); process.exitCode = 1; });\n'"
+      ],
+      "entrypoint": "bash",
+      "id": "packaged-runtime-and-api-startup-proof",
+      "name": "gcr.io/cloud-builders/docker@sha256:fbc05705e6f24467e40ae8a4097ab9b8fae1116551f838fa2c55f4367427fc36"
+    }
+  ],
+  "timeout": "600s"
+}

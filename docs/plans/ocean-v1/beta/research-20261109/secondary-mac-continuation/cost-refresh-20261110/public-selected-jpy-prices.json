@@ -1,0 +1,2196 @@
+{
+  "captured_utc": "2026-11-09T23:43:42.395834+00:00",
+  "client_date_jst": "2026-11-10",
+  "cloud_mutations": false,
+  "credential_values_saved": false,
+  "currency": "JPY",
+  "documentation": "https://docs.cloud.google.com/billing/docs/reference/pricing-api/rest/v2beta/skus.price/get",
+  "prior_v1_bulk_capture": "Timed out in service page read; no output written; replaced by exact selectedSKU price reads.",
+  "project": "ocean-v1-beta-20261101",
+  "public_latest_prices_not_account_contract_or_invoice": true,
+  "records": [
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/A464-9020-6404/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 949229999
+                  },
+                  "startAmount": {
+                    "value": "2500"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "min",
+                "unitDescription": "minute",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "build_e2_standard_2",
+      "sku_id": "A464-9020-6404",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/A464-9020-6404/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/6DFF-5025-A128/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 281999997,
+                    "units": "63"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 640999998,
+                    "units": "31"
+                  },
+                  "startAmount": {
+                    "value": "1000000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "dns_queries",
+      "sku_id": "6DFF-5025-A128",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/6DFF-5025-A128/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/8C22-6FC3-D478/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 640999998,
+                    "units": "31"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 820499999,
+                    "units": "15"
+                  },
+                  "startAmount": {
+                    "value": "25"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 746149999,
+                    "units": "4"
+                  },
+                  "startAmount": {
+                    "value": "10000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "mo",
+                "unitDescription": "month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "dns_zone",
+      "sku_id": "8C22-6FC3-D478",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/8C22-6FC3-D478/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/DEE3-C42E-3E4D/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 955124999,
+                    "units": "3"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "global_https_forwarding_minimum",
+      "sku_id": "DEE3-C42E-3E4D",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/DEE3-C42E-3E4D/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/0D27-F4FA-E8E0/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 387149998,
+                    "units": "36"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 805099998,
+                    "units": "34"
+                  },
+                  "startAmount": {
+                    "value": "1024"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 640999998,
+                    "units": "31"
+                  },
+                  "startAmount": {
+                    "value": "10240"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy",
+                "unitDescription": "gibibyte",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "internet_worst_selected_destination",
+      "sku_id": "0D27-F4FA-E8E0",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/0D27-F4FA-E8E0/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/4445-66EE-8E07/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 898459999,
+                    "units": "1"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy",
+                "unitDescription": "gibibyte",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "lb_inbound_tokyo",
+      "sku_id": "4445-66EE-8E07",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/4445-66EE-8E07/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/86C9-AD43-1809/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 898459999,
+                    "units": "1"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy",
+                "unitDescription": "gibibyte",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "lb_outbound_tokyo",
+      "sku_id": "86C9-AD43-1809",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/86C9-AD43-1809/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/F4AE-5A52-ACE3/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 582049999,
+                    "units": "1"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.mo",
+                "unitDescription": "gibibyte month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "logging_extra_retention",
+      "sku_id": "F4AE-5A52-ACE3",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/F4AE-5A52-ACE3/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/143F-A1B0-E0BE/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_PROJECT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 102499997,
+                    "units": "79"
+                  },
+                  "startAmount": {
+                    "value": "50"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy",
+                "unitDescription": "gibibyte",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "logging_ingestion",
+      "sku_id": "143F-A1B0-E0BE",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/143F-A1B0-E0BE/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/4DBF-185F-A415/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 791024999
+                  },
+                  "startAmount": {
+                    "value": "5000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "object_class_a",
+      "sku_id": "4DBF-185F-A415",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/4DBF-185F-A415/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/7870-010B-2763/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 63281999
+                  },
+                  "startAmount": {
+                    "value": "50000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "object_class_b",
+      "sku_id": "7870-010B-2763",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/7870-010B-2763/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/1845-1496-2891/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 638714999,
+                    "units": "3"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.mo",
+                "unitDescription": "gibibyte month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "object_standard_tokyo",
+      "sku_id": "1845-1496-2891",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/1845-1496-2891/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/8502-299A-ABAF/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 820499999,
+                    "units": "15"
+                  },
+                  "startAmount": {
+                    "value": "0.5"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.mo",
+                "unitDescription": "gibibyte month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "registry_storage",
+      "sku_id": "8502-299A-ABAF",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/8502-299A-ABAF/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/4856-B847-F1EB/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/70D7-D1AB-12A4",
+            "consumptionModelDescription": "Compute Flexible CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 3151443
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "s",
+                "unitDescription": "second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 3796919
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "s",
+                "unitDescription": "second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/A4B6-DEDF-1A65",
+            "consumptionModelDescription": "Cloud Run CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 3151443
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "s",
+                "unitDescription": "second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/73A1-AD60-B867",
+            "consumptionModelDescription": "Cloud Run CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 3151443
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "s",
+                "unitDescription": "second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/D97B-0795-975B",
+            "consumptionModelDescription": "Compute Flexible CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 3151443
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "s",
+                "unitDescription": "second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "run_request_cpu",
+      "sku_id": "4856-B847-F1EB",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/4856-B847-F1EB/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/02A2-9231-36A6/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/70D7-D1AB-12A4",
+            "consumptionModelDescription": "Compute Flexible CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 328275
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.s",
+                "unitDescription": "gibibyte second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 395512
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.s",
+                "unitDescription": "gibibyte second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/A4B6-DEDF-1A65",
+            "consumptionModelDescription": "Cloud Run CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 328275
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.s",
+                "unitDescription": "gibibyte second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/73A1-AD60-B867",
+            "consumptionModelDescription": "Cloud Run CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 328275
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.s",
+                "unitDescription": "gibibyte second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/D97B-0795-975B",
+            "consumptionModelDescription": "Compute Flexible CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 328275
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.s",
+                "unitDescription": "gibibyte second",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "run_request_ram",
+      "sku_id": "02A2-9231-36A6",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/02A2-9231-36A6/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/2DA5-55D3-E679/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/70D7-D1AB-12A4",
+            "consumptionModelDescription": "Compute Flexible CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 524059998,
+                    "units": "52"
+                  },
+                  "startAmount": {
+                    "value": "2000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 281999997,
+                    "units": "63"
+                  },
+                  "startAmount": {
+                    "value": "2000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/A4B6-DEDF-1A65",
+            "consumptionModelDescription": "Cloud Run CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 524059998,
+                    "units": "52"
+                  },
+                  "startAmount": {
+                    "value": "2000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/73A1-AD60-B867",
+            "consumptionModelDescription": "Cloud Run CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 524059998,
+                    "units": "52"
+                  },
+                  "startAmount": {
+                    "value": "2000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/D97B-0795-975B",
+            "consumptionModelDescription": "Compute Flexible CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 524059998,
+                    "units": "52"
+                  },
+                  "startAmount": {
+                    "value": "2000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "run_requests",
+      "sku_id": "2DA5-55D3-E679",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/2DA5-55D3-E679/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/EBA7-264F-2D2C/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 746149999,
+                    "units": "4"
+                  },
+                  "startAmount": {
+                    "value": "10000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "10000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "secret_access",
+      "sku_id": "EBA7-264F-2D2C",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/EBA7-264F-2D2C/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/7756-ADEF-84F4/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 492299999,
+                    "units": "9"
+                  },
+                  "startAmount": {
+                    "value": "6"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "mo",
+                "unitDescription": "month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "secret_version_replica",
+      "sku_id": "7756-ADEF-84F4",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/7756-ADEF-84F4/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/F8BE-1CC3-FDF3/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 453319999,
+                    "units": "16"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.mo",
+                "unitDescription": "gibibyte month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "sql_backups",
+      "sku_id": "F8BE-1CC3-FDF3",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/F8BE-1CC3-FDF3/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/D34E-ED22-3AA3/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/52FB-D69D-95BE",
+            "consumptionModelDescription": "Cloud SQL CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 77892079,
+                    "units": "4"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 495608499,
+                    "units": "8"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/61F8-639B-D89C",
+            "consumptionModelDescription": "Cloud SQL CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 371706374,
+                    "units": "6"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "sql_cpu",
+      "sku_id": "D34E-ED22-3AA3",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/D34E-ED22-3AA3/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/9AE6-50FF-E3A7/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/52FB-D69D-95BE",
+            "consumptionModelDescription": "Cloud SQL CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 691039439
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.h",
+                "unitDescription": "gibibyte hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 439665499,
+                    "units": "1"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.h",
+                "unitDescription": "gibibyte hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/61F8-639B-D89C",
+            "consumptionModelDescription": "Cloud SQL CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 79749124,
+                    "units": "1"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.h",
+                "unitDescription": "gibibyte hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "sql_ram",
+      "sku_id": "9AE6-50FF-E3A7",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/9AE6-50FF-E3A7/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/A593-7E26-0880/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 963304998,
+                    "units": "34"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.mo",
+                "unitDescription": "gibibyte month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "sql_ssd",
+      "sku_id": "A593-7E26-0880",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/A593-7E26-0880/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/C054-7F72-A02E/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 791024999
+                  },
+                  "startAmount": {
+                    "value": "721"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "standard_vm_ipv4",
+      "sku_id": "C054-7F72-A02E",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/C054-7F72-A02E/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/378A-D762-1F74/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 281999997,
+                    "units": "63"
+                  },
+                  "startAmount": {
+                    "value": "1000000"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "tasks_operations",
+      "sku_id": "378A-D762-1F74",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/378A-D762-1F74/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/7A91-88CA-899A/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 373074999,
+                    "units": "2"
+                  },
+                  "startAmount": {
+                    "value": "1"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "unused_regional_ipv4_reference",
+      "sku_id": "7A91-88CA-899A",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/7A91-88CA-899A/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/6D8C-DF09-314D/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 566649999,
+                    "units": "20"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.mo",
+                "unitDescription": "gibibyte month",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "worker_balanced_disk",
+      "sku_id": "6D8C-DF09-314D",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/6D8C-DF09-314D/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/EAED-8A05-843B/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/70D7-D1AB-12A4",
+            "consumptionModelDescription": "Compute Flexible CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 394316679,
+                    "units": "2"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 433919775,
+                    "units": "4"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/D97B-0795-975B",
+            "consumptionModelDescription": "Compute Flexible CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 192422238,
+                    "units": "3"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "h",
+                "unitDescription": "hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "worker_cpu",
+      "sku_id": "EAED-8A05-843B",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/EAED-8A05-843B/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/CB4B-B875-93B4/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/70D7-D1AB-12A4",
+            "consumptionModelDescription": "Compute Flexible CUD - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 319434784
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.h",
+                "unitDescription": "gibibyte hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 591545897
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.h",
+                "unitDescription": "gibibyte hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/D97B-0795-975B",
+            "consumptionModelDescription": "Compute Flexible CUD - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 425913046
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "GiBy.h",
+                "unitDescription": "gibibyte hour",
+                "unitQuantity": {
+                  "value": "1"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "worker_ram",
+      "sku_id": "CB4B-B875-93B4",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/CB4B-B875-93B4/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/2A35-AC68-14D6/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/BBB5-D209-3835",
+            "consumptionModelDescription": "Gemini Enterprise Flexible Savings Plan - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 576749993,
+                    "units": "213"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 307499992,
+                    "units": "237"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/C109-C9C0-A044",
+            "consumptionModelDescription": "Gemini Enterprise Flexible Savings Plan - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 845999993,
+                    "units": "189"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "gemini_3_8_flash_input",
+      "sku_id": "2A35-AC68-14D6",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/2A35-AC68-14D6/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/90FD-DC5F-DC55/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/BBB5-D209-3835",
+            "consumptionModelDescription": "Gemini Enterprise Flexible Savings Plan - 1 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 883749966,
+                    "units": "1067"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 537499962,
+                    "units": "1186"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          },
+          {
+            "consumptionModel": "consumptionModels/C109-C9C0-A044",
+            "consumptionModelDescription": "Gemini Enterprise Flexible Savings Plan - 3 Year",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 229999969,
+                    "units": "949"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "1000000"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "gemini_3_8_flash_output",
+      "sku_id": "90FD-DC5F-DC55",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/90FD-DC5F-DC55/price?currencyCode=JPY"
+    },
+    {
+      "http_status": 200,
+      "result": {
+        "currencyCode": "JPY",
+        "name": "skus/A5D6-43A2-28A7/price",
+        "skuPrices": [
+          {
+            "consumptionModel": "consumptionModels/7754-699E-0EBF",
+            "consumptionModelDescription": "Default",
+            "rate": {
+              "aggregationInfo": {
+                "interval": "INTERVAL_MONTHLY",
+                "level": "LEVEL_ACCOUNT"
+              },
+              "tiers": [
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY"
+                  },
+                  "startAmount": {
+                    "value": "0"
+                  }
+                },
+                {
+                  "listPrice": {
+                    "currencyCode": "JPY",
+                    "nanos": 820499999,
+                    "units": "15"
+                  },
+                  "startAmount": {
+                    "value": "93"
+                  }
+                }
+              ],
+              "unitInfo": {
+                "unit": "count",
+                "unitDescription": "count",
+                "unitQuantity": {
+                  "value": "31"
+                }
+              }
+            },
+            "valueType": "rate"
+          }
+        ]
+      },
+      "selection_name": "scheduler_job_day",
+      "sku_id": "A5D6-43A2-28A7",
+      "source_url": "https://cloudbilling.googleapis.com/v2beta/skus/A5D6-43A2-28A7/price?currencyCode=JPY"
+    }
+  ],
+  "version": "ocean-beta-selected-public-jpy-refresh-v2"
+}

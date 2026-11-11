@@ -1,0 +1,321 @@
+{
+  "captured_utc": "2026-11-09T23:43:42.395834+00:00",
+  "currency": "JPY",
+  "freetiers_promotions_cud_and_account_discounts_ignored": true,
+  "monthly_unit_conversion_basis": "Current v2 unit labels equal prior v1 units. For mo/GiBy.mo fixed-hour calculations, retain the prior captured v1 baseUnitConversionFactor (721hours/price-month) as a conservative scenario convention; not invoice month allocation.",
+  "only_default_consumption_model_used": true,
+  "prior_month_conversion_source_sha256": "46380ba7a77c3d532c526f8e9d0d4033ccdb9614653f665951e2abf127c4305d",
+  "selection": {
+    "build_e2_standard_2": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/A464-9020-6404/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.949229999",
+      "normalized_jpy_per_unit": "0.949229999",
+      "price_quantity": "1",
+      "sku_id": "A464-9020-6404",
+      "unit": "min"
+    },
+    "dns_queries": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/6DFF-5025-A128/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "63.281999997",
+      "normalized_jpy_per_unit": "0.000063281999997",
+      "price_quantity": "1000000",
+      "sku_id": "6DFF-5025-A128",
+      "unit": "count"
+    },
+    "dns_zone": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/8C22-6FC3-D478/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "31.640999998",
+      "normalized_jpy_per_unit": "31.640999998",
+      "price_quantity": "1",
+      "sku_id": "8C22-6FC3-D478",
+      "unit": "mo"
+    },
+    "gemini_3_8_flash_input": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/2A35-AC68-14D6/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "237.307499992",
+      "normalized_jpy_per_unit": "0.000237307499992",
+      "price_quantity": "1000000",
+      "sku_id": "2A35-AC68-14D6",
+      "unit": "count"
+    },
+    "gemini_3_8_flash_output": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/90FD-DC5F-DC55/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "1186.537499962",
+      "normalized_jpy_per_unit": "0.001186537499962",
+      "price_quantity": "1000000",
+      "sku_id": "90FD-DC5F-DC55",
+      "unit": "count"
+    },
+    "global_https_forwarding_minimum": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/DEE3-C42E-3E4D/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "3.955124999",
+      "normalized_jpy_per_unit": "3.955124999",
+      "price_quantity": "1",
+      "sku_id": "DEE3-C42E-3E4D",
+      "unit": "h"
+    },
+    "internet_worst_selected_destination": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/0D27-F4FA-E8E0/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "36.387149998",
+      "normalized_jpy_per_unit": "36.387149998",
+      "price_quantity": "1",
+      "sku_id": "0D27-F4FA-E8E0",
+      "unit": "GiBy"
+    },
+    "lb_inbound_tokyo": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/4445-66EE-8E07/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "1.898459999",
+      "normalized_jpy_per_unit": "1.898459999",
+      "price_quantity": "1",
+      "sku_id": "4445-66EE-8E07",
+      "unit": "GiBy"
+    },
+    "lb_outbound_tokyo": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/86C9-AD43-1809/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "1.898459999",
+      "normalized_jpy_per_unit": "1.898459999",
+      "price_quantity": "1",
+      "sku_id": "86C9-AD43-1809",
+      "unit": "GiBy"
+    },
+    "logging_extra_retention": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/F4AE-5A52-ACE3/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "1.582049999",
+      "normalized_jpy_per_unit": "1.582049999",
+      "price_quantity": "1",
+      "sku_id": "F4AE-5A52-ACE3",
+      "unit": "GiBy.mo"
+    },
+    "logging_ingestion": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/143F-A1B0-E0BE/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "79.102499997",
+      "normalized_jpy_per_unit": "79.102499997",
+      "price_quantity": "1",
+      "sku_id": "143F-A1B0-E0BE",
+      "unit": "GiBy"
+    },
+    "object_class_a": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/4DBF-185F-A415/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.791024999",
+      "normalized_jpy_per_unit": "0.000791024999",
+      "price_quantity": "1000",
+      "sku_id": "4DBF-185F-A415",
+      "unit": "count"
+    },
+    "object_class_b": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/7870-010B-2763/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.063281999",
+      "normalized_jpy_per_unit": "0.000063281999",
+      "price_quantity": "1000",
+      "sku_id": "7870-010B-2763",
+      "unit": "count"
+    },
+    "object_standard_tokyo": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/1845-1496-2891/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "3.638714999",
+      "normalized_jpy_per_unit": "3.638714999",
+      "price_quantity": "1",
+      "sku_id": "1845-1496-2891",
+      "unit": "GiBy.mo"
+    },
+    "registry_storage": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/8502-299A-ABAF/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "15.820499999",
+      "normalized_jpy_per_unit": "15.820499999",
+      "price_quantity": "1",
+      "sku_id": "8502-299A-ABAF",
+      "unit": "GiBy.mo"
+    },
+    "run_request_cpu": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/4856-B847-F1EB/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.003796919",
+      "normalized_jpy_per_unit": "0.003796919",
+      "price_quantity": "1",
+      "sku_id": "4856-B847-F1EB",
+      "unit": "s"
+    },
+    "run_request_ram": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/02A2-9231-36A6/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.000395512",
+      "normalized_jpy_per_unit": "0.000395512",
+      "price_quantity": "1",
+      "sku_id": "02A2-9231-36A6",
+      "unit": "GiBy.s"
+    },
+    "run_requests": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/2DA5-55D3-E679/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "63.281999997",
+      "normalized_jpy_per_unit": "0.000063281999997",
+      "price_quantity": "1000000",
+      "sku_id": "2DA5-55D3-E679",
+      "unit": "count"
+    },
+    "scheduler_job_day": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/A5D6-43A2-28A7/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "15.820499999",
+      "normalized_jpy_per_unit": "0.5103387096451612903225806452",
+      "price_quantity": "31",
+      "sku_id": "A5D6-43A2-28A7",
+      "unit": "count"
+    },
+    "secret_access": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/EBA7-264F-2D2C/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "4.746149999",
+      "normalized_jpy_per_unit": "0.0004746149999",
+      "price_quantity": "10000",
+      "sku_id": "EBA7-264F-2D2C",
+      "unit": "count"
+    },
+    "secret_version_replica": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/7756-ADEF-84F4/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "9.492299999",
+      "normalized_jpy_per_unit": "9.492299999",
+      "price_quantity": "1",
+      "sku_id": "7756-ADEF-84F4",
+      "unit": "mo"
+    },
+    "sql_backups": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/F8BE-1CC3-FDF3/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "16.453319999",
+      "normalized_jpy_per_unit": "16.453319999",
+      "price_quantity": "1",
+      "sku_id": "F8BE-1CC3-FDF3",
+      "unit": "GiBy.mo"
+    },
+    "sql_cpu": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/D34E-ED22-3AA3/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "8.495608499",
+      "normalized_jpy_per_unit": "8.495608499",
+      "price_quantity": "1",
+      "sku_id": "D34E-ED22-3AA3",
+      "unit": "h"
+    },
+    "sql_ram": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/9AE6-50FF-E3A7/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "1.439665499",
+      "normalized_jpy_per_unit": "1.439665499",
+      "price_quantity": "1",
+      "sku_id": "9AE6-50FF-E3A7",
+      "unit": "GiBy.h"
+    },
+    "sql_ssd": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/A593-7E26-0880/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "34.963304998",
+      "normalized_jpy_per_unit": "34.963304998",
+      "price_quantity": "1",
+      "sku_id": "A593-7E26-0880",
+      "unit": "GiBy.mo"
+    },
+    "standard_vm_ipv4": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/C054-7F72-A02E/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.791024999",
+      "normalized_jpy_per_unit": "0.791024999",
+      "price_quantity": "1",
+      "sku_id": "C054-7F72-A02E",
+      "unit": "h"
+    },
+    "tasks_operations": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/378A-D762-1F74/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "63.281999997",
+      "normalized_jpy_per_unit": "0.000063281999997",
+      "price_quantity": "1000000",
+      "sku_id": "378A-D762-1F74",
+      "unit": "count"
+    },
+    "unused_regional_ipv4_reference": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/7A91-88CA-899A/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "2.373074999",
+      "normalized_jpy_per_unit": "2.373074999",
+      "price_quantity": "1",
+      "sku_id": "7A91-88CA-899A",
+      "unit": "h"
+    },
+    "worker_balanced_disk": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/6D8C-DF09-314D/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "20.566649999",
+      "normalized_jpy_per_unit": "20.566649999",
+      "price_quantity": "1",
+      "sku_id": "6D8C-DF09-314D",
+      "unit": "GiBy.mo"
+    },
+    "worker_cpu": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/EAED-8A05-843B/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "4.433919775",
+      "normalized_jpy_per_unit": "4.433919775",
+      "price_quantity": "1",
+      "sku_id": "EAED-8A05-843B",
+      "unit": "h"
+    },
+    "worker_ram": {
+      "consumption_model": "consumptionModels/7754-699E-0EBF",
+      "consumption_model_description": "Default",
+      "current_public_source_url": "https://cloudbilling.googleapis.com/v2beta/skus/CB4B-B875-93B4/price?currencyCode=JPY",
+      "highest_tier_price_jpy": "0.591545897",
+      "normalized_jpy_per_unit": "0.591545897",
+      "price_quantity": "1",
+      "sku_id": "CB4B-B875-93B4",
+      "unit": "GiBy.h"
+    }
+  },
+  "version": "ocean-beta-selected-default-public-price-units-v1"
+}

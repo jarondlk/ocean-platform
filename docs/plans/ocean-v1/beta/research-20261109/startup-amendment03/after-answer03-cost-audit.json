@@ -1,0 +1,114 @@
+{
+  "admission_guidance": [
+    "No additional paidquestion orautomaticretry.",
+    "425+75splitdoesnotfundallobservedcloudcategoriesplus600sbuild.",
+    "A shorteractualbuildor480sboundedbuildwithreservebasedonunchanged417.392planningboundcouldfitonlywithsmallverifiedancillaryoverhead; do not silently raise500ceiling.",
+    "Prefer safelyextractingexistingdurableproviderusage.total_tokens and stopreason to reconciletheonecompletedcontrollerquestion withoutanothermodelcall.",
+    "KeepqueueandSchedulerpauseduntilactualanswer/citation/reloadandbudgetgatespass."
+  ],
+  "already_admitted_question": {
+    "additional_invocations_observed_after_answer_delivery": 0,
+    "additional_questions_admitted_by_this_audit": 0,
+    "answer_delivery_utc": "2026-11-10T14:43:55Z",
+    "answer_status_or_success_proven_by_metrics": false,
+    "controller_delivery_utc": "2026-11-10T14:25:56Z",
+    "expected_model_ids": [
+      "gemini-3.8-flash"
+    ],
+    "input_tokens_observed": "10599",
+    "native_snapshot_end_utc": "2026-11-10T14:53:32.530452Z",
+    "observed_gross_token_estimate_at_current_rates_jpy": "3.706505842",
+    "output_tokens_observed": "1004",
+    "retain_conservative_reserve_until_durable_usage_reconciliation": true,
+    "run_id": "91f567bc-a9a2-4f38-84c4-54d789972115",
+    "submitted_utc": "2026-11-10T14:24:13.542Z",
+    "successful_model_invocations_observed": "2",
+    "thinking_inclusion_attested": false
+  },
+  "captured_utc": "2026-11-10T15:00:02.736370+00:00",
+  "cloud_mutations": false,
+  "credentials_or_prompt_payloads_saved": false,
+  "input_sha256": {
+    "secondary-mac-continuation/cost-refresh-20261110/selected-default-jpy-prices.json": "9ba9e6dff6da41c3382e2e8fe65427acce4ccc3c0291549a2959cc8b2f5f909e",
+    "secondary-mac-continuation/vertex-cost-after-gemini-answer-03-cost-audit.json": "1815265fad2d99433d1d3b785eb5c5afb903a08a13ddf107e4d8d63f5e38e02e",
+    "startup-amendment03/live-nonmodel-cost-after-answer03-evidence.json": "1aeeb8b38cec36b49a9abcc5d36045e0d42fdc077a03e84dbb4a4a7ced48fa66",
+    "startup-amendment03/live-validation-overhead-after-answer03.json": "1db7ec52843fde75954f502470e9df0bda48dff365abbf8c74586af88462b83d",
+    "startup-amendment03/validation-allocation-amendment.json": "ffcdfcccc240f49f0a6e8ad414fb06fa1d85c42812301fe7df2033bcbe22d95b"
+  },
+  "network_uncertainty": {
+    "all_bytes_charged_as_internet_is_supported": false,
+    "charge_zero_without_destination_evidence": false,
+    "dominant_regional_path_inference": "Snapshots bucket and serving/controller/CloudBuild are all Tokyo; repeatedserver-side frozen snapshot/control reads are expected same-location traffic. Monitoring sent_bytes lacks destination labels. Operator must attest directMac downloads bounded before using only a small Internet allowance.",
+    "if_every_byte_were_internet_at_max_selected_rate_jpy": "62.787403069",
+    "storage_sent_bytes": "1852782114"
+  },
+  "nonmodel_cost": {
+    "allproject_observation_start_utc": "2026-11-09T13:13:28Z",
+    "combined425reserve_plus_known_nonmodel_plus600build_jpy": "506.881958769",
+    "combined_full16call_bound_plus_known_nonmodel_plus480build_jpy": "497.375592052",
+    "finished_builds_jpy": "6.731826131",
+    "future480second_build_max_jpy": "7.593839992",
+    "future600second_e2_standard2_max_jpy": "9.492299990",
+    "internal75_allowance_remaining_after600second_build_jpy": "-6.881958769",
+    "known_nonmodel_estimate_jpy_before_pending_build_and_other_overhead": "72.389658779",
+    "known_nonmodel_plus600second_build_jpy": "81.881958769",
+    "logging_billing_bytes": "8361668",
+    "logging_larger_counter_priced_jpy": "0.768462089",
+    "logging_ordinary_bytes": "10431148",
+    "overhead_snapshot_utc": "2026-11-10T14:56:16.715233Z",
+    "qualification": "Allprojectusage conservatively attributed to validation. StoragecostwasabsentfromearlierRun+buildsubtotal; this audit corrects that omission. Loggingbillingcanlaghourly; maxordinaryandbillingusedasplanningenvelope, notinvoice. Includesread-onlyinspection traffic. Registry/storage residence, network, Tasks, Secrets and more delayedusage remain separate.",
+    "remaining500_after_full16call_bound_known_nonmodel_and480build_jpy": "2.624407948",
+    "run_jpy": "52.834086467",
+    "run_plus_builds_jpy": "59.565912598",
+    "run_snapshot_utc": "2026-11-10T14:53:51.947545Z",
+    "storage_class_b_priced_operations": "189751",
+    "storage_operation_methods": {
+      "GetBucketMetadata": "31",
+      "GetBucketStorageLayout": "13",
+      "GetIamPolicy": "5",
+      "GetObjectMetadata": "94879",
+      "ListObjects": "1",
+      "ReadObject": "94872",
+      "SetIamPolicy": "1",
+      "WriteObject": "9"
+    },
+    "storage_operations_estimate_jpy": "12.055284092",
+    "storage_other_operations_conservatively_priced_class_a": "60"
+  },
+  "primary_documentation": [
+    {
+      "support": "Loggingbilling/bytes_ingested and ordinarybyte_count are differentDELTAmetrics; billingingestion maylag.",
+      "url": "https://docs.cloud.google.com/monitoring/api/metrics_gcp_i_o"
+    },
+    {
+      "support": "Billingmetrics canarrivehourly; ordinaryLogbytes is notbillingmetric.",
+      "url": "https://docs.cloud.google.com/stackdriver/estimating-bills"
+    }
+  ],
+  "project": "ocean-v1-beta-20261101",
+  "source_verified_unchanged_runtime": {
+    "double_output_planning_tokens": 131072,
+    "fits425_model_reserve": true,
+    "frontend_only_head": "7fe5e1342e586dd994020683c3e3fb227d4b287a",
+    "full16call_conservative_model_planning_estimate_jpy": "417.392093281",
+    "input_assumption": "One token per bounded UTF8 byte plus2048wrapper allowance percall; conservative planning inference, not provider countTokens proof. Controller14*(65536prompt+1583schema+2048wrapper), synthesis2*(65536prompt/schema+2048wrapper).",
+    "input_planning_tokens": 1103506,
+    "max_controller_calls": 14,
+    "max_output_tokens_per_call": 4096,
+    "max_synthesis_calls": 2,
+    "reserve_is_provider_currency_cap": false,
+    "runtime_sha256": {
+      "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+      "orchestration/beta_vertex_research.py": "64e9a22ad36bc1b6f3d326e0b4a82125b1912d6aaefd442260021aba7039edec",
+      "orchestration/research_answers.py": "751c941216bdbf50afc71607dff58c371ea3254f3f4ea4713a8624fcc79281bb",
+      "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+      "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+      "orchestration/research_synthesis.py": "9991a2af117aa6747417c3e2d85b8e76e1494163bb245d49249790b935526a50",
+      "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634"
+    },
+    "source_base": "9969feb23a1c15af6d6459e02beab0ce56ef9be3"
+  },
+  "state": "425_75_split_has_unfunded_overhead_no_new_admission",
+  "user_total_limit_jpy": 500,
+  "version": "ocean-beta-after-answer03-budget-audit-v1"
+}
