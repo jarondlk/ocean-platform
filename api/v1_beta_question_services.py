@@ -4,6 +4,7 @@ Used by the serving API and the private delivery host with their independently
 configured SQL identities. Experiments stay unavailable. Merely composing these
 services never dispatches an outbox or calls a provider.
 """
+from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import partial
 from typing import Literal
@@ -15,7 +16,7 @@ from api.v1_beta_research_host import SITE_ID, compose_beta_context_services
 from api.v1_host import HostConfigurationError, V1ReadServices
 from orchestration.beta_vertex_research import BetaVertexResearchRuntime
 from orchestration.cloud_research_dispatch import CloudResearchQueue, CloudResearchSettings, PROJECT
-from orchestration.research_answers import ResearchAnswerService
+from orchestration.research_answers import ResearchAnswerError, ResearchAnswerService
 from orchestration.research_controller import ResearchController
 from orchestration.research_evidence import ResearchEvidenceService
 from orchestration.research_runs import ResearchRunService
@@ -33,6 +34,30 @@ class BetaModelSettings(BaseModel):
     model: Literal["gemini-3.8-flash"]
     location: Literal["global"]
     max_output_tokens: Literal[4096]
+
+
+class BetaResearchEvidenceService(ResearchEvidenceService):
+    @contextmanager
+    def _transaction(self):
+        # Close current activation/control proofs before committing SQL. C09
+        # retention writes remain between transactions, outside this read scope.
+        with super()._transaction() as session:
+            with self.catalogue.read_scope():
+                yield session
+
+
+class BetaResearchAnswerService(ResearchAnswerService):
+    def invoke(self, name, payload, user, *, allow_new_submit=True):
+        if name not in {"list", "status", "events"}:
+            return super().invoke(name, payload, user, allow_new_submit=allow_new_submit)
+        try:
+            with self.investigations.catalogue.read_scope():
+                return super().invoke(name, payload, user, allow_new_submit=allow_new_submit)
+        except ResearchAnswerError:
+            raise
+        except Exception:
+            # Closing authority failures happen outside the base invoke guard.
+            raise ResearchAnswerError() from None
 
 
 @dataclass(frozen=True)
@@ -116,9 +141,9 @@ def compose_beta_question_services(*, session_factory, catalogue_service, catalo
     runs = ResearchRunService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, controller_factory=factory,
         queue=CloudResearchQueue(settings=cloud_settings, kind="run"), owner_locker=lock_research_owner)
-    evidence = ResearchEvidenceService(session_factory=session_factory, site_id=SITE_ID,
+    evidence = BetaResearchEvidenceService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, runs=runs)
-    answers = ResearchAnswerService(evidence=evidence, queue=CloudResearchQueue(settings=cloud_settings, kind="answer"),
+    answers = BetaResearchAnswerService(evidence=evidence, queue=CloudResearchQueue(settings=cloud_settings, kind="answer"),
         runtime=runtime, model=model_settings.model, runtime_identity=identity)
     investigations.artifact_resolver = evidence.attachment_resolver()
     investigations.evidence_protection = evidence
