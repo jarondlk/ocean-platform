@@ -49,6 +49,8 @@ def test_fixed_projection_preserves_missing_usage_and_excludes_private_content()
         assert 'request_json' not in sql and "->'content'" not in sql and "->>'content'" not in sql
     assert cursor.queries[1][1] == (diagnostic.RUN_ID, diagnostic.JOB_ID)
     assert 'LIMIT 15' in cursor.queries[2][0]
+    assert "payload_json::jsonb->'generation'" in cursor.queries[2][0]
+    assert "payload_json::jsonb->'generation'" not in cursor.queries[3][0]
 
 
 @pytest.mark.parametrize('changes', [

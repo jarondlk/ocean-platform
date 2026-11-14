@@ -1,0 +1,33 @@
+{
+  "version": "ocean-beta-b1-q5-diagnostic-plan-v1",
+  "source_file": "scripts/beta_b1_diagnostic.py",
+  "source_sha256": "3a004dad50528767c74f3b48c5146b76071bedadd8c5f22ab193bce7ac60a6dc",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "existing_job": "ocean-v1-beta-provider-preflight-20261111",
+  "operation": "One jobs.run execution with args-only override of diagnostics container; validateOnly first, etag-bound, no automatic retry. Original Job template remains immutable.",
+  "unchanged": [
+    "service account",
+    "API image4b24ca90",
+    "SQL proxy indexf333a9c5",
+    "private VPC",
+    "numeric controller database secret1",
+    "all feature flagsfalse",
+    "taskCount1",
+    "parallelism1",
+    "maxRetries0",
+    "timeout120s",
+    "resources1CPU/512Mi plus proxy1CPU/256Mi"
+  ],
+  "sql_scope": "Fixed Q5 run/answer heads and model-step metadata; read-only repeatable-read, statement5s, lock2s, rollback/close, proxy shutdown. No raw content, prompts, requests, manifests, user identities, scientific rows or secret values selected/emitted.",
+  "per_execution_planning_jpy": "1.5",
+  "existing_forward_cloud_margin_jpy": "20",
+  "approved_initial_validation_limit_jpy": 550,
+  "new_model_call_or_queue_write": false,
+  "authorization": "Standing beta GCP/B1 repair approval, reaffirmed by user approval of everything. No IAM expansion.",
+  "verification": "9 privacy/fail-closed tests and Ruff pass; actual read-only SQL execution remains to be observed.",
+  "api_reference": "https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.jobs/run",
+  "supersedes_source_plan": "question05-diagnostic-plan.json",
+  "prior_source_sha256": "90f3fab4fe762c053105c2f16d910c56244318bdedd99291f5a0af4a0f082af2",
+  "amendment": "Pre-execution review corrected C20 nested generation metadata projection; C21 remains direct. Original validateOnly succeeded but no execution started. Original plan and source revision retained."
+}

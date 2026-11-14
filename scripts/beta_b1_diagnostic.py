@@ -32,19 +32,20 @@ HEAD = """SELECT j.status,
 def generations(table, key):
     # Identifiers are fixed constants, never operator input. Never select raw
     # content, requests, prompts, manifests, identities or scientific table rows.
+    data = "(p.payload_json::jsonb->'generation')" if table == 'research_run' else 'p.payload_json::jsonb'
     return f"""SELECT s.state,
- CASE WHEN p.payload_json::jsonb->>'status' IN ('completed','output_limited','refused','failed','unknown')
- THEN p.payload_json::jsonb->>'status' ELSE 'unrecognized' END,
- CASE WHEN p.payload_json::jsonb->>'finish_reason' IN
+ CASE WHEN {data}->>'status' IN ('completed','output_limited','refused','failed','unknown')
+ THEN {data}->>'status' ELSE 'unrecognized' END,
+ CASE WHEN {data}->>'finish_reason' IN
  ('STOP','MAX_TOKENS','SAFETY','RECITATION','OTHER','BLOCKLIST','PROHIBITED_CONTENT',
  'SPII','MALFORMED_FUNCTION_CALL','UNEXPECTED_TOOL_CALL','ClientError','ServerError',
  'ReadTimeout','TimeoutError','ConnectTimeout','ConnectionError','ValueError')
- THEN p.payload_json::jsonb->>'finish_reason'
- WHEN p.payload_json::jsonb->>'finish_reason' IS NULL THEN NULL ELSE 'unrecognized' END,
- p.payload_json::jsonb#>'{{usage,input_tokens}}',
- p.payload_json::jsonb#>'{{usage,output_tokens}}',
- p.payload_json::jsonb#>'{{usage,total_tokens}}',
- p.payload_json::jsonb->'max_output_tokens',
+ THEN {data}->>'finish_reason'
+ WHEN {data}->>'finish_reason' IS NULL THEN NULL ELSE 'unrecognized' END,
+ {data}#>'{{usage,input_tokens}}',
+ {data}#>'{{usage,output_tokens}}',
+ {data}#>'{{usage,total_tokens}}',
+ {data}->'max_output_tokens',
  encode(sha256(convert_to(p.payload_json,'UTF8')),'hex')=p.sha256,
  (SELECT count(*) FROM {table}_attempt a WHERE a.{key}=s.{key} AND a.step_id=s.step_id)
  FROM {table}_step s LEFT JOIN {table}_payload p ON p.{key}=s.{key} AND p.sha256=s.outcome_sha256
