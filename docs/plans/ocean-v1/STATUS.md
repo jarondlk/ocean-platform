@@ -4,6 +4,17 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Repair image181f26d4/source9eb9de8 is now source-bound delivery qualified:
+4successful build proofs/exact staged archive,220hosted unit checks reused
+with180byte-equal runtime pins, and native-followup24PostgreSQL16.16 tests plus
+48operator checks passed. Current68operator adversarial checks/Ruff pass locally.
+[Delivery](beta/b1-20261114/repair-delivery-qualification.json).
+Serving39remains drained on7889ef20until guarded rollout; queue PAUSED.
+Cost planning311.9020JPY of550 includes missing usage and next rollout margin.
+Actual beta latency/model-answer/reload/recovery gates remain open.
+
+Historical built candidate:
+
 Repair candidate image181f26d4 (source9eb9de8) passed all4source-bound Cloud
 Build proofs. Linux220checks passed; native acceptance stopped at the CI harness's
 missing expected container address. The exact-peer follow-up preserves that

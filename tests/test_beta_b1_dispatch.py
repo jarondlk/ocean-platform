@@ -88,6 +88,20 @@ def test_uncertain_dispatch_retains_intent_and_cannot_be_repeated(monkeypatch, t
     assert cloud.writes == 1
 
 
+def test_repair_dispatch_cannot_use_an_unqualified_candidate(monkeypatch, tmp_path):
+    from scripts import beta_b1_repair_rollout as repair
+    calls = []
+
+    def reject(*args):
+        raise delivery.guard.Rejected('Hosted repair qualification is required')
+
+    monkeypatch.setattr(repair, 'qualify', reject)
+    with pytest.raises(delivery.guard.Rejected):
+        delivery.execute(type('Cloud', (), {'request': lambda *args, **kwargs: calls.append(args)})(),
+                         tmp_path, 'run', IDENTITY, repair_candidate=True)
+    assert not calls and not list(tmp_path.iterdir())
+
+
 def page_cloud(pages):
     class Cloud:
         def __init__(self):

@@ -1,6 +1,30 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current delivery gate — repair built, native CI setup follow-up next
+## Current rollout checkpoint — actual repair delivery qualified
+
+Repair source9eb9de8/image181f26d4… is qualified by exact4-step buildd3735340,
+provider-hashed archive/all24files and180runtime pins, actual hosted220unit
+checks plus successful native-followup43620300346/job132524284823 onfafbed7.
+Follow-up verified all180runtime bytes match9eb9de8, passed48operator checks
+and24native PostgreSQL16.16 tests. Original native setup failures remain
+immutable; broad CI is separate and not claimed complete.
+[Delivery qualification](../beta/b1-20261114/repair-delivery-qualification.json).
+The repair contract now pins actual CI source/job/log hashes and clears only
+hosted preparation. Current68operator task/phase/archive/cost adversarial tests
+andRuff pass locally. No repaired service rollout has occurred yet.
+
+Current cost plan311.9020JPY of550 includes both synthetic probes, image build,
+full missing-usage bounds,20forward cloud and1future observer. No new paid
+question admitted. [Cost](../beta/b1-20261114/repair-cost-before-rollout.json).
+Next: validate-only controller/stage, original-source fresh post-drain observer,
+then new repair writer controller/stage/promotion. Preserve serving39drain and
+controller3until each exact guarded step is observed. Keep queue/sweep/Codex
+scheduling PAUSED and new Research admission false. Actual saved-history/
+evidence latency, cited model answer/reload and recovery gates stay open.
+Use manual dispatcher `--repair-candidate` only after repaired live admission
+qualifies, with a separately reconciled currency reservation for the question.
+
+## Historical built candidate/native setup follow-up — repair built, native CI setup follow-up next
 
 Repair source9eb9de8 / image181f26d4… built successfully in exact approved
 Cloud Build`d3735340-23c0-45b3-88d9-7b47fb44b333`. All4source/non-root/offline

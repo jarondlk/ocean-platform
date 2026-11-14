@@ -1,0 +1,32 @@
+{
+  "source_paths": 180,
+  "intentional_runtime_supersessions": 2,
+  "build_id": "d3735340-23c0-45b3-88d9-7b47fb44b333",
+  "ci_run_id": 43620300346,
+  "focused_source_bound_delivery_verified": true,
+  "version": "ocean-beta-b1-repair-delivery-v1",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "ci_source": "fafbed759ab9e68a0f88db3135de0f43fe32252e",
+  "CI_runtime_pins_equal": true,
+  "unit_checks": {
+    "run_id": 43619074592,
+    "job_id": 132520434482,
+    "passed": 220,
+    "overall_run_failure_preserved": "Native peer setup failure; successful unit step only reused",
+    "log_sha256": "42504331d5c7631dfe2b41a026150d1599583c2e42428d0fda721813ba1f3da2"
+  },
+  "native_checks": {
+    "run_id": 43620300346,
+    "job_id": 132524284823,
+    "actual_postgres": "16.16",
+    "passed": 24,
+    "seconds": 185.18,
+    "additional_hosted_operator_checks": 48,
+    "log_sha256": "bbc1d73997414c180648dd7efb06cb1947d47555396332220500f1d514d2aad0"
+  },
+  "current_operator_adversarial_tests_passed": 68,
+  "ruff_passed": true,
+  "original_broad_CI_not_claimed_complete": true,
+  "all_other_runtime_source_bytes_unchanged": 178,
+  "deployment_performed": false
+}

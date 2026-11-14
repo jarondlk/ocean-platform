@@ -1,6 +1,10 @@
 """Repair planner preserves original config guards and rejects phase/drift errors."""
 
 from copy import deepcopy
+import base64
+import hashlib
+import io
+import tarfile
 
 import pytest
 
@@ -96,3 +100,29 @@ def test_readback_rejects_concurrent_change_or_wrong_revision(material):
     after['template']['timeout'] = '120s'
     with pytest.raises(Rejected):
         repair.readback(serving, after, proposal, contract)
+
+
+@pytest.mark.parametrize('change', [None, 'provider_hash', 'file_bytes', 'missing', 'duplicate', 'traversal', 'symlink', 'oversize'])
+def test_source_archive_requires_exact_provider_hash_and_safe_reviewed_file_set(tmp_path, change):
+    archive = tmp_path / 'source.tgz'
+    content = b'reviewed synthetic source'
+    with tarfile.open(archive, 'w:gz') as tar:
+        info = tarfile.TarInfo('../source.py' if change == 'traversal' else 'source.py')
+        if change == 'symlink':
+            info.type, info.linkname = tarfile.SYMTYPE, '/etc/passwd'
+            tar.addfile(info)
+        elif change != 'missing':
+            payload = b'changed source' if change == 'file_bytes' else b'x' * 1048577 if change == 'oversize' else content
+            info.size = len(payload)
+            tar.addfile(info, io.BytesIO(payload))
+            if change == 'duplicate':
+                tar.addfile(info, io.BytesIO(payload))
+    hashes = [{'type': 'SHA256', 'value': base64.urlsafe_b64encode(hashlib.sha256(archive.read_bytes()).digest()).decode()}]
+    if change == 'provider_hash':
+        hashes[0]['value'] = base64.urlsafe_b64encode(bytes(32)).decode()
+    expected = {'source.py': hashlib.sha256(content).hexdigest()}
+    if change is None:
+        repair.verify_archive(archive, hashes, expected)
+    else:
+        with pytest.raises(Rejected):
+            repair.verify_archive(archive, hashes, expected)

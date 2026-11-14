@@ -84,3 +84,31 @@ does not establish a successful answer.
 Primary API references checked November14:
 [service PATCH/validateOnly](https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.services/patch),
 [service/traffic/revision fields](https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.services).
+
+## Separately qualified repair candidate
+
+`scripts/beta_b1_repair_rollout.py` and `repair-contract.json` own the new
+181f26d4 candidate. The original fixed-image writer and its receipts remain
+unchanged. The repair requires the exact 9eb9de8 source/180 pins, two explicit
+runtime supersessions, four successful build proofs, the provider-hashed staged
+archive matching all24reviewed files, and actual composed hosted CI. The contract
+remains blocked while `hosted_acceptance_pending` is true. A prior successful
+220-test step can be reused only with its retained source/job/log evidence and
+the native follow-up's complete runtime byte comparison. Failed native setup
+and skipped repeated checks are never presented as native acceptance.
+
+The repair phases are controller, stage, promote, admit-stage and admit-promote.
+Each supports validate-only and retains a new private phase directory before
+one PATCH. An existing phase directory prevents retry. The full original
+configuration hashes still bind both services after normalizing only the
+reviewed image, admission flags and traffic. Fresh post-drain quiescence, paused
+empty queue, current catalogue authority, numeric secret metadata and private
+controller IAM remain required. Saved-history/evidence latency precedes new
+admission; an actual model answer/reload/recovery and fresh cost plan still
+precede broader acceptance. Do not reuse expired observers.
+
+The manual dispatcher supports `--repair-candidate` only after this exact
+candidate qualifies and both services are Ready on its expected live revisions.
+Canonical task/body/OIDC/deadline checks, full bounded pagination, paused queue,
+retained-before-POST intent and no automatic retry are unchanged. Neither writer
+nor dispatcher admits a new model question under an unreconciled currency plan.

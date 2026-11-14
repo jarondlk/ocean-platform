@@ -68,12 +68,19 @@ def one_queued_task(cloud, queue):
     raise guard.Rejected("Task listing incomplete")
 
 
-def execute(cloud, directory, kind, identity):
-    contract = guard.document(rollout.CONTRACT_PATH.read_bytes())
+def execute(cloud, directory, kind, identity, *, repair_candidate=False):
+    if repair_candidate:
+        from scripts import beta_b1_repair_rollout as repair
+        contract = guard.document(repair.CONTRACT.read_bytes())
+        repair.qualify(directory, contract)
+        verify_baseline, image = repair.baseline, contract['image']
+    else:
+        contract = guard.document(rollout.CONTRACT_PATH.read_bytes())
+        verify_baseline, image = rollout.verify_baseline, rollout.NEW
     for name in ("controller", "serving"):
         service = cloud.request("https://run.googleapis.com/v2/" + contract["services"][name]["name"])
-        rollout.verify_baseline(service, name, contract)
-        guard.require(rollout.main_container(service, name)["image"] == rollout.NEW)
+        verify_baseline(service, name, contract)
+        guard.require(rollout.main_container(service, name)["image"] == image)
         revision = contract["revisions"]["controller" if name == "controller" else "live"]
         guard.require(service["latestCreatedRevision"] == service["latestReadyRevision"]
                       and service["latestReadyRevision"].split("/")[-1] == revision)
@@ -104,13 +111,14 @@ def main():
     parser.add_argument("--directory", type=Path, required=True)
     parser.add_argument("--kind", choices=("run", "answer"), required=True)
     parser.add_argument("--identity", required=True)
+    parser.add_argument('--repair-candidate', action='store_true', help='Require the separately qualified exact B1 repair image/CI contract')
     args = parser.parse_args()
     try:
         directory = args.directory.resolve()
         guard.require(rollout.ROOT not in directory.parents and directory.is_dir()
                       and directory.stat().st_uid == os.geteuid() and not directory.stat().st_mode & 0o077)
         os.umask(0o077)
-        print(json.dumps(execute(Cloud(), directory, args.kind, args.identity), sort_keys=True))
+        print(json.dumps(execute(Cloud(), directory, args.kind, args.identity, repair_candidate=args.repair_candidate), sort_keys=True))
         return 0
     except (guard.Rejected, KeyError, OSError, ValueError):
         print('{"state":"manual_delivery_stopped_inspect_intent_before_retry"}')

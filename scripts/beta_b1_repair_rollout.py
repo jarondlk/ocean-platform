@@ -108,6 +108,20 @@ def readback(before, after, proposal, contract, staged=None):
             'runtime_startup_verified': not idle, 'all_other_configuration_preserved': True}
 
 
+def verify_archive(archive, hashes, expected_files):
+    digest = hashlib.sha256(archive.read_bytes()).digest()
+    guard.require(any(item['type'] == 'SHA256' and base64.urlsafe_b64decode(item['value']) == digest for item in hashes))
+    with tarfile.open(archive, 'r:gz') as tar:
+        files = {}
+        for member in tar.getmembers():
+            guard.require(not member.name.startswith('/') and '..' not in Path(member.name).parts
+                          and (member.isdir() or member.isfile()))
+            if member.isfile():
+                guard.require(member.name not in files and member.size <= 1048576)
+                files[member.name] = hashlib.sha256(tar.extractfile(member).read()).hexdigest()
+        guard.require(files == expected_files)
+
+
 def qualify(directory, contract):
     guard.require(contract['hosted_acceptance_pending'] is False)
     manifest = guard.document((PROOF / 'repair-production-source-manifest.json').read_bytes())
@@ -140,21 +154,11 @@ def qualify(directory, contract):
     guard.require(source['bucket'] == original.PROJECT + '-build-source' and source['object'].startswith('source/')
                   and str(source['generation']).isdecimal() and build['source'] == {'storageSource': source})
     archive = directory / 'staged-source.tgz'
-    digest = hashlib.sha256(archive.read_bytes()).digest()
     uri = 'gs://' + source['bucket'] + '/' + source['object'] + '#' + str(source['generation'])
     hashes = build['sourceProvenance']['fileHashes'][uri]['fileHash']
-    guard.require(any(item['type'] == 'SHA256' and base64.urlsafe_b64decode(item['value']) == digest for item in hashes))
     expected_files = guard.document((PROOF / 'repair-build-context.json').read_bytes())
     guard.require(original.sha(expected_files) == contract['build_context_sha256'])
-    with tarfile.open(archive, 'r:gz') as tar:
-        files = {}
-        for member in tar.getmembers():
-            guard.require(not member.name.startswith('/') and '..' not in Path(member.name).parts
-                          and (member.isdir() or member.isfile()))
-            if member.isfile():
-                guard.require(member.name not in files and member.size <= 1048576)
-                files[member.name] = hashlib.sha256(tar.extractfile(member).read()).hexdigest()
-        guard.require(files == expected_files)
+    verify_archive(archive, hashes, expected_files)
     run = guard.document((directory / 'focused-run.json').read_bytes())
     jobs = guard.document((directory / 'focused-jobs.json').read_bytes())['jobs']
     guard.require(run['id'] == contract['ci_run_id'] and run['head_sha'] == contract['ci_source_commit']

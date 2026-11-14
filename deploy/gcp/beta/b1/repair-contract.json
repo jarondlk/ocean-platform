@@ -24,14 +24,14 @@
   "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
   "build_id": "d3735340-23c0-45b3-88d9-7b47fb44b333",
   "build_context_sha256": "a3a7355759a5237df100e4ca5ca880bbe833be0d6d57d75736c43bf14083c536",
-  "ci_run_id": null,
-  "ci_job_id": null,
-  "ci_log_sha256": null,
-  "hosted_acceptance_pending": true,
+  "ci_run_id": 43620300346,
+  "ci_job_id": 132524284823,
+  "ci_log_sha256": "bbc1d73997414c180648dd7efb06cb1947d47555396332220500f1d514d2aad0",
+  "hosted_acceptance_pending": false,
   "initial_revisions": {
     "controller": "ocean-v1-beta-research-controller-b1-provider-20261114",
     "serving": "ocean-v1-beta-serving-b1-drain-20261114"
   },
-  "ci_source_commit": null,
+  "ci_source_commit": "fafbed759ab9e68a0f88db3135de0f43fe32252e",
   "unit_ci_log_sha256": "42504331d5c7631dfe2b41a026150d1599583c2e42428d0fda721813ba1f3da2"
 }
