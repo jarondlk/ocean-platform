@@ -61,6 +61,10 @@ candidate:
 - Current authorization applies to live and historical data, answers, artifacts
   and exports. There is no critical scope, authority, numerical or isolation
   violation. A citation check alone cannot establish scientific correctness.
+- The candidate's locked application dependencies and deployed container images
+  have current security findings triaged, with no unaccepted release-blocking
+  vulnerability. A repository default-branch advisory total is not a scan of the
+  beta candidate; bind findings and repairs to the actual shipped versions.
 - Actual queue, worker, cancellation, crash/restart, backup/restore and rollback
   checks pass at their real resource/material identities. Uncertain worker state
   retains capacity until independent physical proof permits release.
