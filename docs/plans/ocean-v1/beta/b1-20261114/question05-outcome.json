@@ -1,0 +1,49 @@
+{
+  "version": "ocean-beta-b1-question05-outcome-v1",
+  "recorded_utc": "2026-11-14T16:48:20.826177+00:00",
+  "run_id": "6e09ea49-b2bd-40ac-a457-b16709912f1d",
+  "answer_job_id": "bb9994e4-c678-4fc3-a59c-97adf0563e13",
+  "question_plan": "question05-plan.json",
+  "single_submission": true,
+  "manual_run_deliveries": 1,
+  "manual_answer_deliveries": 1,
+  "controller_status": "completed",
+  "controller_active_elapsed_ms": 32414,
+  "controller_tool_actions": 2,
+  "controller_model_calls": 1,
+  "answer_status": "unavailable",
+  "shared_active_elapsed_ms": 55801,
+  "shared_tool_actions": 2,
+  "shared_model_calls": 2,
+  "malformed_repairs": 0,
+  "answer_or_citation_acceptance_passed": false,
+  "generation_reason_not_yet_observed": true,
+  "provider_metrics": {
+    "all_pages_read": true,
+    "calls_total": 4,
+    "response_codes": {
+      "200": 3,
+      "400": 1
+    },
+    "input_tokens_total": 15941,
+    "output_tokens_total": 1429,
+    "captured_utc": "2026-11-14T16:45:38.031691Z"
+  },
+  "evidence_read_failure": {
+    "http_status": 503,
+    "observed_latencies_seconds": [
+      15.028303162,
+      15.030394033,
+      15.025584854
+    ],
+    "latency_acceptance_passed": false
+  },
+  "queue_remains_paused": true,
+  "scientific_approval": false,
+  "runtime_source_unchanged": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "api_image_digest": "sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "screenshots_sha256": {
+    "answer-unavailable.jpg": "0b9ec65a9b451653d1cee640e0fe7e397da4ddd635d4d56fa04f42d1af13edfe",
+    "answer-history-timeout.jpg": "6c8955e661a3be8e49dec56c9a7e92f566b5cce0891640b80c419b778e039a85"
+  }
+}

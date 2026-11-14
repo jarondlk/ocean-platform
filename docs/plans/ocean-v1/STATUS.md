@@ -4,13 +4,16 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
-Browser retry approval cleared the read gate. Q4 was submitted once, queued as
-`df44514b-2a14-4bde-a9e9-347859f02094`; its frozen CTD binding is retained.
-The manual dispatcher stopped before any tasks.run because the provider returned
-one result plus a continuation. Its corrected complete-page guard passes actual
-read-only qualification and141focused tests/Ruff. No question resubmission,
-runtime/IAM change or model dispatch yet. Queue remains PAUSED. [Submission](beta/b1-20261114/question04-submitted.json),
-[pagination amendment](beta/b1-20261114/task-pagination-amendment.json).
+Q4's free-form fixture failed deterministic grammar before any model call and
+was cancelled once. Q5's supported CTD lookup completed (2tools/1model), but
+its answer became unavailable after1additional model attempt (55.801s cumulative,
+0repairs). Provider meters show4historical+new calls, including1HTTP400.
+Evidence/list also hit503 at15seconds. Actual Gemini answer/citation/reload and
+current latency gates remain open. No retry or new runtime deployment.
+[Outcome](beta/b1-20261114/question05-outcome.json),
+[read-only diagnostic preparation](beta/b1-20261114/question05-diagnostic-plan.json).
+Queue and scheduling stay PAUSED. Read-only failure/usage diagnosis precedes
+repairs and any additional paid question. Initial550JPY/monthly50k unchanged.
 
 Historical pre-submit readback:
 

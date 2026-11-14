@@ -1,28 +1,39 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current continuation — Q4 submitted once, manual delivery next
+## Current continuation — Q5 answer unavailable, read-only diagnosis next
 
-The user explicitly approved the beta browser retry; same tab7 access works.
-The first shell read showed Connection failed, then the visible Try again
-recovered the signed-in page. Cause remains unproven; do not count this as a
-new cold-load latency pass. Existing history still had only3prior runs.
-The exact predeclared Q4 was submitted once at15:56:29UTC, accepted as queued
-run`df44514b-2a14-4bde-a9e9-347859f02094`, with current CTD snapshot50bfdf55…,
-revision401844d5…/payloadcb28a278…. [Submission receipt](../beta/b1-20261114/question04-submitted.json).
-Do not resubmit or continue it as a second question. Browser tab7 was navigated
-to About to stop active polling while the bounded manual task runs.
+Q4's unsupported free-form fixture reached pre-model clarification and was
+cancelled once; no Gemini call. Preserve its [failed outcome](../beta/b1-20261114/question04-outcome.json).
+Q5 used the predeclared supported object lookup, submitted/delivered once.
+Controller completed with2tools/1model call. Answer jobbb9994e4… was submitted
+and manually delivered once, then became unavailable with cumulative2model
+calls/55.801active seconds/0repairs. No answer/citation pass or automatic retry.
+[Q5 outcome](../beta/b1-20261114/question05-outcome.json). Native meters now show
+4total calls,3HTTP200/1HTTP400; exact retained generation failure is unobserved.
+Evidence/list also returned503 at the existing15-second deadline. Earlier hot
+latency observations do not qualify this failing journey. No deadline increased.
 
-The first dispatcher invocation stopped before creating an intent or sending
-tasks.run: one task arrived with a continuation token. The amended helper now
-requires exactly1canonical task across complete bounded pages, rejects looped/
-incomplete/duplicate listings and retains the original no-POST failure.141focused
-operator tests/Ruff pass. [Actual complete-page proof](../beta/b1-20261114/task-pagination-amendment.json).
-Next: checkpoint this operator-only correction and manually dispatch that same
-undispatched task. Queue remains PAUSED; no model execution is accepted yet.
-Working directory `/private/tmp/ocean-b1-20261115-q4` has the before-submit,
-single UI intent/acceptance, private task metadata and pagination proof. Preserve
-all intents; never retry tasks.run automatically. Actual question/answer/citation/
-reload/recovery/cost gates remain open. Budget550JPY and monthly50,000JPY remain.
+Next is the [fixed read-only diagnostic](../beta/b1-20261114/question05-diagnostic-plan.json):
+one args-overridden execution of the existing observer with identical identity,
+network/proxy/secret/resources and no Job template mutation, SQL write, model
+or queue delivery. Validate first, retain intent before one POST, inspect outcome
+before any retry.9privacy/fail-closed tests/Ruff pass. Its1.5JPY bound uses the
+existing20JPY forward cloud reserve. Reconcile terminal model/actual cloud
+usage against550JPY before any further paid question. Fresh price reads were
+429; reuse accepted price bytes explicitly, without claiming a fresh read.
+Budget metadata read403 does not authorize role expansion. Monthly target50k
+unchanged. No fresh Google sign-in is currently required.
+
+Serving38/controller3 remain on accepted7889ef20/runtime0f15bbca; no runtime
+source edit yet. Queue and recurring sweep/Codex automation remain PAUSED.
+Before runtime repair, drain existing admission using the qualified old-image
+writer, wait the full old request envelope and obtain fresh quiescence. Preserve
+all180runtime source pins until that drain is complete. Minimal ready-receipt
+read optimization and the confirmed provider failure need source-bound tests,
+image/hosted evidence and guarded rollout; neither is implemented or passed.
+Private current directory `/private/tmp/ocean-b1-20261115-q5`; after-q5 preserves
+before/current usage separately. Browser was moved to About after the unavailable
+answer to stop polling; no new paid question is authorized by an elapsed timer.
 
 ## Historical budget and browser gate
 
