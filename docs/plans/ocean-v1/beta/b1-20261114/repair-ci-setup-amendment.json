@@ -1,0 +1,11 @@
+{
+  "version": "ocean-beta-b1-ci-setup-amendment-v1",
+  "original_runtime_source": "4b55f9404e60f91bd7cef58853dfc2afeac9b1af",
+  "original_focused_run": 43618912077,
+  "failed_job": 132519938962,
+  "actual_failure": "Package boundary helper hardcoded macOS /private/tmp, absent on Linux. Lint and C21 export checks passed; application/native tests were not reached.",
+  "amendment": "Use resolved system temporary directory for synthetic offline package checks; preserve no-symlink binding validation. 34 package checks pass locally.",
+  "runtime_bytes_changed_by_amendment": false,
+  "original_failed_run_receipt_immutable": true,
+  "new_source_bound_hosted_run_required": true
+}

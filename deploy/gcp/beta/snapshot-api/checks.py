@@ -119,7 +119,7 @@ def main():
     ]:
         mutated = {**binding, key: value}
         check(name, lambda mutated=mutated: validate_binding(mutated), rejects=True)
-    with tempfile.TemporaryDirectory(prefix='ocean-beta-snapshot-package-', dir='/private/tmp') as directory:
+    with tempfile.TemporaryDirectory(prefix='ocean-beta-snapshot-package-', dir=Path(tempfile.gettempdir()).resolve()) as directory:
         private = Path(directory)
         selected, target = private / 'selected.json', private / 'binding.json'
         activation_data = renderer.canonical(activation)
