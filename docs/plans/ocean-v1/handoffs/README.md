@@ -1,5 +1,11 @@
 # Component handoffs
 
+Current beta continuation: [BETA_DEPLOYMENT.md](BETA_DEPLOYMENT.md),
+[completion plan](../beta/BETA_COMPLETION_PLAN.md) and
+[November 14 main-Mac audit](../beta/main-mac-return-20261114/audit.json).
+P00/C01–C27 handoffs below are historical component acceptance; they do not
+replace current cloud integration and live release gates.
+
 [P00.md](P00.md) records the accepted local prototype. [C01.md](C01.md) records
 completed offline scientific scope validation. [C02.md](C02.md) records completed
 derived-evidence software and synthetic checks. [C03.md](C03.md) records completed

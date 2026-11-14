@@ -1,5 +1,13 @@
 # Provider amendment 06 — checkpoint November 14, 2026
 
+Later main-Mac audit: [current handoff](../../../handoffs/BETA_DEPLOYMENT.md),
+[completion plan](../../BETA_COMPLETION_PLAN.md) and
+[exact proxy-index/child proof](../../main-mac-return-20261114/audit.json).
+The text below retains the second-Mac checkpoint. Fresh main-Mac reads now
+confirm the held images and prove the proxy relationship; rollout guards,
+private-tool portability, current preflight and live acceptance remain open.
+Original JSON receipts below are unchanged.
+
 The rollout is held. [rollout-hold.json](rollout-hold.json) records the effective
 state and resume order. November 14 cloud inspection requires reauthentication;
 all successful cloud and cost observations here are dated November 11.

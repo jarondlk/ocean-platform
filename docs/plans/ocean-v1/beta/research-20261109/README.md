@@ -1,6 +1,18 @@
 # Research questions activation review — 2026-11-09 JST
 
-## Current checkpoint — 2026-11-14 JST
+## Current progress overlay — main Mac return, 2026-11-14 JST
+
+Use the [current deployment handoff](../../handoffs/BETA_DEPLOYMENT.md),
+[beta completion plan](../BETA_COMPLETION_PLAN.md) and
+[main-Mac audit](../main-mac-return-20261114/audit.json).
+Dedicated CLI reads confirmed the held service/controller and successful build.
+Exact public manifest bytes now prove that executed proxy `1d2285ce…` is the
+Linux/amd64 child of reviewed index `f333a9c5…`. The guard remains unchanged,
+private helpers are missing from this Mac's documented locations, and fresh
+cost/control/quiescence checks plus actual model/reload/latency acceptance remain
+required. No cloud mutation, runtime sweep or Codex scheduling change occurred.
+
+## Historical second Mac checkpoint — 2026-11-14 JST
 
 The rollout is held and checkpointed at the operator's request. Fresh cloud
 inspection on November 14 requires Google reauthentication; no sign-in or

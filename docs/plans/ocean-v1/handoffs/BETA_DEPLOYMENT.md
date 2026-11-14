@@ -1,6 +1,58 @@
 # Beta deployment continuation — 2026-11-14 JST
 
-## Current durable checkpoint
+## Current main Mac continuation and completion plan
+
+Main-Mac return audit on November 14 fast-forwarded `overhaul` by 8 commits to
+`7002312`, preserving existing unrelated work. The current follow-on is the
+[beta completion plan](../beta/BETA_COMPLETION_PLAN.md); it carries all 43 C26
+rows and 20 C27 operational gates into six bounded milestones. Full beta and
+scientific acceptance remain false. This is a progress/evidence integration,
+not a deployment or a restart of the paused three-hour automation.
+
+[Audit receipt](../beta/main-mac-return-20261114/audit.json) records fresh
+service/controller/build reads through the main Mac's dedicated CLI identity,
+180 API and 71 frontend source pins, 79 focused backend passes, focused frontend
+checks/lint, and login 200/protected runtime 401. Serving is still generation 34,
+revision `00021-mgn` at 100% traffic; controller `00002-mcw` is unchanged. Both
+use API `4b24ca90…`; frontend is `be709b49…`; new API `7889ef20…` is undeployed.
+New Research dispatch and synthesis remain false. Existing catalogue,
+investigation, history and cancellation settings are preserved.
+
+**Proxy finding supersession:** raw registry bytes now prove reviewed index
+`f333a9c5…` explicitly names executed digest `1d2285ce…` as its Linux/amd64
+manifest. Exact index and child SHA256 checks pass, with raw bytes retained in
+the audit directory. The prior observer failures remain immutable. The guard
+was not modified; this proof still needs reviewed integration and negative
+checks before a rollout. Old quiescence observations and budget are expired.
+
+**Portability gap:** 15 hash-pinned private operator helpers retained on the
+second Mac are absent from the two documented locations checked on this Mac.
+Transfer privately against `provider-amendment06/retained-helpers.json`, or
+reconstruct/review equivalent tools. Do not replay historical phase arguments
+or the obsolete one-shot observer refresh helper. No credentials or scientific
+payloads were copied into the new audit.
+
+Dedicated wrapper inspection works without new personal sign-in; it does not
+provide controller-update, job-execution, SQL/IAM or direct-secret capabilities.
+Use already authorized concrete scopes and validate the required operator
+credentials when those operations are reached. Fresh queue/Scheduler, IAM and
+secret metadata, catalogue control/audits, database quiescence and usage ledger
+were **not** requalified by this read-only inspection.
+
+Exact next action: B0 tool recovery/review, exact index/child guard correction,
+and fresh scoped preflight/cost/quiescence; then B1 private controller image
+update followed by preserved-settings API staging/promotion and actual Gemini
+answer/reload/history-latency acceptance. B2 eDNA/data, B3 production experiments,
+B4 operations and B5 full acceptance remain in scope. Do not rerun successful
+bootstrap, migrations, enrollment, grants or imports. Keep unchanged historical
+CI evidence; the original normal run remains failed and its native crash cause
+unproven despite separate source-bound PostgreSQL/restore acceptance.
+
+## Historical second Mac checkpoint — 2026-11-14 JST
+
+The following checkpoint is retained as captured on the second Mac. Its lack
+of fresh cloud access and unverified proxy relationship are superseded only by
+the main-Mac observations above; all other acceptance limitations remain.
 
 The rollout is held and checkpointed at the operator's request. Fresh cloud
 inspection on November 14 requires Google reauthentication; no sign-in or

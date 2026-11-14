@@ -1,0 +1,205 @@
+{
+  "version": "ocean-beta-main-mac-return-audit-v1",
+  "recorded_at_utc": "2026-11-14T07:04:27.448657+00:00",
+  "date_jst": "2026-11-14",
+  "branch": "overhaul",
+  "audited_checkpoint": "7002312a1552b122a6b457adc9dc58d03721e0aa",
+  "previous_main_mac_checkpoint": "4f4b6166370f475bf27801531e8b1ce0ec587250",
+  "incoming_commits": 8,
+  "fast_forward_completed": true,
+  "unrelated_local_changes_preserved": true,
+  "scope": "Read-only cloud/source audit and focused local checks; no deployment or gate promotion.",
+  "cloud_identity": "ocean-v1-beta-cli@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "project_id": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "dedicated_wrapper_reads_succeeded": true,
+  "new_personal_sign_in_required_for_these_reads": false,
+  "serving": {
+    "observed_at_utc": "2026-11-14T06:51:52.574788+00:00",
+    "name": "ocean-v1-beta-serving",
+    "generation": 34,
+    "ready": true,
+    "latest_ready_revision": "ocean-v1-beta-serving-00021-mgn",
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "ocean-v1-beta-serving-00021-mgn"
+      }
+    ],
+    "containers": [
+      {
+        "name": "frontend",
+        "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3"
+      },
+      {
+        "name": "api",
+        "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a"
+      },
+      {
+        "name": "sql-proxy",
+        "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+      }
+    ],
+    "api_feature_flags": {
+      "ENABLE_V1_CATALOGUE": true,
+      "ENABLE_V1_CATALOGUE_BROWSER": true,
+      "ENABLE_V1_SHELL": true,
+      "ENABLE_V1_INVESTIGATIONS": true,
+      "ENABLE_V1_RESEARCH_CONTROLLER": true,
+      "ENABLE_V1_RESEARCH_RUNS": true,
+      "ENABLE_V1_RESEARCH_DISPATCH": false,
+      "ENABLE_V1_EVIDENCE": true,
+      "ENABLE_V1_SYNTHESIS": false,
+      "ENABLE_V1_EXPERIMENTS": false,
+      "ENABLE_V1_EXPERIMENT_DISPATCH": false,
+      "ENABLE_V1_EXPERIMENT_WORKSPACE": false
+    },
+    "raw_private_readback_sha256": "8514d4a631a3948779b83c49f3a57ada10c04740317f6ceec12ff6007293c5b8",
+    "raw_private_readback_committed": false
+  },
+  "controller": {
+    "observed_at_utc": "2026-11-14T06:52:52.445495+00:00",
+    "name": "ocean-v1-beta-research-controller",
+    "generation": 2,
+    "ready": true,
+    "latest_ready_revision": "ocean-v1-beta-research-controller-00002-mcw",
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "ocean-v1-beta-research-controller-00002-mcw"
+      }
+    ],
+    "containers": [
+      {
+        "name": "controller",
+        "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a"
+      },
+      {
+        "name": "sql-proxy",
+        "image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+      }
+    ],
+    "api_feature_flags": {},
+    "raw_private_readback_sha256": "46987db04b0f1d0992797404ae09cd374183a2c5b9570cbfea5542ce72ceec73",
+    "raw_private_readback_committed": false
+  },
+  "api_build": {
+    "id": "ec6296cd-55ea-42ec-a50a-552364f2a62c",
+    "status": "SUCCESS",
+    "finish_time": "2026-11-11T12:39:52.862086Z",
+    "image_digests": [
+      "sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8"
+    ]
+  },
+  "source_pin_checks": {
+    "api": {
+      "paths_verified": 180,
+      "mismatches": [],
+      "manifest": "docs/plans/ocean-v1/beta/research-20261109/provider-amendment06/production-source-manifest.json"
+    },
+    "frontend": {
+      "paths_verified": 71,
+      "mismatches": [],
+      "manifest": "docs/plans/ocean-v1/beta/research-20261109/frontend-amendment05/production-source-manifest.json"
+    }
+  },
+  "focused_local_checks": {
+    "backend": {
+      "command": ".venv/bin/python -m pytest -q tests/test_beta_activation_serialization.py tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_beta_question_services.py",
+      "passed": 79,
+      "warnings": 1,
+      "seconds": 32.11,
+      "exit_code": 0
+    },
+    "frontend": {
+      "test_files": [
+        "frontend-v1/tests/research-answer-history.test.ts",
+        "frontend-v1/tests/research-answer-read-ownership.test.ts"
+      ],
+      "exit_code": 0,
+      "new_full_frontend_suite_claimed": false
+    },
+    "ruff": {
+      "exit_code": 0,
+      "scope": [
+        "api/v1_beta_question_services.py",
+        "api/v1_catalogue_host.py",
+        "orchestration/beta_vertex_research.py",
+        "tests/test_beta_activation_serialization.py",
+        "tests/test_beta_vertex_research.py",
+        "tests/test_beta_research_read_scopes.py"
+      ]
+    },
+    "raw_test_logs_retained_in_this_receipt": false,
+    "basis": "Completed tool output from the immediately preceding main-Mac audit; historical hosted CI is reused separately."
+  },
+  "http_checks": {
+    "login": {
+      "url": "https://beta.oceaninfobio.com/login",
+      "status": 200
+    },
+    "unauthenticated_runtime": {
+      "url": "https://beta.oceaninfobio.com/v1/runtime",
+      "status": 401
+    },
+    "signed_in_browser_journey_repeated": false
+  },
+  "hosted_ci": {
+    "receipt": "../research-20261109/provider-amendment06/ci.json",
+    "normal_run_id": 42941802734,
+    "normal_run_conclusion": "failure",
+    "diagnostic_run_id": 43020625782,
+    "diagnostic_run_conclusion": "success",
+    "postgres_passed": 318,
+    "postgres_explicit_skips": 16,
+    "restored_tables": 74,
+    "crash_root_cause_proven": false,
+    "jobs_metadata_reopened_during_audit": true,
+    "new_run_started": false
+  },
+  "proxy_relationship": {
+    "registry_repository": "gcr.io/cloud-sql-connectors/cloud-sql-proxy",
+    "reviewed_index": "sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+    "executed_manifest": "sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+    "reviewed_index_raw_bytes": "proxy-index.json",
+    "executed_manifest_raw_bytes": "proxy-linux-amd64.json",
+    "both_raw_sha256_verified": true,
+    "matching_descriptor": {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+      "size": 2940,
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      }
+    },
+    "finding": "Executed digest is the exact Linux/amd64 child named by the reviewed OCI index.",
+    "guard_implementation_changed": false,
+    "rollout_cleared": false
+  },
+  "private_helper_portability": {
+    "manifest": "../research-20261109/provider-amendment06/retained-helpers.json",
+    "expected_files": 15,
+    "second_mac_relative_directory": "provider-amendment06-recovery-tools-20261114",
+    "documented_main_mac_location_present": false,
+    "alternate_OCEAN_root_location_present": false,
+    "search_was_limited_to_documented_locations": true,
+    "copied_or_reconstructed": false,
+    "next_action": "Transfer hash-pinned helpers privately, or reconstruct and review equivalent tools. Expired arguments and one-shot assumptions must not be replayed."
+  },
+  "not_refreshed": [
+    "database global quiescence",
+    "Cloud Tasks queue/tasks",
+    "Scheduler",
+    "IAM and numeric secret metadata",
+    "catalogue control/audit chain",
+    "budget and post-ledger usage"
+  ],
+  "cloud_mutations": false,
+  "scientific_payloads_or_credentials_committed": false,
+  "scientific_approval": false,
+  "release_accepted": false,
+  "three_hour_schedule": "Remains PAUSED per existing checkpoint; no automation update made."
+}

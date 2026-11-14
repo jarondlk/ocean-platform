@@ -1,26 +1,33 @@
 # OCEAN v1.0.0 Planning Hub
 
-Current follow-on: [beta integration/cloud preparation](beta/PREPARATION.md) is
-complete locally. The user will sign in later; runtime implementation and cloud
-setup have not started. [Handoff](handoffs/BETA_PREPARATION.md).
+Current phase (2026-11-14 JST): **cloud integration and operational acceptance**
+for the independent beta at `https://beta.oceaninfobio.com`. The main Mac has
+resumed from second-Mac checkpoint `7002312`; unrelated local work is preserved.
 
-**P00 and C01–C26 are Complete within their documented boundaries with hosted delivery; C27 is Complete for local release preparation. Live deployment/release gates remain pending.**
-The user selected C27 on 2026-11-01 after the verified C26 delivery.
-See [C27 readiness](C27_READINESS_AUDIT_2026-11-01.md),
-[release preparation](C27_RELEASE_PREPARATION.md) and [handoff](handoffs/C27.md).
-The dated C24/C25 notes below are historical; current state is in STATUS.
-C24 is delivered for offline configuration and operator preparation; provider/live
-beta deployment gates remain pending. See [C24 handoff](handoffs/C24.md).
-C25 readiness passes for starting local proposal review/approval work. Later
-execution/result service acceptance needs the explicit public-contract amendment
-identified in [the readiness audit](C25_READINESS_AUDIT_2026-10-28.md).
-C25 remains Not started.
-C24 development preparation is ready for the proposed `beta.oceaninfobio.com`
-site; see [readiness and plan](C24_READINESS_AUDIT_2026-10-28.md). DNS, hosting
-and deployment have not been configured. Current implementation status always
-comes from [STATUS.md](STATUS.md); dated checkpoints below remain historical.
-This folder is the portable source of truth for the accepted architecture,
-component prompts and resumable progress. Start here in a fresh chat.
+P00/C01–C26 are complete within documented software/component boundaries;
+C27 is complete for local release preparation. Authenticated hosting, CTD,
+metagenome/MUR SST catalogues and saved investigations are deployed. Research
+has a qualified API awaiting guarded rollout; eDNA, production experiments,
+recovery and full release acceptance remain open. There is no later CXX
+component to invent or automatically mark complete.
+
+Start with [STATUS](STATUS.md), the [current deployment handoff](handoffs/BETA_DEPLOYMENT.md)
+and the [beta completion plan](beta/BETA_COMPLETION_PLAN.md). The plan organizes
+remaining work as B0 resume/preflight, B1 usable Research, B2 complete data,
+B3 production experiments, B4 durable operations and B5 accepted beta release.
+It retains all 43 formal evaluation rows and 20 original operational gates.
+[Main-Mac audit](beta/main-mac-return-20261114/audit.json) records the exact
+current source/image findings. Research dispatch/synthesis and the three-hour
+Codex schedule remain paused; no full beta/release acceptance is claimed.
+
+The November 1 [integration preparation](beta/PREPARATION.md),
+[release package](C27_RELEASE_PREPARATION.md) and component handoffs are historical
+source-bound evidence. Their pre-deployment wording does not describe current
+cloud progress. Preserve their receipts; use the current handoff/plan to resume.
+
+This folder is the portable source of truth for accepted architecture, component
+contracts, progress and resumable work. The root repository README's unrelated
+local changes remain outside this update.
 
 ## Read and choose
 
@@ -30,6 +37,11 @@ component prompts and resumable progress. Start here in a fresh chat.
 4. Copy its planning, implementation or resume prompt from
    [PROMPTS.md](PROMPTS.md). Planning is the default until the user explicitly
    selects implementation.
+
+## Historical component checkpoints
+
+The following dated component notes retain their original progression. Current
+state and remaining beta work are in STATUS and the completion plan above.
 
 **Completed:** P00 — Local UI and UX prototype, accepted on 2026-10-14 JST.
 The Pipeline & jobs page is omitted as requested. Read [its handoff](handoffs/P00.md)

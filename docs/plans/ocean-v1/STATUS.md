@@ -2,7 +2,37 @@
 
 Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
 
-**Current beta checkpoint — 2026-11-14 JST:**
+**Current beta progress — main Mac return, 2026-11-14 JST:**
+
+The main Mac is synchronized to second-Mac checkpoint `7002312` on `overhaul`,
+with unrelated local work preserved. The return audit rechecked live serving
+revision `00021-mgn` (generation 34, 100% traffic), controller `00002-mcw`,
+candidate build `ec6296cd` and 180 API/71 frontend source pins. Dedicated
+`scripts/gcloud_beta.sh` inspection access works here without a new personal
+sign-in. Login 200/protected runtime 401, 79 focused backend tests, focused
+frontend checks and Ruff pass. No cloud update or signed-in journey was run.
+
+The exact executed SQL-proxy digest is now verified as the Linux/amd64 member
+of the reviewed OCI index; both raw manifest hashes are retained. This resolves
+the missing registry relationship evidence, **not** the unchanged rollout guard
+or the expired database/budget preflight. Fifteen private operator helpers are
+absent from this Mac's documented locations; transfer by hash or reconstruct
+and review before use. Serving/controller still use API `4b24ca90…`; qualified
+API `7889ef20…` remains undeployed, Research dispatch/synthesis are off, and the
+paused Codex schedule is unchanged. Original normal CI remains red; the separate
+318-case/74-table PostgreSQL acceptance and its unexplained-crash limitation stand.
+
+[Audit and exact image proof](beta/main-mac-return-20261114/audit.json),
+[beta completion plan](beta/BETA_COMPLETION_PLAN.md),
+[current deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+We are in cloud integration/operational acceptance: three live source families
+and investigations are available; Research, eDNA, production experiments,
+recovery and full release acceptance remain open. The plan retains all 43 C26
+rows and 20 C27 gates. Next: B0 fresh scoped preflight/tool recovery, then B1
+Research acceptance, followed by B2 data, B3 experiments, B4 operations and B5
+integrated release. `release_accepted=false`; scientific approval remains false.
+
+**Historical second Mac checkpoint — 2026-11-14 JST:**
 
 The rollout is held and checkpointed at the operator's request. Fresh cloud
 inspection on November 14 requires Google reauthentication; no sign-in or
