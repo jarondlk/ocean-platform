@@ -2,6 +2,15 @@
 
 State: in progress. The user selected B1 on November14.
 
+[Admission rollout](admission-rollout.json) is now Ready at generation38, with
+both Research flags true and queue PAUSED. Authentication/private-origin checks
+pass. The actual model test is held at the original initial¥500 planning limit:
+[latest budget](question04-budget-hold.json) is¥509.1663 including the full¥300
+model reserve/¥20forward cloud margin. A concrete¥550initial-allowance amendment
+has been requested, not applied. Monthly target stays¥50,000; no new question
+or model call.136focused operator checks/Ruff pass, including portable canonical
+manual task delivery and refusal to retry uncertain outcomes.
+
 [Drained promotion](drained-promotion.json) is delivered: controller/API7889ef20
 are Ready, serving generation36 receives100%traffic with admission false. The
 signed-in existing-history/evidence journey passes15seconds; its observed

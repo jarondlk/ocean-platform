@@ -10,6 +10,12 @@ no runtime Scheduler or new question yet. Actual authentication/private-origin
 checks pass. [Admission receipt](beta/b1-20261114/admission-rollout.json).
 One canonical manual-delivery helper is now portable and refuses automatic
 retries after retaining a dispatch intent. Actual Gemini acceptance follows.
+Latest model admission is held for the requested initial-validation allowance
+amendment500→550JPY: refreshed conservative total509.1663JPY includes the full
+300JPY model reserve and20JPY forward cloud margin. This is not an actual
+invoice overrun. No new question/model call;136focused operator checks/Ruff pass.
+[Budget hold](beta/b1-20261114/question04-budget-hold.json). Monthly target50,000JPY
+is unchanged, and personal CLI/browser login work.
 
 Serving generation36 / `ocean-v1-beta-serving-b1-provider-20261114` is now
 Ready at100%traffic on API7889ef20, after fresh observer and traffic-only CAS

@@ -2,6 +2,15 @@
 
 ## Current continuation — B1 drained API promoted, model acceptance next
 
+Immediate Q4 gate: refreshed conservative plan is¥509.1663 with all7observer
+executions costed, no future observer, full¥300model reserve and¥20forward
+cloud margin. The initial¥500 allowance remains unchanged. A user question is
+pending for¥550; do not treat silence as approval. No fourth question or new
+model call was submitted. [Exact hold](../beta/b1-20261114/question04-budget-hold.json).
+The monthly beta target stays¥50,000.136focused operator checks/Ruff pass.
+Service admission38 remains active, queue paused; no recurring runtime dispatch.
+GCP CLI and beta Google session work, so no new sign-in is currently needed.
+
 Later admission increment: generation38 / `ocean-v1-beta-serving-b1-live-20261114`
 is Ready at100%traffic with only the two Research flags true. Fresh observer
 `…-wlwl2` succeeded08:50:29UTC before both guarded phases. Queue stays PAUSED,
@@ -11,6 +20,7 @@ yet. Portable `scripts/beta_b1_dispatch.py` supports one canonical undispatched
 task per public UUID with retained-before-POST intent and no automatic retry.
 Reconcile the fresh zero-future-observer cost capture before submitting the
 predeclared Q4; then use the manual helper for its run and answer task only.
+The later budget hold above supersedes the earlier pending reconciliation.
 
 Serving generation36 / `ocean-v1-beta-serving-b1-provider-20261114` is Ready
 at100% traffic on API7889ef20, matching private controller generation3. Fresh
