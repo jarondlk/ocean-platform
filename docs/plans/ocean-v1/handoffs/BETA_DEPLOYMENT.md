@@ -2,6 +2,16 @@
 
 ## Current continuation — B1 drained API promoted, model acceptance next
 
+Later admission increment: generation38 / `ocean-v1-beta-serving-b1-live-20261114`
+is Ready at100%traffic with only the two Research flags true. Fresh observer
+`…-wlwl2` succeeded08:50:29UTC before both guarded phases. Queue stays PAUSED,
+Scheduler absent; unauthenticated runtime401/private-controller404 verified.
+[Admission receipt](../beta/b1-20261114/admission-rollout.json). No fourth question
+yet. Portable `scripts/beta_b1_dispatch.py` supports one canonical undispatched
+task per public UUID with retained-before-POST intent and no automatic retry.
+Reconcile the fresh zero-future-observer cost capture before submitting the
+predeclared Q4; then use the manual helper for its run and answer task only.
+
 Serving generation36 / `ocean-v1-beta-serving-b1-provider-20261114` is Ready
 at100% traffic on API7889ef20, matching private controller generation3. Fresh
 observer`…-dz544` succeeded08:43:01UTC before the traffic-only CAS update;

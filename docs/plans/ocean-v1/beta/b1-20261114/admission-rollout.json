@@ -1,0 +1,50 @@
+{
+  "version": "ocean-beta-b1-admission-rollout-v1",
+  "recorded_utc": "2026-11-14T08:53:13.299994+00:00",
+  "writer_source_checkpoint": "ca37e0d",
+  "observer": {
+    "execution": "ocean-v1-beta-provider-preflight-20261111-wlwl2",
+    "start_utc": "2026-11-14T08:50:04.568117+00:00",
+    "completion_utc": "2026-11-14T08:50:29.328627+00:00",
+    "proxy_proof": {
+      "index": "sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+      "executed_manifest": "sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+      "platform": "linux/amd64"
+    }
+  },
+  "stage": {
+    "phase": "admit-stage",
+    "generation": "37",
+    "created_revision": "ocean-v1-beta-serving-b1-live-20261114",
+    "ready_revision": "ocean-v1-beta-serving-b1-provider-20261114",
+    "runtime_startup_verified": false,
+    "all_other_configuration_preserved": true
+  },
+  "promotion": {
+    "phase": "admit-promote",
+    "generation": "38",
+    "created_revision": "ocean-v1-beta-serving-b1-live-20261114",
+    "ready_revision": "ocean-v1-beta-serving-b1-live-20261114",
+    "runtime_startup_verified": true,
+    "all_other_configuration_preserved": true
+  },
+  "only_changed_flags": [
+    "ENABLE_V1_RESEARCH_DISPATCH",
+    "ENABLE_V1_SYNTHESIS"
+  ],
+  "all_other_input_configuration_preserved": true,
+  "traffic_percent": 100,
+  "queue": "PAUSED",
+  "scheduler_jobs": 0,
+  "unauthenticated_checks": {
+    "login": 200,
+    "runtime": 401,
+    "private_controller": 404
+  },
+  "question04_submitted": false,
+  "manual_delivery_helper": "scripts/beta_b1_dispatch.py",
+  "manual_delivery_boundary": "Exactly one undispatched canonical task for the supplied public UUID; exact target/body/OIDC/hash-name/deadline; paused queue, accepted live images and private IAM; intent persisted before one POST; no retry or task creation.",
+  "manual_delivery_helper_sha256": "d29c1e5214a6c0e20e4fda75d884720f8131213a4cf8aa00652445ded8d14f5b",
+  "full_B1_acceptance": false,
+  "scientific_approval": false
+}

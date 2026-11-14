@@ -4,6 +4,13 @@ Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-14 JST:**
 
+Admission generation38 / `ocean-v1-beta-serving-b1-live-20261114` is now Ready
+at100%traffic with just the two Research flags true. Queue remains PAUSED;
+no runtime Scheduler or new question yet. Actual authentication/private-origin
+checks pass. [Admission receipt](beta/b1-20261114/admission-rollout.json).
+One canonical manual-delivery helper is now portable and refuses automatic
+retries after retaining a dispatch intent. Actual Gemini acceptance follows.
+
 Serving generation36 / `ocean-v1-beta-serving-b1-provider-20261114` is now
 Ready at100%traffic on API7889ef20, after fresh observer and traffic-only CAS
 promotion. Controller generation3 is Ready on the same image. Existing signed-in

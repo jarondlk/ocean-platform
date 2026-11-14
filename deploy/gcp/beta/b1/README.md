@@ -68,6 +68,19 @@ image, source, service identity or relevant configuration needs its own reviewed
 contract and acceptance. Broad application CI is reused only for unchanged
 runtime bytes; operator-tool tests and live provider validations are separate.
 
+For the bounded manual acceptance, `scripts/beta_b1_dispatch.py` validates one
+undispatched canonical task for the supplied run/job UUID, current accepted
+service images/traffic, private IAM and the paused queue. It retains an intent
+before exactly one `tasks.run` request. It never resumes a queue or creates a
+replacement task. A retained intent without an acknowledgement requires actual
+outcome inspection; a second call refuses to repeat it. A task acknowledgement
+does not establish a successful answer.
+
+```sh
+.venv/bin/python scripts/beta_b1_dispatch.py --directory "$PRIVATE_B1_DIRECTORY" \
+  --kind run --identity "$PUBLIC_RUN_UUID"
+```
+
 Primary API references checked November14:
 [service PATCH/validateOnly](https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.services/patch),
 [service/traffic/revision fields](https://docs.cloud.google.com/run/docs/reference/rest/v2/projects.locations.services).
