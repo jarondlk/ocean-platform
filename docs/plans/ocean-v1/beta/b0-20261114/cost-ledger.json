@@ -1,0 +1,132 @@
+{
+  "all31_public_prices_unchanged": true,
+  "all_metric_pages_read": true,
+  "ancillary_reserve_jpy": "5",
+  "builds": [
+    {
+      "id": "ec6296cd-55ea-42ec-a50a-552364f2a62c",
+      "jpy": "0.949229999",
+      "planning_whole_minutes": "1",
+      "seconds": "40.82353"
+    },
+    {
+      "id": "cc67b713-828d-4f4e-ba46-f403a843f4b5",
+      "jpy": "6.644609993",
+      "planning_whole_minutes": "7",
+      "seconds": "377.973775"
+    },
+    {
+      "id": "f612c37f-dee6-4d40-806f-ecc7a9676ea8",
+      "jpy": "6.644609993",
+      "planning_whole_minutes": "7",
+      "seconds": "384.715521"
+    },
+    {
+      "id": "c9f4bb42-c54b-403e-b7d2-3cce0d400931",
+      "jpy": "0.949229999",
+      "planning_whole_minutes": "1",
+      "seconds": "40.797335"
+    }
+  ],
+  "builds_planning_whole_minute_jpy": "15.187679984",
+  "captured_utc": "2026-11-14T07:31:17.113006Z",
+  "conservative_all_storage_sent_bytes_at_internet_rate_jpy": "74.10906740811742645129561423",
+  "conservative_observed_and_reserved_jpy": "174.7657349535067889366407472",
+  "cost_meter_ingestion_lag_remains": true,
+  "currency": "JPY",
+  "incremental_validation_limit_jpy": 500,
+  "interval_start": "2026-11-09T13:13:28Z",
+  "is_invoice_or_hard_currency_cap": false,
+  "job_minimum_corrections": [
+    {
+      "additional_minimum_jpy": "0.48451805846109458444611094",
+      "execution_count": 1,
+      "job": "ocean-v1-beta-controller-credential",
+      "measured_cpu_seconds": "0.1917902262616523",
+      "measured_memory_gibyte_seconds": "0.11986889095210503",
+      "per_execution_cpu": 2,
+      "per_execution_memory_gib": "1.25",
+      "per_execution_minimum_seconds": 60
+    },
+    {
+      "additional_minimum_jpy": "0.94527854559999999999208976",
+      "execution_count": 2,
+      "job": "ocean-v1-beta-provider-preflight-20261111",
+      "measured_cpu_seconds": "0.4",
+      "measured_memory_gibyte_seconds": "0.15000000000000002",
+      "per_execution_cpu": 2,
+      "per_execution_memory_gib": ".75",
+      "per_execution_minimum_seconds": 60
+    },
+    {
+      "additional_minimum_jpy": "0.47263927279999999999604488",
+      "execution_count": 1,
+      "job": "ocean-v1-beta-research-action-shape-20261111",
+      "measured_cpu_seconds": "0.2",
+      "measured_memory_gibyte_seconds": "0.07500000000000001",
+      "per_execution_cpu": 2,
+      "per_execution_memory_gib": ".75",
+      "per_execution_minimum_seconds": 60
+    },
+    {
+      "additional_minimum_jpy": "0.47263927279999999999604488",
+      "execution_count": 1,
+      "job": "ocean-v1-beta-research-diagnostics-20261110",
+      "measured_cpu_seconds": "0.2",
+      "measured_memory_gibyte_seconds": "0.07500000000000001",
+      "per_execution_cpu": 2,
+      "per_execution_memory_gib": ".75",
+      "per_execution_minimum_seconds": 60
+    },
+    {
+      "additional_minimum_jpy": "0",
+      "execution_count": 1,
+      "job": "ocean-v1-beta-research-grants",
+      "measured_cpu_seconds": "120.000000000",
+      "measured_memory_gibyte_seconds": "75.000000000",
+      "per_execution_cpu": 2,
+      "per_execution_memory_gib": "1.25",
+      "per_execution_minimum_seconds": 60
+    }
+  ],
+  "job_minimum_total_jpy": "2.37507514966109458443029046",
+  "logging_bytes_conservative": "18342186",
+  "logging_jpy": "1.351267814645518960431218147",
+  "manual_question_limit": 20,
+  "manual_questions_submitted": 3,
+  "metric_cpu_seconds": "13589.129143672790904809453",
+  "metric_memory_gibyte_seconds": "21655.7264245272820318610331",
+  "metric_request_count": "5297",
+  "model_calls": 2,
+  "model_input_tokens": 10599,
+  "model_jpy": "3.706505842377056",
+  "model_output_tokens_including_thoughts": 1004,
+  "monthly_scenario_unchanged_price_reference_jpy": "36810.84",
+  "monthly_target_jpy": 50000,
+  "new_model_question_admitted": false,
+  "observed_metered_gross_estimate_jpy": "95.65666754538936248534513301",
+  "observer_executed_after_capture_and_not_yet_meter_reconciled": true,
+  "one_B0_observer_reserved_jpy": "1.50",
+  "prior370_model_plus20_rollout_plus_observer_within500": false,
+  "prior_future_model370_reserve_not_admitted": true,
+  "project": "ocean-v1-beta-20261101",
+  "qualifications": [
+    "CPU/memory allocation metrics priced at conservative request rates, including whole-project service use.",
+    "Whole-minute build allowances and job60s minima are conservative planning corrections, not invoice granularity.",
+    "All storage sent bytes are conservatively reserved at the highest previously selected internet-destination rate; actual same-region transfers may be lower.",
+    "Logging uses larger ordinary/billing counter. Ancillary reserve covers small tasks/secrets/registry/log-ingestion lag effects.",
+    "SQL/LB and other standing baseline remain in the monthly scenario, separate from incremental validation.",
+    "B0 observer only is admitted; subsequent model reserve must be narrowed to a defensible bound or separately amended."
+  ],
+  "remaining_initial500_after_observer_reserve_jpy": "323.7342650464932110633592528",
+  "run_at_higher_request_rates_jpy": "60.49712706266669294048362440",
+  "single_observer_reserve_retained_after_success": true,
+  "storage_class_a_operations": "16",
+  "storage_class_b_operations": "197945",
+  "storage_network_destination_attested_by_metric": false,
+  "storage_operations_jpy": "12.539011692039",
+  "storage_sent_bytes": "2186871058",
+  "total_with_B0_observer_jpy": "176.2657349535067889366407472",
+  "upper_budget_jpy": 100000,
+  "version": "ocean-beta-b0-cost-ledger-v1"
+}

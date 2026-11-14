@@ -1,0 +1,5 @@
+import hashlib,sys
+expected='a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33'
+if len(sys.argv)!=2 or hashlib.sha256(sys.argv[1].encode()).hexdigest()!=expected:
+ print('{"state":"preflight_source_hash_rejected"}');sys.exit(2)
+source=sys.argv[1];sys.argv=['ocean_provider_rollout_preflight.py'];exec(compile(source,'ocean_provider_rollout_preflight.py','exec'),{'__name__':'__main__'})

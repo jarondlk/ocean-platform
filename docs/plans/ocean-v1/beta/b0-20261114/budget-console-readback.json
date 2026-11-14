@@ -1,0 +1,51 @@
+{
+  "amounts_filters_caps_and_notification_settings_changed": false,
+  "beta_monthly_budget": {
+    "actual_threshold_percent": [
+      50,
+      75,
+      90,
+      100
+    ],
+    "amount": 50000,
+    "credits_used": false,
+    "currency": "JPY",
+    "id": "8e005868-c456-4ee3-9f34-682d2e0edc20",
+    "name": "ocean-v1-beta-monthly-50000",
+    "observed_reported_spend_jpy": "10357.58",
+    "period": "monthly",
+    "scope": "OCEAN v1 beta project; all services",
+    "spend_cap": "Not applicable; alert budget only"
+  },
+  "billing_budgets_API_read": {
+    "fallback": "Existing authenticated Console, read only",
+    "http_status": 403,
+    "reason": "SERVICE_DISABLED",
+    "service_enabled_or_IAM_expanded_to_read": false
+  },
+  "cost_reporting_lag": "Console says costs usually recorded within 24 hours; directional cap costs can lead reported costs.",
+  "date_jst": "2026-11-14",
+  "existing_cloud_run_cap": {
+    "amount_jpy": 3000,
+    "configured_date_console": "Nov 1, 2026, 7:35:58 PM",
+    "enforcement_selected": true,
+    "id": "790b19ff-fda7-4216-953c-4bf3b54a4b5a",
+    "name": "ocean-v1-beta-cloud-run-cap-3000",
+    "notification_billing_admins_and_users": true,
+    "notification_project_owners": true,
+    "observed_directional_spend_jpy": "270.97",
+    "period": "monthly",
+    "qualification": "Console warns enforcement is not instant and overages remain billable; no stronger hard-cap guarantee is claimed.",
+    "scope": "Cloud Run in OCEAN v1 beta project only",
+    "spend_cap_status": "Configured",
+    "threshold_percent": [
+      50,
+      80,
+      100
+    ]
+  },
+  "observed_costs_are_final_invoice": false,
+  "project_id": "ocean-v1-beta-20261101",
+  "source": "Actual Google Cloud Console budget table and read-only Cloud Run cap detail",
+  "version": "ocean-beta-b0-budget-console-readback-v1"
+}

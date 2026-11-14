@@ -1,0 +1,199 @@
+"""Fixed aggregate-only read-only beta runtime-identity rollout preflight."""
+import datetime
+import json
+import os
+import re
+import sys
+import urllib.request
+
+PROJECT = 'ocean-v1-beta-20261101'
+DATABASE = 'ocean_v1_beta'
+DB_USER = 'ocean_v1_research_controller'
+CONNECTION = PROJECT + ':asia-northeast1:ocean-v1-beta-sql'
+RUN_ID = '91f567bc-a9a2-4f38-84c4-54d789972115'
+JOB_ID = '3b1885a1-e5b1-4f85-9495-8cf4e333020c'
+INVESTIGATION_ID = '86c7fe5b-3485-4a61-ab97-32c4f1628cdc'
+CONVERSATION_ID = '72a52508-2123-42c4-951f-da54eea16a64'
+RUN_TERMINAL = "('completed','partial','cancelled','failed')"
+ANSWER_TERMINAL = "('completed','partial','cancelled','failed','unavailable')"
+RUN_NONTERMINAL = "('queued','running','awaiting_clarification','awaiting_approval')"
+IDENTITY_SQL = "SELECT current_user, current_database(), current_setting('transaction_read_only'), current_setting('transaction_isolation')"
+RUN_FIELDS = ('total','queued','running','awaiting_clarification','awaiting_approval','nonterminal','open_lease_fields','unexpired_leases','unknown_status')
+ANSWER_FIELDS = ('total','queued','running','nonterminal','open_lease_fields','unexpired_leases','unknown_status')
+OUTBOX_FIELDS = ('total','pending','pending_dispatchable','pending_terminal','pending_stale_input','orphaned','unknown_state')
+STEP_FIELDS = ('prepared_model_steps','unknown_kind','unknown_state')
+FIXED_FIELDS = ('matches','terminal','lease_closed')
+RUN_SQL = f"""SELECT count(*),
+ count(*) FILTER (WHERE status='queued'), count(*) FILTER (WHERE status='running'),
+ count(*) FILTER (WHERE status='awaiting_clarification'), count(*) FILTER (WHERE status='awaiting_approval'),
+ count(*) FILTER (WHERE status NOT IN {RUN_TERMINAL}),
+ count(*) FILTER (WHERE lease_until IS NOT NULL OR active_started_at IS NOT NULL),
+ count(*) FILTER (WHERE lease_until>CURRENT_TIMESTAMP),
+ count(*) FILTER (WHERE status NOT IN {RUN_TERMINAL} AND status NOT IN {RUN_NONTERMINAL})
+ FROM research_run"""
+ANSWER_SQL = f"""SELECT count(*),
+ count(*) FILTER (WHERE status='queued'), count(*) FILTER (WHERE status='running'),
+ count(*) FILTER (WHERE status NOT IN {ANSWER_TERMINAL}),
+ count(*) FILTER (WHERE lease_until IS NOT NULL OR active_started_at IS NOT NULL),
+ count(*) FILTER (WHERE lease_until>CURRENT_TIMESTAMP),
+ count(*) FILTER (WHERE status NOT IN {ANSWER_TERMINAL} AND status NOT IN ('queued','running'))
+ FROM research_answer_job"""
+RUN_OUTBOX_SQL = f"""SELECT count(*), count(*) FILTER (WHERE o.state='pending'),
+ count(*) FILTER (WHERE o.state='pending' AND r.status IN ('queued','running') AND o.input_version=r.input_version),
+ count(*) FILTER (WHERE o.state='pending' AND r.status IN {RUN_TERMINAL}),
+ count(*) FILTER (WHERE o.state='pending' AND o.input_version<>r.input_version),
+ count(*) FILTER (WHERE r.id IS NULL), count(*) FILTER (WHERE o.state NOT IN ('pending','sent'))
+ FROM research_run_outbox o LEFT JOIN research_run r ON r.id=o.run_id"""
+ANSWER_OUTBOX_SQL = f"""SELECT count(*), count(*) FILTER (WHERE o.state='pending'),
+ count(*) FILTER (WHERE o.state='pending' AND j.status IN ('queued','running')),
+ count(*) FILTER (WHERE o.state='pending' AND j.status IN {ANSWER_TERMINAL}),
+ 0::bigint, count(*) FILTER (WHERE j.id IS NULL), count(*) FILTER (WHERE o.state NOT IN ('pending','sent'))
+ FROM research_answer_outbox o LEFT JOIN research_answer_job j ON j.id=o.job_id"""
+RUN_STEPS_SQL = """SELECT count(*) FILTER (WHERE state='prepared' AND kind='model'),
+ count(*) FILTER (WHERE kind NOT IN ('model','tool','repair')),
+ count(*) FILTER (WHERE state NOT IN ('prepared','committed')) FROM research_run_step"""
+ANSWER_STEPS_SQL = RUN_STEPS_SQL.replace('research_run_step','research_answer_step')
+Q3_RUN_SQL = f"""SELECT count(*), count(*) FILTER (WHERE status IN {RUN_TERMINAL}),
+ count(*) FILTER (WHERE lease_until IS NULL AND active_started_at IS NULL)
+ FROM research_run WHERE id=%s::uuid AND investigation_id=%s::uuid
+ AND conversation_id=%s::uuid AND input_version=1"""
+Q3_ANSWER_SQL = f"""SELECT count(*), count(*) FILTER (WHERE j.status IN {ANSWER_TERMINAL}),
+ count(*) FILTER (WHERE j.lease_until IS NULL AND j.active_started_at IS NULL)
+ FROM research_answer_job j JOIN research_run r ON r.id=j.run_id AND r.user_id=j.user_id
+ AND r.investigation_id=j.investigation_id AND r.conversation_id=j.conversation_id
+ AND r.revision_id=j.revision_id AND r.snapshot_id=j.snapshot_id AND r.payload_sha256=j.payload_sha256
+ AND r.input_version=j.input_version
+ WHERE r.id=%s::uuid AND j.id=%s::uuid AND r.investigation_id=%s::uuid
+ AND r.conversation_id=%s::uuid AND r.input_version=1"""
+QUERIES = (
+ ('runs',RUN_SQL,RUN_FIELDS,None), ('answer_jobs',ANSWER_SQL,ANSWER_FIELDS,None),
+ ('run_outbox',RUN_OUTBOX_SQL,OUTBOX_FIELDS,None), ('answer_outbox',ANSWER_OUTBOX_SQL,OUTBOX_FIELDS,None),
+ ('run_steps',RUN_STEPS_SQL,STEP_FIELDS,None), ('answer_steps',ANSWER_STEPS_SQL,STEP_FIELDS,None),
+ ('q3_run',Q3_RUN_SQL,FIXED_FIELDS,(RUN_ID,INVESTIGATION_ID,CONVERSATION_ID)),
+ ('q3_answer_job',Q3_ANSWER_SQL,FIXED_FIELDS,(RUN_ID,JOB_ID,INVESTIGATION_ID,CONVERSATION_ID)),
+)
+STAGES = {'configuration','connect','read_only_session','identity','runs','answer_jobs','run_outbox','answer_outbox','run_steps','answer_steps','q3_run','q3_answer_job','close','proxy_shutdown'}
+
+
+def sqlstate(error):
+    try:
+        value = getattr(error,'pgcode',None)
+    except Exception:
+        return None
+    return value if isinstance(value,str) and re.fullmatch('[A-Z0-9]{5}',value) else None
+
+
+class ReadFailure(Exception):
+    def __init__(self,stage,error):
+        super().__init__('Read-only preflight failed')
+        self.stage = stage if stage in STAGES else 'identity'
+        self.pgcode = sqlstate(error)
+
+
+def execute(cursor,query,params,stage):
+    try:
+        cursor.execute(query,params)
+    except Exception as error:
+        raise ReadFailure(stage,error) from None
+
+
+def counts(row,fields):
+    if not isinstance(row,(tuple,list)) or len(row)!=len(fields) or any(type(v) is not int or not 0<=v<=9007199254740991 for v in row):
+        raise ValueError('Invalid aggregate counts')
+    return dict(zip(fields,row))
+
+
+def collect(connection):
+    groups = {}
+    with connection.cursor() as cursor:
+        execute(cursor,IDENTITY_SQL,None,'identity')
+        if cursor.fetchone()!=(DB_USER,DATABASE,'on','repeatable read'):
+            raise ValueError('Wrong read-only database identity')
+        for name,query,fields,params in QUERIES:
+            execute(cursor,query,params,name)
+            rows=cursor.fetchall()
+            if len(rows)!=1:
+                raise ValueError('Expected one aggregate row')
+            groups[name]=counts(rows[0],fields)
+    for name in ('runs','answer_jobs'):
+        g=groups[name]
+        active_keys=('queued','running','awaiting_clarification','awaiting_approval') if name=='runs' else ('queued','running')
+        if (any(v>g['total'] for v in g.values()) or g['nonterminal']!=sum(g[k] for k in active_keys)+g['unknown_status']
+                or g['unexpired_leases']>g['open_lease_fields']):
+            raise ValueError('Inconsistent head aggregate')
+    for name in ('run_outbox','answer_outbox'):
+        g=groups[name]
+        if g['pending']>g['total'] or any(g[k]>g['pending'] for k in ('pending_dispatchable','pending_terminal','pending_stale_input')) or g['orphaned']>g['total'] or g['unknown_state']>g['total']:
+            raise ValueError('Inconsistent outbox aggregate')
+    fixed_closed=all(groups[n]=={'matches':1,'terminal':1,'lease_closed':1} for n in ('q3_run','q3_answer_job'))
+    no_active_heads=all(groups[n][k]==0 for n in ('runs','answer_jobs') for k in ('nonterminal','open_lease_fields','unexpired_leases','unknown_status'))
+    no_dispatchable=all(groups[n][k]==0 for n in ('run_outbox','answer_outbox') for k in ('pending_dispatchable','orphaned','unknown_state'))
+    no_uncertain_models=all(v==0 for n in ('run_steps','answer_steps') for v in groups[n].values())
+    clear=fixed_closed and no_active_heads and no_dispatchable and no_uncertain_models
+    return {'version':'ocean-beta-runtime-rollout-preflight-v1','state':'read_only_rollout_preflight_verified' if clear else 'runtime_identity_change_blocked',
+        'project':PROJECT,'counts':groups,'fixed_question_three_terminal_and_leases_closed':fixed_closed,
+        'runtime_identity_change_clear_at_snapshot':clear,'transaction_read_only_verified':True,
+        'counts_and_booleans_only':True,'user_records_prompts_payloads_credentials_selected_or_emitted':False,
+        'snapshot_is_not_a_new_submission_or_queue_admission_fence':True,
+        'terminal_pending_outbox_is_not_dispatchable_and_is_not_modified':True}
+
+
+def configuration(env):
+    from sqlalchemy.engine import make_url
+    if (env.get('OCEAN_V1_PROJECT_ID')!=PROJECT or env.get('DEPLOYMENT_ENV')!='production'
+            or env.get('OCEAN_V1_SQL_CONNECTION_NAME')!=CONNECTION or env.get('OCEAN_V1_DATABASE_USER')!=DB_USER
+            or 'DATABASE_URL' in env or any(v.strip().lower()!='false' for k,v in env.items() if k.startswith('ENABLE_V1_'))):
+        raise ValueError('Wrong preflight target')
+    url=make_url(env['OCEAN_V1_DATABASE_URL'])
+    if (url.drivername!='postgresql+psycopg2' or url.username!=DB_USER or not url.password or url.database!=DATABASE
+            or url.host!='127.0.0.1' or url.port!=5432 or dict(url.query) not in ({},{'sslmode':'disable'})):
+        raise ValueError('Wrong preflight database identity')
+    return {'host':url.host,'port':url.port,'user':url.username,'password':url.password,'dbname':url.database,
+        'sslmode':'disable','connect_timeout':5,'application_name':'ocean-provider-rollout-preflight-20261111',
+        'options':'-c default_transaction_read_only=on -c statement_timeout=5000 -c lock_timeout=2000 -c idle_in_transaction_session_timeout=15000'}
+
+
+def main():
+    result={'version':'ocean-beta-runtime-rollout-preflight-v1','state':'preflight_read_failed','runtime_identity_change_clear_at_snapshot':False}
+    connection=None;code=2;stage='configuration'
+    try:
+        if len(sys.argv)!=1:
+            raise ValueError('No arguments supported')
+        import psycopg2
+        kwargs=configuration(os.environ);stage='connect';connection=psycopg2.connect(**kwargs)
+        stage='read_only_session';connection.set_session(readonly=True,isolation_level='REPEATABLE READ',autocommit=False)
+        stage='identity';result=collect(connection);code=0 if result['runtime_identity_change_clear_at_snapshot'] else 3
+    except Exception as error:
+        result['failure_stage']=error.stage if isinstance(error,ReadFailure) else stage
+        value=sqlstate(error)
+        if value is not None:result['sqlstate']=value
+    finally:
+        if connection is not None:
+            close_error=None
+            try:
+                connection.rollback()
+            except Exception as error:
+                close_error=error
+            try:
+                connection.close()
+            except Exception as error:
+                close_error=error
+            if close_error is not None:
+                code=2;result={'version':'ocean-beta-runtime-rollout-preflight-v1','state':'preflight_close_failed','failure_stage':'close','runtime_identity_change_clear_at_snapshot':False}
+                value=sqlstate(close_error)
+                if value is not None:result['sqlstate']=value
+        try:
+            request=urllib.request.Request('http://127.0.0.1:9091/quitquitquit',data=b'',method='POST')
+            with urllib.request.urlopen(request,timeout=5) as response:
+                if response.status!=200:raise ValueError()
+            result['proxy_shutdown_verified']=True
+        except Exception:
+            code=2;result['proxy_shutdown_verified']=False;result['runtime_identity_change_clear_at_snapshot']=False
+            if 'failure_stage' not in result:result['failure_stage']='proxy_shutdown'
+        result['captured_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+        print(json.dumps(result,sort_keys=True,separators=(',',':'),allow_nan=False))
+    return code
+
+
+if __name__=='__main__':
+    raise SystemExit(main())

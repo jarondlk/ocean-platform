@@ -1,6 +1,14 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
+B0 preparation and its dated live preflight completed on November14:
+[completion/evidence](b0-20261114/README.md). B1 is next. The proxy guard and
+read-only observer boundary are now portable and tested; B1's writer still
+needs recovery/reconstruction/review. A passed180-second quiescence snapshot
+expires and cannot be replayed as permanent apply clearance. No runtime image
+has been changed. Fresh conservative ledger leaves¥323.7343 within the initial
+¥500 limit; the former¥370 model plus¥20 rollout reserve is not admitted.
+
 Source checkpoint reviewed: `7002312` on `overhaul`. This plan integrates the
 return-to-main-Mac audit and the second Mac's deployment work. It supersedes
 the *current-progress descriptions* in the November 1 preparation plans, while
@@ -231,5 +239,5 @@ checks. There is no need to repeat the entire backend suite for this plan.
 Legacy resources/data, original scientific bytes and prior receipts remain
 protected. Do not resume the paused Codex automation as part of planning.
 
-**Next action:** execute B0, then B1. Full beta acceptance remains false until
+**Next action:** begin B1 writer preparation and its current pre-apply gates after the completed B0 checkpoint. Full beta acceptance remains false until
 B2–B5 and all applicable original requirements have actual evidence.

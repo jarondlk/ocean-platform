@@ -1,6 +1,64 @@
 # Beta deployment continuation — 2026-11-14 JST
 
-## Current main Mac continuation and completion plan
+## Current continuation — B0 completed, B1 next
+
+B0 preparation and its dated live preflight passed on November 14. Read the
+[B0 completion and next gates](../beta/b0-20261114/README.md),
+[source/readiness receipt](../beta/b0-20261114/readiness.json) and
+[beta completion plan](../beta/BETA_COMPLETION_PLAN.md). The former proxy
+manifest hold has a verified exact index/child implementation and actual
+observer execution proof. No controller/serving rollout occurred.
+
+The existing observer source and 402-byte entry wrapper are recovered exactly
+from Cloud Run, with original hashes preserved. New
+`scripts/beta_b0_preflight.py` and its pinned contract pass 47 tests/Ruff and
+verify actual `…-9grc7` execution/report. The 15-file second-Mac helper set is
+not recovered; B1 still needs the stage/controller writer recovered by hash or
+reconstructed/reviewed. Do not replay old one-shot arguments. New raw captures
+and read-only recovery helpers are durable at
+`~/Library/Application Support/OCEAN/private-handoff-20261114/b0` (0700/0600),
+with hashes in the B0 private evidence index. No key/store/auth-code copy.
+
+Personal Google CLI sign-in is connected and scoped reads succeeded. Continue
+using `scripts/gcloud_beta.sh` for its grants and the explicit operator account
+only for separately authorized capabilities; no role expansion was made.
+Numeric secrets are enabled after resolving Cloud Run aliases; current private
+IAM/subject/custom permissions match. Catalogue control generation1794325728054265,
+SHA `94f56925…`, revision22/full audit replay and 16 references pass; selected
+activation `4843e61b…`/generation1794232040589985 and six registered snapshots
+remain current. No data/control/SQL write or completed setup job was repeated.
+
+Observer `ocean-v1-beta-provider-preflight-20261111-9grc7` succeeded at
+07:36:12 UTC; 3 terminal runs,2 terminal answer jobs,0active leases, pending
+outbox or uncertain model steps; read-only transaction and proxy shutdown pass.
+Guard proof verified at 07:37:48 UTC, with 180-second max freshness. Treat it as
+historical after expiry and reacquire current quiescence for a later apply.
+Closing service specs/generations/traffic match: serving34/`00021-mgn`,
+controller2/`00002-mcw`, old API `4b24ca90…`, frontend `be709b49…`.
+Research admission remains false; queue PAUSED/0tasks,0runtime Scheduler jobs.
+Qualified API `7889ef20…` is still undeployed. Runtime source/CI evidence is reused;
+the normal CI native crash remains explicit despite composed PostgreSQL acceptance.
+
+Budget Console readback confirms beta-only¥50,000 alerts (reported¥10,357.58)
+and the existing Cloud Run-only¥3,000 enforced cap (directional~¥270.97).
+No billing/API/IAM/cap setting changed. Budgets API `SERVICE_DISABLED` used a
+read-only Console fallback. Fresh 31 JPY prices are unchanged. Conservative
+incremental gross/reserves including one observer are¥176.2657;¥323.7343 remains
+inside the initial¥500 envelope, with ingestion-lag reserves retained. This
+includes all storage sent bytes at the worst selected internet rate and is not
+an invoice. The old¥370 model plus¥20 rollout reserve no longer fits; before
+new paid validation, bound a smaller safe model/call envelope or record an
+explicit amendment. Still3 submitted questions/2 historical model calls.
+
+Exact next action: begin B1 writer recovery/reconstruction/review and frozen
+source/image/build/composed-CI preservation checks. Immediately before any
+apply, refresh current configuration/authority/queue/budget and post-drain
+quiescence; private-controller image readiness precedes serving API staging
+and promotion. No new question or runtime sweep before actual new-image
+answer/reload/history/recovery and cost gates. B2–B5 remain open; scientific
+approval and release acceptance remain false. Codex scheduling stays PAUSED.
+
+## Historical main Mac return and completion plan
 
 Main-Mac return audit on November 14 fast-forwarded `overhaul` by 8 commits to
 `7002312`, preserving existing unrelated work. The current follow-on is the

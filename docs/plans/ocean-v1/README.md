@@ -11,6 +11,12 @@ has a qualified API awaiting guarded rollout; eDNA, production experiments,
 recovery and full release acceptance remain open. There is no later CXX
 component to invent or automatically mark complete.
 
+B0 preparation and its dated live preflight now pass; see the
+[B0 checkpoint](beta/b0-20261114/README.md). B1 guarded Research rollout
+preparation is next. The new guard/observer tooling is portable; the B1 writer
+still needs recovery or reconstruction/review. Research admission stays paused,
+and any future apply requires fresh state/quiescence rather than saved arguments.
+
 Start with [STATUS](STATUS.md), the [current deployment handoff](handoffs/BETA_DEPLOYMENT.md)
 and the [beta completion plan](beta/BETA_COMPLETION_PLAN.md). The plan organizes
 remaining work as B0 resume/preflight, B1 usable Research, B2 complete data,

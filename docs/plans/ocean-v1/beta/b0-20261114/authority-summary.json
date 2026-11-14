@@ -1,0 +1,63 @@
+{
+  "captured_utc": "2026-11-14T07:30:03.238953+00:00",
+  "project": "ocean-v1-beta-20261101",
+  "secret_metadata": [
+    {
+      "name": "projects/534831104543/secrets/ocean-v1-beta-auth",
+      "version": "1",
+      "state": "ENABLED"
+    },
+    {
+      "name": "projects/534831104543/secrets/ocean-v1-beta-internal",
+      "version": "1",
+      "state": "ENABLED"
+    },
+    {
+      "name": "projects/534831104543/secrets/ocean-v1-beta-oauth",
+      "version": "1",
+      "state": "ENABLED"
+    },
+    {
+      "name": "projects/534831104543/secrets/ocean-v1-beta-serving-database",
+      "version": "1",
+      "state": "ENABLED"
+    },
+    {
+      "name": "projects/ocean-v1-beta-20261101/secrets/ocean-v1-beta-controller-database",
+      "version": "1",
+      "state": "ENABLED"
+    },
+    {
+      "name": "projects/ocean-v1-beta-20261101/secrets/ocean-v1-beta-internal",
+      "version": "1",
+      "state": "ENABLED"
+    }
+  ],
+  "cloud_run_secret_aliases_resolved": true,
+  "initial_literal_alias_404_was_metadata_addressing_only": true,
+  "objects": {
+    "control": {
+      "generation": "1794325728054265",
+      "sha256": "94f56925ee3f2c8503cf336e88039dbb0a34b45da841fb5a863b6949279dfa32",
+      "bytes": 7269,
+      "generation_fence_verified": true
+    },
+    "activation": {
+      "generation": "1794232040589985",
+      "sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+      "bytes": 5887,
+      "generation_fence_verified": true
+    }
+  },
+  "canonical_lifecycle_and_full_audit_replay": "passed",
+  "control_revision": 22,
+  "audit_count": 22,
+  "reference_count": 16,
+  "registered_snapshot_count": 6,
+  "active_family_count": 3,
+  "selected_registry_and_child_snapshots_current": 6,
+  "research_activation_enabled": true,
+  "scientific_approval": false,
+  "credential_values_scientific_rows_and_ids_emitted": false,
+  "cloud_mutations": false
+}

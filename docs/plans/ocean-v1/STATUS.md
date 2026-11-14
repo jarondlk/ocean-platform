@@ -2,7 +2,42 @@
 
 Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
 
-**Current beta progress — main Mac return, 2026-11-14 JST:**
+**Current beta progress — B0 complete, 2026-11-14 JST:**
+
+B0 preparation and its dated live preflight passed. The exact deployed read-only
+observer/entry wrapper are recovered as immutable source artifacts; a portable
+job/execution/report guard now verifies the exact OCI index→Linux/amd64 digest
+relationship and all unchanged job settings. All47 focused guard tests and Ruff
+pass. No application image/source was changed; 180 API/71 frontend pins and
+existing composed hosted CI remain unchanged. Original normal CI remains red.
+
+Fresh personal GCP sign-in, numeric secret metadata/aliases, private task IAM,
+SQL metadata, canonical catalogue control and all 22 audit entries pass.
+The single observer `…-9grc7` completed at 07:36:12 UTC: 3 terminal runs,2 terminal
+answer jobs,0open leases/pending work/uncertain model steps; read-only isolation
+and proxy shutdown verified. Its guard proof passed while fresh at 07:37:48 UTC.
+Snapshot freshness expires after 180seconds; this is not persistent rollout
+clearance. Serving generation34/revision21 and controller generation2/revision2,
+API/frontend images, queue PAUSED/0tasks and0Scheduler jobs remain unchanged.
+
+The Console confirms existing¥50,000 beta alerts and¥3,000 Cloud Run cap.
+Fresh conservative incremental observed/reserved planning total including the
+single observer is¥176.2657, leaving¥323.7343 of the initial¥500 envelope.
+This includes worst-selected-rate reserve for all storage sent bytes, not an
+invoice. Model usage is still2calls/11,603tokens; no fourth question admitted.
+The former¥370 model plus¥20 rollout reserve needs a defensible narrower bound
+or documented amendment before B1 paid validation. No budget/cap was changed.
+
+[B0 completion/evidence](beta/b0-20261114/README.md),
+[portable tool boundary](../../../deploy/gcp/beta/b0/README.md),
+[completion plan](beta/BETA_COMPLETION_PLAN.md).
+Next: B1 stage/controller helper recovery or reconstruction/review, current
+pre-apply gates and guarded controller→serving API rollout. The original 15-file
+private helper set is not claimed recovered; new raw evidence is retained in
+owner-only durable storage. Research dispatch/synthesis, scientific/worker/
+experiment and release acceptance remain gated. Three-hour scheduling stays PAUSED.
+
+**Historical main-Mac return progress — 2026-11-14 JST:**
 
 The main Mac is synchronized to second-Mac checkpoint `7002312` on `overhaul`,
 with unrelated local work preserved. The return audit rechecked live serving

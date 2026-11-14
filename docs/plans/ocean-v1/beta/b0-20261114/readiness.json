@@ -1,0 +1,57 @@
+{
+  "B0_preparation_and_dated_preflight_complete": true,
+  "B1_local_rollout_preparation_ready": true,
+  "base_checkpoint": "438be2c75d3f376895ba9688229b07550fe8ca91",
+  "branch": "overhaul",
+  "candidate_API_image": "sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "candidate_runtime_commit": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "candidate_runtime_source_pins_unchanged": 180,
+  "deployment_IAM_schema_or_catalogue_mutations": false,
+  "focused_local_tests": {
+    "passed": 47,
+    "ruff": "passed",
+    "seconds": "0.10"
+  },
+  "frontend_source_pins_unchanged": 71,
+  "immediate_or_future_runtime_rollout_cleared": false,
+  "legacy_mutations": false,
+  "new_hosted_runtime_CI_claimed": false,
+  "new_model_calls": 0,
+  "new_model_questions": 0,
+  "normal_CI_still_failed_and_native_crash_cause_unproven": true,
+  "observer_completed_utc": "2026-11-14T07:36:12.249347+00:00",
+  "observer_execution": "ocean-v1-beta-provider-preflight-20261111-9grc7",
+  "observer_job_read_only": true,
+  "observer_proof_verified_while_fresh_at_utc": "2026-11-14T07:37:48.499376+00:00",
+  "observer_proxy_shutdown_verified": true,
+  "original_scientific_bytes_and_receipts_preserved": true,
+  "private_helpers_recovery": {
+    "exact_observer_and_entry_wrapper_recovered": true,
+    "original_15_file_set_recovered": false,
+    "original_missing_stage_helper_required_before_B1_apply": "Recover by hash or reconstruct/review the controller/staging/promotion tool; do not replay the obsolete one-shot helper."
+  },
+  "recorded_utc": "2026-11-14T07:42:05.121494+00:00",
+  "release_accepted": false,
+  "remaining_before_B1_live_apply": [
+    "Reconstruct/review or privately recover the B1 stage/controller helper and its source-bound CI/build preservation gates.",
+    "Refresh service/IAM/secret/control/queue/budget state and a post-drain observer snapshot within the exact guard freshness bound at the time of apply.",
+    "Preserve every unrelated serving/controller setting; private controller image readiness must precede serving API stage/promotion."
+  ],
+  "remaining_before_any_new_model_question": [
+    "The former370JPY model reserve plus20JPY rollout reserve does not fit the refreshed conservative500JPY envelope.",
+    "Prepare a defensible narrower token/call bound fitting the remaining allocation, or obtain a separately documented amendment; no new model question is admitted by B0."
+  ],
+  "scientific_approval": false,
+  "snapshot_is_not_an_admission_fence": true,
+  "snapshot_maximum_age_seconds": 180,
+  "three_hour_Codex_schedule": "PAUSED; not changed",
+  "tool_sources": {
+    "deploy/gcp/beta/b0/observer-contract.json": "b4364fb35068d36eab5f8bd406407deb49b521b8bbf7d1d6cfed2901094c3726",
+    "deploy/gcp/beta/b0/observer-entry.source": "33e1b7fd0660acbdb244c393b4982379926785fc6eba3ddbc1f6ec15f886c1a2",
+    "deploy/gcp/beta/b0/observer.source": "a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33",
+    "scripts/beta_b0_preflight.py": "22ceb421ce8223fa99475c783aeef6c174fcd180c826d77340bb028ea75f5ed9",
+    "tests/test_beta_b0_preflight.py": "6d38f66cf10e3782261a68d0f423b4dc63fbb4cdf8f5d8c14a40521c40daf1b0"
+  },
+  "unchanged_runtime_hosted_evidence": "../research-20261109/provider-amendment06/ci.json",
+  "version": "ocean-beta-b0-completion-v1"
+}

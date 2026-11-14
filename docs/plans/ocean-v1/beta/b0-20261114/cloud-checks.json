@@ -1,0 +1,66 @@
+{
+  "SQL_live_restore_claimed": false,
+  "captured_utc": "2026-11-14T07:39:26.893837+00:00",
+  "catalogue_control_writer_permissions": [
+    "storage.objects.create",
+    "storage.objects.delete"
+  ],
+  "config_IAM_data_or_service_mutations": false,
+  "controller_only_task_invoker": true,
+  "inherited_IAM_and_full_network_legacy_denial_release_matrix_claimed": false,
+  "keys_or_secret_values_read": false,
+  "numeric_secret_metadata_and_control_authority": "authority-summary.json",
+  "one_read_only_observer_execution_created": true,
+  "predict_role_permissions": [
+    "aiplatform.endpoints.predict"
+  ],
+  "private_SQL_and_encryption_preserved": true,
+  "project": "ocean-v1-beta-20261101",
+  "queue": "PAUSED",
+  "queue_and_scheduler_all_pages_read": true,
+  "runtime_scheduler_jobs": 0,
+  "secret_policy_exact_runtime_accessors_only": true,
+  "services": [
+    {
+      "generation": 34,
+      "images": {
+        "api": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+        "frontend": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+        "sql-proxy": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+      },
+      "name": "ocean-v1-beta-serving",
+      "ready_revision": "ocean-v1-beta-serving-00021-mgn",
+      "spec_sha256": "10f00dd2fee6e4cb1d19fc69ac19e5fb6c762925975d6d75f03ab6825657c97e",
+      "spec_traffic_and_generation_preserved": true,
+      "traffic": [
+        {
+          "latestRevision": true,
+          "percent": 100,
+          "revisionName": "ocean-v1-beta-serving-00021-mgn"
+        }
+      ]
+    },
+    {
+      "generation": 2,
+      "images": {
+        "controller": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+        "sql-proxy": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+      },
+      "name": "ocean-v1-beta-research-controller",
+      "ready_revision": "ocean-v1-beta-research-controller-00002-mcw",
+      "spec_sha256": "e6a40a658bfcded2a17f65fcc448b039f03d9b1e767c4e72be92d7177363276b",
+      "spec_traffic_and_generation_preserved": true,
+      "traffic": [
+        {
+          "latestRevision": true,
+          "percent": 100,
+          "revisionName": "ocean-v1-beta-research-controller-00002-mcw"
+        }
+      ]
+    }
+  ],
+  "task_invoker_subject_matches": true,
+  "tasks": 0,
+  "temporary_controller_bootstrap_secret_accessors_absent": true,
+  "version": "ocean-beta-b0-cloud-checks-v1"
+}
