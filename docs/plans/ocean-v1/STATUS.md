@@ -4,6 +4,20 @@ Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-14 JST:**
 
+Serving generation36 / `ocean-v1-beta-serving-b1-provider-20261114` is now
+Ready at100%traffic on API7889ef20, after fresh observer and traffic-only CAS
+promotion. Controller generation3 is Ready on the same image. Existing signed-in
+history loaded within10.931seconds and retained evidence within4.296seconds;
+the existing deterministic answer remains readable. Admission remains false,
+queue PAUSED and runtime Scheduler absent.121 focused operator tests pass.
+[Promotion/UI receipt](beta/b1-20261114/drained-promotion.json),
+[one-question oracle](beta/b1-20261114/question04-plan.json),
+[current reservation](beta/b1-20261114/before-admission-reservation.json).
+Next: fresh observer, staged admission and one actual Gemini question followed
+by answer/reload/recovery/cost acceptance. No fourth question submitted yet.
+
+Historical controller/stage checkpoint:
+
 B1 controller image7889ef20 is deployed and Ready at generation3. Serving
 generation35 has the same API image staged at zero traffic; 100% traffic remains
 on drained revision00021-mgn with admission false. The first writer stopped at

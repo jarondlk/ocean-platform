@@ -18,7 +18,8 @@ if not __package__:
 from scripts.beta_b0_preflight import require
 
 
-def calculate(directory):
+def calculate(directory, *, future_observers=2):
+    require(type(future_observers) is int and 0 <= future_observers <= 2)
     def load(name):
         return json.loads((directory / name).read_text())
     usage, extra = load("usage-summary.json"), load("ancillary-summary.json")
@@ -88,9 +89,9 @@ def calculate(directory):
     model_output = 14 * 4096
     planning = model_input * selected["gemini_3_8_flash_input"] + model_output * selected["gemini_3_8_flash_output"]
     model_reserve = (planning / 5).to_integral_value(rounding=ROUND_CEILING) * 5
-    rollout_reserve, observer_reserve = Decimal(20), Decimal(3)
+    rollout_reserve, observer_reserve = Decimal(20), Decimal("1.5") * future_observers
     total = known + model_reserve + rollout_reserve + observer_reserve
-    return {"version": "ocean-beta-b1-reservation-v1", "captured_utc": extra["captured_utc"],
+    return {"version": "ocean-beta-b1-reservation-v2", "captured_utc": extra["captured_utc"],
             "currency": "JPY", "observed_incremental_gross_jpy": str(observed), "run_jpy": str(run),
             "job_minimums": minimums, "storage_operations_jpy": str(storage), "logging_jpy": str(logging),
             "build_allowance_jpy": str(build_total), "model_observed_jpy": str(model_observed),
@@ -99,7 +100,8 @@ def calculate(directory):
             "shared_call_cap": 14, "max_output_tokens_per_call_including_thoughts": 4096,
             "input_planning_tokens": model_input, "output_planning_tokens": model_output,
             "model_planning_jpy": str(planning), "one_question_model_reserve_jpy": str(model_reserve),
-            "rollout_reserve_jpy": str(rollout_reserve), "two_observers_reserve_jpy": str(observer_reserve),
+            "rollout_reserve_jpy": str(rollout_reserve), "future_observers": future_observers,
+            "future_observers_reserve_jpy": str(observer_reserve),
             "total_planned_jpy": str(total), "remaining_initial500_jpy": str(500 - total),
             "within_initial500": total <= 500, "new_questions_considered": 1,
             "new_question_already_submitted": False, "prior_questions": 3, "prior_model_calls": 2,
@@ -115,8 +117,9 @@ def calculate(directory):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", type=Path, required=True)
+    parser.add_argument("--future-observers", type=int, choices=(0, 1, 2), default=2)
     args = parser.parse_args()
-    result = calculate(args.directory)
+    result = calculate(args.directory, future_observers=args.future_observers)
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0 if result["within_initial500"] else 2
 

@@ -2,12 +2,13 @@
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
 B0 preparation and its dated live preflight completed on November14:
-[completion/evidence](b0-20261114/README.md). B1 is next. The proxy guard and
-read-only observer boundary are now portable and tested; B1's writer still
-needs recovery/reconstruction/review. A passed180-second quiescence snapshot
-expires and cannot be replayed as permanent apply clearance. No runtime image
-has been changed. Fresh conservative ledger leaves¥323.7343 within the initial
-¥500 limit; the former¥370 model plus¥20 rollout reserve is not admitted.
+[completion/evidence](b0-20261114/README.md). B1 is in progress. Its reconstructed
+writer has deployed accepted API7889ef20 to controller and serving, with full
+configuration preservation and actual readiness. Serving generation36 receives
+100%traffic with Research admission false. The signed-in existing-history and
+evidence journey passes15seconds. [Current B1 delivery](b1-20261114/README.md)
+retains actual model answer/reload/recovery acceptance as the next gate. Fresh
+observer/cost precedes admission; a passed180-second quiescence snapshot expires.
 
 Source checkpoint reviewed: `7002312` on `overhaul`. This plan integrates the
 return-to-main-Mac audit and the second Mac's deployment work. It supersedes
@@ -29,7 +30,7 @@ No defensible single percentage follows from the component count.
 | Edge, identity and application shell | Independent beta DNS/TLS, Google login, enrolled admin/internal account, real frontend/API/private SQL; login 200 and protected runtime 401 rechecked November 14 | Final signed-in origin/session/role/isolation matrix and intended beta-user enrollment checks |
 | Catalogue and investigations | CTD, metagenome and MUR regional SST plus saved investigations previously accepted live | Reopen current authority/control state; complete whole-scope/UI/export and retention acceptance; resolve eDNA latency/integrity gate |
 | Research delivery and evidence | Private controller, Cloud Tasks integration, durable state and evidence wiring installed; deterministic cited answer, cancellation and duplicate/outbox recovery observed | New API rollout, actual Gemini cited answer, persistence/reload, current-image recovery and history/evidence latency acceptance; supervised sweep remains gated |
-| New Research API | Source `0f15bbca`, image `7889ef20…`, successful source/SDK image proofs and explicit composed hosted CI | Not deployed; serving/controller still use API `4b24ca90…` |
+| New Research API | Source `0f15bbca`, image `7889ef20…` deployed to controller and drained serving; successful source/SDK image proofs and explicit composed hosted CI | Staged admission and actual Gemini answer/reload/recovery/cost acceptance remain open |
 | Experimental execution | C22/C23/C25 contracts and actual retained Linux test evidence exist | Production admission/start integration, retained port/supervisor and current beta worker qualification are unfinished |
 | Operations and release | Independent resources, cost planning and local migration/rollback rehearsals exist | Current live backup/restore, recovery, containment/capacity, alerts/cost, whole-system evaluation and release decision |
 

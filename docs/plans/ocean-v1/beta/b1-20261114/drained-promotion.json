@@ -1,0 +1,52 @@
+{
+  "version": "ocean-beta-b1-drained-promotion-v1",
+  "recorded_utc": "2026-11-14T08:47:25.468359+00:00",
+  "writer_source_checkpoint": "0398ee8",
+  "runtime_source": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "api_image": "sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "controller": {
+    "phase": "controller",
+    "generation": "3",
+    "ready_revision": "ocean-v1-beta-research-controller-b1-provider-20261114",
+    "all_other_configuration_preserved": true
+  },
+  "serving": {
+    "phase": "promote",
+    "generation": "36",
+    "created_revision": "ocean-v1-beta-serving-b1-provider-20261114",
+    "ready_revision": "ocean-v1-beta-serving-b1-provider-20261114",
+    "runtime_startup_verified": true,
+    "all_other_configuration_preserved": true
+  },
+  "observer": {
+    "execution": "ocean-v1-beta-provider-preflight-20261111-dz544",
+    "start_utc": "2026-11-14T08:42:47.536131+00:00",
+    "completion_utc": "2026-11-14T08:43:01.690229+00:00",
+    "proxy_proof": {
+      "index": "sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+      "executed_manifest": "sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+      "platform": "linux/amd64"
+    }
+  },
+  "traffic_percent": 100,
+  "frontend_unchanged": true,
+  "admission_flags": false,
+  "queue": "PAUSED",
+  "runtime_scheduler_jobs": 0,
+  "signed_in_identity_role": "admin/internal existing enrolled account",
+  "browser_checks": {
+    "reload_ready_upper_bound_ms": 6264,
+    "investigation_ready_upper_bound_ms": 3925,
+    "saved_history_ready_upper_bound_ms": 10931,
+    "saved_answer_panel_ready_upper_bound_ms": 206,
+    "retained_evidence_ready_upper_bound_ms": 4296,
+    "fifteen_second_gate_this_journey": true,
+    "timing_qualification": "Conservative wall-clock action-to-observed-ready upper bounds including automation overhead; one signed-in existing-history journey, not a cold-load or scale matrix. Original incomplete/model history remains incomplete."
+  },
+  "old_retained_deterministic_answer_still_readable": true,
+  "new_model_question_submitted": false,
+  "full_B1_acceptance": false,
+  "source_bound_hosted_evidence_reused_for_unchanged_runtime": true,
+  "focused_operator_tests": 121,
+  "original_receipts_mutated": false
+}

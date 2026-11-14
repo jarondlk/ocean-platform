@@ -1,0 +1,30 @@
+{
+  "version": "ocean-beta-b1-question04-predeclared-oracle-v1",
+  "prepared_utc": "2026-11-14T08:47:25.469729+00:00",
+  "question": "Using the permitted CTD dataset beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529, how many casts and original depth observations are present? Return full-population counts with retained citations, state the sampling and units limitations, and state that scientific approval has not been given.",
+  "question_sha256": "bbf49f11450a7072d53120620c11b3968eaad232cd437b9ea448af655f19465c",
+  "new_questions": 1,
+  "submitted": false,
+  "expected": {
+    "casts": 162,
+    "original_depth_observations": 10955,
+    "scientific_approval": false
+  },
+  "independent_oracle_receipt": "docs/plans/ocean-v1/beta/snapshot-activation-20261103/preparation-result.json",
+  "oracle_sha256": "f5ceb37d142de4d86d0ac6029fb29daf7529416e57e03b1b719b30d6a6f73dd9",
+  "oracle_qualification": "Retained exact-cohort ingestion/count evidence, independent of the generated answer; counts do not create scientific eligibility or independent scientific review.",
+  "required": [
+    "Actual model controller call",
+    "Full-population counts and correct denominators",
+    "Retained citations and limitations",
+    "Persisted answer/evidence after reload",
+    "Current owner/context/snapshot authorization",
+    "Actual model and cloud usage reconciliation"
+  ],
+  "manual_queue_dispatch_only": true,
+  "shared_model_call_cap": 14,
+  "one_question_model_reserve_jpy": "300",
+  "initial_validation_limit_jpy": 500,
+  "monthly_beta_target_jpy": 50000,
+  "runtime_sweep_gated": true
+}

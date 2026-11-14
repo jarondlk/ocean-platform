@@ -1,6 +1,31 @@
 # Beta deployment continuation — 2026-11-14 JST
 
-## Current continuation — B1 controller deployed, API staged
+## Current continuation — B1 drained API promoted, model acceptance next
+
+Serving generation36 / `ocean-v1-beta-serving-b1-provider-20261114` is Ready
+at100% traffic on API7889ef20, matching private controller generation3. Fresh
+observer`…-dz544` succeeded08:43:01UTC before the traffic-only CAS update;
+complete input preservation/readiness pass. Admission flags remain false,
+queue PAUSED and empty, Scheduler absent. No model question submitted yet.
+[Promotion and signed-in evidence](../beta/b1-20261114/drained-promotion.json).
+Existing saved conversation activity loaded within10.931seconds and retained
+evidence within4.296seconds; old deterministic cited answer is readable. These
+are this journey's observed upper bounds, not a scale/cold-load matrix.
+
+The browser tab7 is signed into beta as the enrolled admin/internal user and
+shows the original retained CTD inventory evidence. Continue using this session.
+Question04 is predeclared against independent CTD162casts/10,955depth-row
+receipts in [oracle plan](../beta/b1-20261114/question04-plan.json).
+Fresh cost includes6observer executions and reserves only1future observer plus
+¥300shared14-call model segment/¥20remaining cloud allowance:¥499.0271 of the
+initial¥500 envelope. No monthly target or actual model limit changed. The
+budget estimator now separates completed executions from future observer
+reserves;121focused checks/Ruff pass. Reconcile before model submission.
+Next: fresh observer, `admit-stage`/`admit-promote`, one UI question and exact
+manual Cloud Tasks delivery while queue remains paused. Actual answer/reload,
+cancel/duplicate/recovery and cost gates remain open; no runtime sweep yet.
+
+## Historical B1 controller/stage checkpoint
 
 Controller generation3 / `ocean-v1-beta-research-controller-b1-provider-20261114`
 is Ready with accepted API7889ef20; complete preserved input configuration passes.

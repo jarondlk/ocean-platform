@@ -1,0 +1,65 @@
+{
+  "version": "ocean-beta-b1-reservation-v2",
+  "captured_utc": "2026-11-14T08:46:01.132397Z",
+  "currency": "JPY",
+  "observed_incremental_gross_jpy": "97.77522765376290921855165438",
+  "run_jpy": "61.61687224167580629205324153",
+  "job_minimums": [
+    {
+      "job": "ocean-v1-beta-controller-credential",
+      "executions": 1,
+      "additional_jpy": "0.48451805846109458444611094"
+    },
+    {
+      "job": "ocean-v1-beta-provider-preflight-20261111",
+      "executions": 6,
+      "additional_jpy": "1.890129623790667668838802832"
+    },
+    {
+      "job": "ocean-v1-beta-research-action-shape-20261111",
+      "executions": 1,
+      "additional_jpy": "0.47263927279999999999604488"
+    },
+    {
+      "job": "ocean-v1-beta-research-diagnostics-20261110",
+      "executions": 1,
+      "additional_jpy": "0.47263927279999999999604488"
+    },
+    {
+      "job": "ocean-v1-beta-research-grants",
+      "executions": 1,
+      "additional_jpy": "0"
+    }
+  ],
+  "storage_operations_jpy": "12.564324491639",
+  "logging_jpy": "1.379918866219284673221409320",
+  "build_allowance_jpy": "15.187679984",
+  "model_observed_jpy": "3.706505842377056",
+  "all_storage_sent_bytes_worst_selected_internet_allowance_jpy": "74.75184192871635113842785357",
+  "ancillary_reserve_jpy": "5",
+  "known_observed_and_reserved_jpy": "177.5270695824792603569795080",
+  "shared_call_cap": 14,
+  "max_output_tokens_per_call_including_thoughts": 4096,
+  "input_planning_tokens": 968380,
+  "output_planning_tokens": 57344,
+  "model_planning_jpy": "297.844643240073888",
+  "one_question_model_reserve_jpy": "300",
+  "rollout_reserve_jpy": "20",
+  "future_observers": 1,
+  "future_observers_reserve_jpy": "1.5",
+  "total_planned_jpy": "499.0270695824792603569795080",
+  "remaining_initial500_jpy": "0.9729304175207396430204920",
+  "within_initial500": true,
+  "new_questions_considered": 1,
+  "new_question_already_submitted": false,
+  "prior_questions": 3,
+  "prior_model_calls": 2,
+  "initial_validation_limit_jpy": 500,
+  "monthly_beta_target_jpy": 50000,
+  "provider_currency_hard_cap_or_invoice_claimed": false,
+  "output_semantics_source": "https://ai.google.dev/gemini-api/docs/thinking#token-limits",
+  "endpoint_qualification": "Planning applies the documented combined Gemini response/thought output cap to the same generateContent configuration on Vertex; it is not an independent provider billing guarantee.",
+  "input_qualification": "Retains the prior one token per bounded UTF8 byte plus schema and2048 wrapper envelope; no provider countTokens proof is claimed.",
+  "no_model_limits_or_scientific_authority_changed": true,
+  "reconcile_actual_usage_before_next_question_or_continuation": true
+}

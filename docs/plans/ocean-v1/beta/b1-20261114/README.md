@@ -2,6 +2,16 @@
 
 State: in progress. The user selected B1 on November14.
 
+[Drained promotion](drained-promotion.json) is delivered: controller/API7889ef20
+are Ready, serving generation36 receives100%traffic with admission false. The
+signed-in existing-history/evidence journey passes15seconds; its observed
+upper bounds are10.931s/4.296s. [Idle-stage amendment](idle-stage-amendment.json)
+preserves the original stopped readback and distinguishes zero-traffic imported
+configuration from actual promoted runtime readiness. No PATCH was retried.
+[Predeclared Q4 oracle](question04-plan.json) and
+[updated reservation](before-admission-reservation.json) prepare one real model
+question, not yet submitted.121focused operator checks/Ruff pass.
+
 [Writer preparation](writer-preparation.json) qualifies the reconstructed
 [planner/executor](../../../../../deploy/gcp/beta/b1/README.md) with100 focused
 checks (53 B1 and47 B0), Ruff, exact current source/build/composed-CI proofs and
@@ -33,8 +43,7 @@ proofs remain unchanged. No model limit, provider, SDK, scientific authority or
 monthly budget was changed. One new question is reserved, not yet submitted.
 Reconcile actual usage before any further question or explicit continuation.
 
-Next: fresh post-drain observer, controller image Ready/private acceptance,
-zero-traffic API stage, promotion and actual signed-in history/evidence checks.
-Only then stage/promote Research admission, validate one Gemini-backed cited
+Next: fresh post-drain observer and stage/promote Research admission;
+validate one Gemini-backed cited
 answer and reload/recovery within reserves. Keep runtime sweep and Codex
 scheduling paused until their separate gates pass. B1 is not complete.

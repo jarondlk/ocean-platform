@@ -58,6 +58,19 @@ def test_overspend_is_not_admitted(captures):
     assert not result["within_initial500"] and Decimal(result["remaining_initial500_jpy"]) < 0
 
 
+def test_completed_observers_are_reconciled_separately_from_future_reserve(captures):
+    two, one = budget.calculate(captures), budget.calculate(captures, future_observers=1)
+    assert one["known_observed_and_reserved_jpy"] == two["known_observed_and_reserved_jpy"]
+    assert Decimal(two["total_planned_jpy"]) - Decimal(one["total_planned_jpy"]) == Decimal("1.5")
+    assert one["future_observers"] == 1 and one["future_observers_reserve_jpy"] == "1.5"
+
+
+@pytest.mark.parametrize("value", [-1, 3, True, "1"])
+def test_invalid_future_observer_reservation_rejected(captures, value):
+    with pytest.raises(Rejected):
+        budget.calculate(captures, future_observers=value)
+
+
 @pytest.mark.parametrize("target", ["missing_page", "gauge", "negative", "changed_calls", "currency", "free_nondefault"])
 def test_incomplete_or_changed_meter_basis_rejected(captures, target):
     path = captures / ("public-prices.json" if target in {"currency", "free_nondefault"} else "usage-summary.json")
