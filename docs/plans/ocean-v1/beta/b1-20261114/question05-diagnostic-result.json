@@ -1,0 +1,62 @@
+{
+  "execution": "ocean-v1-beta-provider-preflight-20261111-zqrbg",
+  "source_sha256": "3a004dad50528767c74f3b48c5146b76071bedadd8c5f22ab193bce7ac60a6dc",
+  "source_checkpoint": "dab3f29",
+  "original_job_template_unchanged": true,
+  "execution_count_after": 8,
+  "report": {
+    "head": {
+      "model_calls": 2,
+      "malformed_repairs": 0,
+      "run_status": "completed",
+      "status": "unavailable",
+      "reason_code": "generation_incomplete",
+      "active_elapsed_ms": 55801,
+      "lease_closed": true,
+      "run_lease_closed": true,
+      "tool_actions": 2
+    },
+    "generations": {
+      "research_run": [
+        {
+          "usage": {
+            "input_tokens": 5342,
+            "output_tokens": 125,
+            "total_tokens": 5767
+          },
+          "max_output_tokens": 4096,
+          "state": "committed",
+          "finish_reason": "STOP",
+          "payload_hash_verified": true,
+          "physical_attempts": 1,
+          "status": "completed"
+        }
+      ],
+      "research_answer": [
+        {
+          "max_output_tokens": 4096,
+          "physical_attempts": 1,
+          "status": "failed",
+          "usage": {
+            "output_tokens": null,
+            "input_tokens": null,
+            "total_tokens": null
+          },
+          "payload_hash_verified": true,
+          "state": "committed",
+          "finish_reason": null
+        }
+      ]
+    },
+    "version": "ocean-beta-b1-q5-diagnostic-v1",
+    "state": "read_only_diagnostic_verified",
+    "raw_content_selected_or_emitted": false,
+    "run_id": "6e09ea49-b2bd-40ac-a457-b16709912f1d",
+    "captured_utc": "2026-11-14T16:50:30.968928+00:00",
+    "model_queue_or_sql_write": false,
+    "project": "ocean-v1-beta-20261101",
+    "proxy_shutdown_verified": true,
+    "answer_job_id": "bb9994e4-c678-4fc3-a59c-97adf0563e13",
+    "transaction_read_only_verified": true
+  }
+}

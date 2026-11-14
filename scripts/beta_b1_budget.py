@@ -18,7 +18,7 @@ if not __package__:
 from scripts.beta_b0_preflight import require
 
 
-def calculate(directory, *, future_observers=2):
+def _calculate(directory, *, future_observers=2, terminal_report=None):
     require(type(future_observers) is int and 0 <= future_observers <= 2)
     def load(name):
         return json.loads((directory / name).read_text())
@@ -78,7 +78,38 @@ def calculate(directory, *, future_observers=2):
     input_tokens = sum((Decimal(s["sum"]) for s in tokens if s["metric_labels"]["type"] == "input"), Decimal(0))
     output_tokens = sum((Decimal(s["sum"]) for s in tokens if s["metric_labels"]["type"] == "output"), Decimal(0))
     calls = sums["aiplatform.googleapis.com/publisher/online_serving/model_invocation_count"]
-    require((calls, input_tokens, output_tokens) == (2, 10599, 1004))
+    if terminal_report is None:
+        require((calls, input_tokens, output_tokens) == (2, 10599, 1004))
+    else:
+        require(terminal_report['version'] == 'ocean-beta-b1-q5-diagnostic-v1'
+                and terminal_report['state'] == 'read_only_diagnostic_verified'
+                and terminal_report['transaction_read_only_verified'] is True
+                and terminal_report['proxy_shutdown_verified'] is True
+                and terminal_report['run_id'] == '6e09ea49-b2bd-40ac-a457-b16709912f1d'
+                and terminal_report['answer_job_id'] == 'bb9994e4-c678-4fc3-a59c-97adf0563e13')
+        head = terminal_report['head']
+        require(head['status'] == 'unavailable' and head['run_status'] == 'completed'
+                and head['lease_closed'] is True and head['run_lease_closed'] is True
+                and type(head['model_calls']) is int and head['model_calls'] == 2 and calls == 4)
+        groups = terminal_report['generations']
+        require(set(groups) == {'research_run', 'research_answer'} and all(len(v) == 1 for v in groups.values()))
+        ceiling_inputs, ceiling_outputs = 10599, 1004
+        for values in groups.values():
+            step = values[0]
+            require(step['state'] == 'committed' and step['payload_hash_verified'] is True
+                    and type(step['physical_attempts']) is int and step['physical_attempts'] == 1)
+            for name, cap in [('input_tokens', 65536 + 1586 + 2048), ('output_tokens', 4096), ('total_tokens', 65536 + 1586 + 2048 + 4096)]:
+                value = step['usage'].get(name)
+                require(value is None or type(value) is int and 0 <= value <= cap)
+            ceiling_inputs += step['usage']['input_tokens'] if step['usage']['input_tokens'] is not None else 65536 + 1586 + 2048
+            # candidates_token_count alone excludes thought tokens. Derive the
+            # combined output from total-input only when both exist, otherwise
+            # retain the full combined output cap, even on a completed step.
+            total, inputs = step['usage'].get('total_tokens'), step['usage']['input_tokens']
+            combined = 4096 if total is None or inputs is None else total - inputs
+            require(0 <= combined <= 4096)
+            ceiling_outputs += max(combined, step['usage']['output_tokens'] or 0)
+        require(input_tokens >= 10599 and output_tokens >= 1004)
     model_observed = input_tokens * selected["gemini_3_8_flash_input"] + output_tokens * selected["gemini_3_8_flash_output"]
     network = sums["storage.googleapis.com/network/sent_bytes_count"] / 2**30 * selected["internet_worst_selected_destination"]
     observed = run + minimum + storage + logging + build_total + model_observed
@@ -89,9 +120,16 @@ def calculate(directory, *, future_observers=2):
     model_output = 14 * 4096
     planning = model_input * selected["gemini_3_8_flash_input"] + model_output * selected["gemini_3_8_flash_output"]
     model_reserve = (planning / 5).to_integral_value(rounding=ROUND_CEILING) * 5
+    if terminal_report is not None:
+        # Closed physical attempts have no automatic future continuation. Missing
+        # provider usage is still bounded in full; it never becomes a free call.
+        input_ceiling = max(input_tokens, Decimal(ceiling_inputs))
+        output_ceiling = max(output_tokens, Decimal(ceiling_outputs))
+        ceiling_cost = input_ceiling * selected['gemini_3_8_flash_input'] + output_ceiling * selected['gemini_3_8_flash_output']
+        model_reserve = max(Decimal(0), ceiling_cost - model_observed)
     rollout_reserve, observer_reserve = Decimal(20), Decimal("1.5") * future_observers
     total = known + model_reserve + rollout_reserve + observer_reserve
-    return {"version": "ocean-beta-b1-reservation-v2", "captured_utc": extra["captured_utc"],
+    result = {"version": "ocean-beta-b1-reservation-v2", "captured_utc": extra["captured_utc"],
             "currency": "JPY", "observed_incremental_gross_jpy": str(observed), "run_jpy": str(run),
             "job_minimums": minimums, "storage_operations_jpy": str(storage), "logging_jpy": str(logging),
             "build_allowance_jpy": str(build_total), "model_observed_jpy": str(model_observed),
@@ -112,6 +150,27 @@ def calculate(directory, *, future_observers=2):
             "input_qualification": "Retains the prior one token per bounded UTF8 byte plus schema and2048 wrapper envelope; no provider countTokens proof is claimed.",
             "no_model_limits_or_scientific_authority_changed": True,
             "reconcile_actual_usage_before_next_question_or_continuation": True}
+    if terminal_report is not None:
+        result.update(version='ocean-beta-b1-q5-terminal-reconciliation-v1',
+            new_questions_considered=0, new_question_already_submitted=True,
+            native_model_calls=str(calls), native_input_tokens=str(input_tokens), native_output_tokens=str(output_tokens),
+            terminal_physical_attempts=2, input_planning_tokens=str(input_ceiling), output_planning_tokens=str(output_ceiling),
+            model_planning_jpy=str(ceiling_cost), one_question_model_reserve_jpy='0',
+            missing_usage_reserve_jpy=str(model_reserve), initial_validation_limit_jpy=550,
+            remaining_initial550_jpy=str(550-total), within_initial550=total <= 550,
+            prior_questions=3, manual_questions_submitted=5, new_paid_question_admitted=False,
+            terminal_diagnostic_captured_utc=terminal_report['captured_utc'])
+    return result
+
+
+def calculate(directory, *, future_observers=2):
+    """Original pre-submission estimator, preserving its strict meter baseline."""
+    return _calculate(directory, future_observers=future_observers)
+
+
+def reconcile_terminal(directory, report, *, future_observers=0):
+    """Reconcile closed Q5 attempts; this cannot admit another model segment."""
+    return _calculate(directory, future_observers=future_observers, terminal_report=report)
 
 
 def main():

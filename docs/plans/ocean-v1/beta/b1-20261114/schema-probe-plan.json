@@ -1,0 +1,22 @@
+{
+  "version": "ocean-beta-b1-synthetic-schema-probe-plan-v1",
+  "project": "ocean-v1-beta-20261101",
+  "model": "gemini-3.8-flash",
+  "location": "global",
+  "source_sha256": "35ca1f59b61b5dc90d665ba934fb1e1e8367168927ee08be02a5c99e736f5c28",
+  "original_runtime_schema_source": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "manual_operator_posts_max": 2,
+  "per_call_timeout_seconds": 45,
+  "sdk_retries": 0,
+  "max_output_tokens_including_thoughts": 4096,
+  "request_bytes_max": 12000,
+  "probe_1": "Original C21 response schema and a fixed synthetic empty selection prompt",
+  "probe_2": "Only after original HTTP400 schema-complexity proof: remove array minItems/maxItems from provider-only schema, same synthetic input. Actual host schema/parser remain unchanged.",
+  "model_reservation_jpy": "45",
+  "existing_terminal_plan_jpy": "302.3941720426366101470069631",
+  "total_with_probes_jpy": "347.3941720426366101470069631",
+  "approved_validation_limit_jpy": 550,
+  "counts_as_engineering_attempts_not_beta_answer_acceptance": true,
+  "no_scientific_data_history_secrets_or_iam_mutation": true,
+  "authorization": "Standing beta GCP/model repair authorization; no new recurring workload or automatic retry."
+}

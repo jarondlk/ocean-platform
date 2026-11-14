@@ -90,3 +90,48 @@ def test_incomplete_or_changed_meter_basis_rejected(captures, target):
     path.write_text(json.dumps(data))
     with pytest.raises(Rejected):
         budget.calculate(captures)
+
+
+@pytest.fixture
+def terminal(captures):
+    p = captures / 'usage-summary.json'
+    data = json.loads(p.read_text())
+    data['metrics'][-1]['series'][0]['sum'] = '4'
+    p.write_text(json.dumps(data))
+    step = {'state': 'committed', 'payload_hash_verified': True, 'physical_attempts': 1,
+            'usage': {'input_tokens': None, 'output_tokens': None}}
+    return {'version': 'ocean-beta-b1-q5-diagnostic-v1', 'state': 'read_only_diagnostic_verified',
+            'transaction_read_only_verified': True, 'proxy_shutdown_verified': True,
+            'run_id': '6e09ea49-b2bd-40ac-a457-b16709912f1d',
+            'answer_job_id': 'bb9994e4-c678-4fc3-a59c-97adf0563e13',
+            'head': {'status': 'unavailable', 'run_status': 'completed', 'lease_closed': True,
+                     'run_lease_closed': True, 'model_calls': 2},
+            'generations': {'research_run': [step], 'research_answer': [step]},
+            'captured_utc': '2026-11-14T17:00:00Z'}
+
+
+def test_closed_segment_never_invents_missing_usage_or_admits_a_retry(captures, terminal):
+    result = budget.reconcile_terminal(captures, terminal)
+    assert result['input_planning_tokens'] == str(10599 + 2 * (65536 + 1586 + 2048))
+    assert result['output_planning_tokens'] == str(1004 + 2 * 4096)
+    assert Decimal(result['missing_usage_reserve_jpy']) > 0
+    assert result['new_questions_considered'] == 0 and result['one_question_model_reserve_jpy'] == '0'
+    assert result['new_paid_question_admitted'] is False and result['within_initial550']
+    with pytest.raises(Rejected):
+        budget.calculate(captures)  # Original pre-submit contract stays strict.
+
+
+@pytest.mark.parametrize('change', ['active', 'identity', 'corrupt', 'attempts', 'bool_usage', 'negative_usage'])
+def test_terminal_reconciliation_requires_exact_closed_known_attempts(captures, terminal, change):
+    if change == 'active':
+        terminal['head']['lease_closed'] = False
+    elif change == 'identity':
+        terminal['run_id'] = 'other'
+    elif change == 'corrupt':
+        terminal['generations']['research_answer'][0]['payload_hash_verified'] = False
+    elif change == 'attempts':
+        terminal['generations']['research_answer'][0]['physical_attempts'] = 2
+    else:
+        terminal['generations']['research_answer'][0]['usage']['input_tokens'] = True if change == 'bool_usage' else -1
+    with pytest.raises(Rejected):
+        budget.reconcile_terminal(captures, terminal)
