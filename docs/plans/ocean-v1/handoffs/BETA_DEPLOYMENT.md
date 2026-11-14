@@ -1,6 +1,28 @@
 # Beta deployment continuation — 2026-11-14 JST
 
-## Current continuation — B0 completed, B1 next
+## Current continuation — B1 writer prepared, rollout next
+
+The user selected B1. New `scripts/beta_b1_rollout.py` and
+`scripts/beta_b1_apply.py` reconstruct the fixed-candidate writer, qualified by
+100 focused tests/Ruff and actual controller/stage `validateOnly` success with
+full service readbacks unchanged. [Preparation/source hashes](../beta/b1-20261114/writer-preparation.json),
+[operator usage and boundaries](../../../../deploy/gcp/beta/b1/README.md).
+The original private writer is not claimed recovered. New code keeps its own
+identity; existing runtime source0f15bbca/image7889ef20 and original receipts
+remain unchanged. Live GitHub job metadata and exact workflow/PostgreSQL-log
+hashes requalify the accepted composed CI; normal CI remains red, cause unproven.
+
+Private working directory: `/private/tmp/ocean-b1-20261114`. It contains fresh
+v1/v2 service/build/GitHub readbacks, qualified plans and provider validation
+results. Do not overwrite existing phase directories or replay stale commands.
+Fresh metadata/authority and usage/price probes are running before reserved
+observer execution and image apply. Next: qualify current budget and source,
+obtain fresh post-drain global quiescence, then guarded controller image update,
+API zero-traffic stage and promotion. Actual signed-in history/latency checks
+precede admission flags and one separately reserved question. No deployment,
+new model question, queue/Scheduler or Codex automation change at this checkpoint.
+
+## Historical B0 completion and next-step record
 
 B0 preparation and its dated live preflight passed on November 14. Read the
 [B0 completion and next gates](../beta/b0-20261114/README.md),

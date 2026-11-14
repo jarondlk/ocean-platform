@@ -1,0 +1,25 @@
+{
+  "base_checkpoint": "b728bf0",
+  "revisions": {
+    "controller": "ocean-v1-beta-research-controller-b1-provider-20261114",
+    "drain": "ocean-v1-beta-serving-b1-drain-20261114",
+    "live": "ocean-v1-beta-serving-b1-live-20261114",
+    "stage": "ocean-v1-beta-serving-b1-provider-20261114"
+  },
+  "runtime_commit": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "services": {
+    "controller": {
+      "baseline_configuration_sha256": "0fa6e432368a310924299cec35ae9f39aa37d510ac231891c53c8858e3f2c6e3",
+      "initial_revision": "ocean-v1-beta-research-controller-00002-mcw",
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-research-controller",
+      "uid": "75791f9e-366d-4901-9d2f-89080510acfa"
+    },
+    "serving": {
+      "baseline_configuration_sha256": "28470ac814239b69ff970751e081a2775b6b7eb750611efa0eb04fb60271aff7",
+      "initial_revision": "ocean-v1-beta-serving-00021-mgn",
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving",
+      "uid": "e425c401-bb6e-445f-8487-cda4d5744676"
+    }
+  },
+  "version": "ocean-beta-b1-rollout-contract-v1"
+}

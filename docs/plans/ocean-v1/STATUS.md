@@ -2,7 +2,20 @@
 
 Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
 
-**Current beta progress — B0 complete, 2026-11-14 JST:**
+**Current beta progress — B1 in progress, 2026-11-14 JST:**
+
+B1 is selected by the user. The missing writer is reconstructed as a fixed-candidate
+planner/executor with100 focused operator tests and Ruff passing. Cloud Run accepted
+both controller and serving stage `validateOnly` requests with complete service
+readbacks unchanged. Current180-source/build/composed-CI qualification passes,
+including exact original/diagnostic workflow bytes and PostgreSQL log. Runtime
+images and Research admission remain unchanged at this preparation checkpoint.
+[Writer preparation](beta/b1-20261114/writer-preparation.json),
+[operator boundary](../../../deploy/gcp/beta/b1/README.md).
+Fresh authority/usage/budget and post-drain quiescence are being renewed before
+actual controller→serving rollout; no fourth paid question is admitted yet.
+
+**Historical B0 completion — 2026-11-14 JST:**
 
 B0 preparation and its dated live preflight passed. The exact deployed read-only
 observer/entry wrapper are recovered as immutable source artifacts; a portable

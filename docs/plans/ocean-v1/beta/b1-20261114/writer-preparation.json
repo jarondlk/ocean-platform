@@ -1,0 +1,40 @@
+{
+  "version": "ocean-beta-b1-writer-preparation-v1",
+  "recorded_utc": "2026-11-14T08:20:10.369204+00:00",
+  "base_checkpoint": "b728bf0",
+  "phase": "writer_prepared_provider_validation_passed_no_rollout_yet",
+  "runtime_commit": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "candidate_image": "sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "focused_operator_tests_passed": 100,
+  "ruff": "passed",
+  "controller_and_stage_validate_only_succeeded": true,
+  "complete_service_readbacks_exactly_unchanged_after_validation": true,
+  "source_bound_composed_CI_reopened_and_matches_original": true,
+  "original_normal_CI_still_failed": true,
+  "native_crash_cause_proven": false,
+  "new_hosted_runtime_CI_claimed": false,
+  "source_sha256": {
+    "scripts/beta_b1_rollout.py": "f67f0bbced23fdaafde92a50b43e5d532e7c3c7137dd5b04107e858a1546f5f2",
+    "scripts/beta_b1_apply.py": "1e80dc4fc0c2b4c74d0cdda48f020334819e5f73d07adc3a738ddd95a4bb5260",
+    "tests/test_beta_b1_rollout.py": "839a922e10b6b284dca63c5ad3021e364f67f1376eaa52eb1321aa915cea15c9",
+    "tests/test_beta_b1_apply.py": "0aa61bb10a3f1feb2741e90b999e1468a957a641893bc02b3d10233ab326c79f",
+    "deploy/gcp/beta/b1/rollout-contract.json": "e83afc7fe9298bed88e5fb853cc358c36619968daee3d8b5a3bc899183033e3d",
+    "scripts/beta_b1_budget.py": "74d34f662b05d10d2644510100783dba50169df5fbebd4b9feb0df4a4dd1759f",
+    "tests/test_beta_b1_budget.py": "20b193b96447deadb4c0f8b18572d5f5f04abd3ead9710a14961cc8881c4aca8"
+  },
+  "private_validation_records": {
+    "stage-validate/before.json": "63103d535d97cc628582a081079fcb861b8141fe0bb21788df23555b13ca6dec",
+    "stage-validate/plan.json": "af16d38cc1965b37753fca8ca189f48c76bf4f80e2ea3773696fb1678316c500",
+    "stage-validate/operation.json": "21b804c93978efb0fddc4f39031141a47da6356827db1285d988c0045cfea0c3",
+    "controller-validate/before.json": "86d250cc266578b70d767860a0b3e48c3d6c9b033b5aafe745f88d1dfa23023c",
+    "controller-validate/plan.json": "443941604b944473cf10b09a9ab7c14051b15eeba64df38243253050b0612827",
+    "controller-validate/operation.json": "76533855e2b7d63742012a54361d63500ad2bf01106e63bf5e6708fd3332d562"
+  },
+  "runtime_source_changed": false,
+  "cloud_mutations": false,
+  "paid_model_question_admitted": false,
+  "fresh_authority_budget_and_post_drain_quiescence_still_required": true,
+  "test_scope": "B1 planner/executor/budget plus existing B0 guard;53 B1 cases and47 B0 cases",
+  "new_question_model_reserve_jpy": "300",
+  "planned_total_with_two_observers_and_rollout_jpy": "498.2462100394396147441749055"
+}
