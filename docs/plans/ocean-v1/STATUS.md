@@ -4,6 +4,16 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Browser retry approval cleared the read gate. Q4 was submitted once, queued as
+`df44514b-2a14-4bde-a9e9-347859f02094`; its frozen CTD binding is retained.
+The manual dispatcher stopped before any tasks.run because the provider returned
+one result plus a continuation. Its corrected complete-page guard passes actual
+read-only qualification and141focused tests/Ruff. No question resubmission,
+runtime/IAM change or model dispatch yet. Queue remains PAUSED. [Submission](beta/b1-20261114/question04-submitted.json),
+[pagination amendment](beta/b1-20261114/task-pagination-amendment.json).
+
+Historical pre-submit readback:
+
 The user approved the single Q4 validation allowance550JPY. Fresh conservative
 planning522.0093JPY fits it; the300JPY model reserve/shared14-call cap and
 50,000JPY monthly target remain unchanged. Current cloud reads verify exact

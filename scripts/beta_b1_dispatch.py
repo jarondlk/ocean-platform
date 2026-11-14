@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import urllib.parse
 
 if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -49,6 +50,24 @@ def validate_task(task, kind, identity):
             "automatic_retry_permitted": False, "successful_answer_claimed": False}
 
 
+def one_queued_task(cloud, queue):
+    """Require one task across complete bounded pages, not one first page."""
+    tasks, seen = [], set()
+    query = {"pageSize": 1000, "responseView": "FULL"}
+    for _ in range(10):
+        page = cloud.request(queue + "/tasks?" + urllib.parse.urlencode(query), personal=True)
+        tasks.extend(page.get("tasks", []))
+        guard.require(len(tasks) <= 1)
+        token = page.get("nextPageToken")
+        if not token:
+            guard.require(len(tasks) == 1)
+            return tasks[0]
+        guard.require(type(token) is str and token not in seen)
+        seen.add(token)
+        query["pageToken"] = token
+    raise guard.Rejected("Task listing incomplete")
+
+
 def execute(cloud, directory, kind, identity):
     contract = guard.document(rollout.CONTRACT_PATH.read_bytes())
     for name in ("controller", "serving"):
@@ -66,9 +85,7 @@ def execute(cloud, directory, kind, identity):
         "serviceAccount:" + SETTINGS.task_invoker_email]}])
     queue = "https://cloudtasks.googleapis.com/v2/" + SETTINGS.queue_path
     guard.require(cloud.request(queue, personal=True)["state"] == "PAUSED")
-    tasks = cloud.request(queue + "/tasks?pageSize=1000&responseView=FULL", personal=True)
-    guard.require(not tasks.get("nextPageToken") and len(tasks.get("tasks", [])) == 1)
-    intent = validate_task(tasks["tasks"][0], kind, identity)
+    intent = validate_task(one_queued_task(cloud, queue), kind, identity)
     target = directory / ("manual-" + kind + "-" + identity)
     guard.require(not target.exists())
     target.mkdir(mode=0o700)

@@ -1,0 +1,35 @@
+{
+  "version": "ocean-beta-b1-task-pagination-amendment-v1",
+  "recorded_utc": "2026-11-14T15:59:56.176234+00:00",
+  "original_attempt": "Stopped at incomplete task listing before creating intent or sending tasks.run",
+  "actual_complete_page_reads": [
+    {
+      "tasks": 1,
+      "has_next_page": true
+    },
+    {
+      "tasks": 0,
+      "has_next_page": false
+    }
+  ],
+  "canonical_task": {
+    "version": "ocean-beta-b1-single-task-intent-v1",
+    "kind": "run",
+    "identity": "df44514b-2a14-4bde-a9e9-347859f02094",
+    "delivery_id": "12b522b6-463e-4586-a807-94d800a73114",
+    "task": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/queues/ocean-v1-beta-research/tasks/research-e814342e5a3994427feb3f4a024ddad73fb6a3df3437622910cd385445cf5c0d",
+    "canonical_target_identity_and_body_verified": true,
+    "prior_dispatches": 0,
+    "queue_must_remain_paused": true,
+    "automatic_retry_permitted": false,
+    "successful_answer_claimed": false
+  },
+  "task_dispatches_before_retry": 0,
+  "question_submit_clicks": 1,
+  "focused_operator_tests_passed": 141,
+  "ruff": "passed",
+  "changed_runtime_or_IAM_or_task_body": false,
+  "helper_sha256": "0f06d80dab4bc1fad6b949f252e509ed6d93009dbd38b3c143f4ba26f9a96bee",
+  "primary_reference": "https://docs.cloud.google.com/tasks/docs/reference/rest/v2/projects.locations.queues.tasks/list",
+  "original_failed_capture_preserved": true
+}

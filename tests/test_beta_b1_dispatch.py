@@ -86,3 +86,32 @@ def test_uncertain_dispatch_retains_intent_and_cannot_be_repeated(monkeypatch, t
     with pytest.raises(delivery.guard.Rejected):
         delivery.execute(cloud, tmp_path, "run", IDENTITY)
     assert cloud.writes == 1
+
+
+def page_cloud(pages):
+    class Cloud:
+        def __init__(self):
+            self.urls = []
+        def request(self, url, **kwargs):
+            self.urls.append(url)
+            assert kwargs == {"personal": True}
+            return pages[len(self.urls) - 1]
+    return Cloud()
+
+
+def test_one_task_requires_complete_pages_and_encodes_token():
+    value = task()
+    cloud = page_cloud([{"tasks": [value], "nextPageToken": "next+/="}, {}])
+    assert delivery.one_queued_task(cloud, "https://cloudtasks.googleapis.com/v2/fixed") == value
+    assert len(cloud.urls) == 2 and "pageToken=next%2B%2F%3D" in cloud.urls[1]
+
+
+@pytest.mark.parametrize("pages", [
+    [{"tasks": [task()], "nextPageToken": "next"}, {"tasks": [task()]}],
+    [{"nextPageToken": "same"}, {"nextPageToken": "same"}],
+    [{"nextPageToken": str(i)} for i in range(10)],
+    [{"nextPageToken": "next"}, {}],
+])
+def test_incomplete_duplicate_looping_or_empty_task_listing_refused(pages):
+    with pytest.raises(delivery.guard.Rejected):
+        delivery.one_queued_task(page_cloud(pages), "https://cloudtasks.googleapis.com/v2/fixed")

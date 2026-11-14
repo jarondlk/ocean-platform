@@ -1,6 +1,30 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current continuation — B1 budget approved, browser review blocked
+## Current continuation — Q4 submitted once, manual delivery next
+
+The user explicitly approved the beta browser retry; same tab7 access works.
+The first shell read showed Connection failed, then the visible Try again
+recovered the signed-in page. Cause remains unproven; do not count this as a
+new cold-load latency pass. Existing history still had only3prior runs.
+The exact predeclared Q4 was submitted once at15:56:29UTC, accepted as queued
+run`df44514b-2a14-4bde-a9e9-347859f02094`, with current CTD snapshot50bfdf55…,
+revision401844d5…/payloadcb28a278…. [Submission receipt](../beta/b1-20261114/question04-submitted.json).
+Do not resubmit or continue it as a second question. Browser tab7 was navigated
+to About to stop active polling while the bounded manual task runs.
+
+The first dispatcher invocation stopped before creating an intent or sending
+tasks.run: one task arrived with a continuation token. The amended helper now
+requires exactly1canonical task across complete bounded pages, rejects looped/
+incomplete/duplicate listings and retains the original no-POST failure.141focused
+operator tests/Ruff pass. [Actual complete-page proof](../beta/b1-20261114/task-pagination-amendment.json).
+Next: checkpoint this operator-only correction and manually dispatch that same
+undispatched task. Queue remains PAUSED; no model execution is accepted yet.
+Working directory `/private/tmp/ocean-b1-20261115-q4` has the before-submit,
+single UI intent/acceptance, private task metadata and pagination proof. Preserve
+all intents; never retry tasks.run automatically. Actual question/answer/citation/
+reload/recovery/cost gates remain open. Budget550JPY and monthly50,000JPY remain.
+
+## Historical budget and browser gate
 
 The user explicitly approved the initial validation allowance500→550JPY for
 the single predeclared Q4 question/answer segment, then requested continuation
