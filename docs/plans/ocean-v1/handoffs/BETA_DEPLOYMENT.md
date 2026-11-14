@@ -1,6 +1,39 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current repair checkpoint — admission drained, two source repairs under test
+## Current delivery gate — repair built, native CI setup follow-up next
+
+Repair source9eb9de8 / image181f26d4… built successfully in exact approved
+Cloud Build`d3735340-23c0-45b3-88d9-7b47fb44b333`. All4source/non-root/offline
+actual-SDK/label steps passed. Exact staged archive SHA and all24files match
+reviewed context;180runtime pins differ from0f15only in the2intended paths.
+[Build receipt](../beta/b1-20261114/repair-build-result.json). No repaired image
+has been deployed. Source-bound Linux220tests passed on9eb9de8. Native24cases
+all stopped at expected-server identity setup because the focused workflow did
+not provide its actual owned container peer. The address guard was correct and
+is unchanged. [Setup amendment](../beta/b1-20261114/repair-ci-native-setup.json).
+
+The native-followup workflow now supplies docker-inspected exactIPv4 and first
+compares every180Git/runtime pin with9eb9de8. It reuses the actual220successful
+checks, skips that long repeated step explicitly, and runs48current operator
+checks plus real native C21 acceptance. Original failed receipts stay immutable.
+The repair contract intentionally has hosted_acceptance_pendingtrue/null IDs;
+no apply/validate can pass qualification until actual native success and pinned
+source/job/log receipts are installed. New guarded repair writer has18phase/
+configuration preservation tests;48operator/privacy/cost tests/Ruff pass locally.
+Full original broad CI remains separate and is not claimed passed by this work.
+
+Serving remains drained39/image7889ef20; controller3/image7889ef20. Queue/
+sweep/Codex scheduling PAUSED. New observer must use the original unchanged Job
+source (the successful Q5 diagnostic execution is not a quiescence receipt).
+Original Job generation1,8executions; reserve and reconcile before execution.
+Use a fresh post-drain observer and the new repair writer for guarded controller,
+stage, promotion. Do not invoke the old fixed-image writer after source edits.
+Saved-history/evidence latency precedes any new Research admission. Actual cited
+answer/reload/recovery and cost gates remain open. Initial allowance550JPY and
+monthly50k unchanged. Current private working root `/private/tmp/ocean-b1-repair-20261115`;
+original Q4/Q5/diagnostic/probe working evidence remains unchanged elsewhere.
+
+## Historical repair preparation — admission drained, two source repairs under test
 
 Serving generation39 / `ocean-v1-beta-serving-b1-drain-20261114` is Ready at
 100%traffic on the same7889ef20image, with only Research dispatch/synthesis

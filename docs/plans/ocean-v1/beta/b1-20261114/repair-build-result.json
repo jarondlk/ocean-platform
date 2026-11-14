@@ -1,0 +1,31 @@
+{
+  "version": "ocean-beta-b1-repair-build-result-v1",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "build_id": "d3735340-23c0-45b3-88d9-7b47fb44b333",
+  "status": "SUCCESS",
+  "image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "region": "asia-northeast1",
+  "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "options_logging": "CLOUD_LOGGING_ONLY",
+  "four_exact_steps_successful": true,
+  "steps": [
+    "source-bound-provider-api-image",
+    "nonroot-offline-source-activation-role-proof",
+    "nonroot-offline-real-schema-sdk-proof",
+    "immutable-source-label-proof"
+  ],
+  "staged_source": {
+    "bucket": "ocean-v1-beta-20261101-build-source",
+    "generation": "1794675948056038",
+    "object": "source/1794675947.751513-b9d31738f7154cfb948228bceb5cb13e.tgz"
+  },
+  "staged_archive_sha256": "a59121a6c65c86694195d69dc6df7f7519e6e4b520c1113fc28887475717598c",
+  "staged_archive_all24files_match_reviewed_context": true,
+  "runtime_source_paths": 180,
+  "intentional_runtime_supersessions": 2,
+  "runtime_qualification_includes_strict_host_bounds": true,
+  "hosted_native_gate_pending": true,
+  "deployment_performed": false,
+  "limited_cli_staging_read_403_resolved_with_authorized_personal_read_no_role_expansion": true,
+  "first_build_command_staging_bucket_root_rejected_before_build_creation": true
+}

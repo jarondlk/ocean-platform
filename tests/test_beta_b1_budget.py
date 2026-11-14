@@ -135,3 +135,22 @@ def test_terminal_reconciliation_requires_exact_closed_known_attempts(captures, 
         terminal['generations']['research_answer'][0]['usage']['input_tokens'] = True if change == 'bool_usage' else -1
     with pytest.raises(Rejected):
         budget.reconcile_terminal(captures, terminal)
+
+
+def test_synthetic_probe_reconciliation_keeps_failed_request_bounded(captures, terminal):
+    p = captures / 'usage-summary.json'
+    data = json.loads(p.read_text())
+    data['metrics'][-1]['series'][0]['sum'] = '6'
+    p.write_text(json.dumps(data))
+    probes = [{'variant': 'original', 'http_status': 400, 'usage': None,
+               'no_beta_history_or_scientific_data_used': True},
+              {'variant': 'array_bounds_removed', 'http_status': 200,
+               'usage': {'promptTokenCount': 585, 'totalTokenCount': 672},
+               'no_beta_history_or_scientific_data_used': True}]
+    result = budget.reconcile_terminal(captures, terminal, engineering_reports=probes)
+    assert result['terminal_physical_attempts'] == 4
+    assert result['input_planning_tokens'] == str(10599 + 2 * (65536 + 1586 + 2048) + 14048 + 585)
+    assert result['output_planning_tokens'] == str(1004 + 2 * 4096 + 4096 + 87)
+    probes[1]['usage']['totalTokenCount'] = 585 + 4097
+    with pytest.raises(Rejected):
+        budget.reconcile_terminal(captures, terminal, engineering_reports=probes)

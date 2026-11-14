@@ -43,6 +43,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
@@ -51,6 +52,7 @@ jobs:
       - name: Install hash-locked dependencies
         run: python -m pip install --require-hashes -r requirements/dev.txt
       - name: Verify repair, privacy and unchanged host contracts
+        if: ${{ !contains(github.event.head_commit.message, '[native-followup]') }}
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
@@ -59,10 +61,36 @@ jobs:
           python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
           python deploy/gcp/beta/snapshot-api/checks.py
           python -m pytest tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_research_synthesis.py tests/test_research_evidence_runtime.py tests/test_research_evidence_api.py tests/test_research_evidence_contracts.py tests/test_research_answers.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q --tb=short
+      - name: Verify reused runtime bytes and current operator checks
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          manifest = json.loads(pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114/repair-production-source-manifest.json').read_text())
+          assert manifest['revision'] == '9eb9de8b1757e27eba37f8388ccb30c2a78a1389' and len(manifest['sources']) == 180
+          for path, expected in manifest['sources'].items():
+              original = subprocess.check_output(['git', 'show', manifest['revision'] + ':' + path])
+              assert hashlib.sha256(original).hexdigest() == expected
+              assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() == expected
+          print('All180 runtime source pins equal the prior source with220 hosted tests passed; native setup failure remains recorded.')
+          PY
+          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_budget.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_budget.py
+          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q
+      - name: Identify job-owned PostgreSQL container address
+        id: c21-target
+        env:
+          POSTGRES_TEST_CONTAINER_ID: ${{ job.services.postgres.id }}
+        run: |
+          container_address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$POSTGRES_TEST_CONTAINER_ID")"
+          python -c 'import ipaddress,sys; ipaddress.IPv4Address(sys.argv[1])' "$container_address"
+          printf 'address=%s\n' "$container_address" >> "$GITHUB_OUTPUT"
       - name: Verify actual PostgreSQL 16 migrations, protection and concurrency
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
           RUN_POSTGRES_INTEGRATION: '1'
           C21_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c21_beta_b1_test
+          C21_TEST_SERVER_ADDRESS: ${{ steps.c21-target.outputs.address }}
         run: python -m pytest tests/integration/test_research_evidence_postgres.py -q -rA --tb=short

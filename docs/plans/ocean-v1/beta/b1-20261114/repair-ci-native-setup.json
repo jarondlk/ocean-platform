@@ -1,0 +1,15 @@
+{
+  "version": "ocean-beta-b1-native-ci-setup-amendment-v1",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "run_id": 43619074592,
+  "job_id": 132520434482,
+  "hosted_runtime_operator_tests_passed": 220,
+  "hosted_seconds": 517.94,
+  "native_tests_reached_setup": 24,
+  "native_tests_passed": 0,
+  "reason": "Missing C21_TEST_SERVER_ADDRESS expected job-owned RFC1918 container peer. Guard correctly rejected every native setup.",
+  "amendment": "Pin actual docker-inspect IPv4 of this job-owned PostgreSQL service to C21_TEST_SERVER_ADDRESS; unchanged guard. Reuse220 passing tests only after matching all180 actual Git/runtime pins.",
+  "original_log_sha256": "42504331d5c7631dfe2b41a026150d1599583c2e42428d0fda721813ba1f3da2",
+  "original_log_retained_private": true,
+  "no_runtime_or_provider_admission_waived": true
+}

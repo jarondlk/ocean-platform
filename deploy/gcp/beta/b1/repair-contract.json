@@ -1,0 +1,37 @@
+{
+  "base_checkpoint": "b728bf0",
+  "revisions": {
+    "controller": "ocean-v1-beta-research-controller-b1-fix-1115",
+    "stage": "ocean-v1-beta-serving-b1-fix-1115",
+    "live": "ocean-v1-beta-serving-b1-fix-live-1115"
+  },
+  "runtime_commit": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "services": {
+    "controller": {
+      "baseline_configuration_sha256": "0fa6e432368a310924299cec35ae9f39aa37d510ac231891c53c8858e3f2c6e3",
+      "initial_revision": "ocean-v1-beta-research-controller-00002-mcw",
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-research-controller",
+      "uid": "75791f9e-366d-4901-9d2f-89080510acfa"
+    },
+    "serving": {
+      "baseline_configuration_sha256": "28470ac814239b69ff970751e081a2775b6b7eb750611efa0eb04fb60271aff7",
+      "initial_revision": "ocean-v1-beta-serving-00021-mgn",
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving",
+      "uid": "e425c401-bb6e-445f-8487-cda4d5744676"
+    }
+  },
+  "version": "ocean-beta-b1-repair-rollout-contract-v1",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "build_id": "d3735340-23c0-45b3-88d9-7b47fb44b333",
+  "build_context_sha256": "a3a7355759a5237df100e4ca5ca880bbe833be0d6d57d75736c43bf14083c536",
+  "ci_run_id": null,
+  "ci_job_id": null,
+  "ci_log_sha256": null,
+  "hosted_acceptance_pending": true,
+  "initial_revisions": {
+    "controller": "ocean-v1-beta-research-controller-b1-provider-20261114",
+    "serving": "ocean-v1-beta-serving-b1-drain-20261114"
+  },
+  "ci_source_commit": null,
+  "unit_ci_log_sha256": "42504331d5c7631dfe2b41a026150d1599583c2e42428d0fda721813ba1f3da2"
+}

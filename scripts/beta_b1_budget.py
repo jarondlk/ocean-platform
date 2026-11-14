@@ -18,7 +18,7 @@ if not __package__:
 from scripts.beta_b0_preflight import require
 
 
-def _calculate(directory, *, future_observers=2, terminal_report=None):
+def _calculate(directory, *, future_observers=2, terminal_report=None, engineering_reports=()):
     require(type(future_observers) is int and 0 <= future_observers <= 2)
     def load(name):
         return json.loads((directory / name).read_text())
@@ -90,7 +90,7 @@ def _calculate(directory, *, future_observers=2, terminal_report=None):
         head = terminal_report['head']
         require(head['status'] == 'unavailable' and head['run_status'] == 'completed'
                 and head['lease_closed'] is True and head['run_lease_closed'] is True
-                and type(head['model_calls']) is int and head['model_calls'] == 2 and calls == 4)
+                and type(head['model_calls']) is int and head['model_calls'] == 2 and calls == 4 + len(engineering_reports))
         groups = terminal_report['generations']
         require(set(groups) == {'research_run', 'research_answer'} and all(len(v) == 1 for v in groups.values()))
         ceiling_inputs, ceiling_outputs = 10599, 1004
@@ -109,6 +109,22 @@ def _calculate(directory, *, future_observers=2, terminal_report=None):
             combined = 4096 if total is None or inputs is None else total - inputs
             require(0 <= combined <= 4096)
             ceiling_outputs += max(combined, step['usage']['output_tokens'] or 0)
+        require(len(engineering_reports) in (0, 2))
+        if engineering_reports:
+            require([r['variant'] for r in engineering_reports] == ['original', 'array_bounds_removed']
+                    and [r['http_status'] for r in engineering_reports] == [400, 200])
+            for report in engineering_reports:
+                require(report['no_beta_history_or_scientific_data_used'] is True)
+                usage = report['usage']
+                if usage is None:
+                    ceiling_inputs += 12000 + 2048
+                    ceiling_outputs += 4096
+                    continue
+                inputs, total = usage['promptTokenCount'], usage['totalTokenCount']
+                require(type(inputs) is int and 0 <= inputs <= 12000 + 2048
+                        and type(total) is int and inputs <= total <= inputs + 4096)
+                ceiling_inputs += inputs
+                ceiling_outputs += total - inputs
         require(input_tokens >= 10599 and output_tokens >= 1004)
     model_observed = input_tokens * selected["gemini_3_8_flash_input"] + output_tokens * selected["gemini_3_8_flash_output"]
     network = sums["storage.googleapis.com/network/sent_bytes_count"] / 2**30 * selected["internet_worst_selected_destination"]
@@ -154,7 +170,7 @@ def _calculate(directory, *, future_observers=2, terminal_report=None):
         result.update(version='ocean-beta-b1-q5-terminal-reconciliation-v1',
             new_questions_considered=0, new_question_already_submitted=True,
             native_model_calls=str(calls), native_input_tokens=str(input_tokens), native_output_tokens=str(output_tokens),
-            terminal_physical_attempts=2, input_planning_tokens=str(input_ceiling), output_planning_tokens=str(output_ceiling),
+            terminal_physical_attempts=2 + len(engineering_reports), input_planning_tokens=str(input_ceiling), output_planning_tokens=str(output_ceiling),
             model_planning_jpy=str(ceiling_cost), one_question_model_reserve_jpy='0',
             missing_usage_reserve_jpy=str(model_reserve), initial_validation_limit_jpy=550,
             remaining_initial550_jpy=str(550-total), within_initial550=total <= 550,
@@ -168,9 +184,9 @@ def calculate(directory, *, future_observers=2):
     return _calculate(directory, future_observers=future_observers)
 
 
-def reconcile_terminal(directory, report, *, future_observers=0):
+def reconcile_terminal(directory, report, *, future_observers=0, engineering_reports=()):
     """Reconcile closed Q5 attempts; this cannot admit another model segment."""
-    return _calculate(directory, future_observers=future_observers, terminal_report=report)
+    return _calculate(directory, future_observers=future_observers, terminal_report=report, engineering_reports=engineering_reports)
 
 
 def main():

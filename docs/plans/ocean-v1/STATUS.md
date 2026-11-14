@@ -4,6 +4,17 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Repair candidate image181f26d4 (source9eb9de8) passed all4source-bound Cloud
+Build proofs. Linux220checks passed; native acceptance stopped at the CI harness's
+missing expected container address. The exact-peer follow-up preserves that
+guard and reuses220unchanged-runtime checks after180pin comparison. Candidate
+rollout remains gated; beta serving remains drained39 on7889ef20, queue PAUSED.
+[Build](beta/b1-20261114/repair-build-result.json),
+[native setup amendment](beta/b1-20261114/repair-ci-native-setup.json).
+No repaired deployment or new answer acceptance is claimed.
+
+Historical repair state:
+
 Research admission is now drained at serving39 on the unchanged accepted API;
 queue and scheduling remain PAUSED. Q5 diagnosis confirmed generation_incomplete
 and closed leases. Synthetic provider probes isolated original schema400 versus
