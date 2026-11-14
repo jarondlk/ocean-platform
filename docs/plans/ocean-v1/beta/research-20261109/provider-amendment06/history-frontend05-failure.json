@@ -1,0 +1,53 @@
+{
+  "version": "ocean-beta-signed-in-history-failure-v1",
+  "recorded_utc": "2026-11-11T01:40:08.160048+00:00",
+  "project": "ocean-v1-beta-20261101",
+  "serving_revision": "ocean-v1-beta-serving-00020-n7s",
+  "frontend_source": "7fe5e1342e586dd994020683c3e3fb227d4b287a",
+  "frontend_digest": "sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+  "api_source": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+  "signed_in_account_class": "Internal account, Administrator",
+  "read_only_UI": true,
+  "manual_questions_added": 0,
+  "browser_result": "The saved answers could not be verified.",
+  "overall_history_deadline_ms": 15000,
+  "request_metadata_observations": [
+    {
+      "timestamp": "2026-11-11T01:31:54.211990Z",
+      "path": "/research/evidence/list",
+      "status": 503,
+      "latency_seconds": "15.035427690"
+    },
+    {
+      "timestamp": "2026-11-11T01:32:06.117827Z",
+      "path": "/research/answers/list",
+      "status": 200,
+      "latency_seconds": "2.473110120"
+    },
+    {
+      "timestamp": "2026-11-11T01:32:08.617720Z",
+      "path": "/research/evidence/list",
+      "status": 200,
+      "latency_seconds": "13.906812775"
+    },
+    {
+      "timestamp": "2026-11-11T01:32:08.625242Z",
+      "path": "/research/answers/events",
+      "status": 200,
+      "latency_seconds": "4.516047032"
+    }
+  ],
+  "sequential_answer_list_then_evidence_seconds": "16.379922895",
+  "interpretation": "The server evidence path alone can consume nearly the complete history deadline; overlapping events and evidence does not remove the answer-list prerequisite. No freshness or authorization guard or deadline was changed.",
+  "proof_image": {
+    "basename": "research-history-frontend05-pending.jpg",
+    "sha256": "06648fc8badc12c8b3dd37f7d6b5c2c16441afaddde8c8f72a41ecea28221143",
+    "bytes": 71951,
+    "stored_outside_git": true
+  },
+  "logging_privacy": "Only allowlisted Research paths, status, latency and revision are retained. No URL queries, auth callbacks, request bodies, model content or credential values are retained.",
+  "browser_after_capture": "about:blank to stop recurring read polling",
+  "live_history_gate_passed": false,
+  "actual_successful_Gemini_cited_answer_gate_passed": false,
+  "scientific_approval": false
+}

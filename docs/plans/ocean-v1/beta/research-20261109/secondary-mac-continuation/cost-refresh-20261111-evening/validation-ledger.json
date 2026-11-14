@@ -1,0 +1,153 @@
+{
+  "candidate_next_work_not_admitted": {
+    "CI_GitHub_cost_included_in_GCP_project": false,
+    "UI_rollout_cloud_margin_jpy": "20.000000000",
+    "build_ceiling_jpy": "9.492299990",
+    "combined_observed_ancillary_build_model_observer_and_cloud_reserves_jpy": "496.003071892",
+    "conservative_model_planning_jpy": "365.885449638",
+    "controller_wire_bytes": 1586,
+    "double4096_output_planning_tokens": 114688,
+    "future_model_build_observer_and_UI_reserves_are_not_actual_charges": true,
+    "observer120second_higher_request_rate_envelope_jpy": "0.946856640",
+    "observer_main_plus_proxy_GiB": "0.75",
+    "observer_main_plus_proxy_vcpu": 2,
+    "observer_preflight_job_freshly_verified_created_never_executed": true,
+    "one_E2_STANDARD_2_API_build_timeout_seconds": 600,
+    "one_readonly_observer_job_timeout_seconds": 120,
+    "provider_hard_currency_cap": false,
+    "re_admit_deliberate_new_continuation_or_question": true,
+    "remaining500_after_candidate_reserves_jpy": "3.996928108",
+    "root_source_image_CI_rollout_and_actual_budget_readback_gates_required": true,
+    "rounded_model_reserve_jpy": "370.000000000",
+    "rounded_observer_reserve_with_startup_cleanup_jpy": "1.500000000",
+    "shared_combined_controller_and_answer_model_call_cap": 14,
+    "worst_case_input_planning_tokens": 968380
+  },
+  "captured_utc": "2026-11-11T12:27:31.991663Z",
+  "closed_question03_model": {
+    "cost_jpy": "3.706505842",
+    "durable_thoughts_inclusion_reconciled": true,
+    "durable_total_tokens": 11603,
+    "extra_invocations_since_prior_audit": 0,
+    "input_tokens": 10599,
+    "native_model_invocations": 2,
+    "native_output_tokens_including_thoughts": 1004,
+    "prior425_reserve_released_only_for_this_closed_question": true,
+    "run_id": "91f567bc-a9a2-4f38-84c4-54d789972115",
+    "successful_Gemini_cited_answer_acceptance": false
+  },
+  "cloud_mutations": false,
+  "currency": "JPY",
+  "delivery_state": {
+    "queue_http": 200,
+    "queue_state": "PAUSED",
+    "scheduler_http": 200,
+    "scheduler_job_names": [],
+    "scheduler_next_page_present": false,
+    "task_count": 0,
+    "tasks_http": 200,
+    "tasks_next_page_present": false
+  },
+  "fresh_observed_and_conservative_cloud": {
+    "all_time_series_pages_read": true,
+    "allproject_attribution_includes_unrelated_serving_and_readonly_inspection": true,
+    "builds": [
+      {
+        "duration_seconds": "377.973775",
+        "id": "cc67b713-828d-4f4e-ba46-f403a843f4b5",
+        "planning_whole_minutes": "7"
+      },
+      {
+        "duration_seconds": "384.715521",
+        "id": "f612c37f-dee6-4d40-806f-ecc7a9676ea8",
+        "planning_whole_minutes": "7"
+      },
+      {
+        "duration_seconds": "40.797335",
+        "id": "c9f4bb42-c54b-403e-b7d2-3cce0d400931",
+        "planning_whole_minutes": "1"
+      }
+    ],
+    "cloud_total_jpy": "86.304266060",
+    "extra_job_minimum_envelope_jpy": "1.429796604",
+    "finished_builds_exact_duration_gross_jpy": "12.711560232",
+    "finished_builds_whole_minute_ceiling_jpy": "14.238449985",
+    "interval_start_utc": "2026-11-09T13:13:28Z",
+    "job_minimum_corrections": [
+      {
+        "additional_minimum_correction_jpy": "0.484518058",
+        "conservative60s_minimum_request_rate_envelope_jpy": "0.485293680",
+        "job": "ocean-v1-beta-controller-credential",
+        "observed_request_rate_jpy": "0.000775622"
+      },
+      {
+        "additional_minimum_correction_jpy": "0E-9",
+        "conservative60s_minimum_request_rate_envelope_jpy": "0.485293680",
+        "job": "ocean-v1-beta-research-grants",
+        "observed_request_rate_jpy": "0.485293680"
+      },
+      {
+        "additional_minimum_correction_jpy": "0.472639273",
+        "conservative60s_minimum_request_rate_envelope_jpy": "0.473428320",
+        "job": "ocean-v1-beta-research-diagnostics-20261110",
+        "observed_request_rate_jpy": "0.000789047"
+      },
+      {
+        "additional_minimum_correction_jpy": "0.472639273",
+        "conservative60s_minimum_request_rate_envelope_jpy": "0.473428320",
+        "job": "ocean-v1-beta-research-action-shape-20261111",
+        "observed_request_rate_jpy": "0.000789047"
+      }
+    ],
+    "logging_larger_ordinary_or_billing_counter_jpy": "1.089099101",
+    "new_cloud_builds_since_morning": 0,
+    "not_invoice": true,
+    "storage_ops_class_a_conservative_count": "78",
+    "storage_ops_class_b_count": "197032",
+    "storage_ops_gross_jpy": "12.530278777",
+    "wholeproject_run_at_higher_request_rates_jpy": "57.016641593"
+  },
+  "input_sha256": {
+    "evening_renderer_source.py": "574db0be760485242741ef0ee02b4aca6d18cc0bca249bf87d928bca3343c653",
+    "observed-usage.json": "950b550d8af1f913ab513f26e20c416c5396fb387fc477b68f87b3c9d284ac34",
+    "observer-job-metadata.json": "437dd1c5350c556a308aa02ff3dd1fc801b7e3e1082cff71e676a14e56973f20",
+    "public-selected-jpy-prices.json": "7a7617c98be576b708f56ac71aa3273b8d18bf37b0228805fac77c78ff246261",
+    "question03-model-cost-reconciled.json": "47de653a4a3e990aca45f2f6f9c7f7260d988b4f8e31357294ad08114e74d963",
+    "shared-model-cap-proof.json": "4d027f96343e5aaf6c04fe2c1460fc16e5a27a652084a1495bee943aadbcfd71"
+  },
+  "manual_question_limit": 20,
+  "manual_questions_already_submitted": 3,
+  "network_qualification": {
+    "all_storage_sent_bytes_assumed_internet": false,
+    "monitoring_sent_bytes_does_not_attest_destination": true,
+    "operator_attestation_retained": "Science archive already on Desktop; after Nov9 13:13 only tiny control/activation/build metadata downloaded to this Mac.",
+    "residual_internet_egress_reserved_in_ancillary": true,
+    "sameTokyo_GCS_to_Run_CloudBuild_expected_zero_transfer_rate": true,
+    "storage_sent_bytes": "2183999910"
+  },
+  "new_question_admitted": false,
+  "project": "ocean-v1-beta-20261101",
+  "qualifications": [
+    "Public list gross estimates are not an invoice, spend cap or provider countTokens proof.",
+    "60sjobminimum is conservatively priced at higher request-based rates; actualjobs use instance-based rates.",
+    "Build wholeminute ceilings are planning allowances, not asserted invoice granularity.",
+    "Fixed SQL/LBbaseline independent of validation is included in monthlyscenario; initialledger tracks incrementalcategories.",
+    "No modelquestion, queue/Scheduler enablement or successful citedanswer is admitted by this receipt."
+  ],
+  "real_model_calls_by_this_audit": 0,
+  "remaining_allocations": {
+    "ancillary_registry_storage_residence_internet_tasks_secrets_ingestion_lag_reserve_jpy": "5.000000000",
+    "observed_plus_ancillary_jpy": "95.010771902",
+    "prior_completed_action_shape_diagnostic_reserve_released_jpy": "1.500000000",
+    "remaining500_before_new_work_jpy": "404.989228098",
+    "structural_job_now_in_observed_run_and60s_minimum": true
+  },
+  "source_receipts": [
+    "../../startup-amendment03/question03-model-cost-reconciled.json",
+    "../../startup-amendment03/action-shape-diagnostic.json",
+    "../../startup-amendment03/shared-model-cap-proof.json"
+  ],
+  "state": "fresh_cloud_model_reconciled_candidate_build_and_one_question_fit500_no_admission",
+  "user_limit_jpy": 500,
+  "version": "ocean-beta-validation-ledger-20261111-evening-v1"
+}

@@ -1,0 +1,47 @@
+{
+  "context": {
+    "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "base_serving_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/catalogue-api@sha256:0de4842308efeef1b64c3e51b9c225d2ce0dbdd5b4b321ea4c65c1b6e37de13d",
+    "composed_api_sources": 180,
+    "context_files": [
+      "Dockerfile",
+      "application/api/research_evidence_routes.py",
+      "application/api/research_run_routes.py",
+      "application/api/v1_beta_question_entry.py",
+      "application/api/v1_beta_question_services.py",
+      "application/api/v1_beta_research_host.py",
+      "application/api/v1_catalogue_host.py",
+      "application/api/v1_host.py",
+      "application/api/v1_research_controller_host.py",
+      "application/ingestion/beta_catalogue_retention.py",
+      "application/ingestion/gcs_catalogue_snapshot.py",
+      "application/orchestration/beta_vertex_research.py",
+      "application/orchestration/catalogue_service.py",
+      "application/orchestration/cloud_research_dispatch.py",
+      "application/orchestration/frozen_catalogue.py",
+      "application/orchestration/frozen_scientific_catalogue.py",
+      "application/orchestration/investigations.py",
+      "application/orchestration/research_answers.py",
+      "application/orchestration/research_runs.py",
+      "beta-host-config.json",
+      "catalogue-source.json",
+      "snapshot-serving-manifest.json",
+      "source-manifest.json"
+    ],
+    "manifest_sha256": "d5d8ec518a7f4cd8af8a7253d667736183f580a90d70323522c972871cffd549",
+    "opaque_source_binding_included": true,
+    "revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+    "runtime_activation_document_included": false,
+    "source_binding_sha256": "3aa35972d4fda7f0aa4842a58ee6f05b4a36d6172fbf54a72c0f2f50cb853f5a",
+    "unchanged_base_sources": 162
+  },
+  "renderer": {
+    "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "binding_bytes": 422,
+    "binding_sha256": "3aa35972d4fda7f0aa4842a58ee6f05b4a36d6172fbf54a72c0f2f50cb853f5a",
+    "cloud_calls": false,
+    "dataset_ids_rows_policy_or_credentials_in_output": false,
+    "scientific_approval_claimed": false,
+    "state": "opaque_beta_source_binding_rendered"
+  }
+}

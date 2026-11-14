@@ -1,0 +1,257 @@
+{
+  "captured_utc": "2026-11-11T01:50:27.150103+00:00",
+  "correctness": {
+    "answer_new_closing_failures": "ResearchAnswerError is preserved, including403; other closing-fence exceptions become safe503 without private exception content.",
+    "answer_scope": "Only list/status/events invoke an outer read scope; submit/cancel/delivery/provider/retention are not surrounded.",
+    "cleanup": "Nested/body failure and domain403 clear both scopes; next operation rereads authority. Two concurrent answer reads each have their own2 activation/2 control reads, with identical responses.",
+    "closing_failures_route_cases": {
+      "actions": [
+        "answers/list",
+        "answers/status",
+        "answers/events",
+        "evidence/list"
+      ],
+      "count": 16,
+      "failures": [
+        "control generation changed",
+        "activation generation changed",
+        "activation bytes changed",
+        "private transport exception"
+      ],
+      "result": "All return only sanitized HTTP503 error; no ready job/receipt escapes after the body has produced a result."
+    },
+    "evidence_scope": "Existing catalogue read scope inside each parent SQL transaction; final activation/control proof exits before SQL commit.",
+    "exact_response_bytes_and_all_original_core_calls_preserved": true,
+    "external_artifact_and_documentary_providers_in_beta_fixture": false,
+    "immutable_manifest_and_payload_read_counts_preserved": true,
+    "original_deadlines_and_authorization_epochs_preserved": true,
+    "retention_C09_writes": "All existing add_reference calls remain between SQL transactions, outside active control and activation read scopes; actual deterministic submission/retention/delivery and repeat-list calls assert this.",
+    "sql_commit_order": "A permitted synthetic investigation-name write is flushed, closing control-generation change is confirmed, and the failed scope rolls SQL back; original name remains."
+  },
+  "diagnosis": {
+    "avoided_work": "Repeated activation/control network observations within each beta evidence SQL transaction and each pure answer read.",
+    "checks_not_skipped": [
+      "fresh SQL principal/owner checks",
+      "source/context/policy checks",
+      "committed C20 projection/replay",
+      "exact immutable manifest and payload reads/hashes",
+      "receipt/dependency/protection validation",
+      "existing additive reference reconciliation",
+      "strict response contracts/access revisions/bindings"
+    ],
+    "frontend05_still_requires_deployed_history_acceptance": true,
+    "no_ready_receipt_shortcut_or_ttl_cache_added": true,
+    "source_path": "evidence/list invokes ensure_retained -> load_verified/replay -> _retain -> reference reconciliation -> per-receipt read and validation. Already-ready results repeat these checks."
+  },
+  "exact_rollout_drain": {
+    "existing_answer_history_and_evidence_http": 200,
+    "existing_queued_answer_cancellation": "HTTP200/cancelled",
+    "existing_queued_run_cancellation": "HTTP200/cancelled",
+    "flags": {
+      "ENABLE_V1_EVIDENCE": true,
+      "ENABLE_V1_RESEARCH_CONTROLLER": true,
+      "ENABLE_V1_RESEARCH_DISPATCH": false,
+      "ENABLE_V1_RESEARCH_RUNS": true,
+      "ENABLE_V1_SYNTHESIS": false
+    },
+    "frontend_expected_research_api_unchanged": true,
+    "health_live": {
+      "execution_enabled": true,
+      "status": "live"
+    },
+    "new_run_and_new_answer_http": 503,
+    "provider_calls": 0,
+    "queue_transport_call_counts_unchanged_after_denials": true,
+    "run_answer_job_outbox_row_counts_unchanged_after_denials": true,
+    "scope": "Synthetic actual HTTP/composition check; no live drain action performed by receipt preparer."
+  },
+  "fingerprint_preservation": {
+    "all18_generic_files_byte_identical": true,
+    "baseline_commit": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+    "controller_fingerprint": "cf87f56712ccf4eddb03fe944e9bb293132163e881fdea38bb515b103c2641a5",
+    "files_sha256": {
+      "ingestion/beta_catalogue_retention.py": "62fc99ec260925c081c6668725860d190fca0b8526eee00e58f502f0b4037187",
+      "ingestion/gcs_catalogue_snapshot.py": "974081209c850d5cca6b3a24580f3572723ad81415552f709de18d72cd8361fd",
+      "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+      "orchestration/frozen_documentary.py": "c3672d21a8a61145b1935879b535f02eb8439fdf8dc3aedb73675274449b1ac5",
+      "orchestration/research_answers.py": "751c941216bdbf50afc71607dff58c371ea3254f3f4ea4713a8624fcc79281bb",
+      "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+      "orchestration/research_controller_budget.py": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57",
+      "orchestration/research_controller_observations.py": "e3aeff8f74aa25997ebd1e000ddba490326bde6e908509fc212627379b71b81d",
+      "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+      "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+      "orchestration/research_evidence.py": "89e62649bb6fdb3b9b60a1f98dda7973683c1c5180c56483d520834184ee63ca",
+      "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+      "orchestration/research_runs.py": "a2a8835c7c32b8c9496d1a2da8d6ee05d8ae33be2666af3f4fb2840e9baef3f6",
+      "orchestration/research_synthesis.py": "9991a2af117aa6747417c3e2d85b8e76e1494163bb245d49249790b935526a50",
+      "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+      "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+      "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+      "schema/research_evidence.py": "79617dba452bdc144c6e43e998f0627a0fcbe5b5475caa88a916de4fef820d92"
+    },
+    "historical_replay_and_fingerprint_contract_modified": false,
+    "synthesis_engine_fingerprint": "81c19577aff6414aed7246274fbb115767fd0f939d00451bd86bc55306474850"
+  },
+  "offline_transport_counts": {
+    "each_answers_list_status_events": {
+      "after": {
+        "activation": 2,
+        "control": 2,
+        "manifest": 3,
+        "object": 7,
+        "total": 14
+      },
+      "all_core_call_counts_equal": true,
+      "before": {
+        "activation": 6,
+        "control": 7,
+        "manifest": 3,
+        "object": 7,
+        "total": 23
+      },
+      "fresh_sql_principal_calls_before_and_after": 2,
+      "logical_reads_saved": 9,
+      "resolver_calls_before_and_after": 3,
+      "response_bytes_equal": true
+    },
+    "environment": "Actual beta production composition, canonical sealed synthetic one-CTD-snapshot catalogue and SQLite application database; one completed deterministic retained answer, one receipt. GCS transport replaced only by BoundedLocalStore. No cloud/provider/model call.",
+    "evidence_list": {
+      "after": {
+        "activation": 16,
+        "control": 16,
+        "manifest": 17,
+        "object": 39,
+        "total": 88
+      },
+      "before": {
+        "activation": 30,
+        "control": 37,
+        "manifest": 17,
+        "object": 39,
+        "total": 123
+      },
+      "core_calls_before_and_after": {
+        "_policy": 7,
+        "_read_receipt": 1,
+        "_retain": 1,
+        "_source": 5,
+        "_verified": 1,
+        "add_reference": 2,
+        "resolve": 12
+      },
+      "fresh_sql_principal_call_counts_equal": true,
+      "logical_reads_saved": 35,
+      "response_bytes_equal": true
+    },
+    "gcs_transport_note": "BoundedGcsStore.read performs metadata reload plus generation-conditional byte download for each logical read; counts omit any SDK/network retries. This source-level reduction is not measured live latency or invoice cost.",
+    "latency_acceptance_claimed": false,
+    "live_deadline_ms_unchanged": 15000
+  },
+  "packaging_boundary": {
+    "changed_production_file_already_in_allowed_overlay": "api/v1_beta_question_services.py",
+    "existing_additions": 8,
+    "existing_overlay_count": 18,
+    "existing_snapshot_source_count": 180,
+    "explicit_supersessions": 10,
+    "finite_import_closure_validation_passed": true,
+    "new_base_source_override": false,
+    "new_overlay_paths": [],
+    "package_files_unchanged_from_baseline": {
+      "deploy/gcp/beta/snapshot-api/Dockerfile": "021f2c4cb7536d68b0155cef7898384c5ab92703d1574b91aaf1731a4fadf673",
+      "deploy/gcp/beta/snapshot-api/base-api-source-manifest.json": "545434f538df9104e3595148e18228afff7d857e2f511a56c909c9d99986af41",
+      "deploy/gcp/beta/snapshot-api/prepare_context.py": "88d650df551043474fe3fe44a3605f92d742a16605ef58a29f09fd8a13d355db",
+      "deploy/gcp/beta/snapshot-api/render_configuration.py": "f38e504926ccd63ae9638214d09ce2840d93f048ad2eb0964f3589beebeca311"
+    },
+    "source_manifest_hash_for_final_commit": "pending_parent_commit_and_context_preparation",
+    "unchanged_base_sources": 162
+  },
+  "remaining_gates": {
+    "actual_valid_gemini_question_and_cited_answer_reload": "pending; priorQ03 remains partial/repair_budget",
+    "aggregate_cost_admission_and_recurring_sweep": "separate current live/cost gate",
+    "fresh_drain_identity_preserving_rollout": "pending; root owns cloud operations",
+    "immutable_api_image_and_packaged_proof": "pending for final scope source commit",
+    "normal_ci": "pending for final scope source commit",
+    "signed_in_live_history_within_existing15s_deadline": "pending; storage request reduction alone is not acceptance"
+  },
+  "scope_limits": {
+    "cloud_calls_or_mutations": false,
+    "commits_or_pushes_by_preparer": false,
+    "credential_values_or_real_scientific_payloads_included": false,
+    "legacy_edna_anemone_experiments_workers_gates_changed": false,
+    "new_manual_questions": 0,
+    "provider_or_model_calls": false,
+    "scientific_approval": false
+  },
+  "source": {
+    "changed_files": {
+      "api/v1_beta_question_services.py": {
+        "bytes": 11400,
+        "sha256": "4dbb63a87a4592df1ec82ee075a89b7b1b4d248ce4d17b4e1f28e0249aabfc00"
+      },
+      "tests/test_beta_research_read_scopes.py": {
+        "bytes": 17708,
+        "sha256": "1c7106ad7d1b41720f5be1ae7041f7fd5b8602185b81ff364619370040e9273d"
+      }
+    },
+    "generic_baseline_commit": "9969feb23a1c15af6d6459e02beab0ce56ef9be3",
+    "parent_checkout_commit": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+    "production_change": "Only the existing beta composition overlay gains two subclasses; generic services and legacy composition remain unchanged.",
+    "scope_fix_commit": "pending_parent_commit"
+  },
+  "state": "local_beta_scope_optimization_verified_ci_image_and_live_latency_pending",
+  "verification": {
+    "broader_focused": {
+      "collection_note": "The final SQL-rollback regression was added after this run collected; existing collected cases and production source bytes were unchanged.",
+      "command": "python -m pytest -q -o addopts='' tests/test_beta_research_read_scopes.py tests/test_beta_question_services.py tests/test_beta_catalogue_retention.py tests/test_beta_snapshot_catalogue.py tests/test_research_evidence_store.py tests/test_research_evidence_api.py tests/test_research_evidence_contracts.py tests/test_research_answers.py",
+      "failed": 0,
+      "log": "ocean_beta_read_scopes_focused.log",
+      "new_scope_cases_collected": 26,
+      "passed": 157,
+      "seconds": 224.73
+    },
+    "final_new_suite": {
+      "command": "python -m pytest -q -o addopts='' tests/test_beta_research_read_scopes.py",
+      "failed": 0,
+      "includes_corrected_sql_rollback_and_exact_drain": true,
+      "log": "ocean_beta_read_scopes_final.log",
+      "passed": 27,
+      "seconds": 25.21
+    },
+    "git_diff_check_passed": true,
+    "logs": {
+      "ocean_beta_read_scopes_drain_rollback.log": {
+        "bytes": 6263,
+        "private_local_basename": "ocean_beta_read_scopes_drain_rollback.log",
+        "sha256": "a379e0199d82f3ae138c6bc310b94cab043ea6d29eb1b1ea3a11f1837f7e389e"
+      },
+      "ocean_beta_read_scopes_final.log": {
+        "bytes": 692,
+        "private_local_basename": "ocean_beta_read_scopes_final.log",
+        "sha256": "49ec485383b778dc196223f0753c38a8afa97b973c5e1d11d86235726a2cfc2e"
+      },
+      "ocean_beta_read_scopes_focused.log": {
+        "bytes": 864,
+        "private_local_basename": "ocean_beta_read_scopes_focused.log",
+        "sha256": "7b05f20a5e6fefbb22b8d6cdf65b01a6d135da5fcfa8157e7ea010adf62bf7f4"
+      },
+      "ocean_research_read_counts.log": {
+        "bytes": 3395,
+        "private_local_basename": "ocean_research_read_counts.log",
+        "sha256": "0bb196985f874526c3710cfd37fe3726041cfec9657088f0c96c18bf66c9a4bc"
+      }
+    },
+    "overlap": {
+      "counts_are_not_additive": true,
+      "distinct_cases_across_runs": 158,
+      "repeated_cases": 26
+    },
+    "raw_logs_in_git": false,
+    "ruff": {
+      "command": "python -m ruff check api/v1_beta_question_services.py tests/test_beta_research_read_scopes.py",
+      "passed": true
+    },
+    "runtime": "Python3.13 local isolated venv; synthetic SQLite is not native PostgreSQL or GCS acceptance.",
+    "test_probe_correction": "The first added rollback probe attempted ready->prepared on immutable evidence and correctly hit its existing ORM guard before the intended fence. It was changed to a permitted synthetic investigation-name write; final27 run confirms the actual closing-generation failure and rollback. The original failed probe log is retained privately."
+  },
+  "version": "ocean-beta-research-read-scopes-verification-v1"
+}

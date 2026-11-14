@@ -1,0 +1,35 @@
+{
+  "API_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+  "all_other_writable_settings_preserved": true,
+  "freshness": "Historical November 11 readback; November 14 cloud inspection requires reauthentication.",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+  "generation": 34,
+  "history_and_cancellation_flags_preserved": true,
+  "observed_utc": "2026-11-11T13:01:35.482886+00:00",
+  "observer_execution": "Two successful read-only executions; snapshots expired and rollout guard rejected proxy image. See observer-completed.json and rollout-hold.json.",
+  "old_request_timeout_seconds": 60,
+  "old_requests_expired_after_utc": "2026-11-11T13:02:35.482886+00:00",
+  "only_two_flags_and_explicit_traffic_target_changed": true,
+  "project": "ocean-v1-beta-20261101",
+  "qualified_new_API_has_no_traffic": true,
+  "queue_state": "PAUSED",
+  "record_hashes": {
+    "drain-apply.json": "f85f888e9ba208cdaee29b6ff40f16f56bcd7fd47c7c73d7a863ed98c3d09844",
+    "drain-before.json": "5d70b074c129c6a81c738bbd38803f671f3bdc4a77c87be17cdec8cef2c2e809",
+    "drain-dryrun.json": "d84d6706f2965b208fb4eda639d9a0b0f240aac9dedddeceb29587b31104481c",
+    "drain-readback.json": "5cdfae11c9810c671c2a42bb457f112b9c408dec0404e01e32c84572bbefef15",
+    "drain-request.json": "c27b9ae4ef8d90ac561c32e4db825aa0c70a10f9d42458c1a0908e8c69953865"
+  },
+  "region": "asia-northeast1",
+  "scheduler_jobs": 0,
+  "scientific_approval": false,
+  "serving_revision": "ocean-v1-beta-serving-00021-mgn",
+  "state": "ready_drain100_admission_disabled",
+  "tasks": 0,
+  "temporary_admission_flags": {
+    "ENABLE_V1_RESEARCH_DISPATCH": false,
+    "ENABLE_V1_SYNTHESIS": false
+  },
+  "traffic_percent": 100,
+  "version": "ocean-beta-provider06-drain-readback-v1"
+}

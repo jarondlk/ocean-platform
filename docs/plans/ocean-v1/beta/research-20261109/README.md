@@ -1,77 +1,125 @@
 # Research questions activation review — 2026-11-09 JST
 
-## Current checkpoint — 2026-11-11 JST
+## Current checkpoint — 2026-11-14 JST
 
-Research infrastructure is activated for bounded manual validation; full live
-acceptance remains open. Deployed frontend source is `7fe5e1342e586dd994020683c3e3fb227d4b287a`.
-Effective selections are unchanged startup03 API `4b24ca90…` and amendment05
-frontend `be709b49…`, now live on Ready `00020-n7s` at 100% traffic, generation 33,
-with no tags. Full promoted readback verifies exact preservation of all unrelated
-writable settings, including API/proxy, identity, secrets and ingress. The
-earlier quota-rejected attempt did not execute; the later promotion succeeded
-at 01:09 UTC on Nov11.
-[Live frontend receipt](frontend-amendment05/serving.json),
-[effective images](frontend-amendment05/images.json).
+The rollout is held and checkpointed at the operator's request. Fresh cloud
+inspection on November 14 requires Google reauthentication; no sign-in or
+further cloud mutation was started during wrap-up. All cloud observations
+below are last verified November 11, not a current clearance.
 
-The [amendment05 exact-source build](frontend-amendment05/build.json) passed
-all affected Linux gates: 1,085 prototype, 61 host and 1 standalone HTTP test,
-both production audits/typechecks/builds and actual packaged startup/login with
-UID/GID1000, network disabled and Research API expected=true. It includes
-independent reader-failure ownership and parallel event/evidence reads without
-changing the overall 15-second history deadline or policy checks. Reuse
-[source 9969 full CI 42721324508](startup-amendment03/ci.json), all jobs passed,
-for unchanged backend/PostgreSQL: 318 native cases, 16 expected skips and actual
-version 16.15 restore of 74 tables. The [original retry](secondary-mac-continuation/ci.json)
-also succeeded as job 129184649747 in run 42594709784; the prior exit139 is retained
-with cause unknown. The narrow activation serialization correction preserves
-the exact replacement hash and all generation/access/scientific guards.
+The last verified serving state is temporary admission drain
+`ocean-v1-beta-serving-00021-mgn`, generation 34, at 100% traffic,
+observed 2026-11-11T13:01:35.482886Z. New Research dispatch and synthesis
+admission flags are false. History/cancellation flags, frontend `7fe5e134` /
+`be709b49…`, startup03 API `9969feb2` / `4b24ca90…` and all other writable
+settings are preserved. Private controller `00002-mcw` still uses API
+`4b24ca90…`; the qualified new API has not been deployed.
+[Verified drain](provider-amendment06/drain.json),
+[current/prospective images](provider-amendment06/images.json),
+[effective hold and resume order](provider-amendment06/rollout-hold.json).
+
+Two aggregate-only read-only observer executions succeeded after the full
+60-second old-request envelope: `kzm8g` at 13:06 UTC and `fpdhd` at 13:12 UTC
+on November 11. Both found 3 terminal runs, 2 terminal answer jobs, no active
+leases, no pending outbox work and no uncertain model steps; proxy shutdown
+was verified. These snapshots have expired. The controller dry-run guard
+rejected the executed proxy digest `1d2285ce…` against reviewed digest
+`f333a9c5…`; their registry manifest relationship is unverified. The exact
+guard remains intact. No controller intent/PUT/apply or new API serving
+stage/promotion occurred.
+[Completed observer and exact mismatch](provider-amendment06/observer-completed.json).
+
+Source `0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f` combines the beta-only
+Gemini wire `const`→singleton-`enum` correction and bounded authority-read
+scopes for retained answer/evidence reads. The original logical schemas,
+strict host parsing, historical replay fingerprints, fresh authorization and
+closing generation fences remain intact; no deadline was increased.
+Tokyo [build `ec6296cd-55ea-42ec-a50a-552364f2a62c`](provider-amendment06/build.json)
+passed all four steps in 40.823529845 seconds and produced immutable API digest
+`7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8`.
+Both actual container proofs ran nonroot, network-disabled and read-only:
+source/activation/role checks and the frozen SDK's real controller/synthesis
+wire checks. The finite [180-source manifest](provider-amendment06/production-source-manifest.json)
+and 23-file context contain no original scientific payload or credential values.
+Two earlier submissions created no builds: local staging-bucket parsing failed,
+then the API rejected a proof argument over 10,000 bytes. The accepted build
+splits that proof into two steps, maximum argument 6,462 bytes; only the label
+step uses documented literal `$$`→`$` normalization. Their failures are retained.
+[Read-scope verification](provider-amendment06/read-scopes-verification.json),
+[accepted build configuration](provider-amendment06/cloudbuild.json).
+
+[Normal CI 42941802734](https://github.com/jarondlk/ocean-platform/actions/runs/42941802734)
+on source `0f15bbca` passed backend and all three frontend jobs. Backend evidence
+is 1 scale gate, 17 shared integration cases and 7,270 remaining passes,
+627 explicit skips and 83.89% coverage. Its PostgreSQL job repeated exit139
+in the retained native artifact case before backup/restore. The failure remains
+explicit and its cause unproven. [Isolated diagnostic 43020625782](https://github.com/jarondlk/ocean-platform/actions/runs/43020625782)
+on head `41fda4d` passed both focused 120-second faulthandler and disabled-timer
+variants. The full PostgreSQL test groups then passed all 318 cases with
+16 explicit skips and actual PostgreSQL16.15 backup/restore of 74 tables,
+including isolated restore cleanup. Successful unchanged backend/frontend
+evidence is reused. This is explicit source-bound composed acceptance; the
+original normal workflow remains red and the exact interpreter cause is unproven.
+The checkpoint workflow change sets only this native group's scheduled diagnostic
+timer to its default zero; fatal handling, every test and the 45-minute job bound
+remain unchanged.
+[Current composed CI receipt](provider-amendment06/ci.json),
+[exact one-scalar workflow proof](provider-amendment06/workflow-supersession.json).
+The earlier [318-case / 16-skip / 74-table restore proof](startup-amendment03/ci.json)
+belongs to the currently deployed `9969feb2` API, not acceptance of this new source.
 
 [Applied cloud prerequisites](startup-amendment03/cloud-prerequisites.json)
-record scoped IAM, successful credential/grant jobs, enabled numeric controller
-secret version 1 and temporary-grant cleanup. The exact immutable activation
-`4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694`
-is published at generation 1794232040589985. Private controller `00002-mcw`
-is Ready, internal and IAM-restricted to the task-invoker. The queue is PAUSED
-with 0 tasks, runtime Scheduler job absent and three-hour Codex schedule PAUSED.
-Scientific approval remains false and all original scientific bytes remain
-preserved. Legacy, eDNA/ANEMONE, experiments and workers retain separate gates.
+last verified scoped IAM, successful one-shot credential/grant jobs, enabled
+numeric controller-secret version1 and temporary-grant cleanup. They were not
+retried. Exact activation `4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694`
+is published at generation 1794232040589985. The November 11 private controller
+readback permits only the task-invoker IAM identity; queue readback is PAUSED
+with 0 tasks and no runtime Scheduler. Reopen all current settings, IAM,
+secret metadata, catalogue control references/audits, tasks and budget before
+any write. Resolve the proxy digest proof, then obtain fresh global quiescence
+after verifying drain and the preserved timeout envelope. Preserve every other
+service setting during API-only rollout. Historical prepared observer details
+are in [preflight.json](provider-amendment06/preflight.json);
+the completed executions and hold above supersede its preparation-only state.
 
-Deterministic count completed with 0 model calls and a persistent native cited
-answer; queued cancellation, terminal duplicate delivery and outbox recovery
-passed. Actual Gemini question03 ended partial/`repair_budget` after 143 seconds
-and two STOP responses. Its saved native partial answer used 0 synthesis calls,
-so the Gemini-backed cited-answer gate remains open alongside signed-in
-history/evidence latency and persistence/reload. Read-only diagnostic execution
-`ocean-v1-beta-research-diagnostics-20261110-ssdgb` verified both leases were
-closed and 2 physical calls: 10,599 input / 11,603 total tokens, including thoughts,
-estimated ¥3.706505842. [Reconciliation](startup-amendment03/question03-model-cost-reconciled.json).
+Earlier live checks passed deterministic count with a native cited answer and
+0 model calls, queued cancellation, terminal duplicate delivery and outbox
+recovery. Actual question03 remains partial/`repair_budget` after 143 seconds
+and two STOP responses; its saved native partial answer used 0 synthesis calls.
+Read-only diagnostics verified valid lookup target/fact_ids but invalid action
+kind strings; this proves the structural mismatch, not a provider cause.
+The actual Gemini-backed cited-answer, persistence/reload and 15-second signed-in
+history/evidence gates remain open. Frontend05 last measured answer-list at
+2.473 seconds followed by evidence/list at 13.907 seconds. The qualified
+read-scope change still requires deployed latency acceptance.
+[History failure](provider-amendment06/history-frontend05-failure.json),
+[closed-model usage](startup-amendment03/question03-model-cost-reconciled.json).
 
-The Nov11 01:30 UTC [validation ledger](secondary-mac-continuation/cost-refresh-20261111/validation-ledger.json)
-estimates ¥91.721211491 observed or reserved. One 600-second API build ceiling
-plus a rounded ¥370 future-question reserve would leave ¥28.786488519 for
-verification. Refresh after subsequent UI reads and before admission. The
-20-question/¥500 initial limit remains unchanged. The independently checked
-cumulative 14-call bound with the normalized wire schema is ¥365.885449638;
-no new question is admitted. The [fresh bounded monthly scenario](secondary-mac-continuation/cost-refresh-20261111/monthly-scenario.json)
-is ¥36,810.84 including contingency, within the unchanged ¥50,000/month target
-and ¥100,000 upper budget. These are estimates, not invoices or spend caps.
-Structural action-shape
-execution `-d466m` succeeded read-only. Both hash-bound JSON results selected
-`catalogue.open` with the correct target and matching single fact_id, no extra
-fields, but `kind` was a string outside `tool`/`finish`/`clarify` (safe enum=null).
-That establishes a structural mismatch rather than its provider cause. The
-beta-only adapter `const`→`enum` correction is committed as source
-`77c1517f9c996544d08d3dbd7cafcae868e8d78a`. [Normal CI 42939381842](https://github.com/jarondlk/ocean-platform/actions/runs/42939381842), image qualification
-and new valid live question/cited-answer proof remain pending; this source is
-distinct from the deployed `9969feb2` API.
-Historical replays stay preserved and no new question is admitted. The recurring
-outbox sweep remains gated.
+The historical [November 11, 21:27 JST ledger](secondary-mac-continuation/cost-refresh-20261111-evening/validation-ledger.json)
+records ¥95.010771902 observed plus ancillary reserve; model usage remains
+2 calls, 10,599 input / 11,603 total tokens including thoughts, estimated
+¥3.706505842. Replacing only the finished build's 600-second reserve with
+its one-minute planning allowance of ¥0.949229999 gives
+[known observed/reserved total ¥487.460001901](provider-amendment06/candidate-budget-after-build.json),
+leaving ¥12.539998099 outside the retained ¥370 model, ¥1.50 observer,
+¥20 UI/rollout and already included ¥5 ancillary reserves. Post-ledger cloud
+usage from the drain and two observers is not fully reconciled; this is a
+stale planning reservation, not actual current spend. Refresh before any further
+model question or recurring sweep. No fourth question was admitted.
+The unchanged initial limit is 20 questions / ¥500. The [bounded monthly scenario](secondary-mac-continuation/cost-refresh-20261111-evening/monthly-scenario.json)
+is ¥36,810.84 including contingency, within the ¥50,000 target and ¥100,000
+upper budget; these are planning estimates, not invoices or provider spend caps.
 
-Fresh signed-in frontend05 still misses the 15-second history gate:
-evidence/list took 13.907 seconds after answer-list took 2.473 seconds. Server
-read-path diagnosis continues without relaxing deadlines or access guards.
-[Shared model cap proof](startup-amendment03/shared-model-cap-proof.json),
-[structural diagnostic receipt](startup-amendment03/action-shape-diagnostic.json).
+The recurring outbox sweep remains gated on actual model/citation/reload and
+new-image live cost acceptance. Three-hour Codex scheduling stays PAUSED.
+Scientific approval remains false. Original scientific bytes, immutable receipts
+and the separate legacy, eDNA/ANEMONE, experiments and worker gates are preserved.
+
+Reviewed helpers and their tests are retained in durable private storage,
+with [hashes and replay restrictions](provider-amendment06/retained-helpers.json).
+Saved phase arguments and quiescence proofs are expired. The historical
+one-shot refresh helper expects an obsolete execution count and must not be
+replayed. Auxiliary diagnostic branch `codex/postgres-reopen-20261111` is retained.
 
 ## Historical receiving Mac continuation — 2026-11-09 JST
 

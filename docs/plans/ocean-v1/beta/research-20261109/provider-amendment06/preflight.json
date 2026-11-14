@@ -1,0 +1,169 @@
+{
+  "base_successful_diagnostic_request_sha256": "d36a0126528fd300fd950713b6e328ba66efc9891fd5867602964c88d4b74394",
+  "cleanup": "Rollback and close independently attempted; local proxy quitquitquit POST always attempted. Any cleanup failure revokes clear result and returns2.",
+  "cloud_calls_or_mutations": false,
+  "controller_identity_numeric_secret1_private_proxy_network_resources_preserved_exactly": true,
+  "database_boundary": "Server startup default_transaction_read_only=on; REPEATABLE READ READ ONLY; trusted identity/database/readonly/isolation exact checks;5s statement/2s lock/15s idle transaction timeouts;5s connect timeout.",
+  "database_user": "ocean_v1_research_controller",
+  "exit_codes": {
+    "0": "Read snapshot clear and proxy cleanup verified",
+    "2": "Configuration/query/identity/cleanup failure; no clear result",
+    "3": "Successful readonly inspection found blocked/uncertain work"
+  },
+  "expected_incremental_cost": "A single short120-second-bounded task with mandatory proxy shutdown; minimum job billing/startup and ancillary usage require ledger reservation and reconciliation. No provider currency cap.",
+  "failure_redaction": "Fixed stage enum +optional strict[A-Z0-9]{5}SQLSTATE only; never exception text.",
+  "fixed_q3_answer_job_id": "3b1885a1-e5b1-4f85-9495-8cf4e333020c",
+  "fixed_q3_run_id": "91f567bc-a9a2-4f38-84c4-54d789972115",
+  "fresh_before_creation": [
+    "Root review script/SQL/tests/hash/request andcurrent500JPYledger.",
+    "Confirm new job absent; create-only new job, never replace an existing job.",
+    "Fresh controller service identity/image/network/proxy settings and numeric controller DBsecret1 metadata; rebase proposal only after review if drift.",
+    "Keep queue/sweep paused and hold new submissions; counts are a snapshot and do not lock admission.",
+    "Inspect uncertain creation/execution outcomes before any retry; execute once with maxRetries0.",
+    "Require all recorded counts/booleans andproxy shutdown before rollout, then reconcile actual job/resource spending."
+  ],
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+  "internal_or_model_or_oauth_secrets_mounted": false,
+  "main_resources": {
+    "limits": {
+      "cpu": "1",
+      "memory": "512Mi"
+    }
+  },
+  "max_retries": 0,
+  "model_runtime_imported_or_called": false,
+  "name": "ocean-v1-beta-provider-preflight-20261111",
+  "native_sql_acceptance_or_live_clearance_claimed": false,
+  "no_live_rollout_clearance_or_job_execution_claimed": true,
+  "numeric_database_secret_refs_verified_from_request": [
+    {
+      "key": "1",
+      "name": "ocean-v1-beta-controller-database"
+    }
+  ],
+  "offline_tests_passed": 30,
+  "only_job_name_and_hash_bound_inline_source_changed": true,
+  "prepared_at_utc": "2026-11-11T01:45:34.015753+00:00",
+  "project": "ocean-v1-beta-20261101",
+  "proposal_private_relative_path": "provider-amendment06-preflight",
+  "proxy_args_private_fixed": true,
+  "proxy_image": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736",
+  "proxy_resources": {
+    "limits": {
+      "cpu": "1",
+      "memory": "256Mi"
+    }
+  },
+  "queries": "Identity SELECT then8 fixed aggregate-only SELECTs: global run/job states+leases; run/answer pending/dispatchable/terminal/stale/orphan outbox counts; global prepared model-step/unknown state counts; fixed Q3 terminal+closed-lease count predicates.",
+  "region": "asia-northeast1",
+  "report": "Fixed count keys/booleans only; no per-user IDs/rows, prompt/generated/payload/request JSON, question text, account data or credential values selected/emitted. Fixed target UUIDs are query parameters, not report fields.",
+  "report_contract": {
+    "clear_flag": "runtime_identity_change_clear_at_snapshot",
+    "closed_target_ids_emitted": false,
+    "count_groups": [
+      "runs",
+      "answer_jobs",
+      "run_outbox",
+      "answer_outbox",
+      "run_steps",
+      "answer_steps",
+      "q3_run",
+      "q3_answer_job"
+    ],
+    "required_success_flags": [
+      "fixed_question_three_terminal_and_leases_closed",
+      "transaction_read_only_verified",
+      "proxy_shutdown_verified",
+      "counts_and_booleans_only"
+    ],
+    "snapshot_caveat_flag": "snapshot_is_not_a_new_submission_or_queue_admission_fence",
+    "untrusted_error_or_user_text_allowed": false,
+    "version": "ocean-beta-runtime-rollout-preflight-v1"
+  },
+  "request_record": {
+    "bytes": 18173,
+    "sha256": "9ec7d9c064ad0120ad0a7f5b01e573f54ed2203f0b3dc6d976e9dccdcf2d03e2"
+  },
+  "request_sha256": "9ec7d9c064ad0120ad0a7f5b01e573f54ed2203f0b3dc6d976e9dccdcf2d03e2",
+  "root_owned_before_execution": [
+    "Drain new serving submissions with an explicit reviewed flag-only change; this package does not perform that change.",
+    "Keep queue/sweep paused, wait the current old-request timeout envelope, then inspect the fixed readonly snapshot.",
+    "Recheck freshness if any new admission, uncertain delivery or other runtime state changes before identity rollout."
+  ],
+  "runtime_identity_gate": "No nonterminal heads/open lease fields/unknown states, no dispatchable or orphaned outbox, no prepared model steps and exact fixed-Q3 terminal+closed-lease predicates. Terminal pending outbox rows are reported, remain untouched and do not dispatch under current source.",
+  "secret_refs": [
+    {
+      "key": "1",
+      "name": "ocean-v1-beta-controller-database"
+    }
+  ],
+  "service_account": "ocean-v1-beta-controller@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "snapshot_is_not_a_new_submission_or_queue_admission_fence": true,
+  "snapshot_is_not_an_admission_fence": true,
+  "source_iam_secret_or_database_grant_mutations": false,
+  "source_record": {
+    "bytes": 12094,
+    "sha256": "a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33"
+  },
+  "source_schema_check": {
+    "answer_statuses": [
+      "cancelled",
+      "completed",
+      "failed",
+      "partial",
+      "queued",
+      "running",
+      "unavailable"
+    ],
+    "native_sql_run_or_cloud_calls": false,
+    "outbox_states": [
+      "pending",
+      "sent"
+    ],
+    "run_dispatch_requires_current_input_version": true,
+    "run_statuses": [
+      "awaiting_approval",
+      "awaiting_clarification",
+      "cancelled",
+      "completed",
+      "failed",
+      "partial",
+      "queued",
+      "running"
+    ],
+    "source_sha256": "a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33",
+    "state": "source_schema_and_dispatch_predicates_verified",
+    "step_kinds": [
+      "model",
+      "repair",
+      "tool"
+    ]
+  },
+  "source_schema_check_record": {
+    "bytes": 670,
+    "sha256": "583d9fffe1d0bb72b7844358a6217131205e6495b3965d8dbb4272310f1714b1"
+  },
+  "source_schema_references": [
+    "db/app_models.py:871",
+    "db/app_models.py:1015",
+    "db/app_models.py:1147",
+    "db/app_models.py:1250",
+    "orchestration/research_runs.py:553",
+    "orchestration/research_answers.py:618"
+  ],
+  "source_sha256": "a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33",
+  "state": "prepared_not_created_or_executed",
+  "task_count": 1,
+  "test_log_record": {
+    "basename": "ocean-provider-rollout-preflight-tests.log",
+    "bytes": 99,
+    "sha256": "ca6ac17841d13fb16657c5e4a7d5979fbf77588500ae576f2c7e699f6be15fab"
+  },
+  "tests_record": {
+    "bytes": 9003,
+    "sha256": "3d5ef47687f96ed3335fbbb9cb766d9c72eebf030adc022444bc29cc200febe6"
+  },
+  "tests_sha256": "3d5ef47687f96ed3335fbbb9cb766d9c72eebf030adc022444bc29cc200febe6",
+  "timeout_seconds": 120,
+  "version": "ocean-beta-provider-amendment06-readonly-preflight-v1"
+}

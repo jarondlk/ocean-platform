@@ -1,0 +1,133 @@
+{
+  "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+  "all4_steps_success": true,
+  "build_config_comparison": {
+    "SDK_proof_arguments_exact_no_normalization": true,
+    "actual_config_matches_reviewed_after_only_literal_dollar_rule": true,
+    "actual_source_and_provider_proof_hashes": [
+      "047a2ba6ae05b92929a63c7491111f30a0bde62876f0faad1e57634fe8f54436",
+      "ae95cf0127700703f73f5d95d53334f63301100d9d2b392d8d7371250fd83cf4"
+    ],
+    "all4_steps_success": true,
+    "build_id": "ec6296cd-55ea-42ec-a50a-552364f2a62c",
+    "build_readback_sha256": "23c55f9b66d0e62a3457920f646f24df4d23bf156a462253d81d3e051bc2eea9",
+    "config_sha256": "214b4588df5f3444f456325ca9fb3a784b498ae9490ee610a1faaea297c5189c",
+    "documented_normalizations": [
+      {
+        "field": "args",
+        "rule": "Cloud Build literal $$ becomes $",
+        "step": 3
+      }
+    ],
+    "live_deployment": false,
+    "source_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+    "version": "ocean-beta-accepted-build-config-comparison-v1"
+  },
+  "build_id": "ec6296cd-55ea-42ec-a50a-552364f2a62c",
+  "build_readback_sha256": "23c55f9b66d0e62a3457920f646f24df4d23bf156a462253d81d3e051bc2eea9",
+  "cloudbuild_config_sha256": "214b4588df5f3444f456325ca9fb3a784b498ae9490ee610a1faaea297c5189c",
+  "cost_planning_jpy_at_evening_public_rate": "0.949229999",
+  "cost_planning_whole_minutes": "1",
+  "duration_seconds": "40.823529845",
+  "finish_time": "2026-11-11T12:39:52.862086Z",
+  "frozen_build_plan_sha256": "02b4f6d269003825d01e1d51b11eb9f8147c2e4abb4384ad45bec04d94ca3ded",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "image_proofs": {
+    "actual_SDK_transport": "synthetic_credentials_and_mock_HTTP_no_network",
+    "actual_real_schema_SDK_wire_sha256": "ae95cf0127700703f73f5d95d53334f63301100d9d2b392d8d7371250fd83cf4",
+    "both_existing_activation_serializations_preserved": true,
+    "controller_and_synthesis_constants_singleton_enum_on_wire": true,
+    "filesystem_read_only": true,
+    "historical_controller_fingerprint_preserved": true,
+    "network_none": true,
+    "nonroot_uid_gid": "10001:10001",
+    "single_physical_mock503_attempt": true,
+    "source_activation_role_sha256": "047a2ba6ae05b92929a63c7491111f30a0bde62876f0faad1e57634fe8f54436",
+    "source_graph_count": 180,
+    "strict_host_action_parser_not_weakened": true
+  },
+  "live_deployment": false,
+  "logging": "CLOUD_LOGGING_ONLY",
+  "machine_type": "E2_STANDARD_2",
+  "maximum_build_argument_bytes": 6462,
+  "new_model_question_admitted": false,
+  "original_scientific_bytes_or_secret_values_in_image": false,
+  "prepared_at_utc": "2026-11-11T12:48:00.570624+00:00",
+  "prior_rejected_attempts_preserved": [
+    {
+      "application_or_service_mutation": false,
+      "automatic_retry": false,
+      "cloud_build_created": false,
+      "exit_code": 1,
+      "failure_kind": "local_source_staging_bucket_argument_parse_rejected",
+      "finished_utc": "2026-11-11T12:31:35.517373+00:00",
+      "private_receipt_basename": "build-submit-response.json",
+      "private_receipt_sha256": "7f0b6713c2abaead2e13b6672ac7732e406372fa82c02455e360ec02b086691f",
+      "source_upload_log_present": false,
+      "started_utc": "2026-11-11T12:31:34.927874+00:00"
+    },
+    {
+      "application_or_service_mutation": false,
+      "automatic_retry": false,
+      "cloud_build_created": false,
+      "exit_code": 1,
+      "failure_kind": "Cloud_Build_API_rejected_single_argument_over10000_bytes",
+      "finished_utc": "2026-11-11T12:33:42.316413+00:00",
+      "private_receipt_basename": "build-submit-attempt02.json",
+      "private_receipt_sha256": "006dc2f20031e17bd56148e168f7b9bc71c94c5b847906f44bdb8aa13a8de721",
+      "source_upload_log_present": true,
+      "started_utc": "2026-11-11T12:33:40.613126+00:00"
+    }
+  ],
+  "prior_single_proof_split_into_two_offline_proof_steps": true,
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "scientific_approval": false,
+  "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+  "source_archive": {
+    "bucket": "ocean-v1-beta-20261101-build-source",
+    "generation": "1794400750552882",
+    "object": "source/1794400750.229892-2219ea7a8e9d42e5b8a4a19c09797969.tgz",
+    "sha256": "cd6fc25497d4ef81d4655f03c353889fd4770688aaed59c7a20dad7fbe34d125"
+  },
+  "source_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "start_time": "2026-11-11T12:39:12.038556155Z",
+  "state": "immutable_API_qualified_prospective_not_deployed_CI_native_restore_pending",
+  "status": "SUCCESS",
+  "steps": [
+    {
+      "id": "source-bound-provider-api-image",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-11T12:39:38.209562282Z",
+        "startTime": "2026-11-11T12:39:15.306106955Z"
+      }
+    },
+    {
+      "id": "nonroot-offline-source-activation-role-proof",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-11T12:39:44.268750246Z",
+        "startTime": "2026-11-11T12:39:38.209844360Z"
+      }
+    },
+    {
+      "id": "nonroot-offline-real-schema-sdk-proof",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-11T12:39:49.576700728Z",
+        "startTime": "2026-11-11T12:39:44.269011900Z"
+      }
+    },
+    {
+      "id": "immutable-source-label-proof",
+      "status": "SUCCESS",
+      "timing": {
+        "endTime": "2026-11-11T12:39:50.418986725Z",
+        "startTime": "2026-11-11T12:39:49.576920570Z"
+      }
+    }
+  ],
+  "timeout_seconds": 600,
+  "version": "ocean-beta-provider06-qualified-api-build-v1"
+}

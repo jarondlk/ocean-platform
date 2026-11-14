@@ -1,0 +1,204 @@
+{
+  "database_writes_or_model_calls": false,
+  "executions": [
+    {
+      "completion_utc": "2026-11-11T13:06:28.100322Z",
+      "execution": "ocean-v1-beta-provider-preflight-20261111-kzm8g",
+      "execution_readback_sha256": "2bda2b8175f9b43337c359caa45aa927b1898bebeaeee6ec30e7166a067a58ec",
+      "job_generation": "1",
+      "private_relative_execution_record": "provider-amendment06-preflight/execution-readback.json",
+      "private_relative_report": "provider-amendment06-preflight/diagnostic-report.json",
+      "report": {
+        "captured_utc": "2026-11-11T13:06:24.826223+00:00",
+        "counts": {
+          "answer_jobs": {
+            "nonterminal": 0,
+            "open_lease_fields": 0,
+            "queued": 0,
+            "running": 0,
+            "total": 2,
+            "unexpired_leases": 0,
+            "unknown_status": 0
+          },
+          "answer_outbox": {
+            "orphaned": 0,
+            "pending": 0,
+            "pending_dispatchable": 0,
+            "pending_stale_input": 0,
+            "pending_terminal": 0,
+            "total": 2,
+            "unknown_state": 0
+          },
+          "answer_steps": {
+            "prepared_model_steps": 0,
+            "unknown_kind": 0,
+            "unknown_state": 0
+          },
+          "q3_answer_job": {
+            "lease_closed": 1,
+            "matches": 1,
+            "terminal": 1
+          },
+          "q3_run": {
+            "lease_closed": 1,
+            "matches": 1,
+            "terminal": 1
+          },
+          "run_outbox": {
+            "orphaned": 0,
+            "pending": 0,
+            "pending_dispatchable": 0,
+            "pending_stale_input": 0,
+            "pending_terminal": 0,
+            "total": 3,
+            "unknown_state": 0
+          },
+          "run_steps": {
+            "prepared_model_steps": 0,
+            "unknown_kind": 0,
+            "unknown_state": 0
+          },
+          "runs": {
+            "awaiting_approval": 0,
+            "awaiting_clarification": 0,
+            "nonterminal": 0,
+            "open_lease_fields": 0,
+            "queued": 0,
+            "running": 0,
+            "total": 3,
+            "unexpired_leases": 0,
+            "unknown_status": 0
+          }
+        },
+        "counts_and_booleans_only": true,
+        "fixed_question_three_terminal_and_leases_closed": true,
+        "project": "ocean-v1-beta-20261101",
+        "proxy_shutdown_verified": true,
+        "runtime_identity_change_clear_at_snapshot": true,
+        "snapshot_is_not_a_new_submission_or_queue_admission_fence": true,
+        "state": "read_only_rollout_preflight_verified",
+        "terminal_pending_outbox_is_not_dispatchable_and_is_not_modified": true,
+        "transaction_read_only_verified": true,
+        "user_records_prompts_payloads_credentials_selected_or_emitted": false,
+        "version": "ocean-beta-runtime-rollout-preflight-v1"
+      },
+      "report_sha256": "dcdaef9acd60e4a054d7401cae9dfc9ee57c8bac522b4a2d6f9d26cacea82e70",
+      "reviewed_task_subset_differences": [
+        {
+          "executed": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+          "path": "/containers/1/image",
+          "reviewed": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+        }
+      ],
+      "start_utc": "2026-11-11T13:06:07.013035Z",
+      "succeeded_tasks": 1
+    },
+    {
+      "completion_utc": "2026-11-11T13:12:18.339321Z",
+      "execution": "ocean-v1-beta-provider-preflight-20261111-fpdhd",
+      "execution_readback_sha256": "4ad82eb2273ebb9691f10965dc62a5848f550b4771321da99b1688b33179f928",
+      "job_generation": "1",
+      "private_relative_execution_record": "provider-amendment06-preflight/refresh01-execution-readback.json",
+      "private_relative_report": "provider-amendment06-preflight/refresh01-report.json",
+      "report": {
+        "captured_utc": "2026-11-11T13:12:15.178818+00:00",
+        "counts": {
+          "answer_jobs": {
+            "nonterminal": 0,
+            "open_lease_fields": 0,
+            "queued": 0,
+            "running": 0,
+            "total": 2,
+            "unexpired_leases": 0,
+            "unknown_status": 0
+          },
+          "answer_outbox": {
+            "orphaned": 0,
+            "pending": 0,
+            "pending_dispatchable": 0,
+            "pending_stale_input": 0,
+            "pending_terminal": 0,
+            "total": 2,
+            "unknown_state": 0
+          },
+          "answer_steps": {
+            "prepared_model_steps": 0,
+            "unknown_kind": 0,
+            "unknown_state": 0
+          },
+          "q3_answer_job": {
+            "lease_closed": 1,
+            "matches": 1,
+            "terminal": 1
+          },
+          "q3_run": {
+            "lease_closed": 1,
+            "matches": 1,
+            "terminal": 1
+          },
+          "run_outbox": {
+            "orphaned": 0,
+            "pending": 0,
+            "pending_dispatchable": 0,
+            "pending_stale_input": 0,
+            "pending_terminal": 0,
+            "total": 3,
+            "unknown_state": 0
+          },
+          "run_steps": {
+            "prepared_model_steps": 0,
+            "unknown_kind": 0,
+            "unknown_state": 0
+          },
+          "runs": {
+            "awaiting_approval": 0,
+            "awaiting_clarification": 0,
+            "nonterminal": 0,
+            "open_lease_fields": 0,
+            "queued": 0,
+            "running": 0,
+            "total": 3,
+            "unexpired_leases": 0,
+            "unknown_status": 0
+          }
+        },
+        "counts_and_booleans_only": true,
+        "fixed_question_three_terminal_and_leases_closed": true,
+        "project": "ocean-v1-beta-20261101",
+        "proxy_shutdown_verified": true,
+        "runtime_identity_change_clear_at_snapshot": true,
+        "snapshot_is_not_a_new_submission_or_queue_admission_fence": true,
+        "state": "read_only_rollout_preflight_verified",
+        "terminal_pending_outbox_is_not_dispatchable_and_is_not_modified": true,
+        "transaction_read_only_verified": true,
+        "user_records_prompts_payloads_credentials_selected_or_emitted": false,
+        "version": "ocean-beta-runtime-rollout-preflight-v1"
+      },
+      "report_sha256": "0549d83f835132a23ac878f37dc7d3a5339ff5c8a04f169844cc7e1aef7162f3",
+      "reviewed_task_subset_differences": [
+        {
+          "executed": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:1d2285ce2ae05129166c2cf2eb9d481570ffd43b4755dab5384ad17ffa1194bb",
+          "path": "/containers/1/image",
+          "reviewed": "gcr.io/cloud-sql-connectors/cloud-sql-proxy@sha256:f333a9c59890c3c67b8505166c5dbdcc0b29fca9173a2e09ca0446ab6997a736"
+        }
+      ],
+      "start_utc": "2026-11-11T13:11:59.563743Z",
+      "succeeded_tasks": 1
+    }
+  ],
+  "fresh_clearance_for_rollout": false,
+  "guard_error": "Executed observer task differs from reviewed source",
+  "guard_location": "ocean_stage_provider_api_only.py: Live.database execution task subset comparison",
+  "guard_relaxed": false,
+  "job": "ocean-v1-beta-provider-preflight-20261111",
+  "job_request_sha256": "9ec7d9c064ad0120ad0a7f5b01e573f54ed2203f0b3dc6d976e9dccdcf2d03e2",
+  "next_required": "Verify the exact registry manifest relationship for reviewed and executed proxy digests, review any proof change, and acquire a fresh aggregate-only snapshot with all other gates refreshed.",
+  "observer_source_sha256": "a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33",
+  "proxy_digest_relation_verified": false,
+  "recorded_at_utc": "2026-11-14T06:45:59.851728+00:00",
+  "runtime_identity_change_accepted": false,
+  "second_execution_reason": "First successful snapshot aged before controller dry-run; its successful outcome was inspected before a deliberate fresh audit.",
+  "snapshots_expired_at_checkpoint": true,
+  "state": "two_successful_read_only_snapshots_rollout_guard_rejected_proxy_image",
+  "version": "ocean-beta-provider06-observer-completed-v1"
+}

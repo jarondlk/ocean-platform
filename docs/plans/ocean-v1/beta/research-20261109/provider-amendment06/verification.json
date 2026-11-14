@@ -1,0 +1,198 @@
+{
+  "actual_contract_constants": {
+    "controller": {
+      "count": 3,
+      "kinds": [
+        "tool",
+        "clarify",
+        "finish"
+      ],
+      "types": [
+        "string"
+      ]
+    },
+    "synthesis": {
+      "count": 5,
+      "kinds": [
+        "fact",
+        "rows",
+        "relationship",
+        "documentary"
+      ],
+      "types": [
+        "string"
+      ],
+      "version": "c21-selection-v1"
+    }
+  },
+  "actual_sdk_wire_proofs": [
+    "ToolAction, ClarifyAction and FinishAction kind values are singleton enums, with no schema const remaining.",
+    "C21 selection version and all four block kind values are singleton enums.",
+    "Caller original canonical schema bytes remain unchanged.",
+    "A valid catalogue.open tool response passes original parse_controller_action; unknown kind still fails.",
+    "Temperature omitted, LOW thinking and4096 output retained; original timeout and one-attempt tests pass."
+  ],
+  "after_fix": {
+    "beta_adapter_tests_passed": 27,
+    "diff_check": "passed",
+    "focused_contract_model_replay_and_retained_projection_tests_passed": 178,
+    "focused_seconds": "16.63",
+    "ruff": "passed"
+  },
+  "before_fix": {
+    "bytes": 7036,
+    "deselected": 25,
+    "failed": 2,
+    "log_basename": "ocean-beta-const-enum-before.log",
+    "passed": 0,
+    "selected_real_sdk_regressions": 2,
+    "sha256": "3d9196d030f531220755c7a9eecb6e2e0e29c05af2eb54c0d3f86b96c84f2e9e"
+  },
+  "build_preparation": {
+    "absent_output_and_no_overwrite_guard_verified": true,
+    "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "activation_utf8_and_ascii_encoding_and_role_guards_retained": true,
+    "build_plan_record": {
+      "bytes": 3559,
+      "sha256": "98903386d0cb2c6da1c2a47b1e1a199e9f3ea052817ed7da023e63544e94ca0c"
+    },
+    "build_service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "cloud_calls_or_build_submission": false,
+    "cloudbuild_config_record": {
+      "bytes": 14511,
+      "sha256": "37ec37e43f891ad667e0da805f952e7b7d2cf6fd12bf3636c70400093e4ceebe"
+    },
+    "committed_source_activation_and_provider_schema_image_labels": {
+      "ocean.beta.activation-sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+      "ocean.beta.provider-schema": "const-to-enum-v1",
+      "org.opencontainers.image.revision": "77c1517f9c996544d08d3dbd7cafcae868e8d78a"
+    },
+    "composed_api_source_count": 180,
+    "container_proof_boundary": {
+      "cap_drop": "ALL",
+      "gid": 10001,
+      "network": "none",
+      "no_new_privileges": true,
+      "read_only": true,
+      "real_provider_credentials_or_calls": false,
+      "uid": 10001
+    },
+    "context_closure_and_member_boundary_checked": true,
+    "context_file_count": 23,
+    "existing_committed_finite_packager_used": true,
+    "frozen_actual_sdk_version_in_image_proof": "2.25.0",
+    "helper_basename": "ocean_prepare_provider_build.py",
+    "helper_record": {
+      "bytes": 18086,
+      "sha256": "ac03d0406dca8bddbf07d723dced702f5ef8a34ccc65cbfbafa71fee895a12fb"
+    },
+    "image_proof_record": {
+      "bytes": 11468,
+      "sha256": "f436b7ce3bc8bc30349f873a841ae6aceb8d96bfd8215d1de257b7d95faa460d"
+    },
+    "image_tag_proposal": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:provider-schema-77c1517f9c99",
+    "label_verifier_shell_syntax_checked": true,
+    "logging": "CLOUD_LOGGING_ONLY",
+    "machine_type": "E2_STANDARD_2",
+    "original_scientific_activation_bytes_in_context": false,
+    "original_source_hash_and_sdk_request_proof_retained": true,
+    "private_package_relative_path": "provider-amendment06",
+    "region": "asia-northeast1",
+    "scientific_rows_credentials_access_policy_or_dataset_ids_in_context": false,
+    "snapshot_serving_manifest_record": {
+      "bytes": 4563,
+      "sha256": "17e9f7758052a63ed27543a349c9551e29be762c55b56b5d74c287fce2056ce2"
+    },
+    "source_binding_sha256": "3aa35972d4fda7f0aa4842a58ee6f05b4a36d6172fbf54a72c0f2f50cb853f5a",
+    "source_commit": "77c1517f9c996544d08d3dbd7cafcae868e8d78a",
+    "source_manifest_record": {
+      "bytes": 21257,
+      "sha256": "93d9b30e7b162ba2eca28dc7f8b1d5e6bcdf4af9c991d9351a24c96f1639326e"
+    },
+    "source_staging_bucket": "ocean-v1-beta-20261101-build-source",
+    "timeout_seconds": 600
+  },
+  "change": "Beta-only provider wire-schema deep copy converts supported string/number const values to equivalent singleton enums before client construction; logical prompt/schema and strict host parser are unchanged.",
+  "changed_source_files": [
+    {
+      "bytes": 3949,
+      "path": "orchestration/beta_vertex_research.py",
+      "sha256": "063aac4b7600cb883af5ea15b2534ba35a26d9957f04c5cf09347b37685ce1aa"
+    },
+    {
+      "bytes": 11706,
+      "path": "tests/test_beta_vertex_research.py",
+      "sha256": "1c6ab75c7f5e91baaef063fc49c9aa53397a9026fdf75dee443cf7c8aefdd03a"
+    }
+  ],
+  "invalid_enum_behavior": "If an existing enum does not contain the same JSON literal, reject before client construction. Numeric1 is not boolean true; compatible broader enum is narrowed to the original const intersection.",
+  "logs": [
+    {
+      "basename": "ocean-beta-const-enum-after.log",
+      "bytes": 99,
+      "sha256": "866ffd6700fb957d16e593deecc8dab6447b828df6606331e89e8b202c59763c"
+    },
+    {
+      "basename": "ocean-beta-const-enum-focused.log",
+      "bytes": 261,
+      "sha256": "fce10a01733817159bd99256d9880b804c61b2231a75359569a9003e237b58d7"
+    },
+    {
+      "basename": "ocean-beta-const-enum-ruff.log",
+      "bytes": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "pending_gates": {
+    "image_container_proofs": "Configured, syntax checked and retained; not executed in an immutable built image by this receipt.",
+    "immutable_api_image_build": "Prepared but not submitted; hold while separate history-latency source review determines the final combined source.",
+    "normal_source_ci": "Pending source-owner readback; no green CI claim from this receipt.",
+    "rollout_database_preflight": "Pending scoped read-only nonterminal run/job/outbox and prior-question lease closure inspection before runtime identity changes.",
+    "serving_and_private_controller_rollout": "Pending fresh state review, exact preservation of settings, qualified image and scoped rollout gates.",
+    "signed_in_gemini_cited_answer_and_latency": "Pending after deployment; offline serialization is not live acceptance."
+  },
+  "prepared_at_utc": "2026-11-11T01:36:24.280449+00:00",
+  "preservation_requirement": {
+    "existing_activation_hash_bytes_and_original_receipts_changed": false,
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+    "frontend_rebuild_or_update_selected": false,
+    "legacy_edna_anemone_experiments_workers_gates_changed": false,
+    "scientific_approval": false
+  },
+  "primary_documentation": "https://docs.cloud.google.com/java/docs/reference/google-cloud-vertexai/latest/com.google.cloud.vertexai.api.GenerationConfigOrBuilder#getResponseJsonSchema()",
+  "provider_cause_qualification": "Trusted structural metadata establishes actual invalid discriminator strings in two STOP/completed generations. The fix addresses const compatibility with the documented provider subset; it does not prove Google ignored const or prove successful live generation.",
+  "replay_compatibility": {
+    "actual_retained_model_and_optional_repair_projection_tests_passed": true,
+    "fingerprint_unchanged_and_in_supported_projection_set": true,
+    "generic_controller_prompt_schema_model_runtime_replay_files_changed": false,
+    "historical_controller_fingerprint": "cf87f56712ccf4eddb03fe944e9bb293132163e881fdea38bb515b103c2641a5",
+    "old_inflight_execution_note": "The runtime source SHA is part of explicit execution identity. An old nonterminal run/job is not transparently resumable under the new adapter identity; inspect/drain/resolve it under existing guards before rollout. Terminal historical projections keep the unchanged supported controller fingerprint and original logical request/schema hashes.",
+    "pending_execution_identity_transparently_reused": false,
+    "runtime_source_sha_versions_new_execution_identity_automatically": true
+  },
+  "schema_bytes": {
+    "controller_logical": 1583,
+    "controller_wire": 1586,
+    "synthesis_logical": 1894,
+    "synthesis_wire": 1899
+  },
+  "scope_limits": {
+    "cloud_calls": false,
+    "live_gemini_success_claimed": false,
+    "real_model_calls": 0,
+    "scientific_approval": false,
+    "source_commit_or_push": false
+  },
+  "source_commit": "77c1517f9c996544d08d3dbd7cafcae868e8d78a",
+  "source_committed_by_parent": true,
+  "state": "committed_source_and_private_build_context_verified_ci_build_and_live_pending",
+  "traversal": "Only recognized schema-bearing keywords are visited. Defaults/examples/enum literal JSON and discriminator maps are not interpreted as subschemas.",
+  "updated_prior_planning_envelope": {
+    "cumulative_calls": 14,
+    "double_output_tokens": 114688,
+    "input_tokens_with_larger_controller_wire_schema": 968380,
+    "is_provider_currency_cap": false,
+    "jpy_at_retained_public_rates": "365.885449637894816"
+  },
+  "version": "ocean-beta-provider-amendment06-verification-v1"
+}

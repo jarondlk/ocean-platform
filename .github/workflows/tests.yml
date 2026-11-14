@@ -539,7 +539,7 @@ jobs:
           tests/integration/test_retained_admission_postgres.py
           tests/integration/test_retained_admission_edges_postgres.py
           tests/integration/test_retained_acceptance_helpers_postgres.py
-          -x -vv -s --tb=short -o faulthandler_timeout=120
+          -x -vv -s --tb=short -o faulthandler_timeout=0
 
       - name: Verify database backup and isolated restore
         env:

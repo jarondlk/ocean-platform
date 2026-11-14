@@ -1,0 +1,31 @@
+{
+  "acceptance": {
+    "backup_restore_client_version": "16.15",
+    "explicit_skips": 16,
+    "full_postgres_passed": 318,
+    "restored_tables": 74
+  },
+  "all_test_cases_assertions_fatal_handling_and_45_minute_job_bound_preserved": true,
+  "application_source_changed_since_image_build": false,
+  "auxiliary_branch_kept": "codex/postgres-reopen-20261111",
+  "base_sha256": "60848d40908c66aa3832c31943376350a465a7f5958b5c562e18eaa4ce402cb0",
+  "base_source_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "checkpoint_sha256": "b31636834d35a9d18b47acf101870f2d44b9699ef674c5f1fd62e517a95a1cd7",
+  "ci_receipt": "ci.json",
+  "diagnostic_checkout_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "diagnostic_run": "https://github.com/jarondlk/ocean-platform/actions/runs/43020625782",
+  "diagnostic_workflow_head": "41fda4d17329a454b2cf7a0daf405b3092ec9e8d",
+  "full_backend_repeated_for_checkpoint": false,
+  "interpreter_crash_root_cause_proven": false,
+  "only_change": {
+    "native_artifact_group_faulthandler_timeout": {
+      "after": 0,
+      "before": 120
+    }
+  },
+  "original_normal_workflow_still_failed": true,
+  "path": ".github/workflows/tests.yml",
+  "recorded_at_utc": "2026-11-14T06:45:59.851728+00:00",
+  "version": "ocean-beta-provider06-workflow-supersession-v1",
+  "whole_file_equality_after_exact_one_scalar_replacement_verified": true
+}

@@ -1,0 +1,47 @@
+{
+  "currency": "JPY",
+  "input_sha256": {
+    "build.json_private": "23c55f9b66d0e62a3457920f646f24df4d23bf156a462253d81d3e051bc2eea9",
+    "selected-default-jpy-prices.json": "b5eac685f0aba3ecae15303c6bf11af91c47efd2f4c409fdfffdece4a359c2f5"
+  },
+  "manual_question_limit": 20,
+  "prepared_at_utc": "2026-11-11T12:48:00.570624+00:00",
+  "prior_evening_ledger_sha256": "d4d061fd1a7d39bd94eca404f63024ef3bcc4745745b4c8a50b96eaacf95466d",
+  "prior_telemetry_utc": "2026-11-11T12:27:31.991663Z",
+  "qualifications": [
+    "Only the known finishedbuild charge envelope is updated; post12:27telemetry is not freshlyreconciled here.",
+    "Source staging uploads for rejectedattempts and new registry/logging/metadata/Run usage remain covered by retainedancillary andcloudmargin pending actualreadback.",
+    "The two rejectedattempts created no CloudBuildjobs; their retained failure receipts are preserved.",
+    "No Q4question, observerexecution, deployment or runtimeScheduler is admitted by this calculation.",
+    "Publiclistgross is not invoice orprovider hardcurrencycap; keep20questions/\u00a5500 unchanged."
+  ],
+  "qualified_build": {
+    "E2_STANDARD_2_rate_jpy_per_minute": "0.949229999",
+    "duration_seconds": "40.823529845",
+    "exact_duration_gross_estimate_jpy": "0.645848653",
+    "id": "ec6296cd-55ea-42ec-a50a-552364f2a62c",
+    "invoice_granularity_asserted": false,
+    "whole_minute_ceiling": "1",
+    "whole_minute_ceiling_planning_jpy": "0.949229999"
+  },
+  "release_only_finished_build_reservation": {
+    "new_finished_build_wholeminute_planning_jpy": "0.949229999",
+    "previous600second_build_ceiling_jpy": "9.492299990",
+    "release_authorizes_new_question": false,
+    "released_jpy": "8.543069991"
+  },
+  "retained_allocations": {
+    "ancillary5already_in_prior_subtotal_not_added_twice": true,
+    "combined_known_observed_and_retained_planning_jpy": "487.460001901",
+    "future_UI_rollout_cloud_margin_jpy": "20.000000000",
+    "future_model_reserve_jpy": "370.000000000",
+    "future_observer_reserve_jpy": "1.500000000",
+    "future_reserves_are_not_actual_charges": true,
+    "prior_observed_cloud_and_closed_model_plus_ancillary_jpy": "95.010771902",
+    "unallocated_to500_jpy": "12.539998099"
+  },
+  "scientific_approval": false,
+  "state": "known_build_only_reserve_update_not_fresh_wholeproject_reconciliation_no_Q4_admission",
+  "user_initial_limit_jpy": 500,
+  "version": "ocean-beta-provider06-candidate-budget-after-qualified-build-v1"
+}

@@ -1,0 +1,83 @@
+{
+  "build_id": "ec6296cd-55ea-42ec-a50a-552364f2a62c",
+  "effective_checkpoint_receipt": "rollout-hold.json",
+  "image_labels": {
+    "ocean.beta.activation-sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "ocean.beta.provider-schema": "const-to-enum-v1",
+    "org.opencontainers.image.revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f"
+  },
+  "last_verified_serving_after_drain": {
+    "API_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+    "generation": 34,
+    "observed_utc": "2026-11-11T13:01:35.482886+00:00",
+    "old_request_timeout_seconds": 60,
+    "serving_revision": "ocean-v1-beta-serving-00021-mgn",
+    "temporary_admission_flags": {
+      "ENABLE_V1_RESEARCH_DISPATCH": false,
+      "ENABLE_V1_SYNTHESIS": false
+    },
+    "traffic_percent": 100
+  },
+  "live_readback": [
+    {
+      "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+      "generation": 33,
+      "observed_utc": "2026-11-11T12:40:23.804648+00:00",
+      "private_readback_sha256": "80d8b828b91ea5d257dc5a00220afd36414d414acab50c84450a16b6f12488c1",
+      "ready_revision": "ocean-v1-beta-serving-00020-n7s",
+      "service": "ocean-v1-beta-serving",
+      "traffic": [
+        {
+          "percent": 100,
+          "revisionName": "ocean-v1-beta-serving-00020-n7s"
+        }
+      ]
+    },
+    {
+      "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+      "generation": 2,
+      "observed_utc": "2026-11-11T12:40:23.800122+00:00",
+      "private_readback_sha256": "a510c16954aff03a21bc6fceda5b8ac8d0d84b0fdab1fc6d2327df38acf6f4c2",
+      "ready_revision": "ocean-v1-beta-research-controller-00002-mcw",
+      "service": "ocean-v1-beta-research-controller",
+      "traffic": [
+        {
+          "latestRevision": true,
+          "percent": 100,
+          "revisionName": "ocean-v1-beta-research-controller-00002-mcw"
+        }
+      ]
+    }
+  ],
+  "live_readback_is_historical_pre_drain": true,
+  "native_ci_acceptance": {
+    "original_normal_workflow_failed": true,
+    "receipt": "ci.json",
+    "root_cause_proven": false,
+    "state": "source_bound_composed_acceptance"
+  },
+  "new_API_serving_or_controller_rollout": false,
+  "observer_receipt": "observer-completed.json",
+  "prepared_at_utc": "2026-11-11T12:48:00.570624+00:00",
+  "preserve_frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+  "prospective_API_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "published_activation_generation": "1794232040589985",
+  "published_activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+  "required_after_rollout": [
+    "Actual signed-in Gemini-backed citedanswer, persistence/reload and history/evidence latency.",
+    "Cancellation/duplicate/recovery acceptance with boundedcosts before recurringoutboxsweep."
+  ],
+  "required_before_rollout": [
+    "Fresh Google authentication and complete service/IAM/numeric secret metadata/catalogue-control/cost readback; verify queue paused and Scheduler absent.",
+    "Resolve reviewed versus executed observer proxy image digest and review any proof change without weakening the guard.",
+    "Recheck admission drain, full preserved old-request-timeout envelope and fresh hash-bound aggregate-only global quiescence.",
+    "Controller image-only Ready/private acceptance before serving new API zero-traffic stage and preserved-settings promotion."
+  ],
+  "runtime_sweep_enabled": false,
+  "scientific_approval": false,
+  "source_manifest_sha256": "b5cef75b80e594deb58dbaa91412a7ed5b5cecd24c0c65d32bc5d2c9b21835cf",
+  "source_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "state": "prospective_API_qualified_composed_CI_accepted_not_deployed_proxy_guard_hold",
+  "version": "ocean-beta-provider06-effective-image-selection-v1"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_Gemini_backed_cited_answer_acceptance": false,
+  "automatic_replay_of_saved_phase_arguments_or_one_shot_helper_allowed": false,
+  "bootstrap_migrations_enrollment_credentials_and_grant_jobs_retried": false,
+  "budget": {
+    "actual_current_spend_or_invoice_claimed": false,
+    "historical_bounded_monthly_forecast_jpy": 36810.84,
+    "initial_limits": {
+      "incremental_jpy": 500,
+      "manual_questions": 20
+    },
+    "known_observed_and_reserved_jpy_after_build": 487.460001901,
+    "last_ledger_utc": "2026-11-11T12:27:31.991663Z",
+    "monthly_target_jpy": 50000,
+    "monthly_upper_jpy": 100000,
+    "post_ledger_cloud_usage_fully_reconciled": false,
+    "refresh_required_before_any_model_question_or_recurring_sweep": true
+  },
+  "checkpoint_date_jst": "2026-11-14",
+  "checkpoint_recorded_at_utc": "2026-11-14T06:45:59.851728+00:00",
+  "cloud_fresh_read_on_20261114": {
+    "reauthentication_required": true,
+    "sign_in_reopened_for_wrap_up": false,
+    "succeeded": false
+  },
+  "controller_apply_or_new_API_serving_stage_or_promotion_performed": false,
+  "controller_dry_run_intent_or_put_request_created": false,
+  "guard_unchanged": true,
+  "last_verified_controller": {
+    "API_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "generation": 2,
+    "private": true,
+    "revision": "ocean-v1-beta-research-controller-00002-mcw"
+  },
+  "last_verified_queue": {
+    "observations_date_jst": "2026-11-11",
+    "runtime_scheduler_jobs": 0,
+    "state": "PAUSED",
+    "tasks": 0
+  },
+  "last_verified_serving": {
+    "API_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:4b24ca90a47c22f14c05987b958121780418c28b4f0563e8c88d0b8bb3e4999a",
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:be709b492d7f28c34324c102b7310878bf389fe82725cf18175f9adfcbae60f3",
+    "generation": 34,
+    "observed_utc": "2026-11-11T13:01:35.482886+00:00",
+    "old_request_timeout_seconds": 60,
+    "serving_revision": "ocean-v1-beta-serving-00021-mgn",
+    "temporary_admission_flags": {
+      "ENABLE_V1_RESEARCH_DISPATCH": false,
+      "ENABLE_V1_SYNTHESIS": false
+    },
+    "traffic_percent": 100
+  },
+  "manual_questions_submitted": 3,
+  "model_answer_persistence_reload_acceptance": false,
+  "new_API_deployed_to_controller_or_serving": false,
+  "new_API_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "new_question_four_admitted": false,
+  "observer_receipt": "observer-completed.json",
+  "outbox_sweep_enabled": false,
+  "preserved_boundaries": [
+    "original scientific bytes and immutable receipts",
+    "separately retained older local-uncommitted-work",
+    "legacy",
+    "eDNA/ANEMONE",
+    "experiments",
+    "workers"
+  ],
+  "proxy_digest_relationship_unresolved": true,
+  "reason": "Operator requested wrap-up and checkpoint; deployment remains held at exact observer proxy image guard.",
+  "resume_order": [
+    "Reauthenticate personal Google CLI for the explicit beta project when resuming; verify current branch and all source/image/activation pins.",
+    "Reopen current service settings, IAM, numeric secret metadata, queue tasks, Scheduler, catalogue control references/audits and cost ledger; inspect outcomes before any retry.",
+    "Resolve reviewed proxy digest f333a9c5 versus executed digest 1d2285ce from authoritative manifest bytes; review proof changes without bypassing exact image verification.",
+    "Reestablish admission drain and full old-request-timeout envelope if needed, then fresh read-only global quiescence. Saved snapshots are expired.",
+    "Only after all gates pass: private controller image-only update, then preserved-settings serving API stage and verified promotion.",
+    "Within refreshed 20-question/JPY500 limits complete signed-in actual Gemini cited answer, persistence/reload, history/evidence latency and any required cancellation/duplicate/recovery checks before runtime sweep."
+  ],
+  "retained_private_helpers": "retained-helpers.json",
+  "runtime_source_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "scientific_approval": false,
+  "signed_in_history_evidence_15_second_acceptance": false,
+  "three_hour_Codex_schedule": "PAUSED",
+  "version": "ocean-beta-provider06-rollout-hold-checkpoint-v1",
+  "workflow_receipt": "workflow-supersession.json"
+}

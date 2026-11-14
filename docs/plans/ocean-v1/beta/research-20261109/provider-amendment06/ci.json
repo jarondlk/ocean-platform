@@ -1,0 +1,363 @@
+{
+  "acceptance_scope": "Four successful original jobs are reused unchanged; PostgreSQL acceptance is supplied by the explicit immutable-source timer-zero diagnostic variant. The original normal workflow remains failed.",
+  "evidence_retention": {
+    "private_relative_directory": "ci/postgres-reopen-20261111",
+    "records": [
+      {
+        "basename": "run-42941802734-final.json",
+        "bytes": 12581,
+        "sha256": "92e4394c01da5d3c3e617d418fb5b354de955c750e466357468c1ee4dab4477f"
+      },
+      {
+        "basename": "jobs-42941802734-final.json",
+        "bytes": 19222,
+        "sha256": "ab1ad8229a340cd5431456290a84c01d002248db4672ce7ca3b99f47d79a7a56"
+      },
+      {
+        "basename": "run-43020625782-final.json",
+        "bytes": 12639,
+        "sha256": "1c7036bf443ff00ede320a6fa278158e5dce53131d2ee923ec78efa66ee5066d"
+      },
+      {
+        "basename": "jobs-43020625782-final.json",
+        "bytes": 13020,
+        "sha256": "9cfa686c4b35503608d28200328fc6f06d13abec96dc10817e3060ee745d4f4e"
+      },
+      {
+        "basename": "job-130523881090-metadata.json",
+        "bytes": 6509,
+        "sha256": "8b3d07d60188bbeff69686d3810034c9151a9d1157838cd7d7d2d8ebba9fe9f0"
+      },
+      {
+        "basename": "diagnostic-workflow-41fda4d.yml",
+        "bytes": 23210,
+        "sha256": "55bb71a44a87ce68701aff39b66cb70c65b4246c4cfaa63e54b32141e8fed84c"
+      },
+      {
+        "basename": "normal-workflow-0f15bbc.yml",
+        "bytes": 21962,
+        "sha256": "60848d40908c66aa3832c31943376350a465a7f5958b5c562e18eaa4ce402cb0"
+      },
+      {
+        "basename": "normal-workflow-41fda4d.yml",
+        "bytes": 21950,
+        "sha256": "bff58b1f11c5d3539c95c4df411b1d20d39c2b63948fde572e35d8a56958e639"
+      },
+      {
+        "basename": "source-diagnostic-compare.github.json",
+        "bytes": 36675,
+        "sha256": "79fe7fe2a6b7f15f685b8796b58527ab9c232a444509db1c62ad13e569e75854"
+      },
+      {
+        "basename": "diagnostic-git-commit.github.json",
+        "bytes": 1150,
+        "sha256": "06b1c0c60d1f9fc8453cc55d042c68fa8370ae722adaf4382f20ce54f1495679"
+      },
+      {
+        "basename": "git-tree-0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f.github.json",
+        "bytes": 2853563,
+        "sha256": "7bb8f01ee1ffb6d0d0ef0d867337a2e78fb6c794ac5cbda551f46450d4af6d13"
+      },
+      {
+        "basename": "git-tree-41fda4d17329a454b2cf7a0daf405b3092ec9e8d.github.json",
+        "bytes": 2853827,
+        "sha256": "c4b9e5b8ce4c4835990a2d113f96c32ca5f9c3b96722bcd7b1a747e56dd71a70"
+      }
+    ]
+  },
+  "original_normal_workflow": {
+    "all_five_normal_jobs_passed": false,
+    "backend": {
+      "complete_uncached_log": {
+        "basename": "ocean-ci-42941802734-backend-success-uncached.log",
+        "bytes": 8243889,
+        "sha256": "d3e70c780f25ebfda1da2aa9a279e5c772dc888d9da59064b444fe6798311236"
+      },
+      "coverage_percent": "83.89",
+      "explicit_skips": 627,
+      "hour_long_backend_rerun_for_diagnostic_branch": false,
+      "isolated_100000_object_gate_passed": 1,
+      "private_retention_relative_directory": "ci/source-0f15bbc",
+      "remaining_tests_passed": 7270,
+      "shared_integration_passed": 17
+    },
+    "conclusion": "failure",
+    "event": "push",
+    "head_branch": "overhaul",
+    "retained_postgres_failure": {
+      "backup_restore_reached": false,
+      "backup_restore_step_conclusion": "skipped",
+      "conclusion": "failure",
+      "exit_code": 139,
+      "failed_native_case": "test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen",
+      "job_id": 130265227200,
+      "raw_api_log": {
+        "basename": "job-130265227200.log",
+        "bytes": 320337,
+        "sha256": "ec38d65eb357ede31294fe87d27802447ab91876aaf0d340be68d54c9467882d"
+      },
+      "retained_cli_log": {
+        "basename": "ocean-ci-42941802734-postgres-failure.log",
+        "bytes": 437666,
+        "sha256": "f79963f48fc63ebe83aa720bf3c4bebf9f5df32a9654ca4c762dff5727a23c42"
+      },
+      "scheduled_dump_seconds": 120,
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42941802734/job/130265227200"
+    },
+    "reused_successful_jobs": [
+      {
+        "conclusion": "success",
+        "id": 130265226998,
+        "name": "OCEAN v1 authenticated host tests and build"
+      },
+      {
+        "conclusion": "success",
+        "id": 130265227315,
+        "name": "Backend tests and security boundary"
+      },
+      {
+        "conclusion": "success",
+        "id": 130265227344,
+        "name": "OCEAN v1 prototype tests and build"
+      },
+      {
+        "conclusion": "success",
+        "id": 130265227401,
+        "name": "Frontend typecheck and build"
+      }
+    ],
+    "run_attempt": 1,
+    "run_id": 42941802734,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/42941802734",
+    "workflow_path": ".github/workflows/tests.yml"
+  },
+  "postgres_workflow_only_supersession": {
+    "application_checkout_revision_in_all_three_jobs": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+    "application_dependencies_and_test_source_identical": true,
+    "causation_limit": "Scheduled timer change is a controlled workflow-only acceptance variant; exact SIGSEGV cause is not proven.",
+    "conclusion": "success",
+    "diagnostic_tree_leaf_entries": 7885,
+    "event": "push",
+    "fatal_signal_handler_remains_enabled": true,
+    "focused_jobs_are_independent": true,
+    "focused_timer0": {
+      "call_seconds": 99.48,
+      "job_id": 130522632226,
+      "log_bytes": 71702,
+      "log_sha256": "0ecfaf95131be6aba19f7a0f05aff3ba7511f8b81e04afd5088abc54bba61638",
+      "native_case": "test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen",
+      "passed": 1,
+      "scheduled_dump_observed": false,
+      "scheduled_dump_seconds": 0,
+      "skipped": 0,
+      "total_pytest_seconds": 102.39
+    },
+    "focused_timer120_observation": {
+      "call_seconds": 182.09,
+      "job_id": 130522632547,
+      "log_bytes": 81160,
+      "log_sha256": "0627c8826b66ba2a7b1ae0217af3877ff19d935f57af514fe7f9c677d883a453",
+      "meaning": "The scheduled 120-second stack dump was observed and the case later passed; timer120 does not fail deterministically.",
+      "native_case": "test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen",
+      "passed": 1,
+      "scheduled_dump_observed": true,
+      "scheduled_dump_seconds": 120,
+      "skipped": 0,
+      "total_pytest_seconds": 186.3
+    },
+    "full_postgres_acceptance": {
+      "actual_backup_restore_completed_at_utc": "2026-11-11T12:48:42Z",
+      "all_declared_steps_completed_successfully": true,
+      "c23_completed_at_utc": "2026-11-11T12:48:40Z",
+      "explicit_skips": 16,
+      "groups": [
+        [
+          82,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          21,
+          0
+        ],
+        [
+          60,
+          0
+        ],
+        [
+          44,
+          0
+        ],
+        [
+          23,
+          0
+        ],
+        [
+          21,
+          0
+        ],
+        [
+          43,
+          16
+        ]
+      ],
+      "job_id": 130523881090,
+      "log_bytes": 389431,
+      "log_sha256": "d4133a90458730ad45cb0a6d35105e86e515decb7e1753b36d024d152b676b21",
+      "passed": 318,
+      "pg_dump_major": 16,
+      "pg_restore_major": 16,
+      "restore_ok": true,
+      "restored_table_count": 74,
+      "temporary_database_removed": true
+    },
+    "full_postgres_depends_only_on_focused_timer0": true,
+    "head_branch": "codex/postgres-reopen-20261111",
+    "head_revision": "41fda4d17329a454b2cf7a0daf405b3092ec9e8d",
+    "historical_reference_paths": [
+      "docs/plans/ocean-v1/handoffs/C26.md",
+      "docs/plans/ocean-v1/C26_DEFECT_REGISTER_2026-10-30.md"
+    ],
+    "job_clone_proof": {
+      "all_three_checkouts": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+      "full_postgres_clone_only_name_needs_checkout_and_one_timer_scalar_changed": true,
+      "normal_push_filter_only": true,
+      "original_workflow_sha256": "60848d40908c66aa3832c31943376350a465a7f5958b5c562e18eaa4ce402cb0",
+      "workflow_sha256": "55bb71a44a87ce68701aff39b66cb70c65b4246c4cfaa63e54b32141e8fed84c"
+    },
+    "job_timeouts_minutes": {
+      "focused_timer0": 20,
+      "focused_timer120": 20,
+      "full_postgres": 45
+    },
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 130522632226,
+        "name": "Focused native reopen with timer 0"
+      },
+      {
+        "conclusion": "success",
+        "id": 130522632547,
+        "name": "Focused native reopen with timer 120"
+      },
+      {
+        "conclusion": "success",
+        "id": 130523881090,
+        "name": "Complete PostgreSQL acceptance with timer zero"
+      }
+    ],
+    "normal_workflow_push_filter_change_is_diagnostic_branch_only": "Remove codex/** from the normal workflow push filter on the diagnostic branch to avoid repeating the four successful source jobs. The overhaul workflow is unchanged by this diagnostic commit.",
+    "only_changed_repository_paths": [
+      ".github/workflows/postgres-reopen-diagnostic.yml",
+      ".github/workflows/tests.yml"
+    ],
+    "original_workflow_sha256": "60848d40908c66aa3832c31943376350a465a7f5958b5c562e18eaa4ce402cb0",
+    "prior_comparison": "The previously successful source 9969 PostgreSQL run also emitted a 120-second dump before the same native case passed. Historical C26 D26-08 documents controlled timer-zero acceptance for async-dump crashes; this receipt does not establish a specific CPython defect.",
+    "run_attempt": 1,
+    "run_id": 43020625782,
+    "runtime_versions_observed": {
+      "focused_postgres_server": "16.15",
+      "pg_dump": "16.15",
+      "pg_restore": "16.15",
+      "pytest": "9.1.1",
+      "python": "3.12.16"
+    },
+    "source_tree_leaf_entries": 7884,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/43020625782",
+    "workflow_path": ".github/workflows/postgres-reopen-diagnostic.yml",
+    "workflow_sha256": "55bb71a44a87ce68701aff39b66cb70c65b4246c4cfaa63e54b32141e8fed84c"
+  },
+  "rollout_ci_verifier": {
+    "actual_remote_composite_verification": {
+      "google_cloud_calls": 0,
+      "google_token_obtained": false,
+      "private_proof": {
+        "basename": "live-composite-proof.json",
+        "bytes": 3850,
+        "sha256": "9a1b3adb164c678898243aac8d78b4a8c9a7f3d7f61a0985f4ac27b7acf59cf7"
+      },
+      "state": "passed"
+    },
+    "all_original_cloud_mutation_delivery_private_and_database_methods_ast_unchanged": true,
+    "arbitrary_local_receipt_boolean_accepted": false,
+    "container_build_gate": {
+      "both_proofs": "Nonroot UID/GID 10001:10001, network none, read-only, drop ALL capabilities, no-new-privileges, no extra credentials or mounts.",
+      "only_execution_normalizations": [
+        "Immutable-label shell script only: Cloud Build literal-dollar escape $$ becomes $. Source and SDK proof args remain exact.",
+        "options.diskSizeGb only: reviewed 100 GB may be serialized as decimal string 100. Observed empty pool/legacy worker metadata is bounded separately."
+      ],
+      "real_schema_sdk_proof_sha256": "ae95cf0127700703f73f5d95d53334f63301100d9d2b392d8d7371250fd83cf4",
+      "required_successful_steps": 4,
+      "source_activation_role_proof_sha256": "047a2ba6ae05b92929a63c7491111f30a0bde62876f0faad1e57634fe8f54436"
+    },
+    "default_all_five_normal_jobs_success_path_preserved": true,
+    "helper": {
+      "basename": "ocean_stage_provider_api_only.py",
+      "bytes": 56558,
+      "sha256": "005d16b1466945a9dd2c942dba7efbd8f4236d8d1f48da9dd5cb3ae9dc2fcd6f"
+    },
+    "offline_tests": {
+      "additional_tests": 77,
+      "log": {
+        "basename": "ocean-stage-provider-composite-ci-tests.log",
+        "bytes": 180,
+        "sha256": "d926f7a3998fc859300f88a621df6b9def69d600e633d71d1095ebadbb4c663b"
+      },
+      "original_tests_unchanged": 47,
+      "passed": 124,
+      "seconds": "1.62",
+      "test_files": [
+        {
+          "basename": "test_ocean_stage_provider_api_only.py",
+          "bytes": 16114,
+          "sha256": "8d972c30643ef0eafbcc03fa197fbc81827655bb61b0e10e6c8c04729614d8dd"
+        },
+        {
+          "basename": "test_ocean_provider_composite_ci.py",
+          "bytes": 17194,
+          "sha256": "60f0678d0641c6908b1dc38e4dbb525d5360b0a09a98273d9b8de7ea15bd4191"
+        }
+      ]
+    },
+    "optional_flag": "--postgres-diagnostic-run 43020625782",
+    "original_ci_flag": "--ci-run 42941802734",
+    "original_helper_before_review": {
+      "basename": "ocean_stage_provider_api_only.before-composite-ci.py",
+      "bytes": 37504,
+      "sha256": "45f2a2b74a47d3622a2daee8d5ef03b50c6d6b0b56425d3c4de65ffce9bf5487"
+    },
+    "representation_references": [
+      "https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values",
+      "https://docs.cloud.google.com/build/docs/api/reference/rest/v1/projects.builds#BuildOptions",
+      "https://protobuf.dev/programming-guides/json/"
+    ],
+    "strict_rejections": [
+      "Wrong source, repository/fork, branch, push event, workflow path, attempt or exact run/job identity.",
+      "Any changed non-workflow source or altered full PostgreSQL clone beyond name, dependency, immutable checkout and one 120-to-zero scalar.",
+      "Missing/failed/skipped required job or step; focused timer 0 without one actual pass and zero skips.",
+      "Changed group totals, missing PostgreSQL 16 clients, unsuccessful 74-table restore or missing temporary-database cleanup.",
+      "Changed source/SDK proof bytes, extra step/global credentials or mounts, root/network privileges, altered label script or machine/logging/disk options."
+    ],
+    "verification_reads": "Fresh GitHub run/job metadata, raw job logs, hash-bound workflow blobs, direct parent commit and both complete recursive repository trees."
+  },
+  "source_revision": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "state": "source_bound_composed_ci_accepted",
+  "unchanged_gates": {
+    "fresh_post_drain_database_quiescence_and_live_acceptance": "Still required before/after runtime-identity rollout; CI does not transparently resume old in-flight jobs.",
+    "legacy_edna_anemone_experiments_workers": "Separate acceptance boundaries remain.",
+    "model_questions_or_real_provider_calls_performed_by_this_ci_receipt": 0,
+    "queue_runtime_sweep": "Remain paused until separate live and budget acceptance.",
+    "scientific_approval": false,
+    "serving_controller_deployment": "Not performed by this CI receipt."
+  },
+  "verified_at_utc": "2026-11-11T12:52:24.643693+00:00",
+  "version": "ocean-beta-provider-amendment06-composed-ci-v1"
+}

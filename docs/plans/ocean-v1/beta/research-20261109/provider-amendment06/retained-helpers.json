@@ -1,0 +1,85 @@
+{
+  "automatic_resume_allowed": false,
+  "files": [
+    {
+      "bytes": 56558,
+      "name": "ocean_stage_provider_api_only.py",
+      "sha256": "005d16b1466945a9dd2c942dba7efbd8f4236d8d1f48da9dd5cb3ae9dc2fcd6f"
+    },
+    {
+      "bytes": 16114,
+      "name": "test_ocean_stage_provider_api_only.py",
+      "sha256": "8d972c30643ef0eafbcc03fa197fbc81827655bb61b0e10e6c8c04729614d8dd"
+    },
+    {
+      "bytes": 17194,
+      "name": "test_ocean_provider_composite_ci.py",
+      "sha256": "60f0678d0641c6908b1dc38e4dbb525d5360b0a09a98273d9b8de7ea15bd4191"
+    },
+    {
+      "bytes": 3601,
+      "name": "ocean-stage-provider-api-only-review.json",
+      "sha256": "04e2d38bdca96075337e9cd9cc3d302d71eda9713e0ad49a2c6f955195c72c9e"
+    },
+    {
+      "bytes": 2508,
+      "name": "ocean-stage-provider-composite-ci-review.json",
+      "sha256": "aca6dd5fea4533aa30d5863bc67015657cd87719492ed9ae6eabb7d16179abba"
+    },
+    {
+      "bytes": 799,
+      "name": "ocean-provider-api-quiescence-contract.json",
+      "sha256": "1ae48a473959028a9713f60c1d0f2d4c0a61eab6eec0a3eaaea163e33e9920ad"
+    },
+    {
+      "bytes": 19494,
+      "name": "ocean_prepare_provider_build.py",
+      "sha256": "73a95925b40ec3164b7514e83cc6d717c57b371a05808119e399e079bde239fa"
+    },
+    {
+      "bytes": 7587,
+      "name": "ocean_prepare_provider_preflight_job.py",
+      "sha256": "9aeb5ecc5ef8cfbfd8430ed6dc2cf27e212cb7f1abf1f5784e03390190548132"
+    },
+    {
+      "bytes": 12094,
+      "name": "ocean_provider_rollout_preflight.py",
+      "sha256": "a094ff42319fb4428fd0955ab8abfaf6ea94dd5b9d976198ef50f85af20a9e33"
+    },
+    {
+      "bytes": 9003,
+      "name": "test_ocean_provider_rollout_preflight.py",
+      "sha256": "3d5ef47687f96ed3335fbbb9cb766d9c72eebf030adc022444bc29cc200febe6"
+    },
+    {
+      "bytes": 5005,
+      "name": "ocean_provider_schema_image_proof.py",
+      "sha256": "9423fc2822b320f8663e5fd524f5e47b061a07c530fd391a4197c8f1a1ab4ea3"
+    },
+    {
+      "bytes": 4474,
+      "name": "ocean_refresh_observer_and_controller.py",
+      "sha256": "bf79151d00586f036e318c36951940326060be4f5eac46b60580b3719159a073"
+    },
+    {
+      "bytes": 4532,
+      "name": "ocean_manual_research_task.py",
+      "sha256": "471448b03fa6f22ccb9ee6491783badb4ab010730b151681ef8c4006bc18e5dc"
+    },
+    {
+      "bytes": 5313,
+      "name": "ocean_runtime_scheduler_step.py",
+      "sha256": "d1d7dd4718f773015967e76a4a6af2d60710875da7ba4679c1028034cc7c1af8"
+    },
+    {
+      "bytes": 2852,
+      "name": "ocean_final_catalogue_readback.py",
+      "sha256": "e0107d908f96f32ea6b8f1e1a99613adc77f65a92b010cc96bdfceeb5858d2b4"
+    }
+  ],
+  "private_relative_directory": "provider-amendment06-recovery-tools-20261114",
+  "retained_at_utc": "2026-11-14T06:43:10.246205+00:00",
+  "secrets_or_credential_stores_copied": false,
+  "version": "ocean-beta-provider06-retained-helper-manifest-v1",
+  "warning": "Historical reviewed helpers and tests only. Recheck source, paths, contracts, budget, auth, cloud state and exact proxy manifest before use. The refresh helper is one-shot and its expected execution count is obsolete after two successful executions. Saved rollout phase arguments and quiescence snapshots are expired. Do not replay them."
+}
