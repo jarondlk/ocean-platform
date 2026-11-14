@@ -1,6 +1,43 @@
-# Beta deployment continuation — 2026-11-14 JST
+# Beta deployment continuation — 2026-11-15 JST
 
-## Current continuation — B1 drained API promoted, model acceptance next
+## Current continuation — B1 budget approved, browser review blocked
+
+The user explicitly approved the initial validation allowance500→550JPY for
+the single predeclared Q4 question/answer segment, then requested continuation
+on November15JST. [Authorization](../beta/b1-20261114/question04-budget-authorization.json)
+supersedes only the prior budget hold; the14-call shared segment cap,300JPY
+model reserve,20JPY cloud margin and50,000JPY/month beta target remain unchanged.
+Original plans/hold receipts are immutable. Fresh current planning is522.0093JPY,
+leaving27.9907JPY under550; [approved reservation](../beta/b1-20261114/question04-approved-reservation.json).
+
+[Current cloud/readiness receipt](../beta/b1-20261114/resume-20261115.json)
+verifies serving38/controller3 Ready on exact accepted API7889ef20, complete
+input preservation, private task-invoker IAM, queue PAUSED/0tasks,0Scheduler,
+observer generation1/7executions and unchanged22-audit catalogue authority.
+All6 selected snapshots remain current; numeric secret metadata is enabled.
+Candidate180-source/build/composed-CI qualification passes; the original normal
+CI failure is still explicit. No runtime change or broad suite repeat. There
+are still only2historical model calls; Q4 has not been submitted or dispatched.
+GCP credentials work; no fresh Google sign-in is needed for these checks.
+
+Browser observation of existing beta tab7 was rejected by automatic approval
+review after the earlier usage-limit interruption. The November15 retry was
+also rejected because the earlier block required explicit guidance. A new
+question asks approval to retry read-only observation of this same beta tab.
+Do not retry before that reply, bypass the gate through another browser, use
+raw browser commands, or submit the UI test through an indirect API. Finish
+the actual signed-in UI acceptance only after browser access is cleared.
+
+Active private directory is `/private/tmp/ocean-b1-20261115-q4`, containing
+fresh service/control/activation/usage captures and unchanged build/CI inputs.
+Older phase readbacks and durable copies remain preserved. After clearance:
+check the existing signed-in conversation for any intervening submission,
+submit the exact Q4 once, retain its public UUID, then use the reviewed single-
+task dispatcher for its canonical run and answer tasks. Keep queue/runtime
+sweep/Codex scheduling paused. Actual answer/citations/reload/recovery and
+cost reconciliation remain required; B1 is not complete.
+
+## Historical B1 deployment and budget hold — November14
 
 Immediate Q4 gate: refreshed conservative plan is¥509.1663 with all7observer
 executions costed, no future observer, full¥300model reserve and¥20forward

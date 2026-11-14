@@ -1,0 +1,79 @@
+{
+  "version": "ocean-beta-b1-resume-20261115-v1",
+  "recorded_utc": "2026-11-14T15:50:03.583416+00:00",
+  "source_checkpoint": "b253469",
+  "state": {
+    "version": "ocean-beta-b1-question04-readiness-20261115-v1",
+    "captured_utc": "2026-11-14T15:48:36.678226+00:00",
+    "services": {
+      "serving": {
+        "generation": "38",
+        "ready_revision": "ocean-v1-beta-serving-b1-live-20261114",
+        "complete_input_configuration_preserved": true
+      },
+      "controller": {
+        "generation": "3",
+        "ready_revision": "ocean-v1-beta-research-controller-b1-provider-20261114",
+        "complete_input_configuration_preserved": true
+      }
+    },
+    "queue": "PAUSED",
+    "tasks": 0,
+    "runtime_scheduler_jobs": 0,
+    "private_controller_iam": "exact original task invoker only",
+    "observer_execution_count": 7,
+    "cloud_mutations": false,
+    "new_question_submitted": false
+  },
+  "authority": {
+    "captured_utc": "2026-11-14T15:49:04.744907+00:00",
+    "control_revision": 22,
+    "audit_count": 22,
+    "reference_count": 16,
+    "selected_current_snapshots": 6,
+    "scientific_approval": false,
+    "numeric_secret_metadata_enabled": 6,
+    "canonical_full_audit_replay": "passed",
+    "activation_and_control": {
+      "control": {
+        "generation": "1794325728054265",
+        "sha256": "94f56925ee3f2c8503cf336e88039dbb0a34b45da841fb5a863b6949279dfa32",
+        "bytes": 7269,
+        "generation_fence_verified": true
+      },
+      "activation": {
+        "generation": "1794232040589985",
+        "sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+        "bytes": 5887,
+        "generation_fence_verified": true
+      }
+    }
+  },
+  "model_calls_historical": 2,
+  "new_question_submitted": false,
+  "new_model_call_or_manual_task_dispatch": false,
+  "approved_initial_validation_allowance_jpy": 550,
+  "total_planned_jpy": "522.0093041085172740531191114",
+  "within_approved_allowance": true,
+  "monthly_target_jpy": 50000,
+  "cloud_or_billing_configuration_mutation": false,
+  "browser_block": {
+    "action": "Read-only observation of existing signed-in beta.oceaninfobio.com tab7",
+    "review_result": "Automatic approval review rejected retry after earlier usage-limit interruption; not a manual user rejection.",
+    "explicit_retry_guidance_requested": true,
+    "guidance_reply_received": false,
+    "workaround_or_alternate_browser_or_direct_UI_API_attempted": false
+  },
+  "runtime_and_focused_test_evidence": "Unchanged candidate/source evidence and136focused operator checks reused; no new code or broad test rerun.",
+  "normal_CI_still_failed": true,
+  "composed_source_bound_CI_accepted": true,
+  "full_B1_acceptance": false,
+  "durable_private_capture": {
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261115/b1-question04",
+    "files": 28,
+    "index_sha256": "1ebdd49944ad9aa394d37e7a3a64d24571dd9a9a06304cbb8183d3fe4aa84975",
+    "directories": "0700",
+    "files_permissions": "0600",
+    "credentials_or_original_scientific_payloads_copied": false
+  }
+}

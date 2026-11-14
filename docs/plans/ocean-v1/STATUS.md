@@ -1,8 +1,23 @@
 # Implementation status
 
-Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
+Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
 
-**Current beta progress — B1 in progress, 2026-11-14 JST:**
+**Current beta progress — B1 in progress, 2026-11-15 JST:**
+
+The user approved the single Q4 validation allowance550JPY. Fresh conservative
+planning522.0093JPY fits it; the300JPY model reserve/shared14-call cap and
+50,000JPY monthly target remain unchanged. Current cloud reads verify exact
+accepted serving38/controller3 Ready, preserved configuration, queue PAUSED and
+empty,0Scheduler and current catalogue/secret metadata. No new model call or
+question: the counters still contain only2historical calls. Browser automatic
+approval review blocks reading the beta tab after the earlier usage-limit
+interruption; explicit approval to retry that same read-only observation is
+pending. No alternative browser/API workaround was attempted. Actual Gemini
+answer/reload/recovery acceptance remains open. [Authorization](beta/b1-20261114/question04-budget-authorization.json),
+[current planning](beta/b1-20261114/question04-approved-reservation.json),
+[readiness/block receipt](beta/b1-20261114/resume-20261115.json).
+
+**Historical B1 deployment — 2026-11-14 JST:**
 
 Admission generation38 / `ocean-v1-beta-serving-b1-live-20261114` is now Ready
 at100%traffic with just the two Research flags true. Queue remains PAUSED;

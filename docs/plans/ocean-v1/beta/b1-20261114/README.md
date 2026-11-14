@@ -2,6 +2,18 @@
 
 State: in progress. The user selected B1 on November14.
 
+November15 continuation: the user [approved550JPY](question04-budget-authorization.json)
+for the same single Q4 segment. [Fresh522.0093JPY planning](question04-approved-reservation.json)
+fits the amended allowance; original plans and holds remain immutable. Actual
+[current cloud/configuration/authority checks](resume-20261115.json) pass and
+no new model question or call has occurred. The signed-in browser read is
+blocked by automatic approval review following the earlier usage-limit gate;
+explicit retry guidance is pending. No browser/API workaround was attempted.
+GCP access works. Actual Gemini answer/citations/reload/recovery and cost gates
+remain open; the budget approval does not pass those gates.
+
+Historical November14 deployment and budget hold:
+
 [Admission rollout](admission-rollout.json) is now Ready at generation38, with
 both Research flags true and queue PAUSED. Authentication/private-origin checks
 pass. The actual model test is held at the original initial¥500 planning limit:
