@@ -1,0 +1,35 @@
+{
+  "version": "ocean-beta-b1-q4-invalid-test-fixture-v1",
+  "recorded_utc": "2026-11-14T16:10:16.524964+00:00",
+  "run_id": "df44514b-2a14-4bde-a9e9-347859f02094",
+  "actual_UI_status": "awaiting_clarification",
+  "actual_UI_active_elapsed": "0:05",
+  "original_numeric_answer_acceptance": false,
+  "scope_parser_result": [
+    "unresolved",
+    null,
+    {},
+    null
+  ],
+  "reason_inference": "Exact current source rejects the chosen free-form wording in deterministic scope resolution before its inventory/model loop; UI outcome is consistent. No claim to have read private journal or diagnostic fields.",
+  "scope_parser_source_sha256": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+  "unsupported_natural_question_is_a_real_usability_limitation": true,
+  "expected_next_validation_question": "Find object \"beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529\"",
+  "corrected_fixture_parser_result": [
+    "find_exact_id",
+    "beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529",
+    {},
+    null
+  ],
+  "original_question_and_receipts_preserved": true,
+  "no_runtime_guard_weakened": true,
+  "actual_UI_final_state": "cancelled",
+  "cancel_clicked_utc": "2026-11-14T16:10:32.834Z",
+  "cancel_observed_utc": "2026-11-14T16:12:41.085602+00:00",
+  "cancel_event_elapsed": "0:05",
+  "cancellation_case_scope": "Cancelling an awaiting-clarification run; no active provider/worker cancellation is claimed.",
+  "native_model_metrics_still_historical_two_calls": true,
+  "manual_task_dispatch_count": 1,
+  "original_numeric_question_answered": false,
+  "full_B1_acceptance": false
+}

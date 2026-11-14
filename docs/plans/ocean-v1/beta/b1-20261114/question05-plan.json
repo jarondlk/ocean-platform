@@ -1,0 +1,32 @@
+{
+  "version": "ocean-beta-b1-question05-supported-fixture-v1",
+  "prepared_utc": "2026-11-14T16:12:41.088198+00:00",
+  "question": "Find object \"beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529\"",
+  "question_sha256": "bdf9eecf9e29d24ba2bed564ee9025a9d2941b6b0d90e4be314f495e17b5ceb1",
+  "expected": {
+    "canonical_object_id": "beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529",
+    "source_family": "ctd",
+    "scientific_approval": false
+  },
+  "independent_oracle_receipt": "docs/plans/ocean-v1/beta/snapshot-activation-20261103/preparation-result.json",
+  "oracle_sha256": "f5ceb37d142de4d86d0ac6029fb29daf7529416e57e03b1b719b30d6a6f73dd9",
+  "test_scope": "Actual supported C19 model-driven object lookup, retained cited answer and reload; not an answer to Q4 natural-language row counts. Any numeric answer claims require their own retained evidence.",
+  "host_parser_result": [
+    "find_exact_id",
+    "beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529",
+    {},
+    null
+  ],
+  "replaces_only_unused_forward_model_reservation_from": "Q4 deterministic pre-model clarification; cancelled without a model call. Original failed question remains failed.",
+  "single_future_model_segment_reserved": true,
+  "shared_model_call_cap": 14,
+  "model_reserve_jpy": "300",
+  "approved_initial_validation_limit_jpy": 550,
+  "total_planned_jpy": "532.3182199695308436781150736",
+  "manual_question_count_after_submission": 5,
+  "standing_manual_question_limit": 20,
+  "monthly_beta_target_jpy": 50000,
+  "no_scope_or_scientific_guard_changed": true,
+  "submitted": false,
+  "browser_explicit_retry_approval_received": true
+}
