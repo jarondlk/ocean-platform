@@ -1,0 +1,23 @@
+{
+  "version": "ocean-beta-b1-regional-read-amendment-v1",
+  "recorded_utc": "2026-11-14T08:32:19.876075+00:00",
+  "parent_source_checkpoint": "669cb2b",
+  "failure": "Global endpoint returned404 for namespace-style observer Job read; no service PATCH was reached.",
+  "change": "Use exact Tokyo regional namespace endpoint; follow bounded, nonrepeating log pages with exact execution/location/time filter. Service PATCH endpoint/body, roles and guards remain unchanged.",
+  "role_identity_scope_or_service_request_body_changed": false,
+  "old_write_request_validation_still_applicable": true,
+  "focused_tests_passed": 105,
+  "ruff": "passed",
+  "fresh_regional_read_check": "Actual regional Job/Execution reads and complete one-report bounded log query passed at08:31UTC; execution rejected only at unchanged180-second freshness check.",
+  "original_attempt_retained": "controller-apply-attempt01-prepatch-stop",
+  "old_observer": "ocean-v1-beta-provider-preflight-20261111-t4pbw",
+  "old_observer_replayed_as_clearance": false,
+  "new_writer_sha256": "8dacb45d8789fb229265747313cea208fa230b8838bfca8b202e72bf6731d4d7",
+  "new_observer_required_before_apply": true,
+  "cloud_service_changes": false,
+  "pagination_observation": "Logging can return a nextPageToken with fewer than pageSize entries; actual first unbounded query returned one report and a continuation. New reader follows all bounded pages and rejects incomplete/duplicate results.",
+  "primary_references": [
+    "https://docs.cloud.google.com/run/docs/reference/rest/v1/namespaces.jobs/get",
+    "https://docs.cloud.google.com/logging/docs/reference/v2/rest/v2/entries/list"
+  ]
+}

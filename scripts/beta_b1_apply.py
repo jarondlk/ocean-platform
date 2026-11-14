@@ -30,7 +30,8 @@ JOB = "ocean-v1-beta-provider-preflight-20261111"
 ACCOUNT = "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp"
 ACTIVATION = "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694"
 API_HOSTS = {"run.googleapis.com", "cloudtasks.googleapis.com", "cloudscheduler.googleapis.com",
-             "secretmanager.googleapis.com", "storage.googleapis.com", "logging.googleapis.com"}
+             "secretmanager.googleapis.com", "storage.googleapis.com", "logging.googleapis.com",
+             "asia-northeast1-run.googleapis.com"}
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -69,6 +70,37 @@ class Cloud:
         with self.opener.open(request, timeout=30) as response:
             observer.require(response.status == 200)
             return observer.document(response.read())
+
+
+def observer_report(cloud, execution_name, execution):
+    """Read every bounded log page, including empty continuation pages."""
+    start = observer.timestamp(execution["metadata"]["creationTimestamp"]).isoformat()
+    end = observer.timestamp(execution["status"]["completionTime"]).isoformat()
+    query = {"resourceNames": ["projects/" + PROJECT], "filter":
+        f'resource.type="cloud_run_job" AND resource.labels.job_name="{JOB}" '
+        f'AND resource.labels.location="{REGION}" '
+        f'AND labels."run.googleapis.com/execution_name"="{execution_name}" '
+        f'AND timestamp>="{start}" AND timestamp<="{end}" '
+        'AND (jsonPayload.version="ocean-beta-runtime-rollout-preflight-v1" '
+        'OR textPayload:"ocean-beta-runtime-rollout-preflight-v1")',
+        "pageSize": 100, "orderBy": "timestamp desc"}
+    reports, seen = [], set()
+    for _ in range(10):
+        logs = cloud.request("https://logging.googleapis.com/v2/entries:list", method="POST", body=query)
+        for entry in logs.get("entries", []):
+            report = entry.get("jsonPayload")
+            if report is None and entry.get("textPayload"):
+                report = observer.document(entry["textPayload"].encode())
+            if report and report.get("version") == "ocean-beta-runtime-rollout-preflight-v1":
+                reports.append(report)
+        next_page = logs.get("nextPageToken")
+        if not next_page:
+            observer.require(len(reports) == 1)
+            return reports[0]
+        observer.require(type(next_page) is str and next_page not in seen)
+        seen.add(next_page)
+        query["pageToken"] = next_page
+    raise observer.Rejected("Observer log pagination incomplete")
 
 
 def fresh_entry(cloud, directory, execution_name, not_before, phase):
@@ -116,30 +148,18 @@ def fresh_entry(cloud, directory, execution_name, not_before, phase):
     observer.require(all(s in state["snapshots"] and not state["snapshots"][s]["revoked"]
                          and not state["snapshots"][s]["retired"] for s in selected))
     observer.require(execution_name.startswith(JOB + "-") and "/" not in execution_name)
-    prefix = f"https://run.googleapis.com/apis/run.googleapis.com/v1/namespaces/{PROJECT}"
+    prefix = f"https://{REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/{PROJECT}"
     job = cloud.request(prefix + "/jobs/" + JOB)
     execution = cloud.request(prefix + "/executions/" + execution_name)
     contract = observer.document(observer.CONTRACT.read_bytes())
     observer.verify_job(job, contract)
-    logs = cloud.request("https://logging.googleapis.com/v2/entries:list", method="POST", body={
-        "resourceNames": ["projects/" + PROJECT], "filter":
-        f'resource.type="cloud_run_job" AND resource.labels.job_name="{JOB}" AND labels."run.googleapis.com/execution_name"="{execution_name}" AND (jsonPayload.version="ocean-beta-runtime-rollout-preflight-v1" OR textPayload:"ocean-beta-runtime-rollout-preflight-v1")',
-        "pageSize": 10, "orderBy": "timestamp desc"})
-    observer.require(not logs.get("nextPageToken"))
-    reports = []
-    for entry in logs.get("entries", []):
-        report = entry.get("jsonPayload")
-        if report is None and entry.get("textPayload"):
-            report = observer.document(entry["textPayload"].encode())
-        if report and report.get("version") == "ocean-beta-runtime-rollout-preflight-v1":
-            reports.append(report)
-    observer.require(len(reports) == 1)
+    report = observer_report(cloud, execution_name, execution)
     now = datetime.now(timezone.utc)
     proof = observer.verify_execution(execution, contract, name=execution_name,
         not_before=observer.timestamp(not_before), now=now,
         index_raw=(observer.PROOF / "proxy-index.json").read_bytes(),
         child_raw=(observer.PROOF / "proxy-linux-amd64.json").read_bytes())
-    quiescence = observer.verify_report(reports[0], proof, now=now)
+    quiescence = observer.verify_report(report, proof, now=now)
     result = {"captured_utc": now.isoformat(), "phase": phase, "observer": proof,
               "quiescence": quiescence, "control_generation": control_meta["generation"],
               "control_revision": state["revision"], "queue": "PAUSED", "tasks": 0, "scheduler_jobs": 0}
