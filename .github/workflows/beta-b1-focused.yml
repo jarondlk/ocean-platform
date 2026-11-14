@@ -1,0 +1,68 @@
+name: Beta B1 focused acceptance
+
+on:
+  push:
+    branches: [overhaul]
+    paths:
+      - 'orchestration/research_evidence.py'
+      - 'orchestration/beta_vertex_research.py'
+      - 'tests/test_beta_vertex_research.py'
+      - 'tests/test_beta_research_read_scopes.py'
+      - 'tests/test_research_evidence_store.py'
+      - 'tests/integration/test_research_evidence_postgres.py'
+      - '.github/workflows/beta-b1-focused.yml'
+      - 'deploy/gcp/beta/snapshot-api/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beta-b1-focused-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  research-repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: ocean
+          POSTGRES_PASSWORD: integration-only-password
+          POSTGRES_DB: ocean_c21_beta_b1_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ocean -d ocean_c21_beta_b1_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements/dev.txt
+      - name: Install hash-locked dependencies
+        run: python -m pip install --require-hashes -r requirements/dev.txt
+      - name: Verify repair, privacy and unchanged host contracts
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+        run: |
+          python -m ruff check orchestration/beta_vertex_research.py orchestration/research_evidence.py scripts/beta_b1_budget.py scripts/beta_b1_diagnostic.py tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py tests/integration/test_research_evidence_postgres.py
+          python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
+          python deploy/gcp/beta/snapshot-api/checks.py
+          python -m pytest tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_research_synthesis.py tests/test_research_evidence_runtime.py tests/test_research_evidence_api.py tests/test_research_evidence_contracts.py tests/test_research_answers.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q --tb=short
+      - name: Verify actual PostgreSQL 16 migrations, protection and concurrency
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: '1'
+          C21_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c21_beta_b1_test
+        run: python -m pytest tests/integration/test_research_evidence_postgres.py -q -rA --tb=short

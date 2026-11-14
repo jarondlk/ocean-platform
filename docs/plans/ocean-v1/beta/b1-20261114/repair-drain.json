@@ -1,0 +1,17 @@
+{
+  "phase": "drain",
+  "generation": "39",
+  "created_revision": "ocean-v1-beta-serving-b1-drain-20261114",
+  "ready_revision": "ocean-v1-beta-serving-b1-drain-20261114",
+  "runtime_startup_verified": true,
+  "all_other_configuration_preserved": true,
+  "source_checkpoint_before_runtime_edits": "0ecdfb2",
+  "image_sha256": "7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "ready_at_service_update_utc": "2026-11-14T16:53:31.579763Z",
+  "flags": {
+    "ENABLE_V1_RESEARCH_DISPATCH": false,
+    "ENABLE_V1_SYNTHESIS": false
+  },
+  "only_flags_revision_and_latest_traffic_changed": true,
+  "queue_remains_paused": true
+}

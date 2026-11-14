@@ -28,6 +28,7 @@ SUPERSEDED = ('api/v1_host.py', 'api/v1_catalogue_host.py',
     'orchestration/frozen_scientific_catalogue.py', 'orchestration/catalogue_service.py',
     'orchestration/frozen_catalogue.py', 'orchestration/investigations.py',
     'orchestration/research_runs.py', 'orchestration/research_answers.py',
+    'orchestration/research_evidence.py',
     'api/research_run_routes.py', 'api/research_evidence_routes.py')
 ADDED = ('ingestion/gcs_catalogue_snapshot.py', 'api/v1_beta_research_host.py',
     'ingestion/beta_catalogue_retention.py', 'orchestration/cloud_research_dispatch.py',

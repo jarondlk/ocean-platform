@@ -155,6 +155,10 @@ def test_actual_sdk_normalizes_real_contract_constants_without_mutating_replay_s
             parse_controller_action(json.dumps({**tool, "kind": "unknown"}), fact_ids=("requested:1",))
     else:
         assert wire["properties"]["version"]["enum"] == ["c21-selection-v1"]
+        assert 'maxItems' not in wire['properties']['blocks']
+        assert schema['properties']['blocks']['maxItems'] == 128
+        assert 'minItems' not in wire['$defs']['FactSelection']['properties']['aliases']
+        assert schema['$defs']['FactSelection']['properties']['aliases']['minItems'] == 1
         for name, kind in [("FactSelection", "fact"), ("RowSelection", "rows"), ("RelationshipSelection", "relationship"), ("DocumentarySelection", "documentary")]:
             assert wire["$defs"][name]["properties"]["kind"]["enum"] == [kind]
 
@@ -175,6 +179,34 @@ def test_wire_constant_conversion_visits_schema_locations_not_literal_annotation
     assert wire["items"] == {"anyOf": [{"enum": [1]}, {"allOf": [{"enum": ["nested"]}]}]}
     assert wire["additionalProperties"] == {"enum": ["extra"]}
     assert wire["prefixItems"] == [{"enum": ["first"]}]
+
+
+def test_provider_array_grammar_translation_never_changes_host_limits_or_literal_data(monkeypatch):
+    from pydantic import ValidationError
+    from orchestration.research_synthesis import FactSelection, RowSelection, Selection, selection_schema
+
+    schema = selection_schema()
+    schema['properties']['blocks']['examples'] = [{'type': 'array', 'minItems': 9, 'maxItems': 10}]
+    original = json.dumps(schema, sort_keys=True)
+    wire = captured_wire_schema(monkeypatch, schema)
+    assert json.dumps(schema, sort_keys=True) == original
+    assert wire['properties']['blocks']['examples'] == schema['properties']['blocks']['examples']
+    assert wire['properties']['blocks']['items']['oneOf'] == schema['properties']['blocks']['items']['oneOf']
+    for name in ('FactSelection', 'RowSelection'):
+        field = 'aliases' if name == 'FactSelection' else 'row_ids'
+        assert 'minItems' not in wire['$defs'][name]['properties'][field]
+        assert 'maxItems' not in wire['$defs'][name]['properties'][field]
+    # The original strict models still reject provider outputs outside every
+    # affected bound, before evidence/witness verification or answer rendering.
+    for model, value in [
+        (Selection, {'version': 'c21-selection-v1', 'blocks': [{'kind': 'documentary', 'excerpt_id': 'synthetic'}] * 129}),
+        (FactSelection, {'kind': 'fact', 'fact_id': 'synthetic', 'aliases': []}),
+        (FactSelection, {'kind': 'fact', 'fact_id': 'synthetic', 'aliases': ['S1'] * 257}),
+        (RowSelection, {'kind': 'rows', 'alias': 'S1', 'row_ids': []}),
+        (RowSelection, {'kind': 'rows', 'alias': 'S1', 'row_ids': ['synthetic'] * 21}),
+    ]:
+        with pytest.raises(ValidationError):
+            model.model_validate(value)
 
 
 @pytest.mark.parametrize("schema", [

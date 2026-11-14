@@ -1,0 +1,54 @@
+{
+  "version": "ocean-beta-b1-synthetic-schema-probe-result-v1",
+  "plan_supersession": "schema-probe-plan02.json",
+  "results": [
+    {
+      "variant": "original",
+      "http_status": 400,
+      "error_status": "INVALID_ARGUMENT",
+      "complexity_error_confirmed": false,
+      "usage": null,
+      "finish_reasons": [],
+      "request_sha256": "7a5e195c5068daa4f5ca59d321de148e0d0901cd8362ee53ebdda9a71503f849",
+      "response_sha256": "7f8ea7ad876a698d968a79b1c356eeafe5b0c3d92894c885f1ca3caec49ad24f",
+      "no_beta_history_or_scientific_data_used": true,
+      "captured_utc": "2026-11-14T16:55:12.793692+00:00"
+    },
+    {
+      "variant": "array_bounds_removed",
+      "http_status": 200,
+      "error_status": null,
+      "complexity_error_confirmed": false,
+      "usage": {
+        "promptTokenCount": 585,
+        "candidatesTokenCount": 15,
+        "totalTokenCount": 672,
+        "trafficType": "ON_DEMAND",
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 585
+          }
+        ],
+        "candidatesTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 15
+          }
+        ],
+        "thoughtsTokenCount": 72
+      },
+      "finish_reasons": [
+        "STOP"
+      ],
+      "request_sha256": "38bb3549b72953180e408a18ba1db55e8f5e88c476196a4096ffab347d1e0660",
+      "response_sha256": "52a660ae8ac894c0f9e44816fd20c0839d46117721ced47c456e66c973b9b793",
+      "no_beta_history_or_scientific_data_used": true,
+      "captured_utc": "2026-11-14T16:56:17.681386+00:00"
+    }
+  ],
+  "controlled_difference": "Only provider-schema minItems/maxItems removed at array schema locations; same synthetic prompt, model and generation configuration. Original400 INVALID_ARGUMENT generic error, modified200 STOP. No exact provider-internal cause is claimed.",
+  "no_beta_answer_acceptance_claimed": true,
+  "next_paid_probe_reserved": false,
+  "host_validation_and_scientific_authority_unchanged": true
+}

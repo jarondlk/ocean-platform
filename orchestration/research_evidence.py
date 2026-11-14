@@ -361,6 +361,7 @@ class ResearchEvidenceService:
 
     def _retain(self, verified, user):
         """Prepare app protection before any independent C09 reference write."""
+        pending, ready = [], []
         with self._transaction() as session:
             actor = self._principal(session, user)
             self.investigations._retention_lock(session)
@@ -378,6 +379,10 @@ class ResearchEvidenceService:
                 if row is not None:
                     if row.user_id != actor.id or row.receipt_json != canonical_json(receipt.model_dump(mode="json")) or row.blob_sha256 != blob_sha:
                         raise ResearchEvidenceError("conflict", 409)
+                    if row.state == "ready":
+                        ready.append(receipt.id)
+                    else:
+                        pending.append(receipt)
                     continue
                 blob = session.get(ResearchEvidenceBlob, (actor.id, blob_sha))
                 if blob is None:
@@ -393,9 +398,10 @@ class ResearchEvidenceService:
                 session.flush()
                 session.add(ResearchEvidenceProtection(receipt_id=receipt.id, user_id=actor.id,
                     references_json=canonical_json(self._references(receipt)), state="prepared"))
+                pending.append(receipt)
                 # Prepared edges protect older ready source receipts. Derived
                 # siblings become ready in observation order before edges below.
-        for receipt in verified.receipts:
+        for receipt in pending:
             try:
                 for binding in self._references(receipt):
                     self.store.add_reference(binding["snapshot_id"], binding["reference"])
@@ -427,6 +433,13 @@ class ResearchEvidenceService:
                 row.state, protection.state = "ready", "ready"
         with self._transaction() as session:
             actor = self._principal(session, user)
+            # A ready SQL flag is not an authorization or integrity proof. Reuse
+            # only after checking current C09 references/lifecycle, protection,
+            # payload hashes, owner/context and the full dependency closure.
+            # Never rewrite a missing reference while serving retained history.
+            memo = {}
+            for identity in ready:
+                self._read_receipt(session, identity, actor, memo=memo)
             run = session.get(ResearchRun, uuid.UUID(verified.anchor.run_id))
             current_policy = self.authorize_run(session, run, actor)
             return replace(verified, anchor=replace(verified.anchor, catalogue_policy_revision=current_policy))

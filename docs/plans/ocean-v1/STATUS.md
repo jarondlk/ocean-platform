@@ -4,6 +4,19 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Research admission is now drained at serving39 on the unchanged accepted API;
+queue and scheduling remain PAUSED. Q5 diagnosis confirmed generation_incomplete
+and closed leases. Synthetic provider probes isolated original schema400 versus
+array-bound-removed200; beta-only schema adaptation and C21 ready-retention
+write elimination are under focused tests. Host strict validation stays intact.
+[Diagnostic](beta/b1-20261114/question05-diagnostic-result.json),
+[probe](beta/b1-20261114/schema-probe-result.json),
+[drain](beta/b1-20261114/repair-drain.json). No repaired runtime deployment yet.
+Terminal planning302.3942JPY of550 includes missing-usage bounds; further
+validation needs fresh admission/cost evidence. Actual B1 gates remain open.
+
+Historical Q5 outcome:
+
 Q4's free-form fixture failed deterministic grammar before any model call and
 was cancelled once. Q5's supported CTD lookup completed (2tools/1model), but
 its answer became unavailable after1additional model attempt (55.801s cumulative,

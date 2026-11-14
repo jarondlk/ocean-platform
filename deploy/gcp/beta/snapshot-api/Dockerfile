@@ -8,6 +8,7 @@ COPY --chown=0:0 --chmod=0444 application/orchestration/frozen_catalogue.py /opt
 COPY --chown=0:0 --chmod=0444 application/orchestration/investigations.py /opt/ocean/orchestration/investigations.py
 COPY --chown=0:0 --chmod=0444 application/orchestration/research_runs.py /opt/ocean/orchestration/research_runs.py
 COPY --chown=0:0 --chmod=0444 application/orchestration/research_answers.py /opt/ocean/orchestration/research_answers.py
+COPY --chown=0:0 --chmod=0444 application/orchestration/research_evidence.py /opt/ocean/orchestration/research_evidence.py
 COPY --chown=0:0 --chmod=0444 application/api/research_run_routes.py /opt/ocean/api/research_run_routes.py
 COPY --chown=0:0 --chmod=0444 application/api/research_evidence_routes.py /opt/ocean/api/research_evidence_routes.py
 COPY --chown=0:0 --chmod=0444 application/ingestion/gcs_catalogue_snapshot.py /opt/ocean/ingestion/gcs_catalogue_snapshot.py

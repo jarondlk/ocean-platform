@@ -87,6 +87,16 @@ def test_native_sql_cannot_rewrite_or_delete_retained_records(actual, table, sta
         session.execute(text(statement))
 
 
+def test_ready_retention_reuses_native_protection_without_c09_writes(actual, monkeypatch):
+    fixture, evidence = actual
+    run, receipt = retained(actual)
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Ready protection must not be rewritten'))
+    again = evidence.ensure_retained(run['id'], 1, fixture.user)
+    assert receipt.id in {item.id for item in again.receipts}
+    assert evidence.invoke('list', {**fixture.address(run), 'input_version': 1}, fixture.user)['total'] >= 1
+    assert evidence.resolve_attachment(fixture.user, receipt.attachment_reference.model_dump(mode='json')).sha256 == receipt.sha256
+
+
 def test_populated_downgrade_is_rejected_without_losing_receipts(actual, isolated):
     fixture, evidence = actual
     _, receipt = retained(actual)

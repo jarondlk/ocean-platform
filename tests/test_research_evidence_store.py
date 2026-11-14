@@ -81,6 +81,78 @@ def test_owner_and_expected_hash_do_not_disclose_receipts(actual):
     assert failure.value.status_code == 422
 
 
+@pytest.mark.parametrize('change', ['reference', 'protection', 'blob'])
+def test_ready_retention_revalidates_current_protection_without_recreating_references(actual, monkeypatch, change):
+    from copy import deepcopy
+    from sqlalchemy import text
+    from orchestration.research_evidence import ResearchEvidenceError
+
+    fixture, evidence = actual
+    run = finished(fixture)
+    retained = evidence.ensure_retained(run['id'], 1, fixture.user)
+    receipt = retained.receipts[0]
+    statement, restore, params = None, None, {'id': receipt.id}
+    if change == 'reference':
+        lifecycle = evidence.store.lifecycle
+
+        def missing_reference():
+            state = deepcopy(lifecycle())
+            state['references'].pop(evidence._references(receipt)[0]['reference'])
+            return state
+
+        monkeypatch.setattr(evidence.store, 'lifecycle', missing_reference)
+    elif change == 'protection':
+        statement = "UPDATE research_evidence_protection SET state='uncertain' WHERE receipt_id=:id"
+        restore = "UPDATE research_evidence_protection SET state='ready' WHERE receipt_id=:id"
+    else:
+        with fixture.retained.factory() as session:
+            row = session.get(ResearchEvidenceReceipt, receipt.id)
+            params['sha'] = row.blob_sha256
+            params['original'] = session.scalar(text('SELECT payload_json FROM research_evidence_blob WHERE sha256=:sha'), params)
+        statement = "UPDATE research_evidence_blob SET payload_json='{}' WHERE sha256=:sha"
+        restore = 'UPDATE research_evidence_blob SET payload_json=:original WHERE sha256=:sha'
+    if statement:
+        with fixture.retained.factory.begin() as session:
+            session.execute(text(statement), params)
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Ready reads must not rewrite C09 references'))
+    try:
+        with pytest.raises(ResearchEvidenceError):
+            evidence.ensure_retained(run['id'], 1, fixture.user)
+    finally:
+        if restore:
+            with fixture.retained.factory.begin() as session:
+                session.execute(text(restore), params)
+
+
+def test_uncertain_prepared_retention_still_reconciles_references_before_ready_reuse(actual, monkeypatch):
+    from db.app_models import ResearchEvidenceProtection
+    from orchestration.research_evidence import ResearchEvidenceError
+
+    fixture, evidence = actual
+    run = finished(fixture)
+    original = evidence.store.add_reference
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: (_ for _ in ()).throw(RuntimeError('synthetic C09 failure')))
+    with pytest.raises(ResearchEvidenceError) as failure:
+        evidence.ensure_retained(run['id'], 1, fixture.user)
+    assert failure.value.code == 'evidence_protection_pending'
+    verified = evidence.load_verified(run['id'], 1, fixture.user)
+    with fixture.retained.factory() as session:
+        assert session.get(ResearchEvidenceReceipt, verified.receipts[0].id).state == 'prepared'
+        assert session.get(ResearchEvidenceProtection, verified.receipts[0].id).state == 'uncertain'
+    calls = []
+
+    def reconcile(*args):
+        calls.append(args)
+        return original(*args)
+
+    monkeypatch.setattr(evidence.store, 'add_reference', reconcile)
+    retained = evidence.ensure_retained(run['id'], 1, fixture.user)
+    assert calls
+    calls.clear()
+    assert evidence.ensure_retained(run['id'], 1, fixture.user) == retained
+    assert not calls
+
+
 def test_reopen_current_policy_revocation_fails_but_retains_bytes(actual):
     from orchestration.research_evidence import ResearchEvidenceError
     fixture, evidence = actual

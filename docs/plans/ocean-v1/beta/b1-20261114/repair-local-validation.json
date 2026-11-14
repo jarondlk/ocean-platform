@@ -1,0 +1,35 @@
+{
+  "version": "ocean-beta-b1-repair-local-validation-v1",
+  "focused_runtime_tests_passed": 191,
+  "operator_privacy_budget_tests_passed": 29,
+  "source_package_boundary_checks_passed": 34,
+  "ruff_passed": true,
+  "generated_c21_contract_current": true,
+  "new_postgres_case_run_locally": false,
+  "hosted_focused_postgres_and_image_qualification_pending": true,
+  "runtime_source_paths_intentionally_superseded": [
+    "orchestration/beta_vertex_research.py",
+    "orchestration/research_evidence.py"
+  ],
+  "unchanged_base_runtime_paths": 178,
+  "reuses_source_bound_broad_evidence_only_for_unchanged_paths": true,
+  "evidence_list_reads": {
+    "prior": {
+      "activation": 16,
+      "control": 16,
+      "manifest": 17,
+      "object": 39,
+      "add_reference": 2
+    },
+    "after": {
+      "activation": 8,
+      "control": 8,
+      "manifest": 15,
+      "object": 35,
+      "add_reference": 0
+    },
+    "unchanged_source_policy_resolve_counts": true,
+    "response_byte_equal": true
+  },
+  "actual_latency_and_beta_answer_gates_pending": true
+}

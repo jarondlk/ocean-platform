@@ -1,6 +1,42 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current continuation — Q5 answer unavailable, read-only diagnosis next
+## Current repair checkpoint — admission drained, two source repairs under test
+
+Serving generation39 / `ocean-v1-beta-serving-b1-drain-20261114` is Ready at
+100%traffic on the same7889ef20image, with only Research dispatch/synthesis
+flagsfalse. Every other input setting is preserved. [Drain](../beta/b1-20261114/repair-drain.json).
+Controller remains generation3/image7889ef20. Queue/sweep/Codex scheduling
+remain PAUSED; beta and saved history remain available. No new admission.
+
+One fixed read-only diagnostic completed`…-zqrbg`, original Job template
+unchanged/generation1, now8executions. Q5 reason is generation_incomplete;
+controller and answer heads terminal/leasesclosed. Controller generationSTOP,
+5342input/125candidate/5767total tokens; answer failed with missing usage and
+no diagnostic finish reason. Do not invent its missing usage or provider text.
+[Actual report](../beta/b1-20261114/question05-diagnostic-result.json).
+Conservative terminal reconciliation302.3942JPY of550 includes21.2746JPY for
+missing usage, combined thought-output accounting,20forward cloud and1future
+observer. Accepted price capture reused after fresh429; no billing-role expansion.
+
+Two reserved synthetic-only engineering probes used the original C21 response
+schema and the same empty-selection prompt. Original400 INVALID_ARGUMENT;
+removing only array minItems/maxItems succeeded200STOP. [Controlled result](../beta/b1-20261114/schema-probe-result.json).
+This isolates an accepted wire-schema difference, not provider-internal cause
+or a beta answer pass. Beta adapter now removes array bounds only at provider
+schema locations. Original schema/replay inputs and strict host size/witness/
+evidence checks remain unchanged. Shared legacy runtime untouched.
+
+C21 _retain now skips redundant C09 writes for already-ready receipts, after
+matching canonical receipt/blob identity, and fully revalidates current refs,
+protection, payload hashes, owner/context and dependency closure before final
+authority fence. Prepared/uncertain reconciliation remains. Scoped evidence/list
+metadata drops16activation+16control to8+8, with unchanged response and source/
+policy/replay checks. Negative/recovery tests added. New runtime source is local
+until the next source checkpoint; no repaired image has been built/deployed.
+Focused Linux/PostgreSQL CI is prepared; original broad CI remains unchanged.
+Keep actual signed-in latency/answer/reload/recovery and cost gates open.
+
+## Historical Q5 diagnosis preparation — Q5 answer unavailable, read-only diagnosis next
 
 Q4's unsupported free-form fixture reached pre-model clarification and was
 cancelled once; no Gemini call. Preserve its [failed outcome](../beta/b1-20261114/question04-outcome.json).

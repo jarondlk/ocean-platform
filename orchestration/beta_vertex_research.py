@@ -10,7 +10,13 @@ from model_runtime import VertexRuntime, _generate_result
 
 
 def _gemini_response_schema(schema):
-    """Translate constants only at schema locations, preserving replay inputs."""
+    """Adapt provider grammar only; replay and host validation stay strict.
+
+    Nested bounded arrays in the C21 selection schema exceed Gemini's accepted
+    grammar (actual original400/unbounded200 synthetic probe). The provider
+    output token cap still bounds generation; host parsing enforces every array
+    limit before a selection can render an answer.
+    """
     wire = deepcopy(schema)
 
     def visit(node):
@@ -18,6 +24,9 @@ def _gemini_response_schema(schema):
             return  # Boolean schemas are not boolean enum values.
         if not isinstance(node, dict):
             raise ValueError("Invalid beta response schema")
+        if node.get("type") == "array":
+            node.pop("minItems", None)
+            node.pop("maxItems", None)
         if "const" in node:
             value = node.pop("const")
             if type(value) not in (str, int, float) or (type(value) is float and not math.isfinite(value)):
