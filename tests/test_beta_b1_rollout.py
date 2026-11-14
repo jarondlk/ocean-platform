@@ -71,6 +71,60 @@ def test_complete_ordered_phase_graph_preserves_configuration(material):
     assert not rollout.flag_state(serving)
 
 
+def retired_stage(material, phase="stage"):
+    serving, _, contract = material
+    if phase == "admit-stage":
+        for step in ["stage", "promote"]:
+            serving = completed(serving, rollout.plan_transition(serving, step, contract))
+    plan = rollout.plan_transition(serving, phase, contract)
+    after = completed(serving, plan)
+    after["latestReadyRevision"] = serving["latestReadyRevision"]
+    revision = {**deepcopy(after["template"]), "name": after["latestCreatedRevision"],
+        "service": after["name"].split("/")[-1], "uid": "immutable-revision", "generation": "1", "observedGeneration": "1",
+        "conditions": [{"type": "Ready", "state": "CONDITION_SUCCEEDED", "revisionReason": "RETIRED"},
+                       {"type": "ContainerReady", "state": "CONDITION_SUCCEEDED"}]}
+    return serving, after, revision, plan, contract
+
+
+@pytest.mark.parametrize("phase,next_phase", [("stage", "promote"), ("admit-stage", "admit-promote")])
+def test_idle_zero_traffic_stage_requires_immutable_revision_and_defers_startup(material, phase, next_phase):
+    before, after, revision, plan, contract = retired_stage(material, phase)
+    with pytest.raises(rollout.Rejected):
+        rollout.verify_readback(before, after, plan, contract)
+    result = rollout.verify_readback(before, after, plan, contract, revision)
+    assert result["all_other_configuration_preserved"] and not result["runtime_startup_verified"]
+    promote = rollout.plan_transition(after, next_phase, contract)
+    assert promote["body"]["traffic"] == rollout.fixed_traffic(plan["expected_ready_revision"])
+    live = completed(after, promote)
+    assert rollout.verify_readback(after, live, promote, contract)["runtime_startup_verified"]
+    live["latestReadyRevision"] = after["latestReadyRevision"]
+    with pytest.raises(rollout.Rejected):
+        rollout.verify_readback(after, live, promote, contract, revision)
+
+
+@pytest.mark.parametrize("change", ["image", "identity", "network", "name", "generation", "condition", "unknown_ready", "traffic"])
+def test_idle_revision_drift_cannot_qualify_a_stage(material, change):
+    before, after, revision, plan, contract = retired_stage(material)
+    if change == "image":
+        revision["containers"][0]["image"] = "wrong-image"
+    elif change == "identity":
+        revision["serviceAccount"] = "wrong@example.com"
+    elif change == "network":
+        revision["vpcAccess"] = {}
+    elif change == "name":
+        revision["name"] += "-other"
+    elif change == "generation":
+        revision["observedGeneration"] = "0"
+    elif change == "condition":
+        revision["conditions"][0]["state"] = "CONDITION_FAILED"
+    elif change == "unknown_ready":
+        after["latestReadyRevision"] += "-unknown"
+    else:
+        after["traffic"] = rollout.fixed_traffic(plan["expected_ready_revision"])
+    with pytest.raises(rollout.Rejected):
+        rollout.verify_readback(before, after, plan, contract, revision)
+
+
 @pytest.mark.parametrize("target", ["identity", "secret", "sidecar", "frontend", "scale", "network", "timeout", "ingress", "image", "extra", "project", "uid"])
 def test_initial_configuration_drift_is_rejected(material, target):
     service, _, contract = material

@@ -4,16 +4,18 @@ Updated: 2026-11-14 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-14 JST:**
 
-B1 is selected by the user. The missing writer is reconstructed as a fixed-candidate
-planner/executor with100 focused operator tests and Ruff passing. Cloud Run accepted
-both controller and serving stage `validateOnly` requests with complete service
-readbacks unchanged. Current180-source/build/composed-CI qualification passes,
-including exact original/diagnostic workflow bytes and PostgreSQL log. Runtime
-images and Research admission remain unchanged at this preparation checkpoint.
-[Writer preparation](beta/b1-20261114/writer-preparation.json),
+B1 controller image7889ef20 is deployed and Ready at generation3. Serving
+generation35 has the same API image staged at zero traffic; 100% traffic remains
+on drained revision00021-mgn with admission false. The first writer stopped at
+the stage readback because Cloud Run retired the idle revision and retained the
+old latestReady pointer. No update was retried. The amended reader now verifies
+the exact immutable staged template without claiming runtime startup; actual
+new-revision readiness remains required after guarded promotion.116 focused
+tests and Ruff pass. [Live stage/amendment](beta/b1-20261114/idle-stage-amendment.json),
+[writer preparation](beta/b1-20261114/writer-preparation.json),
 [operator boundary](../../../deploy/gcp/beta/b1/README.md).
-Fresh authority/usage/budget and post-drain quiescence are being renewed before
-actual controller→serving rollout; no fourth paid question is admitted yet.
+Runtime source/build/composed CI are unchanged. Fresh quiescence/cost precedes
+promotion. Queue stays PAUSED/empty; no Scheduler or fourth question yet.
 
 **Historical B0 completion — 2026-11-14 JST:**
 

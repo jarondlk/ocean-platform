@@ -100,8 +100,13 @@ def plan_transition(service, phase, contract):
     expected = deepcopy(before)
     image = main_container(service, kind)["image"]
     ready = service["latestReadyRevision"].split("/")[-1]
-    require(service["latestCreatedRevision"] == service["latestReadyRevision"])
+    created = service["latestCreatedRevision"].split("/")[-1]
     revision = revision_name(contract, phase)
+    if phase in {"promote", "admit-promote"}:
+        previous = entry["initial_revision"] if phase == "promote" else contract["revisions"]["stage"]
+        require(created == revision and ready in {previous, revision})
+    else:
+        require(created == ready)
     require(re.fullmatch(re.escape(entry["name"].split("/")[-1]) + r"-[a-z0-9-]+[a-z0-9]", revision)
             and len(revision) <= 63)
     body = {"name": service["name"], "etag": service["etag"]}
@@ -118,9 +123,9 @@ def plan_transition(service, phase, contract):
             main_container(expected, kind)["image"] = NEW
             expected["traffic"] = fixed_traffic(ready)
         elif phase == "promote":
-            require(image == NEW and not enabled and ready == contract["revisions"]["stage"])
+            require(image == NEW and not enabled and created == contract["revisions"]["stage"])
             require(same_document(service["traffic"], fixed_traffic(entry["initial_revision"])))
-            expected["traffic"] = fixed_traffic(ready)
+            expected["traffic"] = fixed_traffic(revision)
         elif phase == "admit-stage":
             require(image == NEW and not enabled and ready == contract["revisions"]["stage"])
             require(same_document(service["traffic"], fixed_traffic(ready)))
@@ -128,9 +133,9 @@ def plan_transition(service, phase, contract):
                 if e["name"] in FLAGS:
                     e["value"] = "true"
         elif phase == "admit-promote":
-            require(image == NEW and enabled and ready == contract["revisions"]["live"])
+            require(image == NEW and enabled and created == contract["revisions"]["live"])
             require(same_document(service["traffic"], fixed_traffic(contract["revisions"]["stage"])))
-            expected["traffic"] = fixed_traffic(ready)
+            expected["traffic"] = fixed_traffic(revision)
         else:
             require(image == NEW and enabled)
             revision = contract["revisions"]["drain"]
@@ -150,20 +155,52 @@ def plan_transition(service, phase, contract):
             "endpoint": "https://run.googleapis.com/v2/" + service["name"],
             "update_mask": ",".join(mask), "body": body, "before_generation": service["generation"],
             "before_configuration_sha256": sha(before), "expected_configuration": expected,
-            "expected_ready_revision": revision if new_revision else ready,
+            "expected_ready_revision": revision if new_revision or phase in {"promote", "admit-promote"} else ready,
             "creates_revision": new_revision, "rollout_cleared": False}
 
 
-def verify_readback(before, after, plan, contract):
+def verify_revision(service, revision, expected_name):
+    """Verify the immutable staged template; retirement is not a startup test."""
+    from scripts import beta_b0_preflight as observer
+    require(revision["name"] == service["name"] + "/revisions/" + expected_name)
+    require(revision["service"] == service["name"].split("/")[-1])
+    require(bool(revision["uid"]) and str(revision["generation"]) == str(revision["observedGeneration"]))
+    template = deepcopy(service["template"])
+    template.pop("revision", None)
+    actual = {key: deepcopy(revision.get(key)) for key in template}
+    proxies = [c for c in actual["containers"] if c.get("name") == "sql-proxy"]
+    expected = [c for c in template["containers"] if c.get("name") == "sql-proxy"]
+    require(len(proxies) == len(expected) == 1)
+    if proxies[0]["image"] != expected[0]["image"]:
+        observer.verify_proxy(expected[0]["image"], proxies[0]["image"],
+            (observer.PROOF / "proxy-index.json").read_bytes(),
+            (observer.PROOF / "proxy-linux-amd64.json").read_bytes())
+        proxies[0]["image"] = expected[0]["image"]
+    require(same_document(actual, template))
+    conditions = revision["conditions"]
+    require(any(c.get("type") == "Ready" and c.get("state") == "CONDITION_SUCCEEDED" for c in conditions))
+    require(any(c.get("type") == "ContainerReady" and c.get("state") == "CONDITION_SUCCEEDED" for c in conditions))
+    return {"immutable_template_verified": True,
+            "retired": any(c.get("type") == "Ready" and c.get("revisionReason") == "RETIRED" for c in conditions)}
+
+
+def verify_readback(before, after, plan, contract, staged_revision=None):
     kind = "controller" if plan["phase"] == "controller" else "serving"
     verify_baseline(after, kind, contract)
     require(sha(configuration(before)) == plan["before_configuration_sha256"])
     require(same_document(configuration(after), plan["expected_configuration"]))
     require(int(after["generation"]) > int(before["generation"]))
-    require(after["latestReadyRevision"].split("/")[-1] == plan["expected_ready_revision"])
-    require(after["latestCreatedRevision"] == after["latestReadyRevision"])
+    expected = plan["expected_ready_revision"]
+    require(after["latestCreatedRevision"].split("/")[-1] == expected)
+    staged = plan["phase"] in {"stage", "admit-stage"}
+    if staged and after["latestReadyRevision"].split("/")[-1] != expected:
+        require(after["latestReadyRevision"] == before["latestReadyRevision"] and staged_revision is not None)
+        require(verify_revision(after, staged_revision, expected)["retired"])
+    else:
+        require(after["latestReadyRevision"].split("/")[-1] == expected)
     return {"phase": plan["phase"], "generation": after["generation"],
-            "ready_revision": plan["expected_ready_revision"], "all_other_configuration_preserved": True}
+            "created_revision": expected, "ready_revision": after["latestReadyRevision"].split("/")[-1],
+            "runtime_startup_verified": not staged, "all_other_configuration_preserved": True}
 
 
 def verify_build(build, expected):

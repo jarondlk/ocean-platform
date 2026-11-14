@@ -188,6 +188,10 @@ def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_
             rollout.verify_baseline(controller, "controller", contract)
             observer.require(rollout.main_container(controller, "controller")["image"] == rollout.NEW
                              and controller["latestReadyRevision"].split("/")[-1] == contract["revisions"]["controller"])
+        if phase in {"promote", "admit-promote"}:
+            revision = cloud.request(endpoint + "/revisions/" + plan["expected_ready_revision"])
+            rollout.verify_revision(before, revision, plan["expected_ready_revision"])
+            (target / "staged-revision-before.json").write_text(json.dumps(revision, indent=2) + "\n")
     # No receipt can waive the provider's fresh etag check. PATCH is sent once.
     fresh = cloud.request(endpoint)
     observer.require(fresh["etag"] == before["etag"] and rollout.configuration(fresh) == rollout.configuration(before))
@@ -207,7 +211,15 @@ def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_
         if (str(after["generation"]) == str(after["observedGeneration"])
                 and after.get("terminalCondition", {}).get("state") in {"CONDITION_SUCCEEDED", "CONDITION_FAILED"}):
             (target / "after.json").write_text(json.dumps(after, indent=2) + "\n")
-            result = rollout.verify_readback(before, after, plan, contract)
+            staged_revision = None
+            if phase in {"stage", "admit-stage"}:
+                staged_revision = cloud.request(endpoint + "/revisions/" + plan["expected_ready_revision"])
+                (target / "staged-revision-after.json").write_text(json.dumps(staged_revision, indent=2) + "\n")
+            elif (after.get("terminalCondition", {}).get("state") == "CONDITION_SUCCEEDED"
+                  and after["latestReadyRevision"].split("/")[-1] != plan["expected_ready_revision"]):
+                time.sleep(3)
+                continue
+            result = rollout.verify_readback(before, after, plan, contract, staged_revision)
             (target / "result.json").write_text(json.dumps(result, indent=2) + "\n")
             return result
         time.sleep(3)

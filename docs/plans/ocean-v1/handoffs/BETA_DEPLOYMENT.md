@@ -1,6 +1,29 @@
 # Beta deployment continuation — 2026-11-14 JST
 
-## Current continuation — B1 writer prepared, rollout next
+## Current continuation — B1 controller deployed, API staged
+
+Controller generation3 / `ocean-v1-beta-research-controller-b1-provider-20261114`
+is Ready with accepted API7889ef20; complete preserved input configuration passes.
+Serving generation35 has `ocean-v1-beta-serving-b1-provider-20261114` staged,
+with100% traffic still on drained00021-mgn/admission false. The stage PATCH was
+accepted once. Its idle revision is imported/Ready with `RETIRED`; latestReady
+remains the prior revision. The writer stopped at that readback, without retry.
+[Amendment and exact outcomes](../beta/b1-20261114/idle-stage-amendment.json)
+qualify immutable staged configuration separately from runtime startup; the
+latter remains required after promotion.116 focused checks/Ruff pass. Regional
+namespace endpoint and bounded log pagination are corrected in source0884ad3;
+original failed pre-PATCH attempt is retained. Runtime source/build unchanged.
+
+Private working directory `/private/tmp/ocean-b1-20261114` retains original
+controller/stage before/plan/operation/after, controller result and stage
+`idle-stage-requalification.json`; do not replay controller/stage applies.
+Observer`…-tsrjh` succeeded08:34:36UTC; its180-second freshness is historical
+after expiry. Refresh current observer/cost before promotion. No fourth question,
+queue/Scheduler/automation change. Next: guarded traffic-only promotion, actual
+signed-in saved-history/evidence latency, then separately admit one reserved
+Gemini question and actual answer/reload/recovery/cost acceptance.
+
+## Historical B1 writer preparation
 
 The user selected B1. New `scripts/beta_b1_rollout.py` and
 `scripts/beta_b1_apply.py` reconstruct the fixed-candidate writer, qualified by

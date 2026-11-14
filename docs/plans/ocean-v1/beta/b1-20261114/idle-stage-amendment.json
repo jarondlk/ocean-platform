@@ -1,0 +1,37 @@
+{
+  "version": "ocean-beta-b1-idle-stage-amendment-v1",
+  "recorded_utc": "2026-11-14T08:40:27.150111+00:00",
+  "parent_source_checkpoint": "0884ad3",
+  "runtime_source": "0f15bbcae3ad73ed76ddb32dd57b3a03dbedb49f",
+  "api_image": "sha256:7889ef206cb34008e5a5806ab8bd0ebff486501e53160862e94bfd12b8d875f8",
+  "observer": "ocean-v1-beta-provider-preflight-20261111-tsrjh",
+  "controller": {
+    "phase": "controller",
+    "generation": "3",
+    "ready_revision": "ocean-v1-beta-research-controller-b1-provider-20261114",
+    "all_other_configuration_preserved": true
+  },
+  "stage": {
+    "phase": "stage",
+    "generation": "35",
+    "created_revision": "ocean-v1-beta-serving-b1-provider-20261114",
+    "ready_revision": "ocean-v1-beta-serving-00021-mgn",
+    "runtime_startup_verified": false,
+    "all_other_configuration_preserved": true
+  },
+  "actual_provider_observation": "Cloud Run accepted generation35 and imported the zero-traffic revision, marked Ready/SUCCEEDED with revisionReason RETIRED, kept latestReady at the prior traffic-bearing revision, and did not run the new containers. Original after.json and stopped-at-readback outcome are preserved.",
+  "amended_acceptance": "A staged idle revision must have exact immutable template, exact selected revision/image and complete preserved service configuration. Only the already verified exact OCI index/platform-child normalization is permitted. Staging is not runtime startup acceptance. Promotion requires current observer and CAS, and only succeeds when new created/Ready revision and complete expected traffic/config match.",
+  "service_update_retried": false,
+  "traffic_unchanged": "100% ocean-v1-beta-serving-00021-mgn",
+  "admission_flags": false,
+  "queue": "PAUSED",
+  "scheduler_jobs": 0,
+  "promotion_performed": false,
+  "model_question_submitted": false,
+  "focused_tests_passed": 116,
+  "ruff": "passed",
+  "writer_sha256": "b20adb1585d0d87b5094ad8b06bb8c35b7f4f4a9ea796edadfed564d89a52fbd",
+  "planner_sha256": "8eec873d54f148db0e23138dec7793e0cd05e731fb52f85a7623d7733443573f",
+  "primary_reference": "https://docs.cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration",
+  "known_preservation": "Frontend, proxy, identities, secrets, ingress, network, scaling and timeouts are unchanged; exact full-input comparisons pass."
+}

@@ -34,9 +34,11 @@ Sequence:
 
 1. `controller`: replace only the private controller image and revision identity.
 2. `stage`: create a new API revision while explicitly retaining 100% traffic
-   on the preceding drained serving revision.
+   on the preceding drained serving revision. Verify its immutable template and
+   imported images. Cloud Run can mark this idle revision `RETIRED` and retain
+   the prior `latestReadyRevision`; that is not runtime startup acceptance.
 3. `promote`: route 100% to the qualified drained API revision, without changing
-   its template.
+   its template. Require the new revision actually Ready after activation.
 4. Inspect actual signed-in saved history/evidence before admitting new work.
 5. `admit-stage`: prepare only the two Research admission flags on a new revision;
    keep traffic on the prior drained API revision.

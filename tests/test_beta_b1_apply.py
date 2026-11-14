@@ -7,7 +7,7 @@ import pytest
 
 from scripts import beta_b1_apply as writer
 from scripts import beta_b1_rollout as rollout
-from tests.test_beta_b1_rollout import make_material, completed
+from tests.test_beta_b1_rollout import make_material, completed, retired_stage
 
 
 @pytest.fixture
@@ -97,6 +97,27 @@ def test_bad_readback_is_retained_without_automatic_rollback(monkeypatch, tmp_pa
     assert (tmp_path / "controller-apply/after.json").is_file()
 
 
+def test_stage_retirement_is_retained_without_claiming_runtime_startup(monkeypatch, tmp_path, material):
+    setup(monkeypatch, tmp_path, material)
+    before, after, revision, plan, contract = retired_stage(material)
+    controller_before = material[1]
+    controller = completed(controller_before, rollout.plan_transition(controller_before, "controller", contract))
+    class StageCloud(FakeCloud):
+        def request(self, url, **kwargs):
+            if url.endswith("/services/ocean-v1-beta-research-controller"):
+                return controller
+            if "/revisions/" in url:
+                return revision
+            return super().request(url, **kwargs)
+    monkeypatch.setattr(writer, "fresh_entry", lambda *args: {"current": True})
+    cloud = StageCloud(before, after)
+    result = writer.execute(cloud, tmp_path, "stage", validate_only=False, execution_name="new", not_before="now")
+    assert not result["runtime_startup_verified"]
+    assert sum(k.get("method") == "PATCH" for _, k in cloud.requests) == 1
+    assert (tmp_path / "stage-apply/staged-revision-after.json").is_file()
+    assert result["created_revision"] == plan["expected_ready_revision"]
+
+
 @pytest.mark.parametrize("url", ["https://attacker.example/", "http://run.googleapis.com/", "https://run.googleapis.com.attacker.example/", "https://run.googleapis.com:444/", "https://user@run.googleapis.com/"])
 def test_tokens_cannot_be_sent_to_unreviewed_destinations(url):
     cloud = writer.Cloud.__new__(writer.Cloud)
@@ -138,12 +159,9 @@ def test_log_reader_follows_empty_continuation_and_keeps_exact_filter():
     [{"nextPageToken": "repeated"}, {"nextPageToken": "repeated"}],
     [{"nextPageToken": str(i)} for i in range(10)],
     [{}],
-    [{"entries": [{"jsonPayload": {"version": "ocean-beta-runtime-rollout-preflight-v1"}}]},
-     {"entries": []}],
+    [{"entries": [{"jsonPayload": {"version": "ocean-beta-runtime-rollout-preflight-v1"}}] * 2}],
 ])
 def test_log_reader_rejects_missing_incomplete_or_looping_pages(pages):
-    if len(pages) == 2 and "entries" in pages[0]:
-        pages = [{"entries": pages[0]["entries"] * 2}]
     cloud, execution = log_material(pages)
     with pytest.raises(writer.observer.Rejected):
         writer.observer_report(cloud, "exact-execution", execution)
