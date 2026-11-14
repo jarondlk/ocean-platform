@@ -10,6 +10,15 @@ model call was submitted. [Exact hold](../beta/b1-20261114/question04-budget-hol
 The monthly beta target stays¥50,000.136focused operator checks/Ruff pass.
 Service admission38 remains active, queue paused; no recurring runtime dispatch.
 GCP CLI and beta Google session work, so no new sign-in is currently needed.
+Private evidence is now durable at
+`~/Library/Application Support/OCEAN/private-handoff-20261114/b1`,129files with
+0700directories/0600files and a hash-bound private index. No key, token/store,
+auth code or original scientific table payload was copied.
+[Preservation receipt](../beta/b1-20261114/private-evidence-preservation.json).
+Keep `/private/tmp/ocean-b1-20261114` as the active phase directory; restored
+captures must be reread/requalified for current state rather than replayed.
+Tab7 is retained signed-in on existing saved results; the new model test remains
+unsubmitted. The screenshot shows original saved history, not a new Gemini pass.
 
 Later admission increment: generation38 / `ocean-v1-beta-serving-b1-live-20261114`
 is Ready at100%traffic with only the two Research flags true. Fresh observer

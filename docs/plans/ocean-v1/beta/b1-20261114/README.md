@@ -10,6 +10,9 @@ model reserve/¥20forward cloud margin. A concrete¥550initial-allowance amendme
 has been requested, not applied. Monthly target stays¥50,000; no new question
 or model call.136focused operator checks/Ruff pass, including portable canonical
 manual task delivery and refusal to retry uncertain outcomes.
+[Private preservation](private-evidence-preservation.json) retains129files and
+their private hash index outside temporary storage without credentials or raw
+scientific table payloads.
 
 [Drained promotion](drained-promotion.json) is delivered: controller/API7889ef20
 are Ready, serving generation36 receives100%traffic with admission false. The
@@ -56,3 +59,19 @@ Next: fresh post-drain observer and stage/promote Research admission;
 validate one Gemini-backed cited
 answer and reload/recovery within reserves. Keep runtime sweep and Codex
 scheduling paused until their separate gates pass. B1 is not complete.
+
+Remaining B1 acceptance:
+
+- After the pending allowance decision, refresh admission/cost and submit the
+  single predeclared Q4 through the signed-in UI. Verify actual model usage,
+  independent162/10,955counts, complete-population denominators, retained
+  citations and explicit scientific limitations. Keep all actual failures.
+- Manually deliver only its canonical run/answer tasks. Queue acknowledgements
+  and HTTP200 do not prove successful exploration or a published answer.
+  Verify the durable answer, citation content and reload under current access.
+- Exercise new-image cancellation, authenticated duplicate/retry behavior and
+  authority revocation with a reviewed isolated target; do not revoke active
+  CTD data or edit unrelated saved history as a shortcut. These gates remain
+  unrun; old receipts/local tests are separate evidence.
+- Reconcile actual model/cloud usage before another paid segment or continuation.
+  Supervised outbox scheduling remains gated on actual recovery and cost evidence.
