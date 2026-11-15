@@ -14,6 +14,8 @@ on:
       - 'deploy/gcp/beta/snapshot-api/**'
       - 'scripts/beta_b1_repair_rollout.py'
       - 'tests/test_beta_b1_list_rollout.py'
+      - 'scripts/beta_b1_dispatch.py'
+      - 'tests/test_beta_b1_dispatch.py'
   workflow_dispatch:
 
 permissions:
@@ -94,8 +96,8 @@ jobs:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
         run: |
-          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_budget.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_budget.py
-          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q
+          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_dispatch.py scripts/beta_b1_budget.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_dispatch.py tests/test_beta_b1_budget.py
+          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_dispatch.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q
       - name: Identify job-owned PostgreSQL container address
         if: ${{ !contains(github.event.head_commit.message, '[operator-followup]') }}
         id: c21-target

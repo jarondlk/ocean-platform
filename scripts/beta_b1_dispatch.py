@@ -68,10 +68,11 @@ def one_queued_task(cloud, queue):
     raise guard.Rejected("Task listing incomplete")
 
 
-def execute(cloud, directory, kind, identity, *, repair_candidate=False):
-    if repair_candidate:
+def execute(cloud, directory, kind, identity, *, repair_candidate=False, list_candidate=False):
+    guard.require(not (repair_candidate and list_candidate))
+    if repair_candidate or list_candidate:
         from scripts import beta_b1_repair_rollout as repair
-        contract = guard.document(repair.CONTRACT.read_bytes())
+        contract = guard.document((repair.LIST_CONTRACT if list_candidate else repair.CONTRACT).read_bytes())
         repair.qualify(directory, contract)
         verify_baseline, image = repair.baseline, contract['image']
     else:
@@ -111,14 +112,17 @@ def main():
     parser.add_argument("--directory", type=Path, required=True)
     parser.add_argument("--kind", choices=("run", "answer"), required=True)
     parser.add_argument("--identity", required=True)
-    parser.add_argument('--repair-candidate', action='store_true', help='Require the separately qualified exact B1 repair image/CI contract')
+    candidate = parser.add_mutually_exclusive_group()
+    candidate.add_argument('--repair-candidate', action='store_true', help='Require the separately qualified exact B1 repair image/CI contract')
+    candidate.add_argument('--list-candidate', action='store_true', help='Require the separately qualified exact list-read image/CI contract')
     args = parser.parse_args()
     try:
         directory = args.directory.resolve()
         guard.require(rollout.ROOT not in directory.parents and directory.is_dir()
                       and directory.stat().st_uid == os.geteuid() and not directory.stat().st_mode & 0o077)
         os.umask(0o077)
-        print(json.dumps(execute(Cloud(), directory, args.kind, args.identity, repair_candidate=args.repair_candidate), sort_keys=True))
+        print(json.dumps(execute(Cloud(), directory, args.kind, args.identity,
+            repair_candidate=args.repair_candidate, list_candidate=args.list_candidate), sort_keys=True))
         return 0
     except (guard.Rejected, KeyError, OSError, ValueError):
         print('{"state":"manual_delivery_stopped_inspect_intent_before_retry"}')

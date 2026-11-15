@@ -102,6 +102,25 @@ def test_repair_dispatch_cannot_use_an_unqualified_candidate(monkeypatch, tmp_pa
     assert not calls and not list(tmp_path.iterdir())
 
 
+def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous_mode(monkeypatch, tmp_path):
+    from scripts import beta_b1_repair_rollout as repair
+    path = tmp_path / 'list-contract.json'
+    path.write_text('{"version":"synthetic-list-contract"}')
+    monkeypatch.setattr(repair, 'LIST_CONTRACT', path)
+    seen, requests = [], []
+    def reject(directory, contract):
+        seen.append(contract['version'])
+        raise delivery.guard.Rejected('List qualification is required')
+    monkeypatch.setattr(repair, 'qualify', reject)
+    cloud = type('Cloud', (), {'request': lambda *args, **kwargs: requests.append(args)})()
+    with pytest.raises(delivery.guard.Rejected):
+        delivery.execute(cloud, tmp_path, 'answer', IDENTITY, list_candidate=True)
+    assert seen == ['synthetic-list-contract'] and not requests
+    with pytest.raises(delivery.guard.Rejected):
+        delivery.execute(cloud, tmp_path, 'answer', IDENTITY, repair_candidate=True, list_candidate=True)
+    assert seen == ['synthetic-list-contract'] and not requests
+
+
 def page_cloud(pages):
     class Cloud:
         def __init__(self):

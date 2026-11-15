@@ -36,6 +36,14 @@ The corrected operator-only hosted run is next; no live update has been made.
 Fresh meters including the new build give664.4339JPY planning, within approved
 700 and retaining the full300 model reserve. [Cost](../beta/b1-20261114/question06-rollout-reservation.json).
 
+The final operator-only follow-up also qualifies the canonical manual dispatcher
+for `--list-candidate`. It selects this separate contract before any cloud/task
+request, rejects ambiguous modes and retains the original one-task/OIDC/body/
+prior-dispatch/paused-queue/intent guards.98 local operator/delivery tests pass.
+The final operator CI must bind all5 operator/workflow/test source pins; do not
+use the earlier writer-only run as acceptance for the extended dispatcher.
+Runtime source a0e98fe and the built83ce6e8e image remain unchanged.
+
 Next: commit/push the operator-only follow-up, retain its exact CI metadata/log,
 create the separate fixed `deploy/gcp/beta/b1/list-read-contract.json` bound to
 the actual build/image/core CI/operator CI, refresh complete meters/prices and

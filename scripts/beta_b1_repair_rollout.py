@@ -286,6 +286,7 @@ def qualify_list(directory, contract):
         and hashlib.sha256((directory / 'operator.log').read_bytes()).hexdigest() == contract['operator_ci_log_sha256'])
     operator_pins = contract['operator_pins']
     guard.require(set(operator_pins) == {'scripts/beta_b1_repair_rollout.py', 'tests/test_beta_b1_list_rollout.py',
+                                        'scripts/beta_b1_dispatch.py', 'tests/test_beta_b1_dispatch.py',
                                         '.github/workflows/beta-b1-focused.yml'})
     for path, digest in operator_pins.items():
         committed = subprocess.check_output(['git', 'show', contract['operator_commit'] + ':' + path], cwd=ROOT)
