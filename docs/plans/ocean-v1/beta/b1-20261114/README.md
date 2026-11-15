@@ -2,6 +2,21 @@
 
 State: in progress. The user selected B1 on November14.
 
+Current November15 checkpoint:83ce6e8e/source a0e98fe is live on serving48/
+controller5. Q6's one canonical answer delivery completed with real Gemini,
+closed leases and no repair/retry. The completed answer survived full reload
+with one explicit read retry; both citations opened, with frozen CTD identity,
+not_reviewed status and independent child-snapshot match. [Actual outcome](question06-answer-outcome.json).
+[Delivery](question06-answer-delivery.json) retains exact binding/CI/image and
+paused queue. [Terminal cost](question06-terminal-reconciliation.json) plans
+506.9420JPY with8 native calls, retaining historical missing usage and admitting
+no new question. The15s [read-reliability gate](question06-read-reliability.json)
+and current-image recovery matrix remain open; B1 is not complete.
+40budget/127focused local operator checks/Ruff pass; operator-only hosted
+follow-up pending. No runtime change, queue/scheduling stay PAUSED.
+
+Historical repaired checkpoint before Q6:
+
 Current November15 checkpoint: repaired source9eb9de8/image181f26d4 is live on
 controller4/serving41,100%traffic with new Research admissionfalse.
 [Delivery](repair-delivery-qualification.json) includes4build proofs, exact

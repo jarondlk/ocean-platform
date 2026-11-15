@@ -18,6 +18,8 @@ on:
       - 'tests/test_beta_b1_dispatch.py'
       - 'scripts/beta_b1_q6_diagnostic.py'
       - 'tests/test_beta_b1_q6_diagnostic.py'
+      - 'scripts/beta_b1_budget.py'
+      - 'tests/test_beta_b1_budget.py'
   workflow_dispatch:
 
 permissions:

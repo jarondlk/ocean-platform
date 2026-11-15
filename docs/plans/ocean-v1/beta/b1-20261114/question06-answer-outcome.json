@@ -1,0 +1,112 @@
+{
+  "B1_complete": false,
+  "B2_through_B5_complete": false,
+  "actual_answer_physical_attempts": 1,
+  "actual_lookup_physical_attempts": 1,
+  "answer_job_id": "3d707667-ef41-4b6a-b790-a77a9c91ae9c",
+  "citation_screenshot_sha256": "023e1d7dd19a764e2370f99d506f6c815ec314e4ea7741f8c096a6fc08fd597e",
+  "current_image_recovery_matrix_passed": false,
+  "delivery_id": "d0b4619b-3108-4c4b-9c32-c3bd7979ec57",
+  "durable_answer_after_full_page_reload": true,
+  "expected_canonical_object_id_matches": true,
+  "expected_scientific_approval_false_matches": true,
+  "expected_source_family_ctd_matches": true,
+  "frozen_context": {
+    "conversation_id": "72a52508-2123-42c4-951f-da54eea16a64",
+    "investigation_id": "86c7fe5b-3485-4a61-ab97-32c4f1628cdc",
+    "payload_sha256": "cb28a278770a8de9a56de7721e2ad2fea91538cbb0ce8bc11d755df3c5bae2b4",
+    "revision_id": "401844d5-80b8-41a5-83ab-2a1b22093775",
+    "snapshot_id": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459"
+  },
+  "full_reload_required_one_explicit_read_retry": true,
+  "generations": {
+    "research_answer": [
+      {
+        "finish_reason": "STOP",
+        "max_output_tokens": 4096,
+        "payload_hash_verified": true,
+        "physical_attempts": 1,
+        "state": "committed",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 4162,
+          "output_tokens": 111,
+          "total_tokens": 4273
+        }
+      }
+    ],
+    "research_run": [
+      {
+        "finish_reason": "STOP",
+        "max_output_tokens": 4096,
+        "payload_hash_verified": true,
+        "physical_attempts": 1,
+        "state": "committed",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 5313,
+          "output_tokens": 116,
+          "total_tokens": 5596
+        }
+      }
+    ]
+  },
+  "independent_oracle_receipt": "docs/plans/ocean-v1/beta/snapshot-activation-20261103/preparation-result.json",
+  "independent_scientific_review_claimed": false,
+  "inventory_citation_opened_after_full_page_reload": true,
+  "inventory_inputs_include_independent_oracle_child_snapshot": true,
+  "inventory_receipt_metadata": {
+    "binding": {
+      "conversation_id": "72a52508-2123-42c4-951f-da54eea16a64",
+      "investigation_id": "86c7fe5b-3485-4a61-ab97-32c4f1628cdc",
+      "payload_sha256": "cb28a278770a8de9a56de7721e2ad2fea91538cbb0ce8bc11d755df3c5bae2b4",
+      "revision_id": "401844d5-80b8-41a5-83ab-2a1b22093775",
+      "snapshot_id": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459"
+    },
+    "id": "c21:receipt:d05499a639095bf2c4fc2ed5dfe9ba00bf970216a318023dad9e8946f6e748ae",
+    "input_count": 2,
+    "input_sha256": "d532aa848139407bee3d502f200dd2d1cea17e675f36805596388c93166bea33",
+    "query_completion": "complete",
+    "result_content_sha256": "8d7040da152eaad9530e9c06428b8a926cfe0653dd41eeb38a1c979db03ccab3",
+    "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "sha256": "d05499a639095bf2c4fc2ed5dfe9ba00bf970216a318023dad9e8946f6e748ae",
+    "source_completeness": "complete"
+  },
+  "leases_closed": true,
+  "literal_object_citation_opened": true,
+  "malformed_repairs": 0,
+  "model_provider": "Vertex AI global, explicit beta configuration",
+  "new_model_or_question_for_reload": false,
+  "observer_job_execution_count_after_probe": 14,
+  "oracle_sha256": "f5ceb37d142de4d86d0ac6029fb29daf7529416e57e03b1b719b30d6a6f73dd9",
+  "original_Q4_full_cast_and_depth_count_question_answered": false,
+  "original_observer_job_generation": 1,
+  "queue_and_scheduling": "PAUSED",
+  "read_reliability_gate_passed": false,
+  "real_model": "gemini-3.8-flash",
+  "recorded_utc": "2026-11-15T11:26:06.909163+00:00",
+  "reload_screenshot_sha256": "3ba9567a429649853a46afd6d00af271e7496b8fdc67cc8520a636545d5254b7",
+  "reload_ui_text_sha256": "90de179cd462f44add462223000eb3c484a8032af4ecfe51a829ee0f0812e771",
+  "result_scope": "Supported canonical CTD object lookup and inventory traceability only; not population-count or scientific-correctness acceptance",
+  "retained_receipts_shown": 2,
+  "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+  "runtime_source": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "shared_budget": {
+    "active_elapsed_ms": 78740,
+    "exact_frozen_context_and_task_binding_verified": true,
+    "lease_closed": true,
+    "malformed_repairs": 0,
+    "model_calls": 2,
+    "outbox_state": "sent",
+    "reason_code": "other",
+    "run_lease_closed": true,
+    "run_status": "completed",
+    "status": "completed",
+    "tool_actions": 2
+  },
+  "status": "completed",
+  "terminal_probe_execution": "ocean-v1-beta-provider-preflight-20261111-tttgn",
+  "terminal_probe_read_only_and_proxy_shutdown_verified": true,
+  "terminal_probe_report_sha256": "8fe114689b728f429b83cbaf90154a2f277668c0e2dd4c6fc6495284e2bce561",
+  "version": "ocean-beta-b1-q6-answer-outcome-v1"
+}

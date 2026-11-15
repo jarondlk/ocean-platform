@@ -18,7 +18,7 @@ if not __package__:
 from scripts.beta_b0_preflight import require
 
 
-def _calculate(directory, *, future_observers=2, terminal_report=None, engineering_reports=(), pending_q6=False):
+def _calculate(directory, *, future_observers=2, terminal_report=None, engineering_reports=(), pending_q6=False, closed_q6=None):
     require(type(future_observers) is int and 0 <= future_observers <= 2)
     def load(name):
         return json.loads((directory / name).read_text())
@@ -91,7 +91,8 @@ def _calculate(directory, *, future_observers=2, terminal_report=None, engineeri
         require(head['status'] == 'unavailable' and head['run_status'] == 'completed'
                 and head['lease_closed'] is True and head['run_lease_closed'] is True
                 and type(head['model_calls']) is int and head['model_calls'] == 2
-                and calls == 4 + len(engineering_reports) + int(pending_q6))
+                and calls == 4 + len(engineering_reports) + int(pending_q6)
+                    + (closed_q6['head']['model_calls'] if closed_q6 is not None else 0))
         groups = terminal_report['generations']
         require(set(groups) == {'research_run', 'research_answer'} and all(len(v) == 1 for v in groups.values()))
         ceiling_inputs, ceiling_outputs = 10599, 1004
@@ -136,6 +137,17 @@ def _calculate(directory, *, future_observers=2, terminal_report=None, engineeri
                     and 0 <= output_tokens - 1516 <= 4096)
             ceiling_inputs += input_tokens - 16526
             ceiling_outputs += output_tokens - 1516
+        if closed_q6 is not None:
+            # Add closed Q6 attempts to the historical ceiling. Native meters
+            # cannot silently consume reserves for older missing usage.
+            for values in closed_q6['generations'].values():
+                for step in values:
+                    usage = step['usage']
+                    inputs, total = usage.get('input_tokens'), usage.get('total_tokens')
+                    ceiling_inputs += inputs if inputs is not None else 65536 + 1586 + 2048
+                    combined = 4096 if inputs is None or total is None else total - inputs
+                    require(0 <= combined <= 4096)
+                    ceiling_outputs += max(combined, usage.get('output_tokens') or 0)
     model_observed = input_tokens * selected["gemini_3_8_flash_input"] + output_tokens * selected["gemini_3_8_flash_output"]
     network = sums["storage.googleapis.com/network/sent_bytes_count"] / 2**30 * selected["internet_worst_selected_destination"]
     observed = run + minimum + storage + logging + build_total + model_observed
@@ -226,6 +238,57 @@ def reconcile_pending_q6(directory, report, submission, *, future_observers=2, e
         approved_existing_question_continuation_only=True,
         within_initial500=total <= 500, remaining_initial500_jpy=str(500-total),
         within_initial550=total <= 550, remaining_initial550_jpy=str(550-total))
+    return result
+
+
+def reconcile_closed_q6(directory, report, q6, *, future_observers=0, engineering_reports=()):
+    """Reconcile actual closed Q6 attempts without admitting any continuation.
+
+    The original pre-submit and pending-Q6 meter guards remain unchanged. A
+    terminal report must account for every physical attempt; missing usage
+    retains its full input/combined-output ceiling, including older failures.
+    """
+    require(q6['version'] == 'ocean-beta-b1-q6-diagnostic-v1'
+        and q6['state'] == 'read_only_diagnostic_verified'
+        and q6['project'] == 'ocean-v1-beta-20261101'
+        and q6['run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
+        and q6['answer_job_id'] == '3d707667-ef41-4b6a-b790-a77a9c91ae9c'
+        and q6['delivery_id'] == 'd0b4619b-3108-4c4b-9c32-c3bd7979ec57'
+        and q6['transaction_read_only_verified'] is True and q6['proxy_shutdown_verified'] is True
+        and q6['raw_content_selected_or_emitted'] is False and q6['model_queue_or_sql_write'] is False)
+    head, groups = q6['head'], q6['generations']
+    require(head['status'] in {'completed', 'partial', 'unavailable', 'failed', 'cancelled'}
+        and head['run_status'] == 'completed' and head['lease_closed'] is True
+        and head['run_lease_closed'] is True and head['outbox_state'] == 'sent'
+        and head['exact_frozen_context_and_task_binding_verified'] is True
+        and type(head['model_calls']) is int and 1 <= head['model_calls'] <= 3
+        and set(groups) == {'research_run', 'research_answer'}
+        and len(groups['research_run']) == 1 and len(groups['research_answer']) <= 2
+        and len(engineering_reports) == 2)
+    attempts = 0
+    for values in groups.values():
+        for step in values:
+            require(step['state'] == 'committed' and step['payload_hash_verified'] is True
+                and type(step['physical_attempts']) is int and step['physical_attempts'] == 1
+                and step['max_output_tokens'] == 4096 and type(step['max_output_tokens']) is int)
+            attempts += step['physical_attempts']
+            usage = step['usage']
+            for key, cap in [('input_tokens', 69170), ('output_tokens', 4096), ('total_tokens', 73266)]:
+                value = usage.get(key)
+                require(value is None or type(value) is int and 0 <= value <= cap)
+    require(attempts == head['model_calls'])
+    if head['status'] == 'completed':
+        require(bool(groups['research_answer']) and all(step['status'] == 'completed'
+            and step['finish_reason'] == 'STOP' for values in groups.values() for step in values))
+    result = _calculate(directory, future_observers=future_observers, terminal_report=report,
+        engineering_reports=engineering_reports, closed_q6=q6)
+    result.update(version='ocean-beta-b1-q6-terminal-reconciliation-v1',
+        terminal_run_id=q6['run_id'], terminal_answer_job_id=q6['answer_job_id'],
+        terminal_status=head['status'], terminal_physical_attempts=4 + attempts,
+        terminal_diagnostic_captured_utc=q6['captured_utc'], manual_questions_submitted=6,
+        prior_questions=5, q6_physical_attempts=attempts, one_question_model_reserve_jpy='0',
+        terminal_physical_attempts_scope='closed_Q5_schema_probes_and_Q6',
+        automatic_continuation_admitted=False)
     return result
 
 

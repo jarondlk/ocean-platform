@@ -212,3 +212,86 @@ def test_pending_q6_rejects_changed_admission_or_exposes_overspend(captures, ter
     else:
         with pytest.raises(Rejected):
             budget.reconcile_pending_q6(captures, terminal, submission, engineering_reports=probes)
+
+
+@pytest.fixture
+def closed_q6(captures, pending_q6):
+    p = captures / 'usage-summary.json'
+    data = json.loads(p.read_text())
+    data['metrics'][-1]['series'][0]['sum'] = '8'
+    data['metrics'][-2]['series'][0]['sum'] = '26001'
+    data['metrics'][-2]['series'][1]['sum'] = '1910'
+    p.write_text(json.dumps(data))
+    def step(inputs, outputs, total):
+        return {'state': 'committed', 'status': 'completed', 'finish_reason': 'STOP',
+            'payload_hash_verified': True, 'physical_attempts': 1, 'max_output_tokens': 4096,
+            'usage': {'input_tokens': inputs, 'output_tokens': outputs, 'total_tokens': total}}
+    return {'version': 'ocean-beta-b1-q6-diagnostic-v1', 'state': 'read_only_diagnostic_verified',
+        'project': 'ocean-v1-beta-20261101', 'run_id': 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8',
+        'answer_job_id': '3d707667-ef41-4b6a-b790-a77a9c91ae9c',
+        'delivery_id': 'd0b4619b-3108-4c4b-9c32-c3bd7979ec57',
+        'transaction_read_only_verified': True, 'proxy_shutdown_verified': True,
+        'raw_content_selected_or_emitted': False, 'model_queue_or_sql_write': False,
+        'captured_utc': '2026-11-15T11:16:24Z',
+        'head': {'status': 'completed', 'run_status': 'completed', 'lease_closed': True,
+            'run_lease_closed': True, 'outbox_state': 'sent', 'model_calls': 2,
+            'exact_frozen_context_and_task_binding_verified': True},
+        'generations': {'research_run': [step(5313, 116, 5596)],
+            'research_answer': [step(4162, 111, 4273)]}}
+
+
+def test_closed_q6_keeps_historical_missing_usage_and_releases_only_closed_segment(captures, terminal, pending_q6, closed_q6):
+    submission, probes = pending_q6
+    result = budget.reconcile_closed_q6(captures, terminal, closed_q6, engineering_reports=probes)
+    assert result['native_model_calls'] == '8' and result['q6_physical_attempts'] == 2
+    assert result['terminal_physical_attempts'] == 6
+    assert result['input_planning_tokens'] == str(10599 + 2 * 69170 + 14048 + 585 + 5313 + 4162)
+    assert result['output_planning_tokens'] == str(1004 + 2 * 4096 + 4096 + 87 + 283 + 111)
+    assert Decimal(result['missing_usage_reserve_jpy']) > 0
+    assert result['one_question_model_reserve_jpy'] == '0'
+    assert result['new_questions_considered'] == 0 and not result['new_paid_question_admitted']
+    assert not result['automatic_continuation_admitted']
+    with pytest.raises(Rejected):
+        budget.reconcile_pending_q6(captures, terminal, submission, engineering_reports=probes)
+
+
+def test_closed_q6_missing_usage_retains_full_combined_output_not_only_visible_tokens(captures, terminal, pending_q6, closed_q6):
+    _, probes = pending_q6
+    original = budget.reconcile_closed_q6(captures, terminal, closed_q6, engineering_reports=probes)
+    closed_q6['generations']['research_answer'][0]['usage'] = {
+        'input_tokens': None, 'output_tokens': 111, 'total_tokens': None}
+    missing = budget.reconcile_closed_q6(captures, terminal, closed_q6, engineering_reports=probes)
+    assert Decimal(missing['input_planning_tokens']) - Decimal(original['input_planning_tokens']) == 69170 - 4162
+    assert Decimal(missing['output_planning_tokens']) - Decimal(original['output_planning_tokens']) == 4096 - 111
+    assert Decimal(missing['missing_usage_reserve_jpy']) > Decimal(original['missing_usage_reserve_jpy'])
+
+
+@pytest.mark.parametrize('change', ['wrong_delivery', 'active', 'binding', 'outbox', 'missing_answer',
+    'extra_attempt', 'unmetered_call', 'bool_usage', 'combined_overflow', 'unfinished_generation'])
+def test_closed_q6_rejects_unbound_uncertain_or_unreconciled_state(captures, terminal, pending_q6, closed_q6, change):
+    _, probes = pending_q6
+    if change == 'wrong_delivery':
+        closed_q6['delivery_id'] = 'other'
+    elif change == 'active':
+        closed_q6['head']['lease_closed'] = False
+    elif change == 'binding':
+        closed_q6['head']['exact_frozen_context_and_task_binding_verified'] = False
+    elif change == 'outbox':
+        closed_q6['head']['outbox_state'] = 'pending'
+    elif change == 'missing_answer':
+        closed_q6['generations']['research_answer'] = []
+    elif change == 'extra_attempt':
+        closed_q6['generations']['research_answer'][0]['physical_attempts'] = 2
+    elif change == 'unmetered_call':
+        path = captures / 'usage-summary.json'
+        data = json.loads(path.read_text())
+        data['metrics'][-1]['series'][0]['sum'] = '9'
+        path.write_text(json.dumps(data))
+    elif change == 'bool_usage':
+        closed_q6['generations']['research_answer'][0]['usage']['input_tokens'] = True
+    elif change == 'combined_overflow':
+        closed_q6['generations']['research_answer'][0]['usage']['total_tokens'] = 4162 + 4097
+    else:
+        closed_q6['generations']['research_answer'][0]['finish_reason'] = 'MAX_TOKENS'
+    with pytest.raises(Rejected):
+        budget.reconcile_closed_q6(captures, terminal, closed_q6, engineering_reports=probes)

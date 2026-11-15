@@ -1,0 +1,30 @@
+{
+  "UI_quality_followup": "Long repeated literal qualification metadata and narrow answer panel remain visible; no broad UX pass claimed.",
+  "completed_answer_and_both_retained_citations_observed": true,
+  "deadline_changed": false,
+  "deadline_seconds": 15,
+  "diagnosis": "Answer listing precedes parallel evidence/event hydration; provider durations alone can exceed the shared15s deadline. Generic earlier UI errors without matching RPCs are not relabeled backend timeouts.",
+  "full_reload_with_explicit_read_retry_observed": true,
+  "gate_passed": false,
+  "intermittent_refresh_failure_observed": true,
+  "next": "Reduce redundant verified catalogue reads while preserving replay, payload hashes, origin ownership, current actor/policy, C09 protection/dependency closure and closing generation fences. Qualify changed source/image, then measure actual signed-in repeated reload/read journeys.",
+  "no_cross_request_authority_cache_or_stale_private_display_admitted": true,
+  "one_failed_history_pipeline": {
+    "answer_list_http": 200,
+    "answer_list_seconds": "1.674022150",
+    "answer_list_timestamp": "2026-11-15T11:17:43.426666Z",
+    "browser_network_and_validation_overhead_included": false,
+    "evidence_list_http": 200,
+    "evidence_list_seconds": "14.177035739",
+    "evidence_list_timestamp": "2026-11-15T11:17:45.133483Z",
+    "parallel_answer_events_seconds": "2.484039970",
+    "sequential_list_plus_max_branch_seconds": "15.851057889"
+  },
+  "provider_logs_capture_all_pages": true,
+  "provider_request_entries": 273,
+  "recorded_utc": "2026-11-15T11:26:06.909163+00:00",
+  "runtime_source": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "serving_generation": 48,
+  "signed_in_actual_UI": true,
+  "version": "ocean-beta-b1-q6-read-reliability-v1"
+}

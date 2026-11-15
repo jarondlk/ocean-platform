@@ -1,0 +1,20 @@
+{
+  "captured_utc": "2026-11-15T11:26:48.657208+00:00",
+  "full_service_configuration_preserved": true,
+  "queue": "PAUSED",
+  "scheduler_jobs": 0,
+  "services": {
+    "controller": {
+      "generation": "5",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "latest_ready_revision": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-research-controller/revisions/ocean-v1-beta-research-controller-b1-list-1115"
+    },
+    "serving": {
+      "generation": "48",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "latest_ready_revision": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving/revisions/ocean-v1-beta-serving-b1-list-live-1115"
+    }
+  },
+  "task_pagination_complete": true,
+  "tasks": 0
+}

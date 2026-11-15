@@ -1,18 +1,22 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
-B0's dated preparation/preflight completed. Current November15B1repair is live:
-source9eb9de8/image181f26d4 on controller4/serving41, full settings preserved,
-Research admissionfalse and queue/scheduling PAUSED. Actual hot signed-in
-history13.731s/evidence11.226s meet15seconds for this journey. Source-bound
-build/composed CI includes220passing runtime checks,24nativePGchecks and48
-operator checks. [Current B1 evidence](b1-20261114/README.md).
-Q5model lookup completed but its answer failed; a provider-only grammar repair
-and ready-retention read repair are deployed. A fresh matched cited answer,
-persistence/reload and current-image recovery remain open. Next Q6is prepared
-but requires the pending numeric allowance decision (550→650JPY; planned616.39)
-and fresh source/cost/quiescence before admission. Monthly50k unchanged. Earlier
-observations below are historical context, not blanket current-candidate passes.
+Updated November15: B0 completed. Runtime a0e98fe/image83ce6e8e is live on
+controller5/serving48 with full other settings preserved. Q6's single actual
+Gemini answer completed and persisted across full reload with an explicit read
+retry; both citations opened against the independent CTD oracle. No scientific
+review or original unsupported population-count answer is claimed.
+[Current B1 outcome](b1-20261114/question06-answer-outcome.json).
+B1remains open: measured history+evidence hydration can exceed the unchanged15s
+browser deadline; current-image recovery matrix is still required. [Read gate](b1-20261114/question06-read-reliability.json).
+Native8calls reconciled at506.9420JPY conservative planning; historical missing
+usage retained, no new question/continuation admitted. Standing future approval
+supports operator-selected1000validation allowance; monthly50000target/notice
+remain. [Cost](b1-20261114/question06-terminal-reconciliation.json).
+Queue, sweep, Scheduler and Codex scheduling stay PAUSED. Next is owning read
+path optimization and focused/current-image acceptance, then remaining B1–B5.
+
+Historical integrated audit basis (November14):
 
 Source checkpoint reviewed: `7002312` on `overhaul`. This plan integrates the
 return-to-main-Mac audit and the second Mac's deployment work. It supersedes
@@ -34,7 +38,7 @@ No defensible single percentage follows from the component count.
 | Edge, identity and application shell | Independent beta DNS/TLS, Google login, enrolled admin/internal account, real frontend/API/private SQL; login 200 and protected runtime 401 rechecked November 14 | Final signed-in origin/session/role/isolation matrix and intended beta-user enrollment checks |
 | Catalogue and investigations | CTD, metagenome and MUR regional SST plus saved investigations previously accepted live | Reopen current authority/control state; complete whole-scope/UI/export and retention acceptance; resolve eDNA latency/integrity gate |
 | Research delivery and evidence | Private controller, Cloud Tasks integration, durable state and evidence wiring installed; deterministic cited answer, cancellation and duplicate/outbox recovery observed | New API rollout, actual Gemini cited answer, persistence/reload, current-image recovery and history/evidence latency acceptance; supervised sweep remains gated |
-| New Research API | Source `0f15bbca`, image `7889ef20…` deployed to controller and drained serving; successful source/SDK image proofs and explicit composed hosted CI | Staged admission and actual Gemini answer/reload/recovery/cost acceptance remain open |
+| New Research API | Source `a0e98fe`, image `83ce6e8e…` live; actual real-model Q6 answer/citation/reload journey and closed cost reconciliation observed | Reliable15s signed-in reads and current-image recovery matrix remain open |
 | Experimental execution | C22/C23/C25 contracts and actual retained Linux test evidence exist | Production admission/start integration, retained port/supervisor and current beta worker qualification are unfinished |
 | Operations and release | Independent resources, cost planning and local migration/rollback rehearsals exist | Current live backup/restore, recovery, containment/capacity, alerts/cost, whole-system evaluation and release decision |
 
@@ -244,5 +248,5 @@ checks. There is no need to repeat the entire backend suite for this plan.
 Legacy resources/data, original scientific bytes and prior receipts remain
 protected. Do not resume the paused Codex automation as part of planning.
 
-**Next action:** begin B1 writer preparation and its current pre-apply gates after the completed B0 checkpoint. Full beta acceptance remains false until
+**Next action:** optimize the owning B1 retained-read path, qualify any changed source/image, and prove reliable signed-in reads plus current-image recovery. Full beta acceptance remains false until
 B2–B5 and all applicable original requirements have actual evidence.

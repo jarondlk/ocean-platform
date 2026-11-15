@@ -4,15 +4,21 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
-Repair83ce6e8e is live on serving48/controller5, full configuration preserved.
-Q6evidence verified on explicit reload and its answer was prepared exactly once;
-job3d707667… is queued, not manually delivered. A read-only exact job/run/task
-binding probe and refreshed source-bound budget gate precede delivery. Native
-calls remain7. User's standing future approval supports operator-selected1000
-validation allowance; monthly50k unchanged. Read/reload reliability, actual cited
-Gemini answer and B1–B5 remain open. [Rollout](beta/b1-20261114/list-read-rollout-result.json),
-[queued answer](beta/b1-20261114/question06-answer-queued.json),
-[authorization basis](beta/b1-20261114/question06-budget-authorization03.json).
+Q6's single answer delivery completed with one real Gemini synthesis attempt,
+STOP, no repair/retry and closed leases. Signed-in full-page reload plus one
+explicit read retry recovered the answer; both retained citation views opened,
+and complete inventory input matches the independent CTD snapshot oracle.
+Supported object lookup/traceability passed; Q4counts and scientific review are
+not claimed. [Outcome](beta/b1-20261114/question06-answer-outcome.json).
+Repair83ce6e8e/source a0e98fe remains serving48/controller5, all other settings
+preserved. Queue/sweep/scheduling stay PAUSED; do not resubmit or redeliver Q6.
+Native8calls are reconciled at506.9420JPY conservative planning, historical
+missing usage retained and no new model admission.40budget/127operator tests
+pass locally; operator-only hosted follow-up pending. [Cost](beta/b1-20261114/question06-terminal-reconciliation.json).
+B1remains open for reliable15s reads and current-image recovery. Measured
+sequential history+evidence can exceed15s; a successful retry is no reliability
+pass. [Read gate](beta/b1-20261114/question06-read-reliability.json).
+B2–B5, actual scientific reviews and full live release acceptance remain open.
 
 Historical qualified-candidate checkpoint:
 
