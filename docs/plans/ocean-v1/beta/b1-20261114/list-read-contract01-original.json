@@ -1,0 +1,49 @@
+{
+  "revisions": {
+    "controller": "ocean-v1-beta-research-controller-b1-list-1115",
+    "stage": "ocean-v1-beta-serving-b1-list-1115",
+    "live": "ocean-v1-beta-serving-b1-list-live-1115"
+  },
+  "runtime_commit": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "services": {
+    "controller": {
+      "baseline_configuration_sha256": "0fa6e432368a310924299cec35ae9f39aa37d510ac231891c53c8858e3f2c6e3",
+      "initial_revision": "ocean-v1-beta-research-controller-00002-mcw",
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-research-controller",
+      "uid": "75791f9e-366d-4901-9d2f-89080510acfa"
+    },
+    "serving": {
+      "baseline_configuration_sha256": "28470ac814239b69ff970751e081a2775b6b7eb750611efa0eb04fb60271aff7",
+      "initial_revision": "ocean-v1-beta-serving-00021-mgn",
+      "name": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-serving",
+      "uid": "e425c401-bb6e-445f-8487-cda4d5744676"
+    }
+  },
+  "version": "ocean-beta-b1-list-read-rollout-contract-v1",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+  "build_id": "ab4b6868-af58-4e21-b524-97cca4c6a2d3",
+  "build_context_sha256": "cc2effc96e800b130aced2ae398cd236caea05ebc1da30922dd076a7f22a2099",
+  "ci_run_id": 43693489204,
+  "ci_job_id": 132748878213,
+  "ci_log_sha256": "ee796466763717b1a6461fad5dcfaaa4810ba4f8df4274c5dda925852fe733de",
+  "hosted_acceptance_pending": false,
+  "initial_revisions": {
+    "controller": "ocean-v1-beta-research-controller-b1-fix-1115",
+    "serving": "ocean-v1-beta-serving-b1-list-drain-1115"
+  },
+  "initial_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "operator_hosted_acceptance_pending": false,
+  "operator_commit": "98727f44a617287251e917863c5c720195dccc82",
+  "operator_ci_run_id": 43695470027,
+  "initial_admitted_revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+  "operator_pins": {
+    "scripts/beta_b1_repair_rollout.py": "44a6017614a7dc7e1e570820ecda344653ea36b27c06fd9ff1274cf8b624922b",
+    "tests/test_beta_b1_list_rollout.py": "ab1917ddec07a4ffd157ae496b1452bf1fd273d567ff9ec61f44b341923e3bc3",
+    "scripts/beta_b1_dispatch.py": "537f28305a24dd7e543be4653fe9bb662a671f24e5d32f63a2303b179d754af9",
+    "tests/test_beta_b1_dispatch.py": "585756b812300e15b065497f4b4efcf84910c6dcfe3c00ba3f21afff43df26c6",
+    ".github/workflows/beta-b1-focused.yml": "af8ad3ca057e623e0b4ded565f4eee0b726e8d8785ba9453eae5f3a42ccf8d4d"
+  },
+  "operator_ci_job_id": 132754899455,
+  "operator_ci_log_sha256": "5f49405ce21a3474f6364e140ad895033a1182553d706bcdd0500703340290ba",
+  "previous_runtime_commit": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389"
+}
