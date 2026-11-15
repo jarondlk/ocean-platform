@@ -1,0 +1,29 @@
+{
+  "version": "ocean-beta-b1-q6-resume-v1",
+  "captured_utc": "2026-11-15T05:09:47.731016+00:00",
+  "services": [
+    {
+      "service": "serving",
+      "generation": "41",
+      "ready_revision": "ocean-v1-beta-serving-b1-fix-1115",
+      "image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "admission": false,
+      "configuration_preservation_verified": true
+    },
+    {
+      "service": "controller",
+      "generation": "4",
+      "ready_revision": "ocean-v1-beta-research-controller-b1-fix-1115",
+      "image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "admission": null,
+      "configuration_preservation_verified": true
+    }
+  ],
+  "runtime_pins_unchanged": true,
+  "approved_initial_validation_limit_jpy": 650,
+  "budget_authorization": "question06-budget-authorization.json",
+  "personal_cli_reauthentication_required": true,
+  "google_sdk_passkey_handoff_open": true,
+  "new_question_submitted": false,
+  "fresh_cost_authority_observer_admission_still_required": true
+}

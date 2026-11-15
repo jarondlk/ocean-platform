@@ -1,6 +1,40 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current checkpoint — repaired beta live, new-model allowance decision pending
+## Current Q6 resumption —650approved, SDK passkey handoff pending
+
+User explicitly approved650JPY initial live validation (monthly50k unchanged).
+[Authorization](../beta/b1-20261114/question06-budget-authorization.json) supersedes
+only the former550gate. Q6 remains unsubmitted. Prepared prior plan616.3901JPY
+is historical until fresh meters after reauthentication; retain full300model
+reserve, missing usage and original failures. No arbitrary scope/limit change.
+
+After the overnight gap, beta's expected8-hour app session expired; the existing
+Google identity signed in again successfully. This is not evidence of a new
+session bug or a reason to weaken its security. Personal CLI refresh failed with
+explicit reauthentication required; dedicated beta CLI reads still work. Fresh
+read-only service checks verify serving41/controller4 Ready on181f26d4, full
+configuration preservation and serving admissionfalse.180runtime source pins,
+exact staged archive and composed CI still qualify.
+[Current resumption](../beta/b1-20261114/question06-resume.json).
+
+Fresh Google Cloud SDK sign-in tab9 is open at the university account passkey
+check, awaiting user confirmation. Auth flow PTY51805 waits for its verification
+code; use this same flow if still active and inspect before restarting. Never
+put auth codes/tokens in chat, Git, handoff indexes or logs. User was asked to
+finish the passkey/prompts, leave the verification-code page open and reply done.
+Do not expand the limited beta CLI's grants to bypass personal authentication.
+Tab7 beta is signed in; no new question/task/admission action. Queue/sweep/Codex
+scheduling remain PAUSED. Current working root `/private/tmp/ocean-b1-q6-20261115`
+contains static exact candidate qualification and fresh service readbacks.
+
+After authentication: fresh complete usage/cost and authority, original-source
+observer on the repaired serving/controller configuration, then repair writer
+admit-stage/promote; verify current UI frozen context against Q6plan before one
+submission. Retain UUID and manually deliver only canonical run/answer tasks with
+`--repair-candidate`, no automatic retry. Verify actual answer/citations/reload.
+B1 recovery and wider beta gates remain explicit; no completion claim.
+
+## Historical live repair/budget decision checkpoint — repaired beta live, new-model allowance decision pending
 
 Reviewed Q4/Q5/repair evidence is durable at
 `~/Library/Application Support/OCEAN/private-handoff-20261115-repair`:248files,

@@ -4,6 +4,17 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Q6initial allowance650JPY is now explicitly approved; monthly50k unchanged.
+Repaired serving41/controller4 remain Ready on181f26d4 with admissionfalse and
+preserved configuration. Current exact source/archive/CI qualification passes.
+Beta app sign-in refreshed after its expected8-hour expiry; personal GCPCLI
+needs reauthentication and the fresh SDK passkey page is open. No new Q6question
+or model/task/admission write. Fresh post-login cost/authority/observer still
+required. [Authorization](beta/b1-20261114/question06-budget-authorization.json),
+[resumption](beta/b1-20261114/question06-resume.json).
+
+Historical repaired deployment:
+
 Repair image181f26d4/source9eb9de8 is live: controller4 and serving41 Ready,
 100%beta traffic, full configuration preservation. Research admission stays
 false; queue/scheduling PAUSED. Actual signed-in hot history13.731s and retained
