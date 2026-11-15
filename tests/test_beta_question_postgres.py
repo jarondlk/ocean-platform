@@ -87,12 +87,18 @@ def native(monkeypatch):
             return self._dsn
     secret = MemorySecret()
     with admin.begin() as c:
+        # Only this disposable session creates a synthetic SCRAM credential.
+        # Attest the actual server settings; never bypass the production guard.
+        for name, value in base.PASSWORD_LOGGING_POLICY.items():
+            c.execute(text("SELECT set_config(:name,:value,true)"), {"name": name, "value": value})
         c.execute(text("REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM PUBLIC"))
         version, controller_dsn = credential.initialize(c, store=secret, base=base)
         assert version == "1" and secret.adds == 1
     with pytest.raises(ValueError, match="refuses existing"), admin.begin() as c:
         credential.initialize(c, store=secret, base=base)
     with admin.begin() as c:
+        for name, value in base.PASSWORD_LOGGING_POLICY.items():
+            c.execute(text("SELECT set_config(:name,:value,true)"), {"name": name, "value": value})
         same_version, same_dsn = credential.initialize(c, store=secret, base=base, version="1")
         assert same_version == version and same_dsn == controller_dsn and secret.adds == 1
     with owner.begin() as c:
