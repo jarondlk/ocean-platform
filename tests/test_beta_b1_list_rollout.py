@@ -1,5 +1,6 @@
 """The list-read candidate extends the fixed writer without widening its scope."""
 from copy import deepcopy
+import json
 
 import pytest
 
@@ -86,3 +87,23 @@ def test_list_writer_cannot_skip_drain_or_rewrite_old_contract(material, listed)
     with pytest.raises(Rejected):
         repair.plan(serving, 'stage', contract)
     assert serving == before
+
+
+@pytest.mark.parametrize('amount', [700, 1000])
+def test_allowance_requires_its_exact_source_bound_authorization(monkeypatch, tmp_path, amount):
+    monkeypatch.setattr(repair, 'PROOF', tmp_path)
+    name = 'question06-budget-authorization0' + ('2' if amount == 700 else '3') + '.json'
+    value = {'approved_initial_validation_allowance_jpy': amount, 'monthly_beta_target_jpy': 50000,
+        'authorization_basis': 'standing_approval_for_this_and_future_requests', 'new_question_admitted': False}
+    (tmp_path / name).write_text(json.dumps(value))
+    assert repair.approved_allowance({'budget_authorization_receipt': name}) == amount
+    value['approved_initial_validation_allowance_jpy'] = amount + 1
+    (tmp_path / name).write_text(json.dumps(value))
+    with pytest.raises(Rejected):
+        repair.approved_allowance({'budget_authorization_receipt': name})
+
+
+@pytest.mark.parametrize('name', ['../authorization.json', 'unrecognized.json', 1000])
+def test_allowance_rejects_unreviewed_authority_paths(name):
+    with pytest.raises(Rejected):
+        repair.approved_allowance({'budget_authorization_receipt': name})

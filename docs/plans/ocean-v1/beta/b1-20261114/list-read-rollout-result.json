@@ -1,0 +1,80 @@
+{
+  "version": "ocean-beta-b1-list-read-rollout-result-v1",
+  "recorded_utc": "2026-11-15T10:53:21.372766+00:00",
+  "runtime_source": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "operator_source_used": "98727f44a617287251e917863c5c720195dccc82",
+  "image_digest": "sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+  "phases": {
+    "drain": {
+      "phase": "drain",
+      "generation": "44",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "ready_revision": "ocean-v1-beta-serving-b1-list-drain-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    },
+    "controller": {
+      "phase": "controller",
+      "generation": "5",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "ready_revision": "ocean-v1-beta-research-controller-b1-list-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    },
+    "stage": {
+      "phase": "stage",
+      "generation": "45",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "ready_revision": "ocean-v1-beta-serving-b1-list-drain-1115",
+      "runtime_startup_verified": false,
+      "all_other_configuration_preserved": true
+    },
+    "promote": {
+      "phase": "promote",
+      "generation": "46",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "ready_revision": "ocean-v1-beta-serving-b1-list-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    },
+    "admit-stage": {
+      "phase": "admit-stage",
+      "generation": "47",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "ready_revision": "ocean-v1-beta-serving-b1-list-1115",
+      "runtime_startup_verified": false,
+      "all_other_configuration_preserved": true
+    },
+    "admit-promote": {
+      "phase": "admit-promote",
+      "generation": "48",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+      "ready_revision": "ocean-v1-beta-serving-b1-list-live-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    }
+  },
+  "fresh_original_observers": [
+    "ocean-v1-beta-provider-preflight-20261111-8xfb2",
+    "ocean-v1-beta-provider-preflight-20261111-npqv7"
+  ],
+  "original_job_unchanged": true,
+  "observer_expired_attempt": {
+    "before_written_utc": "2026-11-15T08:47:57.617301+00:00",
+    "captured_utc": "2026-11-15T08:44:55.257969+00:00",
+    "pre_PATCH_entry_absent": true,
+    "operation_absent": true,
+    "provider_etag_and_generation_unchanged": true,
+    "preserved_private_directory": "promote-apply-rejected01"
+  },
+  "all_other_configuration_preserved": true,
+  "queue_and_scheduling_remain_paused": true,
+  "signed_in_context_binding_reverified": true,
+  "answer_prepared_once": true,
+  "answer_job_id": "3d707667-ef41-4b6a-b790-a77a9c91ae9c",
+  "answer_job_binding_readonly_probe_pending": true,
+  "answer_task_manually_delivered": false,
+  "actual_successful_Gemini_answer_and_reload_pass": false,
+  "current_latency_gate_passed": false,
+  "scientific_approval": false
+}

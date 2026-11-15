@@ -4,6 +4,18 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Repair83ce6e8e is live on serving48/controller5, full configuration preserved.
+Q6evidence verified on explicit reload and its answer was prepared exactly once;
+job3d707667… is queued, not manually delivered. A read-only exact job/run/task
+binding probe and refreshed source-bound budget gate precede delivery. Native
+calls remain7. User's standing future approval supports operator-selected1000
+validation allowance; monthly50k unchanged. Read/reload reliability, actual cited
+Gemini answer and B1–B5 remain open. [Rollout](beta/b1-20261114/list-read-rollout-result.json),
+[queued answer](beta/b1-20261114/question06-answer-queued.json),
+[authorization basis](beta/b1-20261114/question06-budget-authorization03.json).
+
+Historical qualified-candidate checkpoint:
+
 The83ce6e8e candidate now qualifies with full runtime/native acceptance and
 final98727f4 operator CI (98 tests;180 unchanged runtime pins verified).
 Exact drain validateOnly passed without changing serving43/controller4.

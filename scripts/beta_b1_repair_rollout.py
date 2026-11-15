@@ -41,6 +41,20 @@ def initial_image(contract):
     return PREVIOUS
 
 
+def approved_allowance(contract):
+    receipts = {'question06-budget-authorization02.json': 700, 'question06-budget-authorization03.json': 1000}
+    name = contract.get('budget_authorization_receipt', 'question06-budget-authorization02.json')
+    guard.require(type(name) is str and name in receipts)
+    authorization = guard.document((PROOF / name).read_bytes())
+    amount = authorization['approved_initial_validation_allowance_jpy']
+    guard.require(type(amount) is int and amount == receipts[name]
+        and authorization['monthly_beta_target_jpy'] == 50000)
+    if amount == 1000:
+        guard.require(authorization['authorization_basis'] == 'standing_approval_for_this_and_future_requests'
+            and authorization['new_question_admitted'] is False)
+    return amount
+
+
 def baseline(service, kind, contract):
     image = original.main_container(service, kind)['image']
     guard.require(image in {initial_image(contract), contract['image']})
@@ -285,20 +299,21 @@ def qualify_list(directory, contract):
             {'Verify reused runtime bytes for native-only follow-up', 'Verify current operator checks'}
         and hashlib.sha256((directory / 'operator.log').read_bytes()).hexdigest() == contract['operator_ci_log_sha256'])
     operator_pins = contract['operator_pins']
-    guard.require(set(operator_pins) == {'scripts/beta_b1_repair_rollout.py', 'tests/test_beta_b1_list_rollout.py',
+    expected_operator_pins = {'scripts/beta_b1_repair_rollout.py', 'tests/test_beta_b1_list_rollout.py',
                                         'scripts/beta_b1_dispatch.py', 'tests/test_beta_b1_dispatch.py',
-                                        '.github/workflows/beta-b1-focused.yml'})
+                                        '.github/workflows/beta-b1-focused.yml'}
+    if contract.get('q6_diagnostic_source_bound') is True:
+        expected_operator_pins |= {'scripts/beta_b1_q6_diagnostic.py', 'tests/test_beta_b1_q6_diagnostic.py'}
+    guard.require(set(operator_pins) == expected_operator_pins)
     for path, digest in operator_pins.items():
         committed = subprocess.check_output(['git', 'show', contract['operator_commit'] + ':' + path], cwd=ROOT)
         guard.require(hashlib.sha256(committed).hexdigest() == digest
             and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest)
-    authorization = guard.document((PROOF / 'question06-budget-authorization02.json').read_bytes())
     reservation = guard.document((directory / 'reservation.json').read_bytes())
     from decimal import Decimal
-    guard.require(authorization['approved_initial_validation_allowance_jpy'] == 700
-        and reservation['pending_run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
+    guard.require(reservation['pending_run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
         and reservation['native_model_calls'] == '7'
-        and Decimal(reservation['total_planned_jpy']) <= 700
+        and Decimal(reservation['total_planned_jpy']) <= approved_allowance(contract)
         and Decimal(reservation['one_question_model_reserve_jpy']) >= 300
         and reservation['new_paid_question_admitted'] is False)
     from datetime import datetime, timezone

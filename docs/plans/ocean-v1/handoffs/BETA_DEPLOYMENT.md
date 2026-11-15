@@ -1,6 +1,68 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current checkpoint — list-read delivery qualified; guarded rollout next
+## Current checkpoint — repair live; one Q6 answer queued, binding probe next
+
+Actual guarded deployment completed: controller5 and serving48 Ready,100% beta
+traffic on83ce6e8e/source a0e98fe, both Research flags true; all other full
+configuration preserved. Queue/scheduling stay PAUSED. Original observer8xfb2
+qualified controller/stage. Its180s freshness expired before promotion entered
+the PATCH path; retained `promote-apply-rejected01` has no entry/operation and
+provider etag/generation remained45. Fresh original observernpqv7 qualified
+promotion/admit-stage/admit-promote. Original Job config stays unchanged,12
+executions. [Actual rollout](../beta/b1-20261114/list-read-rollout-result.json).
+
+GCP sign-in still works. A fresh full browser reload restored the properly
+accessible Results panel; context50bfdf55…/revision401844d5…/payloadcb28a278… and
+Q6selection were reverified. One explicit evidence reload then verified both
+receipts and enabled Prepare. It was clicked exactly once; actual UI showed a
+queued EN answer. No new question and no answer-model delivery yet. Later
+history refresh failed again. Some earlier UI errors had no recent matching
+answer/evidence RPC and must not be labeled proven new-backend timeouts.
+Actual current latency/reload reliability remains open.
+
+Canonical paused queue now has exactly one undispatched answer task:
+job `3d707667-ef41-4b6a-b790-a77a9c91ae9c`, delivery
+`d0b4619b-3108-4c4b-9c32-c3bd7979ec57`, created10:37:31UTC.
+[Queued answer](../beta/b1-20261114/question06-answer-queued.json).
+Do not click Prepare again, resubmit Q6 or retry its run delivery. Tab11 is on
+About to stop polling. `answer-submit-intent.json` is now present and immutable.
+
+Fresh meters at10:31UTC still show7 cumulative native calls; complete planning
+774.8752JPY retains the whole300 Q6 reserve and historical missing usage.
+The user explicitly approved "all of these and future request" in response to
+the700 request. The operator selected1000 for this same validation under that
+standing authorization; the user did not type the number1000. Monthly target
+50,000JPY/notice before exceeding it remain. No new question is admitted.
+[Authority and interpretation](../beta/b1-20261114/question06-budget-authorization03.json).
+
+Current local changes add fixed Q6 read-only SQL binding/generation metadata
+diagnostic `scripts/beta_b1_q6_diagnostic.py`, its privacy/state tests, and exact
+700/1000 source-bound allowance handling. They do not alter any runtime source
+or the deployed images. The queued task must be joined to the exact Q6 frozen
+binding/outbox delivery in read-only SQL before manual delivery. The probe uses
+the existing observer's unchanged identity/proxy/numeric secret via args-only
+override, not direct Secret Manager reads or IAM expansion; it must be recorded
+as a different diagnostic execution, never as an original observer receipt.
+Its launcher must embed/hash both the unchanged original Q5 helper source and
+new Q6 module, set no env overrides and retain an exclusive intent before run.
+
+Next: finish/push operator-only hosted checks for these local changes, preserve
+the original list-read contract bytes and record an intentional current-control
+supersession bound to the new operator CI/pins and authorization03. Refresh the
+reservation before delivery (old root quote is expired); keep native7 strict
+until this answer is delivered. Validate/run the fixed read-only binding probe
+once through the existing Job with args-only overrides, verify queued/closed
+head, sent outbox, exact run/context/delivery and one retained lookup attempt.
+Then manually deliver only this canonical answer with `--list-candidate`, once.
+Actual Gemini answer/citations/reload and B1–B5 gates remain open.
+
+Latest private root `/private/tmp/ocean-b1-q6-20261115`; candidate/phase/CI state
+under `list-read-candidate`, fresh meters under `cost-before-answer`. Existing
+durable Q6 backup predates deployment and queued-answer captures; preserve a
+new indexed increment before handing off. Preserve all unrelated tracked and
+scientific/untracked files. No scheduling or queue resume is authorized here.
+
+## Historical qualification — list-read delivery qualified; guarded rollout next
 
 Final operator source `98727f44a617287251e917863c5c720195dccc82` passed run
 43695470027/job132754899455:98 operator/delivery tests and an actual180-pin

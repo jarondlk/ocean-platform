@@ -1,0 +1,47 @@
+{
+  "version": "ocean-beta-b1-q6-answer-queued-v1",
+  "ui_submit_intent": {
+    "version": "ocean-beta-b1-q6-answer-intent-v3",
+    "captured_utc": "2026-11-15T10:37:21.785Z",
+    "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "binding": [
+      "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459",
+      "401844d5-80b8-41a5-83ab-2a1b22093775",
+      "cb28a278770a8de9a56de7721e2ad2fea91538cbb0ce8bc11d755df3c5bae2b4"
+    ],
+    "image_digest": "sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+    "budget_allowance_jpy": 700,
+    "selected_run_verified": true,
+    "prepared_answer_absent": true,
+    "one_click_only": true,
+    "new_question": false
+  },
+  "task_read": {
+    "captured_utc": "2026-11-15T10:46:06.349035+00:00",
+    "queue_state": "PAUSED",
+    "only_one_task_complete_pages": true,
+    "job_id": "3d707667-ef41-4b6a-b790-a77a9c91ae9c",
+    "delivery_id": "d0b4619b-3108-4c4b-9c32-c3bd7979ec57",
+    "create_time": "2026-11-15T10:37:31Z",
+    "canonical_task": {
+      "version": "ocean-beta-b1-single-task-intent-v1",
+      "kind": "answer",
+      "identity": "3d707667-ef41-4b6a-b790-a77a9c91ae9c",
+      "delivery_id": "d0b4619b-3108-4c4b-9c32-c3bd7979ec57",
+      "task": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/queues/ocean-v1-beta-research/tasks/research-644cc463c1ad376f439a234fefc56427778d88de27d42ad409b7659a2fdaf5da",
+      "canonical_target_identity_and_body_verified": true,
+      "prior_dispatches": 0,
+      "queue_must_remain_paused": true,
+      "automatic_retry_permitted": false,
+      "successful_answer_claimed": false
+    },
+    "not_delivered": true
+  },
+  "queued_card_observed": true,
+  "only_one_prepare_click": true,
+  "additional_model_calls_delivered": 0,
+  "job_to_run_binding_probe_pending": true,
+  "later_UI_history_refresh_error_preserved": true,
+  "first_UI_error_not_independently_proven_a_new_backend_timeout": true,
+  "no_new_question": true
+}
