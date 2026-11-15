@@ -12,8 +12,9 @@ paused queue. [Terminal cost](question06-terminal-reconciliation.json) plans
 506.9420JPY with8 native calls, retaining historical missing usage and admitting
 no new question. The15s [read-reliability gate](question06-read-reliability.json)
 and current-image recovery matrix remain open; B1 is not complete.
-40budget/127focused local operator checks/Ruff pass; operator-only hosted
-follow-up pending. No runtime change, queue/scheduling stay PAUSED.
+40budget/127focused operator checks/Ruff pass locally and on hosted4dc33a3/
+run43709165599;180runtime pins verified,232runtime/24actualPG16 checks reused.
+[Hosted checkpoint](question06-checkpoint-hosted-verification.json). No runtime change, queue/scheduling stay PAUSED.
 
 Historical repaired checkpoint before Q6:
 

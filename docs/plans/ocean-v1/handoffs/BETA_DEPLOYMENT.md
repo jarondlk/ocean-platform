@@ -50,18 +50,23 @@ literal qualification metadata/narrow answer panel remain UX follow-ups.
 
 New operator-only terminal reconciliation keeps original native2/native7 guards
 strict and requires exact closed Q6 identities/attempts, preserving older missing
-usage.40budget tests and127focused operator tests/Ruff pass locally; hosted
-operator follow-up is pending. Runtime bytes/images did not change. Adding budget
+usage.40budget tests and127focused operator tests/Ruff pass locally and on hosted
+source4dc33a3/run43709165599/job132796786108. All180runtime bytes equal accepted
+a0e98fe;232runtime/24actualPG16 tests are explicitly reused, not newly run.
+[Hosted checkpoint](../beta/b1-20261114/question06-checkpoint-hosted-verification.json). Runtime bytes/images did not change. Adding budget
 paths to the focused workflow makes this operator change trigger its own checks;
 the earlier dispatcher was qualified at delivery before this follow-up.
 
-Next: checkpoint/push these actual outcomes and operator source, retain hosted
-follow-up, then reduce redundant verified reads in the owning C21 path without
+Current checkpoint4dc33a3is pushed; focused hosted follow-up passed. Next:
+reduce redundant verified reads in the owning C21 path without
 weakening replay/hash/owner/policy/protection/dependency/closing fences. Qualify
 any new runtime/source/image before rollout and repeat actual15s signed-in
 history/evidence journeys. Current-image cancel/duplicate/retry/revocation and
 broader B2–B5 gates remain required. No new model question is needed for this
-read-reliability repair. Do not reuse pending-native7 reservation for admission
+read-reliability repair. The last LISTcontract pins9d7035b remain historical
+delivery authority; the workflow changed at4dc33a3 and its new127-test hosted
+proof is recorded separately. Do not treat that old contract or pending-native7
+quote as fresh authority for any further dispatch. Do not reuse pending-native7 reservation for admission
 after native8, or replay any completed rollout/observer/dispatch operation.
 
 Private root `/private/tmp/ocean-b1-q6-20261115` includes all candidate build/CI/
@@ -73,6 +78,27 @@ retains275files/28,484,556bytes; indexSHA b1a0e385622fe1ae1799d1b4da653ee2d969e2
 Old backups/indexes stay immutable; SDK auth files are excluded. Final cloud
 readback proves empty PAUSED queue,0Scheduler jobs, same48/5/full settings.
 All unrelated tracked/scientific/untracked files remain untouched.
+
+### Next read-performance investigation — preserve authorization semantics
+
+The observed failure is the combined history hydration deadline, not a failed
+Gemini generation. Current frontend lists answers first, then reads retained
+receipts/events concurrently under one15s deadline. Open/page citation reads
+were generally1–2s warm; an evidence-list read reached14.177s. Use matched
+request timings and actual PostgreSQL concurrency to separate transport,
+replay/hash work and lock waits before choosing the next repair.
+
+Source review also shows account `FOR NO KEY UPDATE` and site advisory
+retention locks can serialize concurrent read transactions. That is a source
+finding, not a measured attribution of this particular14.177s request. Do not
+change SQL capability bodies, grants, lock modes or row-lock order merely to
+remove a timeout. Any such repair needs actual PostgreSQL owner/status change,
+retirement/hold and concurrent read/mutation tests. First evaluate reducing
+repeated ready-retention transactions/current-source reads while keeping every
+replay, receipt/blob hash, exact dependency/hold, owner/policy and closing
+activation/control proof. C09 writes must remain outside read scopes. Do not
+cache private authority across requests, show unverified stale data, increase
+the15s deadline or make a second model question to mask this read failure.
 
 ## Historical qualification — list-read delivery qualified; guarded rollout next
 

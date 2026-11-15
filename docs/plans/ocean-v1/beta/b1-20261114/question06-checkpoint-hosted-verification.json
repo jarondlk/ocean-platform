@@ -1,0 +1,39 @@
+{
+  "B1_complete": false,
+  "accepted_actual_postgresql16_tests_reused": 24,
+  "accepted_runtime_tests_reused": 232,
+  "budget_reconciliation_tests_included": 40,
+  "captured_utc": "2026-11-15T11:33:04.199231+00:00",
+  "ci_job_id": 132796786108,
+  "ci_log_sha256": "9cf3e7414ffc04bab4f6a5922b3eed2781f72ae8a9c82b704263a0ae2325c917",
+  "ci_run_id": 43709165599,
+  "ci_url": "https://github.com/jarondlk/ocean-platform/actions/runs/43709165599",
+  "conclusion": "success",
+  "focused_operator_tests_passed": 127,
+  "full_live_acceptance_passed": false,
+  "new_cloud_build_or_service_deployment": false,
+  "operator_source_sha256": {
+    ".github/workflows/beta-b1-focused.yml": "e2912fb7d1034b53b752b005517ac3de3049329ec95a0c398bc0d7b355a16484",
+    "scripts/beta_b1_budget.py": "957a7cecd54d1e98f881bfb327f29fb22deceafef3f64d420b2081b6cdfa6937",
+    "tests/test_beta_b1_budget.py": "e9c42cb95dbed0c437e3c117358ef1398eb34346b482a42ac54b75aea03a1281"
+  },
+  "private_ci_preservation": {
+    "all_hashes_verified": true,
+    "bytes": 74846,
+    "files": 3,
+    "folder": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261115-q6-ci",
+    "index_sha256": "94fcbcffb9c10f5d9d3d97e1f0cc46c532ce9ab20ab2e7e9e024d142d8b0ed61"
+  },
+  "reused_ci_job": 132748878213,
+  "reused_ci_run": 43693489204,
+  "ruff": "passed",
+  "runtime_and_postgresql_tests_newly_run": false,
+  "runtime_pins_compared": 180,
+  "runtime_source_unchanged": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "source_revision": "4dc33a3513421c98cc127b62c6baa3e69d13d1a7",
+  "supersedes_pending_hosted_followup_only": [
+    "question06-terminal-reconciliation.json",
+    "current STATUS/handoff at4dc33a3"
+  ],
+  "version": "ocean-beta-b1-q6-checkpoint-hosted-verification-v1"
+}
