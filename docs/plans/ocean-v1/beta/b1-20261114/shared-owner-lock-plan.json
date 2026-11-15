@@ -1,0 +1,38 @@
+{
+  "conservative_planning_jpy": "599.7285410620009282766010486",
+  "intentional_sql_source_supersession": "Original immutable grant function FOR NO KEY UPDATE -> separately qualified CREATE OR REPLACE with FOR SHARE; original grant receipts and privilege source preserved.",
+  "live_generations": {
+    "controller": 6,
+    "serving": 53
+  },
+  "live_sql_changed": false,
+  "local_checks": {
+    "native_pass_claimed": false,
+    "native_skipped": 1,
+    "passed": 51
+  },
+  "monthly_target_jpy": 50000,
+  "native_model_calls": "8",
+  "new_model_calls": 0,
+  "operator_selected_allowance_jpy": 1000,
+  "price_capture_utc": "2026-11-15T15:49:55.692208+00:00",
+  "protected_invariants": [
+    "role/status UPDATE and DELETE blocked for duration of reader",
+    "no account UPDATE grant for runtime",
+    "same function OID/owner/ACL/security-definer/search_path/other pg_proc metadata",
+    "fresh owner and closing policy checks",
+    "unchanged run/job locks and C09 global retention fence",
+    "unchanged 15s browser deadline"
+  ],
+  "queue_scheduling": "PAUSED",
+  "recorded_utc": "2026-11-15T15:58:44.587900+00:00",
+  "runtime_180_sources_unchanged": true,
+  "source_pins": {
+    ".github/workflows/beta-b1-shared-owner.yml": "4400a6bc90d17e7ba52aa1ce10732b7bf73eee1950401deecd4a1c9c52ac134f",
+    "deploy/gcp/beta/research-operator/research_operator.py": "080e71f9905aeb3c92981b72bc842ada7bedd202f64edf0acc26ba363a8442df",
+    "deploy/gcp/beta/research-operator/shared_owner_lock.py": "62175b69b3eeacb8dae36f8ce725d3f8125b16f33a6b6845bab90c3bee53be1b",
+    "tests/test_beta_question_postgres.py": "9665b3e0048ba7a008c7dd99e43fe4f8b7b0019f90b25b6281e544785c7e4ad3"
+  },
+  "state": "candidate_native_verification_pending",
+  "version": "ocean-beta-b1-shared-owner-lock-plan-v1"
+}

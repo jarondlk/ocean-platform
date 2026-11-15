@@ -1,6 +1,42 @@
 # Implementation status
 
+Shared owner-lock candidate prepared November16: local51pass/native1skip; hosted
+PG16 concurrency/revocation/real-role journey pending. No live SQL change. Exact
+function metadata/grants and all180 runtime sources preserved;15s unchanged.
+Fresh planning599.7285JPY, native8 unchanged. [Plan](beta/b1-20261114/shared-owner-lock-plan.json).
+
 Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documented boundaries with source-bound hosted delivery; C27 is Complete for local release preparation after passing disposable rehearsals. Full live release acceptance remains gated.**
+
+## Current B1 checkpoint — live repair, remaining read contention
+
+Updated November16JST: source148182d/image5aedf3ba is deployed and Ready on
+serving53/controller6. All6guarded phases completed with full settings preserved,
+60s old request envelope and two fresh original quiescence observers j6b59/wnhvp.
+Do not repeat rollout or either observer. [Actual rollout](beta/b1-20261114/ready-list-rollout-result.json).
+Q6's existing answer and citation read passed individual observed upper bounds
+8.072s/12.511s, but background refresh failed again. Reliable15s acceptance and
+current-image recovery remain OPEN. [Read follow-up](beta/b1-20261114/ready-list-read-followup.json).
+No new question or model call occurred. Original source bytes/receipts preserved.
+
+GCPCLI access works. The automatic usage-limit review interrupted the last
+browser capture; normal browser access is now restored and the expired beta
+session was refreshed. Tab11 is signed-in on About to stop polling. Queue,
+Scheduler, sweep and Codex scheduling remain PAUSED; do not resubmit/redeliver Q6.
+Private state: `/private/tmp/ocean-b1-finish-20261115/ready-list-candidate` includes
+all phase/observer/source/build/CI files, failed background-read text and bounded
+browser trials. Latest durable Q6 backups predate this rollout; preserve a new
+indexed increment before handoff. Unrelated/scientific checkout files unchanged.
+
+Next: validate shared owner-read locking against real disposable PostgreSQL16,
+including blocked role/status changes and preserved mutation/idempotency/ACLs.
+The existing owner function serializes concurrent readers with FOR NO KEY UPDATE;
+any amendment must be fixed-source, restricted migrator, unchanged grants/owner/
+security-definer/search_path, current quiescence and source-bound native evidence.
+No SQL amendment, new recovery Job or test account has yet been created.
+Then prove actual stable signed-in reload/background reads and bounded current-
+image cancellation/duplicate/uncertain-outbox/revocation cases before B1 closure.
+
+### Historical qualified preparation before the completed rollout
 
 ## Ready-list delivery qualified — guarded rollout next
 

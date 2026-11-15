@@ -1,0 +1,33 @@
+{
+  "actual_browser_trials": [
+    {
+      "answerVisible": true,
+      "case": "selected_existing_Q6",
+      "deadlineMs": 15000,
+      "observedUpperMs": 8072,
+      "twoReceipts": true
+    },
+    {
+      "case": "inventory_citation_open_and_page",
+      "complete": true,
+      "deadlineMs": 15000,
+      "observedUpperMs": 12511,
+      "snapshotMatches": true
+    }
+  ],
+  "beta_account_session_refreshed": true,
+  "browser_gate_now_accessible": true,
+  "controller_generation": 6,
+  "current_b1_complete": false,
+  "failure_text_capture_preserved": true,
+  "fifteen_second_gate_passed": false,
+  "image_digest": "sha256:5aedf3ba006901cd129e237632eab36aa06195d936ab1fd80c196863767f9ea7",
+  "last_failure_screenshot_not_captured_due_usage_auto_review": true,
+  "new_question_or_Gemini_call_for_reads": false,
+  "next": "Native PostgreSQL validation of shared owner read lock: concurrent readers, blocked role/status writes, mutation/idempotency, unchanged ACLs and owner; then source-bound exact database amendment and live recovery checks. No SQL change yet.",
+  "observed_background_refresh_failure": true,
+  "recorded_utc": "2026-11-15T15:48:55.598715+00:00",
+  "serving_generation": 53,
+  "source_revision": "148182df18e0c4fb0084e9e766a9c071412f5287",
+  "version": "ocean-beta-b1-ready-list-actual-read-followup-v1"
+}

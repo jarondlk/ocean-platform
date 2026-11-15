@@ -66,6 +66,8 @@ def native(monkeypatch):
         return module
     load("privileges", "privileges.py")
     operator = load("native_research_operator", "research_operator.py")
+    monkeypatch.setitem(sys.modules, "research_operator", operator)
+    shared_lock = load("native_shared_owner_lock", "shared_owner_lock.py")
     package = load("native_research_operator_package", "prepare_context.py")
     credential = load("native_controller_credential", "controller_credential.py")
     base = load("native_password_base", "../operator/operator.py")
@@ -122,6 +124,7 @@ def native(monkeypatch):
             display_name="Synthetic native owner", role="admin", account_type="internal", status="active")
         s.add(actor)
     result = {"actor": current_user_from_model(actor), "serving": serving, "controller": controller,
+        "owner": owner, "shared_lock": shared_lock, "manifest": package.schema_contract(),
         "factory": sessionmaker(bind=serving, expire_on_commit=False),
         "controller_factory": sessionmaker(bind=controller, expire_on_commit=False)}
     original = journey.private_app
@@ -165,4 +168,47 @@ def test_pg16_roles_finish_question_and_reopen_answer_without_account_write_righ
             c.execute(text("SELECT id FROM public.app_user FOR NO KEY UPDATE"))
         with engine.begin() as c:
             c.execute(text("SELECT public.ocean_v1_beta_research_owner_lock(:id)"), {"id": native["actor"].id})
+    lock = text("SELECT public.ocean_v1_beta_research_owner_lock(:id)")
+    identity = {"id": native["actor"].id}
+    # Reproduce the predecessor's contention before changing the exact same
+    # function. A timeout is asserted as a lock conflict, not merely any error.
+    with native["serving"].begin() as reader:
+        reader.execute(lock, identity)
+        with pytest.raises(DBAPIError) as blocked, native["controller"].begin() as other:
+            other.execute(text("SET LOCAL lock_timeout='250ms'"))
+            other.execute(lock, identity)
+        assert blocked.value.orig.pgcode == "55P03"
+    amendment = native["shared_lock"]
+    with native["owner"].begin() as c:
+        original_metadata, _ = amendment.metadata(c)
+        report = amendment.amend(c, native["manifest"])
+        assert report["oid_acl_owner_security_metadata_preserved"] is True
+    with pytest.raises(ValueError, match="inspect rather than replay"), native["owner"].begin() as c:
+        amendment.amend(c, native["manifest"])
+    with native["owner"].begin() as c:
+        assert amendment.amend(c, native["manifest"], verify_only=True)["verification_only"]
+        assert amendment.metadata(c)[0] == original_metadata
+    with native["serving"].begin() as reader, native["controller"].begin() as other:
+        reader.execute(lock, identity)
+        other.execute(text("SET LOCAL lock_timeout='250ms'"))
+        other.execute(lock, identity)  # Concurrent readers now coexist.
+        for sql in ("UPDATE public.app_user SET status='suspended' WHERE id=:id",
+                    "UPDATE public.app_user SET role='viewer' WHERE id=:id",
+                    "DELETE FROM public.app_user WHERE id=:id"):
+            with pytest.raises(DBAPIError) as blocked, native["owner"].begin() as writer:
+                writer.execute(text("SET LOCAL lock_timeout='250ms'"))
+                writer.execute(text(sql), identity)
+            assert blocked.value.orig.pgcode == "55P03"
+    # Authority changes commit after readers release. A stale CurrentUser is
+    # denied by the actual beta service; restoration does not alter its grants.
+    from orchestration.research_runs import ResearchRunError
+    with native["owner"].begin() as c:
+        c.execute(text("UPDATE public.app_user SET status='suspended' WHERE id=:id"), identity)
+    with pytest.raises(ResearchRunError) as denied, native["factory"]() as s, s.begin():
+        questions[0].research_run_service._principal(s, user=native["actor"])
+    assert denied.value.status_code == 403
+    with native["owner"].begin() as c:
+        c.execute(text("UPDATE public.app_user SET status='active' WHERE id=:id"), identity)
+    # The original full real-role journey now runs under the amended function,
+    # exercising actual durable mutation/claim/duplicate/reopen locks as well.
     journey.test_question_is_durable_before_private_delivery_and_answer_reopens(questions)

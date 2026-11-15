@@ -76,12 +76,18 @@ def policies(manifest):
     return result
 
 
-def verify(connection, manifest, *, complete):
+def verify(connection, manifest, *, complete, owner_lock_mode="exclusive"):
+    # Versioned, closed alternatives only. Historical grant receipts continue
+    # to require the original body unless this amendment is explicitly selected.
+    if owner_lock_mode not in ("exclusive", "shared"):
+        raise ValueError("Reviewed owner-lock mode required")
     if complete:
         function = connection.execute(text("SELECT p.prosecdef,p.proconfig,pg_get_userbyid(p.proowner),p.prosrc,"
             "p.prorettype='pg_catalog.void'::regtype FROM pg_proc p WHERE "
             "p.oid=to_regprocedure('public.ocean_v1_beta_research_owner_lock(uuid)')")).first()
         expected_body = privileges.OWNER_LOCK_SQL.split("$body$")[1].strip()
+        if owner_lock_mode == "shared":
+            expected_body = expected_body.replace("FOR NO KEY UPDATE", "FOR SHARE")
         if (function is None or function[0] is not True or function[1] != ["search_path=pg_catalog"]
                 or function[2] != MIGRATOR or function[3].strip() != expected_body or function[4] is not True):
             raise ValueError("Exact restricted owner-lock function required")

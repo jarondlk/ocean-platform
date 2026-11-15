@@ -1,0 +1,75 @@
+name: Beta B1 shared owner lock qualification
+
+on:
+  push:
+    branches: [overhaul]
+    paths:
+      - 'deploy/gcp/beta/research-operator/shared_owner_lock.py'
+      - 'deploy/gcp/beta/research-operator/research_operator.py'
+      - 'tests/test_beta_question_postgres.py'
+      - '.github/workflows/beta-b1-shared-owner.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beta-b1-shared-owner-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pg16-locks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: ocean_v1_beta
+        options: >-
+          --health-cmd "pg_isready -U postgres -d ocean_v1_beta"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      AUTH_MODE: disabled
+      DEPLOYMENT_ENV: test
+      OCEAN_BETA_RESEARCH_NATIVE_TEST_URL: postgresql+psycopg2://postgres@pg-beta-research-qualification:5432/ocean_v1_beta
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements/dev.txt
+      - name: Install hash-locked dependencies
+        run: python -m pip install --require-hashes -r requirements/dev.txt
+      - name: Verify unchanged accepted runtime
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          base=pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114')
+          m=json.loads((base/'ready-list-production-source-manifest.json').read_text())
+          assert m['revision']=='148182df18e0c4fb0084e9e766a9c071412f5287' and len(m['sources'])==180
+          for path,expected in m['sources'].items():
+              assert hashlib.sha256(subprocess.check_output(['git','show',m['revision']+':'+path])).hexdigest()==expected
+              assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()==expected
+          print('180 accepted runtime pins unchanged; reuse run43710279748 runtime248/PG25, add separate actual role/lock proof below.')
+          PY
+      - name: Select disposable container and require controller SCRAM
+        env:
+          PG_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$PG_CONTAINER")"
+          python -c 'import ipaddress,sys; ipaddress.IPv4Address(sys.argv[1])' "$address"
+          printf '%s pg-beta-research-qualification\n' "$address" | sudo tee -a /etc/hosts
+          docker exec "$PG_CONTAINER" sh -c 'printf "host all ocean_v1_research_controller 0.0.0.0/0 scram-sha-256\n" > /tmp/b1-hba; cat "$PGDATA/pg_hba.conf" >> /tmp/b1-hba; cat /tmp/b1-hba > "$PGDATA/pg_hba.conf"'
+          docker exec "$PG_CONTAINER" psql -U postgres -d ocean_v1_beta -c 'SELECT pg_reload_conf()'
+      - name: Verify actual PG16 owner locks, revocation, grants and durable question
+        run: |
+          python -m ruff check deploy/gcp/beta/research-operator/shared_owner_lock.py deploy/gcp/beta/research-operator/research_operator.py tests/test_beta_question_postgres.py
+          python -m pytest tests/test_beta_question_postgres.py -q -rA --tb=short
