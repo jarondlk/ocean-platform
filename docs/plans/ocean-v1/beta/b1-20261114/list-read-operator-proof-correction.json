@@ -1,0 +1,17 @@
+{
+  "version": "ocean-beta-b1-operator-reuse-proof-correction-v1",
+  "captured_utc": "2026-11-15T08:36:22.896672+00:00",
+  "failed_source": "ae698880be6c38170a0a522bf8b63bcf098c523f",
+  "failed_ci_run": 43695060802,
+  "failed_ci_job": 132753652900,
+  "failed_step": "Verify reused runtime bytes for native-only follow-up",
+  "reason": "The expected revision variable was overwritten by the runtime-source hash loop; the later source-revision assertion failed.",
+  "failed_log_sha256": "f6f75f08d4e5977ea9c42ed3ed8a873647ffc99f9d27125f9a30358f8768fad3",
+  "correction": "Keep expected_revision distinct from the per-file expected hash.",
+  "corrected_actual180_pin_reuse_script_passed_locally": true,
+  "operator_tests_passed_locally": 76,
+  "new_hosted_acceptance": "pending",
+  "runtime_source_unchanged": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "image_unchanged": "sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+  "live_update_applied": false
+}

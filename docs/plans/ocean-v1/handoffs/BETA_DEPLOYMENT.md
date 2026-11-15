@@ -27,6 +27,15 @@ pass before any live update; it reuses the232/24 unchanged-runtime acceptance
 only after checking all180 source bytes against a0e98fe. Do not repeat broad
 runtime/native checks for this operator-only change or claim them newly run.
 
+First operator follow-up ae69888/run43695060802/job132753652900 failed at the
+reuse-proof assertion because the loop overwrote the expected revision with a
+file hash. Its failure/log remain preserved; operator checks were not reached.
+The corrected workflow uses `expected_revision`; its actual180-pin script and76
+local operator tests pass. [Correction](../beta/b1-20261114/list-read-operator-proof-correction.json).
+The corrected operator-only hosted run is next; no live update has been made.
+Fresh meters including the new build give664.4339JPY planning, within approved
+700 and retaining the full300 model reserve. [Cost](../beta/b1-20261114/question06-rollout-reservation.json).
+
 Next: commit/push the operator-only follow-up, retain its exact CI metadata/log,
 create the separate fixed `deploy/gcp/beta/b1/list-read-contract.json` bound to
 the actual build/image/core CI/operator CI, refresh complete meters/prices and

@@ -75,15 +75,15 @@ jobs:
           operator = os.environ['B1_OPERATOR_FOLLOWUP'] == 'true'
           base = pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114')
           manifest = json.loads((base / ('list-read-production-source-manifest.json' if operator else 'repair-production-source-manifest.json')).read_text())
-          expected = 'a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac' if operator else '9eb9de8b1757e27eba37f8388ccb30c2a78a1389'
-          assert manifest['revision'] == expected and len(manifest['sources']) == 180
+          expected_revision = 'a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac' if operator else '9eb9de8b1757e27eba37f8388ccb30c2a78a1389'
+          assert manifest['revision'] == expected_revision and len(manifest['sources']) == 180
           for path, expected in manifest['sources'].items():
               original = subprocess.check_output(['git', 'show', manifest['revision'] + ':' + path])
               assert hashlib.sha256(original).hexdigest() == expected
               assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() == expected
           if operator:
               accepted = json.loads((base / 'list-read-hosted-verification.json').read_text())
-              assert accepted['source_revision'] == expected and accepted['ci_run_id'] == 43693489204 and accepted['conclusion'] == 'success'
+              assert accepted['source_revision'] == expected_revision and accepted['ci_run_id'] == 43693489204 and accepted['conclusion'] == 'success'
               assert accepted['runtime_tests'] == 232 and accepted['postgresql_tests'] == 24
               print('All180 runtime pins equal accepted source a0e98fe; reusing232 runtime and24 actual PostgreSQL16 tests for operator-only changes.')
           else:
