@@ -1,6 +1,36 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current Q6 resumption —650approved, SDK passkey handoff pending
+## Current Q6 preparation — login restored, fresh621.4768JPY reservation
+
+User requested SDK login reopened. The stale prior flow was cancelled; fresh
+Google SDK login completed privately and both personal/beta CLI identities now
+verify intended services. Code was delivered to non-echoing child stdin and its
+private transfer file removed; no code/token/DSN printed or copied to Git.
+[Login restoration](../beta/b1-20261114/question06-login-restored.json).
+Old PTY51805 is closed; newer helper session20039 completed successfully. Do not
+restart an old auth flow or reuse a consumed code. SDKtab10 was closed after use.
+
+Fresh source/build/archive/composed-CI qualification still passes. Serving41/
+controller4 are Ready on181f26d4, full settings preserved and admissionfalse.
+QueuePAUSED/0tasks,0Scheduler; original observer generation1/9executions.
+Fresh complete model/cloud meters contain6native calls. Both public Gemini
+price records re-read200 and exactly match accepted rates; other29prices are
+explicitly reused. [Fresh reservation](../beta/b1-20261114/question06-reservation.json)
+is621.4768JPY including full300new shared14-call reserve, missing prior usage,
+20cloud margin and1future observer, within user-approved650. Monthly50k unchanged.
+
+Admit-stage validateOnly succeeded with service unchanged. Next: execute original
+unchanged read-only observer using `/private/tmp/ocean-b1-q6-20261115/start_observer_q6.py`
+(once, inspect intent before retry), then repair writer admit-stage/admit-promote
+using fresh post-drain quiescence. Q6 is still unsubmitted. Reverify actual UI
+frozen context/oracle before one click, retain run UUID and use canonical manual
+run/answer dispatch `--repair-candidate`. No queue resume, sweep or Codex schedule.
+Actual answer/citations/reload and remaining recovery gates are still open.
+Current private working root `/private/tmp/ocean-b1-q6-20261115`; no beta tab was
+present in current browser inventory, so open a fresh beta tab for the UI test
+and reuse existing cookie if valid. No new user sign-in action is needed now.
+
+## Historical Q6 authorization/SDK handoff —650approved, SDK passkey handoff pending
 
 User explicitly approved650JPY initial live validation (monthly50k unchanged).
 [Authorization](../beta/b1-20261114/question06-budget-authorization.json) supersedes

@@ -1,0 +1,102 @@
+{
+  "version": "ocean-beta-b1-q6-reservation-v1",
+  "captured_utc": "2026-11-15T07:31:13.527027+00:00",
+  "currency": "JPY",
+  "approved_initial_validation_allowance_jpy": 650,
+  "authorization_receipt": "question06-budget-authorization.json",
+  "terminal_model_cloud_reconciliation": {
+    "version": "ocean-beta-b1-q5-terminal-reconciliation-v1",
+    "captured_utc": "2026-11-15T07:29:07.184179Z",
+    "currency": "JPY",
+    "observed_incremental_gross_jpy": "145.0739342778134677671250400",
+    "run_jpy": "96.23537059592859254784716004",
+    "job_minimums": [
+      {
+        "job": "ocean-v1-beta-controller-credential",
+        "executions": 1,
+        "additional_jpy": "0.48451805846109458444611094"
+      },
+      {
+        "job": "ocean-v1-beta-provider-preflight-20261111",
+        "executions": 9,
+        "additional_jpy": "3.308888948101235222761537024"
+      },
+      {
+        "job": "ocean-v1-beta-research-action-shape-20261111",
+        "executions": 1,
+        "additional_jpy": "0.47263927279999999999604488"
+      },
+      {
+        "job": "ocean-v1-beta-research-diagnostics-20261110",
+        "executions": 1,
+        "additional_jpy": "0.47263927279999999999604488"
+      },
+      {
+        "job": "ocean-v1-beta-research-grants",
+        "executions": 1,
+        "additional_jpy": "0"
+      }
+    ],
+    "storage_operations_jpy": "20.552727635473",
+    "logging_jpy": "1.689705916439361412078142166",
+    "build_allowance_jpy": "16.136909983",
+    "model_observed_jpy": "5.720534594810184",
+    "all_storage_sent_bytes_worst_selected_internet_allowance_jpy": "120.4345429889235531296581030",
+    "ancillary_reserve_jpy": "5",
+    "known_observed_and_reserved_jpy": "270.5084772667370208967831430",
+    "shared_call_cap": 14,
+    "max_output_tokens_per_call_including_thoughts": 4096,
+    "input_planning_tokens": "99744",
+    "output_planning_tokens": "9708",
+    "model_planning_jpy": "35.188905328833144",
+    "one_question_model_reserve_jpy": "0",
+    "rollout_reserve_jpy": "20",
+    "future_observers": 1,
+    "future_observers_reserve_jpy": "1.5",
+    "total_planned_jpy": "321.4768480007599808967831430",
+    "remaining_initial500_jpy": "178.5231519992400191032168570",
+    "within_initial500": true,
+    "new_questions_considered": 0,
+    "new_question_already_submitted": true,
+    "prior_questions": 3,
+    "prior_model_calls": 2,
+    "initial_validation_limit_jpy": 550,
+    "monthly_beta_target_jpy": 50000,
+    "provider_currency_hard_cap_or_invoice_claimed": false,
+    "output_semantics_source": "https://ai.google.dev/gemini-api/docs/thinking#token-limits",
+    "endpoint_qualification": "Planning applies the documented combined Gemini response/thought output cap to the same generateContent configuration on Vertex; it is not an independent provider billing guarantee.",
+    "input_qualification": "Retains the prior one token per bounded UTF8 byte plus schema and2048 wrapper envelope; no provider countTokens proof is claimed.",
+    "no_model_limits_or_scientific_authority_changed": true,
+    "reconcile_actual_usage_before_next_question_or_continuation": true,
+    "native_model_calls": "6",
+    "native_input_tokens": "16526",
+    "native_output_tokens": "1516",
+    "terminal_physical_attempts": 4,
+    "missing_usage_reserve_jpy": "29.468370734022960",
+    "remaining_initial550_jpy": "228.5231519992400191032168570",
+    "within_initial550": true,
+    "manual_questions_submitted": 5,
+    "new_paid_question_admitted": false,
+    "terminal_diagnostic_captured_utc": "2026-11-14T16:50:30.968928+00:00"
+  },
+  "one_new_shared14call_segment_reserve_jpy": "300",
+  "model_price_records_fresh200_and_identical": true,
+  "other29price_records_reused_from_accepted_capture": true,
+  "total_planned_jpy": "621.4768480007599808967831430",
+  "remaining_approved_jpy": "28.5231519992400191032168570",
+  "within_approved_allowance": true,
+  "monthly_beta_target_jpy": 50000,
+  "prior_q4_q5_and_probe_receipts_immutable": true,
+  "qualification": {
+    "source_paths": 180,
+    "intentional_runtime_supersessions": 2,
+    "build_id": "d3735340-23c0-45b3-88d9-7b47fb44b333",
+    "ci_run_id": 43620300346,
+    "focused_source_bound_delivery_verified": true
+  },
+  "queue": "PAUSED",
+  "queue_tasks": 0,
+  "scheduler_jobs": 0,
+  "new_question_submitted": false,
+  "no_invoice_or_provider_currency_cap_claim": true
+}

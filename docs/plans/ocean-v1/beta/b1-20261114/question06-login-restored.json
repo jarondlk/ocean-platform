@@ -1,0 +1,26 @@
+{
+  "captured_utc": "2026-11-15T07:28:08.878631+00:00",
+  "personal_cli_and_beta_cli_verified": true,
+  "services": [
+    {
+      "service": "serving",
+      "generation": "41",
+      "ready_revision": "ocean-v1-beta-serving-b1-fix-1115",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "admission": false
+    },
+    {
+      "service": "controller",
+      "generation": "4",
+      "ready_revision": "ocean-v1-beta-research-controller-b1-fix-1115",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "admission": null
+    }
+  ],
+  "credentials_printed": false,
+  "version": "ocean-beta-b1-q6-login-restored-v1",
+  "old_flow_cancelled_before_new_flow": true,
+  "fresh_sdk_login_completed": true,
+  "private_verification_code_file_removed": true,
+  "codes_tokens_or_dsns_saved_in_receipt": false
+}
