@@ -1,0 +1,51 @@
+{
+  "version": "ocean-beta-b1-list-read-repair-plan-v1",
+  "captured_utc": "2026-11-15T08:12:08.844448+00:00",
+  "accepted_runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "runtime_supersessions": {
+    "orchestration/research_evidence.py": {
+      "accepted_sha256": "886886da63cfe5d0e8f9e7f22720266169d25c23a6ba9933b4d61bec4c2a8008",
+      "candidate_sha256": "0ddc4adca211d27418b895565c58ee71a74973c06d92c1afd35496d021ba3f16"
+    }
+  },
+  "other_runtime_pins_byte_equal": 179,
+  "change": "Project the retained listing in the final retention transaction with its current actor, verified dependency memo and closing catalogue fence. No cross-request cache.",
+  "preserved": [
+    "full committed C20 replay",
+    "receipt and blob hashes",
+    "current owner and context",
+    "current protection and C09 references",
+    "dependency closure",
+    "activation and control closing fences",
+    "SQL rollback on closing failure",
+    "original strict model and request deadlines"
+  ],
+  "observed_synthetic_transport_reads": {
+    "accepted": {
+      "activation": 8,
+      "control": 8,
+      "manifest": 15,
+      "object": 35
+    },
+    "candidate": {
+      "activation": 6,
+      "control": 6,
+      "manifest": 12,
+      "object": 28
+    }
+  },
+  "local_checks": {
+    "retention_and_beta_read_scope_tests": 51,
+    "budget_tests": 28,
+    "packaging_boundary_checks": 34,
+    "ruff": "passed",
+    "C21_wire_contract": "current"
+  },
+  "initial_local_run": "46 passed; one expected old performance-count assertion failed before updating its measured expectation",
+  "hosted_source_acceptance": "pending",
+  "candidate_image_built": false,
+  "candidate_deployed": false,
+  "actual_latency_improvement_proven": false,
+  "existing_runtime_unchanged": true,
+  "old_receipts_immutable": true
+}

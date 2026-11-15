@@ -359,7 +359,7 @@ class ResearchEvidenceService:
         return [{"snapshot_id": snapshot, "reference": "c21:dependency:" + canonical_hash([self.site_id, receipt.id, snapshot])}
             for snapshot in (receipt.binding.snapshot_id, *registration.child_snapshot_ids)]
 
-    def _retain(self, verified, user):
+    def _retain(self, verified, user, *, _on_ready=None):
         """Prepare app protection before any independent C09 reference write."""
         pending, ready = [], []
         with self._transaction() as session:
@@ -442,7 +442,13 @@ class ResearchEvidenceService:
                 self._read_receipt(session, identity, actor, memo=memo)
             run = session.get(ResearchRun, uuid.UUID(verified.anchor.run_id))
             current_policy = self.authorize_run(session, run, actor)
-            return replace(verified, anchor=replace(verified.anchor, catalogue_policy_revision=current_policy))
+            current = replace(verified, anchor=replace(verified.anchor, catalogue_policy_revision=current_policy))
+            # A retained listing can use the receipts just verified in this same
+            # transaction. Its current actor, dependency memo and closing store
+            # fence belong to this operation only; none survives the response.
+            if _on_ready is not None:
+                return _on_ready(session, actor, current, memo)
+            return current
 
     def ensure_retained(self, run_id, input_version, user):
         return self._retain(self.load_verified(run_id, input_version, user), user)
@@ -595,6 +601,31 @@ class ResearchEvidenceService:
                 return True
         return False
 
+    def _list_retained(self, request, verified, session, actor, memo):
+        items = []
+        retained_ids = session.scalars(select(ResearchEvidenceReceipt.id).where(
+            ResearchEvidenceReceipt.user_id == actor.id,
+            ResearchEvidenceReceipt.run_id == uuid.UUID(request.run_id),
+            ResearchEvidenceReceipt.input_version == request.input_version,
+            ResearchEvidenceReceipt.state == "ready")).all()
+        for identity in dict.fromkeys([*retained_ids, *(item.id for item in verified.attached_receipts)]):
+            items.append(self._read_receipt(session, identity, actor, memo=memo)[0])
+        items.sort(key=lambda item: item.id)
+        page, size = [], 0
+        for item in items[request.offset:request.offset + request.limit]:
+            item_size = len(canonical_json(item.model_dump(mode="json")).encode("utf-8"))
+            if size + item_size > MAX_PAGE_BYTES:
+                if not page:
+                    raise ResearchEvidenceError("evidence_page_too_large", 503)
+                break
+            page.append(item)
+            size += item_size
+        return {"version": EVIDENCE_VERSION, "access_revision": canonical_hash([catalogue_access_binding(actor), verified.anchor.catalogue_policy_revision, [item.sha256 for item in items]]),
+            "run_id": request.run_id, "input_version": request.input_version, "offset": request.offset,
+            "items": [item.model_dump(mode="json") for item in page],
+            "next_offset": request.offset + len(page) if request.offset + len(page) < len(items) else None,
+            "total": len(items)}
+
     def invoke(self, name, payload, user):
         try:
             request = EVIDENCE_REQUEST_MODELS[name].model_validate(payload)
@@ -602,35 +633,12 @@ class ResearchEvidenceService:
             raise ResearchEvidenceError("invalid_request", 422) from None
         try:
             if name == "list":
-                verified = self.ensure_retained(request.run_id, request.input_version, user)
+                verified = self.load_verified(request.run_id, request.input_version, user)
                 binding = verified.anchor.binding
                 if binding.investigation_id != request.investigation_id or binding.conversation_id != request.conversation_id:
                     raise ResearchEvidenceError("not_found", 404)
-                with self._transaction() as session:
-                    actor = self._principal(session, user)
-                    items = []
-                    retained_ids = session.scalars(select(ResearchEvidenceReceipt.id).where(
-                        ResearchEvidenceReceipt.user_id == actor.id,
-                        ResearchEvidenceReceipt.run_id == uuid.UUID(request.run_id),
-                        ResearchEvidenceReceipt.input_version == request.input_version,
-                        ResearchEvidenceReceipt.state == "ready")).all()
-                    for receipt in dict.fromkeys([*retained_ids, *(item.id for item in verified.attached_receipts)]):
-                        items.append(self._read_receipt(session, receipt, actor)[0])
-                    items.sort(key=lambda item: item.id)
-                    page, size = [], 0
-                    for item in items[request.offset:request.offset + request.limit]:
-                        item_size = len(canonical_json(item.model_dump(mode="json")).encode("utf-8"))
-                        if size + item_size > MAX_PAGE_BYTES:
-                            if not page:
-                                raise ResearchEvidenceError("evidence_page_too_large", 503)
-                            break
-                        page.append(item)
-                        size += item_size
-                    result = {"version": EVIDENCE_VERSION, "access_revision": canonical_hash([catalogue_access_binding(actor), verified.anchor.catalogue_policy_revision, [item.sha256 for item in items]]),
-                        "run_id": request.run_id, "input_version": request.input_version, "offset": request.offset,
-                        "items": [item.model_dump(mode="json") for item in page],
-                        "next_offset": request.offset + len(page) if request.offset + len(page) < len(items) else None,
-                        "total": len(items)}
+                result = self._retain(verified, user, _on_ready=lambda session, actor, current, memo:
+                    self._list_retained(request, current, session, actor, memo))
             else:
                 with self._transaction() as session:
                     actor = self._principal(session, user)

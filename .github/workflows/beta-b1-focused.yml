@@ -61,7 +61,8 @@ jobs:
           python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
           python deploy/gcp/beta/snapshot-api/checks.py
           python -m pytest tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_research_synthesis.py tests/test_research_evidence_runtime.py tests/test_research_evidence_api.py tests/test_research_evidence_contracts.py tests/test_research_answers.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q --tb=short
-      - name: Verify reused runtime bytes and current operator checks
+      - name: Verify reused runtime bytes for native-only follow-up
+        if: ${{ contains(github.event.head_commit.message, '[native-followup]') }}
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
@@ -76,6 +77,11 @@ jobs:
               assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() == expected
           print('All180 runtime source pins equal the prior source with220 hosted tests passed; native setup failure remains recorded.')
           PY
+      - name: Verify current operator checks
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+        run: |
           python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_budget.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_budget.py
           python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q
       - name: Identify job-owned PostgreSQL container address

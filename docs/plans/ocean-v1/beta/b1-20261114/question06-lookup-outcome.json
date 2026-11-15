@@ -1,0 +1,146 @@
+{
+  "version": "ocean-beta-b1-q6-lookup-outcome-v1",
+  "captured_utc": "2026-11-15T08:12:08.806043+00:00",
+  "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "api_image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "ui_status": "completed",
+  "ui_active_time_seconds": 34,
+  "public_activity_events": 6,
+  "one_submission_and_one_manual_run_delivery": true,
+  "controller_request": [
+    {
+      "timestamp": "2026-11-15T07:41:50.671350Z",
+      "service": "ocean-v1-beta-research-controller",
+      "revision": "ocean-v1-beta-research-controller-b1-fix-1115",
+      "status": 200,
+      "latency": "57.487659918s",
+      "path": "/internal/research/run"
+    }
+  ],
+  "new_native_model_calls": 1,
+  "native_model_calls_cumulative": 7,
+  "native_input_tokens_cumulative": 21839,
+  "native_output_tokens_cumulative": 1799,
+  "native_usage_capture_utc": "2026-11-15T08:03:42.162104Z",
+  "native_usage_capture_sha256": "59547628ad43251bcb324ca42392eabbdb7b8bcaf8f8a5011ed594862d60a58c",
+  "answer_submit_intent_exists": false,
+  "answer_preparation_successfully_submitted": false,
+  "queue_and_services": {
+    "captured_utc": "2026-11-15T08:03:44.765928+00:00",
+    "queue_state": "PAUSED",
+    "tasks_count": 0,
+    "all_task_pages_read": true,
+    "services": {
+      "serving": {
+        "generation": "43",
+        "latest_ready_revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+        "latest_created_equals_ready": true
+      },
+      "controller": {
+        "generation": "4",
+        "latest_ready_revision": "ocean-v1-beta-research-controller-b1-fix-1115",
+        "latest_created_equals_ready": true
+      }
+    }
+  },
+  "observed_read_failures": [
+    {
+      "timestamp": "2026-11-15T07:56:02.921749Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "15.025655664s",
+      "path": "/research/evidence/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:46.177290Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "1.100590285s",
+      "path": "/research/investigations/conversations/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:46.177078Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "3.153507405s",
+      "path": "/research/investigations/conversations/get"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:46.176531Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "3.432799635s",
+      "path": "/research/investigations/get"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:45.793640Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "1.931011969s",
+      "path": "/research/answers/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:44.741033Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "0.993843609s",
+      "path": "/research/investigations/conversations/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:44.739288Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "1.011792848s",
+      "path": "/research/investigations/get"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:44.732652Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 403,
+      "latency": "1.292161451s",
+      "path": "/research/runs/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:45:42.533785Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "15.024907592s",
+      "path": "/research/evidence/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:43:48.994147Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "15.032242188s",
+      "path": "/research/evidence/list"
+    },
+    {
+      "timestamp": "2026-11-15T07:39:22.525943Z",
+      "service": "ocean-v1-beta-serving",
+      "revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "status": 503,
+      "latency": "15.028942531s",
+      "path": "/research/evidence/list"
+    }
+  ],
+  "complete_request_metadata_private_sha256": "3ca95fad5792ac6c50c034b86911a877c6a4fa8da3b9ff475f06cb5f7a3f0cea",
+  "two_receipts_verified_transiently": true,
+  "read_failure_cause_proven": false,
+  "actual_answer_citation_reload_pass": false,
+  "current_latency_gate_pass": false,
+  "original_cast_depth_question_answered": false,
+  "scientific_approval": false,
+  "scheduling_remains_paused": true,
+  "credentials_or_scientific_table_payloads_in_receipt": false
+}

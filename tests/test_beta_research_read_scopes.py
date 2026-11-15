@@ -102,10 +102,11 @@ def test_evidence_list_keeps_replay_authorization_and_payload_reads_while_reduci
     scoped_reads = Counter(_category(key) for _, key in reads)
     assert _bytes(result) == _bytes(baseline) and result["total"] == 1
     assert calls == baseline_calls
-    assert calls["_verified"] == 1 and calls["_source"] == 5 and calls["_policy"] == 7
-    assert calls["resolve"] == 12 and calls["add_reference"] == 0
-    assert scoped_reads['activation'] < 16 and scoped_reads['control'] < 16, scoped_reads
-    assert scoped_reads == {'activation': 8, 'control': 8, 'manifest': 15, 'object': 35}
+    assert calls["_verified"] == 1 and calls["_source"] == 4 and calls["_policy"] == 6, calls
+    assert calls["resolve"] == 10 and calls["add_reference"] == 0, calls
+    # The ready-list projection shares the final retention transaction and its
+    # dependency memo. The prior accepted path used 8/8/15/35 transport reads.
+    assert scoped_reads == {'activation': 6, 'control': 6, 'manifest': 12, 'object': 28}, scoped_reads
     assert scoped_reads['manifest'] == baseline_reads['manifest']
     assert scoped_reads['object'] == baseline_reads['object']
     assert scoped_reads['activation'] < baseline_reads['activation']

@@ -4,6 +4,23 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Q6 completed after its single manual delivery (34s active; one additional native
+model call). GCP login works. Saved-evidence reads remain intermittent, so no
+answer was prepared. Queue is PAUSED and empty; serving43/controller4 remain on
+181f26d4. [Actual outcome](beta/b1-20261114/question06-lookup-outcome.json).
+
+The local evidence-list repair shares its final retention transaction, current
+actor/dependency memo and closing authority fence. All replay, hash, owner and
+protection checks remain. 79 focused local tests plus34 package checks pass;
+synthetic transport reads66→52. Hosted/PostgreSQL checks and deployment remain
+pending. [Candidate](beta/b1-20261114/list-read-repair-plan.json).
+Fresh conservative planning663.4312JPY exceeds the explicit650 allowance,
+retaining full300 Q6 model reserve and historical missing usage. Further paid
+live validation is gated pending an amended allowance; monthly50k is unchanged.
+[Budget](beta/b1-20261114/question06-pending-reservation.json). B1–B5 remain open.
+
+Historical queued checkpoint:
+
 Q6was submitted once and accepted queued asf7e35a7a… under the650approved
 allowance (fresh full plan621.4768JPY). SDKlogin restored privately. Controller4/
 serving43Ready on181f26d4; onlyResearch admission flags enabled, queue/scheduling

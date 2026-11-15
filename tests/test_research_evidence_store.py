@@ -81,8 +81,23 @@ def test_owner_and_expected_hash_do_not_disclose_receipts(actual):
     assert failure.value.status_code == 422
 
 
+def test_list_rejects_wrong_context_before_installing_retention(actual, monkeypatch):
+    from orchestration.research_evidence import ResearchEvidenceError
+
+    fixture, evidence = actual
+    run = finished(fixture)
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Wrong context must not create retention'))
+    address = {**fixture.address(run), 'conversation_id': str(uuid.uuid4()), 'input_version': 1}
+    with pytest.raises(ResearchEvidenceError) as failure:
+        evidence.invoke('list', address, fixture.user)
+    assert failure.value.status_code == 404
+    with fixture.retained.factory() as session:
+        assert session.scalar(select(ResearchEvidenceReceipt).where(ResearchEvidenceReceipt.run_id == uuid.UUID(run['id']))) is None
+
+
 @pytest.mark.parametrize('change', ['reference', 'protection', 'blob'])
-def test_ready_retention_revalidates_current_protection_without_recreating_references(actual, monkeypatch, change):
+@pytest.mark.parametrize('operation', ['retain', 'list'])
+def test_ready_retention_revalidates_current_protection_without_recreating_references(actual, monkeypatch, change, operation):
     from copy import deepcopy
     from sqlalchemy import text
     from orchestration.research_evidence import ResearchEvidenceError
@@ -117,7 +132,10 @@ def test_ready_retention_revalidates_current_protection_without_recreating_refer
     monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Ready reads must not rewrite C09 references'))
     try:
         with pytest.raises(ResearchEvidenceError):
-            evidence.ensure_retained(run['id'], 1, fixture.user)
+            if operation == 'retain':
+                evidence.ensure_retained(run['id'], 1, fixture.user)
+            else:
+                evidence.invoke('list', {**fixture.address(run), 'input_version': 1}, fixture.user)
     finally:
         if restore:
             with fixture.retained.factory.begin() as session:

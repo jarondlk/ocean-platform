@@ -154,3 +154,61 @@ def test_synthetic_probe_reconciliation_keeps_failed_request_bounded(captures, t
     probes[1]['usage']['totalTokenCount'] = 585 + 4097
     with pytest.raises(Rejected):
         budget.reconcile_terminal(captures, terminal, engineering_reports=probes)
+
+
+@pytest.fixture
+def pending_q6(captures, terminal):
+    p = captures / 'usage-summary.json'
+    data = json.loads(p.read_text())
+    data['metrics'][-2]['series'][0]['sum'] = '21839'
+    data['metrics'][-2]['series'][1]['sum'] = '1799'
+    data['metrics'][-1]['series'][0]['sum'] = '7'
+    p.write_text(json.dumps(data))
+    submission = {'version': 'ocean-beta-b1-q6-ui-accepted-v1',
+        'run_id': 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8', 'one_submission': True,
+        'budget_approved_jpy': 650, 'new_question_resubmission_forbidden': True}
+    probes = [{'variant': 'original', 'http_status': 400, 'usage': None,
+               'no_beta_history_or_scientific_data_used': True},
+              {'variant': 'array_bounds_removed', 'http_status': 200,
+               'usage': {'promptTokenCount': 585, 'totalTokenCount': 672},
+               'no_beta_history_or_scientific_data_used': True}]
+    return submission, probes
+
+
+def test_pending_q6_keeps_full_reserve_and_historical_missing_usage(captures, terminal, pending_q6):
+    submission, probes = pending_q6
+    result = budget.reconcile_pending_q6(captures, terminal, submission, engineering_reports=probes)
+    assert result['one_question_model_reserve_jpy'] == '300'
+    assert result['native_model_calls'] == '7' and result['within_initial650']
+    assert result['input_planning_tokens'] == str(10599 + 2 * 69170 + 14048 + 585 + 5313)
+    assert result['output_planning_tokens'] == str(1004 + 2 * 4096 + 4096 + 87 + 283)
+    assert result['new_questions_considered'] == 0 and not result['new_paid_question_admitted']
+    assert result['approved_existing_question_continuation_only']
+    with pytest.raises(Rejected):
+        budget.reconcile_terminal(captures, terminal, engineering_reports=probes)
+
+
+@pytest.mark.parametrize('change', ['extra_call', 'excess_tokens', 'wrong_run', 'unapproved_allowance', 'resubmission', 'overspend'])
+def test_pending_q6_rejects_changed_admission_or_exposes_overspend(captures, terminal, pending_q6, change):
+    submission, probes = pending_q6
+    p = captures / 'usage-summary.json'
+    data = json.loads(p.read_text())
+    if change == 'extra_call':
+        data['metrics'][-1]['series'][0]['sum'] = '8'
+    elif change == 'excess_tokens':
+        data['metrics'][-2]['series'][1]['sum'] = str(1516 + 4097)
+    elif change == 'wrong_run':
+        submission['run_id'] = 'other'
+    elif change == 'unapproved_allowance':
+        submission['budget_approved_jpy'] = 550
+    elif change == 'resubmission':
+        submission['one_submission'] = False
+    else:
+        data['metrics'][0]['series'][0]['sum'] = '1000000'
+    p.write_text(json.dumps(data))
+    if change == 'overspend':
+        result = budget.reconcile_pending_q6(captures, terminal, submission, engineering_reports=probes)
+        assert not result['within_initial650'] and not result['new_paid_question_admitted']
+    else:
+        with pytest.raises(Rejected):
+            budget.reconcile_pending_q6(captures, terminal, submission, engineering_reports=probes)

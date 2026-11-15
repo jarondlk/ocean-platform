@@ -93,7 +93,8 @@ def test_ready_retention_reuses_native_protection_without_c09_writes(actual, mon
     monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Ready protection must not be rewritten'))
     again = evidence.ensure_retained(run['id'], 1, fixture.user)
     assert receipt.id in {item.id for item in again.receipts}
-    assert evidence.invoke('list', {**fixture.address(run), 'input_version': 1}, fixture.user)['total'] >= 1
+    listing = evidence.invoke('list', {**fixture.address(run), 'input_version': 1}, fixture.user)
+    assert listing['total'] == 1 and listing['items'] == [receipt.model_dump(mode='json')]
     assert evidence.resolve_attachment(fixture.user, receipt.attachment_reference.model_dump(mode='json')).sha256 == receipt.sha256
 
 

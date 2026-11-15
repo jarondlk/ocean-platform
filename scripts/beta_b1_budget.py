@@ -18,7 +18,7 @@ if not __package__:
 from scripts.beta_b0_preflight import require
 
 
-def _calculate(directory, *, future_observers=2, terminal_report=None, engineering_reports=()):
+def _calculate(directory, *, future_observers=2, terminal_report=None, engineering_reports=(), pending_q6=False):
     require(type(future_observers) is int and 0 <= future_observers <= 2)
     def load(name):
         return json.loads((directory / name).read_text())
@@ -90,7 +90,8 @@ def _calculate(directory, *, future_observers=2, terminal_report=None, engineeri
         head = terminal_report['head']
         require(head['status'] == 'unavailable' and head['run_status'] == 'completed'
                 and head['lease_closed'] is True and head['run_lease_closed'] is True
-                and type(head['model_calls']) is int and head['model_calls'] == 2 and calls == 4 + len(engineering_reports))
+                and type(head['model_calls']) is int and head['model_calls'] == 2
+                and calls == 4 + len(engineering_reports) + int(pending_q6))
         groups = terminal_report['generations']
         require(set(groups) == {'research_run', 'research_answer'} and all(len(v) == 1 for v in groups.values()))
         ceiling_inputs, ceiling_outputs = 10599, 1004
@@ -126,6 +127,15 @@ def _calculate(directory, *, future_observers=2, terminal_report=None, engineeri
                 ceiling_inputs += inputs
                 ceiling_outputs += total - inputs
         require(input_tokens >= 10599 and output_tokens >= 1004)
+        if pending_q6:
+            # Q6 is already admitted under its full300JPY reserve. Preserve the
+            # historical missing-usage allowance independently of its new meter
+            # delta; new tokens must not silently consume that older reserve.
+            require(len(engineering_reports) == 2 and calls == 7
+                    and 0 <= input_tokens - 16526 <= 65536 + 1586 + 2048
+                    and 0 <= output_tokens - 1516 <= 4096)
+            ceiling_inputs += input_tokens - 16526
+            ceiling_outputs += output_tokens - 1516
     model_observed = input_tokens * selected["gemini_3_8_flash_input"] + output_tokens * selected["gemini_3_8_flash_output"]
     network = sums["storage.googleapis.com/network/sent_bytes_count"] / 2**30 * selected["internet_worst_selected_destination"]
     observed = run + minimum + storage + logging + build_total + model_observed
@@ -136,6 +146,7 @@ def _calculate(directory, *, future_observers=2, terminal_report=None, engineeri
     model_output = 14 * 4096
     planning = model_input * selected["gemini_3_8_flash_input"] + model_output * selected["gemini_3_8_flash_output"]
     model_reserve = (planning / 5).to_integral_value(rounding=ROUND_CEILING) * 5
+    new_segment_reserve = model_reserve
     if terminal_report is not None:
         # Closed physical attempts have no automatic future continuation. Missing
         # provider usage is still bounded in full; it never becomes a free call.
@@ -176,6 +187,8 @@ def _calculate(directory, *, future_observers=2, terminal_report=None, engineeri
             remaining_initial550_jpy=str(550-total), within_initial550=total <= 550,
             prior_questions=3, manual_questions_submitted=5, new_paid_question_admitted=False,
             terminal_diagnostic_captured_utc=terminal_report['captured_utc'])
+    if pending_q6:
+        result['pending_shared_segment_reserve_jpy'] = str(new_segment_reserve)
     return result
 
 
@@ -187,6 +200,33 @@ def calculate(directory, *, future_observers=2):
 def reconcile_terminal(directory, report, *, future_observers=0, engineering_reports=()):
     """Reconcile closed Q5 attempts; this cannot admit another model segment."""
     return _calculate(directory, future_observers=future_observers, terminal_report=report, engineering_reports=engineering_reports)
+
+
+def reconcile_pending_q6(directory, report, submission, *, future_observers=2, engineering_reports=()):
+    """Keep the complete admitted Q6 reserve; never authorize a new question.
+
+    Only the single delivered lookup is recognized. A later answer/model call
+    must be reconciled from its actual outcome instead of relaxing this guard.
+    """
+    require(submission['version'] == 'ocean-beta-b1-q6-ui-accepted-v1'
+            and submission['run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
+            and submission['one_submission'] is True and submission['budget_approved_jpy'] == 650
+            and submission['new_question_resubmission_forbidden'] is True)
+    result = _calculate(directory, future_observers=future_observers, terminal_report=report,
+        engineering_reports=engineering_reports, pending_q6=True)
+    reserve = Decimal(result['pending_shared_segment_reserve_jpy'])
+    total = Decimal(result['total_planned_jpy']) + reserve
+    result.update(version='ocean-beta-b1-q6-pending-reconciliation-v1',
+        total_planned_jpy=str(total), one_question_model_reserve_jpy=str(reserve),
+        initial_validation_limit_jpy=650, remaining_initial650_jpy=str(650-total),
+        within_initial650=total <= 650, pending_run_id=submission['run_id'],
+        new_questions_considered=0, new_paid_question_admitted=False,
+        manual_questions_submitted=6, prior_questions=5,
+        terminal_physical_attempts_scope='closed_Q5_and_synthetic_schema_probes_only',
+        approved_existing_question_continuation_only=True,
+        within_initial500=total <= 500, remaining_initial500_jpy=str(500-total),
+        within_initial550=total <= 550, remaining_initial550_jpy=str(550-total))
+    return result
 
 
 def main():

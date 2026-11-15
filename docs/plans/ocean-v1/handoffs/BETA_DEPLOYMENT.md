@@ -1,6 +1,60 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current Q6 checkpoint — submitted once, canonical manual delivery next
+## Current checkpoint — Q6 lookup completed; evidence-list repair awaiting hosted checks
+
+Fresh Google SDK login completed privately and both CLI identities work. No
+further user sign-in is currently needed. Q6 `f7e35a7a-4196-4431-9f3f-d5edbca66bc8`
+was submitted and manually delivered exactly once. The UI shows Completed,
+34 seconds active time, six activity events; controller request returned 200.
+Complete native meters now show seven cumulative model calls (one new), 21,839
+input and 1,799 output tokens. [Outcome](../beta/b1-20261114/question06-lookup-outcome.json).
+
+Evidence history intermittently hits its 15-second deadline; a transient run
+history 403 also reset selection. Its exact cause is not yet proven. Both Q6
+receipts were briefly verified, but preparation was disabled again before a
+successful click. There is no answer-submit intent or answer task. A later
+attempt to locate/click the disabled control matched no actionable control;
+queue readback confirms PAUSED and empty. Do not resubmit Q6 or repeat its run
+delivery. Tab11 is signed in on About to stop polling. Original Q4/Q5 failures
+and the original cast/depth question remain unchanged, without scientific approval.
+
+Local repair combines the retained-list projection with the final retention
+transaction and its current actor, dependency memo and closing authority fence.
+Full replay, current reference/protection checks, ownership, payload hashes and
+rollback remain enforced; there is no cross-request cache. Synthetic transport
+reads reduce from 8/8/15/35 to 6/6/12/28 (activation/control/manifest/object).
+51 retention/read-scope tests and 28 budget tests pass, plus 34 package checks,
+Ruff and the C21 wire-contract check. Native PostgreSQL and full hosted source
+checks remain required. [Candidate plan](../beta/b1-20261114/list-read-repair-plan.json).
+Only `orchestration/research_evidence.py` differs among the accepted 180 runtime
+pins. Original delivery and source receipts are immutable; this is a candidate,
+not a deployed repair. Existing serving43/controller4 remain on image181f26d4.
+
+Fresh cloud meters and all31 current JPY prices retain the entire existing
+300JPY/shared14-call Q6 reserve, historical missing usage,20JPY forward cloud
+margin and2 future observer executions. Conservative planning is663.4312JPY,
+above the explicitly approved650JPY allowance. This is a planning envelope,
+not an invoice. [Reconciliation](../beta/b1-20261114/question06-pending-reservation.json).
+The new fixed `reconcile_pending_q6` path rejects any eighth model call and
+does not admit another question. The original pre-submit/Q5 calculators stay
+strict. No new build, Job execution, deployment or model call while this
+allowance gate is open; finish independent hosted verification first, then
+request a concrete amended allowance before further paid live validation.
+
+Next: commit/push this candidate and inspect its source-bound focused CI,
+including actual PostgreSQL16 checks. The workflow's old180-pin reuse proof now
+applies only to explicitly marked native-only follow-ups; a changed runtime
+must run the full focused checks. Do not use `[native-followup]` for this change.
+After acceptance and budget authorization: prepare a new source-bound image and
+reviewed rollout/drain plan preserving current181f26d4 configuration, fresh
+authority/quiescence/original-source observer, then verify Q6 evidence and prepare
+its answer once. The old fixed repair writer intentionally rejects this new
+runtime source; never weaken it or rewrite old receipts. Actual latency,
+answer/citation/reload/recovery and B1–B5 acceptance remain open. Queue, sweep,
+Scheduler and Codex scheduling remain PAUSED. Current private evidence root:
+`/private/tmp/ocean-b1-q6-20261115` (not yet copied into the older durable backup).
+
+## Historical Q6 checkpoint — submitted once, canonical manual delivery next
 
 Fresh SDKlogin completed; both CLI identities verified. Budget650approved and
 fresh621.4768JPY plan includes the full300model/shared14call reserve. Serving
