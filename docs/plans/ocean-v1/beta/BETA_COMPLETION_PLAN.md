@@ -1,13 +1,13 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
-Updated November16: B0 completed. API source148182d/image5aedf3ba is live on
-serving56/controller6. Separately qualified shared owner-row locking is applied,
+Updated November16: B0 completed. API source4872d04/image55cef311 is live on
+serving62/controller7, with frontend0bde/source6fdf666. Separately qualified shared owner-row locking is applied,
 with unchanged private ACL/security metadata and19 actual PG16/operator checks.
 Q6's one real Gemini answer and CTD citations remain durable; warm reads improve
-to roughly4–5s. Full reload still exceeds the unchanged15s history deadline due
-to sequential event hydration. Frontend-only bounded parallel hydration is being
-qualified. Current-image recovery remains required. B1 is OPEN; no new question,
+to roughly4–5s. Bounded parallel event hydration and per-list authority fences are deployed.
+Current15s history/answer/evidence read jobs complete; total cold navigation
+17.671s is separately retained as a UX finding. Current-image recovery remains required. B1 is OPEN; no new question,
 model call, queue resume, schedule activation or independent scientific review.
 [Current SQL delivery](b1-20261114/shared-owner-delivery.json),
 [read finding](b1-20261114/shared-owner-read-followup.json).

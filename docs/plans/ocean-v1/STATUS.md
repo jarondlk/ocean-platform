@@ -1,5 +1,25 @@
 # Implementation status
 
+## Current November16 — live62/7, actual recovery qualification next
+
+API55cef311/source4872d04 is live on serving62/controller7; frontend0bde/source
+6fdf666 and all other settings preserved.253runtime/146operator/25C21 PG/19role
+checks,4image proofs and24-file source archive passed. All6phases completed,
+original observers l6qn8/qj6bn succeeded; original Job generation1/count20.
+Do not rerun any rollout/observer/amendment. Queue/scheduling stayPAUSED.
+[Actual delivery](beta/b1-20261114/run-list-rollout-result.json).
+Existing15s scheduler jobs now observe history13.211s from navigation, then
+answer4.460s; exactQ6 answer7.526s, citation2.831s, complete inputs6.116s, sustained
+background noerror. Total navigation17.671s remains an explicit UX finding.
+B1remainsOPEN for current-image cancel/duplicate/retry/revocation. Fixed non-login
+fixture harness2local tests pass; actual restricted-role PG rehearsal pending.
+No live fixture account or recovery Job created yet. [Recovery plan](beta/b1-20261114/current-image-recovery-plan.json).
+Image/runtime180sources unchanged by harness; no new model call/Q6delivery.
+Latest private root /private/tmp/ocean-b1-wrap-20261116; new immutable backup
+private-handoff-20261116-b1-wrap (542files,index3376974f…) predates62rollout and
+latest fixture source; preserve a new increment after current deliveries.
+Browser signed-in on About. Earlier sections are historical checkpoints.
+
 ## Current November16 — frontend live57; list-fence candidate
 
 Frontend0bde2554/source6fdf666 is live on57, API5aed/controller6 unchanged.

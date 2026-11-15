@@ -11,6 +11,9 @@ on:
       - 'tests/test_beta_b1_shared_owner.py'
       - 'api/v1_beta_question_services.py'
       - 'docs/plans/ocean-v1/beta/b1-20261114/run-list-repair-plan.json'
+      - 'deploy/gcp/beta/b1/recovery_owner.py'
+      - 'deploy/gcp/beta/b1/recovery_probe.py'
+      - 'tests/test_beta_b1_recovery_probe.py'
       - '.github/workflows/beta-b1-shared-owner.yml'
   workflow_dispatch:
 
@@ -82,5 +85,5 @@ jobs:
           docker exec "$PG_CONTAINER" psql -U postgres -d ocean_v1_beta -c 'SELECT pg_reload_conf()'
       - name: Verify actual PG16 owner locks, revocation, grants and durable question
         run: |
-          python -m ruff check deploy/gcp/beta/research-operator/shared_owner_lock.py deploy/gcp/beta/research-operator/research_operator.py tests/test_beta_question_postgres.py scripts/beta_b1_shared_owner.py tests/test_beta_b1_shared_owner.py
-          python -m pytest tests/test_beta_b1_shared_owner.py tests/test_beta_question_postgres.py -q -rA --tb=short
+          python -m ruff check deploy/gcp/beta/research-operator/shared_owner_lock.py deploy/gcp/beta/research-operator/research_operator.py tests/test_beta_question_postgres.py scripts/beta_b1_shared_owner.py tests/test_beta_b1_shared_owner.py deploy/gcp/beta/b1/recovery_owner.py deploy/gcp/beta/b1/recovery_probe.py tests/test_beta_b1_recovery_probe.py
+          python -m pytest tests/test_beta_b1_shared_owner.py tests/test_beta_b1_recovery_probe.py tests/test_beta_question_postgres.py -q -rA --tb=short

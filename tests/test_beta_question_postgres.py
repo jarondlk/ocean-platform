@@ -235,3 +235,28 @@ def test_pg16_roles_finish_question_and_reopen_answer_without_account_write_righ
         address = {"investigation_id": str(run.investigation_id), "conversation_id": str(run.conversation_id)}
     history = questions[0].research_run_service.invoke("list", address, native["actor"])
     assert len(history["items"]) == 1 and history["items"][0]["status"] == "completed"
+    # Rehearse the exact isolated fixture program with actual restricted SQL
+    # roles. Cloud transport/source bytes remain explicitly synthetic here.
+    from tests.test_beta_b1_recovery_probe import PROBE, exercise
+    spec = importlib.util.spec_from_file_location("b1_recovery_owner", ROOT / "deploy/gcp/beta/b1/recovery_owner.py")
+    fixture_owner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fixture_owner)
+    with native["owner"].begin() as c:
+        fixture_owner.operate(c, "enroll")
+    with pytest.raises(ValueError, match="exists or conflicts"), native["owner"].begin() as c:
+        fixture_owner.operate(c, "enroll")
+    actor = PROBE.fixture_actor(questions[0])
+    scoped_questions = (questions[0], actor, questions[2], questions[3])
+    before = exercise(scoped_questions)
+    with pytest.raises(ValueError, match="isolated fixture profile"), native["owner"].begin() as c:
+        c.execute(text("UPDATE public.app_user SET display_name='unexpected' WHERE id=CAST(:id AS uuid)"), {"id": fixture_owner.ACTOR_ID})
+        fixture_owner.operate(c, "suspend")
+    with native["owner"].begin() as c:
+        fixture_owner.operate(c, "suspend")
+    stale = PROBE.fixture_actor(questions[0], revoked=True)
+    assert PROBE.verify(questions[0], stale, revoked=True)["stale_principal_denied"]
+    with native["owner"].begin() as c:
+        fixture_owner.operate(c, "restore")
+    assert PROBE.verify(questions[0], PROBE.fixture_actor(questions[0])) == before
+    with native["owner"].begin() as c:
+        assert fixture_owner.operate(c, "close")["status"] == "suspended"

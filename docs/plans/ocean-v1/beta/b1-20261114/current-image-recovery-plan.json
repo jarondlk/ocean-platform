@@ -1,0 +1,30 @@
+{
+  "api_image": "sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+  "image_source_revision": "4872d04323c7e7b2bc1946ece41bd0a6333f39c0",
+  "local_tests": 2,
+  "new_fixed_count_questions_planned": 3,
+  "new_live_fixture_accounts": 0,
+  "new_live_recovery_jobs": 0,
+  "new_model_calls_admitted": 0,
+  "no_real_account_history_credential_or_scientific_data_copy": true,
+  "planned_account": "One fixed non-login fixture provider outside Google-only host allowlist; final state suspended. Main account/history remains untouched.",
+  "planned_cases": [
+    "queued cancellation and actual terminal delivery",
+    "lost acknowledgement after actual provider task create",
+    "same delivery409 and FULL task readback recovery",
+    "continuation with identical submitted context",
+    "zero-model deterministic count and answer",
+    "actual duplicate deliveries with unchanged event cursors",
+    "wrong-context denial",
+    "suspend fixture; deny stale active principal; restore and reverify; final suspend"
+  ],
+  "queue_scheduling": "PAUSED",
+  "source_pins": {
+    "deploy/gcp/beta/b1/recovery_owner.py": "7a7539ecc30373a1a29bbb6e5fc46c60dabf5841aeac1e4e57a57689ca90f032",
+    "deploy/gcp/beta/b1/recovery_probe.py": "dad3d56f5fcff427e244925d5d669228f677376b57e04e97da52607435f2dd15",
+    "tests/test_beta_b1_recovery_probe.py": "96b1a8700b10f2acaea30b2363c2d6b266463d2d8089ef879179136ae56b3d34",
+    "tests/test_beta_question_postgres.py": "95093998ea950119125d65ffe303230f85cdca543bdc490cd20a553ac81eb8d6"
+  },
+  "state": "local_pass_hosted_actual_role_rehearsal_pending",
+  "version": "ocean-beta-b1-current-image-recovery-plan-v1"
+}

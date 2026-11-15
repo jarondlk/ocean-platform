@@ -1,0 +1,31 @@
+{
+  "actual_c21_postgresql_tests": 25,
+  "all_four_image_proofs_passed": true,
+  "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+  "build_id": "c314b3f3-da33-45f5-9f24-471a5c9d3093",
+  "copied_original_phase_guard_supersession": "Only drain initial traffic predicate now requires exact accepted frontend57 LATEST100 instead of the prior API rollout fixed-revision traffic. All other inherited phase guards unchanged.",
+  "exact_source_archive_files": 24,
+  "fixed_target_planner_checks_local": 21,
+  "focused_job": 132884290099,
+  "focused_run": 43737845874,
+  "frontend_unchanged_from_accepted_0bde": true,
+  "full_actual_read_and_recovery_acceptance_complete": false,
+  "native_role_job": 132884289815,
+  "native_role_run": 43737845883,
+  "operator_tests": 146,
+  "original_guard_sources_unchanged": true,
+  "original_receipts_preserved": true,
+  "recorded_utc": "2026-11-15T17:09:56.671459+00:00",
+  "reservation_total_jpy": "631.9439725158975521034583637",
+  "restricted_role_pg_cases": 19,
+  "runtime_tests": 253,
+  "source_archive_generation": {
+    "bucket": "ocean-v1-beta-20261101-build-source",
+    "generation": "1794761666968341",
+    "object": "source/1794761666.683462-a028cab028ca469dbf514bce991915d4.tgz"
+  },
+  "source_checkpoint_pushed": true,
+  "source_image_deployment_started": false,
+  "source_revision": "4872d04323c7e7b2bc1946ece41bd0a6333f39c0",
+  "version": "ocean-beta-b1-run-list-delivery-qualification-v1"
+}

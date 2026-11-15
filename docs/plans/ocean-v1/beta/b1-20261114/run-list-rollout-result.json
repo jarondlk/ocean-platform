@@ -1,0 +1,120 @@
+{
+  "actual_current_image_recovery_complete": false,
+  "all_other_full_service_settings_preserved": true,
+  "api_image": "sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+  "browser_trials": {
+    "startedUtc": "2026-11-15T17:19:37.523Z",
+    "trials": [
+      {
+        "case": "Cold full navigation, six-run history and default retained answer",
+        "loaded": false,
+        "observedUpperBoundMs": 15028,
+        "observedUtc": "2026-11-15T17:19:52.551Z"
+      },
+      {
+        "answerVisibleUpperBoundFromHistoryObservationMs": 4460,
+        "case": "Full reload, independently observed history and retained-answer phases",
+        "historyVisible": true,
+        "historyVisibleUpperBoundFromNavigationMs": 13211,
+        "observedUtc": "2026-11-15T17:23:19.544Z",
+        "readError": false,
+        "retainedAnswerVisible": true,
+        "totalNavigationUpperBoundMs": 17671
+      },
+      {
+        "case": "Current-image Q6 exact answer and two citations",
+        "loaded": true,
+        "observedUpperBoundMs": 7526,
+        "observedUtc": "2026-11-15T17:27:10.234Z"
+      },
+      {
+        "case": "Current-image inventory citation open and page",
+        "loaded": true,
+        "observedUpperBoundMs": 2831,
+        "observedUtc": "2026-11-15T17:27:13.065Z"
+      },
+      {
+        "case": "Current-image complete input identities match independent oracle",
+        "matched": true,
+        "observedUpperBoundMs": 6116,
+        "observedUtc": "2026-11-15T17:41:12.449Z"
+      },
+      {
+        "answerVisible": true,
+        "case": "Sustained current-image background refresh",
+        "observedUtc": "2026-11-15T17:41:12.539Z",
+        "readError": false,
+        "twoCitations": true
+      }
+    ],
+    "version": "ocean-beta-b1-run-list-browser-v1"
+  },
+  "controller_generation": 7,
+  "deadline_scope": "Existing C20 history hydration and C21 answer/evidence jobs each retain15s. Total navigation includes bootstrap and sequential guarded jobs; its17.671s result remains an open UX finding, not a claimed15s full-page pass.",
+  "frontend_image": "sha256:0bde25544313072317ee45d36770400160f0f0960d14cddb7efc416357adffe0",
+  "new_model_calls": 0,
+  "original_jobs_and_receipts_immutable": true,
+  "original_observer_execution_count": 20,
+  "original_observer_job_generation": 1,
+  "original_observers": [
+    "ocean-v1-beta-provider-preflight-20261111-l6qn8",
+    "ocean-v1-beta-provider-preflight-20261111-qj6bn"
+  ],
+  "phases": [
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "58",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:5aedf3ba006901cd129e237632eab36aa06195d936ab1fd80c196863767f9ea7",
+      "phase": "drain",
+      "ready_revision": "ocean-v1-beta-serving-b1-runs-drain-1116",
+      "runtime_startup_verified": true
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "7",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+      "phase": "controller",
+      "ready_revision": "ocean-v1-beta-research-controller-b1-runs-1116",
+      "runtime_startup_verified": true
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "59",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+      "phase": "stage",
+      "ready_revision": "ocean-v1-beta-serving-b1-runs-drain-1116",
+      "runtime_startup_verified": false
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "60",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+      "phase": "promote",
+      "ready_revision": "ocean-v1-beta-serving-b1-runs-stage-1116",
+      "runtime_startup_verified": true
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "61",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+      "phase": "admit-stage",
+      "ready_revision": "ocean-v1-beta-serving-b1-runs-stage-1116",
+      "runtime_startup_verified": false
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "62",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+      "phase": "admit-promote",
+      "ready_revision": "ocean-v1-beta-serving-b1-runs-live-1116",
+      "runtime_startup_verified": true
+    }
+  ],
+  "queue_scheduling": "PAUSED",
+  "recorded_utc": "2026-11-15T17:42:22.093163+00:00",
+  "retained_input_oracle_matched": true,
+  "serving_generation": 62,
+  "source_revision": "4872d04323c7e7b2bc1946ece41bd0a6333f39c0",
+  "sustained_background_read_error": false,
+  "version": "ocean-beta-b1-run-list-rollout-result-v1"
+}
