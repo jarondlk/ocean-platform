@@ -1,5 +1,20 @@
 # Beta deployment continuation — 2026-11-15 JST
 
+## Ready-list delivery qualified — guarded rollout next
+
+Runtime148182d passed248hosted runtime checks and25actual PostgreSQL16.16
+checks; operatorfc90172 passed146checks after exact180runtime-byte comparison.
+Buildba3bade6…/image5aedf3ba… passed all4source/nonroot/offlineSDK/label proofs;
+exact24-file generation-pinned source archive verified. Only2runtime sources
+intentionally supersede a0e98fe. Separate fixed READYcontract targets exact
+current83ce6e8e predecessor and full immutable settings. Fresh planning520.5131JPY
+under standing1000operator allowance; no new model admission. [Qualification](../beta/b1-20261114/ready-list-delivery-qualification.json).
+Next: `beta_b1_repair_rollout.py --ready-candidate` drain validate/apply, old60s
+request envelope and fresh original observer, then guarded controller/stage/
+promote/admit stages. New private root `/private/tmp/ocean-b1-finish-20261115`;
+inspect exclusive phase/observer intents before any repeat. Existing original
+receipts stay immutable. Actual15s reads and current-image recovery remain open.
+
 ## Ongoing B1 completion — ready-list candidate, not yet deployed
 
 User requested finishing B1. Local ready-list candidate changes only
