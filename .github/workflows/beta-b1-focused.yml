@@ -5,6 +5,7 @@ on:
     branches: [overhaul]
     paths:
       - 'orchestration/research_evidence.py'
+      - 'api/v1_beta_question_services.py'
       - 'orchestration/beta_vertex_research.py'
       - 'tests/test_beta_vertex_research.py'
       - 'tests/test_beta_research_read_scopes.py'
@@ -65,7 +66,7 @@ jobs:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
         run: |
-          python -m ruff check orchestration/beta_vertex_research.py orchestration/research_evidence.py scripts/beta_b1_budget.py scripts/beta_b1_diagnostic.py tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py tests/integration/test_research_evidence_postgres.py
+          python -m ruff check api/v1_beta_question_services.py orchestration/beta_vertex_research.py orchestration/research_evidence.py scripts/beta_b1_budget.py scripts/beta_b1_diagnostic.py tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py tests/integration/test_research_evidence_postgres.py
           python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
           python deploy/gcp/beta/snapshot-api/checks.py
           python -m pytest tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_research_synthesis.py tests/test_research_evidence_runtime.py tests/test_research_evidence_api.py tests/test_research_evidence_contracts.py tests/test_research_answers.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q --tb=short

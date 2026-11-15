@@ -98,6 +98,35 @@ def test_ready_retention_reuses_native_protection_without_c09_writes(actual, mon
     assert evidence.resolve_attachment(fixture.user, receipt.attachment_reference.model_dump(mode='json')).sha256 == receipt.sha256
 
 
+def test_ready_listing_single_native_transaction_preserves_exact_projection_and_protection(actual, monkeypatch):
+    from contextlib import contextmanager
+    from sqlalchemy import event
+    from schema.research_evidence import EVIDENCE_REQUEST_MODELS
+    fixture, evidence = actual
+    run, receipt = retained(actual)
+    payload = {**fixture.address(run), 'input_version': 1}
+    expected = evidence.invoke('list', payload, fixture.user)
+    transactions, statements = [], []
+    original = evidence._transaction
+    @contextmanager
+    def counted():
+        transactions.append(True)
+        with original() as session:
+            yield session
+    def sql(_connection, _cursor, statement, _parameters, _context, _many):
+        statements.append(statement.lstrip().split()[0].upper())
+    engine = fixture.retained.factory.kw['bind']
+    monkeypatch.setattr(evidence, '_transaction', counted)
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Ready listing must not reinstall C09'))
+    event.listen(engine, 'before_cursor_execute', sql)
+    try:
+        result = evidence._ready_listing(EVIDENCE_REQUEST_MODELS['list'].model_validate(payload), fixture.user)
+    finally:
+        event.remove(engine, 'before_cursor_execute', sql)
+    assert result == expected and result['items'][0]['id'] == receipt.id
+    assert len(transactions) == 1 and statements and set(statements) == {'SELECT'}
+
+
 def test_populated_downgrade_is_rejected_without_losing_receipts(actual, isolated):
     fixture, evidence = actual
     _, receipt = retained(actual)

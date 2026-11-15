@@ -1,0 +1,52 @@
+{
+  "B1_complete": false,
+  "actual_latency_gate_passed": false,
+  "additional_actual_postgresql_test_added": true,
+  "behavior": "Already-ready evidence listing replays/verifies retained C20 work, exact receipt/blob projection, current source/owner/policy/C09 protection and dependency closure in one SQL transaction with the closing catalogue fence before commit. Missing/prepared receipts use the original installation path outside that transaction.",
+  "earlier_owning_67_cases": {
+    "failed": 1,
+    "failure": "Old transport/call-count expectation; corrected test now passes, unchanged functional/negative cases passed.",
+    "passed": 66
+  },
+  "hosted_runtime_and_postgresql_pending": true,
+  "live_deployed": false,
+  "new_model_question_required_for_read_fix": false,
+  "new_ready_privacy_and_no_write_tests_passed": 4,
+  "predecessor_image_digest": "sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b",
+  "predecessor_source": "a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac",
+  "queue_scheduling_must_remain_paused": true,
+  "recorded_utc": "2026-11-15T11:43:04.609428+00:00",
+  "recovery_gates_required": [
+    "current-image cancellation",
+    "duplicate delivery",
+    "uncertain/retry recovery",
+    "revocation/current owner context changes"
+  ],
+  "same_fixture_response_bytes": true,
+  "source_changes": [
+    "api/v1_beta_question_services.py",
+    "orchestration/research_evidence.py"
+  ],
+  "source_scope_positive_test_passed": true,
+  "synthetic_transport_reads_after": {
+    "activation": 2,
+    "control": 2,
+    "manifest": 9,
+    "object": 21
+  },
+  "synthetic_transport_reads_before": {
+    "activation": 6,
+    "control": 6,
+    "manifest": 12,
+    "object": 28
+  },
+  "unchanged": [
+    "SQL lock modes/capabilities/grants",
+    "all immutable source payload reads remain fresh and hashed",
+    "15-second browser deadline",
+    "model/runtime bounds",
+    "Q6 retained answer and scientific authority",
+    "C09 writes outside read scopes"
+  ],
+  "version": "ocean-beta-b1-ready-list-repair-plan-v1"
+}

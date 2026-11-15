@@ -626,6 +626,46 @@ class ResearchEvidenceService:
             "next_offset": request.offset + len(page) if request.offset + len(page) < len(items) else None,
             "total": len(items)}
 
+    def _ready_listing(self, request, user):
+        """Project existing protection in one transaction; never install holds.
+
+        A ready flag only selects this path. Replay, source access, exact
+        receipt/blob identity, current protection and dependency checks still
+        run. A missing/prepared receipt returns to the ordinary installation
+        path after this transaction and its catalogue fence have closed.
+        """
+        with self._transaction() as session:
+            actor = self._principal(session, user)
+            self.investigations._retention_lock(session)
+            rows = session.scalars(select(ResearchEvidenceReceipt).where(
+                ResearchEvidenceReceipt.user_id == actor.id,
+                ResearchEvidenceReceipt.run_id == uuid.UUID(request.run_id),
+                ResearchEvidenceReceipt.input_version == request.input_version)).all()
+            if not rows or any(row.state != "ready" for row in rows):
+                return None
+            verified = self._verified(session, request.run_id, request.input_version, actor)
+            binding = verified.anchor.binding
+            if binding.investigation_id != request.investigation_id or binding.conversation_id != request.conversation_id:
+                raise ResearchEvidenceError("not_found", 404)
+            source = session.scalar(select(ResearchInvestigation).where(
+                ResearchInvestigation.id == uuid.UUID(binding.investigation_id)).with_for_update())
+            if source is None or source.status == "retired" or source.user_id != actor.id:
+                raise ResearchEvidenceError("access_denied", 403)
+            retained = {row.id: row for row in rows}
+            for receipt in verified.receipts:
+                row = retained.get(receipt.id)
+                if row is None:
+                    return None
+                expected_blob = canonical_hash({"payload": verified.full_payloads_by_receipt[receipt.id],
+                    "inputs": verified.input_manifests_by_receipt[receipt.id]})
+                if row.receipt_json != canonical_json(receipt.model_dump(mode="json")) or row.blob_sha256 != expected_blob:
+                    raise ResearchEvidenceError("conflict", 409)
+            policy = self.authorize_run(session, session.get(ResearchRun, uuid.UUID(request.run_id)), actor)
+            current = replace(verified, anchor=replace(verified.anchor, catalogue_policy_revision=policy))
+            result = self._list_retained(request, current, session, actor, {})
+            self._principal(session, user)
+            return result
+
     def invoke(self, name, payload, user):
         try:
             request = EVIDENCE_REQUEST_MODELS[name].model_validate(payload)

@@ -1,5 +1,20 @@
 # Beta deployment continuation — 2026-11-15 JST
 
+## Ongoing B1 completion — ready-list candidate, not yet deployed
+
+User requested finishing B1. Local ready-list candidate changes only
+api/v1_beta_question_services.py and orchestration/research_evidence.py.
+One SQL transaction retains replay, exact bytes/hashes, current owner/source/
+policy, C09 protection, dependency closure and closing authority before commit.
+No lock/capability/deadline/model limit change or cross-request cache. Missing/
+prepared receipts use the original installation path outside the read scope.
+Identical synthetic response,52→34transportreads;4newprivacy/no-write tests and
+the corrected source-count case pass. Earlier owning67cases had66functional
+passes and one old count expectation failure, now corrected. Native PG test
+added; hosted runtime/PG/build/deployment and actual15s read/recovery acceptance
+remain pending. Q6 must not be resubmitted or redelivered. Live48/5andPAUSED
+queue/scheduling unchanged. [Candidate](../beta/b1-20261114/ready-list-repair-plan.json).
+
 ## Current checkpoint — Q6 real Gemini answer and persisted citations verified
 
 On November15, the single already queued Q6 answer was delivered exactly once

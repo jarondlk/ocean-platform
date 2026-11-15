@@ -5,7 +5,6 @@ import base64
 import json
 import os
 from threading import get_ident
-from types import MethodType
 import uuid
 
 from fastapi.testclient import TestClient
@@ -91,24 +90,21 @@ def test_evidence_list_keeps_replay_authorization_and_payload_reads_while_reduci
                 return _original(*args, **kwargs)
 
             monkeypatch.setattr(owner, name, counted)
-    transaction = evidence._transaction
-    monkeypatch.setattr(evidence, "_transaction", MethodType(ResearchEvidenceService._transaction, evidence))
-    baseline = evidence.invoke("list", {**address, "input_version": 1}, actor)
+    baseline = ResearchEvidenceService.invoke(evidence, "list", {**address, "input_version": 1}, actor)
     baseline_reads, baseline_calls = Counter(_category(key) for _, key in reads), calls.copy()
-    monkeypatch.setattr(evidence, "_transaction", transaction)
     reads.clear()
     calls.clear()
     result = evidence.invoke("list", {**address, "input_version": 1}, actor)
     scoped_reads = Counter(_category(key) for _, key in reads)
     assert _bytes(result) == _bytes(baseline) and result["total"] == 1
-    assert calls == baseline_calls
-    assert calls["_verified"] == 1 and calls["_source"] == 4 and calls["_policy"] == 6, calls
-    assert calls["resolve"] == 10 and calls["add_reference"] == 0, calls
-    # The ready-list projection shares the final retention transaction and its
-    # dependency memo. The prior accepted path used 8/8/15/35 transport reads.
-    assert scoped_reads == {'activation': 6, 'control': 6, 'manifest': 12, 'object': 28}, scoped_reads
-    assert scoped_reads['manifest'] == baseline_reads['manifest']
-    assert scoped_reads['object'] == baseline_reads['object']
+    assert baseline_calls['_retain'] == 1 and calls['_retain'] == 0
+    assert calls["_verified"] == 1 and calls["_source"] == 3 and calls["_policy"] == 5, calls
+    assert calls["resolve"] == 8 and calls["add_reference"] == 0, calls
+    # Every immutable source read/hash remains fresh. Removing the separate
+    # preparation transaction removes one redundant complete source projection.
+    assert scoped_reads == {'activation': 2, 'control': 2, 'manifest': 9, 'object': 21}, scoped_reads
+    assert scoped_reads['manifest'] < baseline_reads['manifest']
+    assert scoped_reads['object'] < baseline_reads['object']
     assert scoped_reads['activation'] < baseline_reads['activation']
     assert scoped_reads['control'] < baseline_reads['control']
 
@@ -348,3 +344,62 @@ def test_exact_rollout_drain_keeps_history_and_cancellation_but_creates_no_new_w
             "idempotency_key": str(uuid.uuid4())}, headers=auth)
         assert cancelled_answer.status_code == cancelled_run.status_code == 200
         assert cancelled_answer.json()["job"]["status"] == cancelled_run.json()["run"]["status"] == "cancelled"
+
+
+def test_ready_listing_is_one_sql_transaction_and_never_installs_protection(completed, monkeypatch):
+    from sqlalchemy import event
+    questions, address, _ = completed
+    bundle, actor, factory, _ = questions
+    evidence = bundle.research_evidence_service
+    transactions, statements = [], []
+    original = evidence._transaction
+
+    from contextlib import contextmanager
+    @contextmanager
+    def counted():
+        transactions.append(True)
+        with original() as session:
+            yield session
+
+    monkeypatch.setattr(evidence, '_transaction', counted)
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Ready listing must not write C09'))
+    engine = factory.kw['bind']
+    def sql(_connection, _cursor, statement, _parameters, _context, _many):
+        statements.append(statement.lstrip().split()[0].upper())
+    event.listen(engine, 'before_cursor_execute', sql)
+    try:
+        result = evidence.invoke('list', {**address, 'input_version': 1}, actor)
+    finally:
+        event.remove(engine, 'before_cursor_execute', sql)
+    assert result['total'] == 1 and len(transactions) == 1
+    assert statements and set(statements) == {'SELECT'}
+
+
+@pytest.mark.parametrize('change', ['missing_reference', 'corrupt_blob', 'uncertain_protection'])
+def test_ready_listing_never_trusts_sql_ready_flag_or_repairs_failed_protection(completed, monkeypatch, change):
+    from copy import deepcopy
+    from sqlalchemy import text
+    from orchestration.research_evidence import ResearchEvidenceError
+    from schema.research_evidence import EvidenceReceipt
+    questions, address, _ = completed
+    bundle, actor, factory, _ = questions
+    evidence = bundle.research_evidence_service
+    retained = evidence.invoke('list', {**address, 'input_version': 1}, actor)['items'][0]
+    monkeypatch.setattr(evidence.store, 'add_reference', lambda *_: pytest.fail('Corrupt ready state must not reinstall C09 holds'))
+    if change == 'missing_reference':
+        original = evidence.store.lifecycle
+        def removed():
+            state = deepcopy(original())
+            state['references'].pop(evidence._references(EvidenceReceipt.model_validate(retained))[0]['reference'])
+            return state
+        monkeypatch.setattr(evidence.store, 'lifecycle', removed)
+    else:
+        with factory.begin() as session:
+            if change == 'uncertain_protection':
+                session.execute(text("UPDATE research_evidence_protection SET state='uncertain' WHERE receipt_id=:id"), {'id': retained['id']})
+            else:
+                session.execute(text("UPDATE research_evidence_blob SET payload_json='{}' WHERE sha256=(SELECT blob_sha256 FROM research_evidence_receipt WHERE id=:id)"), {'id': retained['id']})
+    with pytest.raises(ResearchEvidenceError):
+        evidence.invoke('list', {**address, 'input_version': 1}, actor)
+    assert evidence.store._active_read_scope() is None
+    assert evidence.catalogue.resolver.authority._scope.get() is None

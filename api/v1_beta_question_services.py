@@ -37,6 +37,25 @@ class BetaModelSettings(BaseModel):
 
 
 class BetaResearchEvidenceService(ResearchEvidenceService):
+    def invoke(self, name, payload, user):
+        if name != "list":
+            return super().invoke(name, payload, user)
+        from orchestration.research_evidence import ResearchEvidenceError
+        from schema.research_evidence import EVIDENCE_REQUEST_MODELS, EVIDENCE_RESPONSE_MODELS
+        try:
+            request = EVIDENCE_REQUEST_MODELS[name].model_validate(payload)
+        except (TypeError, ValueError):
+            raise ResearchEvidenceError("invalid_request", 422) from None
+        try:
+            result = self._ready_listing(request, user)
+            if result is not None:
+                return EVIDENCE_RESPONSE_MODELS[name].model_validate(result).model_dump(mode="json")
+            return super().invoke(name, payload, user)
+        except ResearchEvidenceError:
+            raise
+        except Exception:
+            raise ResearchEvidenceError() from None
+
     @contextmanager
     def _transaction(self):
         # Close current activation/control proofs before committing SQL. C09
