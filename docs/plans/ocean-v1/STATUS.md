@@ -4,6 +4,19 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Repair image181f26d4/source9eb9de8 is live: controller4 and serving41 Ready,
+100%beta traffic, full configuration preservation. Research admission stays
+false; queue/scheduling PAUSED. Actual signed-in hot history13.731s and retained
+evidence11.226s meet15s for this journey; old failed answer remains unavailable.
+[Rollout](beta/b1-20261114/repair-rollout-result.json),
+[readback](beta/b1-20261114/repair-ui-readback.json).
+Current planning316.3901JPY fits550; proposed Q6full model reserve brings it to
+616.3901JPY. An explicit650initial-allowance amendment is pending; monthly50k
+unchanged. No new model question submitted or B1completion claimed.
+[Q6 plan](beta/b1-20261114/question06-plan.json). No new GCPsign-in needed now.
+
+Historical delivery qualification:
+
 Repair image181f26d4/source9eb9de8 is now source-bound delivery qualified:
 4successful build proofs/exact staged archive,220hosted unit checks reused
 with180byte-equal runtime pins, and native-followup24PostgreSQL16.16 tests plus

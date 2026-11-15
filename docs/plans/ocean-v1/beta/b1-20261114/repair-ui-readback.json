@@ -1,0 +1,34 @@
+{
+  "version": "ocean-beta-b1-repair-ui-readback-v1",
+  "serving_generation": 41,
+  "controller_generation": 4,
+  "image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "signed_in_role": "admin/internal",
+  "routine_google_session_refresh_completed": true,
+  "user_sign_in_action_required": false,
+  "history": {
+    "started_utc": "2026-11-14T17:31:04.826Z",
+    "visible": true,
+    "elapsed_upper_bound_ms": 13731,
+    "criterion_ms": 15000
+  },
+  "evidence": {
+    "started_utc": "2026-11-14T17:30:18.079Z",
+    "visible": true,
+    "elapsed_upper_bound_ms": 11226,
+    "criterion_ms": 15000,
+    "retained_receipts": 2
+  },
+  "earlier_coarse_history_observation_ms": 17054,
+  "coarse_observation_is_not_precise_latency": true,
+  "new_model_call": false,
+  "historical_q5_answer_still_unavailable": true,
+  "new_answer_acceptance_passed": false,
+  "scope": "One actual hot signed-in saved-history/evidence journey, not a cold-load or scale matrix.",
+  "metadata_amendment": "Corrected explanatory boolean only; original private ui-readback.json retained. First coarse17.054s observation was not a timed15s gate; deliberate hot history13.731s and evidence11.226s are the measured readbacks.",
+  "original_readback_sha256": "d204456474408103eee1bbccbcc7a4d23c722bb073acdeb9a8031ec42b267a48",
+  "screenshots_sha256": {
+    "history-after-repair.png": "f7ad0247511dc06b450cfae11dde70081b47d8555139557d2747385289ac89a3",
+    "q5-evidence-after-repair.png": "fed4d376f38dfa49d39cd75f982f79027149b2b5ac86e776c0e64fbb572fe2ec"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "version": "ocean-beta-b1-repair-rollout-result-v1",
+  "source_checkpoint_before_apply": "498a069",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "phases": {
+    "controller": {
+      "phase": "controller",
+      "generation": "4",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "ready_revision": "ocean-v1-beta-research-controller-b1-fix-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    },
+    "stage": {
+      "phase": "stage",
+      "generation": "40",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "ready_revision": "ocean-v1-beta-serving-b1-drain-20261114",
+      "runtime_startup_verified": false,
+      "all_other_configuration_preserved": true
+    },
+    "promote": {
+      "phase": "promote",
+      "generation": "41",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "ready_revision": "ocean-v1-beta-serving-b1-fix-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    }
+  },
+  "fresh_original_observer": "ocean-v1-beta-provider-preflight-20261111-vq7mr",
+  "observer_source_unchanged": true,
+  "original_job_generation": 1,
+  "observer_executions_after": 9,
+  "admission_flags_false": true,
+  "queue_paused": true,
+  "scheduler_jobs": 0,
+  "frontend_identity_sidecars_secrets_network_ingress_scaling_timeouts_preserved": true,
+  "no_new_question_or_model_dispatch": true,
+  "scientific_approval": false,
+  "signed_in_hot_readback": "repair-ui-readback.json",
+  "actual_new_answer_reload_recovery_gates_open": true
+}

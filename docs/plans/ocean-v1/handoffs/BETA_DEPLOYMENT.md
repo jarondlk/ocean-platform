@@ -1,6 +1,54 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current rollout checkpoint — actual repair delivery qualified
+## Current checkpoint — repaired beta live, new-model allowance decision pending
+
+Reviewed Q4/Q5/repair evidence is durable at
+`~/Library/Application Support/OCEAN/private-handoff-20261115-repair`:248files,
+17.83MB,0700directories/0600files and hash-bound private index. No key/token/
+auth code/credential store/DSN/scientific table payload copied. Original working
+roots remain untouched. [Preservation](../beta/b1-20261114/repair-private-preservation.json).
+
+Controller generation4 / `ocean-v1-beta-research-controller-b1-fix-1115` and
+serving generation41 / `ocean-v1-beta-serving-b1-fix-1115` are Ready on repair
+image181f26d4 / runtime source9eb9de8. Serving has100%traffic; Research dispatch
+and synthesis admission remainfalse. All identities/frontend/proxy/numeric
+secrets/ingress/network/scaling/timeouts are preserved. Original-source observer
+`…-vq7mr` completed post-drain before all3guarded phases; original Job unchanged,
+now9executions. That freshness is historical after180seconds; do not replay it.
+[Actual rollout](../beta/b1-20261114/repair-rollout-result.json).
+
+Routine beta Google session refresh completed with the existing enrolled account;
+no user action or new GCP login is currently needed. Actual timed hot signed-in
+history13.731s and Q5retained evidence11.226s meet15seconds for this journey.
+The earlier coarse17.054s observation was not a precise timed gate; keep it
+qualified. Two Q5receipts remain readable; historical answer is still unavailable.
+[Readback](../beta/b1-20261114/repair-ui-readback.json). This is not a new Gemini
+answer or cold-load/scale-matrix pass. Tab7 is signed in on About to stop polling.
+
+Fresh terminal/cloud planning316.3901JPY of550 includes all6native model calls,
+4new physical attempts (Q5controller/synthesis +2synthetic schema probes),29.4684
+missing-usage reserve, image build,9completed observers,20cloud margin and1future
+observer. [Cost](../beta/b1-20261114/repair-cost-after-readback.json).
+The exact [Q6 plan](../beta/b1-20261114/question06-plan.json) is one supported CTD
+lookup/real synthesis/citations/reload on the same frozen context, reverified
+before submission. A fresh full14-call/300JPY reserve puts planning616.3901JPY
+above the earlier explicit550initial allowance. A user question requests650;
+DO NOT treat an unanswered question, earlier broad GCP approval or continuation
+as the numeric amendment. No new question/task/admission action yet. Monthly50k
+unchanged. New-model/reload and current-image recovery gates remain open; B1 is
+not complete. Runtime queue/sweep/Codex scheduling stay PAUSED.
+
+After an explicit allowance reply: refresh usage/source/context and confirm the
+new reservation still fits, run the original unchanged observer on the repaired
+configuration (no replay of start_observer.py's old-image-only assumptions),
+then guarded admit-stage/admit-promote with the repair writer. Submit Q6 once
+through the existing UI, retain UUID, manually deliver its one canonical run/
+answer task with `--repair-candidate`. Preserve all intents; inspect uncertain
+outcomes before retry. No replacement tasks, silent budgets, old-job rewrites or
+scientific-approval claims. Current working root `/private/tmp/ocean-b1-repair-20261115`;
+Q4/Q5 originals remain under their original working/private locations.
+
+## Historical qualified preparation before apply — actual repair delivery qualified
 
 Repair source9eb9de8/image181f26d4… is qualified by exact4-step buildd3735340,
 provider-hashed archive/all24files and180runtime pins, actual hosted220unit

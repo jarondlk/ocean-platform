@@ -1,0 +1,40 @@
+{
+  "version": "ocean-beta-b1-question06-plan-v1",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "serving_generation_before_admission": 41,
+  "controller_generation": 4,
+  "question": "Find object \"beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529\"",
+  "question_sha256": "bdf9eecf9e29d24ba2bed564ee9025a9d2941b6b0d90e4be314f495e17b5ceb1",
+  "independent_oracle_receipt": "docs/plans/ocean-v1/beta/snapshot-activation-20261103/preparation-result.json",
+  "oracle_sha256": "f5ceb37d142de4d86d0ac6029fb29daf7529416e57e03b1b719b30d6a6f73dd9",
+  "expected": {
+    "canonical_object_id": "beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529",
+    "source_family": "ctd",
+    "scientific_approval": false
+  },
+  "frozen_context_to_reverify_before_one_click": {
+    "snapshot_id": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459",
+    "revision_id": "401844d5-80b8-41a5-83ab-2a1b22093775",
+    "payload_sha256": "cb28a278770a8de9a56de7721e2ad2fea91538cbb0ce8bc11d755df3c5bae2b4",
+    "investigation_id": "86c7fe5b-3485-4a61-ab97-32c4f1628cdc",
+    "conversation_id": "72a52508-2123-42c4-951f-da54eea16a64"
+  },
+  "scope": "One new supported object lookup, actual model synthesis, retained citations and persisted reload. Does not answer original unsupported Q4 row-count question or close all B1 recovery gates.",
+  "shared_model_call_cap": 14,
+  "combined_output_cap_per_call": 4096,
+  "model_reserve_jpy": "300",
+  "current_terminal_rollout_plan_jpy": "316.3901254888055788229791496",
+  "proposed_total_with_one_new_segment_jpy": "616.3901254888055788229791496",
+  "current_initial_allowance_jpy": 550,
+  "proposed_initial_allowance_jpy": 650,
+  "budget_amendment_pending": true,
+  "monthly_beta_target_jpy": 50000,
+  "manual_question_count_after_submission": 6,
+  "standing_manual_question_limit": 20,
+  "submitted": false,
+  "queue_must_remain_paused": true,
+  "runtime_sweep_and_Codex_scheduling_remain_paused": true,
+  "historical_failure_or_scientific_approval_not_rewritten": true,
+  "before_admission": "Approved numeric allowance, fresh bounded usage/source check, original-source quiescence observer and guarded admit-stage/promote. Source/readback checks cannot authorize a budget change."
+}

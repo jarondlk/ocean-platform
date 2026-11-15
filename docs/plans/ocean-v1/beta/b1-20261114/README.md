@@ -2,6 +2,34 @@
 
 State: in progress. The user selected B1 on November14.
 
+Current November15 checkpoint: repaired source9eb9de8/image181f26d4 is live on
+controller4/serving41,100%traffic with new Research admissionfalse.
+[Delivery](repair-delivery-qualification.json) includes4build proofs, exact
+source archive/180pins,220reused passing unit checks and24actual native PG16.16
+checks plus48hosted operator checks. [Rollout](repair-rollout-result.json) keeps
+all other service settings; queue/scheduling PAUSED. Actual signed-in hot history
+13.731s and retained evidence11.226s meet15s for this journey; no cold/scale
+matrix is claimed. [Readback](repair-ui-readback.json).
+
+Q4 was unsupported before any model call and cancelled once. Q5supported lookup
+completed but synthesis failed (`generation_incomplete`); original receipts and
+answer remain unchanged. Two synthetic-only provider probes isolated original
+schema400 versus array-bound-removed200. The repair adapts provider grammar
+while host limits/evidence integrity remain strict, and removes redundant ready
+retention writes with full current-protection validation. These probes are not
+an actual beta answer pass.
+
+Fresh [terminal cost](repair-cost-after-readback.json) plans316.3901JPY of550,
+including conservative missing usage. The [next exact question](question06-plan.json)
+needs one new shared14-call/300JPYreserve, putting the plan at616.3901JPY.
+Explicit approval to raise the initial allowance to650 is pending; monthly50k
+unchanged. Do not submit or enable admission until that numeric decision and
+fresh source/cost/quiescence gates pass. Current-image actual Gemini cited answer,
+reload and cancel/duplicate/retry/revocation acceptance remain open. Browser/GCP
+sign-in currently works. B1 is in progress.
+
+Historical November15 pre-submission checkpoint:
+
 November15 continuation: the user [approved550JPY](question04-budget-authorization.json)
 for the same single Q4 segment. [Fresh522.0093JPY planning](question04-approved-reservation.json)
 fits the amended allowance; original plans and holds remain immutable. Actual
@@ -74,16 +102,15 @@ scheduling paused until their separate gates pass. B1 is not complete.
 
 Remaining B1 acceptance:
 
-- After the pending allowance decision, refresh admission/cost and submit the
-  single predeclared Q4 through the signed-in UI. Verify actual model usage,
-  independent162/10,955counts, complete-population denominators, retained
-  citations and explicit scientific limitations. Keep all actual failures.
-- Manually deliver only its canonical run/answer tasks. Queue acknowledgements
-  and HTTP200 do not prove successful exploration or a published answer.
-  Verify the durable answer, citation content and reload under current access.
-- Exercise new-image cancellation, authenticated duplicate/retry behavior and
-  authority revocation with a reviewed isolated target; do not revoke active
-  CTD data or edit unrelated saved history as a shortcut. These gates remain
-  unrun; old receipts/local tests are separate evidence.
-- Reconcile actual model/cloud usage before another paid segment or continuation.
-  Supervised outbox scheduling remains gated on actual recovery and cost evidence.
+- After the explicit allowance decision, refresh source/cost/authority and admit
+  the single predeclared Q6 supported lookup. Q4row-count wording remains failed;
+  do not claim its162/10,955counts were answered by an object lookup.
+- Deliver only canonical Q6run/answer tasks while the queue stays paused. Verify
+  real Gemini output, independent object/family/qualification oracle, citations
+  and durable reload. Task acknowledgements and HTTP200 are not answer proof.
+- Exercise current-image cancellation, authenticated duplicate/retry behavior and
+  authority revocation with reviewed isolated targets. Preserve active CTD data
+  and unrelated saved history. Historical/cloud and new native evidence remain
+  distinct from additional live candidate acceptance.
+- Reconcile actual usage before another paid segment or continuation. Supervised
+  outbox scheduling remains gated by actual recovery and cost evidence.

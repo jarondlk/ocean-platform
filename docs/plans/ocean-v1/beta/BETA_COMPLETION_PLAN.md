@@ -1,14 +1,18 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
-B0 preparation and its dated live preflight completed on November14:
-[completion/evidence](b0-20261114/README.md). B1 is in progress. Its reconstructed
-writer has deployed accepted API7889ef20 to controller and serving, with full
-configuration preservation and actual readiness. Serving generation36 receives
-100%traffic with Research admission false. The signed-in existing-history and
-evidence journey passes15seconds. [Current B1 delivery](b1-20261114/README.md)
-retains actual model answer/reload/recovery acceptance as the next gate. Fresh
-observer/cost precedes admission; a passed180-second quiescence snapshot expires.
+B0's dated preparation/preflight completed. Current November15B1repair is live:
+source9eb9de8/image181f26d4 on controller4/serving41, full settings preserved,
+Research admissionfalse and queue/scheduling PAUSED. Actual hot signed-in
+history13.731s/evidence11.226s meet15seconds for this journey. Source-bound
+build/composed CI includes220passing runtime checks,24nativePGchecks and48
+operator checks. [Current B1 evidence](b1-20261114/README.md).
+Q5model lookup completed but its answer failed; a provider-only grammar repair
+and ready-retention read repair are deployed. A fresh matched cited answer,
+persistence/reload and current-image recovery remain open. Next Q6is prepared
+but requires the pending numeric allowance decision (550→650JPY; planned616.39)
+and fresh source/cost/quiescence before admission. Monthly50k unchanged. Earlier
+observations below are historical context, not blanket current-candidate passes.
 
 Source checkpoint reviewed: `7002312` on `overhaul`. This plan integrates the
 return-to-main-Mac audit and the second Mac's deployment work. It supersedes
