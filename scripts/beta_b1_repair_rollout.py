@@ -29,6 +29,10 @@ PROOF = ROOT / 'docs/plans/ocean-v1/beta/b1-20261114'
 CONTRACT = ROOT / 'deploy/gcp/beta/b1/repair-contract.json'
 LIST_CONTRACT = ROOT / 'deploy/gcp/beta/b1/list-read-contract.json'
 LIST_VERSION = 'ocean-beta-b1-list-read-rollout-contract-v1'
+READY_CONTRACT = ROOT / 'deploy/gcp/beta/b1/ready-list-contract.json'
+READY_VERSION = 'ocean-beta-b1-ready-list-rollout-contract-v1'
+READY_PREVIOUS = ('asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/'
+                  'snapshot-api@sha256:83ce6e8e702d696b2e13d35ff2b58bd153591616518fee96b6bf1633c43a3c1b')
 PREVIOUS = ('asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/'
             'snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84')
 PHASES = ('drain', 'controller', 'stage', 'promote', 'admit-stage', 'admit-promote')
@@ -37,8 +41,9 @@ PHASES = ('drain', 'controller', 'stage', 'promote', 'admit-stage', 'admit-promo
 def initial_image(contract):
     if 'initial_image' not in contract:
         return original.NEW
-    guard.require(contract.get('version') == LIST_VERSION and contract['initial_image'] == PREVIOUS)
-    return PREVIOUS
+    expected = READY_PREVIOUS if contract.get('version') == READY_VERSION else PREVIOUS
+    guard.require(contract.get('version') in {LIST_VERSION, READY_VERSION} and contract['initial_image'] == expected)
+    return expected
 
 
 def approved_allowance(contract):
@@ -74,7 +79,7 @@ def plan(service, phase, contract):
     ready, created = (service[key].split('/')[-1] for key in ('latestReadyRevision', 'latestCreatedRevision'))
     image = original.main_container(service, kind)['image']
     if phase == 'drain':
-        guard.require(contract.get('version') == LIST_VERSION and kind == 'serving'
+        guard.require(contract.get('version') in {LIST_VERSION, READY_VERSION} and kind == 'serving'
                       and image == initial_image(contract) and ready == created
                       and ready == contract['initial_admitted_revision']
                       and original.flag_state(service)
@@ -171,7 +176,7 @@ def verify_archive(archive, hashes, expected_files):
 
 
 def qualify(directory, contract):
-    if contract.get('version') == LIST_VERSION:
+    if contract.get('version') in {LIST_VERSION, READY_VERSION}:
         return qualify_list(directory, contract)
     guard.require(contract['hosted_acceptance_pending'] is False)
     manifest = guard.document((PROOF / 'repair-production-source-manifest.json').read_bytes())
@@ -234,16 +239,20 @@ def qualify(directory, contract):
 
 def qualify_list(directory, contract):
     """Full new-runtime CI/build proof; never reuse the older repair's receipts."""
-    guard.require(contract['hosted_acceptance_pending'] is False and initial_image(contract) == PREVIOUS)
-    manifest = guard.document((PROOF / 'list-read-production-source-manifest.json').read_bytes())
+    ready = contract.get('version') == READY_VERSION
+    prefix = 'ready-list' if ready else 'list-read'
+    guard.require(contract['hosted_acceptance_pending'] is False
+        and initial_image(contract) == (READY_PREVIOUS if ready else PREVIOUS))
+    manifest = guard.document((PROOF / (prefix + '-production-source-manifest.json')).read_bytes())
     pins = manifest['sources']
-    previous = guard.document((PROOF / 'repair-production-source-manifest.json').read_bytes())['sources']
+    previous = guard.document((PROOF / (('list-read' if ready else 'repair') + '-production-source-manifest.json')).read_bytes())['sources']
     guard.require(manifest['revision'] == contract['runtime_commit'] and len(pins) == 180
         and set(pins) == set(previous)
-        and [p for p in sorted(pins) if pins[p] != previous[p]] == ['orchestration/research_evidence.py']
+        and [p for p in sorted(pins) if pins[p] != previous[p]] == (
+            ['api/v1_beta_question_services.py', 'orchestration/research_evidence.py'] if ready else ['orchestration/research_evidence.py'])
         and all(hashlib.sha256((ROOT / p).read_bytes()).hexdigest() == digest for p, digest in pins.items()))
     build = guard.document((directory / 'build.json').read_bytes())
-    wanted = guard.document((PROOF / 'list-read-cloudbuild.json').read_bytes())
+    wanted = guard.document((PROOF / (prefix + '-cloudbuild.json')).read_bytes())
     guard.require(build['id'] == contract['build_id'] and build['status'] == 'SUCCESS'
         and build['projectId'] == original.PROJECT and build['serviceAccount'] == wanted['serviceAccount']
         and build['images'] == wanted['images'] and build['tags'] == wanted['tags']
@@ -266,7 +275,7 @@ def qualify_list(directory, contract):
     guard.require(source['bucket'] == original.PROJECT + '-build-source' and source['object'].startswith('source/')
         and str(source['generation']).isdecimal() and build['source'] == {'storageSource': source})
     uri = 'gs://' + source['bucket'] + '/' + source['object'] + '#' + str(source['generation'])
-    files = guard.document((PROOF / 'list-read-build-context.json').read_bytes())
+    files = guard.document((PROOF / (prefix + '-build-context.json')).read_bytes())
     guard.require(original.sha(files) == contract['build_context_sha256'])
     verify_archive(directory / 'staged-source.tgz', build['sourceProvenance']['fileHashes'][uri]['fileHash'], files)
     run = guard.document((directory / 'focused-run.json').read_bytes())
@@ -302,6 +311,8 @@ def qualify_list(directory, contract):
     expected_operator_pins = {'scripts/beta_b1_repair_rollout.py', 'tests/test_beta_b1_list_rollout.py',
                                         'scripts/beta_b1_dispatch.py', 'tests/test_beta_b1_dispatch.py',
                                         '.github/workflows/beta-b1-focused.yml'}
+    if ready:
+        expected_operator_pins |= {'tests/test_beta_b1_ready_rollout.py'}
     if contract.get('q6_diagnostic_source_bound') is True:
         expected_operator_pins |= {'scripts/beta_b1_q6_diagnostic.py', 'tests/test_beta_b1_q6_diagnostic.py'}
     guard.require(set(operator_pins) == expected_operator_pins)
@@ -309,22 +320,36 @@ def qualify_list(directory, contract):
         committed = subprocess.check_output(['git', 'show', contract['operator_commit'] + ':' + path], cwd=ROOT)
         guard.require(hashlib.sha256(committed).hexdigest() == digest
             and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest)
-    reservation = guard.document((directory / 'reservation.json').read_bytes())
+    verify_read_reservation(guard.document((directory / 'reservation.json').read_bytes()), contract, ready=ready)
+    return {'source_paths': 180, 'intentional_runtime_supersessions': 2 if ready else 1, 'build_id': build['id'],
+            'ci_run_id': run['id'], 'focused_source_bound_delivery_verified': True}
+
+
+def verify_read_reservation(reservation, contract, *, ready):
+    """A closed Q6 quote can fund read repair, never another model segment."""
     from decimal import Decimal
-    guard.require(reservation['pending_run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
-        and reservation['native_model_calls'] == '7'
-        and Decimal(reservation['total_planned_jpy']) <= approved_allowance(contract)
-        and Decimal(reservation['one_question_model_reserve_jpy']) >= 300
+    if ready:
+        guard.require(reservation['version'] == 'ocean-beta-b1-q6-terminal-reconciliation-v1'
+            and reservation['terminal_run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
+            and reservation['terminal_answer_job_id'] == '3d707667-ef41-4b6a-b790-a77a9c91ae9c'
+            and reservation['native_model_calls'] == '8' and reservation['terminal_status'] == 'completed'
+            and reservation['one_question_model_reserve_jpy'] == '0'
+            and reservation['automatic_continuation_admitted'] is False)
+    else:
+        guard.require(reservation['pending_run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
+            and reservation['native_model_calls'] == '7'
+            and Decimal(reservation['one_question_model_reserve_jpy']) >= 300)
+    guard.require(Decimal(reservation['total_planned_jpy']) <= approved_allowance(contract)
         and reservation['new_paid_question_admitted'] is False)
     from datetime import datetime, timezone
     age = (datetime.now(timezone.utc) - guard.timestamp(reservation['captured_utc'])).total_seconds()
     guard.require(0 <= age <= 1800)
-    return {'source_paths': 180, 'intentional_runtime_supersessions': 1, 'build_id': build['id'],
-        'ci_run_id': run['id'], 'focused_source_bound_delivery_verified': True}
 
 
-def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_before=None, list_candidate=False):
-    contract = guard.document((LIST_CONTRACT if list_candidate else CONTRACT).read_bytes())
+def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_before=None, list_candidate=False, ready_candidate=False):
+    guard.require(not (list_candidate and ready_candidate))
+    selected = READY_CONTRACT if ready_candidate else LIST_CONTRACT if list_candidate else CONTRACT
+    contract = guard.document(selected.read_bytes())
     qualification = qualify(directory, contract)
     kind = 'controller' if phase == 'controller' else 'serving'
     endpoint = 'https://run.googleapis.com/v2/' + contract['services'][kind]['name']
@@ -345,7 +370,7 @@ def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_
         guard.require(state['state'] == 'PAUSED' and not tasks.get('tasks') and not tasks.get('nextPageToken')
             and not schedules.get('jobs') and not schedules.get('nextPageToken'))
     if not validate_only and phase != 'drain':
-        if list_candidate and phase == 'controller':
+        if (list_candidate or ready_candidate) and phase == 'controller':
             from datetime import datetime, timezone
             serving = cloud.request('https://run.googleapis.com/v2/' + contract['services']['serving']['name'])
             baseline(serving, 'serving', contract)
@@ -403,7 +428,9 @@ def main():
     mode.add_argument('--apply', action='store_true')
     parser.add_argument('--observer')
     parser.add_argument('--not-before')
-    parser.add_argument('--list-candidate', action='store_true')
+    candidate = parser.add_mutually_exclusive_group()
+    candidate.add_argument('--list-candidate', action='store_true')
+    candidate.add_argument('--ready-candidate', action='store_true')
     args = parser.parse_args()
     import os
     directory = args.directory.resolve()
@@ -412,7 +439,8 @@ def main():
     os.umask(0o077)
     try:
         result = execute(apply.Cloud(), directory, args.phase, validate_only=args.validate_only,
-                         execution_name=args.observer, not_before=args.not_before, list_candidate=args.list_candidate)
+                         execution_name=args.observer, not_before=args.not_before,
+                         list_candidate=args.list_candidate, ready_candidate=args.ready_candidate)
     except Exception:
         print('{"state":"repair_rollout_stopped_inspect_private_phase_before_retry"}')
         return 2

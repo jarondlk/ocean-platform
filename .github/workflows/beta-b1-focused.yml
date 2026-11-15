@@ -15,6 +15,7 @@ on:
       - 'deploy/gcp/beta/snapshot-api/**'
       - 'scripts/beta_b1_repair_rollout.py'
       - 'tests/test_beta_b1_list_rollout.py'
+      - 'tests/test_beta_b1_ready_rollout.py'
       - 'scripts/beta_b1_dispatch.py'
       - 'tests/test_beta_b1_dispatch.py'
       - 'scripts/beta_b1_q6_diagnostic.py'
@@ -76,23 +77,26 @@ jobs:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
           B1_OPERATOR_FOLLOWUP: ${{ contains(github.event.head_commit.message, '[operator-followup]') }}
+          B1_READY_FOLLOWUP: ${{ contains(github.event.head_commit.message, '[ready-followup]') }}
         run: |
           python - <<'PY'
           import hashlib, json, os, pathlib, subprocess
           operator = os.environ['B1_OPERATOR_FOLLOWUP'] == 'true'
+          ready = operator and os.environ['B1_READY_FOLLOWUP'] == 'true'
           base = pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114')
-          manifest = json.loads((base / ('list-read-production-source-manifest.json' if operator else 'repair-production-source-manifest.json')).read_text())
-          expected_revision = 'a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac' if operator else '9eb9de8b1757e27eba37f8388ccb30c2a78a1389'
+          prefix = 'ready-list' if ready else 'list-read' if operator else 'repair'
+          manifest = json.loads((base / (prefix + '-production-source-manifest.json')).read_text())
+          expected_revision = '148182df18e0c4fb0084e9e766a9c071412f5287' if ready else 'a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac' if operator else '9eb9de8b1757e27eba37f8388ccb30c2a78a1389'
           assert manifest['revision'] == expected_revision and len(manifest['sources']) == 180
           for path, expected in manifest['sources'].items():
               original = subprocess.check_output(['git', 'show', manifest['revision'] + ':' + path])
               assert hashlib.sha256(original).hexdigest() == expected
               assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() == expected
           if operator:
-              accepted = json.loads((base / 'list-read-hosted-verification.json').read_text())
-              assert accepted['source_revision'] == expected_revision and accepted['ci_run_id'] == 43693489204 and accepted['conclusion'] == 'success'
-              assert accepted['runtime_tests'] == 232 and accepted['postgresql_tests'] == 24
-              print('All180 runtime pins equal accepted source a0e98fe; reusing232 runtime and24 actual PostgreSQL16 tests for operator-only changes.')
+              accepted = json.loads((base / (prefix + '-hosted-verification.json')).read_text())
+              assert accepted['source_revision'] == expected_revision and accepted['ci_run_id'] == (43710279748 if ready else 43693489204) and accepted['conclusion'] == 'success'
+              assert accepted['runtime_tests'] == (248 if ready else 232) and accepted['postgresql_tests'] == (25 if ready else 24)
+              print('All180 runtime pins equal accepted source; reusing its full runtime and actual PostgreSQL16 tests for operator-only changes.')
           else:
               print('All180 runtime source pins equal the prior source with220 hosted tests passed; native setup failure remains recorded.')
           PY
@@ -101,8 +105,8 @@ jobs:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
         run: |
-          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_dispatch.py scripts/beta_b1_budget.py scripts/beta_b1_q6_diagnostic.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_dispatch.py tests/test_beta_b1_budget.py tests/test_beta_b1_q6_diagnostic.py
-          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_dispatch.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py tests/test_beta_b1_q6_diagnostic.py -q
+          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_dispatch.py scripts/beta_b1_budget.py scripts/beta_b1_q6_diagnostic.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_ready_rollout.py tests/test_beta_b1_dispatch.py tests/test_beta_b1_budget.py tests/test_beta_b1_q6_diagnostic.py
+          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_ready_rollout.py tests/test_beta_b1_dispatch.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py tests/test_beta_b1_q6_diagnostic.py -q
       - name: Identify job-owned PostgreSQL container address
         if: ${{ !contains(github.event.head_commit.message, '[operator-followup]') }}
         id: c21-target
