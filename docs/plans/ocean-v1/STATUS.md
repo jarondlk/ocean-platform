@@ -4,6 +4,15 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+The83ce6e8e candidate now qualifies with full runtime/native acceptance and
+final98727f4 operator CI (98 tests;180 unchanged runtime pins verified).
+Exact drain validateOnly passed without changing serving43/controller4.
+Guarded rollout and same-Q6 answer/citation/reload are next; no further sign-in
+or approval needed. [Qualification](beta/b1-20261114/list-read-delivery-qualification.json).
+Queue/scheduling remain PAUSED, existing live181 image unchanged.
+
+Historical built-candidate checkpoint:
+
 List-read runtime a0e98fe passed hosted232 runtime/63 operator/24 PostgreSQL16
 checks. Its83ce6e8e image passed all4 Cloud Build proofs and exact staged-source
 verification; rollout is pending the guarded operator-only follow-up and fresh

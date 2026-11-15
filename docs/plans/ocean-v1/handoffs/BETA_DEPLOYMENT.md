@@ -1,6 +1,31 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current checkpoint — list-read image built; guarded operator follow-up next
+## Current checkpoint — list-read delivery qualified; guarded rollout next
+
+Final operator source `98727f44a617287251e917863c5c720195dccc82` passed run
+43695470027/job132754899455:98 operator/delivery tests and an actual180-pin
+byte comparison to accepted runtime a0e98fe. This explicitly reuses its232
+runtime and24 PostgreSQL16 checks. The source-bound writer and canonical
+dispatcher, exact83ce6e8e image/build/archive, core CI and fresh664.4339JPY
+reservation now qualify together under700 approval.
+[Qualification](../beta/b1-20261114/list-read-delivery-qualification.json).
+Separate fixed contract: `deploy/gcp/beta/b1/list-read-contract.json`.
+Drain validateOnly passed; service remains unchanged at43/4 on181f26d4.
+No GCP sign-in or additional approval is currently needed.
+
+Immediate next action: apply the reviewed drain once with
+`scripts/beta_b1_repair_rollout.py --directory /private/tmp/ocean-b1-q6-20261115/list-read-candidate --phase drain --apply --list-candidate`.
+The private `drain-validate` directory is accepted validation, not an applied
+drain; inspect `drain-apply` before attempting any repeat. Then honor the60s
+old serving request envelope and launch the original unchanged observer with
+an exclusive intent (not a replay of old Q6/source-specific helper assumptions).
+Proceed through the five guarded candidate phases with fresh observer receipts,
+queue/scheduling paused. Use `--list-candidate` for this writer and for the
+canonical answer dispatcher. Never use the older repair contract/mode for83ce.
+Q6 is completed and still unprepared; one answer/citation/reload journey remains
+authorized, with full300 model reserve held and no new question admission.
+
+## Historical preparation — list-read image built; guarded operator follow-up next
 
 User approved the700JPY validation allowance and routine future follow-ups;
 monthly beta target50,000JPY and notice before exceeding it remain in force.
