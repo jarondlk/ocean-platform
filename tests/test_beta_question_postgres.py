@@ -187,6 +187,12 @@ def test_pg16_roles_finish_question_and_reopen_answer_without_account_write_righ
             other.execute(lock, identity)
         assert blocked.value.orig.pgcode == "55P03"
     amendment = native["shared_lock"]
+    with pytest.raises(ValueError, match="Exact private owner-lock ACL"), native["owner"].begin() as c:
+        c.execute(text("GRANT EXECUTE ON FUNCTION public.ocean_v1_beta_research_owner_lock(uuid) TO PUBLIC"))
+        amendment.amend(c, native["manifest"])
+    with pytest.raises(ValueError, match="restricted owner-lock"), native["owner"].begin() as c:
+        c.execute(text("ALTER FUNCTION public.ocean_v1_beta_research_owner_lock(uuid) SET search_path=public"))
+        amendment.amend(c, native["manifest"])
     with native["owner"].begin() as c:
         original_metadata, _ = amendment.metadata(c)
         report = amendment.amend(c, native["manifest"])

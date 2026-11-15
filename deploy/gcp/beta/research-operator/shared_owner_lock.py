@@ -46,6 +46,13 @@ def amend(connection, manifest, *, verify_only=False):
     """One transaction; an uncertain application must be inspected, never replayed."""
     validate_target(connection)
     connection.execute(text("SELECT pg_advisory_xact_lock(hashtextextended('ocean-v1-beta-research-grants-v1',0))"))
+    acl = connection.execute(text("SELECT pg_get_userbyid(a.grantor),r.rolname,a.privilege_type,a.is_grantable "
+        "FROM pg_proc p CROSS JOIN LATERAL aclexplode(p.proacl) a LEFT JOIN pg_roles r ON r.oid=a.grantee "
+        "WHERE p.oid=to_regprocedure('public.ocean_v1_beta_research_owner_lock(uuid)')")).all()
+    expected_acl = {(operator.MIGRATOR, role, "EXECUTE", False) for role in
+        (operator.MIGRATOR, "ocean_v1_serving", "ocean_v1_research_controller")}
+    if len(acl) != 3 or set(acl) != expected_acl:
+        raise ValueError("Exact private owner-lock ACL required")
     before, body = metadata(connection)
     if verify_only:
         if body != SHARED_BODY:
