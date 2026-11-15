@@ -12,6 +12,8 @@ on:
       - 'tests/integration/test_research_evidence_postgres.py'
       - '.github/workflows/beta-b1-focused.yml'
       - 'deploy/gcp/beta/snapshot-api/**'
+      - 'scripts/beta_b1_repair_rollout.py'
+      - 'tests/test_beta_b1_list_rollout.py'
   workflow_dispatch:
 
 permissions:
@@ -52,7 +54,7 @@ jobs:
       - name: Install hash-locked dependencies
         run: python -m pip install --require-hashes -r requirements/dev.txt
       - name: Verify repair, privacy and unchanged host contracts
-        if: ${{ !contains(github.event.head_commit.message, '[native-followup]') }}
+        if: ${{ !contains(github.event.head_commit.message, '[native-followup]') && !contains(github.event.head_commit.message, '[operator-followup]') }}
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
@@ -62,29 +64,40 @@ jobs:
           python deploy/gcp/beta/snapshot-api/checks.py
           python -m pytest tests/test_beta_vertex_research.py tests/test_beta_research_read_scopes.py tests/test_research_evidence_store.py tests/test_research_synthesis.py tests/test_research_evidence_runtime.py tests/test_research_evidence_api.py tests/test_research_evidence_contracts.py tests/test_research_answers.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q --tb=short
       - name: Verify reused runtime bytes for native-only follow-up
-        if: ${{ contains(github.event.head_commit.message, '[native-followup]') }}
+        if: ${{ contains(github.event.head_commit.message, '[native-followup]') || contains(github.event.head_commit.message, '[operator-followup]') }}
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
+          B1_OPERATOR_FOLLOWUP: ${{ contains(github.event.head_commit.message, '[operator-followup]') }}
         run: |
           python - <<'PY'
-          import hashlib, json, pathlib, subprocess
-          manifest = json.loads(pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114/repair-production-source-manifest.json').read_text())
-          assert manifest['revision'] == '9eb9de8b1757e27eba37f8388ccb30c2a78a1389' and len(manifest['sources']) == 180
+          import hashlib, json, os, pathlib, subprocess
+          operator = os.environ['B1_OPERATOR_FOLLOWUP'] == 'true'
+          base = pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114')
+          manifest = json.loads((base / ('list-read-production-source-manifest.json' if operator else 'repair-production-source-manifest.json')).read_text())
+          expected = 'a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac' if operator else '9eb9de8b1757e27eba37f8388ccb30c2a78a1389'
+          assert manifest['revision'] == expected and len(manifest['sources']) == 180
           for path, expected in manifest['sources'].items():
               original = subprocess.check_output(['git', 'show', manifest['revision'] + ':' + path])
               assert hashlib.sha256(original).hexdigest() == expected
               assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() == expected
-          print('All180 runtime source pins equal the prior source with220 hosted tests passed; native setup failure remains recorded.')
+          if operator:
+              accepted = json.loads((base / 'list-read-hosted-verification.json').read_text())
+              assert accepted['source_revision'] == expected and accepted['ci_run_id'] == 43693489204 and accepted['conclusion'] == 'success'
+              assert accepted['runtime_tests'] == 232 and accepted['postgresql_tests'] == 24
+              print('All180 runtime pins equal accepted source a0e98fe; reusing232 runtime and24 actual PostgreSQL16 tests for operator-only changes.')
+          else:
+              print('All180 runtime source pins equal the prior source with220 hosted tests passed; native setup failure remains recorded.')
           PY
       - name: Verify current operator checks
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
         run: |
-          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_budget.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_budget.py
-          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q
+          python -m ruff check scripts/beta_b1_repair_rollout.py scripts/beta_b1_budget.py tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_budget.py
+          python -m pytest tests/test_beta_b1_repair_rollout.py tests/test_beta_b1_list_rollout.py tests/test_beta_b1_budget.py tests/test_beta_b1_diagnostic.py -q
       - name: Identify job-owned PostgreSQL container address
+        if: ${{ !contains(github.event.head_commit.message, '[operator-followup]') }}
         id: c21-target
         env:
           POSTGRES_TEST_CONTAINER_ID: ${{ job.services.postgres.id }}
@@ -93,6 +106,7 @@ jobs:
           python -c 'import ipaddress,sys; ipaddress.IPv4Address(sys.argv[1])' "$container_address"
           printf 'address=%s\n' "$container_address" >> "$GITHUB_OUTPUT"
       - name: Verify actual PostgreSQL 16 migrations, protection and concurrency
+        if: ${{ !contains(github.event.head_commit.message, '[operator-followup]') }}
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test

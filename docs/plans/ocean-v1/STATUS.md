@@ -4,6 +4,17 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+List-read runtime a0e98fe passed hosted232 runtime/63 operator/24 PostgreSQL16
+checks. Its83ce6e8e image passed all4 Cloud Build proofs and exact staged-source
+verification; rollout is pending the guarded operator-only follow-up and fresh
+quiescence/cost evidence.700JPY validation and routine future follow-ups are
+approved; monthly50k unchanged. Existing live181 image, completed Q6 and no
+answer remain unchanged. [CI](beta/b1-20261114/list-read-hosted-verification.json),
+[build](beta/b1-20261114/list-read-build-result.json),
+[approval](beta/b1-20261114/question06-budget-authorization02.json).
+
+Historical local-repair checkpoint:
+
 Q6 completed after its single manual delivery (34s active; one additional native
 model call). GCP login works. Saved-evidence reads remain intermittent, so no
 answer was prepared. Queue is PAUSED and empty; serving43/controller4 remain on

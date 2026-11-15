@@ -10,6 +10,8 @@ from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 import sys
 import tarfile
 import time
@@ -25,12 +27,23 @@ from scripts import beta_b1_rollout as original
 ROOT = original.ROOT
 PROOF = ROOT / 'docs/plans/ocean-v1/beta/b1-20261114'
 CONTRACT = ROOT / 'deploy/gcp/beta/b1/repair-contract.json'
-PHASES = ('controller', 'stage', 'promote', 'admit-stage', 'admit-promote')
+LIST_CONTRACT = ROOT / 'deploy/gcp/beta/b1/list-read-contract.json'
+LIST_VERSION = 'ocean-beta-b1-list-read-rollout-contract-v1'
+PREVIOUS = ('asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/'
+            'snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84')
+PHASES = ('drain', 'controller', 'stage', 'promote', 'admit-stage', 'admit-promote')
+
+
+def initial_image(contract):
+    if 'initial_image' not in contract:
+        return original.NEW
+    guard.require(contract.get('version') == LIST_VERSION and contract['initial_image'] == PREVIOUS)
+    return PREVIOUS
 
 
 def baseline(service, kind, contract):
     image = original.main_container(service, kind)['image']
-    guard.require(image in {original.NEW, contract['image']})
+    guard.require(image in {initial_image(contract), contract['image']})
     normalized = deepcopy(service)
     original.main_container(normalized, kind)['image'] = original.NEW
     # Original full config hashes still bind all sidecars, identities, secrets,
@@ -46,13 +59,33 @@ def plan(service, phase, contract):
     expected = deepcopy(before)
     ready, created = (service[key].split('/')[-1] for key in ('latestReadyRevision', 'latestCreatedRevision'))
     image = original.main_container(service, kind)['image']
+    if phase == 'drain':
+        guard.require(contract.get('version') == LIST_VERSION and kind == 'serving'
+                      and image == initial_image(contract) and ready == created
+                      and ready == contract['initial_admitted_revision']
+                      and original.flag_state(service)
+                      and service['traffic'] == original.fixed_traffic(ready))
+        revision = contract['initial_revisions']['serving']
+        guard.require(re.fullmatch(re.escape(service['name'].split('/')[-1]) + r'-[a-z0-9-]+[a-z0-9]', revision)
+                      and len(revision) <= 63)
+        for item in original.main_container(expected, kind)['env']:
+            if item['name'] in original.FLAGS:
+                item['value'] = 'false'
+        expected['traffic'] = [{'type': 'TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST', 'percent': 100}]
+        return {'phase': phase, 'kind': kind,
+            'body': {'name': service['name'], 'etag': service['etag'],
+                'template': {'containers': deepcopy(expected['template']['containers']), 'revision': revision},
+                'traffic': expected['traffic']},
+            'update_mask': 'template.containers,template.revision,traffic',
+            'before_configuration_sha256': original.sha(before), 'expected_configuration': expected,
+            'expected_ready_revision': revision}
     revision = contract['revisions']['controller' if kind == 'controller' else 'live' if phase.startswith('admit') else 'stage']
     guard.require(revision.startswith(service['name'].split('/')[-1] + '-') and len(revision) <= 63)
     new_revision = phase in {'controller', 'stage', 'admit-stage'}
     if new_revision:
         guard.require(created == ready)
     if phase in {'controller', 'stage'}:
-        guard.require(image == original.NEW and ready == contract['initial_revisions'][kind])
+        guard.require(image == initial_image(contract) and ready == contract['initial_revisions'][kind])
         guard.require(service['traffic'] == [{'type': 'TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST', 'percent': 100}])
         original.main_container(expected, kind)['image'] = contract['image']
         if kind == 'serving':
@@ -103,7 +136,8 @@ def readback(before, after, proposal, contract, staged=None):
         guard.require(original.verify_revision(after, staged, expected)['retired'])
     else:
         guard.require(after['latestReadyRevision'].split('/')[-1] == expected)
-    return {'phase': proposal['phase'], 'generation': after['generation'], 'image': contract['image'],
+    return {'phase': proposal['phase'], 'generation': after['generation'],
+            'image': original.main_container(after, proposal['kind'])['image'],
             'ready_revision': after['latestReadyRevision'].split('/')[-1],
             'runtime_startup_verified': not idle, 'all_other_configuration_preserved': True}
 
@@ -123,6 +157,8 @@ def verify_archive(archive, hashes, expected_files):
 
 
 def qualify(directory, contract):
+    if contract.get('version') == LIST_VERSION:
+        return qualify_list(directory, contract)
     guard.require(contract['hosted_acceptance_pending'] is False)
     manifest = guard.document((PROOF / 'repair-production-source-manifest.json').read_bytes())
     pins = manifest['sources']
@@ -182,8 +218,97 @@ def qualify(directory, contract):
             'ci_run_id': run['id'], 'focused_source_bound_delivery_verified': True}
 
 
-def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_before=None):
-    contract = guard.document(CONTRACT.read_bytes())
+def qualify_list(directory, contract):
+    """Full new-runtime CI/build proof; never reuse the older repair's receipts."""
+    guard.require(contract['hosted_acceptance_pending'] is False and initial_image(contract) == PREVIOUS)
+    manifest = guard.document((PROOF / 'list-read-production-source-manifest.json').read_bytes())
+    pins = manifest['sources']
+    previous = guard.document((PROOF / 'repair-production-source-manifest.json').read_bytes())['sources']
+    guard.require(manifest['revision'] == contract['runtime_commit'] and len(pins) == 180
+        and set(pins) == set(previous)
+        and [p for p in sorted(pins) if pins[p] != previous[p]] == ['orchestration/research_evidence.py']
+        and all(hashlib.sha256((ROOT / p).read_bytes()).hexdigest() == digest for p, digest in pins.items()))
+    build = guard.document((directory / 'build.json').read_bytes())
+    wanted = guard.document((PROOF / 'list-read-cloudbuild.json').read_bytes())
+    guard.require(build['id'] == contract['build_id'] and build['status'] == 'SUCCESS'
+        and build['projectId'] == original.PROJECT and build['serviceAccount'] == wanted['serviceAccount']
+        and build['images'] == wanted['images'] and build['tags'] == wanted['tags']
+        and build['timeout'] == wanted.get('timeout', '3600s')
+        and not any(k in build for k in ('secrets', 'availableSecrets', 'substitutions', 'buildTriggerId')))
+    options = deepcopy(build['options'])
+    guard.require(options.pop('pool', {}) == {} and options.pop('workerRelease', 'legacy') == 'legacy')
+    options['diskSizeGb'] = int(options['diskSizeGb'])
+    guard.require(options == wanted['options'] and len(build['steps']) == len(wanted['steps']) == 4)
+    for actual, expected in zip(build['steps'], wanted['steps']):
+        guard.require(actual['status'] == 'SUCCESS')
+        value = {k: v for k, v in actual.items() if k not in {'status', 'timing', 'pullTiming'}}
+        expected = deepcopy(expected)
+        if expected['id'] == 'immutable-source-label-proof':
+            expected['args'] = [v.replace('$$', '$') for v in expected['args']]
+        guard.require(value == expected)
+    images = build['results']['images']
+    guard.require(len(images) == 1 and images[0]['digest'] == contract['image'].split('@')[1])
+    source = build['sourceProvenance']['resolvedStorageSource']
+    guard.require(source['bucket'] == original.PROJECT + '-build-source' and source['object'].startswith('source/')
+        and str(source['generation']).isdecimal() and build['source'] == {'storageSource': source})
+    uri = 'gs://' + source['bucket'] + '/' + source['object'] + '#' + str(source['generation'])
+    files = guard.document((PROOF / 'list-read-build-context.json').read_bytes())
+    guard.require(original.sha(files) == contract['build_context_sha256'])
+    verify_archive(directory / 'staged-source.tgz', build['sourceProvenance']['fileHashes'][uri]['fileHash'], files)
+    run = guard.document((directory / 'focused-run.json').read_bytes())
+    jobs = guard.document((directory / 'focused-jobs.json').read_bytes())['jobs']
+    guard.require(run['id'] == contract['ci_run_id'] and run['head_sha'] == contract['runtime_commit']
+        and run['status'] == 'completed' and run['conclusion'] == 'success' and len(jobs) == 1
+        and jobs[0]['id'] == contract['ci_job_id'] and jobs[0]['run_id'] == run['id']
+        and jobs[0]['conclusion'] == 'success' and jobs[0]['status'] == 'completed'
+        and all(s['status'] == 'completed' and (s['conclusion'] == 'success' or
+            s['name'] == 'Verify reused runtime bytes for native-only follow-up' and s['conclusion'] == 'skipped')
+            for s in jobs[0]['steps']))
+    required = {'Verify repair, privacy and unchanged host contracts', 'Verify current operator checks',
+                'Verify actual PostgreSQL 16 migrations, protection and concurrency'}
+    guard.require({s['name'] for s in jobs[0]['steps'] if s['conclusion'] == 'success'} >= required
+        and hashlib.sha256((directory / 'focused.log').read_bytes()).hexdigest() == contract['ci_log_sha256'])
+    guard.require(contract['operator_hosted_acceptance_pending'] is False)
+    operator_run = guard.document((directory / 'operator-run.json').read_bytes())
+    operator_jobs = guard.document((directory / 'operator-jobs.json').read_bytes())['jobs']
+    guard.require(operator_run['id'] == contract['operator_ci_run_id']
+        and operator_run['head_sha'] == contract['operator_commit']
+        and operator_run['status'] == 'completed' and operator_run['conclusion'] == 'success'
+        and len(operator_jobs) == 1 and operator_jobs[0]['id'] == contract['operator_ci_job_id']
+        and operator_jobs[0]['run_id'] == operator_run['id'] and operator_jobs[0]['conclusion'] == 'success'
+        and operator_jobs[0]['status'] == 'completed')
+    skipped = {'Verify repair, privacy and unchanged host contracts', 'Identify job-owned PostgreSQL container address',
+               'Verify actual PostgreSQL 16 migrations, protection and concurrency'}
+    guard.require(all(s['status'] == 'completed' and (s['conclusion'] == 'success' or
+        s['name'] in skipped and s['conclusion'] == 'skipped') for s in operator_jobs[0]['steps'])
+        and {s['name'] for s in operator_jobs[0]['steps'] if s['conclusion'] == 'success'} >=
+            {'Verify reused runtime bytes for native-only follow-up', 'Verify current operator checks'}
+        and hashlib.sha256((directory / 'operator.log').read_bytes()).hexdigest() == contract['operator_ci_log_sha256'])
+    operator_pins = contract['operator_pins']
+    guard.require(set(operator_pins) == {'scripts/beta_b1_repair_rollout.py', 'tests/test_beta_b1_list_rollout.py',
+                                        '.github/workflows/beta-b1-focused.yml'})
+    for path, digest in operator_pins.items():
+        committed = subprocess.check_output(['git', 'show', contract['operator_commit'] + ':' + path], cwd=ROOT)
+        guard.require(hashlib.sha256(committed).hexdigest() == digest
+            and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest)
+    authorization = guard.document((PROOF / 'question06-budget-authorization02.json').read_bytes())
+    reservation = guard.document((directory / 'reservation.json').read_bytes())
+    from decimal import Decimal
+    guard.require(authorization['approved_initial_validation_allowance_jpy'] == 700
+        and reservation['pending_run_id'] == 'f7e35a7a-4196-4431-9f3f-d5edbca66bc8'
+        and reservation['native_model_calls'] == '7'
+        and Decimal(reservation['total_planned_jpy']) <= 700
+        and Decimal(reservation['one_question_model_reserve_jpy']) >= 300
+        and reservation['new_paid_question_admitted'] is False)
+    from datetime import datetime, timezone
+    age = (datetime.now(timezone.utc) - guard.timestamp(reservation['captured_utc'])).total_seconds()
+    guard.require(0 <= age <= 1800)
+    return {'source_paths': 180, 'intentional_runtime_supersessions': 1, 'build_id': build['id'],
+        'ci_run_id': run['id'], 'focused_source_bound_delivery_verified': True}
+
+
+def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_before=None, list_candidate=False):
+    contract = guard.document((LIST_CONTRACT if list_candidate else CONTRACT).read_bytes())
     qualification = qualify(directory, contract)
     kind = 'controller' if phase == 'controller' else 'serving'
     endpoint = 'https://run.googleapis.com/v2/' + contract['services'][kind]['name']
@@ -196,7 +321,21 @@ def execute(cloud, directory, phase, *, validate_only, execution_name=None, not_
         (target / name).write_text(json.dumps(data, indent=2) + '\n')
     save('before.json', before)
     save('plan.json', {**proposal, 'candidate_qualification': qualification})
-    if not validate_only:
+    if phase == 'drain':
+        queue = f'https://cloudtasks.googleapis.com/v2/projects/{original.PROJECT}/locations/{original.REGION}/queues/ocean-v1-beta-research'
+        state = cloud.request(queue, personal=True)
+        tasks = cloud.request(queue + '/tasks?pageSize=1000', personal=True)
+        schedules = cloud.request(f'https://cloudscheduler.googleapis.com/v1/projects/{original.PROJECT}/locations/{original.REGION}/jobs?pageSize=500', personal=True)
+        guard.require(state['state'] == 'PAUSED' and not tasks.get('tasks') and not tasks.get('nextPageToken')
+            and not schedules.get('jobs') and not schedules.get('nextPageToken'))
+    if not validate_only and phase != 'drain':
+        if list_candidate and phase == 'controller':
+            from datetime import datetime, timezone
+            serving = cloud.request('https://run.googleapis.com/v2/' + contract['services']['serving']['name'])
+            baseline(serving, 'serving', contract)
+            guard.require(not original.flag_state(serving)
+                and serving['latestReadyRevision'].split('/')[-1] == contract['initial_revisions']['serving']
+                and (datetime.now(timezone.utc) - guard.timestamp(serving['updateTime'])).total_seconds() > 60)
         guard.require(bool(execution_name) and bool(not_before))
         apply.fresh_entry(cloud, target, execution_name, not_before, phase)
         if kind == 'serving':
@@ -248,6 +387,7 @@ def main():
     mode.add_argument('--apply', action='store_true')
     parser.add_argument('--observer')
     parser.add_argument('--not-before')
+    parser.add_argument('--list-candidate', action='store_true')
     args = parser.parse_args()
     import os
     directory = args.directory.resolve()
@@ -256,7 +396,7 @@ def main():
     os.umask(0o077)
     try:
         result = execute(apply.Cloud(), directory, args.phase, validate_only=args.validate_only,
-                         execution_name=args.observer, not_before=args.not_before)
+                         execution_name=args.observer, not_before=args.not_before, list_candidate=args.list_candidate)
     except Exception:
         print('{"state":"repair_rollout_stopped_inspect_private_phase_before_retry"}')
         return 2

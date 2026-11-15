@@ -1,6 +1,60 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current checkpoint — Q6 lookup completed; evidence-list repair awaiting hosted checks
+## Current checkpoint — list-read image built; guarded operator follow-up next
+
+User approved the700JPY validation allowance and routine future follow-ups;
+monthly beta target50,000JPY and notice before exceeding it remain in force.
+[Approval](../beta/b1-20261114/question06-budget-authorization02.json).
+No further GCP sign-in is currently needed. Q6 is still completed with no
+successfully submitted answer; never resubmit or repeat its run delivery.
+
+Runtime source `a0e98fe8e1e3bfc60b1f917ce6d9355e93d121ac` is pushed and passed
+full source-bound CI43693489204/job132748878213:232 runtime tests,63 operator
+checks and24 actual PostgreSQL16.16 tests. No full-runtime/native skip was used;
+only the inapplicable old-runtime reuse step was skipped.
+[Hosted verification](../beta/b1-20261114/list-read-hosted-verification.json).
+Build `ab4b6868-af58-4e21-b524-97cca4c6a2d3` succeeded with all4 exact source,
+non-root, offline SDK and label proofs. Image digest83ce6e8e…, exact24-file
+staged archive/provider SHA verified. [Build](../beta/b1-20261114/list-read-build-result.json).
+It is not deployed. Existing serving43/controller4 remain on181f26d4.
+
+The fixed repair writer now has an explicit `--list-candidate` mode, a distinct
+list-read contract/CI/build proof, an exact181f26d4 predecessor, admission drain,
+fresh cost/paused-queue guards and preserved full configuration hashes. Original
+default receipts and qualification remain unchanged.76 local operator tests
+pass, including13 new drift/drain cases. The operator-only hosted follow-up must
+pass before any live update; it reuses the232/24 unchanged-runtime acceptance
+only after checking all180 source bytes against a0e98fe. Do not repeat broad
+runtime/native checks for this operator-only change or claim them newly run.
+
+Next: commit/push the operator-only follow-up, retain its exact CI metadata/log,
+create the separate fixed `deploy/gcp/beta/b1/list-read-contract.json` bound to
+the actual build/image/core CI/operator CI, refresh complete meters/prices and
+observer metadata, and run qualification/validateOnly. Candidate private root:
+`/private/tmp/ocean-b1-q6-20261115/list-read-candidate` (build, exact archive,
+context/source pins and full CI evidence). Full conservative pending-Q6 plan
+was663.4312JPY before this build, including300 model reserve/20 cloud margin/2
+future observers; reconcile the new build before rollout and preserve all
+missing-usage allowances. No new question is admitted by these receipts.
+
+Then drain Research admission on the unchanged181 image; wait its60-second
+old serving-request envelope and run the unchanged original read-only observer
+for fresh closed-head/outbox authority. Guarded controller/stage/promote and
+fresh observer before admit-stage/admit-promote preserve identities, numeric
+secrets, sidecars, ingress, networking, scaling and timeouts. Queue and sweep/
+Scheduler/Codex scheduling remain PAUSED throughout. Inspect every uncertain
+mutation before retry; phase intent directories forbid automatic duplicate PATCH.
+Resume the same Q6 and prepare its answer once after evidence/history verify.
+Actual latency, citations/reload/recovery and B1–B5 gates remain open.
+
+Q6's reviewed earlier evidence is durable under
+`~/Library/Application Support/OCEAN/private-handoff-20261115-q6`:100files,
+9.14MB,0700 directories/0600 files, indexed hashes; SDK material excluded.
+[Preservation](../beta/b1-20261114/question06-private-preservation.json).
+Later build/CI captures are currently only in the private working root; preserve
+an additional indexed increment before handing off, without altering that index.
+
+## Historical checkpoint — Q6 lookup completed; evidence-list repair awaiting hosted checks
 
 Fresh Google SDK login completed privately and both CLI identities work. No
 further user sign-in is currently needed. Q6 `f7e35a7a-4196-4431-9f3f-d5edbca66bc8`
