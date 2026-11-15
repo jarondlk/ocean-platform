@@ -226,3 +226,12 @@ def test_pg16_roles_finish_question_and_reopen_answer_without_account_write_righ
     # The original full real-role journey now runs under the amended function,
     # exercising actual durable mutation/claim/duplicate/reopen locks as well.
     journey.test_question_is_durable_before_private_delivery_and_answer_reopens(questions)
+    # The beta list-specific authority fence closes inside the real restricted
+    # SQL transaction, under the same shared owner function used above.
+    from sqlalchemy import select
+    from db.app_models import ResearchRun
+    with native["factory"]() as session:
+        run = session.scalar(select(ResearchRun).where(ResearchRun.user_id == native["actor"].id))
+        address = {"investigation_id": str(run.investigation_id), "conversation_id": str(run.conversation_id)}
+    history = questions[0].research_run_service.invoke("list", address, native["actor"])
+    assert len(history["items"]) == 1 and history["items"][0]["status"] == "completed"

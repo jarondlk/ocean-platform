@@ -36,6 +36,22 @@ class BetaModelSettings(BaseModel):
     max_output_tokens: Literal[4096]
 
 
+class BetaResearchRunService(ResearchRunService):
+    def _list(self, session, actor, data):
+        # One request, inside the existing owner-locked SQL transaction. Every
+        # run/context/payload is still verified; repeated activation/control
+        # reads share a fence that closes before SQL commits. No mutation or
+        # other request inherits this authority observation.
+        from orchestration.research_runs import ResearchRunError
+        try:
+            with self.investigations.catalogue.read_scope():
+                return super()._list(session, actor, data)
+        except ResearchRunError:
+            raise
+        except Exception:
+            raise ResearchRunError() from None
+
+
 class BetaResearchEvidenceService(ResearchEvidenceService):
     def invoke(self, name, payload, user):
         if name != "list":
@@ -157,7 +173,7 @@ def compose_beta_question_services(*, session_factory, catalogue_service, catalo
                     "orchestration/beta_vertex_research.py").read_bytes()).hexdigest()}
     factory = partial(_controller, investigations=investigations, catalogue=catalogue_service,
         runtime=runtime, model=model_settings.model, runtime_identity=identity)
-    runs = ResearchRunService(session_factory=session_factory, site_id=SITE_ID,
+    runs = BetaResearchRunService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, controller_factory=factory,
         queue=CloudResearchQueue(settings=cloud_settings, kind="run"), owner_locker=lock_research_owner)
     evidence = BetaResearchEvidenceService(session_factory=session_factory, site_id=SITE_ID,

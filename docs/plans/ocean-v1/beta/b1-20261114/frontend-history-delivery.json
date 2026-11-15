@@ -1,0 +1,81 @@
+{
+  "actual_current_image_recovery_complete": false,
+  "affected_jobs": [
+    {
+      "conclusion": "success",
+      "id": 132877373974,
+      "tests": 1089
+    },
+    {
+      "conclusion": "success",
+      "id": 132877373585,
+      "standalone_login_proxy_tests": 1,
+      "tests": 61
+    }
+  ],
+  "all_three_build_steps": "SUCCESS",
+  "audits": "0 reported production vulnerabilities in affected frontend jobs",
+  "browser_trials": {
+    "fullNavigationDeadlinePassed": false,
+    "startedUtc": "2026-11-15T16:42:57.898Z",
+    "trials": [
+      {
+        "case": "Cold full navigation, six-run history and retained default answer",
+        "loaded": false,
+        "observedUpperBoundMs": 15014,
+        "observedUtc": "2026-11-15T16:43:12.912Z"
+      },
+      {
+        "case": "Exact persisted Q6 answer and both citations on new frontend",
+        "loaded": true,
+        "observedUpperBoundMs": 6307,
+        "observedUtc": "2026-11-15T16:48:04.006Z"
+      }
+    ],
+    "version": "ocean-beta-b1-parallel-history-browser-v1"
+  },
+  "budget": {
+    "base_reservation_total_jpy": "618.7550630434353611157012392",
+    "conservative_extra_60s_minimum_jpy": "0.011865360",
+    "historical_default_memory_gib": ".75",
+    "new_job_memory_gib": "1.25",
+    "original_estimator_and_meter_guards_unchanged": true,
+    "total_conservative_jpy": "618.7669284034353611157012392"
+  },
+  "build_id": "8828b8b6-cd0d-4b17-88ac-db68755544de",
+  "build_source": {
+    "bucket": "ocean-v1-beta-20261101-build-source",
+    "generation": "1794760159317626",
+    "object": "source/1794760158.594797-58f6c4b446454a1fa5a5bac30836273c.tgz"
+  },
+  "ci_run_id": 43735569458,
+  "exact_archive_verification": {
+    "allowed_large_source_fixture": "qualification/docs/plans/ocean-v1/evidence/C16/actual-wire.json",
+    "bytes": 4833078,
+    "exact_local_declared_sizes_and_hashes": true,
+    "files": 250,
+    "not_a_generic_size_waiver": true,
+    "original_api_1mib_verifier_unchanged": true,
+    "provider_sha256_verified": true
+  },
+  "full_workflow_success_not_claimed": true,
+  "new_model_calls": 0,
+  "offline_nonroot_packaged_startup_and_login_passed": true,
+  "production_intentional_supersessions": [
+    "frontend-v1/src/research-history.ts"
+  ],
+  "production_source_files": 71,
+  "qualification_source_files": 172,
+  "queue_scheduling": "PAUSED",
+  "recorded_utc": "2026-11-15T16:51:40.927907+00:00",
+  "remaining_bottleneck": "Cold listing10.454s; parallel event hydration observed in two bounded cohorts. Exact persisted Q6 answer6.307s. Full navigation not ready at15s; next candidate targets repeated per-list authority transport.",
+  "rollout": {
+    "api_and_every_other_service_setting_preserved": true,
+    "generation": "57",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:0bde25544313072317ee45d36770400160f0f0960d14cddb7efc416357adffe0",
+    "revision": "ocean-v1-beta-serving-b1-history-1116",
+    "state": "frontend_ready"
+  },
+  "source_revision": "6fdf666c2e3fba47a35c9e8319586b6885ca2496",
+  "version": "ocean-beta-b1-frontend-history-delivery-v1"
+}

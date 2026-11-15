@@ -9,6 +9,8 @@ on:
       - 'tests/test_beta_question_postgres.py'
       - 'scripts/beta_b1_shared_owner.py'
       - 'tests/test_beta_b1_shared_owner.py'
+      - 'api/v1_beta_question_services.py'
+      - 'docs/plans/ocean-v1/beta/b1-20261114/run-list-repair-plan.json'
       - '.github/workflows/beta-b1-shared-owner.yml'
   workflow_dispatch:
 
@@ -50,17 +52,24 @@ jobs:
           cache-dependency-path: requirements/dev.txt
       - name: Install hash-locked dependencies
         run: python -m pip install --require-hashes -r requirements/dev.txt
-      - name: Verify unchanged accepted runtime
+      - name: Verify current runtime source boundary
         run: |
           python - <<'PY'
           import hashlib,json,pathlib,subprocess
           base=pathlib.Path('docs/plans/ocean-v1/beta/b1-20261114')
           m=json.loads((base/'ready-list-production-source-manifest.json').read_text())
           assert m['revision']=='148182df18e0c4fb0084e9e766a9c071412f5287' and len(m['sources'])==180
+          candidate_path=base/'run-list-repair-plan.json'
+          candidate=json.loads(candidate_path.read_text()) if candidate_path.exists() else None
+          if candidate:
+              assert candidate['version']=='ocean-beta-b1-run-list-repair-plan-v1'
+              assert candidate['baseline_runtime_revision']==m['revision']
+              assert candidate['intentional_runtime_supersessions']==['api/v1_beta_question_services.py']
           for path,expected in m['sources'].items():
               assert hashlib.sha256(subprocess.check_output(['git','show',m['revision']+':'+path])).hexdigest()==expected
-              assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()==expected
-          print('180 accepted runtime pins unchanged; reuse run43710279748 runtime248/PG25, add separate actual role/lock proof below.')
+              wanted=candidate['runtime_source_pin'] if candidate and path=='api/v1_beta_question_services.py' else expected
+              assert hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()==wanted
+          print('179 unchanged runtime sources plus exact separately declared list candidate; current full runtime/C21 qualification is required in beta-b1-focused, not borrowed from baseline.' if candidate else '180 accepted runtime pins unchanged; reuse run43710279748 runtime248/PG25, add separate actual role/lock proof below.')
           PY
       - name: Select disposable container and require controller SCRAM
         env:

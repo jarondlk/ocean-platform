@@ -1,5 +1,21 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 — frontend live57; list-fence candidate
+
+Frontend0bde2554/source6fdf666 is live on57, API5aed/controller6 unchanged.
+All3CloudBuild gates, exact250-file archive, affected GitHub1089+61+1 checks/
+audits passed. [Delivery](../beta/b1-20261114/frontend-history-delivery.json).
+Parallel event reads are observed; cold run listing10.454s still makes full
+navigation exceed15s. Q6 exact answer and both citations reopen in6.307s. B1
+remains OPEN. New list-only request fence preserves all context/payload/principal
+checks and closes inside owner-locked SQL before commit;36local tests pass.
+Hosted runtime/native PG, new API image and guarded rollout are still pending.
+[Candidate](../beta/b1-20261114/run-list-repair-plan.json). Queue/scheduling remainPAUSED;
+no Q6 resend/new model call, no fixture account/recovery Job yet. New private
+root /private/tmp/ocean-b1-wrap-20261116 includes actualSQL/frontend outcomes.
+Do not repeat successful57frontend rollout or bt2ms SQL amendment. Earlier
+sections below are historical; preserve all original receipts/unrelated files.
+
 ## Current November16 checkpoint — shared owner lock live, frontend history follow-up
 
 Serving56/controller6 retain API5aedf3ba/source148182d. Restricted one-off

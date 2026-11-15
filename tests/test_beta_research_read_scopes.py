@@ -11,12 +11,13 @@ from fastapi.testclient import TestClient
 import pytest
 from sqlalchemy import func, select
 
-from api.v1_beta_question_services import BetaResearchAnswerService, BetaResearchEvidenceService
+from api.v1_beta_question_services import BetaResearchAnswerService, BetaResearchEvidenceService, BetaResearchRunService
 from db.app_models import ResearchAnswerJob, ResearchAnswerOutbox, ResearchInvestigation, ResearchRun, ResearchRunOutbox
 from ingestion.artifact_store import BoundedLocalStore
 from ingestion.provenance_snapshot import SnapshotConflict
 from orchestration.research_answers import ResearchAnswerError, ResearchAnswerService
 from orchestration.research_evidence import ResearchEvidenceService
+from orchestration.research_runs import ResearchRunError, ResearchRunService
 from tests.test_beta_question_services import public_app, questions as questions, submitted
 from tests.test_beta_research_host import context as context
 from tests.test_beta_snapshot_catalogue import sealed as sealed
@@ -73,6 +74,76 @@ def _transport_counter(monkeypatch):
 
 def _bytes(value):
     return json.dumps(value, separators=(",", ":"), ensure_ascii=False).encode()
+
+
+def test_run_listing_preserves_every_context_and_payload_check_with_one_current_fence(completed, monkeypatch):
+    questions, address, _ = completed
+    bundle, actor, _, _ = questions
+    runs = bundle.research_run_service
+    assert isinstance(runs, BetaResearchRunService)
+    # Several histories of the same frozen context reproduce actual reloads.
+    for _ in range(2):
+        current = bundle.investigation_service.invoke("get", {"investigation_id": address["investigation_id"]}, actor)["context"]
+        runs.invoke("submit", {**{k: address[k] for k in ("investigation_id", "conversation_id")},
+            "revision_id": current["id"], "expected_snapshot_id": current["snapshot_id"],
+            "expected_payload_sha256": current["payload_sha256"], "question": "Count all datasets",
+            "idempotency_key": str(uuid.uuid4())}, actor)
+    calls, reads = Counter(), _transport_counter(monkeypatch)
+    for owner, method in [(runs, "_principal"), (runs, "_check_context"), (runs.investigations, "_actor"),
+                          (runs.investigations.catalogue.resolver, "resolve")]:
+        original = getattr(owner, method)
+        def counted(*args, _original=original, _name=method, **kwargs):
+            calls[_name] += 1
+            return _original(*args, **kwargs)
+        monkeypatch.setattr(owner, method, counted)
+    payload = {k: address[k] for k in ("investigation_id", "conversation_id")}
+    listed = runs._list
+    monkeypatch.setattr(runs, "_list", lambda *args: ResearchRunService._list(runs, *args))
+    baseline = runs.invoke("list", payload, actor)
+    baseline_calls, baseline_reads = calls.copy(), Counter(_category(key) for _, key in reads)
+    reads.clear()
+    calls.clear()
+    monkeypatch.setattr(runs, "_list", listed)
+    result = runs.invoke("list", payload, actor)
+    actual = Counter(_category(key) for _, key in reads)
+    assert _bytes(result) == _bytes(baseline) and len(result["items"]) == 3
+    assert calls == baseline_calls and calls["_check_context"] == 3 and calls["_principal"] == 1
+    assert actual["object"] == baseline_reads["object"] and actual["manifest"] == baseline_reads["manifest"]
+    assert actual["activation"] == actual["control"] == 2
+    assert actual["activation"] < baseline_reads["activation"] and actual["control"] < baseline_reads["control"]
+
+
+@pytest.mark.parametrize("change", ["control_generation", "activation_generation", "activation_bytes", "read_error"])
+def test_run_list_closing_authority_failure_never_publishes_history(completed, monkeypatch, change):
+    questions, address, _ = completed
+    bundle, actor, _, sealed = questions
+    armed, changed = False, False
+    original_list = ResearchRunService._list
+    def after_result(*args, **kwargs):
+        nonlocal armed
+        result = original_list(*args, **kwargs)
+        armed = True
+        return result
+    monkeypatch.setattr(ResearchRunService, "_list", after_result)
+    original_read = BoundedLocalStore.read
+    def changing(store, key, **kwargs):
+        nonlocal changed
+        target = key.endswith("/control.json") if change in {"control_generation", "read_error"} else "/activations/" in key
+        if armed and target and not changed:
+            changed = True
+            if change == "read_error":
+                raise OSError("Synthetic closing authority failure")
+            path = sealed[1] / "store" / key
+            if change == "activation_bytes":
+                path.write_bytes(path.read_bytes() + b" ")
+            else:
+                stamp = path.stat().st_mtime_ns
+                os.utime(path, ns=(stamp + 1_000_000, stamp + 1_000_000))
+        return original_read(store, key, **kwargs)
+    monkeypatch.setattr(BoundedLocalStore, "read", changing)
+    with pytest.raises(ResearchRunError) as error:
+        bundle.research_run_service.invoke("list", {k: address[k] for k in ("investigation_id", "conversation_id")}, actor)
+    assert changed and error.value.status_code == 503
 
 
 def test_evidence_list_keeps_replay_authorization_and_payload_reads_while_reducing_authority(completed, monkeypatch):

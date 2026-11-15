@@ -1,0 +1,14 @@
+{
+  "baseline_runtime_revision": "148182df18e0c4fb0084e9e766a9c071412f5287",
+  "hosted_runtime_and_pg_pending": true,
+  "image_build_or_deployment_started": false,
+  "intentional_runtime_supersessions": [
+    "api/v1_beta_question_services.py"
+  ],
+  "local_test_scope": "Owning beta read-scope integration with real retained synthetic SQL/store; not hosted PG/GCP acceptance",
+  "local_tests": 36,
+  "no_new_model_call_or_deadline_lock_acl_change": true,
+  "runtime_source_pin": "5e1b44d5b7f070685b645f619c1a5dd79fd6a07f65516ac3fae9b23c2630079e",
+  "scope": "Read-only run listing; per-request authority memo closes inside unchanged owner-locked SQL transaction. Every per-run context/payload/principal check preserved.",
+  "version": "ocean-beta-b1-run-list-repair-plan-v1"
+}
