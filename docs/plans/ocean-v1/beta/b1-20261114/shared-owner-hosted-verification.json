@@ -1,0 +1,39 @@
+{
+  "actual_pg_role_lock_journey_cases": 1,
+  "ci_job_id": 132871271224,
+  "ci_log_sha256": "71488fb6f38a25f813563f48077c90d21f93148d9d6556cca8fa029869db7c74",
+  "ci_run_id": 43733614756,
+  "conclusion": "success",
+  "live_sql_applied": false,
+  "original_failed_runs_preserved": [
+    43732888694,
+    43733183614
+  ],
+  "postgresql_version": "16.16",
+  "pure_rollout_cases": 18,
+  "runtime_180_sources_unchanged": true,
+  "source_pins": {
+    "deploy/gcp/beta/research-operator/research_operator.py": "080e71f9905aeb3c92981b72bc842ada7bedd202f64edf0acc26ba363a8442df",
+    "deploy/gcp/beta/research-operator/shared_owner_lock.py": "0ca65c4f2e21bfee34e5312af5aba73cffe4cd5d7112d320bab73e7bd6efe008"
+  },
+  "source_revision": "2d4728b27e0a58ec6882e4e6277164cd02d84bd0",
+  "tests": 19,
+  "unchanged_runtime_evidence_reused": {
+    "ci_run_id": 43710279748,
+    "postgresql_tests": 25,
+    "runtime_tests": 248,
+    "source_revision": "148182df18e0c4fb0084e9e766a9c071412f5287"
+  },
+  "verified": [
+    "old_reader_contention_reproduced",
+    "shared_readers_coexist",
+    "role_status_delete_blocked",
+    "stale_actor_denied_after_suspension",
+    "function_oid_acl_owner_security_metadata_unchanged",
+    "public_function_acl_rejected",
+    "altered_search_path_rejected",
+    "runtime_account_update_denied",
+    "actual_durable_run_answer_duplicate_reopen"
+  ],
+  "version": "ocean-beta-b1-shared-owner-hosted-verification-v1"
+}

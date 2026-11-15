@@ -1,5 +1,24 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 checkpoint — shared owner lock live, frontend history follow-up
+
+Serving56/controller6 retain API5aedf3ba/source148182d. Restricted one-off
+migrator Job bt2ms applied only FOR SHARE owner locking; same function OID/ACL/
+owner/security metadata, fresh SQL readback,19hosted PG16/operator checks pass.
+Admission restored; queue/Scheduler/sweep/Codex scheduling PAUSED. No model call.
+[SQL delivery](../beta/b1-20261114/shared-owner-delivery.json).
+Q6 answer/citation/complete identities read in4.9/3.7/4.8s and background remains
+healthy. Full reload still missed15s: serial six-run event hydration after the
+6–8s listing. Do not call B1 complete. Frontend-only bounded3-reader candidate
+keeps cursor order, full-batch authority checks, cancellation and15s deadline.
+[Read follow-up](../beta/b1-20261114/shared-owner-read-followup.json).
+NativeCI43733614756/job132871271224 is exact2d4728b; original fixture failures
+43732888694/43733183614 preserved. No SQL/observer/grant operation may be replayed.
+Private root /private/tmp/ocean-b1-wrap-20261116/shared-owner. Browser signed-in
+on About. Next qualify/build/deploy frontend-only history candidate, then actual
+reload/background and current-image recovery matrix. No fixture account/recovery
+Job has yet been created. Earlier sections below are historical checkpoints.
+
 Shared owner-lock candidate prepared November16: local51pass/native1skip; hosted
 PG16 concurrency/revocation/real-role journey pending. No live SQL change. Exact
 function metadata/grants and all180 runtime sources preserved;15s unchanged.

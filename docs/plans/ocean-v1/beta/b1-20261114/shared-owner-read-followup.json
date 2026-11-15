@@ -1,0 +1,54 @@
+{
+  "all_161_bounded_current_revision_research_requests_http200": true,
+  "api_revision": "ocean-v1-beta-serving-b1-share-live-1116",
+  "deadline_increased": false,
+  "full_reload_not_passed_at_15_seconds": true,
+  "new_model_calls": 0,
+  "note": "Q6 answer/citations and sustained refresh pass. Full reload not ready at 15s; later automatically recovered without explicit retry. Source logs show serial per-run event hydration.",
+  "request_log_capture_sha256": "38bbfbbbfcda4e0df798f00df180307f2a44f177b7454c9188c9e6738336bc06",
+  "request_pages_complete": true,
+  "serial_run_event_hydration_identified": true,
+  "state": "improved_answer_citation_reads_full_reload_gate_open",
+  "trials": [
+    {
+      "answerVisible": true,
+      "case": "Q6 existing answer and evidence selection",
+      "observedUpperBoundMs": 4900,
+      "observedUtc": "2026-11-15T16:19:35.859Z"
+    },
+    {
+      "case": "Q6 inventory citation open and page",
+      "completeSnapshotVisible": false,
+      "loaded": true,
+      "observedUpperBoundMs": 3680,
+      "observedUtc": "2026-11-15T16:20:02.693Z"
+    },
+    {
+      "case": "Q6 complete input identities",
+      "independentChildSnapshotMatched": true,
+      "observedUpperBoundMs": 4776,
+      "observedUtc": "2026-11-15T16:20:21.111Z"
+    },
+    {
+      "case": "Full reload: history and default retained answer",
+      "loaded": false,
+      "observedUpperBoundMs": 15026,
+      "observedUtc": "2026-11-15T16:21:01.957Z"
+    },
+    {
+      "case": "Q6 exact answer and both citations after full reload",
+      "loaded": true,
+      "observedUpperBoundMs": 4761,
+      "observedUtc": "2026-11-15T16:21:33.451Z"
+    },
+    {
+      "answerVisible": true,
+      "case": "Background refresh after Q6 reload",
+      "checking": false,
+      "observedUtc": "2026-11-15T16:22:35.185Z",
+      "readError": false,
+      "twoCitations": true
+    }
+  ],
+  "version": "ocean-beta-b1-shared-owner-read-followup-v1"
+}

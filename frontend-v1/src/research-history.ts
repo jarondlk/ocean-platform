@@ -50,14 +50,29 @@ export async function loadResearchRunHistory(request: RunHistoryRequest): Promis
       unavailable_ids.push(item.id);
     }
   }
-  const runs: ResearchRun[] = [];
-  for (const snapshot of snapshots.values()) {
-    fresh(); let item = mergeRunSnapshot(cached.find(prior => prior.id === snapshot.id), snapshot);
-    for (let index = 0; index < 20 && item.event_cursor < (item.latest_event_cursor ?? item.event_cursor); index++) {
-      const page = await transport.events({ ...researchRunAddress(item), after_cursor: item.event_cursor, limit: 100 }, signal); fresh();
-      item = mergeRunEvents(item, page);
+  // Independent runs can hydrate concurrently. Keep each run's cursor reads
+  // ordered, bound transport pressure, and publish only the complete verified
+  // batch. A denial/cancellation stops peers and cannot expose partial history.
+  const ordered = [...snapshots.values()], runs = new Array<ResearchRun>(ordered.length);
+  const hydration = new AbortController(), cancel = () => hydration.abort();
+  signal.addEventListener("abort", cancel, { once: true });
+  if (signal.aborted) cancel();
+  let next = 0;
+  const current = () => { fresh(); if (hydration.signal.aborted) throw new DOMException("History read cancelled", "AbortError"); };
+  const worker = async () => {
+    while (next < ordered.length) {
+      current(); const position = next++, snapshot = ordered[position];
+      let item = mergeRunSnapshot(cached.find(prior => prior.id === snapshot.id), snapshot);
+      for (let index = 0; index < 20 && item.event_cursor < (item.latest_event_cursor ?? item.event_cursor); index++) {
+        current();
+        const page = await transport.events({ ...researchRunAddress(item), after_cursor: item.event_cursor, limit: 100 }, hydration.signal); current();
+        item = mergeRunEvents(item, page);
+      }
+      runs[position] = item;
     }
-    runs.push(item);
-  }
+  };
+  try { await Promise.all(Array.from({ length: Math.min(3, ordered.length) }, worker)); }
+  catch (error) { hydration.abort(); throw error; }
+  finally { signal.removeEventListener("abort", cancel); }
   fresh(); return { runs, next_cursor: cursor, unavailable_ids };
 }

@@ -1,0 +1,82 @@
+{
+  "actual_pg16_role_lock_and_durable_journey_passed": true,
+  "api_image": "sha256:5aedf3ba006901cd129e237632eab36aa06195d936ab1fd80c196863767f9ea7",
+  "ci_job_id": 132871271224,
+  "ci_run_id": 43733614756,
+  "controller_generation": 6,
+  "execution": "ocean-v1-beta-b1-owner-lock-20261116-bt2ms",
+  "execution_template_observation": "Every emitted execution field matches the fixed Job, allowing only the reviewed OCI proxy index-to-amd64 substitution. Cloud Run execution projection omits VPC; Job VPC equals original migrator configuration.",
+  "executions": 1,
+  "intentional_sql_supersession": "Only owner function row lock: FOR NO KEY UPDATE -> FOR SHARE. Function OID/ACL/owner/security metadata preserved. Original image and grant sources are unchanged. New compiled helper source separately pinned.",
+  "job": "ocean-v1-beta-b1-owner-lock-20261116",
+  "job_source_pins": {
+    "entry_sha256": "752b642803a4ec52e1d799b908e44f55f45982714f429d5b605e35a0e3130826",
+    "original_image_and_all_identity_secret_network_settings_reused": true,
+    "original_job_unchanged": true,
+    "pins": {
+      "deploy/gcp/beta/research-operator/research_operator.py": "080e71f9905aeb3c92981b72bc842ada7bedd202f64edf0acc26ba363a8442df",
+      "deploy/gcp/beta/research-operator/shared_owner_lock.py": "0ca65c4f2e21bfee34e5312af5aba73cffe4cd5d7112d320bab73e7bd6efe008"
+    },
+    "revision": "2d4728b27e0a58ec6882e4e6277164cd02d84bd0"
+  },
+  "new_model_calls": 0,
+  "original_grant_and_observer_jobs_unchanged": true,
+  "original_observers": [
+    "ocean-v1-beta-provider-preflight-20261111-m55nw",
+    "ocean-v1-beta-provider-preflight-20261111-pkbbs"
+  ],
+  "original_receipts_preserved": true,
+  "phases": [
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "54",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:5aedf3ba006901cd129e237632eab36aa06195d936ab1fd80c196863767f9ea7",
+      "phase": "drain",
+      "ready_revision": "ocean-v1-beta-serving-b1-share-drain-1116",
+      "runtime_startup_verified": true
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "55",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:5aedf3ba006901cd129e237632eab36aa06195d936ab1fd80c196863767f9ea7",
+      "phase": "restore-stage",
+      "ready_revision": "ocean-v1-beta-serving-b1-share-drain-1116",
+      "runtime_startup_verified": false
+    },
+    {
+      "all_other_configuration_preserved": true,
+      "generation": "56",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:5aedf3ba006901cd129e237632eab36aa06195d936ab1fd80c196863767f9ea7",
+      "phase": "restore-promote",
+      "ready_revision": "ocean-v1-beta-serving-b1-share-live-1116",
+      "runtime_startup_verified": true
+    }
+  ],
+  "queue_scheduling": "PAUSED",
+  "read_and_current_image_recovery_acceptance_complete": false,
+  "recorded_utc": "2026-11-15T16:27:08.250919+00:00",
+  "retries": 0,
+  "serving_generation": 56,
+  "source_revision": "2d4728b27e0a58ec6882e4e6277164cd02d84bd0",
+  "sql_report": {
+    "base_operator_revision": "84fe01714e426a66ee7b30559b69ebe05ef8f04f",
+    "captured_utc": "2026-11-15T16:14:43.484260+00:00",
+    "fresh_connection_readback_verified": true,
+    "function_metadata_sha256": "962dfa37b6576e04bf40d9b1a65ce90e9b7845c895a3b303fbb66613ccde7200",
+    "grants_account_data_or_runtime_source_changed": false,
+    "oid_acl_owner_security_metadata_preserved": true,
+    "original_body_sha256": "7cde0f282707738084c76f8c829c10d489d9d7d0a0954e9ac9240abcc18bc19c",
+    "proxy": {
+      "http_status": 200,
+      "proxy_process_exit_observation": "requires Cloud Run per-container execution readback",
+      "shutdown_requested": true
+    },
+    "shared_body_sha256": "4ca083968aa63c09783934b22f9fd3d4e5853248beef4134109a54a5f235aee3",
+    "stage": "complete",
+    "state": "shared_owner_lock_verified",
+    "verification_only": false,
+    "version": "ocean-beta-b1-shared-owner-lock-v1"
+  },
+  "state": "live_sql_verified_admission_restored",
+  "version": "ocean-beta-b1-shared-owner-delivery-v1"
+}

@@ -1,20 +1,17 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
-Updated November15: B0 completed. Runtime a0e98fe/image83ce6e8e is live on
-controller5/serving48 with full other settings preserved. Q6's single actual
-Gemini answer completed and persisted across full reload with an explicit read
-retry; both citations opened against the independent CTD oracle. No scientific
-review or original unsupported population-count answer is claimed.
-[Current B1 outcome](b1-20261114/question06-answer-outcome.json).
-B1remains open: measured history+evidence hydration can exceed the unchanged15s
-browser deadline; current-image recovery matrix is still required. [Read gate](b1-20261114/question06-read-reliability.json).
-Native8calls reconciled at506.9420JPY conservative planning; historical missing
-usage retained, no new question/continuation admitted. Standing future approval
-supports operator-selected1000validation allowance; monthly50000target/notice
-remain. [Cost](b1-20261114/question06-terminal-reconciliation.json).
-Queue, sweep, Scheduler and Codex scheduling stay PAUSED. Next is owning read
-path optimization and focused/current-image acceptance, then remaining B1–B5.
+Updated November16: B0 completed. API source148182d/image5aedf3ba is live on
+serving56/controller6. Separately qualified shared owner-row locking is applied,
+with unchanged private ACL/security metadata and19 actual PG16/operator checks.
+Q6's one real Gemini answer and CTD citations remain durable; warm reads improve
+to roughly4–5s. Full reload still exceeds the unchanged15s history deadline due
+to sequential event hydration. Frontend-only bounded parallel hydration is being
+qualified. Current-image recovery remains required. B1 is OPEN; no new question,
+model call, queue resume, schedule activation or independent scientific review.
+[Current SQL delivery](b1-20261114/shared-owner-delivery.json),
+[read finding](b1-20261114/shared-owner-read-followup.json).
+The old runtime/rollout descriptions below are historical audit context.
 
 Historical integrated audit basis (November14):
 

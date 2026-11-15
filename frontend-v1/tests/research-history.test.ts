@@ -68,6 +68,51 @@ test("cached activity without an explicit acknowledgement cannot retain or autho
   const page = await loadResearchRunHistory(options(client, { cached: [run(999, { status: "running" })] }));
   assert.deepEqual(page.runs.map(value => value.id), [uuid(10)]); assert.equal(statuses, 0);
 });
+test("event hydration overlaps at most three runs, preserves list order and keeps each cursor chain sequential", async () => {
+  const records = Array.from({ length: 6 }, (_, index) => run(100 + index, { latest_event_cursor: 2 }));
+  const waiting: { id: string; after: number; release: () => void }[] = [];
+  let active = 0, maximum = 0, published = false;
+  const client = transport({ list: async () => ({ items: records, next_cursor: null }), events: async (request, signal) => {
+    assert.ok(signal);
+    active++; maximum = Math.max(maximum, active);
+    await new Promise<void>(resolve => waiting.push({ id: request.run_id, after: request.after_cursor, release: resolve }));
+    assert.equal(signal.aborted, false); active--;
+    return { run_id: request.run_id, binding: binding(), after_cursor: request.after_cursor, next_cursor: request.after_cursor + 1,
+      latest_event_cursor: 2, has_more: request.after_cursor === 0,
+      events: [{ cursor: request.after_cursor + 1, run_id: request.run_id, elapsed_ms: 0, kind: "progress", summary: { en: "Checked", ja: "確認" } }] };
+  } });
+  const pending = loadResearchRunHistory(options(client)).then(value => { published = true; return value; });
+  await settle(); assert.equal(waiting.length, 3); assert.equal(active, 3); assert.equal(published, false);
+  // Resolve in reverse order; results must still match the authorized listing.
+  let released = 0;
+  for (let tick = 0; tick < 20 && !published; tick++) {
+    const batch = waiting.splice(0).reverse(); released += batch.length;
+    for (const task of batch) task.release();
+    await settle(); assert.ok(active <= 3);
+  }
+  const page = await pending;
+  assert.equal(maximum, 3); assert.equal(released, 12); assert.deepEqual(page.runs.map(value => value.id), records.map(value => value.id));
+  assert.ok(page.runs.every(value => value.event_cursor === 2 && value.activity.length === 2));
+});
+for (const change of ["denial", "abort", "navigation"] as const) test(`${change} during concurrent event hydration cancels peers and publishes no partial batch`, async () => {
+  const records = Array.from({ length: 6 }, (_, index) => run(100 + index, { latest_event_cursor: 1 }));
+  const abort = new AbortController(); let current = true, calls = 0, aborted = 0, published = false, rejectFirst!: (error: unknown) => void;
+  const client = transport({ list: async () => ({ items: records, next_cursor: null }), events: async (_request, signal) => {
+    assert.ok(signal);
+    const index = calls++;
+    return await new Promise<RunEventPage>((_resolve, reject) => {
+      if (index === 0) rejectFirst = reject;
+      signal.addEventListener("abort", () => { aborted++; reject(new DOMException("Cancelled", "AbortError")); }, { once: true });
+    });
+  } });
+  const pending = loadResearchRunHistory(options(client, { signal: abort.signal, isCurrent: () => current })).then(value => { published = true; return value; });
+  const rejected = assert.rejects(pending, error => change === "denial" ? (error as { status_code: number }).status_code === 403 : (error as Error).name === "AbortError");
+  await settle(); assert.equal(calls, 3);
+  if (change === "denial") rejectFirst({ status_code: 403 });
+  else if (change === "abort") abort.abort();
+  else { current = false; rejectFirst(new DOMException("Cancelled", "AbortError")); }
+  await rejected; await settle(); assert.equal(published, false); assert.equal(calls, 3); assert.equal(aborted, 3);
+});
 for (const status_code of [401, 403, 503]) test(`off-page status${status_code} cannot publish a list-only replacement or stale cached run`, async () => {
   const accepted = run(999, { status: "running" }); let published: ResearchRun[] | null = null;
   const client = transport({ list: async () => ({ items: [run(10)], next_cursor: null }), status: async () => { throw { status_code }; } });
