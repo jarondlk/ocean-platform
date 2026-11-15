@@ -95,6 +95,8 @@ def native(monkeypatch):
         version, controller_dsn = credential.initialize(c, store=secret, base=base)
         assert version == "1" and secret.adds == 1
     with pytest.raises(ValueError, match="refuses existing"), admin.begin() as c:
+        for name, value in base.PASSWORD_LOGGING_POLICY.items():
+            c.execute(text("SELECT set_config(:name,:value,true)"), {"name": name, "value": value})
         credential.initialize(c, store=secret, base=base)
     with admin.begin() as c:
         for name, value in base.PASSWORD_LOGGING_POLICY.items():
