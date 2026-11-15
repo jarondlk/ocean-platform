@@ -1,0 +1,44 @@
+{
+  "version": "ocean-beta-b1-q6-ui-accepted-v1",
+  "submitted_utc": "2026-11-15T07:39:10.117Z",
+  "observed_utc": "2026-11-15T07:39:31.029Z",
+  "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+  "question_sha256": "bdf9eecf9e29d24ba2bed564ee9025a9d2941b6b0d90e4be314f495e17b5ceb1",
+  "binding": {
+    "snapshot_id": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459",
+    "revision_id": "401844d5-80b8-41a5-83ab-2a1b22093775",
+    "payload_sha256": "cb28a278770a8de9a56de7721e2ad2fea91538cbb0ce8bc11d755df3c5bae2b4"
+  },
+  "one_submission": true,
+  "model_or_answer_acceptance": false,
+  "status_at_readback": "queued",
+  "serving_generation": 43,
+  "controller_generation": 4,
+  "admission_flags": true,
+  "queue_remains_paused": true,
+  "budget_approved_jpy": 650,
+  "reservation_jpy": "621.4768480007599808967831430",
+  "runtime_source": "9eb9de8b1757e27eba37f8388ccb30c2a78a1389",
+  "api_image_digest": "sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+  "phases": {
+    "admit-stage": {
+      "phase": "admit-stage",
+      "generation": "42",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "ready_revision": "ocean-v1-beta-serving-b1-fix-1115",
+      "runtime_startup_verified": false,
+      "all_other_configuration_preserved": true
+    },
+    "admit-promote": {
+      "phase": "admit-promote",
+      "generation": "43",
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:181f26d4d997e3b07c652f44fd0a4e843eb94fca2a03c0fed91c4c7772ca8d84",
+      "ready_revision": "ocean-v1-beta-serving-b1-fix-live-1115",
+      "runtime_startup_verified": true,
+      "all_other_configuration_preserved": true
+    }
+  },
+  "fresh_observer": "ocean-v1-beta-provider-preflight-20261111-xdqns",
+  "new_question_resubmission_forbidden": true,
+  "model_or_answer_pass_claimed": false
+}

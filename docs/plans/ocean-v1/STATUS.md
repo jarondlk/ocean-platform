@@ -4,6 +4,14 @@ Updated: 2026-11-15 JST. **P00 and C01–C26 are Complete within their documente
 
 **Current beta progress — B1 in progress, 2026-11-15 JST:**
 
+Q6was submitted once and accepted queued asf7e35a7a… under the650approved
+allowance (fresh full plan621.4768JPY). SDKlogin restored privately. Controller4/
+serving43Ready on181f26d4; onlyResearch admission flags enabled, queue/scheduling
+PAUSED. Source/context/oracle and guarded admission verified. Next is one
+canonical manual run delivery; no model/answer pass yet. [Actual submission](beta/b1-20261114/question06-submitted.json).
+
+Historical Q6 resumption:
+
 Q6initial allowance650JPY is now explicitly approved; monthly50k unchanged.
 Repaired serving41/controller4 remain Ready on181f26d4 with admissionfalse and
 preserved configuration. Current exact source/archive/CI qualification passes.

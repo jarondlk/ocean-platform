@@ -1,6 +1,31 @@
 # Beta deployment continuation — 2026-11-15 JST
 
-## Current Q6 preparation — login restored, fresh621.4768JPY reservation
+## Current Q6 checkpoint — submitted once, canonical manual delivery next
+
+Fresh SDKlogin completed; both CLI identities verified. Budget650approved and
+fresh621.4768JPY plan includes the full300model/shared14call reserve. Serving
+admit-stage42 and admit-promote43passed exact guards with original-source
+observer`…-xdqns`. Controller4/serving43Ready on181f26d4,100%traffic, onlythe2
+Research flags true; other full settings preserved. Queue/sweep/Codex scheduling
+remain PAUSED. Observer freshness expires; never reuse it for a later mutation.
+
+Actual UI context matches snapshot50bfdf55…/revision401844d5…/payloadcb28a278…,
+original investigation/conversation and independent oracle SHA. Only5prior runs
+were present. Q6was submitted once through the UI and accepted queued as
+`f7e35a7a-4196-4431-9f3f-d5edbca66bc8`. No model/answer acceptance yet.
+[Submission/admission](../beta/b1-20261114/question06-submitted.json).
+Do not resubmit or continue it as a new question. Tab11signed in on About to
+stop polling; the6thqueued card/screenshot and intent are retained privately.
+
+Next: `scripts/beta_b1_dispatch.py --repair-candidate` on current private root
+`/private/tmp/ocean-b1-q6-20261115`, kindrun, exact UUIDabove. It verifies current
+qualified43/4 services, paused queue, single canonical undispatched task/body/
+OIDC/deadline and retains intent before onePOST. Inspect uncertain outcomes;
+never retry automatically. Then reopen same run, verify completion, prepare its
+answer once and manually dispatch only that canonical answer. Actual citation,
+independent oracle and reload remain open. Q4/Q5failures stay immutable.
+
+## Historical fresh Q6 reservation/admission preparation — login restored, fresh621.4768JPY reservation
 
 User requested SDK login reopened. The stale prior flow was cancelled; fresh
 Google SDK login completed privately and both personal/beta CLI identities now
