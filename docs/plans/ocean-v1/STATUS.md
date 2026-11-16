@@ -1,5 +1,30 @@
 # Implementation status
 
+## Current November16 — B2 source qualified; real private eDNA candidate prepared
+
+Sourcea5f61caf8bad63c993853d26d96115fafec45b9e passes765 hosted runtime tests,
+43 actual PostgreSQL16 C12/SQL parity cases and4 actual C21 retained-read/denial
+scenarios after an unrelated append. The fresh read-only cloud selection confirms
+unchanged serving62/controller7, current control revision34 and the original
+three-family Research activation. No new sign-in was needed.
+
+The source-guarded private candidate adds39 eDNA datasets, with156 byte-identical
+scientific table payloads and39 explicit generated-metadata wording supersessions.
+It preserves existing registrations, all28 retained references and current Research;
+the proposed control reaches revision114 and remains **unpublished**. Exact-input
+local retained-revision proof now passes. Nine refreshed local process-cold trials
+at concurrency1/2/4 pass the15s/3GiB budgets; actual GCS/container/browser gates
+remain open. The320-file/75934750-byte private scientific candidate archive is
+hash-verified and immutable. [Qualified private candidate and hosted proof](beta/b2-20261116/qualified-private-candidate.json).
+
+Next:source-bound B2 image/package, fixed-target observer/probe/cost/rollout
+contracts, actual GCS and signed-in acceptance, and remaining logical dispositions
+and source-owned SST partitions. Stage compatible API/controller against the old
+activation **before** replacing lifecycle control, preserving actual Q6 readback;
+only then register/probe/expose eDNA. Broad CI remains separately pending. No B2
+cloud write, upload, build, rollout, model call or scientific approval has occurred.
+B2 remains incomplete; queue/Scheduler/sweep/automation remainPAUSED.
+
 ## Current November16 — B2 fresh-base preparation and retained-evidence repair
 
 The next source increment adds a39-eDNA-only preparer against an independently

@@ -170,6 +170,18 @@ using the proposed binding without advertising eDNA early. Qualify the concrete
 probe target/identity/configuration and current store boundaries; no fixture
 principal may be represented as signed-in browser acceptance.
 
+November16 implementation qualification found a required ordering constraint:
+the old B1 image lacks C14's unrelated-seal compatibility proof, so a lifecycle
+append could strand its retained Q6 evidence even under the old activation.
+**Stage the qualified compatible API/controller against the original activation
+before replacing control.** Preserve and actually read the existing B1 evidence;
+then publish the exact append, privately probe the proposed binding, deliberately
+expose it and rearm. A proposed single-image package may contain separate old/new
+opaque binding files selected by trusted configuration; that package/probe/rollout
+contract is still to be implemented and source/image-qualified. Do not replay old
+B1 helpers, regenerate Q6 or restore an obsolete lifecycle control for rollback.
+[Accepted source and real private candidate](b2-20261116/qualified-private-candidate.json).
+
 **Exit:** source-bound operator tests and immutable publication candidate, fresh
 CAS basis, preserved B1 authority/retention, and a reviewed uncertain-outcome and
 rollback procedure. There is no production publication pass merely from preparation.
@@ -184,7 +196,8 @@ rollback procedure. There is no production publication pass merely from preparat
 2. Run changed-source focused checks and hosted Linux/source-bound CI. Build with
    the AGENTS.md Tokyo build identity, source bucket and `CLOUD_LOGGING_ONLY`;
    verify nonroot image/source/package proofs. Scientific payloads stay out of images.
-3. Use actual beta GCS transport for bounded private candidate probes. Retain
+3. Stage the compatible API/controller with the old activation before a lifecycle
+   append, then use actual beta GCS transport for bounded private candidate probes. Retain
    original failed/qualified attempts; a local transport or warm-only proof does
    not establish the live gate. Existing public activation remains pinned until
    the deliberate rollout step.

@@ -1,5 +1,58 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 — B2 source verified and real private candidate ready
+
+Resume [qualified-private-candidate.json](../beta/b2-20261116/qualified-private-candidate.json).
+Sourcea5f61caf8bad63c993853d26d96115fafec45b9e has accepted hosted run43812513072,
+job133117113615:765 runtime tests,43 actualPG16 SQL/C12 cases and4 actual C21
+retained-append/current-denial cases. Earlier local/pending checkpoints below are
+historical. The separate broad CI43812513025 is still pending; do not call it passed.
+
+Fresh read-only cloud selection:/private/tmp/ocean-b2-20261116/current-base02,
+selectionSHA930ae9cb2826a1e21020cba80623a913af15ecbc364a34507d18eae48a51aee3.
+It verifies unchanged full serving62/controller7 templates, images, traffic and
+ingress; original4843e61b… activation; control generation1794766025753161,
+revision34,6snapshots/28refs. Initial attempt01 hit sandbox credential-cache
+filesystem restrictions before any cloud operation; authorized escalated attempt02
+succeeded. No sign-in is pending. These observations must be refreshed before apply.
+
+Actual source-guarded39-eDNA private preparation is complete at
+/private/tmp/ocean-b2-20261116/prepared-edna01. Proposed activation
+5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894;
+237 immutable files/62393473bytes, proposed control revision114. Every one of156
+scientific table payloads matches its original oracle-bound export hash.39 generated
+metadata supersessions update obsolete operational Research wording; scientific
+rows, controls, unknowns, methods, physical identities and review lineage are intact.
+The actual captured-base/new-candidate central retained-revision proof passes.
+Nine new local cold/concurrency1/2/4 trials pass15s/3GiB, with stable response hashes;
+these do not establish1CPU4Gi actual GCS/HTTP or signed-in acceptance.
+
+New immutable private scientific archive:
+~/Library/Application Support/OCEAN/private-data-20261116-b2-prepared,
+320files/75934750bytes,indexd2e1ef4ffa5ba27faf2557a063f073c62aaa33c44f79409e9d5608503aeb693e.
+It contains the private candidate/current selection, both retained-proof attempts,
+hosted log and test/performance evidence; credentials and service environment
+files are excluded. Earlier inputs/local/hosted archives stay untouched. Do not
+repeat completed recovery or preparation merely because the temporary root is lost.
+
+**Next delivery ordering is mandatory:** build/source/image-qualify the B2 API
+package with explicit old/new opaque binding selection; qualify bounded cost,
+fresh one-off observer/probes and exact-target rollout contracts. Stage the
+compatible API/controller using the original activation before any C09 lifecycle
+append: the old B1 image lacks the unrelated-seal proof and could strand Q6 after
+registration. Read actual existing Q6 without resubmitting it. Then create/read
+immutable objects, final exact control CAS, private actual GCS candidate probes,
+deliberate activation/rearm and signed-in data/context/page-export/withdrawal checks.
+A stale CAS requires a newly inspected rebase, preserving old receipts; rollback
+uses compatible old binding/image with current control, never an obsolete blob.
+Original observer remains generation1/count20 and may not be extended/reused.
+
+All B2 cloud actions so far are reads. No upload/build/deployment/model call,
+scientific approval, queue/Scheduler/sweep/automation activation or legacy mutation.
+Logical source dispositions, JCOPE source-owned partitions/complete operations,
+remaining cold/eviction/actual-container and signed-in gates stay explicit. B3–B5
+remain separate. Unrelated working files are preserved.
+
 ## Current November16 — B2 current-base and retained-evidence amendment
 
 Resume the [new source amendment](../beta/b2-20261116/current-base-and-retained-proof-amendment.json).

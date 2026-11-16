@@ -1,0 +1,173 @@
+{
+  "version": "ocean-beta-b2-qualified-private-edna-candidate-v1",
+  "captured_utc": "2026-11-16T06:00:02.973780+00:00",
+  "source_revision": "a5f61caf8bad63c993853d26d96115fafec45b9e",
+  "state": "source_verified_real_private_candidate_prepared_not_published",
+  "source_pins": {
+    "deploy/gcp/beta/data/prepare_research_edna.py": "d291690a7b80108e7df9e09eda892fc3e1eb92b4e9bae436adc1872050e2db65",
+    "deploy/gcp/beta/data/append_catalogue.py": "e1439dc393cffc02ba564236c36fe487d20d6b5a77193299490d9ba1cc44ac0c",
+    "orchestration/catalogue_service.py": "dd48e18fdc894978ca0b4fafabd690a1e83952bec114151eba7a8ec3bae7e0ea",
+    "tests/test_beta_research_edna_preparation.py": "6f084e61baff0779617148296dd62a90850bfe000caf29408c9c02bec48fad2d",
+    "tests/test_beta_append_revision_compatibility.py": "92e25adc123e12884ddb353d51d66982ab5025dfd94c4a9a4b36e8008e1d9d59",
+    "tests/integration/test_beta_b2_retained_append_postgres.py": "b967742caa1a8bb7f19c31333fecdd0919cb78206882a130031180f215b37876",
+    ".github/workflows/beta-b2-focused.yml": "9fd2adc7988cb23ef1e64566d7a1c1a2e6fe39f4d947afc562c845320c004b09",
+    "docs/plans/ocean-v1/C14_CATALOGUE_SERVICE_CONTRACT.md": "d457786e966f558e162a17d3e45591c6f767c7f43d0c01f1ec0817cdd80d3ef2"
+  },
+  "hosted": {
+    "run_id": 43812513072,
+    "job_id": 133117113615,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/43812513072",
+    "conclusion": "success",
+    "runtime_tests": 765,
+    "runtime_seconds": 229.94,
+    "actual_PostgreSQL16_C12_parity_cases": 43,
+    "actual_PostgreSQL16_C21_retained_append_and_denial_cases": 4,
+    "no_beta_database_used": true,
+    "log_sha256": "35ebdee9d7846204f898185cfb00ae167420679fd5da2f8ad6bf4e9c111ae140"
+  },
+  "base_read_only_selection": {
+    "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "captured_utc": "2026-11-16T05:50:10.603311+00:00",
+    "cloud_mutations_or_model_calls": false,
+    "control_generation": 1794766025753161,
+    "control_revision": 34,
+    "control_sha256": "3c4e012f98581340f975e70601f61259c2f8e3528963c2d34ce4e4dfcca6155a",
+    "controller_generation": "7",
+    "fresh_control_activation_and_service_closing_fences": true,
+    "immutable_payload_generation_observations_reused_from_verified_recovery": true,
+    "references": 28,
+    "scientific_approval": false,
+    "selection_sha256": "930ae9cb2826a1e21020cba80623a913af15ecbc364a34507d18eae48a51aee3",
+    "serving_controller_templates_images_traffic_and_ingress_unchanged": true,
+    "serving_generation": "62",
+    "snapshots": 6,
+    "version": "ocean-beta-b2-current-base-readonly-selection-v1"
+  },
+  "private_preparation": {
+    "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+    "base_activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "base_control_sha256": "3c4e012f98581340f975e70601f61259c2f8e3528963c2d34ce4e4dfcca6155a",
+    "base_current_in_cloud_verified": false,
+    "base_revision": 34,
+    "cloud_calls": false,
+    "fresh_serving_controller_binding_and_final_CAS_required": true,
+    "immutable_bytes": 62393473,
+    "immutable_files": 237,
+    "new_datasets": 39,
+    "new_revision": 114,
+    "original_sources_and_receipts_unchanged": true,
+    "research_enabled": true,
+    "scientific_approval": false,
+    "source_revision": "a5f61caf8bad63c993853d26d96115fafec45b9e",
+    "source_selection_sha256": "930ae9cb2826a1e21020cba80623a913af15ecbc364a34507d18eae48a51aee3",
+    "state": "current_research_edna_append_prepared_not_published"
+  },
+  "publication_manifest_sha256": "8d34ba3adbb26d7e7ea531547e1f8d8be37a5205b7cebf2c81b34cc3e44cc053",
+  "metadata_supersessions_sha256": "9ce33b99cb72fb76ad3a9de35c85042a47721c26c8b9aaed6d8806243dd81f65",
+  "all156_scientific_table_payloads_byte_identical_to_independent_oracle_bound_baseline": true,
+  "all39_original_generated_metadata_supersessions_explicitly_recorded": true,
+  "classification_reviews_controls_unknowns_physical_identity_and_scientific_approval_unchanged": true,
+  "exact_captured_source_retained_policy_proof": {
+    "version": "ocean-beta-b2-retained-policy-revision-check-v1",
+    "local_exact_captured_base_and_candidate_only": true,
+    "same_original_descriptor_registration_and_source_bytes": true,
+    "before_revision": "c14:b1878c90356f690889cb90280a2822a61b8e3833baf835d5d77b1c5b61002d84",
+    "after_revision": "c14:deb50e15a4ed4e3e2e3a260e367bc014a1729bf6928c40ed1a7e1a987685d40a",
+    "retained_revision_compatible_after_append": true,
+    "cloud_calls_or_mutations": false,
+    "actual_Q6_or_database_read": false,
+    "publication_gate": "open"
+  },
+  "new_candidate_process_cold_local_summary": {
+    "trials": 9,
+    "requests": 21,
+    "concurrency": [
+      1,
+      2,
+      4
+    ],
+    "seconds_range": [
+      5.408298457972705,
+      6.096395208965987
+    ],
+    "maximum_process_RSS_bytes": 1358462976,
+    "all_below15s_and3GiB": true,
+    "responses_consistent_across_trials": true,
+    "compared_to_old_metadata_response_hash": false,
+    "scientific_row_oracle_binding": "All156 table payload hashes match the accepted original independent-source oracle projection; metadata and snapshot ID intentionally superseded",
+    "actual_GCS_container_or_browser_acceptance": false
+  },
+  "private_preservation": {
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-data-20261116-b2-prepared",
+    "files": 320,
+    "bytes": 75934750,
+    "index_sha256": "d2e1ef4ffa5ba27faf2557a063f073c62aaa33c44f79409e9d5608503aeb693e",
+    "all_hashes_reverified": true,
+    "private_scientific_data_included": true,
+    "cloud_publication": false
+  },
+  "read_only_initial_sandbox_attempt": "Credential-cache filesystem restriction; no cloud operation. Authorized escalated read succeeded; no new sign-in required. Original attempt retained.",
+  "broad_CI_separate": {
+    "id": 43812513025,
+    "jobs": [
+      {
+        "id": 133117202596,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "current_steps": []
+      },
+      {
+        "id": 133117202844,
+        "name": "Frontend typecheck and build",
+        "status": "completed",
+        "conclusion": "success",
+        "current_steps": []
+      },
+      {
+        "id": 133117202967,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress",
+        "conclusion": null,
+        "current_steps": [
+          "Verify C23 execution fences, restricted proof release and C25 public read compatibility"
+        ]
+      },
+      {
+        "id": 133117203027,
+        "name": "Backend tests and security boundary",
+        "status": "in_progress",
+        "conclusion": null,
+        "current_steps": [
+          "Run C26 shared-service integration with fresh-process coverage"
+        ]
+      },
+      {
+        "id": 133117203140,
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "current_steps": []
+      },
+      {
+        "id": 133117204453,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "critical_delivery_order": "Stage the compatible API/controller with the original activation before any lifecycle append. The old B1 image lacks this retained-evidence proof. Only then publish via exact CAS, privately probe new binding, and deliberately expose/rearm. Never replace control with an obsolete blob.",
+  "cloud_writes_uploads_builds_rollouts_model_calls": false,
+  "B2_complete": false,
+  "scientific_approval": false,
+  "queue_Scheduler_sweep_and_Codex_schedule": "PAUSED",
+  "remaining_gates": [
+    "logical source dispositions/JCOPE source-owned partition and operation qualification",
+    "remaining costly-path process-cold/eviction protocol and actual1CPU4Gi GCS/HTTP memory/latency",
+    "source-bound B2 API package with explicit old/new opaque bindings, build/nonroot/image proofs",
+    "refreshed cost selection and fixed-target B2 observer/probe/guarded rollout; original B1 observer count20 immutable",
+    "C09 exact-base immutable publication/readbacks/final control CAS after compatible image staging",
+    "actual Q6 retained read, signed-in all-family catalogue/context/export/withdrawal and compatible rollback acceptance"
+  ]
+}
