@@ -1,5 +1,49 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 — B1 functional recovery passed; final control readback pending
+
+The actual current-image cancellation, lost-ACK/409/FULL-readback recovery,
+frozen-context continuation, deterministic retained answer, four duplicate
+deliveries and revoked/restored access checks passed. All eight controller
+requests returned HTTP200. Ten single-task, no-retry executions completed;
+fixture e59c73d1… is finally suspended with fresh SQL readback and has no Google
+sign-in path. The real account, Q6 and original scientific bytes were untouched.
+[Actual recovery and cost receipt](../beta/b1-20261114/current-image-recovery-result.json).
+
+Source740f966's hosted rehearsal passed21 checks (18 operator/planner,2 synthetic,
+1 actual restricted-role PostgreSQL16 lifecycle scenario). Actual image55cef311/
+source4872d04 remains on serving62/controller7, frontend0bde/source6fdf666.
+Every Job/Execution source, image, program, phase, identity, numeric secret version
+and emitted Task interface was checked. Task secret aliases resolve through each
+v1 Execution's exact mapping; egress is verified from Job and v1 metadata rather
+than invented from an omitted Task field. Original audit rejections are retained.
+
+Fresh00:27UTC meters still show8 model calls,26001input/1910combined output; no
+new model call. Conservative planning is **JPY873.79**, including the fullJPY200
+recovery reserve and corrected4+6 Job minimums, under the operator-selected1000
+allowance supported by standing future approval. The user did not type1000.
+Monthly beta target remainsJPY50000; this is no invoice or provider hard cap.
+
+**B1 closure is still pending** fresh queue/Scheduler metadata. Personal SDK
+reauthentication expired after all cloud writes completed; its fresh sign-in is
+open at the university passkey check (tab12). Complete it and leave the code page
+open; never paste the code into chat. The dedicated identity still reads Cloud
+Run/Monitoring; its queue403 was preserved and no role was expanded. Last actual
+post-delivery task list was empty with queuePAUSED; scheduling was never enabled.
+Do not replay any Job, delivery, enrollment, amendment or Q6 action. After login,
+perform only fresh queue/tasks/Scheduler readbacks and preserve a separate closure
+receipt. No new model, build or rollout is needed.
+
+Existing15s history/answer/evidence jobs passed on this exact image. Full cold
+navigation17.671s remains an open UX finding for release acceptance. B2 data,
+B3 workers, B4 supervised delivery/recovery and B5 system/release gates remain.
+New immutable private checkpoint: ~/Library/Application Support/OCEAN/
+private-handoff-20261116-b1-recovery (728files,45771094bytes,index277f301c…);
+all earlier backups/receipts unchanged. Private root /private/tmp/
+ocean-b1-wrap-20261116; auth flow is separately /private/tmp/
+ocean-b1-auth-20261116-02 and excluded from backups/Git. Earlier sections below
+are historical checkpoints. Unrelated checkout/scientific files remain preserved.
+
 ## Current November16 — live62/7, actual recovery qualification next
 
 API55cef311/source4872d04 is live on serving62/controller7; frontend0bde/source

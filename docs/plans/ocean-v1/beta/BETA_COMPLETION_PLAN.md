@@ -1,17 +1,21 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
-Updated November16: B0 completed. API source4872d04/image55cef311 is live on
-serving62/controller7, with frontend0bde/source6fdf666. Separately qualified shared owner-row locking is applied,
-with unchanged private ACL/security metadata and19 actual PG16/operator checks.
-Q6's one real Gemini answer and CTD citations remain durable; warm reads improve
-to roughly4–5s. Bounded parallel event hydration and per-list authority fences are deployed.
-Current15s history/answer/evidence read jobs complete; total cold navigation
-17.671s is separately retained as a UX finding. Current-image recovery remains required. B1 is OPEN; no new question,
-model call, queue resume, schedule activation or independent scientific review.
-[Current SQL delivery](b1-20261114/shared-owner-delivery.json),
-[read finding](b1-20261114/shared-owner-read-followup.json).
-The old runtime/rollout descriptions below are historical audit context.
+Updated November16: B0 completed. B1's supported real Gemini CTD lookup,
+independent oracle, durable answer/citations, existing15s per-job reads and actual
+current-image recovery matrix passed. API4872d04/image55cef311 remains live on
+serving62/controller7 with frontend0bde/source6fdf666. All8 fixture deliveries
+returnedHTTP200;10 no-retry test executions completed; final fixture suspended.
+No real account/history/scientific source bytes changed and no new model call.
+**B1 is awaiting only fresh queue/Scheduler readbacks after personal SDK
+reauthentication; do not mark formal closure complete yet.** Existing queue and
+scheduling were keptPAUSED. Fresh conservative planningJPY873.79 includes the
+full200 reserve; native model total remains8.
+
+The existing history and evidence jobs retain their separate15s deadlines. Full
+cold navigation17.671s is an explicit open UX finding, not a full-page15s pass.
+[Current recovery/cost result](b1-20261114/current-image-recovery-result.json).
+The older rollout and progress descriptions are historical audit context.
 
 Historical integrated audit basis (November14):
 
@@ -34,8 +38,8 @@ No defensible single percentage follows from the component count.
 | Architecture and component implementation | Accepted contracts, local/integrated software checks, hosted delivery and release-preparation rehearsals exist | Qualify later integration changes at their own source/image/configuration identities |
 | Edge, identity and application shell | Independent beta DNS/TLS, Google login, enrolled admin/internal account, real frontend/API/private SQL; login 200 and protected runtime 401 rechecked November 14 | Final signed-in origin/session/role/isolation matrix and intended beta-user enrollment checks |
 | Catalogue and investigations | CTD, metagenome and MUR regional SST plus saved investigations previously accepted live | Reopen current authority/control state; complete whole-scope/UI/export and retention acceptance; resolve eDNA latency/integrity gate |
-| Research delivery and evidence | Private controller, Cloud Tasks integration, durable state and evidence wiring installed; deterministic cited answer, cancellation and duplicate/outbox recovery observed | New API rollout, actual Gemini cited answer, persistence/reload, current-image recovery and history/evidence latency acceptance; supervised sweep remains gated |
-| New Research API | Source `a0e98fe`, image `83ce6e8e…` live; actual real-model Q6 answer/citation/reload journey and closed cost reconciliation observed | Reliable15s signed-in reads and current-image recovery matrix remain open |
+| Research delivery and evidence | Supported real Gemini CTD lookup, independent oracle, saved citations/reload, per-job reads and current-image cancel/duplicate/lost-ACK/revocation matrix observed | Final queue/Scheduler readback; full cold-navigation UX finding; unattended sweep/recovery and broader evaluation remain gated |
+| New Research API | Source `4872d04`, image `55cef311…` live on serving62/controller7; owning source-bound checks, image proofs, per-job reads and actual recovery matrix passed | Final B1 control readback; B4 unattended delivery and B5 whole-system UX/release acceptance |
 | Experimental execution | C22/C23/C25 contracts and actual retained Linux test evidence exist | Production admission/start integration, retained port/supervisor and current beta worker qualification are unfinished |
 | Operations and release | Independent resources, cost planning and local migration/rollback rehearsals exist | Current live backup/restore, recovery, containment/capacity, alerts/cost, whole-system evaluation and release decision |
 
@@ -131,7 +135,7 @@ qualification remain material uncertainties.
 5. Update the private controller image first, then stage/promote only the serving
    API image under reviewed guards. Preserve frontend, SQL proxy, identities,
    secrets, ingress, scaling, timeouts and other settings. Read back each outcome.
-6. Under the refreshed 20-question/¥500 initial validation limit, test one actual
+6. Under the separately amended 20-question validation allowance, test one actual
    model question at a time against independent reference results. Verify saved
    answer/citations/reload, repair/partial outcomes, cancellation, continuation,
    duplicate delivery and owner/context changes. Confirm the unchanged 15-second
@@ -188,7 +192,7 @@ gate is silently changed from `not_run` to passed by this planning update.
 | `backup-recovery` | Partial software evidence: real PostgreSQL CI restore; current deployed beta backup/restore/recovery still required | B4 |
 | `dns-tls` | Partial full-gate coverage: public TLS/login and protected runtime observed; complete origin/session assessment remains | B5 |
 | `real-data-science` | Partial: approved three-family publication; eDNA, independent review and withdrawal assessment open | B2/B5 |
-| `live-model-evaluation` | Partial: two real model calls produced partial/repair-budget outcome; matched live evaluation not accepted | B1/B5 |
+| `live-model-evaluation` | Supported CTD lookup/real Gemini/cited-answer oracle passed in B1; matched whole C26 live evaluation remains open | B5 |
 | `release-rehearsal` | Local rehearsal accepted; current live candidate rehearsal not run | B5 |
 | `C24.whole_site_target_and_live_action_authorization` | Partial: project/region/origin and broad operator approval recorded; each remaining concrete worker/recovery action still needs configured scope | B0/B3/B4 |
 | `C24.authenticated_v1_host_proxy_and_bootstrap` | Partial: real hosting/bootstrap and enrolled browser journey; final current-candidate matrix open | B5 |
@@ -213,8 +217,9 @@ publication, permission and provider configuration. Do not alter or send
 unsolicited traffic to the legacy production deployment. Record numerical
 accuracy, unsupported claims, task completion, citations, latency, tokens and
 cost separately. Mobile, English/Japanese, light/dark, keyboard and screen-reader
-journeys must use actual services. D26-07 and the later history/evidence failure
-remain open until measured resolution or an explicit permitted disposition.
+journeys must use actual services. D26-07 and the full cold-navigation UX finding remain open. The former
+history/evidence job failures have source-bound measured resolution in the B1
+receipt; the complete deployed C26 matrix has not been rerun or claimed passed.
 
 ## Cost, review and delivery controls
 
@@ -228,7 +233,13 @@ committing their resource shapes. Provider budget alerts are not hard spend caps
 The November 11 known observed/reserved validation total ¥487.460001901 is also
 historical and includes reservations, with later drain/observer use unreconciled.
 It must not be presented as actual spend or fresh remaining allowance.
-Keep initial manual validation at 20 questions/¥500 unless separately amended.
+The initial ¥500 limit was subsequently amended. The retained authorization03
+records the operator-selected ¥1000 allowance under the user’s standing future
+approval; the user did not type1000. Fresh November16 planning is ¥873.79 with
+full200 recovery reserve and corrected actual repeated-Job minimums. Six real
+questions plus three isolated deterministic fixture submissions are below the
+conservative20-question bound. No further model question is admitted by B1 closure.
+This is a gross planning envelope, not actual spend or a full monthly invoice.
 
 Retain existing selected recovery/retention settings and measure them; identify
 only genuinely missing owner decisions. Before final acceptance, name the
@@ -245,5 +256,8 @@ checks. There is no need to repeat the entire backend suite for this plan.
 Legacy resources/data, original scientific bytes and prior receipts remain
 protected. Do not resume the paused Codex automation as part of planning.
 
-**Next action:** optimize the owning B1 retained-read path, qualify any changed source/image, and prove reliable signed-in reads plus current-image recovery. Full beta acceptance remains false until
-B2–B5 and all applicable original requirements have actual evidence.
+**Next action:** complete the already-open personal SDK sign-in, then read only
+the current beta queue/tasks and Scheduler metadata. Preserve a new closure
+receipt, checkpoint B1 and move to B2 readiness. Do not repeat any successful
+fixture Job/delivery, Q6 action, build or rollout. Full beta acceptance remains
+false until B2–B5 and all applicable original requirements have actual evidence.
