@@ -85,4 +85,21 @@ jobs:
       - name: Verify actual PostgreSQL 16 canonical SQL versus frozen C12 predicates
         env:
           RUN_POSTGRES_INTEGRATION: '1'
-        run: python -m pytest tests/integration/test_edna_catalogue_postgres.py -q -rA --tb=short
+        run: |
+          python - <<'PY'
+          import os
+          from sqlalchemy import create_engine, text
+          from sqlalchemy.engine import make_url
+          target = make_url(os.environ['DATABASE_URL'])
+          assert (target.host, target.port, target.database, target.username) == (
+              '127.0.0.1', 5432, 'ocean_b2_disposable', 'ocean')
+          engine = create_engine(target)
+          with engine.begin() as connection:
+              database, version = connection.execute(text(
+                  "SELECT current_database(), current_setting('server_version_num')")).one()
+              assert database == 'ocean_b2_disposable' and 160000 <= int(version) < 170000
+              connection.execute(text('CREATE EXTENSION IF NOT EXISTS vector'))
+          engine.dispose()
+          print('Job-owned disposable PostgreSQL16 pgvector fixture initialized; no beta target used')
+          PY
+          python -m pytest tests/integration/test_edna_catalogue_postgres.py -q -rA --tb=short

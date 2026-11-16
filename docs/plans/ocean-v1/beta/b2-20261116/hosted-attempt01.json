@@ -1,0 +1,23 @@
+{
+  "version": "ocean-beta-b2-hosted-qualification-attempt-v1",
+  "source_revision": "1de54a709dbc3a75ceb5eb5bbb9250e8dcdd017e",
+  "run_id": 43808982872,
+  "job_id": 133106162851,
+  "url": "https://github.com/jarondlk/ocean-platform/actions/runs/43808982872",
+  "conclusion": "failure",
+  "changed_source_lint": "success",
+  "hosted_runtime_tests": {
+    "passed": 702,
+    "seconds": 102.91
+  },
+  "actual_postgresql16": {
+    "passed": 0,
+    "setup_errors": 43,
+    "reason": "The new disposable database fixture lacked CREATE EXTENSION vector before CorpusBase table creation. No canonical SQL predicate assertion executed.",
+    "next_action": "Initialize pgvector only after exact disposable target/database/server-version guards, then rerun source-bound native verification."
+  },
+  "original_log_private_path": "/private/tmp/ocean-b2-20261116/hosted-first-job.log",
+  "original_log_sha256": "dcdd48ffae05cf93672f9d232bb57e99c480d025a9d00207246b049cfc338eb0",
+  "production_cloud_calls_or_mutations": false,
+  "scientific_approval": false
+}
