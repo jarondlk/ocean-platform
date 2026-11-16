@@ -154,25 +154,37 @@ class FrozenCatalogueResolver:
         self.edna_input_cache = edna_input_cache
 
     @staticmethod
-    def _access_epoch(lifecycle):
+    def _access_epoch(lifecycle, *, protected_snapshots=None):
         """Retention reference additions do not change scientific visibility.
 
-        Every other lifecycle action still invalidates. Require a complete audit
+        For ordinary current revisions every other action still invalidates. Require a complete audit
         chain and live mappings for its additive tail; incomplete control data
         cannot attest compatibility with a historical execution.
         """
         revision, audits = lifecycle['revision'], lifecycle['audits']
         if type(revision) is not int or revision < 0 or not isinstance(audits, list) or len(audits) != revision:
             raise ValueError('Incomplete catalogue lifecycle audit')
+        # The historical-evidence fallback may disregard only new immutable
+        # seals outside the exact current index/dependency closure. Replay the
+        # entire C09 control before granting that narrower proof; ordinary
+        # current revisions and cursors retain their original global epoch.
+        if protected_snapshots is not None:
+            from ingestion.gcs_catalogue_snapshot import validated_lifecycle
+            from ingestion.immutable_bundle import canonical_bytes
+            validated_lifecycle(canonical_bytes(lifecycle))
         epoch = 0
         for expected, audit in enumerate(audits, 1):
             if (not isinstance(audit, dict) or type(audit.get('revision')) is not int
                     or audit['revision'] != expected or audit.get('action') not in {
                         'seal', 'promote', 'reference', 'unreference', 'hold', 'revoke', 'retire'}):
                 raise ValueError('Invalid catalogue lifecycle audit')
-            if audit['action'] != 'reference':
+            unrelated_seal = (protected_snapshots is not None and audit['action'] == 'seal'
+                and audit.get('snapshot_id') not in protected_snapshots)
+            if audit['action'] != 'reference' and not unrelated_seal:
                 epoch = expected
         for audit in audits[epoch:]:
+            if protected_snapshots is not None and audit['action'] == 'seal':
+                continue  # Full canonical replay above already proved this new seal.
             reference, snapshot_id = audit.get('reference'), audit.get('snapshot_id')
             if (not isinstance(reference, str) or not reference or not isinstance(snapshot_id, str) or not snapshot_id
                     or not isinstance(lifecycle.get('references'), dict)
@@ -199,10 +211,22 @@ class FrozenCatalogueResolver:
         return registration, policy, lifecycle, self._access_epoch(lifecycle)
 
     def revision_compatible(self, user, snapshot_id, expected_revision):
-        """Accept old raw-revision hashes only through a proven reference tail."""
-        _, policy, lifecycle, epoch = self._authorization_state(user, snapshot_id)
+        """Prove retained evidence under unchanged policy and exact dependencies.
+
+        Current withdrawal/registration/policy checks always run first. Normal
+        references remain compatible. Adding another immutable index cannot
+        change this index's namespace; accept its historical hash only through
+        a fully replayed tail of unrelated seals and still-bound references.
+        No hold/unreference/withdrawal/retirement/promotion epoch is skipped.
+        """
+        registration, policy, lifecycle, epoch = self._authorization_state(user, snapshot_id)
+        if any(expected_revision == self._revision(policy.revision, candidate)
+                for candidate in range(epoch, lifecycle['revision'] + 1)):
+            return True
+        scoped_epoch = self._access_epoch(lifecycle, protected_snapshots={
+            registration.snapshot_id, *registration.child_snapshot_ids})
         return any(expected_revision == self._revision(policy.revision, candidate)
-                   for candidate in range(epoch, lifecycle['revision'] + 1))
+            for candidate in range(scoped_epoch, epoch))
 
     def resolve(self, user, snapshot_id):
         registration, policy, _lifecycle, epoch = self._authorization_state(user, snapshot_id)

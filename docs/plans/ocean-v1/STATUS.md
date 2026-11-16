@@ -1,5 +1,24 @@
 # Implementation status
 
+## Current November16 — B2 fresh-base preparation and retained-evidence repair
+
+The next source increment adds a39-eDNA-only preparer against an independently
+selected enabled three-family base; old CTD-only/already-appended bases are refused.
+It preserves all original bytes/retention and records generated operational
+metadata supersessions while requiring identical scientific table hashes.
+
+Before publication, an exact-input local check found that unrelated new seals
+and a globally renamed policy would make C14 reject unchanged B1 retained evidence.
+The repair preserves unchanged per-index policy and gives C20/C21 a canonical
+audit-chain proof for unrelated seals/still-bound reference additions. Current
+global cursor revisions, policy/withdrawal/registration and every nonadditive
+epoch remain enforced. No actual Q6 action or beta database mutation occurred.
+765 focused local tests and lint pass. Hosted verification, actual PostgreSQL
+retained-read scenarios and real39-dataset preparation are pending for this new
+source. [Amendment and original finding](beta/b2-20261116/current-base-and-retained-proof-amendment.json).
+The earlier702/43 hosted result below remains bound to source7b5d935.
+No B2 cloud write or deployment has occurred.
+
 ## Current November16 — B2 first source increment verified and pushed
 
 The exact pinned eDNA inputs are recovered and preserved privately:41 registries,

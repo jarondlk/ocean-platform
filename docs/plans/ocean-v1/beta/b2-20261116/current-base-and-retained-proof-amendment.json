@@ -1,0 +1,61 @@
+{
+  "version": "ocean-beta-b2-current-base-and-retained-proof-amendment-v1",
+  "captured_utc": "2026-11-16T05:46:54.178115+00:00",
+  "prior_verified_source": "7b5d9354e56a7634dec67113b1451c802668955b",
+  "state": "local_qualified_source_checkpoint_hosted_and_real_preparation_pending",
+  "finding": {
+    "version": "ocean-beta-b2-retained-policy-revision-check-v1",
+    "local_exact_captured_base_and_candidate_only": true,
+    "same_original_descriptor_registration_and_source_bytes": true,
+    "before_revision": "c14:b1878c90356f690889cb90280a2822a61b8e3833baf835d5d77b1c5b61002d84",
+    "after_revision": "c14:9c4feef16f698e108b856a93e49eaf09733e9a4b996c947adaedcec43e5d3564",
+    "retained_revision_compatible_after_append": false,
+    "cloud_calls_or_mutations": false,
+    "actual_Q6_or_database_read": false,
+    "publication_gate": "closed: unchanged retained B1 source revisions would be denied by central C14 proof"
+  },
+  "finding_inference": "The exact-source local central proof returns false after the prior append. C21 uses this proof to authorize old retained evidence, so publication would strand B1 evidence. No actual Q6 or beta database query/mutation occurred.",
+  "intentional_source_supersessions": {
+    "append_catalogue": "Explicit enabled-Research append preserves unchanged per-index policy version, old descriptors and retention; legacy disabled default still versions policy as before.",
+    "C14_revision_compatible": "Current/cursor global epochs unchanged. Historical C20/C21 compatibility additionally requires full canonical C09 audit replay and permits only unrelated new seals plus still-bound references outside the exact current index/child closure. Current policy/registration/denial checks run first. All other lifecycle epochs still stop the proof.",
+    "generated_edna_metadata": "New preparer records per-dataset old/new metadata hashes and requires byte-identical four scientific tables. It replaces obsolete all-Research-disabled operational wording; classifications, physical identities, protocols, review lineage and scientific approval stay unchanged."
+  },
+  "new_preparer": {
+    "expected_base": "exact independently selected currently enabled three-family CTD/metagenome/MUR base; rejects old CTD-only or already-appended bases",
+    "reads": "finite private generation/size/hash source selection; complete canonical base manifest/payload membership; no source directory locks/writes",
+    "increment_datasets": 39,
+    "mutable_publication": "not performed; fresh serving/controller/activation binding and exact control CAS remain required",
+    "source_guard": "current committed HEAD with complete imported owner and new preparer pins; no unchecked script/data module loading"
+  },
+  "local_checks": {
+    "passed": 765,
+    "seconds": 171.02,
+    "ruff": "passed",
+    "log_sha256": "5e3abd761ad498786678922ed13d7a9abbe8b2e02abc013bc7917a46a732e49a"
+  },
+  "candidate_sources": {
+    "deploy/gcp/beta/data/prepare_research_edna.py": "d291690a7b80108e7df9e09eda892fc3e1eb92b4e9bae436adc1872050e2db65",
+    "deploy/gcp/beta/data/append_catalogue.py": "e1439dc393cffc02ba564236c36fe487d20d6b5a77193299490d9ba1cc44ac0c",
+    "orchestration/catalogue_service.py": "dd48e18fdc894978ca0b4fafabd690a1e83952bec114151eba7a8ec3bae7e0ea",
+    "tests/test_beta_research_edna_preparation.py": "6f084e61baff0779617148296dd62a90850bfe000caf29408c9c02bec48fad2d",
+    "tests/test_beta_append_revision_compatibility.py": "92e25adc123e12884ddb353d51d66982ab5025dfd94c4a9a4b36e8008e1d9d59",
+    "tests/integration/test_beta_b2_retained_append_postgres.py": "b967742caa1a8bb7f19c31333fecdd0919cb78206882a130031180f215b37876",
+    ".github/workflows/beta-b2-focused.yml": "9fd2adc7988cb23ef1e64566d7a1c1a2e6fe39f4d947afc562c845320c004b09",
+    "docs/plans/ocean-v1/C14_CATALOGUE_SERVICE_CONTRACT.md": "d457786e966f558e162a17d3e45591c6f767c7f43d0c01f1ec0817cdd80d3ef2"
+  },
+  "private_evidence": {
+    "retained-revision-check01/result.json": "ed20962d5e5ae97d2ea48e947eabef541c207a6e845b829f72134c23d53a5391",
+    "check_retained_revision_compatibility.py": "ec576b3cc47bcf0883393494fd95d46110ffd5204ae24d494130812f479da39b",
+    "retained-revision-check01.log": "32106d4ccdcfac4634b4390d70a62ddad2d4a5e098b81c366da8f030e7a35eca",
+    "research-edna-preparation01.log": "3414d086559c0e282df1a79aece86930a4499bdc63840efd9ec913f8ef4b0028",
+    "research-edna-preparation02.log": "855b83c514e2bf6694cc089a17bc7dd87b47d78cd4f04ef6eebe702fc004e50d",
+    "research-edna-preparation03.log": "f8353224d290999b94257a4d38e6ebff7041fbd59e82d3cdb0294fe6e2e6c986",
+    "retained-revision-repair01.log": "09f0d0491d819195fad19deb69420efec0809129ae62683fe8c1515f436794ae",
+    "research-append-focused-final01.log": "5e3abd761ad498786678922ed13d7a9abbe8b2e02abc013bc7917a46a732e49a"
+  },
+  "actual_GCS_container_or_signed_in_acceptance": false,
+  "cloud_writes_or_new_model_calls": false,
+  "original_receipts_and_scientific_bytes_unchanged": true,
+  "scientific_approval": false,
+  "next": "Commit source; run focused hosted765 + actualPG43 and four new retained-evidence PostgreSQL scenarios; then prepare actual current-base eDNA selection and bounded delivery."
+}

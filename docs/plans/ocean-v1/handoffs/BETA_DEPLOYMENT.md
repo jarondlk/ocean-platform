@@ -1,5 +1,34 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 — B2 current-base and retained-evidence amendment
+
+Resume the [new source amendment](../beta/b2-20261116/current-base-and-retained-proof-amendment.json).
+Fresh-base39-eDNA-only preparation and generated qualification supersession are
+implemented, with exact private input selections and source guards, no input-store
+lock writes, preservation of three-family Research/retention and original table
+hashes. It refuses CTD-only/already-appended bases. Actual real preparation must
+run only after this source is committed; do not replay the diagnostic old candidate.
+
+An exact captured-base/candidate local check demonstrated the previous append
+would make central C14 historical revision compatibility false, stranding B1
+evidence. Q6/the beta DB were not read or changed by that diagnostic. Enabled
+append now preserves unchanged per-index policy. C14's retained C20/C21 fallback
+fully replays canonical control and permits only unrelated seals/still-bound
+references outside the exact current closure; current policy/registration/denial
+and all nonadditive epochs still apply. Current global revisions/cursors remain
+unchanged, and an actual old cursor is rejected after append.
+
+765 local tests and lint pass. New focused hosted CI must qualify this amendment,
+43 actual SQL/C12 cases and4 new actual C21 PostgreSQL retained-read/denial cases.
+Prior702/43 source7b5d935 acceptance remains immutable, not automatically extended
+to this new runtime. Private repro:/private/tmp/ocean-b2-20261116/retained-revision-check01;
+new operator tests and logs are alongside it. Preserve them in a new archive at
+the next delivery checkpoint. Next:source checkpoint/CI, actual fresh-base private
+selection/preparation, dual old/new opaque bindings in a source-bound B2 API
+package, bounded cost/probe/rollout contracts. Public beta remains unchanged;
+queue/Scheduler/sweep/automation stayPAUSED; no source/control write/model call.
+Earlier first-increment receipts remain historical accepted evidence.
+
 ## Current November16 — B2 first implementation increment verified
 
 B2 has started. Resume from the [implementation receipt](../beta/b2-20261116/implementation-local-checkpoint.json)

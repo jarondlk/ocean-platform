@@ -27,6 +27,26 @@ C09 lifecycle revision. Even unrelated lifecycle changes conservatively invalida
 old cursors. Access to historical snapshots still uses current local policy.
 No propagation of changes from a disconnected legacy system is implied.
 
+### B2 November16 — retained evidence across an unrelated immutable append
+
+Policy decisions are scoped to the explicit registered snapshot. Adding another
+immutable index does not change effective membership, roles or scientific policy
+inside an existing index. An enabled beta append therefore preserves its declared
+policy revision and every old descriptor/registration; the new index has its own
+snapshot identity. A membership or scientific-policy change within an existing
+snapshot still requires a new policy revision.
+
+Current revisions and cursors retain their global lifecycle epoch. The central
+`revision_compatible` proof used by retained C20/C21 evidence may additionally
+accept an old hash through a fully replayed canonical C09 audit tail containing
+only new seals outside that exact index/dependency closure and still-bound
+reference additions. Current account, policy, registration, source integrity and
+withdrawal checks remain mandatory. Hold, unreference, promotion, withdrawal,
+retirement, changed policy or an invalid audit chain stops this compatibility
+proof. It never rewrites old C20 manifests, evidence receipts, source bytes or
+cursor revisions. The B1 reference-only proof and its original receipts remain
+historical evidence; this is an intentional B2 source supersession.
+
 ## Dependency registration
 
 The trusted operator helper `register_scientific_snapshot(store=...,
@@ -111,6 +131,15 @@ views, with fresh resolver/access validation on every page. Base keys bind token
 subject, policy/lifecycle revision, snapshot and full scope; selected-view keys
 also bind the full query context. Returned values cannot mutate cached nodes.
 The legacy VerifiedCatalogueCache/catalogue_revision discovery is never used.
+
+B2's trusted eDNA host may share validated immutable C12 input tables, bounded
+at 1GiB, 64 entries and two distinct concurrent fills. This caches neither a
+catalogue view nor user/policy/eligibility decisions. Every operation still reads
+and hashes its complete owned immutable bytes, binds the exact manifest and
+observed transport generations, checks per-request decode/namespace bounds and
+current authority, and closes the activation/control fences. Cache returns have
+detached frame/index/attribute/metadata storage; failed fills are not retained.
+Complete real-container latency/memory acceptance remains a B2 deployment gate.
 
 ## Capacity, verification and rollback
 

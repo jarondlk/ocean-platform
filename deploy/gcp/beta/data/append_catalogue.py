@@ -104,8 +104,14 @@ def append_groups(*, store, activation, groups, authorization_ref, research_enab
             or (after['latest'], after['latest_generation']) != (before['latest'], before['latest_generation'])):
         raise ValueError('Original lifecycle, references and latest identity must be preserved')
     result['authorization_ref'] = authorization_ref
-    result['policy_revision'] = 'beta:descriptive:' + hashlib.sha256(
-        canonical_bytes(result['snapshots'])).hexdigest()[:32]
+    # An enabled Research append adds separately registered immutable indexes;
+    # it does not change the original indexes' account or scientific policy.
+    # Keep that declared policy epoch so retained C20/C21 evidence can prove
+    # compatibility through C14's verified unrelated-seal/reference audit tail.
+    # Normal current revisions/cursors still include the new lifecycle epoch.
+    if not research_enabled:
+        result['policy_revision'] = 'beta:descriptive:' + hashlib.sha256(
+            canonical_bytes(result['snapshots'])).hexdigest()[:32]
     result['qualifications'] = list(dict.fromkeys([*result['qualifications'],
         'Additional qualified datasets are operationally authorized for this private beta; independent scientific approval remains false.']))
     data = _canonical(result)

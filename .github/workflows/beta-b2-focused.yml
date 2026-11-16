@@ -15,6 +15,9 @@ on:
       - 'tests/test_edna_validation_reuse.py'
       - 'tests/test_beta_edna_cached_host.py'
       - 'tests/test_beta_research_catalogue_append.py'
+      - 'tests/test_beta_research_edna_preparation.py'
+      - 'tests/test_beta_append_revision_compatibility.py'
+      - 'tests/integration/test_beta_b2_retained_append_postgres.py'
       - 'tests/test_gcs_catalogue_snapshot.py'
       - '.github/workflows/beta-b2-focused.yml'
   workflow_dispatch:
@@ -70,6 +73,9 @@ jobs:
           tests/test_edna_validation_reuse.py tests/test_beta_edna_cached_host.py
           tests/test_beta_research_catalogue_append.py tests/test_gcs_catalogue_snapshot.py
           tests/test_beta_catalogue_append.py
+          deploy/gcp/beta/data/prepare_research_edna.py
+          tests/test_beta_research_edna_preparation.py tests/test_beta_append_revision_compatibility.py
+          tests/integration/test_beta_b2_retained_append_postgres.py
       - name: Verify input semantics, current authority and Research-preserving publication
         run: >-
           python -m pytest -q --tb=short
@@ -82,6 +88,8 @@ jobs:
           tests/test_beta_research_catalogue_append.py tests/test_catalogue_service.py
           tests/test_catalogue_service_frozen.py tests/test_catalogue_service_materialization.py
           tests/test_frozen_scientific_catalogue.py
+          tests/test_beta_research_edna_preparation.py tests/test_beta_append_revision_compatibility.py
+          tests/test_research_evidence_store.py tests/test_research_evidence_runtime.py
       - name: Verify actual PostgreSQL 16 canonical SQL versus frozen C12 predicates
         env:
           RUN_POSTGRES_INTEGRATION: '1'
@@ -103,3 +111,31 @@ jobs:
           print('Job-owned disposable PostgreSQL16 pgvector fixture initialized; no beta target used')
           PY
           python -m pytest tests/integration/test_edna_catalogue_postgres.py -q -rA --tb=short
+      - name: Select job-owned PostgreSQL peer for retained-evidence tests
+        id: b2-pg-peer
+        env:
+          POSTGRES_TEST_CONTAINER_ID: ${{ job.services.postgres.id }}
+        run: |
+          address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$POSTGRES_TEST_CONTAINER_ID")"
+          python -c 'import ipaddress,sys; ipaddress.IPv4Address(sys.argv[1])' "$address"
+          printf 'address=%s\n' "$address" >> "$GITHUB_OUTPUT"
+      - name: Verify retained C21 evidence after unrelated append on actual PostgreSQL16
+        env:
+          RUN_POSTGRES_INTEGRATION: '1'
+          C21_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c21_beta_b2_test
+          C21_TEST_SERVER_ADDRESS: ${{ steps.b2-pg-peer.outputs.address }}
+        run: |
+          python - <<'PY'
+          import os
+          from sqlalchemy import create_engine, text
+          from sqlalchemy.engine import make_url
+          target = make_url(os.environ['DATABASE_URL'])
+          assert (target.host, target.port, target.database) == ('127.0.0.1', 5432, 'ocean_b2_disposable')
+          engine = create_engine(target, isolation_level='AUTOCOMMIT')
+          with engine.connect() as connection:
+              assert connection.scalar(text('SELECT current_database()')) == 'ocean_b2_disposable'
+              assert not connection.scalar(text("SELECT EXISTS (SELECT 1 FROM pg_database WHERE datname='ocean_c21_beta_b2_test')"))
+              connection.exec_driver_sql('CREATE DATABASE ocean_c21_beta_b2_test')
+          engine.dispose()
+          PY
+          python -m pytest tests/integration/test_beta_b2_retained_append_postgres.py -q -rA --tb=short
