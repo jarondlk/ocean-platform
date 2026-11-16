@@ -1,5 +1,35 @@
 # Implementation status
 
+## Current November16 — B2 started; recovered cohort and local runtime repair qualified
+
+The exact pinned eDNA inputs are recovered and preserved privately:41 registries,
+328 objects/127885817bytes, with39 current-v3 datasets selected and2 older
+bundles excluded. An independent source-row oracle agrees with the original
+canonical exports:3498 occurrences/classifications/assays,349638 detections,
+3155 unknown classifications,343 negative controls and3498 unresolved physical
+sample identities. Existing CTD/metagenome/MUR snapshots and the accepted raw
+quarantine are recovered without repeated uploads or imports.
+
+C12 per-load validation reuse preserves row semantics. Its full-cohort concurrent
+C14 path still failed before caching (18.56s/3.55GiB at concurrency4), so the B2
+fallback now shares bounded verified semantic inputs while reading/hashing bytes
+and checking current authority on every request. Nine isolated local cold trials
+at concurrency1/2/4 pass:5.39–6.16s, at most1.28GiB process peak; warm four-request
+trials take1.39s. Response hashes equal the pre-cache results. This is local
+transport/synthetic-user evidence, **not actual GCS/container/browser acceptance**.
+All702 focused local tests and changed-source lint pass. Research-preserving
+append qualification passes locally; the old default still rejects enabled mode.
+[Immutable checkpoint and evidence hashes](beta/b2-20261116/implementation-local-checkpoint.json).
+
+Metadata pagination is complete for raw/1860,edna/530,research-sst/53559 objects;
+those are files, not logical datasets or an atomic source snapshot. Logical
+dispositions, remaining costly-path/eviction measurements, focused hosted CI and
+actual PostgreSQL16 parity, fresh-base eDNA-only preparation, source/image-bound
+delivery and signed-in context/export/withdrawal gates remain open. No B2 cloud
+write, activation, deployment or model call has occurred. B1 serving62/controller7
+and its evidence remain unchanged; queue/Scheduler/sweep/Codex schedule stayPAUSED.
+The prior plan-only checkpoint below is historical. B2 is not complete.
+
 ## Current November16 — B2 plan prepared; implementation not started
 
 B1 remains accepted. [Detailed B2 plan](beta/B2_DATA_CATALOGUE_PLAN.md) organizes source recovery and

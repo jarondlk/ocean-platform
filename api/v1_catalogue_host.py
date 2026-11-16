@@ -396,8 +396,14 @@ def load_snapshot_catalogue(path, *, project_id, site_id, cursor_key,
             return CataloguePolicy(revision=document["policy_revision"], dataset_eligible=eligible,
                 scientific_eligible=lambda snapshot, item: False)
 
+        edna_input_cache = None
+        if any(item.source_family == 'edna_metabarcoding' for group in datasets.values() for item in group):
+            from ingestion.edna_input_cache import ValidatedEDNAInputCache
+            edna_input_cache = ValidatedEDNAInputCache(
+                maximum_bytes=1024**3, maximum_entries=64, maximum_inflight=2)
         catalogue = CatalogueService(resolver=_CurrentSnapshotResolver(authority=authority,
-            store=store, policy_resolver=policy, registrations=registrations))
+            store=store, policy_resolver=policy, registrations=registrations,
+            edna_input_cache=edna_input_cache))
         browser = _CurrentEmptyBrowser(source=authority, service=catalogue, snapshots=descriptors,
             permitted=permitted, revision=document["policy_revision"], cursor_key=cursor_key)
         authority.require_current()

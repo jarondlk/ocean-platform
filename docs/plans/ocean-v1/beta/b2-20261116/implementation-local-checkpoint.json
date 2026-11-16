@@ -1,0 +1,642 @@
+{
+  "version": "ocean-beta-b2-implementation-local-checkpoint-v1",
+  "captured_utc": "2026-11-16T05:12:12.947297+00:00",
+  "state": "local_qualification_in_progress_not_activated",
+  "prior_committed_source": "3c5081391fe4543da4a6d0292d1720c8ae0afdc5",
+  "candidate_sources": {
+    "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+    "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+    "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+    "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+    "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+    "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085",
+    "deploy/gcp/beta/data/append_catalogue.py": "b66e33cfd0a82f77c72859d319d4a20442803192df14ca9197fe5c5510e61599",
+    "deploy/gcp/beta/data/publish_append.py": "3df45623cd96e32627fe3aef097f244e742e969a92298966cc1f56c6a9aa979c",
+    ".github/workflows/beta-b2-focused.yml": "5e0ee8802c7578086f5b6e4734ef75be4ec5028acf6f0324632f7f59ae703e24",
+    "tests/test_edna_input_cache.py": "87853b8ee5276f452c2efa01098e27be8dbb2dc2d9f9e71eacd8249b7b7b8a46",
+    "tests/test_edna_validation_reuse.py": "c9a6be71e6fcb94c840276b472a8361147c525966ef0219a529dad95e8cb064e",
+    "tests/test_beta_edna_cached_host.py": "c906276b96ac5b4a06f2b056a19eb3bf1eb84d8b013b3c1964ae3729a4504c06",
+    "tests/test_gcs_catalogue_snapshot.py": "5f2f98e56e45776ce6ec8a2bc33a85c3296aba4de0e1d1cad3a057dba723a04b",
+    "tests/test_beta_research_catalogue_append.py": "efb9cb1755b2fd071203021d072da71b9a7d530d08c0a48c9891ce741a461f8b",
+    "tests/test_beta_catalogue_append.py": "0b47c9715a8261376a103a429675195cc09847a6ebbba288e4bd8198ce3393bf"
+  },
+  "candidate_source_commit_and_hosted_CI": "pending separate source-bound receipt",
+  "recovery": {
+    "index_generation": 1790740062783615,
+    "index_sha256": "76d89bc641b739f3b5648287f24e947bdd6b6a7f3f8bbbf31020f7d516fd4d86",
+    "registries": 41,
+    "selected_current_v3_registries": 39,
+    "excluded_older_registries": 2,
+    "normalized_objects": 328,
+    "normalized_bytes": 127885817,
+    "all_sizes_generations_crc32c_sha256_verified": true
+  },
+  "accepted_base_recovery": {
+    "snapshots": 6,
+    "payload_objects": 13,
+    "payload_bytes": 6550726,
+    "raw_quarantine_archive_bytes": 91934720,
+    "repeat_uploads_or_migrations": false
+  },
+  "independent_oracle": {
+    "source_revision": "3c5081391fe4543da4a6d0292d1720c8ae0afdc5",
+    "counts": {
+      "bundles": 39,
+      "datasets": 39,
+      "occurrences": 3498,
+      "classifications": 3498,
+      "assays": 3498,
+      "detections": 349638,
+      "export_bytes": 61790167
+    },
+    "classifications": {
+      "unknown": 3155,
+      "negative_control": 343
+    },
+    "physical_identity": {
+      "unresolved_physical_sample": 3498
+    },
+    "assignment_methods": {
+      "qcauto_target": 174819,
+      "qcauto_95pct_3nn_target": 174819
+    },
+    "all_projection_hashes_equal_independent_source_oracle": true,
+    "oracle_sha256": "51724691bdf3ca42684595cdf5f9b4af851a0882a243e363e2eba188711879d6",
+    "canonical_export_manifest_sha256": "19a59562e6909adf1f0c65cce65f4b19b2f1aa0d659cbf0674ca9229da1678b4"
+  },
+  "inventory": {
+    "version": "ocean-beta-b2-origin-metadata-inventory-v1",
+    "source_project": "data-infra-infobio",
+    "source_bucket": "data-infra-infobio-ocean-data",
+    "metadata_response_bytes": 29640481,
+    "prefixes": [
+      {
+        "prefix": "raw/",
+        "complete_pages_read": true,
+        "pages": 2,
+        "objects": 1860,
+        "object_bytes": 89159370,
+        "metadata_sha256": "fdd1b45d8ff0865cdfac79d11ce6971e93351a9c2cc8e2fa27fc28b6138c276a",
+        "start_utc": "2026-11-16T04:21:44.290712+00:00",
+        "end_utc": "2026-11-16T04:21:44.952363+00:00",
+        "next_page_pending": false,
+        "atomic_snapshot_claimed": false
+      },
+      {
+        "prefix": "edna/",
+        "complete_pages_read": true,
+        "pages": 1,
+        "objects": 530,
+        "object_bytes": 329136303,
+        "metadata_sha256": "a90676e86ab5d6bc2e4f58c66a62c8550fa2d1efbc3b089ba08390936e91ec8d",
+        "start_utc": "2026-11-16T04:21:44.953250+00:00",
+        "end_utc": "2026-11-16T04:21:45.144607+00:00",
+        "next_page_pending": false,
+        "atomic_snapshot_claimed": false
+      },
+      {
+        "prefix": "research-sst/",
+        "complete_pages_read": true,
+        "pages": 54,
+        "objects": 53559,
+        "object_bytes": 8177248351,
+        "metadata_sha256": "ad699faa8388f9019f94f9cb3dbbb8f6081ca8f754777d463b630de4a230f294",
+        "start_utc": "2026-11-16T04:21:45.145793+00:00",
+        "end_utc": "2026-11-16T04:22:04.233175+00:00",
+        "next_page_pending": false,
+        "atomic_snapshot_claimed": false
+      }
+    ],
+    "all_selected_prefix_pages_complete": true,
+    "scientific_object_bodies_read": 0,
+    "source_or_beta_mutations": false,
+    "logical_dataset_completeness_or_atomic_snapshot_claimed": false,
+    "selected_cohort_authority": "Exact immutable registry/index generations and hashes, not file counts",
+    "operator_source_sha256": "b2a1361410057d39c5e566ab9010ba18d1f01823c6c09638e67491f2a58bba9e"
+  },
+  "C12_comparison": {
+    "all_39_datasets_old_and_new_match_source_oracle": true,
+    "original_loader_seconds": 12.625,
+    "candidate_loader_seconds_range": [
+      4.26,
+      4.35
+    ],
+    "loader_only_not_full_request": true
+  },
+  "complete_C14_local_measurement": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.7",
+    "transport": "BoundedLocalStore through actual GCS snapshot/host request composition; synthetic admin; no network/backend/browser acceptance",
+    "actual_cloud_resource_equivalence_claimed": false,
+    "cohort_datasets": 39,
+    "pre_cache_failure": {
+      "peak_rss_bytes": 3806740480,
+      "maximum_seconds": 18.55790033331141,
+      "failed_15s_and_proposed3GiB": true
+    },
+    "cached_response_hashes_equal_pre_cache": true,
+    "warm_overview_seconds": [
+      0.8049939163029194,
+      0.7977036670781672,
+      0.7354858750477433,
+      0.7917957920581102,
+      0.8072781669907272,
+      0.8260412919335067,
+      0.8068775003775954,
+      0.7471883338876069,
+      0.7444055839441717
+    ],
+    "warm_4_requests_seconds": [
+      1.3842097921296954,
+      1.384433874860406,
+      1.3848530841059983,
+      1.3851487501524389
+    ],
+    "warm_peak_rss_bytes": 1358135296,
+    "cold_concurrency_trials": [
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:09.586264+00:00",
+        "concurrency": 1,
+        "trial": 1,
+        "startup_seconds": 0.07862675003707409,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 5.527335959021002,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1150255104
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 0,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:15.888366+00:00",
+        "concurrency": 1,
+        "trial": 2,
+        "startup_seconds": 0.08136970782652497,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 5.387117499951273,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1149599744
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 0,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:22.231077+00:00",
+        "concurrency": 1,
+        "trial": 3,
+        "startup_seconds": 0.07455066684633493,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 5.461020916234702,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1150320640
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 0,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:28.769623+00:00",
+        "concurrency": 2,
+        "trial": 1,
+        "startup_seconds": 0.08037129091098905,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 5.669304959010333,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1234649088
+          },
+          {
+            "request": 1,
+            "seconds_including_serialization": 5.669199000112712,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1234649088
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 39,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:35.359701+00:00",
+        "concurrency": 2,
+        "trial": 2,
+        "startup_seconds": 0.076170957647264,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 5.682023749686778,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1223655424
+          },
+          {
+            "request": 1,
+            "seconds_including_serialization": 5.682270125020295,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1223655424
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 39,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:41.865274+00:00",
+        "concurrency": 2,
+        "trial": 3,
+        "startup_seconds": 0.08048066683113575,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 5.631062125321478,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1219133440
+          },
+          {
+            "request": 1,
+            "seconds_including_serialization": 5.631737124640495,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1219133440
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 39,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:48.914159+00:00",
+        "concurrency": 4,
+        "trial": 1,
+        "startup_seconds": 0.07601870922371745,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 6.155718750320375,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1357234176
+          },
+          {
+            "request": 1,
+            "seconds_including_serialization": 6.155860874801874,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1357234176
+          },
+          {
+            "request": 2,
+            "seconds_including_serialization": 6.156205875333399,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1357234176
+          },
+          {
+            "request": 3,
+            "seconds_including_serialization": 6.1565368748269975,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1357234176
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 117,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:08:55.914125+00:00",
+        "concurrency": 4,
+        "trial": 2,
+        "startup_seconds": 0.07592116668820381,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 6.119806292001158,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1362903040
+          },
+          {
+            "request": 1,
+            "seconds_including_serialization": 6.120407707989216,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1362903040
+          },
+          {
+            "request": 2,
+            "seconds_including_serialization": 6.120165125001222,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1362903040
+          },
+          {
+            "request": 3,
+            "seconds_including_serialization": 6.120132749900222,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1362903040
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 39,
+          "coalesced": 117,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      },
+      {
+        "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+        "captured_utc": "2026-11-16T05:09:02.935772+00:00",
+        "concurrency": 4,
+        "trial": 3,
+        "startup_seconds": 0.07642012508586049,
+        "trials": [
+          {
+            "request": 0,
+            "seconds_including_serialization": 6.1348569160327315,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1369210880
+          },
+          {
+            "request": 1,
+            "seconds_including_serialization": 6.134370374958962,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1369210880
+          },
+          {
+            "request": 2,
+            "seconds_including_serialization": 6.134997917339206,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1369210880
+          },
+          {
+            "request": 3,
+            "seconds_including_serialization": 6.134236499667168,
+            "response_sha256": "c41e03e79503b74aaa52db3fe2f04a5dd0d39eaef28d4616d7b68a8be8867559",
+            "peak_rss_bytes": 1369210880
+          }
+        ],
+        "all_below_15s": true,
+        "within_3GiB": true,
+        "cache_stats": {
+          "hits": 1,
+          "misses": 39,
+          "coalesced": 116,
+          "evictions": 0,
+          "failed_fills": 0,
+          "entries": 39,
+          "inflight": 0,
+          "accounted_retained_bytes": 709963072
+        },
+        "local_transport_synthetic_principal_only": true,
+        "actual_GCS_or_browser_acceptance": false,
+        "source_hashes": {
+          "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+          "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+          "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+          "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+          "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+          "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085"
+        }
+      }
+    ],
+    "semantic_cache_accounted_retained_bytes": 709963072,
+    "maximum_retained_cache_bytes": 1073741824,
+    "entries_bound": 64,
+    "fill_bound": 2,
+    "four_request_api_process_budget_bytes": 3221225472,
+    "request_deadline_seconds_unchanged": 15,
+    "remaining_paths_and_actual_container_GCS_trials_required": true
+  },
+  "private_inputs_preservation": {
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-data-20261116-b2-inputs",
+    "files": 1339,
+    "bytes": 382761793,
+    "index_sha256": "dcffdb68ff5c423876538c6fe51a848afd561d86d9b3f483a2796320b5e84a1c",
+    "scientific_payloads_private_only": true,
+    "original_backups_and_scientific_source_bytes_unchanged": true
+  },
+  "private_evidence_root": "/private/tmp/ocean-b2-20261116",
+  "private_evidence_hashes": {
+    "edna-recovery-complete.json": "5bbc4f36d3801840ed2df92e245fa99835b19297a33dcb5ec8b9b55b6d65c823",
+    "accepted-input-recovery.json": "d8db716abd57a0969f105bf653ebb58c4ba2675c4578ce8daf9ad1626c50240f",
+    "edna-baseline02/source-oracle.json": "51724691bdf3ca42684595cdf5f9b4af851a0882a243e363e2eba188711879d6",
+    "edna-baseline02/export-manifest.json": "19a59562e6909adf1f0c65cce65f4b19b2f1aa0d659cbf0674ca9229da1678b4",
+    "edna-baseline02/result.json": "32acb625c15e5a2e70b5cabd6b1a57f7ac9e2341b7d7dadcfb8633979b0b892d",
+    "c12-loader-comparison/result.json": "6d918385e7ced60fc6694230225a6cd157ef96316d4a3664f4231323643f3d36",
+    "c14-local-measurement/result.json": "68f775d5ee9aa48ef43e996df04528d03b47d49168917f58ac1e3f1d426f1dbc",
+    "c14-cached-measurement01/result.json": "f01f15682776189920d9c4afae3b2ccd825e204988cb20ed1c890bbb847678e3",
+    "origin-inventory/complete.json": "089a820c7f9e58edffe6d15eebab0990663af86a21d3b58abed63fc2a4ecb375",
+    "measure_c14_candidate.py": "0d0cfaa4865d6d4459d5fbadbd7f75e53dec7d58bfe6f4d19bd9a2b55ccb664f",
+    "measure_c14_cached01.py": "ca24272c156857744576f677250c6b259f75e5e921dceca9d372af2696133c27",
+    "measure_c14_cold02.py": "93cf5016a3cc5e7f8f3e1ce61b42131f2c94fc19e312ef0eae0975e4023dafd5",
+    "c14-cache-cold02/concurrency1-trial1/result.json": "a8f5fd39268cd3e4752b8d972ad83115471787aed83f388a1a2473e29fd16103",
+    "c14-cache-cold02/concurrency1-trial2/result.json": "6ff92b901d8162042402b66f61ec0211d4028de4ed7709e6d77557ca0595a324",
+    "c14-cache-cold02/concurrency1-trial3/result.json": "2ac86d1389625bcee985a938503b7ab19e6da9c037c64bb4bf6534d2cca6c483",
+    "c14-cache-cold02/concurrency2-trial1/result.json": "c3835b4ea114e1ddf682f5ecf3e23f8ba7f2479299ef188d8dacd2c0bbbfb95e",
+    "c14-cache-cold02/concurrency2-trial2/result.json": "c2b383e596ba3036c3d87805d824064138b05b9dce4ff2d425c0590304417664",
+    "c14-cache-cold02/concurrency2-trial3/result.json": "a3921ddb36124ec4f9ea5c6b7882d63e460ccba4d1d0770187b39e7e3cabf961",
+    "c14-cache-cold02/concurrency4-trial1/result.json": "babe7f87b0754ebd3b9d855386538b5bd8eb916f64643350f5579485503e1e06",
+    "c14-cache-cold02/concurrency4-trial2/result.json": "6117960190ed239640d9916b912dbbdb3f7f4a508e46c7987239f9eba3df01d5",
+    "c14-cache-cold02/concurrency4-trial3/result.json": "eca0befd0fa8ecc06cc687e7f7a232897d6232744b21a5fcffd15a04106d2f15"
+  },
+  "failed_attempts_preserved": [
+    "baseline01 harness final source-pin set comparison; all individual source guards and projections preserved",
+    "recover-beta-store01 harness used byte_count instead of size_bytes; no original object modified",
+    "cache-focused01 expected pandas deep copy shared column index; independent oracle reference corrected",
+    "cached-host01 injected payload change after its already verified read; test corrected to damage bytes before the read, retaining separate post-read authority closing fences"
+  ],
+  "no_cloud_writes_builds_rollouts_or_model_calls": true,
+  "source_origin_reads_authorized_scientific_prefixes_only": true,
+  "scientific_approval": false,
+  "research_enabled_preservation_qualified_locally_only": true,
+  "B1_runtime_unchanged": {
+    "serving_generation": 62,
+    "controller_generation": 7,
+    "API_digest": "55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+    "queue_Scheduler_sweep_and_Codex_schedule": "PAUSED"
+  },
+  "open_gates": [
+    "complete logical dataset disposition ledger beyond source object pagination",
+    "complete costly list/open/raw-page/count/coverage cold-warm protocol, eviction and actual container memory qualification",
+    "source-bound focused hosted CI and PostgreSQL16 semantic parity",
+    "new current-base eDNA-only preparation with explicit source supersession of obsolete Research-disabled qualification",
+    "fresh resource/source/control binding and bounded B2 cost/probe selection before any publication or rollout",
+    "actual GCS and signed-in all-family context/export/withdrawal acceptance",
+    "B3-B5 remain separate open milestones"
+  ],
+  "local_checks": {
+    "tests": 702,
+    "seconds": 72.0,
+    "changed_source_ruff": "passed",
+    "actual_PostgreSQL16": "pending hosted run; not counted",
+    "log_sha256": "b4ae5d625edac6646494731d17f37b242e7e355b372d4c83f7153edc716c5bbd"
+  },
+  "new_private_local_evidence_preservation": {
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261116-b2-local",
+    "files": 29,
+    "bytes": 89400,
+    "index_sha256": "e3407e1340f2d55823cee3ac617013eba506d9ebc6583c5ac3a06eed5c9e9470",
+    "all_hashes_reverified": true
+  }
+}

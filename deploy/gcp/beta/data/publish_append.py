@@ -90,10 +90,10 @@ def _read(root, descriptor, maximum, *, required_bytes=True):
     return data
 
 
-def _activation(root, descriptor):
+def _activation(root, descriptor, *, research_enabled=False):
     from api.v1_catalogue_host import _activation as validate, MAX_ACTIVATION_BYTES
     data = _read(root, descriptor, MAX_ACTIVATION_BYTES, required_bytes=False)
-    validate(data)
+    validate(data, research_enabled=research_enabled)
     return json.loads(data)
 
 
@@ -116,10 +116,15 @@ def validate_transition(before, after):
     return added
 
 
-def validate_bundle(root, manifest):
+def validate_bundle(root, manifest, *, research_enabled=False, expected_base_activation_sha256=None):
     """Validate complete private inputs before any storage read/write is allowed."""
     from deploy.gcp.beta.data.prepare_quarantine import clean_absolute, safe_ancestors
     from api.v1_catalogue_host import _activation as validate_activation, _canonical
+    require(type(research_enabled) is bool, 'Explicit trusted Research mode required')
+    if research_enabled:
+        require(type(expected_base_activation_sha256) is str
+            and re.fullmatch('[a-f0-9]{64}', expected_base_activation_sha256) is not None,
+            'Research append requires an independently selected current activation hash')
     root = clean_absolute(root)
     safe_ancestors(root)
     require(root.is_dir() and not root.is_relative_to(ROOT), 'An explicit private bundle outside the checkout is required')
@@ -141,17 +146,21 @@ def validate_bundle(root, manifest):
     before = validated_lifecycle(_read(root, manifest['base_control'], MAX_CONTROL_BYTES, required_bytes=False))
     after = validated_lifecycle(_read(root, manifest['new_control'], MAX_CONTROL_BYTES))
     added = validate_transition(before, after)
-    old, activation = _activation(root, manifest['base_activation']), _activation(root, manifest['activation'])
+    if research_enabled:
+        require(manifest['base_activation']['sha256'] == expected_base_activation_sha256,
+            'Research append differs from independently selected current activation')
+    old = _activation(root, manifest['base_activation'], research_enabled=research_enabled)
+    activation = _activation(root, manifest['activation'], research_enabled=research_enabled)
     require(len(activation['snapshots']) > len(old['snapshots'])
         and activation['snapshots'][:len(old['snapshots'])] == old['snapshots']
         and activation['qualifications'][:len(old['qualifications'])] == old['qualifications'],
         'Existing activation entries and order must remain unchanged')
     require(activation['access'] == old['access'] and activation['scientific_mode'] == old['scientific_mode']
-        and activation['scientific_approval'] is False and activation['research_enabled'] is False,
+        and activation['scientific_approval'] is False and activation['research_enabled'] is research_enabled,
         'Append publication cannot expand user or scientific execution authority')
     # Both old and new registrations must bind the actual matching lifecycle.
     for document, state in [(old, before), (activation, after)]:
-        _, _, registrations, _ = validate_activation(_canonical(document))
+        _, _, registrations, _ = validate_activation(_canonical(document), research_enabled=research_enabled)
         for registration in registrations.values():
             for reference, identity in registration.references:
                 entry = state['snapshots'].get(identity)
@@ -212,6 +221,8 @@ def validate_bundle(root, manifest):
         'new_control_sha256':manifest['new_control']['sha256'],
         'activation_sha256':manifest['activation']['sha256'], 'new_snapshot_count':len(added),
         'immutable_files':len(entries), 'immutable_bytes':total, 'scientific_approval':False,
+        'research_enabled':research_enabled,
+        'expected_base_activation_sha256':expected_base_activation_sha256,
         'cloud_operations':False, 'control_cas_committed':False}
 
 
@@ -245,13 +256,19 @@ def _write_once(store, key, data, expected_generation, *, test_transport=False):
     return int(blob.generation or 0)
 
 
-def publish(root, manifest, store=None, applying=False, *, _test_transport=False):
+def publish(root, manifest, store=None, applying=False, *, _test_transport=False,
+            research_enabled=False, expected_base_activation_sha256=None):
     """Publish once through explicit authority; caller persists selection/evidence.
 
     Caller MUST retain an exclusive one-attempt selection before applying and
     preserve partial failures. This function never retries a mutation. A lost
     control acknowledgement is reconciled only by an exact current readback;
     every other uncertain outcome raises AppendPublicationUncertain.
+
+    Research mode preserves an already enabled baseline, never enables it. The
+    trusted caller must freshly bind the independently selected activation hash
+    to the serving/controller configuration before applying. The exact remote
+    immutable base activation is also verified before any write below.
     """
     # Freeze caller-owned metadata before provider callbacks or concurrent code
     # could alter selected targets, keys, hashes or the base CAS generation.
@@ -261,7 +278,8 @@ def publish(root, manifest, store=None, applying=False, *, _test_transport=False
         manifest = json.loads(encoded)
     except (TypeError, ValueError):
         raise AppendPublicationError('Explicit bounded JSON publication metadata required') from None
-    info = validate_bundle(root, manifest)
+    info = validate_bundle(root, manifest, research_enabled=research_enabled,
+        expected_base_activation_sha256=expected_base_activation_sha256)
     require(type(applying) is bool, 'Explicit publication selection required')
     if not applying:
         return info
@@ -273,6 +291,17 @@ def publish(root, manifest, store=None, applying=False, *, _test_transport=False
     require(all(callable(getattr(store, method, None)) for method in ('read', 'create', 'replace')),
         'Explicit generation-conditional publication transport required')
     _same_base(_read_control(store), manifest)
+    if research_enabled:
+        try:
+            base = store.read(PREFIX + '/activations/' + expected_base_activation_sha256 + '.json',
+                max_bytes=MAX_MANIFEST_BYTES)
+        except Exception:
+            raise AppendPublicationError('Research baseline read unavailable; no publication write attempted') from None
+        require(isinstance(base, StoredObject) and type(base.generation) is int and base.generation > 0
+            and base.data == _read(Path(root), manifest['base_activation'], MAX_MANIFEST_BYTES, required_bytes=False)
+            and sha(base.data) == expected_base_activation_sha256,
+            'Exact remotely retained Research baseline activation required before publication')
+        info['base_activation_generation'] = base.generation
     created = reused = 0
     for entry in [*manifest['files'], manifest['activation']]:
         maximum = MAX_BYTES if '/objects/' in entry['object_key'] else MAX_MANIFEST_BYTES

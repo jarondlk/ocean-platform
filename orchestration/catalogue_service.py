@@ -146,11 +146,12 @@ class _EDNAAdapter(_IntegrityBoundary, FrozenEDNACatalogueAdapter):
 
 class FrozenCatalogueResolver:
     """Construct fresh policy-bound adapters over explicit registered stores."""
-    def __init__(self, *, store, policy_resolver, registrations):
+    def __init__(self, *, store, policy_resolver, registrations, edna_input_cache=None):
         if not callable(policy_resolver) or not isinstance(registrations, Mapping):
             raise ValueError("Explicit policy resolver and registrations required")
         self.store, self.policy_resolver = store, policy_resolver
         self.registrations = dict(registrations)
+        self.edna_input_cache = edna_input_cache
 
     @staticmethod
     def _access_epoch(lifecycle):
@@ -219,7 +220,9 @@ class FrozenCatalogueResolver:
         adapters = {
             "ctd": c10, "metagenome": c10,
             "remote_sensing": _SSTAdapter(store=self.store, access=SSTAccess(binding, revision, eligible("remote_sensing"))),
-            "edna_metabarcoding": _EDNAAdapter(store=self.store, access=EDNAAccess(binding, revision, eligible("edna_metabarcoding"))),
+            "edna_metabarcoding": _EDNAAdapter(store=self.store,
+                access=EDNAAccess(binding, revision, eligible("edna_metabarcoding")),
+                input_cache=self.edna_input_cache),
         }
         adapter = _ScientificAdapter(
             store=self.store, adapters=adapters,

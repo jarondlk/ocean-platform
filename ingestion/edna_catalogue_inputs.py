@@ -6,6 +6,7 @@ classification and identity assertions are retained, never discovered or approve
 
 from __future__ import annotations
 
+from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 import hashlib
@@ -83,6 +84,8 @@ _JSON_LIMITS = {
     "community_availability_json": 64 * 1024,
     "taxonomy_json": 64 * 1024,
 }
+_TAXONOMY_MEMO_ENTRIES = 2048
+_TAXONOMY_MEMO_BYTES = 4 * 1024 * 1024
 
 
 class AdapterUnavailable(ValueError):
@@ -148,20 +151,27 @@ def parse_community_availability(value: str | None) -> dict:
 
 
 def _validate_primitives(role, records):
+    # Compile the fixed Arrow field checks once per table, not once per cell.
+    plan = []
+    for field in ARROW_SCHEMAS[role]:
+        kind = ("text" if field.type == pa.string() else
+                "bool" if field.type == pa.bool_() else
+                "int" if field.type == pa.int64() else "number")
+        plan.append((field.name, field.nullable, kind,
+                     _JSON_LIMITS.get(field.name, 4000)))
     for row in records:
-        for field in ARROW_SCHEMAS[role]:
-            value = row[field.name]
+        for name, nullable, kind, limit in plan:
+            value = row[name]
             if value is None:
-                if not field.nullable:
+                if not nullable:
                     raise ValueError("Null in required frozen eDNA column")
-            elif field.type == pa.string():
-                limit = _JSON_LIMITS.get(field.name, 4000)
+            elif kind == "text":
                 if type(value) is not str or not value.strip() or len(value.encode("utf-8")) > limit:
                     raise ValueError("Invalid frozen eDNA text value")
-            elif field.type == pa.bool_():
+            elif kind == "bool":
                 if type(value) is not bool:
                     raise ValueError("Frozen eDNA flags require primitive booleans")
-            elif field.type == pa.int64():
+            elif kind == "int":
                 if type(value) is not int or not 0 <= value <= 2**63 - 1:
                     raise ValueError("Frozen eDNA counts require nonnegative primitive int64")
             elif type(value) not in {int, float} or not math.isfinite(value):
@@ -326,6 +336,10 @@ def validate_rows(dataset: EDNADataset, tables: dict[str, pd.DataFrame]):
         raise ValueError("eDNA descriptor method contradicts retained source availability")
 
     counts, sequence_keys = {}, set()
+    # Only this load's fully validated immutable assignment tuples are reused.
+    # No source rows, access decisions or cross-request state enter the memo.
+    taxonomy_memo, taxonomy_bytes = OrderedDict(), 0
+    source_ranks = set(SOURCE_RANKS)
     for row in records.get("detections", []):
         if row["assay_id"] not in assays:
             raise ValueError("Frozen detection refers to an unknown assay")
@@ -346,13 +360,30 @@ def validate_rows(dataset: EDNADataset, tables: dict[str, pd.DataFrame]):
                 raise ValueError("Reported concentration requires a nonnegative value")
         elif row["concentration_status"] not in {"missing", "column_absent"} or copies is not None:
             raise ValueError("Missing/absent concentration must retain an unknown value")
-        taxonomy = _json_object(row["taxonomy_json"], label="taxonomy")
-        if not set(taxonomy) <= set(SOURCE_RANKS) or any(
-            value is not None and (type(value) is not str or not value.strip() or len(value) > 4000)
-            for value in taxonomy.values()
-        ):
-            raise ValueError("Frozen taxonomy requires retained source rank labels")
-        if deepest_resolved_assignment(taxonomy) != (row["assigned_taxon_name"], row["assigned_taxon_rank"]):
+        raw_taxonomy = row["taxonomy_json"]
+        cached = taxonomy_memo.get(raw_taxonomy)
+        if cached is None:
+            taxonomy = _json_object(raw_taxonomy, label="taxonomy")
+            if not set(taxonomy) <= source_ranks or any(
+                value is not None and (type(value) is not str or not value.strip() or len(value) > 4000)
+                for value in taxonomy.values()
+            ):
+                raise ValueError("Frozen taxonomy requires retained source rank labels")
+            assignment = deepest_resolved_assignment(taxonomy)
+            # Bound UTF8 payloads and container overhead independently of rows.
+            cost = len(raw_taxonomy.encode("utf-8")) + sum(
+                len(value.encode("utf-8")) for value in assignment if value is not None
+            ) + 512
+            if _TAXONOMY_MEMO_ENTRIES > 0 and cost <= _TAXONOMY_MEMO_BYTES:
+                while taxonomy_memo and (len(taxonomy_memo) >= _TAXONOMY_MEMO_ENTRIES
+                                        or taxonomy_bytes + cost > _TAXONOMY_MEMO_BYTES):
+                    _, (_, removed) = taxonomy_memo.popitem(last=False)
+                    taxonomy_bytes -= removed
+                taxonomy_memo[raw_taxonomy] = assignment, cost
+                taxonomy_bytes += cost
+        else:
+            assignment = cached[0]
+        if assignment != (row["assigned_taxon_name"], row["assigned_taxon_rank"]):
             raise ValueError("Frozen assigned taxonomy contradicts shared source interpretation")
     if "detections" in records and specs["detections"].completeness == "complete":
         for assay_id, methods in availability.items():

@@ -1,5 +1,52 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 — B2 implementation local checkpoint
+
+B2 has started. Resume from the [implementation receipt](../beta/b2-20261116/implementation-local-checkpoint.json)
+and [delivery plan](../beta/B2_DATA_CATALOGUE_PLAN.md), preserving earlier receipts.
+Recovered and verified all41 pinned eDNA registries/328 objects; select39 current-v3
+bundles. The independent original-source oracle and old canonical exports match
+3498 occurrences/classifications/assays and349638 detections; controls, unknowns,
+methods and unresolved physical identities are unchanged. Current six C09 snapshots,
+13 payload objects and beta quarantine are also recovered. Do not repeat recovery,
+transfers/imports/migrations or old B1 Jobs.
+
+Private working root:/private/tmp/ocean-b2-20261116. Immutable scientific-input
+archive:~/Library/Application Support/OCEAN/private-data-20261116-b2-inputs,
+1339files/382761793bytes,indexdcffdb68ff5c423876538c6fe51a848afd561d86d9b3f483a2796320b5e84a1c.
+It predates the new cache/host tests and local C14 measurements; preserve that
+archive unchanged. The later evidence is now preserved separately in
+~/Library/Application Support/OCEAN/private-handoff-20261116-b2-local,
+29files/89400bytes,indexe3407e1340f2d55823cee3ac617013eba506d9ebc6583c5ac3a06eed5c9e9470.
+Scientific payloads stay private.
+
+Runtime changes:bounded per-load C12 taxonomy/primitive validation reuse; explicit
+trusted-host semantic-input cache(max1GiB/64entries/2distinct fills), exact manifest/
+verified byte/generation keys, detached frames, per-caller decoded bounds, fresh
+policy/namespace/registration/control/activation fences. No catalogue view cache.
+After per-load optimization alone, full-cohort concurrency4 failed18.56s/3.55GiB;
+retain that failure. With the cache,9 isolated local cold trials at1/2/4concurrency
+pass5.39–6.16s/max1.28GiB. Warm4requests take1.39s, exact response hashes retained.
+702 focused local checks and lint pass; focused hosted CI/actualPG16 is still pending.
+Research-preserving publisher amendment requires explicit true plus independently
+selected base activation hash and exact remote immutable base read before writes;
+default false behavior stays intact. No actual publication has happened.
+
+Next:complete logical source dispositions and remaining cold/warm costly-path,
+eviction and actual container/GCS measurements; qualify source-bound hosted CI;
+write a new current-base39-eDNA-only preparer. Replace the obsolete generated
+qualification “all scientific/research execution gates false” only in the new
+operational wrapper, with explicit metadata supersession and original rows/review
+lineage intact. Do not replay CTD-only prepare_cohorts/all-qualified. Before any
+live write/build/probe, refresh cost and current serving/controller/control bindings.
+Preserve all C17/C21 references, holds, audits and current Research mode. Actual
+signed-in context/page-export/withdrawal and B2 acceptance remain open.
+
+Serving62/controller7/API55cef311/frontend0bde2554 are unchanged. There have been
+no B2 cloud writes, builds, rollouts or model calls. Queue/Scheduler/sweep/Codex
+schedule remainPAUSED; B3–B5 stay separate. No sign-in action is currently required.
+Unrelated working files remain preserved. Earlier sections are historical.
+
 ## Current November16 — B2 plan prepared; implementation not started
 
 B1 remains accepted. [Detailed B2 plan](../beta/B2_DATA_CATALOGUE_PLAN.md) organizes source recovery and

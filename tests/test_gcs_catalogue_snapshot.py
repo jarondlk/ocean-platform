@@ -120,6 +120,45 @@ def test_read_scope_never_reuses_payload_or_escapes_into_copied_context(setup):
             reader.read(identity)
 
 
+def test_input_generation_binding_requires_this_threads_verified_read(setup):
+    from concurrent.futures import ThreadPoolExecutor
+    from contextvars import copy_context
+    _, reader, _, identity, _, _ = setup
+    with pytest.raises(ValueError, match='verified snapshot read'):
+        reader.input_generation_binding(identity)
+    with reader.read_scope():
+        with pytest.raises(ValueError, match='verified snapshot read'):
+            reader.input_generation_binding(identity)
+        reader.read(identity)
+        first = reader.input_generation_binding(identity)
+        assert len(first) == 64
+        reader.read(identity)
+        assert reader.input_generation_binding(identity) == first
+        captured = copy_context()
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            with pytest.raises(ValueError, match='verified snapshot read'):
+                pool.submit(captured.run, reader.input_generation_binding, identity).result()
+    with pytest.raises(ValueError, match='verified snapshot read'):
+        reader.input_generation_binding(identity)
+
+
+@pytest.mark.parametrize('part', ['manifest', 'payload'])
+def test_generation_change_with_identical_bytes_invalidates_semantic_binding(setup, part):
+    _, reader, memory, identity, manifest, _ = setup
+    key = (PREFIX + '/manifests/' + identity + '.json' if part == 'manifest'
+        else PREFIX + '/objects/' + manifest.objects[0].sha256)
+    with pytest.raises(SnapshotConflict, match='transport generation changed'):
+        with reader.read_scope():
+            reader.read(identity)
+            first = reader.input_generation_binding(identity)
+            previous = memory.objects[key]
+            memory.objects[key] = StoredObject(previous.data, previous.generation + 1)
+            reader.read(identity)
+    with reader.read_scope():
+        reader.read(identity)
+        assert reader.input_generation_binding(identity) != first
+
+
 def test_read_scope_rechecks_current_manifest_gate_before_return(setup):
     _, reader, _, identity, _, _ = setup
     allowed = True

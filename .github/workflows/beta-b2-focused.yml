@@ -1,0 +1,88 @@
+name: Beta B2 data and catalogue qualification
+
+on:
+  push:
+    branches: [overhaul]
+    paths:
+      - 'ingestion/edna_catalogue_inputs.py'
+      - 'ingestion/edna_input_cache.py'
+      - 'ingestion/gcs_catalogue_snapshot.py'
+      - 'orchestration/frozen_edna_catalogue.py'
+      - 'orchestration/catalogue_service.py'
+      - 'api/v1_catalogue_host.py'
+      - 'deploy/gcp/beta/data/**'
+      - 'tests/test_edna_input_cache.py'
+      - 'tests/test_edna_validation_reuse.py'
+      - 'tests/test_beta_edna_cached_host.py'
+      - 'tests/test_beta_research_catalogue_append.py'
+      - 'tests/test_gcs_catalogue_snapshot.py'
+      - '.github/workflows/beta-b2-focused.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beta-b2-focused-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  catalogue:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: ocean
+          POSTGRES_PASSWORD: integration-only-password
+          POSTGRES_DB: ocean_b2_disposable
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ocean -d ocean_b2_disposable"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      AUTH_MODE: disabled
+      DEPLOYMENT_ENV: test
+      DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_b2_disposable
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements/dev.txt
+      - name: Install hash-locked dependencies
+        run: python -m pip install --require-hashes -r requirements/dev.txt
+      - name: Check changed sources
+        run: >-
+          python -m ruff check ingestion/edna_catalogue_inputs.py
+          ingestion/edna_input_cache.py ingestion/gcs_catalogue_snapshot.py
+          orchestration/frozen_edna_catalogue.py orchestration/catalogue_service.py
+          api/v1_catalogue_host.py deploy/gcp/beta/data/append_catalogue.py
+          deploy/gcp/beta/data/publish_append.py tests/test_edna_input_cache.py
+          tests/test_edna_validation_reuse.py tests/test_beta_edna_cached_host.py
+          tests/test_beta_research_catalogue_append.py tests/test_gcs_catalogue_snapshot.py
+          tests/test_beta_catalogue_append.py
+      - name: Verify input semantics, current authority and Research-preserving publication
+        run: >-
+          python -m pytest -q --tb=short
+          tests/test_edna_input_cache.py tests/test_edna_validation_reuse.py
+          tests/test_edna_catalogue_inputs.py tests/test_edna_catalogue_adversarial.py
+          tests/test_frozen_edna_catalogue.py tests/test_gcs_catalogue_snapshot.py
+          tests/test_v1_catalogue_host.py tests/test_beta_snapshot_catalogue.py
+          tests/test_beta_multisource_edna_catalogue.py tests/test_beta_edna_cached_host.py
+          tests/test_beta_catalogue_append.py tests/test_beta_catalogue_publish_append.py
+          tests/test_beta_research_catalogue_append.py tests/test_catalogue_service.py
+          tests/test_catalogue_service_frozen.py tests/test_catalogue_service_materialization.py
+          tests/test_frozen_scientific_catalogue.py
+      - name: Verify actual PostgreSQL 16 canonical SQL versus frozen C12 predicates
+        env:
+          RUN_POSTGRES_INTEGRATION: '1'
+        run: python -m pytest tests/integration/test_edna_catalogue_postgres.py -q -rA --tb=short

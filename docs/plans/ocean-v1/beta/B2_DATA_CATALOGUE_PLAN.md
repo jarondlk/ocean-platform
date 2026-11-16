@@ -8,6 +8,13 @@ This plan performs no acquisition, upload, publication, deployment, model call,
 scientific reclassification or scheduling change. B2 is an integration milestone
 for existing C09/C11–C14/C16–C18/C21 contracts, not a new component series.
 
+Implementation began later on November16. The [local checkpoint](b2-20261116/implementation-local-checkpoint.json)
+records completed exact input recovery, independent row oracle, full prefix
+metadata pagination, C12 optimization and justified bounded semantic-cache
+fallback, Research-preserving publisher amendment and702 focused local tests.
+The historical audit below remains unchanged. Actual GCS/container/browser,
+logical dataset dispositions, fresh-base publication and B2 acceptance remain open.
+
 ## Outcome
 
 A signed-in beta user can find the intended data across all four source families,

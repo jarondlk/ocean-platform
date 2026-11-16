@@ -42,7 +42,7 @@ def captured_manifest(captured, *, qualifications):
         operation_versions={obj.operation_id: obj.operation_version for obj in captured.objects})
 
 
-def append_groups(*, store, activation, groups, authorization_ref):
+def append_groups(*, store, activation, groups, authorization_ref, research_enabled=False):
     """Seal explicit dataset groups and preserve the complete existing lifecycle.
 
     Each group supplies a label, qualifications and exported dataset triples
@@ -51,7 +51,7 @@ def append_groups(*, store, activation, groups, authorization_ref):
     are loaded from data. The supplied private store is never a serving store.
     """
     from api.v1_catalogue_host import _activation, _canonical
-    _activation(_canonical(activation))
+    _activation(_canonical(activation), research_enabled=research_enabled)
     before = validated_lifecycle(canonical_bytes(store.lifecycle()))
     result = copy.deepcopy(activation)
     if not groups or not isinstance(authorization_ref, str) or not authorization_ref:
@@ -109,8 +109,8 @@ def append_groups(*, store, activation, groups, authorization_ref):
     result['qualifications'] = list(dict.fromkeys([*result['qualifications'],
         'Additional qualified datasets are operationally authorized for this private beta; independent scientific approval remains false.']))
     data = _canonical(result)
-    _activation(data)
+    _activation(data, research_enabled=research_enabled)
     return result, {'activation_sha256': hashlib.sha256(data).hexdigest(),
         'base_control_sha256': hashlib.sha256(canonical_bytes(before)).hexdigest(),
         'base_revision': before['revision'], 'new_revision': after['revision'],
-        'new_groups': summaries, 'scientific_approval': False, 'research_enabled': False}
+        'new_groups': summaries, 'scientific_approval': False, 'research_enabled': research_enabled}

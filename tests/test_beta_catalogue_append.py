@@ -55,6 +55,26 @@ def test_duplicate_existing_dataset_is_rejected_without_control_change(sealed):
     assert store.lifecycle() == before
 
 
+def test_explicit_research_append_preserves_enabled_mode_evidence_refs_and_holds(sealed):
+    _, output, plan, prepared = sealed
+    store = prepared['store']
+    store.access_gate = lambda manifest: True
+    store.add_reference(plan['index_id'], 'c21:dependency:' + 'b' * 64)
+    store.set_hold(plan['index_id'], True)
+    before = store.lifecycle()
+    old = json.loads((output / 'activation.json').read_bytes())
+    old['research_enabled'] = True
+    new, receipt = append_groups(store=store, activation=old, groups=[group()],
+        authorization_ref='synthetic-current-enabled-research', research_enabled=True)
+    after = store.lifecycle()
+    assert new['research_enabled'] is receipt['research_enabled'] is True
+    assert new['scientific_approval'] is False
+    assert new['access'] == old['access'] and new['snapshots'][0] == old['snapshots'][0]
+    assert all(after['snapshots'][key] == value for key, value in before['snapshots'].items())
+    assert all(after['references'][key] == value for key, value in before['references'].items())
+    assert after['audits'][:before['revision']] == before['audits']
+
+
 @pytest.mark.parametrize('key,value', [('scientific_approval', True), ('research_enabled', True),
     ('scientific_mode', 'published')])
 def test_activation_cannot_introduce_unreviewed_science_authority(sealed, key, value):

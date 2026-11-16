@@ -389,8 +389,13 @@ def _method_rows(data, selected, params, filters):
 
 
 class FrozenEDNACatalogueAdapter(FrozenCatalogueAdapter):
-    def __init__(self, *, store, access: EDNAAccess):
+    def __init__(self, *, store, access: EDNAAccess, input_cache=None):
+        if input_cache is not None:
+            from ingestion.edna_input_cache import ValidatedEDNAInputCache
+            if not isinstance(input_cache, ValidatedEDNAInputCache):
+                raise ValueError('Trusted bounded eDNA input cache required')
         self.store, self.access = store, access
+        self.input_cache = input_cache
 
     def _load(self, request):
         if (request.access_binding, request.access_revision) != (
@@ -449,12 +454,14 @@ class FrozenEDNACatalogueAdapter(FrozenCatalogueAdapter):
                 and obj.role == "canonical_rows"
                 and obj.schema_version == DATASET_VERSION
             ):
-                data = load_dataset(
-                    manifest,
-                    contents,
-                    obj,
-                    decoded_budget=MAX_DECODED_BYTES - actual_bytes,
-                )
+                if self.input_cache is None:
+                    data = load_dataset(manifest, contents, obj,
+                        decoded_budget=MAX_DECODED_BYTES - actual_bytes)
+                else:
+                    binding = getattr(self.store, 'input_generation_binding', None)
+                    data = self.input_cache.load(manifest, contents, obj,
+                        decoded_budget=MAX_DECODED_BYTES - actual_bytes,
+                        generation_binding=binding(request.snapshot_id) if callable(binding) else None)
                 if data.metadata.dataset_id in known:
                     raise ValueError("Duplicate eDNA dataset metadata")
                 known.add(data.metadata.dataset_id)

@@ -193,7 +193,8 @@ class GcsCatalogueSnapshotStore:
             yield
             return
         state, before = self._fresh_state()
-        scope = {"active": True, "thread": get_ident(), "state": state, "object": before, "manifests": {}}
+        scope = {"active": True, "thread": get_ident(), "state": state, "object": before,
+            "manifests": {}, "generation_bindings": {}}
         token = self._control_scope.set(scope)
         try:
             yield
@@ -235,7 +236,9 @@ class GcsCatalogueSnapshotStore:
         state, before = self._state()
         self._registered(state, identity)
         try:
-            raw = self._read(f"manifests/{identity}.json", MAX_MANIFEST_BYTES).data
+            source = self._read(f"manifests/{identity}.json", MAX_MANIFEST_BYTES)
+            raw = source.data
+            generations = hashlib.sha256(canonical_bytes([identity, source.generation]))
             if hashlib.sha256(raw).hexdigest() != identity:
                 raise ValueError("Snapshot manifest integrity failure")
             manifest = validated_manifest(_json(raw))
@@ -244,16 +247,32 @@ class GcsCatalogueSnapshotStore:
             self._access(state, identity, manifest)
             contents = {}
             for obj in manifest.objects:
-                data = self._read(f"objects/{obj.sha256}", obj.size_bytes).data
+                payload = self._read(f"objects/{obj.sha256}", obj.size_bytes)
+                data = payload.data
                 if len(data) != obj.size_bytes or hashlib.sha256(data).hexdigest() != obj.sha256:
                     raise ValueError("Snapshot object integrity failure")
                 contents[obj.object_id] = data
+                generations.update(canonical_bytes([obj.sha256, payload.generation]))
         except SnapshotNotFound:
             raise ValueError("Registered snapshot immutable bytes are unavailable") from None
         current, after = self._state()
         self._same_control(before, after)
         self._access(current, identity, manifest)
+        scope = self._active_read_scope()
+        if scope is not None:
+            binding = generations.hexdigest()
+            previous = scope['generation_bindings'].get(identity)
+            if previous is not None and previous != binding:
+                raise SnapshotConflict('Snapshot transport generation changed during read')
+            scope['generation_bindings'][identity] = binding
         return manifest, contents
+
+    def input_generation_binding(self, identity):
+        """Only an exact verified read in the current request can bind inputs."""
+        scope = self._active_read_scope()
+        if scope is None or identity not in scope['generation_bindings']:
+            raise ValueError('Current verified snapshot read required')
+        return scope['generation_bindings'][identity]
 
     def lifecycle(self):
         """A detached, freshly fetched trusted control state; never a data listing."""
