@@ -1,5 +1,40 @@
 # Beta deployment continuation — 2026-11-16 JST
 
+## Current November16 — B2 plan prepared; implementation not started
+
+B1 remains accepted. [Detailed B2 plan](../beta/B2_DATA_CATALOGUE_PLAN.md) organizes source recovery and
+inventory, C12 cold-path optimization, Research-preserving append preparation,
+actual GCS/guarded delivery, signed-in context/export/withdrawal journeys and
+final acceptance. [Source/receipt-bound planning audit](../beta/b2-20261116/planning-audit.json). No benchmark,
+cloud call, transfer, deployment, source reclassification or runtime change was
+performed in this planning checkpoint.
+
+Ready for preparation/local work; eDNA is **not ready for activation**. The old
+normalized/raw private input directories are absent; the held preparation path
+is an empty store directory. Recover generation/hash-pinned inputs using the
+documented procedure, recording new recovery evidence without repeating uploads.
+The old preparation targets a CTD-only base and its publisher requires
+research_enabled=false; qualify a fresh-base append preserving current enabled
+Research, old descriptors and all C17/C21 holds/references before publication.
+The expected increment is39eDNA datasets, not the41old additions that included
+already deployed metagenome/SST. All membership/totals require fresh reconciliation.
+
+Prefer bounded per-load taxonomy/primitive validation improvements before adding
+a production semantic cache. Measure complete39dataset cold/warm paths and
+concurrency1/2/4 against current1CPU/4GiB API; proposed process-peak budget3GiB,
+unchanged15s request deadline. The user's accepted17.671s full-page cold load
+remains a separate nonblocking UX disposition. Private cache timing is diagnostic.
+Close the incomplete SST inventory and give every intended dataset an explicit
+state; preserve controls/unknowns/unresolved sample IDs, product and method units.
+Use the real bounded C21 page export, not prototype transcript/bulk exports.
+
+Next implementation increment: B2.1 exact input recovery/inventory and independent
+oracle, followed by B2.2 measured cold-path repair. No new scientific decision is
+needed to prepare honest raw inventory; missing generations or actual eligibility
+reviews remain explicit gates. Queue/scheduling and execution stayPAUSED/gated;
+B3–B5 acceptance is unchanged. Unrelated/scientific working files are preserved.
+Earlier sections below are historical checkpoints.
+
 ## Current November16 — B1 complete; B2 readiness next
 
 B1 is accepted within its documented Research scope. Fresh SDK sign-in succeeded

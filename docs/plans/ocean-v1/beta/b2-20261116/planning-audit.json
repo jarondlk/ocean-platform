@@ -1,0 +1,87 @@
+{
+  "version": "ocean-beta-b2-planning-audit-v1",
+  "recorded_utc": "2026-11-16T04:09:50.483159+00:00",
+  "date_jst": "2026-11-16",
+  "branch": "overhaul",
+  "source_checkpoint": "7905aa9aaae4a4af1f8bbd3ceba74d5dda17d544",
+  "state": "plan_ready_for_preparation_eDNA_publication_not_ready",
+  "baseline": "Accepted B1 receipts and their exact service metadata; no fresh GCP inspection in this planning audit",
+  "accepted_serving_generation": 62,
+  "accepted_controller_generation": 7,
+  "accepted_api_vcpu": 1,
+  "accepted_api_memory_gib": 4,
+  "accepted_request_concurrency": 4,
+  "proposed_b2_process_peak_budget_gib": 3,
+  "proposed_memory_budget_is_new_predeclared_plan_not_measured_pass": true,
+  "private_input_path_observations": [
+    {
+      "kind": "raw_quarantine",
+      "documented_path": "/private/tmp/ocean-beta-existing-raw-quarantine-20261102",
+      "exists": false,
+      "regular_files_observed": 0
+    },
+    {
+      "kind": "edna_metadata",
+      "documented_path": "/private/tmp/ocean-beta-origin-edna-metadata-20261103",
+      "exists": false,
+      "regular_files_observed": 0
+    },
+    {
+      "kind": "edna_normalized",
+      "documented_path": "/private/tmp/ocean-beta-origin-edna-normalized-20261103",
+      "exists": false,
+      "regular_files_observed": 0
+    },
+    {
+      "kind": "held_full_preparation",
+      "documented_path": "/private/tmp/ocean-beta-multi-catalogue-prepared-20261103",
+      "exists": true,
+      "regular_files_observed": 0
+    },
+    {
+      "kind": "origin_inventory",
+      "documented_path": "/private/tmp/ocean-beta-origin-inventory-20261102",
+      "exists": false,
+      "regular_files_observed": 0
+    }
+  ],
+  "publisher_research_enabled_false_precondition_observed": true,
+  "eDNA_cold_loader_matches_private_diagnostic_source": true,
+  "private_cache_diagnostic_is_not_production_acceptance": true,
+  "production_export_observation": "C21 exports an authorized100-row retained-evidence page; no generic bulk catalogue export in CatalogueBrowser and no production transcript export inferred from prototype UI",
+  "source_pins": {
+    "ingestion/edna_catalogue_inputs.py": "3942dd82de8319d114bbeae39848aa1ca9b7565ae9af61b80d0352bee88d42a5",
+    "orchestration/frozen_edna_catalogue.py": "9adbfb504c968795db8df2971842b780e1af95ebff3fcda1b93703b68c4b2781",
+    "orchestration/frozen_scientific_catalogue.py": "456e7ef9862396ff77b1c034019d04ef7cebfc370baff857952e7fee265a41ec",
+    "orchestration/catalogue_service.py": "7de3b20ccc23b5979e8557a2ef7a1aa3e398d013bc510f511b2b30d490a128a6",
+    "ingestion/gcs_catalogue_snapshot.py": "974081209c850d5cca6b3a24580f3572723ad81415552f709de18d72cd8361fd",
+    "deploy/gcp/beta/data/prepare_cohorts.py": "94182189b565f209c29e8c140bc7cf9a04de6e8377726c2a4737c080fd901d4a",
+    "deploy/gcp/beta/data/publish_append.py": "29bd41e1a7f88f6633f73e6a2968fa26fbd65627c11d05b3fb0e1dd843772089",
+    "frontend-v1/src/runtime-app.tsx": "e3d1d0e799de2af410de8a5a4d342abf883d4e861ace8b4d9b9b1f2cfe3b818e",
+    "frontend-v1/src/research-answers.tsx": "d015ee6ecb9d3e1b42d758b61f759e6201b5539d96cdd5a8f1ca0a519b1a465c"
+  },
+  "receipt_pins": {
+    "b1-20261114/b1-acceptance-20261116.json": "b9174ead3b087ef93d0adef15554007c6c85fb5dee3efdbd6e74cdc6efb285b2",
+    "b1-20261114/cold-navigation-ux-disposition-20261116.json": "8b5760bf090b0c4e03139581dbf3209444e1aa366f47403db45543602df0088c",
+    "cohorts-20261103/edna-conversion-audit-20261103.json": "1514019e50eb0302d00c885a05adce90b3d416fd994ed55e3285aaeefba7131a",
+    "cohorts-20261103/offline-performance-gate-assessment.json": "c328792e8b7af4674ee14d94c4e23a7f20bc997033051cda06de04ff0b176111",
+    "cohorts-20261103/private-inputs-handoff.json": "c6e447db581babbb3d31abbad00128030593a380e8a4b0cdfe3a1aba75d9af14",
+    "cohorts-20261103/meta-sst-live-20261104.md": "8124d5a5648bf038acf304f61e09dc32dfe5ae950fcce8fa290bb33aa8a34d86",
+    "cohorts-20261103/jcope-audit-20261103-amendment01.json": "ae938c707674e99f411dc7cfc82d5688690006f4fdeaae88ec5d825f83c884bf",
+    "edna-latency-20261103/private-cache-prototype.json": "3618fe41a65570d2f9e97df60f794a2efbfc4a8bc4ac9bf605d02c0edfe03e57",
+    "raw-quarantine-20261102/origin-inventory-summary.json": "6d1822425e5d3d8daddf0fa5c72f0982994c6cd336a2a4965cb153b4ce34451d"
+  },
+  "planning_document_sha256": "6bf6965a210cf350b0564c17b1a53f7bdc0d0d3ac0dd5df2e36bb31299e19fb0",
+  "tests_benchmarks_cloud_calls_mutations_acquisition_transfers_deployment_or_model_calls": false,
+  "scientific_approval": false,
+  "unrelated_files_preserved": true,
+  "new_user_decision_required_to_prepare": false,
+  "required_execution_gates": [
+    "exact input recovery/oracle",
+    "fresh current control/activation and Research-preserving append",
+    "qualified cold/warm authority/parity and1/2/4 concurrency memory/latency",
+    "source/image-bound delivery and live GCS/signed-in acceptance",
+    "whole intended inventory/context/export/withdrawal closure"
+  ],
+  "old_CTD_only_preparation_base_is_not_current_publication_authority": true
+}

@@ -17,7 +17,10 @@ deadlines or claiming a15s full-page pass.
 [User disposition](b1-20261114/cold-navigation-ux-disposition-20261116.json).
 Fresh conservative planning isJPY873.80 with the full200 reserve and corrected
 Job minima; native model total remains8. Queue/scheduling remainPAUSED for B4.
-**Full beta acceptance is open; next is B2 readiness and data acceptance.**
+**Full beta acceptance is open; next is B2 data acceptance.** The
+[detailed B2 plan](B2_DATA_CATALOGUE_PLAN.md) is prepared: implementation can start
+with exact input recovery/inventory and local performance work. eDNA publication
+still needs its fresh-base Research-safe operator and actual data/latency gates.
 Older pending-gate, rollout and progress descriptions are historical context.
 
 Historical integrated audit basis (November14):
@@ -110,10 +113,10 @@ candidate:
 | B4 — Prove durable operations | Finish supervised outbox lifecycle, observability, retention and live recovery; measure actual scale and cost | Research sweep follows B1 acceptance and budget; worker recovery follows B3 | Independent beta backup and isolated restore; observed RPO/RTO; held evidence and withdrawal preserved; uncertain ACK/crash recovery; alert/pause/drain readbacks |
 | B5 — Accept and release beta | Repeat C26 integrated evaluation on the deployed candidate and C27 rollout/rollback rehearsal; obtain actual review and final release decision | B1–B4 and required scientific/operational evidence | Completed 43-row evaluation plus 20-gate overlay, evidence manifest, source-bound CI, signed-in UX acceptance, recovery/rollback observations and final release receipt |
 
-B1 is the immediate user-facing priority. Local eDNA and worker preparation can
-proceed independently when their inputs are available; neither may borrow a
-pass from the Research milestone. B2 and B3 can overlap after their own readiness
-checks. Backup/alert preparation can begin early. These are dependency-based
+B1 is accepted; B2 data/catalogue completion is the next implementation priority.
+Local eDNA and worker preparation can proceed independently when their inputs are
+available; neither borrows acceptance from Research. B2 and B3 can overlap after
+their own readiness checks. Backup/alert preparation can begin early. These are dependency-based
 milestones, not calendar promises; actual model quality and production worker
 qualification remain material uncertainties.
 
@@ -260,8 +263,10 @@ checks. There is no need to repeat the entire backend suite for this plan.
 Legacy resources/data, original scientific bytes and prior receipts remain
 protected. Do not resume the paused Codex automation as part of planning.
 
-**Next action:** audit B2 readiness against the current accepted catalogue,
-eDNA integrity/latency, whole-scope and retention requirements. B1 is closed;
+**Next action:** execute B2.1 of the [detailed B2 plan](B2_DATA_CATALOGUE_PLAN.md):
+recover exact pinned inputs, reconcile current source inventory and establish the
+independent expected-result manifest; then B2.2 cold-path repair. The planning
+audit is complete, not eDNA publication readiness. B1 is closed;
 reuse its immutable source/image-bound evidence. Do not repeat successful fixture
 Jobs/deliveries, Q6, bootstrap, source transfers or completed migrations. Keep
 unattended delivery and execution gated to their B3/B4 integration work. Full beta
