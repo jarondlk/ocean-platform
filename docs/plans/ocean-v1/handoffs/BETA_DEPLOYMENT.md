@@ -1,9 +1,10 @@
 # Beta deployment continuation — 2026-11-16 JST
 
-## Current November16 — B2 implementation local checkpoint
+## Current November16 — B2 first implementation increment verified
 
 B2 has started. Resume from the [implementation receipt](../beta/b2-20261116/implementation-local-checkpoint.json)
-and [delivery plan](../beta/B2_DATA_CATALOGUE_PLAN.md), preserving earlier receipts.
+and [accepted hosted verification](../beta/b2-20261116/hosted-verification.json),
+with the [delivery plan](../beta/B2_DATA_CATALOGUE_PLAN.md). Preserve earlier receipts.
 Recovered and verified all41 pinned eDNA registries/328 objects; select39 current-v3
 bundles. The independent original-source oracle and old canonical exports match
 3498 occurrences/classifications/assays and349638 detections; controls, unknowns,
@@ -18,6 +19,9 @@ It predates the new cache/host tests and local C14 measurements; preserve that
 archive unchanged. The later evidence is now preserved separately in
 ~/Library/Application Support/OCEAN/private-handoff-20261116-b2-local,
 29files/89400bytes,indexe3407e1340f2d55823cee3ac617013eba506d9ebc6583c5ac3a06eed5c9e9470.
+Hosted logs and later costly-path measurements are preserved in the separate
+private-handoff-20261116-b2-hosted archive,6files/709172bytes,
+index07af6765c005799fa3a3c01ce19185877364f23ed0d40d4a7876144ab23d6663.
 Scientific payloads stay private.
 
 Runtime changes:bounded per-load C12 taxonomy/primitive validation reuse; explicit
@@ -27,13 +31,23 @@ policy/namespace/registration/control/activation fences. No catalogue view cache
 After per-load optimization alone, full-cohort concurrency4 failed18.56s/3.55GiB;
 retain that failure. With the cache,9 isolated local cold trials at1/2/4concurrency
 pass5.39–6.16s/max1.28GiB. Warm4requests take1.39s, exact response hashes retained.
-702 focused local checks and lint pass; focused hosted CI/actualPG16 is still pending.
+702 focused local checks and lint pass. Source7b5d9354e56a7634dec67113b1451c802668955b
+passes focused hosted run43809484652/job133107699062:702 runtime tests and43 actual
+PostgreSQL16 canonical SQL/frozen-row parity cases. The first run43808982872 passed
+runtime checks but failed43 database setups because the new fixture omitted
+pgvector initialization; original failure/log retained. Only the disposable CI
+setup changed between sources1de54a7 and7b5d935; all14 runtime/test pins are equal.
+The separate broad CI43809484842 remains pending at this checkpoint.
+An additional88 local trials cover39-dataset listing, largest-dataset detailed
+open, raw occurrence/detection pages, raw/eligible counts, coverage and inventory.
+Warm detection pages take1.48–1.72s, all responses remain deterministic per case,
+and peakRSS is1.52GiB; these do not replace per-path three-process-cold/GCS trials.
 Research-preserving publisher amendment requires explicit true plus independently
 selected base activation hash and exact remote immutable base read before writes;
 default false behavior stays intact. No actual publication has happened.
 
-Next:complete logical source dispositions and remaining cold/warm costly-path,
-eviction and actual container/GCS measurements; qualify source-bound hosted CI;
+Next:complete logical source dispositions and remaining per-path cold,
+eviction and actual container/GCS measurements; reuse accepted unchanged evidence;
 write a new current-base39-eDNA-only preparer. Replace the obsolete generated
 qualification “all scientific/research execution gates false” only in the new
 operational wrapper, with explicit metadata supersession and original rows/review

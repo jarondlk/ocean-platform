@@ -1,0 +1,84 @@
+{
+  "version": "ocean-beta-b2-local-costly-paths-exploration-v1",
+  "source_revision": "1de54a709dbc3a75ceb5eb5bbb9250e8dcdd017e",
+  "captured_utc": "2026-11-16T05:19:41.244732+00:00",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "cohort_datasets": 39,
+  "largest_dataset_table_counts": {
+    "occurrences": 128,
+    "classifications": 128,
+    "assays": 128,
+    "detections": 20360
+  },
+  "all_below_15s": true,
+  "within_3GiB": true,
+  "synthetic_principal_local_transport_only": true,
+  "same_case_repeat_response_hash_parity": true,
+  "actual_GCS_container_or_browser_acceptance": false,
+  "does_not_replace_three_process_cold_trials_per_costly_path": true,
+  "cloud_calls_or_mutations": false,
+  "trials": 88,
+  "case_ranges": {
+    "complete-dataset-inventory": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 0.47821991704404354,
+      "maximum_seconds": 1.5343720843084157,
+      "response_hash": "4417b27156a7174ff3b4fd817065b3a17482205c398d3a05d1e8394f48bd3eda"
+    },
+    "detailed-open-largest": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 0.8959485827945173,
+      "maximum_seconds": 1.4208205416798592,
+      "response_hash": "5267c8c417050e3d63d649522ff3ccaab55e62f3d5d08518a7988cbaf144c9bf"
+    },
+    "eligible-count-largest": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 1.2374267093837261,
+      "maximum_seconds": 1.6882639159448445,
+      "response_hash": "c9bf6859ba2ab98329903cc9873a9fa3daa47f48d52fafb89f1b2a63f4155ee0"
+    },
+    "list-39-datasets": {
+      "trials": 11,
+      "cold_trials": 1,
+      "minimum_seconds": 0.8485232917591929,
+      "maximum_seconds": 5.878174915909767,
+      "response_hash": "97f2fe01937cd31536d47656fede273ab3dd91393b4c56334a2e0b2c0c132493"
+    },
+    "raw-count-largest": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 0.6646515829488635,
+      "maximum_seconds": 1.6440830831415951,
+      "response_hash": "9bba15c0b544fb3c8baabecd538ff8ca40168ee3ab90d3de18f320b1be9c91e9"
+    },
+    "raw-coverage-largest": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 0.5817580837756395,
+      "maximum_seconds": 1.4663075832650065,
+      "response_hash": "29995571261c13664246e3bafbd707be1244b94c13c9a6b25fe229fd5d78d026"
+    },
+    "raw-detection-page-largest": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 1.4822366246953607,
+      "maximum_seconds": 1.717065665870905,
+      "response_hash": "6ef53641c977a71a4faf113c78d2dd7537d87b07127b23c93e9924bdc7e189cf"
+    },
+    "raw-occurrence-page-largest": {
+      "trials": 11,
+      "cold_trials": 0,
+      "minimum_seconds": 1.03347570868209,
+      "maximum_seconds": 1.4836522080004215,
+      "response_hash": "1ceed27492511add2670c5ac1a63842f76dfab26c3be2b98d39f65f43270d262"
+    }
+  },
+  "peak_rss_bytes": 1630109696,
+  "result_sha256": "f0793098bec5339c37c5251afcf745de2be0f882d219ea3fbf62bb5afa19d0d5",
+  "operator_sha256": "d432540d0d20bd09d93e7d4f96a1b8ded1f1d41ef0976b2e31fc717d490afb4e",
+  "log_sha256": "fb9e74740ca306cd28780b8c4a637255b1f40cdea6ec53443eeaabb7acab2c16",
+  "private_evidence_root": "/private/tmp/ocean-b2-20261116"
+}

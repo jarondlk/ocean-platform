@@ -1,0 +1,111 @@
+{
+  "version": "ocean-beta-b2-initial-implementation-hosted-verification-v1",
+  "captured_utc": "2026-11-16T05:24:20.360029+00:00",
+  "source_revision": "7b5d9354e56a7634dec67113b1451c802668955b",
+  "runtime_source_first_commit": "1de54a709dbc3a75ceb5eb5bbb9250e8dcdd017e",
+  "source_pins": {
+    "ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+    "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+    "ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+    "orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+    "orchestration/catalogue_service.py": "8285eaaaa27e6f05f17220f99f9bea8b48e9af0fc4d8a8c7da38bc7322aeaa2b",
+    "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085",
+    "deploy/gcp/beta/data/append_catalogue.py": "b66e33cfd0a82f77c72859d319d4a20442803192df14ca9197fe5c5510e61599",
+    "deploy/gcp/beta/data/publish_append.py": "3df45623cd96e32627fe3aef097f244e742e969a92298966cc1f56c6a9aa979c",
+    ".github/workflows/beta-b2-focused.yml": "f68aabcf3e5d9d284b95b9f74e1a04089b2e65c55d7f50c796ea0ff48cf8c459",
+    "tests/test_edna_input_cache.py": "87853b8ee5276f452c2efa01098e27be8dbb2dc2d9f9e71eacd8249b7b7b8a46",
+    "tests/test_edna_validation_reuse.py": "c9a6be71e6fcb94c840276b472a8361147c525966ef0219a529dad95e8cb064e",
+    "tests/test_beta_edna_cached_host.py": "c906276b96ac5b4a06f2b056a19eb3bf1eb84d8b013b3c1964ae3729a4504c06",
+    "tests/test_gcs_catalogue_snapshot.py": "5f2f98e56e45776ce6ec8a2bc33a85c3296aba4de0e1d1cad3a057dba723a04b",
+    "tests/test_beta_research_catalogue_append.py": "efb9cb1755b2fd071203021d072da71b9a7d530d08c0a48c9891ce741a461f8b",
+    "tests/test_beta_catalogue_append.py": "0b47c9715a8261376a103a429675195cc09847a6ebbba288e4bd8198ce3393bf"
+  },
+  "state": "initial_source_increment_verified_B2_acceptance_open",
+  "run_id": 43809484652,
+  "job_id": 133107699062,
+  "run_attempt": 1,
+  "url": "https://github.com/jarondlk/ocean-platform/actions/runs/43809484652",
+  "conclusion": "success",
+  "hosted_environment": "Ubuntu24.04/Python3.12/disposable PostgreSQL16 with pgvector; hash-locked requirements",
+  "changed_source_lint": "passed",
+  "focused_runtime_tests": {
+    "passed": 702,
+    "seconds": 103.17
+  },
+  "actual_postgresql16_predicate_parity_tests": {
+    "passed": 43,
+    "seconds": 16.64,
+    "fixture_database": "ocean_b2_disposable",
+    "beta_database_or_scientific_project_data_used": false
+  },
+  "original_failed_attempt_receipt": "hosted-attempt01.json",
+  "original_failed_fixture_setup_not_relabelled_passed": true,
+  "same_runtime_source_after_fixture_only_fix": true,
+  "hosted_log_sha256": "1e30039d9770604a4d35f46caff7b38eaefe111dfbf5704d0f2cb8322de8116c",
+  "hosted_metadata_sha256": "973ed504d59d1a8801ccbe315f2182a4c09d8496f9fc262e14df284413bab313",
+  "additional_local_costly_path_evidence": "costly-paths-local-followup.json",
+  "private_evidence_preservation": {
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261116-b2-hosted",
+    "files": 6,
+    "bytes": 709172,
+    "index_sha256": "07af6765c005799fa3a3c01ce19185877364f23ed0d40d4a7876144ab23d6663",
+    "all_hashes_reverified": true
+  },
+  "broad_CI_separate_pending": {
+    "run_id": 43809484842,
+    "jobs": [
+      {
+        "id": 133107784373,
+        "name": "Frontend typecheck and build",
+        "status": "completed",
+        "conclusion": "success",
+        "current_steps": []
+      },
+      {
+        "id": 133107784615,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "current_steps": []
+      },
+      {
+        "id": 133107784620,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress",
+        "conclusion": null,
+        "current_steps": [
+          "Verify C21 retained evidence and durable synthesis fences"
+        ]
+      },
+      {
+        "id": 133107784648,
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "current_steps": []
+      },
+      {
+        "id": 133107784660,
+        "name": "Backend tests and security boundary",
+        "status": "in_progress",
+        "conclusion": null,
+        "current_steps": [
+          "Run C26 shared-service integration with fresh-process coverage"
+        ]
+      },
+      {
+        "id": 133107786310,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "full_B2_accepted": false,
+  "actual_GCS_container_or_signed_in_acceptance": false,
+  "cloud_writes_builds_deployments_or_new_model_calls": false,
+  "live_B1_unchanged": true,
+  "queue_Scheduler_sweep_Codex_schedule": "PAUSED",
+  "scientific_approval": false,
+  "next": "Complete logical dispositions, remaining cold/eviction and actual-container qualification; create a source-bound current-base eDNA-only append, then cost-bounded guarded delivery and signed-in context/export/withdrawal acceptance."
+}

@@ -1,6 +1,6 @@
 # Implementation status
 
-## Current November16 — B2 started; recovered cohort and local runtime repair qualified
+## Current November16 — B2 first source increment verified and pushed
 
 The exact pinned eDNA inputs are recovered and preserved privately:41 registries,
 328 objects/127885817bytes, with39 current-v3 datasets selected and2 older
@@ -17,15 +17,23 @@ and checking current authority on every request. Nine isolated local cold trials
 at concurrency1/2/4 pass:5.39–6.16s, at most1.28GiB process peak; warm four-request
 trials take1.39s. Response hashes equal the pre-cache results. This is local
 transport/synthetic-user evidence, **not actual GCS/container/browser acceptance**.
-All702 focused local tests and changed-source lint pass. Research-preserving
-append qualification passes locally; the old default still rejects enabled mode.
-[Immutable checkpoint and evidence hashes](beta/b2-20261116/implementation-local-checkpoint.json).
+All702 focused local tests and changed-source lint pass. Source7b5d935 also passes
+702 hosted runtime tests and43 actual PostgreSQL16 SQL/frozen-row parity tests.
+The original missing-pgvector fixture attempt remains failed in its own receipt;
+the corrected isolated CI fixture is accepted. Research-preserving append
+qualification passes; the old default still rejects enabled mode.
+[Initial checkpoint](beta/b2-20261116/implementation-local-checkpoint.json) and
+[source-bound hosted verification](beta/b2-20261116/hosted-verification.json).
+An additional88 local costly-path trials pass; warm raw detection pages take
+1.48–1.72s and process peak stays1.52GiB. These are still local transport results.
+[Costly-path follow-up](beta/b2-20261116/costly-paths-local-followup.json).
 
 Metadata pagination is complete for raw/1860,edna/530,research-sst/53559 objects;
 those are files, not logical datasets or an atomic source snapshot. Logical
-dispositions, remaining costly-path/eviction measurements, focused hosted CI and
-actual PostgreSQL16 parity, fresh-base eDNA-only preparation, source/image-bound
-delivery and signed-in context/export/withdrawal gates remain open. No B2 cloud
+dispositions, remaining per-path cold/eviction and actual-container/GCS measurements,
+fresh-base eDNA-only preparation, source/image-bound delivery and signed-in
+context/export/withdrawal gates remain open. The separate broad CI run is pending;
+its complete results are not claimed by the focused acceptance. No B2 cloud
 write, activation, deployment or model call has occurred. B1 serving62/controller7
 and its evidence remain unchanged; queue/Scheduler/sweep/Codex schedule stayPAUSED.
 The prior plan-only checkpoint below is historical. B2 is not complete.

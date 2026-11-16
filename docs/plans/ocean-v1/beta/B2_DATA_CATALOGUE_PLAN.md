@@ -12,6 +12,9 @@ Implementation began later on November16. The [local checkpoint](b2-20261116/imp
 records completed exact input recovery, independent row oracle, full prefix
 metadata pagination, C12 optimization and justified bounded semantic-cache
 fallback, Research-preserving publisher amendment and702 focused local tests.
+The [hosted source qualification](b2-20261116/hosted-verification.json) now passes
+702 runtime tests and43 actual PostgreSQL16 parity cases; an additional88 local
+costly-path trials pass in their [separate receipt](b2-20261116/costly-paths-local-followup.json).
 The historical audit below remains unchanged. Actual GCS/container/browser,
 logical dataset dispositions, fresh-base publication and B2 acceptance remain open.
 
