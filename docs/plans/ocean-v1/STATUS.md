@@ -1,5 +1,49 @@
 # Implementation status
 
+## Current November16 — B1 complete; B2 readiness next
+
+B1 is accepted within its documented Research scope. Fresh SDK sign-in succeeded
+and actual queue/Scheduler readbacks close the former pending gate: queuePAUSED,
+0tasks,0Scheduler jobs; serving62/controller7 and full settings remain unchanged.
+Private controller IAM is still only the exact task-invoker identity. Original
+observer/grants Jobs remain generation1,count20/1; fixture owner/probe Jobs stay
+generation1,count4/6. No cloud mutation or completed test/action was replayed.
+[Final B1 acceptance](beta/b1-20261114/b1-acceptance-20261116.json).
+
+The prior real Gemini CTD object-lookup oracle, durable Q6 answer/two citations,
+reload and existing15s per-job read evidence are reused at their exact accepted
+source/image identities. Current-image cancel/lost-ACK/409-FULL recovery/continue/
+duplicate/revoked-restored access passed; all8 controller deliveries wereHTTP200,
+all10 no-retry single-task executions completed, fixture finally suspended with
+no Google sign-in path. No new model call, Q6 action, build, rollout, enrollment,
+source transfer, IAM grant or scientific approval occurred in closure.
+
+The user accepted the measured **17.671s full cold navigation for now** on
+November16. Further cold-navigation optimization is deferred and nonblocking at
+this beta stage. The result remains17.671s; no15s full-page benchmark pass or
+deadline change is invented. [User UX disposition](beta/b1-20261114/cold-navigation-ux-disposition-20261116.json). Fresh closing meters
+still show8native model calls/26001input/1910combined output. Conservative gross
+planningJPY873.80 retains the full200 recovery reserve and corrected Job minima,
+under the standing operator-selected1000 allowance; no invoice/hard-cap claim.
+Monthly beta target remainsJPY50000 with notice before exceeding it.
+
+**Full beta acceptance remains open.** Next audit B2 data/eDNA/whole-scope
+catalogue prerequisites. B3 production workers, B4 supervised outbox/queue/
+backup/recovery and B5 whole-system evaluation/release decisions remain open.
+Queue, Scheduler, runtime sweep and Codex scheduling remainPAUSED; B1 acceptance
+does not claim unattended Research delivery or authorize skipping B4's gates.
+
+New immutable closure archive: ~/Library/Application Support/OCEAN/
+private-handoff-20261116-b1-closed (25files,5208333bytes,indexaa998ef6…).
+Its25files supplement the unchanged728-file recovery archive/index277f301c…
+and all earlier immutable receipts/backups. No auth flow, key, token, DSN or
+original scientific table is included. Private control/cost roots are under
+/private/tmp/ocean-b1-wrap-20261116/{control-accepted-20261116,cost-accepted-20261116}.
+SDK flow03 completed successfully and its code was privately consumed; there is
+no pending sign-in action. Unrelated/scientific checkout files are preserved.
+Earlier sections below describe historical checkpoints, including the resolved
+reauthentication hold; do not replay any of their operations.
+
 ## Current November16 — B1 functional recovery passed; final control readback pending
 
 The actual current-image cancellation, lost-ACK/409/FULL-readback recovery,

@@ -1,21 +1,24 @@
 # Beta completion plan — 2026-11-14 JST
 
 State: **In progress; internal beta is accessible; full beta acceptance is open.**
-Updated November16: B0 completed. B1's supported real Gemini CTD lookup,
-independent oracle, durable answer/citations, existing15s per-job reads and actual
-current-image recovery matrix passed. API4872d04/image55cef311 remains live on
-serving62/controller7 with frontend0bde/source6fdf666. All8 fixture deliveries
-returnedHTTP200;10 no-retry test executions completed; final fixture suspended.
-No real account/history/scientific source bytes changed and no new model call.
-**B1 is awaiting only fresh queue/Scheduler readbacks after personal SDK
-reauthentication; do not mark formal closure complete yet.** Existing queue and
-scheduling were keptPAUSED. Fresh conservative planningJPY873.79 includes the
-full200 reserve; native model total remains8.
+Updated November16: **B0 and B1 are complete within their documented scopes.**
+B1 has the supported real Gemini CTD lookup/independent oracle, durable Q6 answer
+and citations/reload, existing15s per-job reads and actual current-image recovery
+matrix. Fresh personal SDK sign-in and queue/Scheduler readbacks passed: queue
+PAUSED/0tasks/0Scheduler; serving62/controller7/settings and private IAM unchanged.
+All8 fixture deliveries returnedHTTP200,10 no-retry test executions completed,
+fixture finally suspended. No action, model question, build or rollout was rerun.
+[Final B1 acceptance](b1-20261114/b1-acceptance-20261116.json).
 
-The existing history and evidence jobs retain their separate15s deadlines. Full
-cold navigation17.671s is an explicit open UX finding, not a full-page15s pass.
-[Current recovery/cost result](b1-20261114/current-image-recovery-result.json).
-The older rollout and progress descriptions are historical audit context.
+The user accepted the measured17.671s full cold-navigation time for this beta
+stage; further optimization is deferred. It is nonblocking now and remains an
+honest17.671s measurement, without changing the separate15s history/evidence
+deadlines or claiming a15s full-page pass.
+[User disposition](b1-20261114/cold-navigation-ux-disposition-20261116.json).
+Fresh conservative planning isJPY873.80 with the full200 reserve and corrected
+Job minima; native model total remains8. Queue/scheduling remainPAUSED for B4.
+**Full beta acceptance is open; next is B2 readiness and data acceptance.**
+Older pending-gate, rollout and progress descriptions are historical context.
 
 Historical integrated audit basis (November14):
 
@@ -38,8 +41,8 @@ No defensible single percentage follows from the component count.
 | Architecture and component implementation | Accepted contracts, local/integrated software checks, hosted delivery and release-preparation rehearsals exist | Qualify later integration changes at their own source/image/configuration identities |
 | Edge, identity and application shell | Independent beta DNS/TLS, Google login, enrolled admin/internal account, real frontend/API/private SQL; login 200 and protected runtime 401 rechecked November 14 | Final signed-in origin/session/role/isolation matrix and intended beta-user enrollment checks |
 | Catalogue and investigations | CTD, metagenome and MUR regional SST plus saved investigations previously accepted live | Reopen current authority/control state; complete whole-scope/UI/export and retention acceptance; resolve eDNA latency/integrity gate |
-| Research delivery and evidence | Supported real Gemini CTD lookup, independent oracle, saved citations/reload, per-job reads and current-image cancel/duplicate/lost-ACK/revocation matrix observed | Final queue/Scheduler readback; full cold-navigation UX finding; unattended sweep/recovery and broader evaluation remain gated |
-| New Research API | Source `4872d04`, image `55cef311…` live on serving62/controller7; owning source-bound checks, image proofs, per-job reads and actual recovery matrix passed | Final B1 control readback; B4 unattended delivery and B5 whole-system UX/release acceptance |
+| Research delivery and evidence | B1 accepted: real Gemini CTD lookup/oracle, durable answer/citations/reload, per-job reads and actual current-image cancel/duplicate/lost-ACK/revocation; final control readback passed | B4 unattended sweep/recovery and B5 broader evaluation; cold-navigation optimization deferred by user acceptance |
+| New Research API | Source `4872d04`, image `55cef311…` live on serving62/controller7; owning source-bound checks, image proofs, per-job reads, actual recovery and final control readbacks passed | B4 unattended delivery and B5 whole-system UX/release acceptance |
 | Experimental execution | C22/C23/C25 contracts and actual retained Linux test evidence exist | Production admission/start integration, retained port/supervisor and current beta worker qualification are unfinished |
 | Operations and release | Independent resources, cost planning and local migration/rollback rehearsals exist | Current live backup/restore, recovery, containment/capacity, alerts/cost, whole-system evaluation and release decision |
 
@@ -101,7 +104,7 @@ candidate:
 | Milestone | Deliverable and owning components | Dependencies | Exit evidence |
 |---|---|---|---|
 | B0 — Resume the exact candidate | Recover/review operator helpers; incorporate verified index→platform-image proof without relaxing image checks; reopen current targets, authority, IAM, queue, secret metadata and ledger | Audit/source pins are available; scoped credentials for each concrete operation | Hash-bound tooling; exact index/child/platform positive and negative checks; current preflight and budget; fresh post-drain global quiescence |
-| B1 — Make Research usable | Deploy qualified controller/API increment preserving service settings; complete model→tools→evidence→saved answer; address read latency in C14/C20/C21 and UI | B0 passes; actual model validation remains within refreshed limits | Actual Gemini cited answer; independent expected result; persisted answer/evidence after reload; 15-second signed-in history/evidence gate; new-image cancel, duplicate, retry and revocation checks |
+| B1 — Make Research usable (accepted November16) | Deploy qualified controller/API increment preserving service settings; complete model→tools→evidence→saved answer; address read latency in C14/C20/C21 and UI | B0 passes; actual model validation remains within refreshed limits | Actual Gemini cited answer; independent expected result; persisted answer/evidence after reload; 15-second signed-in history/evidence gate; new-image cancel, duplicate, retry and revocation checks |
 | B2 — Complete data and catalogue journeys | Resolve C12–C14 eDNA bottleneck and integrity checks, register the qualified cohort through C09; finish C16–C18 context/navigation/export journeys across intended data | Current control/CAS authority; new source/image proofs for changed code | Exact cohort manifest and totals; whole-scope versus preview parity; unknown/control/method qualifications; source withdrawal/revocation; current browser latency and integrity checks |
 | B3 — Complete production experiments | Amend C22/C25 admission/start integration, build retained execution port/supervisor using C23/C24 boundaries; prepare and qualify bounded isolated beta worker | Accepted approval/input contracts and explicit worker target/material/capacity/cost plan | Actual proposal→approval→reservation→sandbox→validated artifact→independent release; tamper/revocation/cancel/restart tests; all current physical containment and capacity gates |
 | B4 — Prove durable operations | Finish supervised outbox lifecycle, observability, retention and live recovery; measure actual scale and cost | Research sweep follows B1 acceptance and budget; worker recovery follows B3 | Independent beta backup and isolated restore; observed RPO/RTO; held evidence and withdrawal preserved; uncertain ACK/crash recovery; alert/pause/drain readbacks |
@@ -217,9 +220,10 @@ publication, permission and provider configuration. Do not alter or send
 unsolicited traffic to the legacy production deployment. Record numerical
 accuracy, unsupported claims, task completion, citations, latency, tokens and
 cost separately. Mobile, English/Japanese, light/dark, keyboard and screen-reader
-journeys must use actual services. D26-07 and the full cold-navigation UX finding remain open. The former
-history/evidence job failures have source-bound measured resolution in the B1
-receipt; the complete deployed C26 matrix has not been rerun or claimed passed.
+journeys must use actual services. D26-07 remains open. Cold navigation17.671s has an explicit provisional user
+acceptance for this beta stage; optimize later without relabeling the original
+measurement. The former history/evidence job failures have source-bound measured
+resolution in B1. The complete deployed C26 matrix remains unrun/unaccepted.
 
 ## Cost, review and delivery controls
 
@@ -235,7 +239,7 @@ historical and includes reservations, with later drain/observer use unreconciled
 It must not be presented as actual spend or fresh remaining allowance.
 The initial ¥500 limit was subsequently amended. The retained authorization03
 records the operator-selected ¥1000 allowance under the user’s standing future
-approval; the user did not type1000. Fresh November16 planning is ¥873.79 with
+approval; the user did not type1000. Fresh November16 closing planning is ¥873.80 with
 full200 recovery reserve and corrected actual repeated-Job minimums. Six real
 questions plus three isolated deterministic fixture submissions are below the
 conservative20-question bound. No further model question is admitted by B1 closure.
@@ -256,8 +260,10 @@ checks. There is no need to repeat the entire backend suite for this plan.
 Legacy resources/data, original scientific bytes and prior receipts remain
 protected. Do not resume the paused Codex automation as part of planning.
 
-**Next action:** complete the already-open personal SDK sign-in, then read only
-the current beta queue/tasks and Scheduler metadata. Preserve a new closure
-receipt, checkpoint B1 and move to B2 readiness. Do not repeat any successful
-fixture Job/delivery, Q6 action, build or rollout. Full beta acceptance remains
-false until B2–B5 and all applicable original requirements have actual evidence.
+**Next action:** audit B2 readiness against the current accepted catalogue,
+eDNA integrity/latency, whole-scope and retention requirements. B1 is closed;
+reuse its immutable source/image-bound evidence. Do not repeat successful fixture
+Jobs/deliveries, Q6, bootstrap, source transfers or completed migrations. Keep
+unattended delivery and execution gated to their B3/B4 integration work. Full beta
+acceptance remains false until B2–B5 and all applicable original requirements
+have actual evidence.

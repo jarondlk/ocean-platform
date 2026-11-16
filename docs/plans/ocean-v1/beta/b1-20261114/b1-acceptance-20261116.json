@@ -1,0 +1,175 @@
+{
+  "version": "ocean-beta-b1-acceptance-v1",
+  "recorded_utc": "2026-11-16T03:47:25.412705+00:00",
+  "user_local_date": "2026-11-16",
+  "timezone": "Asia/Tokyo",
+  "state": "B1_complete",
+  "b1_complete": true,
+  "full_beta_complete": false,
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_checkpoint_basis": "6d3f75377b56f7f32fddd20d40c5cbd1c89d4c5c",
+  "api_source_revision": "4872d04323c7e7b2bc1946ece41bd0a6333f39c0",
+  "api_image": "sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+  "frontend_source_revision": "6fdf666c2e3fba47a35c9e8319586b6885ca2496",
+  "frontend_image": "sha256:0bde25544313072317ee45d36770400160f0f0960d14cddb7efc416357adffe0",
+  "recovery_program_source_revision": "740f966f80077b0a950537c5a9cdd5346af40c11",
+  "acceptance_gates": {
+    "actual_gemini_cited_answer_and_independent_ctd_object_identity_oracle": true,
+    "q6_answer_and_both_citations_persisted_and_reopened_after_reload": true,
+    "existing_separate_15_second_history_answer_evidence_jobs_observed_passed": true,
+    "current_image_cancellation_lost_ack409_FULL_readback_retry_continuation_duplicates_and_revocation_restoration": true,
+    "four_canonical_and_four_duplicate_deliveries_current_controller_http200": true,
+    "ten_no_retry_single_task_executions_completed": true,
+    "fixture_final_suspended_and_no_google_sign_in_path": true,
+    "fresh_post_exercise_queue_PAUSED_empty_and_scheduler_empty": true,
+    "current_serving62_controller7_and_private_IAM_unchanged": true,
+    "fresh_cost_and_no_new_model_calls_reconciled": true,
+    "measured_cold_navigation_accepted_by_user_for_current_beta_stage": true
+  },
+  "scope_qualification": "Supported CTD object lookup and retained traceability; no unsupported population/statistical answer, independent scientific review or full C26/C27 beta release acceptance is claimed.",
+  "live_control": {
+    "version": "ocean-beta-b1-final-control-readback-v1",
+    "captured_utc": "2026-11-16T03:45:12.198106+00:00",
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "services": {
+      "serving": {
+        "generation": 62,
+        "ready_revision": "ocean-v1-beta-serving-b1-runs-live-1116",
+        "configuration_sha256": "c496da36ff38557f4e05f13149c15f4198c0a0417704c8c099876142ea9024bf"
+      },
+      "research-controller": {
+        "generation": 7,
+        "ready_revision": "ocean-v1-beta-research-controller-b1-runs-1116",
+        "configuration_sha256": "3e04da82cd623242a025e903974ccc39a8dd73d1007e3df6e3133ea177019a65"
+      }
+    },
+    "jobs": {
+      "ocean-v1-beta-b1-recovery-owner-20261116": {
+        "generation": 1,
+        "executions": 4,
+        "template_unchanged": true
+      },
+      "ocean-v1-beta-b1-recovery-probe-20261116": {
+        "generation": 1,
+        "executions": 6,
+        "template_unchanged": true
+      },
+      "ocean-v1-beta-provider-preflight-20261111": {
+        "generation": 1,
+        "executions": 20,
+        "template_unchanged": true
+      },
+      "ocean-v1-beta-research-grants": {
+        "generation": 1,
+        "executions": 1,
+        "template_unchanged": true
+      }
+    },
+    "queue": "PAUSED",
+    "queue_tasks": 0,
+    "scheduler_jobs": 0,
+    "private_controller_exact_task_invoker_only": true,
+    "all_task_and_scheduler_pages_read": true,
+    "cloud_configuration_data_or_iam_mutations": false,
+    "new_job_execution_model_call_q6_action_build_or_rollout": false,
+    "personal_cli_reauthentication_completed": true,
+    "fixture_terminal_evidence_reused_without_replaying_completed_checks": true
+  },
+  "cost": {
+    "version": "ocean-beta-b1-recovery-cost-final-v1",
+    "captured_utc": "2026-11-16T03:46:00.774614+00:00",
+    "meter_captured_utc": "2026-11-16T03:44:19.767405Z",
+    "base_planning_jpy": "670.7987293263039705452638951",
+    "repeated_job_corrections": [
+      {
+        "job": "ocean-v1-beta-b1-recovery-owner-20261116",
+        "executions": 4,
+        "minimum_seconds_each": 60,
+        "vcpu": "2",
+        "ram_gib": "1.25",
+        "full_minimum_jpy": "1.94117472000",
+        "aggregated_metered_jpy": "0.4881059095638823900516679969",
+        "old_estimator_already_added_jpy": "0",
+        "additional_nonnegative_correction_jpy": "1.453068810436117609948332003"
+      },
+      {
+        "job": "ocean-v1-beta-b1-recovery-probe-20261116",
+        "executions": 6,
+        "minimum_seconds_each": 60,
+        "vcpu": "2",
+        "ram_gib": "1.25",
+        "full_minimum_jpy": "2.91176208000",
+        "aggregated_metered_jpy": "1.362140148298537449384770627",
+        "old_estimator_already_added_jpy": "0",
+        "additional_nonnegative_correction_jpy": "1.549621931701462550615229373"
+      }
+    ],
+    "additional_correction_jpy": "3.002690742137580160563561376",
+    "full_original_recovery_reserve_retained_jpy": "200",
+    "total_conservative_planning_jpy": "873.8014200684415507058274565",
+    "initial_validation_allowance_jpy": 1000,
+    "operator_selected_under_standing_future_approval": true,
+    "amount1000_explicitly_typed_by_user": false,
+    "monthly_beta_target_jpy": 50000,
+    "notice_before_exceeding_monthly_target": true,
+    "native_model_calls": 8,
+    "native_input_tokens": 26001,
+    "native_combined_output_tokens": 1910,
+    "new_model_calls": 0,
+    "real_questions_so_far": 6,
+    "additional_fixed_fixture_submissions": 3,
+    "conservative_all_submissions": 9,
+    "question_limit": 20,
+    "full_reserve_covers_delayed_meters_and_unmetered_latest_jobs": true,
+    "original_estimator_and_reservations_unchanged": true,
+    "provider_currency_hard_cap_invoice_or_full_project_monthly_bill_claimed": false,
+    "prices_as_of": "2026-11-15T15:49:55.692208+00:00"
+  },
+  "ux_disposition_receipt": "cold-navigation-ux-disposition-20261116.json",
+  "ux_disposition_receipt_sha256": "8b5760bf090b0c4e03139581dbf3209444e1aa366f47403db45543602df0088c",
+  "prior_receipts_sha256": {
+    "question06-answer-delivery.json": "4d692b558ab4964010c89863fcf53d94cf482396d356d644bb0d2ee8d12f0897",
+    "question06-answer-outcome.json": "a4bb6adc895fd72be2ac704bc70c77aacc2373db23b71215b38e3f976ebc4eec",
+    "run-list-rollout-result.json": "4721a10c411798e62cb022251ec18650af215b8f5b9b406e0dc63d4501fddf82",
+    "current-image-recovery-result.json": "22e6e305316a2a4474765153272d8e875984c28864d6011c820fcdbbcc585bce"
+  },
+  "private_closure_evidence_sha256": {
+    "control-accepted-20261116/result.json": "e5a8dc4f34c13e34a3ceac1e2037db6cefb9f20b477bb98296d57194fe424575",
+    "cost-accepted-20261116/reconciliation.json": "a3f8e5c29e6b1cc5cf47c94a9c1b75cd1b9170c90506c130236e995e429ca190"
+  },
+  "intentional_observation_supersession": "The immutable current-image-recovery-result receipt correctly recorded final queue/Scheduler readbacks pending. Fresh personal SDK sign-in and actual successful readbacks now close that gate. The unchanged measured17.671s cold-navigation finding is accepted provisionally by the user in the separate disposition receipt; it is never relabeled as a15s full-page pass.",
+  "evidence_reuse": {
+    "qualified_runtime_frontend_build_hosted_and_actual_functional_evidence_reused_at_exact_unchanged_source_image_identities": true,
+    "completed_jobs_q6_model_deliveries_migrations_enrollment_or_transfers_repeated": false,
+    "broad_unchanged_tests_rerun": false,
+    "runtime_or_harness_code_changed_in_this_closure": false,
+    "documentation_only_checkpoint_skip_ci_permitted": true
+  },
+  "preserved_boundaries": {
+    "main_legacy_deployment_or_data_mutation": false,
+    "original_scientific_bytes_mutated": false,
+    "scientific_review_or_approval_invented": false,
+    "new_IAM_or_secret_access_grants": false,
+    "new_worker_or_experiment_execution_enabled": false,
+    "queue_scheduler_sweep_or_codex_automation_enabled": false,
+    "real_account_or_history_copied": false
+  },
+  "remaining_beta_work": [
+    "B2 data and eDNA/whole-scope catalogue acceptance",
+    "B3 production experiment admission, retained worker and physical integration acceptance",
+    "B4 supervised outbox/queue operations, observability, backup/restore and recovery acceptance",
+    "B5 complete deployed evaluation, UX/release review and final release decision"
+  ],
+  "next": "B2 readiness and data acceptance; keep unattended delivery and all execution/release gates explicit.",
+  "private_closure_checkpoint": {
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261116-b1-closed",
+    "files": 25,
+    "bytes": 5208333,
+    "index_sha256": "aa998ef65584b3f7d67ed41ff105c4584ddaa89259d00bfead9e8343d79d856b",
+    "prior_recovery_index_sha256": "277f301c4b34a989165112541e004cdf8e2d31c8ab23f52f4621d0e18409d7c4",
+    "original_backups_unchanged": true,
+    "authentication_flows_and_secrets_excluded": true
+  }
+}
