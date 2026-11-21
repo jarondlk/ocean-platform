@@ -1,0 +1,180 @@
+{
+  "B2_complete": false,
+  "broad_runtime_CI": {
+    "dependency_review_skipped_for_push": true,
+    "jobs_passed": 5,
+    "run_id": 43812513025
+  },
+  "build": {
+    "finish": "2026-11-21T06:48:40.953428Z",
+    "id": "86ecd91d-d11a-4507-ad29-cac3a4b3566b",
+    "image": {
+      "artifactRegistryPackage": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/repositories/ocean-v1-beta/packages/snapshot-api/versions/sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+      "digest": "sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+      "name": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:b2-a5f61caf8bad-d9ec1f39182a",
+      "pushTiming": {
+        "endTime": "2026-11-21T06:48:40.573774050Z",
+        "startTime": "2026-11-21T06:48:38.473914109Z"
+      }
+    },
+    "log_sha256": "6bc03527f620c0979d2714b93cc9b6d2ca11989949ed147a6f0bc0144729b812",
+    "logging": "CLOUD_LOGGING_ONLY",
+    "registry_digest_confirmed": true,
+    "service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "source_archive": {
+      "fileHashes": {
+        "gs://ocean-v1-beta-20261101-build-source/source/1795243652.352029-fa34b427f40643438cc522038ba55f4e.tgz#1795243652614212": {
+          "fileHash": [
+            {
+              "type": "MD5",
+              "value": "s1H9cc5nV9imneehZgDrjw=="
+            },
+            {
+              "type": "SHA256",
+              "value": "_iXrQwxWbRPYE1as2b8fedlRnXH-xiji8O6oa-y8mzM="
+            }
+          ]
+        }
+      },
+      "resolvedStorageSource": {
+        "bucket": "ocean-v1-beta-20261101-build-source",
+        "generation": "1795243652614212",
+        "object": "source/1795243652.352029-fa34b427f40643438cc522038ba55f4e.tgz"
+      }
+    },
+    "start": "2026-11-21T06:47:34.229594171Z",
+    "status": "SUCCESS",
+    "steps": {
+      "build-b2-api": "SUCCESS",
+      "verify-b2-image-offline": "SUCCESS",
+      "verify-configured-runtime-user": "SUCCESS"
+    }
+  },
+  "catalogue_published": false,
+  "cost_estimate": {
+    "allowance_basis": "Compute plus reserve for image scanning, shared-layer registry storage, staging and logs. No extra runtime instances or model usage in this build.",
+    "assumed_jpy_per_usd": 200,
+    "build_compute_jpy": 12,
+    "build_compute_usd": 0.06,
+    "build_machine": "E2_STANDARD_2",
+    "estimated_incremental_allowance_jpy": 150,
+    "free_tier_credit_applied": false,
+    "monthly_beta_target_jpy": 50000,
+    "packaging_revision": "d9ec1f39182a23b406a8b8ca3416b52e6854247a",
+    "pricing_sources": [
+      "https://cloud.google.com/build/pricing",
+      "https://cloud.google.com/artifact-registry/pricing"
+    ],
+    "scope": "One Tokyo Cloud Build submission with offline image checks",
+    "source_context_bytes": 170591,
+    "source_context_files": 13,
+    "spend_is_estimate": true,
+    "timeout_minutes": 10
+  },
+  "hosted_runtime_verification": {
+    "conclusion": "success",
+    "postgresql_tests": 47,
+    "run_id": 43812513072,
+    "runtime_tests": 765
+  },
+  "open_gates": [
+    "Fresh operator sign-in for private controller and catalogue access",
+    "Guarded baseline-binding API/controller rollout and actual Q6 retained readback",
+    "Fresh control selection, immutable publication, actual GCS and signed-in acceptance",
+    "Remaining dataset dispositions and SST qualification"
+  ],
+  "package": {
+    "files": {
+      "Dockerfile": "184db6f0189f08ca0e78591c67856c7b0b353ed8cb4d44c55d8da5c73889ee04",
+      "application/api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085",
+      "application/ingestion/edna_catalogue_inputs.py": "7d16e9398aaf4b4d988a991099999935128768ffa113b11fe2679642d113efca",
+      "application/ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+      "application/ingestion/gcs_catalogue_snapshot.py": "5a0bae18df10ba0eab9938c4bdb3b0fb9280ecef875cfd402c6cbe2031313a83",
+      "application/orchestration/catalogue_service.py": "dd48e18fdc894978ca0b4fafabd690a1e83952bec114151eba7a8ec3bae7e0ea",
+      "application/orchestration/frozen_edna_catalogue.py": "6c5bc0f2c16c001d61d13b573a2bc26cf57d862e4a789711aa840f284cc01b79",
+      "b2-package.json": "1747957f8e83a524fa353ad5e9283660049d3f054fbb8c3d307fae5434478a85",
+      "baseline.json": "3aa35972d4fda7f0aa4842a58ee6f05b4a36d6172fbf54a72c0f2f50cb853f5a",
+      "beta-host-config.json": "ba9f36f57d1839a14f48a341da4ea02773215809485bd3f46829b76f56df3cbc",
+      "candidate.json": "ec8770ebc15005935bb506ac7f64ae9d49a6476174b6e6e73c21c6160e3f7cbe",
+      "cloudbuild.json": "01faf46bcfd79d70a0a6a00b32fc476bd229df46cc11524fdfbd37ced77bf440",
+      "source-manifest.json": "e1d78676427da93e3bf085a1ea3033625164f74d138dfae901df27e34fb9bce5"
+    },
+    "package": {
+      "added_sources": [
+        "ingestion/edna_input_cache.py"
+      ],
+      "base_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:55cef31147023d09858d5ea104bfbcfac2096b5cc92c9c80bee68480b9362cd6",
+      "base_revision": "4872d04323c7e7b2bc1946ece41bd0a6333f39c0",
+      "base_source_manifest_sha256": "b3a1bb1e03b55466070f621e71c7a906a146adb093cf558b4e04a067f0694007",
+      "bindings": {
+        "baseline": {
+          "activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+          "path": "/opt/ocean/beta-catalogue-source.json",
+          "sha256": "3aa35972d4fda7f0aa4842a58ee6f05b4a36d6172fbf54a72c0f2f50cb853f5a"
+        },
+        "candidate": {
+          "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+          "path": "/opt/ocean/beta-b2-catalogue-source.json",
+          "sha256": "ec8770ebc15005935bb506ac7f64ae9d49a6476174b6e6e73c21c6160e3f7cbe"
+        }
+      },
+      "default_binding": "baseline",
+      "host_configuration_sha256": "ba9f36f57d1839a14f48a341da4ea02773215809485bd3f46829b76f56df3cbc",
+      "image_proof_sha256": "d477b67c3f652e99e574ba3f9ce069f86283fe4587ac8568fb000519a5120409",
+      "image_tag": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:b2-a5f61caf8bad-d9ec1f39182a",
+      "packaging_revision": "d9ec1f39182a23b406a8b8ca3416b52e6854247a",
+      "packaging_source_sha256": "18f9c7530e4eefb70cf3c3621966d5687fd1ccc366db3fa7b6749fe860051cdc",
+      "qualification_sha256": "f35f2db4d841d47f00c6755693d9d5c4eab901511d97c5338ef992b7bd64ddf1",
+      "runtime_revision": "a5f61caf8bad63c993853d26d96115fafec45b9e",
+      "source_manifest_sha256": "b37df4e69fbb5ba11dda393e670b162acbd78055da7ffd39089db7adf53b59db",
+      "superseded_sources": [
+        "api/v1_catalogue_host.py",
+        "ingestion/edna_catalogue_inputs.py",
+        "ingestion/gcs_catalogue_snapshot.py",
+        "orchestration/catalogue_service.py",
+        "orchestration/frozen_edna_catalogue.py"
+      ],
+      "version": "ocean-beta-b2-api-package-v1"
+    }
+  },
+  "preview": {
+    "after_matches_before": true,
+    "baseline_activation_sha256": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "captured_utc": "2026-11-21T06:50:42.835837+00:00",
+    "configuration_sha256": "c496da36ff38557f4e05f13149c15f4198c0a0417704c8c099876142ea9024bf",
+    "notes": "Accepted provider preview and exact after-read equality. No deployed revision or completed rollout.",
+    "proposed_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+    "proposed_research_admission_disabled": true,
+    "proposed_revision": "ocean-v1-beta-serving-b2-base-1121",
+    "provider_accepted": true,
+    "provider_completed": null,
+    "response_confirmed_expected_revision_and_image": true,
+    "service_generation": 62,
+    "validate_only": true,
+    "validate_only_operation_followup_http": 404
+  },
+  "private_build_archive": {
+    "bytes": 221384,
+    "files": 20,
+    "index_sha256": "6284a047075c58c17a2656782442b5c61b7d7dfbccfbccbe83da82d5652c6f07",
+    "path": "/Users/jaronchai/Library/Application Support/OCEAN/private-handoff-20261121-b2-build"
+  },
+  "project": "ocean-v1-beta-20261101",
+  "recorded_utc": "2026-11-21T06:52:02.263990+00:00",
+  "region": "asia-northeast1",
+  "service_readbacks": {
+    "research-controller": {
+      "configuration_sha256": "3e04da82cd623242a025e903974ccc39a8dd73d1007e3df6e3133ea177019a65",
+      "generation": 7,
+      "ready_revision": "ocean-v1-beta-research-controller-b1-runs-1116"
+    },
+    "serving": {
+      "configuration_sha256": "c496da36ff38557f4e05f13149c15f4198c0a0417704c8c099876142ea9024bf",
+      "generation": 62,
+      "ready_revision": "ocean-v1-beta-serving-b1-runs-live-1116"
+    }
+  },
+  "serving_or_controller_deployed": false,
+  "state": "B2_image_built_provider_preview_passed_deployment_pending",
+  "version": "ocean-beta-b2-api-build-v1"
+}

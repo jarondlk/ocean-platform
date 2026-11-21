@@ -1,4 +1,40 @@
-# Beta deployment continuation — 2026-11-16 JST
+# Beta deployment continuation — 2026-11-21 JST
+
+## November 21 — B2 image built and serving preview accepted
+
+Resume from the [image, build and preview receipt](../beta/b2-20261116/api-image-20261121.json).
+Packaging source `d9ec1f3` uses accepted runtime `a5f61ca` and inherits
+the accepted B1 API image. Cloud Build `86ecd91d-d11a-4507-ad29-cac3a4b3566b`
+passed and produced registry digest
+`sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04`.
+The source context contains the six runtime overlays and two opaque activation
+bindings. The existing binding is the default. Both bindings passed the
+network-disabled image proof together with the non-root identity and both entry
+points. Broad CI run `43812513025` also passed its five applicable jobs.
+
+The serving generation 62 and private controller generation 7 readbacks
+match the B1 template and traffic receipts. Cloud Run accepted a validate-only
+preview of the serving revision with the original binding and Research admission
+closed. The after-read matched the original service exactly. The preview's
+operation name returned HTTP 404 on follow-up. Use the successful preview and
+unchanged readback as the evidence for this step.
+
+The temporary workspace is `/private/tmp/ocean-b2-delivery-20261121`. Its build
+context and proof are preserved in
+`~/Library/Application Support/OCEAN/private-handoff-20261121-b2-build`
+(20 files, 221,384 bytes). The separate prepared-data archive below still holds
+the qualified 39-dataset candidate. Reuse this image and candidate on continuation.
+The initial CLI call using the bare staging bucket failed URI validation. The
+successful build used its existing `/source` prefix and recorded the exact
+archive generation.
+
+Operator credentials need reauthentication for the controller and catalogue.
+The Google Cloud SDK sign-in has been opened. After sign-in, verify queue and
+Scheduler state and production quiescence, qualify the bounded rollout and
+private GCS probes, then stage the compatible API and controller on the original
+activation. Read the existing Q6 evidence before appending. Refresh the
+catalogue control generation at apply time and preserve the compatible
+old-binding rollback. Actual GCS and signed-in acceptance remain pending.
 
 ## Current November16 — B2 source verified and real private candidate ready
 

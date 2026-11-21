@@ -1,5 +1,21 @@
 # Implementation status
 
+## November 21 — B2 API image verified
+
+B2 has a Tokyo-built API image at digest `525145a88ef8…`. The build verified
+181 source pins, both catalogue bindings, the non-root runtime, and the serving
+and controller imports. All five applicable jobs in the broader runtime CI
+run also passed. The 39-dataset candidate remains in its private archive.
+[Build and source receipt](beta/b2-20261116/api-image-20261121.json).
+
+Cloud Run accepted a validate-only serving preview with the original catalogue
+binding. Live readbacks match the B1 serving generation 62 and controller
+generation 7 configurations. The operator's Google Cloud SDK sign-in is pending
+for the controller and catalogue steps. After sign-in, complete the guarded
+baseline rollout and retained Q6 readback before revalidating and appending the
+catalogue control. Actual GCS performance and signed-in acceptance still gate
+eDNA exposure.
+
 ## Current November16 — B2 source qualified; real private eDNA candidate prepared
 
 Sourcea5f61caf8bad63c993853d26d96115fafec45b9e passes765 hosted runtime tests,
