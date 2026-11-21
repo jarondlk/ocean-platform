@@ -14,6 +14,7 @@ import pytest
 from api import auth
 from api import research_evidence_routes as routes
 from api.rate_limit import policy_for_request
+from db.app_models import ResearchEvidenceReceipt
 from tests import test_research_answers as answer_fixtures
 
 retained = answer_fixtures.retained
@@ -131,6 +132,35 @@ def test_fresh_export_permission_and_synthesis_disabled_history(http, monkeypatc
         # C20 binds the complete original actor epoch: membership changes also
         # fail history closed until a fresh authorized context is selected.
         assert client.post('/research/answers/status', json=answer_fixtures.address(job)).status_code == 403
+
+
+def test_child_withdrawal_blocks_both_retained_page_exports_and_keeps_receipt(http):
+    app, _, fixture, evidence, _ = http
+    run, _ = answer_fixtures.request(fixture)
+    receipt = evidence.ensure_retained(run['id'], 1, fixture.user).receipts[0]
+    address = {'receipt_id': receipt.id, 'expected_sha256': receipt.sha256}
+    page = {**address, 'section': 'rows', 'offset': 0, 'limit': 100}
+    catalogue = fixture.retained
+    child = catalogue.registrations[receipt.binding.snapshot_id].child_snapshot_ids[0]
+    with TestClient(app) as client:
+        for format in ('csv', 'json'):
+            response = client.post('/research/evidence/export', json={**page, 'format': format})
+            assert response.status_code == 200
+            export = response.json()
+            assert export['returned_count'] > 0
+            assert export['provenance']['receipt_sha256'] == receipt.sha256
+            assert hashlib.sha256(export['content_text'].encode()).hexdigest() == export['content_sha256']
+        catalogue.store.revoke(child)
+        for route, request in (
+            ('open', address), ('page', page),
+            ('export', {**page, 'format': 'csv'}), ('export', {**page, 'format': 'json'}),
+        ):
+            response = client.post('/research/evidence/' + route, json=request)
+            assert response.status_code in {403, 404}
+            assert set(response.json()) == {'error'}
+            assert receipt.id not in response.text
+    with catalogue.factory() as session:
+        assert session.get(ResearchEvidenceReceipt, receipt.id).state == 'ready'
 
 
 @pytest.mark.parametrize('path,scope,limit', [

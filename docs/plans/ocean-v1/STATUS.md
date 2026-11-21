@@ -1,5 +1,24 @@
 # Implementation status
 
+## November 21 — Research snapshot picker repair live
+
+Serving generation 68 runs the patched frontend and Next.js 15.5.29. Both
+affected hosted frontend jobs passed, including production dependency audits,
+1,093 v1 tests, 61 host tests and the standalone authentication/proxy check.
+The API still runs the qualified B2 catalogue image.
+
+On the live frontend, the first cold discovery still returned 503 at 15.059
+seconds. The new inline retry returned all four collections in 11.268 seconds.
+A disposable CTD investigation saved an attachment and a pin and reopened with
+the exact same context revision and hash after reload. The signed-in Q6 JSON and
+CSV page-export requests both returned HTTP 200. Downloaded file bytes remain
+unverified. A local disposable HTTP regression passed before and after source
+withdrawal, including both export formats and receipt retention.
+
+B2 remains open for cold discovery, live withdrawal, file-level export
+verification and the remaining dataset dispositions. See the
+[picker and context receipt](beta/b2-20261116/picker-live-20261121.json).
+
 ## November 21 — B2 closeout found the Research snapshot picker deadline
 
 On the deployed B2 image, New Investigation could not load its snapshot choices.

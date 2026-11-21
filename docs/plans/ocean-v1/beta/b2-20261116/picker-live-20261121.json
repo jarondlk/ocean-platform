@@ -1,0 +1,113 @@
+{
+  "frontend_image": {
+    "build_id": "54ff85b8-4bae-468c-82eb-534a5f2539f0",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "manifest_sha256": "702a79cca847527bc426962bcde368681b98e51acc7e32cdfd70b0d1a0a896db",
+    "packaging_proof": "success",
+    "source_revision": "0b9236d933273eb04058851fc7d66357bf480090",
+    "staged_source": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1795271391618401",
+      "object": "source/1795271391.094245-97f545025f6b4df09f99b2804bd0bab9.tgz"
+    }
+  },
+  "full_b2_accepted": false,
+  "hosted": {
+    "failed_previous_audit_run": 44913936698,
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 136876064411,
+        "production_vulnerabilities": 0,
+        "tests": 1093
+      },
+      {
+        "conclusion": "success",
+        "id": 136876063999,
+        "production_vulnerabilities": 0,
+        "standalone_authentication_proxy_tests": 1,
+        "tests": 61
+      }
+    ],
+    "run_id": 44914131751,
+    "source_revision": "0b9236d933273eb04058851fc7d66357bf480090"
+  },
+  "live": {
+    "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "configuration_sha256": "4f8bb40cd3e1010bb0153bf02382e1f5bf65e9f80b01fabca983166286f384da",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "revision": "ocean-v1-beta-serving-b2-picker-1121",
+    "serving_generation": 68,
+    "source_revision": "0b9236d933273eb04058851fc7d66357bf480090"
+  },
+  "live_signed_in": {
+    "attachments": 1,
+    "cold_discovery_passed": false,
+    "downloaded_file_bytes_verified": false,
+    "exact_saved_revision_hash_and_snapshot_reopened": true,
+    "fixture_investigation_name": "B2 validation \u00b7 disposable context",
+    "fixture_retained": true,
+    "live_source_withdrawn": false,
+    "new_model_calls": 0,
+    "pins": 1,
+    "requested_downloads": [
+      "json",
+      "csv"
+    ],
+    "requests": [
+      {
+        "http_response_bytes": 759,
+        "path": "/catalogue/snapshots",
+        "seconds": 15.059296981,
+        "status": 503,
+        "timestamp_utc": "2026-11-21T14:34:01.766857Z"
+      },
+      {
+        "http_response_bytes": 2525,
+        "path": "/catalogue/snapshots",
+        "seconds": 11.268185938,
+        "status": 200,
+        "timestamp_utc": "2026-11-21T14:34:24.647385Z"
+      },
+      {
+        "http_response_bytes": 2525,
+        "path": "/catalogue/snapshots",
+        "seconds": 9.558747361,
+        "status": 200,
+        "timestamp_utc": "2026-11-21T14:35:03.603157Z"
+      },
+      {
+        "http_response_bytes": 2525,
+        "path": "/catalogue/snapshots",
+        "seconds": 9.537439162,
+        "status": 200,
+        "timestamp_utc": "2026-11-21T14:37:05.081700Z"
+      },
+      {
+        "http_response_bytes": 11500,
+        "path": "/research/evidence/export",
+        "seconds": 2.347888443,
+        "status": 200,
+        "timestamp_utc": "2026-11-21T14:39:02.416707Z"
+      },
+      {
+        "http_response_bytes": 8265,
+        "path": "/research/evidence/export",
+        "seconds": 2.077106371,
+        "status": 200,
+        "timestamp_utc": "2026-11-21T14:39:13.291686Z"
+      }
+    ],
+    "retained_run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "site": "https://beta.oceaninfobio.com",
+    "warm_retry_snapshot_choices": 4
+  },
+  "local_checks": {
+    "fixture_backend": "disposable SQLite application database and sealed catalogue files",
+    "focused_catalogue_context_evidence_passed": 89,
+    "test_child_withdrawal_blocks_both_retained_page_exports_and_keeps_receipt": "passed"
+  },
+  "nextjs_version": "15.5.29",
+  "previous_live_receipt_sha256": "5551a5875886ad635200db112d788f4091de235faed4f19714f53dece81a0b42",
+  "version": "ocean-beta-b2-picker-delivery-v1"
+}

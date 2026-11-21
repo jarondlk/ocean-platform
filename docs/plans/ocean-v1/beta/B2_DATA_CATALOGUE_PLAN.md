@@ -2,6 +2,12 @@
 
 ## November 21 delivery checkpoint
 
+The [picker and context receipt](b2-20261116/picker-live-20261121.json) adds a
+signed-in CTD investigation with an attachment and a pin that retained the exact
+revision on reload. Both retained Q6 export requests returned HTTP 200. The cold
+full-discovery deadline, exported file readback, live withdrawal and dataset
+dispositions remain open. The 15-second server deadline is unchanged.
+
 The qualified eDNA catalogue is live for signed-in beta administrators.
 The [delivery receipt](b2-20261116/decode-live-20261121.json) binds the exact
 39 datasets to the running image, activation and control generation. It records

@@ -1,6 +1,30 @@
 # Beta deployment continuation — 2026-11-21 JST
 
-## November 21 — B2 closeout snapshot lookup repair
+## November 21 — B2 context and page exports exercised on serving generation 68
+
+Resume from the [picker and context receipt](../beta/b2-20261116/picker-live-20261121.json).
+The frontend source `0b9236d` and image `acd11ce5aa74…` are live at
+`ocean-v1-beta-serving-b2-picker-1121`. The frontend-only update preserved the
+accepted catalogue API, activation, proxy and service settings. The source-bound
+v1 UI and host jobs passed after moving to Next.js 15.5.29.
+
+The signed-in retry from New Investigation returned all four collections.
+The temporary investigation is named **B2 validation · disposable context**.
+Its CTD attachment and pin persisted across reload with the same context
+revision and hash. The existing Q6 inventory page yielded HTTP 200 for both
+download formats. Only browser and status evidence was captured for those
+requests. The file bytes were unavailable to this inspection.
+
+Cold full discovery still ran beyond the server's 15-second budget. Keep that
+gate open and focus the next runtime change on full C16 discovery, retaining
+current authority and complete sealed-input verification. The local withdrawal
+regression checks both formats and retained receipt state with a disposable
+source. Reuse that proof and qualify a scoped live fixture separately. Keep the
+dataset dispositions, final B2 receipt and downstream B3–B5 gates open.
+The verified rollout helper and sanitized receipts are indexed at
+`~/Library/Application Support/OCEAN/private-handoff-20261121-b2-picker`.
+
+## November 21 — B2 closeout initial snapshot lookup failure
 
 The current B2 rollout stays live on serving generation 67. Signed-in Research
 listed the saved investigations and reopened the original Q6 retained inventory
