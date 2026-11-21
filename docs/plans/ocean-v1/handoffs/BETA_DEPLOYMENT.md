@@ -1,5 +1,28 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 22 — Cold discovery repair accepted on the beta user path
+
+Resume from the [live discovery receipt](../beta/b2-20261116/discovery-live-20261122.json).
+Runtime `0994e9d` is live at serving generation 69 and controller generation 10.
+Both services run image `64f99fceba74…`; the frontend digest `acd11ce5aa74…`,
+activation `5460e99c15fc…` and control `1795271687024996` were preserved. The
+paused queue was empty and there were zero Scheduler jobs at final readback.
+
+The exact private Tokyo response went from 19.62 seconds cold to 13.94 seconds
+and 4.86 warm, with the same four descriptors and 39 eDNA dataset result.
+The first signed-in picker request on the new revision returned HTTP 200 in
+13.96 seconds with all four choices and no retry. The disposable CTD attachment
+and pin reopened, and the original Q6 completed answer and citation remained usable.
+
+Reuse the performance and context evidence. The remaining B2 work is the
+dataset ledger, exported-file readback and live disposable withdrawal. B3 local
+admission and worker preparation can overlap that closeout after its readiness
+review. Worker activation still needs the configured target, capacity cost and
+physical containment and recovery proofs. Original receipt bytes and the
+pause on unattended delivery are preserved.
+The sanitized measurements and rollout helpers are indexed at
+`~/Library/Application Support/OCEAN/private-handoff-20261122-b2-discovery`.
+
 ## November 22 — Cold discovery repair under qualification
 
 Resume with the [exact Tokyo baseline](../beta/b2-20261116/discovery-baseline-20261122.json).

@@ -1,5 +1,14 @@
 # B2 — Data and catalogue completion plan
 
+## November 22 discovery delivery
+
+The [live discovery receipt](b2-20261116/discovery-live-20261122.json) records
+exact full-catalogue parity, a 13.94-second cold Tokyo probe, and a 13.96-second
+first signed-in picker request with all four collections. The saved fixture
+context and retained Q6 citation reopened. Continue remaining dataset
+dispositions, export file readback and live disposable withdrawal without
+repeating the accepted import or model run.
+
 ## November 21 delivery checkpoint
 
 The [picker and context receipt](b2-20261116/picker-live-20261121.json) adds a

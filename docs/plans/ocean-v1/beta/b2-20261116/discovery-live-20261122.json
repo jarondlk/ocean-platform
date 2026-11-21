@@ -1,0 +1,195 @@
+{
+  "actual_storage_probe": {
+    "captured_utc": "2026-11-21T15:18:21.767946+00:00",
+    "execution": "ocean-v1-beta-b2-discovery-fast-1122-k7jb2",
+    "failure_logs": [],
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "job_status": "EXECUTION_SUCCEEDED",
+    "passed": true,
+    "report": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "edna_list_seconds": 3.1135977130000043,
+      "edna_response_hashes": [
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5"
+      ],
+      "exact_descriptor_membership": 4,
+      "exact_edna_datasets": 39,
+      "full_discovery_under_deadline": true,
+      "measurements": [
+        {
+          "cpu_seconds": 11.915718659,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.21006960999999968,
+              "wall_seconds": 1.1407679610000088
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 3.0308703980000002,
+              "wall_seconds": 3.306033807999995
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 7.636576761000002,
+              "wall_seconds": 8.199747874000025
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.08305806300000018,
+              "wall_seconds": 0.39137836899999456
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 11.141556186999999,
+              "wall_seconds": 12.075798677000009
+            },
+            "metagenome": {
+              "cpu_seconds": 0.49356489599999964,
+              "wall_seconds": 0.8862189250000085
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.10512040999999961,
+              "wall_seconds": 0.3356931559999907
+            }
+          }
+        },
+        {
+          "cpu_seconds": 3.4975335439999995,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 11,
+              "cpu_seconds": 0.26388714600000185,
+              "wall_seconds": 1.3117586019999976
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 2,
+              "cpu_seconds": 3.7434374330000004,
+              "wall_seconds": 4.165929269000003
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 78,
+              "cpu_seconds": 0.5563406550000103,
+              "wall_seconds": 0.6032572279999613
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.07139240899999777,
+              "wall_seconds": 0.3423973149999995
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 2.763060652,
+              "wall_seconds": 3.0287157729999876
+            },
+            "metagenome": {
+              "cpu_seconds": 0.4694288610000008,
+              "wall_seconds": 0.8843907510000122
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.10156568000000021,
+              "wall_seconds": 0.36186283699998967
+            }
+          }
+        }
+      ],
+      "peak_rss_bytes": 614453248,
+      "request_seconds": [
+        13.937935815000003,
+        4.8632163030000015
+      ],
+      "response_hashes": [
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b",
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b"
+      ],
+      "startup_seconds": 2.927757724000003,
+      "version": "ocean-beta-b2-discovery-candidate-v1"
+    }
+  },
+  "catalogue_control": {
+    "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+    "append_only_c17_references": 2,
+    "captured_utc": "2026-11-21T15:00:02.080469+00:00",
+    "observed_generation": 1795271687024996,
+    "observed_sha256": "1b1059ca9fca50b8a5feeb4956ec7cb8630da88ac5d4d4ef80ee596cdbe3764a",
+    "original_generation": 1795247849876921,
+    "original_sha256": "80fe05b887e16527b574974b7cf10788de6119506f77efec1587487515b2967c",
+    "registered_snapshots_unchanged": true,
+    "version": "ocean-beta-b2-additive-control-read-v1"
+  },
+  "final_readback": {
+    "new_model_calls": 0,
+    "original_activation_unchanged": true,
+    "private_controller_invoker_unchanged": true,
+    "research_queue_paused": true,
+    "research_queue_tasks": 0,
+    "scheduler_jobs": 0
+  },
+  "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+  "full_b2_acceptance": false,
+  "full_beta_acceptance": false,
+  "image_proof": {
+    "build_id": "2b362033-c5fb-4abb-8eb9-159ecb14784c",
+    "build_service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "build_status": "SUCCESS",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "offline_proof": "success",
+    "packaging_revision": "5647f1e0707a946cb3687ec4625bcac9830ea9e6",
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "registry_tag_readback": "exact",
+    "runtime_qualification_sha256": "2e6551b80a100e0890cf16abc4f7484489234e4a18d7fe83b7badb98f9c0f5bb",
+    "runtime_revision": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+    "source_manifest_sha256": "44bedc906bec71ca6ddcc9189036c1f9bf2006e498cfa76238f3ec5666fa2caf",
+    "staged_source": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1795274169080202",
+      "object": "source/1795274168.665433-a881c1a982b84942a39641d78abf7861.tgz"
+    },
+    "version": "ocean-beta-b2-transport-image-v1"
+  },
+  "initial_cold_discovery_delivery_passed": true,
+  "linked_evidence_sha256": {
+    "decode-live-20261121.json": "5551a5875886ad635200db112d788f4091de235faed4f19714f53dece81a0b42",
+    "discovery-baseline-20261122.json": "65395335e0d87e9416248816170606586bf6a292b670a42436aa18a4db939683",
+    "discovery-hosted-20261122.json": "2e6551b80a100e0890cf16abc4f7484489234e4a18d7fe83b7badb98f9c0f5bb",
+    "picker-live-20261121.json": "f4f5c00007b064a743ecee5c8903ae5deb2536e546e9fb957085217703e7a856"
+  },
+  "origin": "https://beta.oceaninfobio.com",
+  "remaining_b2": [
+    "complete intended-dataset dispositions",
+    "exported file readback",
+    "live disposable withdrawal",
+    "deferred repeated and peak concurrent timing coverage"
+  ],
+  "research_controller": {
+    "captured_utc": "2026-11-21T15:18:55.379560+00:00",
+    "configuration_sha256": "f34d33b451a438a3069328566d29b10cd687ad96835dd11a9f3dcf5e1211ba72",
+    "generation": 10,
+    "new_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "old_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "revision": "ocean-v1-beta-research-controller-b2-discovery-1122"
+  },
+  "serving": {
+    "captured_utc": "2026-11-21T15:19:27.464870+00:00",
+    "configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "generation": 69,
+    "new_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "old_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "revision": "ocean-v1-beta-serving-b2-discovery-1122"
+  },
+  "signed_in": {
+    "browser_selection_to_observation_seconds": 14.101,
+    "cloud_run_seconds": 13.962423846,
+    "first_picker_request_logged_utc": "2026-11-21T15:19:55.753338Z",
+    "first_picker_request_started_utc": "2026-11-21T15:19:55.671Z",
+    "four_snapshot_choices_visible": true,
+    "http_response_bytes": 2525,
+    "http_status": 200,
+    "original_q6_completed_and_citation_opened": true,
+    "original_q6_run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "retry_required": false,
+    "saved_fixture_attachment_and_pin_visible": true
+  },
+  "version": "ocean-beta-b2-discovery-live-v1"
+}

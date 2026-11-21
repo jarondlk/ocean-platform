@@ -1,5 +1,23 @@
 # Implementation status
 
+## November 22 — Cold snapshot discovery repaired and live
+
+The B2 API image `64f99fceba74…` is live on serving generation 69 and private
+Research controller generation 10. The existing frontend, catalogue activation
+and control generation `1795271687024996` were preserved. The focused hosted
+run passed 902 runtime tests and 47 PostgreSQL cases.
+
+Private Tokyo discovery passed in 13.94 seconds cold and 4.86 seconds warm,
+with the exact baseline four-collection response and all 39 eDNA datasets.
+The first signed-in picker lookup returned HTTP 200 in 13.96 seconds without
+a retry. The disposable investigation's saved attachment and pin reopened, and
+the original Q6 citation still opened. See the
+[live delivery receipt](beta/b2-20261116/discovery-live-20261122.json).
+
+Full B2 acceptance remains open for remaining data dispositions, exported-file
+readback and live withdrawal. B3 worker preparation can proceed independently
+once its owning contracts are reviewed. Production experiment execution remains gated.
+
 ## November 22 — Cold discovery bottleneck quantified
 
 The live 15-second timeout is reproducible in the private Tokyo diagnostic.
