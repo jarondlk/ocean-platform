@@ -1,5 +1,20 @@
 # B2 — Data and catalogue completion plan
 
+## November 21 delivery checkpoint
+
+The qualified eDNA catalogue is live for signed-in beta administrators.
+The [delivery receipt](b2-20261116/decode-live-20261121.json) binds the exact
+39 datasets to the running image, activation and control generation. It records
+the passing cold and warm private list, the signed-in list and two raw occurrence
+pages, and the reopened B1 Q6 answer and citation. The earlier failed timing
+receipts are preserved.
+
+Use that evidence for the initial data release. Prioritize the remaining dataset
+dispositions and focused context, export and withdrawal journeys. The repeated
+timing matrix and broad CI rerun are deferred. Full B2 acceptance remains open.
+
+## Original preparation checkpoint
+
 Planning checkpoint: 2026-11-16 JST, `overhaul`, after accepted B1 source
 `7905aa9aaae4a4af1f8bbd3ceba74d5dda17d544`.
 

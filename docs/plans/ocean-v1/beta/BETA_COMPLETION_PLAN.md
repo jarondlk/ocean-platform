@@ -1,6 +1,12 @@
 # Beta completion plan — 2026-11-14 JST
 
-State: **In progress; internal beta is accessible; full beta acceptance is open.**
+State: **In progress. The internal beta is accessible and now includes the 39-dataset eDNA catalogue.**
+The [November 21 delivery receipt](b2-20261116/decode-live-20261121.json) records
+the live Tokyo image, source-bound checks, private latency gate, signed-in raw
+browsing and retained B1 evidence. Remaining B2 journeys and B3–B5 gates are open.
+
+### November 16 historical checkpoint
+
 Updated November16: **B0 and B1 are complete within their documented scopes.**
 B1 has the supported real Gemini CTD lookup/independent oracle, durable Q6 answer
 and citations/reload, existing15s per-job reads and actual current-image recovery
@@ -43,9 +49,9 @@ No defensible single percentage follows from the component count.
 |---|---|---|
 | Architecture and component implementation | Accepted contracts, local/integrated software checks, hosted delivery and release-preparation rehearsals exist | Qualify later integration changes at their own source/image/configuration identities |
 | Edge, identity and application shell | Independent beta DNS/TLS, Google login, enrolled admin/internal account, real frontend/API/private SQL; login 200 and protected runtime 401 rechecked November 14 | Final signed-in origin/session/role/isolation matrix and intended beta-user enrollment checks |
-| Catalogue and investigations | CTD, metagenome and MUR regional SST plus saved investigations previously accepted live | Reopen current authority/control state; complete whole-scope/UI/export and retention acceptance; resolve eDNA latency/integrity gate |
+| Catalogue and investigations | CTD, metagenome, MUR regional SST and qualified raw eDNA are live for signed-in administrators | Complete the remaining data dispositions and whole-scope, context, export and withdrawal journeys |
 | Research delivery and evidence | B1 accepted: real Gemini CTD lookup/oracle, durable answer/citations/reload, per-job reads and actual current-image cancel/duplicate/lost-ACK/revocation; final control readback passed | B4 unattended sweep/recovery and B5 broader evaluation; cold-navigation optimization deferred by user acceptance |
-| New Research API | Source `4872d04`, image `55cef311…` live on serving62/controller7; owning source-bound checks, image proofs, per-job reads, actual recovery and final control readbacks passed | B4 unattended delivery and B5 whole-system UX/release acceptance |
+| Research API | B1 accepted its recovery and evidence gates. B2 image `ab72b1b92edf…` is live on serving generation 67 and controller generation 9, with the original Q6 answer and citation reopened | B4 unattended delivery and B5 whole-system UX/release acceptance |
 | Experimental execution | C22/C23/C25 contracts and actual retained Linux test evidence exist | Production admission/start integration, retained port/supervisor and current beta worker qualification are unfinished |
 | Operations and release | Independent resources, cost planning and local migration/rollback rehearsals exist | Current live backup/restore, recovery, containment/capacity, alerts/cost, whole-system evaluation and release decision |
 

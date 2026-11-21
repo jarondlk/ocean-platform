@@ -1,5 +1,29 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 21 — Qualified eDNA catalogue delivered to beta
+
+Resume from the [live delivery receipt](../beta/b2-20261116/decode-live-20261121.json).
+Runtime `6d18925` and packaging checkpoint `f0696f5` produced image
+`ab72b1b92edf…`. Both the catalogue and private controller use activation
+`5460e99c15fc…` with control generation `1795247849876921`. Final readback
+verified serving generation 67, controller generation 9, the existing frontend
+digest, Research admission enabled, queue paused/empty and zero Scheduler jobs.
+
+The exact private cold and warm list passed under the unchanged 15-second
+deadline. The signed-in administrator saw 39 of 39 eDNA datasets and verified
+raw occurrence pages of 100 and 28 rows. The exact retained B1 Q6 answer and
+citation reopened after reload. Reuse this proof and the earlier registered
+bytes. Scientific approval is still unreviewed.
+
+The repeated performance matrix and broad CI rerun were deferred to prioritize
+availability. B2 remains open for the remaining dataset dispositions and focused
+context, export and withdrawal journeys. B3 production experiments, B4 operations
+and B5 final release retain their existing gates. The compatible rollback is the
+prior image and original activation with the current control generation. Reload or
+reaudit actual service state before any future write. The new delivery receipts
+and bounded rollout scripts are indexed at
+`~/Library/Application Support/OCEAN/private-handoff-20261121-b2-live`.
+
 ## November 21 — Registered B2 candidate still needs a qualified cold path
 
 The transport repair at `854498d` passed its owning hosted workflow and image

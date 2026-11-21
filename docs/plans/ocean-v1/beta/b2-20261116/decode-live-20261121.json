@@ -1,0 +1,212 @@
+{
+  "broad_ci": {
+    "conclusion": "cancelled",
+    "rerun": "deferred",
+    "run_id": 44884530234
+  },
+  "compatible_original_binding": {
+    "controller": {
+      "captured_utc": "2026-11-21T07:50:23.605076+00:00",
+      "configuration_sha256": "5c7431477cc0ddd924b100ec34ce982ec60ca28f18c7cae201da68df86f5a67a",
+      "generation": 8,
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+      "revision": "ocean-v1-beta-research-controller-b2-base-1121"
+    },
+    "new_control_readback_and_original_q6_in": "registration-and-failed-probe-20261121.json",
+    "serving": {
+      "binding_path": "/opt/ocean/beta-catalogue-source.json",
+      "captured_utc": "2026-11-21T08:01:08.074735+00:00",
+      "configuration_sha256": "8f30be2923d78e7ee8cc93eb3cb402264ea8a00599cfe8e11c64a54197cfb70f",
+      "generation": 64,
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+      "revision": "ocean-v1-beta-serving-b2-base-live-1121",
+      "service": "serving"
+    }
+  },
+  "full_b2_acceptance": false,
+  "full_beta_release_acceptance": false,
+  "image_proof": {
+    "build_id": "2854e09e-e382-49f4-91fc-3d2955826e98",
+    "build_service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "build_status": "SUCCESS",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "offline_proof": "success",
+    "packaging_revision": "f0696f57e205c8c33149615c122fa14dd0e585e8",
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "registry_tag_readback": "exact",
+    "runtime_qualification_sha256": "a1f2316b4cbb596f9be8a247f2553235f6c763c10cf54aaba53c0275c928fe81",
+    "runtime_revision": "6d18925a8f51996f155af0b1d7429870a91ff335",
+    "source_manifest_sha256": "6621558cd222b40c163d88918a619927f0b35ccb2f9d012ad0aab912d660dbc6",
+    "staged_source": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1795249665490744",
+      "object": "source/1795249665.078494-6b7367529f4f4fdcae9cf2b911be1575.tgz"
+    },
+    "version": "ocean-beta-b2-transport-image-v1"
+  },
+  "initial_edna_delivery_passed": true,
+  "live": {
+    "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+    "captured_utc": "2026-11-21T08:35:52.384775+00:00",
+    "control_generation": 1795247849876921,
+    "controller": {
+      "binding_path": "/opt/ocean/beta-b2-catalogue-source.json",
+      "captured_utc": "2026-11-21T08:31:19.623904+00:00",
+      "configuration_sha256": "42b7b3eb3a6a0b9f48f1a4aa8d24c51a8969a9f377457e5f9df90745e27afc86",
+      "generation": 9,
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+      "research_admission_enabled": null,
+      "revision": "ocean-v1-beta-research-controller-b2-fast-edna-1121",
+      "service": "research-controller"
+    },
+    "experiment_dispatch_enabled": false,
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:0bde25544313072317ee45d36770400160f0f0960d14cddb7efc416357adffe0",
+    "private_controller_invoker_unchanged": true,
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "research_admission_enabled": true,
+    "research_queue_state": "PAUSED",
+    "research_tasks": 0,
+    "scheduler_jobs": 0,
+    "serving": {
+      "binding_path": "/opt/ocean/beta-b2-catalogue-source.json",
+      "captured_utc": "2026-11-21T08:35:30.921274+00:00",
+      "configuration_sha256": "c18f58544c401a8279cfddb61ac120821fe9c30a7f67f2377b805bfb3638b078",
+      "generation": 67,
+      "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+      "research_admission_enabled": true,
+      "revision": "ocean-v1-beta-serving-b2-fast-live-1121",
+      "service": "serving"
+    },
+    "version": "ocean-beta-b2-live-readback-v1"
+  },
+  "predecessor_evidence": {
+    "decode-hosted-20261121.json": "a1f2316b4cbb596f9be8a247f2553235f6c763c10cf54aaba53c0275c928fe81",
+    "registration-and-failed-probe-20261121.json": "ffbf6f580543e42b5e0d1853434e4d4ad8ec18172a20ef56ddd5601ccb6d5677",
+    "transport-probe-20261121.json": "8b8a6f7d850f82eb30bbe2aae49ee28abb8dd75a22c79bf6df258e6d961a0150"
+  },
+  "private_gcs": {
+    "captured_utc": "2026-11-21T08:30:02.173728+00:00",
+    "execution": "ocean-v1-beta-b2-edna-decode-1121-jw6x2",
+    "failure_logs": [],
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "job_status": "EXECUTION_SUCCEEDED",
+    "passed": true,
+    "report": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "diagnostics_complete": true,
+      "exact_dataset_membership": 39,
+      "measurements": [
+        {
+          "cpu_seconds": 13.785486872000002,
+          "phase_timings": {
+            "FrozenEDNACatalogueAdapter._load_verified": {
+              "calls": 39,
+              "cpu_seconds": 9.607466662999993,
+              "wall_seconds": 9.754024077999997
+            },
+            "FrozenScientificCatalogueAdapter._load": {
+              "calls": 1,
+              "cpu_seconds": 13.555089935999998,
+              "wall_seconds": 13.883429501999998
+            },
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 1,
+              "cpu_seconds": 0.012883153999999841,
+              "wall_seconds": 0.09206166899999957
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 3.6144662409999997,
+              "wall_seconds": 3.705016533000002
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 9.556691108000003,
+              "wall_seconds": 9.703282783000017
+            }
+          }
+        },
+        {
+          "cpu_seconds": 3.3740338670000014,
+          "phase_timings": {
+            "FrozenEDNACatalogueAdapter._load_verified": {
+              "calls": 39,
+              "cpu_seconds": 0.31835625900001574,
+              "wall_seconds": 0.3242447850000332
+            },
+            "FrozenScientificCatalogueAdapter._load": {
+              "calls": 1,
+              "cpu_seconds": 3.141096161,
+              "wall_seconds": 3.279140714999997
+            },
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 1,
+              "cpu_seconds": 0.00901434700000081,
+              "wall_seconds": 0.09557596199999807
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 2.5005914180000026,
+              "wall_seconds": 2.5413235329999964
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 0.2792166879999911,
+              "wall_seconds": 0.28429375699997905
+            }
+          }
+        }
+      ],
+      "peak_rss_bytes": 581165056,
+      "request_seconds": [
+        14.254932190000002,
+        3.652130479
+      ],
+      "response_hashes": [
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5",
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5"
+      ],
+      "signed_in_http_acceptance": false,
+      "startup_seconds": 2.899258551999999,
+      "version": "ocean-beta-b2-gcs-list-decode-v1",
+      "within_15_second_and_3_gib_budgets": true
+    }
+  },
+  "remaining_b2": [
+    "Remaining intended-dataset dispositions",
+    "Wider signed-in whole-scope, context and edge journeys",
+    "Retained export and disposable withdrawal cases",
+    "Current concurrency, repeated timings and recovery coverage"
+  ],
+  "repeat_full_timing_matrix": "deferred",
+  "signed_in": {
+    "captured_utc": "2026-11-21T08:34:58.935200+00:00",
+    "exact_edge_resource_timing_captured": false,
+    "first_raw_page_to_observation_seconds_upper_bound": 6.164,
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "inspector_open_to_observation_seconds_upper_bound": 6.452,
+    "list_selection_to_observation_seconds_upper_bound": 8.449,
+    "list_shown_total": 39,
+    "list_visible_total": 39,
+    "new_model_calls": 0,
+    "origin": "https://beta.oceaninfobio.com",
+    "original_q6_run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "passed": true,
+    "raw_occurrence_total": 128,
+    "raw_page_rows": [
+      100,
+      28
+    ],
+    "raw_unknown_control_qualification_visible": true,
+    "real_authenticated_internal_administrator": true,
+    "retained_citation_controls": 2,
+    "retained_citation_opened": true,
+    "retained_completed_answer_reopened_after_reload": true,
+    "scientific_approval_not_reviewed_visible": true,
+    "serving_revision": "ocean-v1-beta-serving-b2-fast-edna-1121",
+    "version": "ocean-beta-b2-signed-in-smoke-v1"
+  },
+  "version": "ocean-beta-b2-initial-edna-delivery-v1"
+}

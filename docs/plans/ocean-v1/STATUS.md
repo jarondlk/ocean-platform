@@ -1,5 +1,20 @@
 # Implementation status
 
+## November 21 — Qualified eDNA catalogue live in the signed-in beta
+
+Serving generation 67 and private Research controller generation 9 use the
+qualified B2 image `ab72b1b92edf…` and the eDNA activation on control generation
+`1795247849876921`. The source-bound run passed 772 runtime tests and 47 real
+PostgreSQL checks. The private Tokyo list returned the exact 39 datasets in
+14.25 seconds cold and 3.65 seconds warm with 581,165,056 peak RSS bytes.
+
+The signed-in browser displayed all 39 eDNA datasets, opened an inspector and
+paged through the selected 128-row raw occurrence table. It reopened the original
+completed Q6 answer and a citation. Research admission is enabled with the
+queue paused and empty. Full B2 data dispositions and wider journey acceptance,
+production experiment execution, operational recovery and final beta release
+remain open. See the [live delivery receipt](beta/b2-20261116/decode-live-20261121.json).
+
 ## November 21 — eDNA cold validation isolated
 
 The transport repair passed [hosted verification](beta/b2-20261116/transport-hosted-20261121.json)
