@@ -1,5 +1,21 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 21 — B2 closeout snapshot lookup repair
+
+The current B2 rollout stays live on serving generation 67. Signed-in Research
+listed the saved investigations and reopened the original Q6 retained inventory
+page. The page displayed CSV and JSON controls. An interrupted browser download
+left both files unverified. New Investigation remained disabled because cold
+snapshot discovery returned 503 in 15.093 seconds and the 7.998-second HTTP 200
+retry still exceeded the browser's eight-second limit with overhead.
+
+The frontend source now starts discovery on opening either snapshot form, uses
+the existing catalogue request deadline and offers an inline retry without
+disrupting historical Research. Retry signed-in context creation and page export
+after qualification. Keep the cold discovery gate, dataset dispositions and
+disposable withdrawal proof open. Reuse the retained live evidence and the
+existing data registrations.
+
 ## November 21 — Qualified eDNA catalogue delivered to beta
 
 Resume from the [live delivery receipt](../beta/b2-20261116/decode-live-20261121.json).

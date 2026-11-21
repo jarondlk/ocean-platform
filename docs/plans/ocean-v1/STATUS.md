@@ -1,5 +1,20 @@
 # Implementation status
 
+## November 21 — B2 closeout found the Research snapshot picker deadline
+
+On the deployed B2 image, New Investigation could not load its snapshot choices.
+A cold discovery returned HTTP 503 in 15.093 seconds. The warm retry returned
+HTTP 200 in 7.998 seconds, which exhausted the eight-second browser timer after
+transport overhead. The independent existing investigation list returned HTTP
+200. The retained Q6 inventory table reopened and displayed both page-export
+controls. The browser download session ended before either file was verified.
+
+The frontend repair runs snapshot discovery when a snapshot form is opened,
+uses the existing 15-second request budget, and provides an inline retry for
+ordinary discovery failures. It retains global handling of access loss. This
+source change requires hosted qualification and a signed-in checkout. Cold
+whole-catalogue discovery and actual withdrawal/export acceptance remain open.
+
 ## November 21 — Qualified eDNA catalogue live in the signed-in beta
 
 Serving generation 67 and private Research controller generation 9 use the
