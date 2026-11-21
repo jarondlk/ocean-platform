@@ -1,0 +1,56 @@
+{
+  "candidate_live_qualification_complete": false,
+  "hosted": {
+    "conclusion": "success",
+    "job_id": 136786819273,
+    "postgres16_c12_passed": 43,
+    "postgres16_retained_c21_passed": 4,
+    "run_id": 44884530323,
+    "runtime_passed": 772,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/44884530323",
+    "workflow": "beta-b2-focused.yml"
+  },
+  "linked_failed_probe": "transport-probe-20261121.json",
+  "local_full_cohort_cold": {
+    "actual_GCS_or_browser_acceptance": false,
+    "all_below_15s": true,
+    "cache_stats": {
+      "accounted_retained_bytes": 709971496,
+      "coalesced": 0,
+      "entries": 39,
+      "evictions": 0,
+      "failed_fills": 0,
+      "hits": 0,
+      "inflight": 0,
+      "misses": 39
+    },
+    "captured_utc": "2026-11-21T08:20:43.868856+00:00",
+    "concurrency": 1,
+    "local_transport_synthetic_principal_only": true,
+    "response_hash_compared_to_old_metadata_candidate": false,
+    "source_hashes": {
+      "api/v1_catalogue_host.py": "cb9a93aff83d366440b72b3cea44dfcefb35df715aefa11045c337311cba5085",
+      "ingestion/edna_catalogue_inputs.py": "ec24555f7b185e9bdae60363343424f004df5ffb8bbfbba840a1fc08054a431b",
+      "ingestion/edna_input_cache.py": "55eb72a845d06065af3e10fc1df77e611d5113bebdf5c7a5adef947ab11fd2e6",
+      "ingestion/gcs_catalogue_snapshot.py": "5c8b94ba1f19b18dfab4b28b92b73f3bc3c8772923a0a827d2df892a74222de0",
+      "orchestration/catalogue_service.py": "dd48e18fdc894978ca0b4fafabd690a1e83952bec114151eba7a8ec3bae7e0ea",
+      "orchestration/frozen_edna_catalogue.py": "9c7f51349aa2089fee3857e73296dcc599b63fd11929d14f95ae0573ca88a9e7",
+      "orchestration/frozen_scientific_catalogue.py": "d41648eaa804aa525e94910f41cdea45873c5ed7993c63b7cf740a6d5e766138"
+    },
+    "startup_seconds": 0.1122426250949502,
+    "trial": 5,
+    "trials": [
+      {
+        "peak_rss_bytes": 547143680,
+        "request": 0,
+        "response_sha256": "8ae7ee10ffd5514294e622470237e930d6fa7a7c1019af37a3e7bee5fe56cee3",
+        "seconds_including_serialization": 2.3890909580513835
+      }
+    ],
+    "version": "ocean-beta-b2-c14-local-cold-concurrency-v1",
+    "within_3GiB": true
+  },
+  "source_revision": "6d18925a8f51996f155af0b1d7429870a91ff335",
+  "supersedes_runtime_revision": "854498da0a6dc20e3691c9636a86904a0c672be5",
+  "version": "ocean-beta-b2-decode-qualification-v1"
+}
