@@ -18,6 +18,7 @@ import time
 
 import pandas as pd
 import pyarrow as pa
+import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
 from ingestion.catalogue_snapshot_capture import CapturedSource, SourceExportRequirement
@@ -86,6 +87,13 @@ _JSON_LIMITS = {
 }
 _TAXONOMY_MEMO_ENTRIES = 2048
 _TAXONOMY_MEMO_BYTES = 4 * 1024 * 1024
+# Python str.strip whitespace, including the four information separators.
+_TEXT_WHITESPACE = "\t\n\v\f\r\x1c\x1d\x1e\x1f \x85\xa0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
+_DETECTION_RELATIONS = (
+    "detection_id", "assay_id", "scientific_content_sha256", "sequence_sha256",
+    "assignment_method", "target_status", "copies_per_ml", "concentration_status",
+    "taxonomy_json", "assigned_taxon_name", "assigned_taxon_rank",
+)
 
 
 class AdapterUnavailable(ValueError):
@@ -216,13 +224,30 @@ def parse_table(spec: EDNATable, data: bytes, *, decoded_budget: int | None = No
         table = parquet.read(use_threads=False)
         if table.nbytes > budget:
             raise ValueError("Frozen eDNA decoded budget exceeded")
-        records = table.to_pylist()
+        # Check the already exact, typed Arrow representation before creating
+        # mutable Python frames. Each column covers every row, including nulls.
+        table.validate(full=True)
+        for field, column in zip(ARROW_SCHEMAS[spec.name], table.columns, strict=True):
+            if not field.nullable and column.null_count:
+                raise ValueError("Null in required frozen eDNA column")
+            if field.type == pa.string():
+                blank = pc.equal(pc.utf8_trim(column, characters=_TEXT_WHITESPACE), "")
+                oversized = pc.greater(pc.binary_length(column), _JSON_LIMITS.get(field.name, 4000))
+                if pc.any(blank).as_py() or pc.any(oversized).as_py():
+                    raise ValueError("Invalid frozen eDNA text value")
+            if field.type == pa.int64() and pc.any(pc.less(column, 0)).as_py():
+                raise ValueError("Frozen eDNA counts require nonnegative primitive int64")
+            if field.type == pa.float64() and pc.any(pc.invert(pc.is_finite(column))).as_py():
+                raise ValueError("Frozen eDNA numbers require finite primitive values")
+        if pc.count_distinct(table[KEYS[spec.name]]).as_py() != table.num_rows:
+            raise ValueError("Frozen eDNA row identities must be unique")
+        frame = table.to_pandas(use_threads=False, ignore_metadata=True).astype(object)
     except (pa.ArrowException, OSError) as exc:
         raise ValueError("Invalid frozen eDNA Parquet") from exc
-    _validate_primitives(spec.name, records)
-    frame = pd.DataFrame(records, columns=TABLE_COLUMNS[spec.name], dtype=object)
-    if frame[KEYS[spec.name]].duplicated().any():
-        raise ValueError("Frozen eDNA row identities must be unique")
+    for field in ARROW_SCHEMAS[spec.name]:
+        if field.nullable and field.type == pa.float64() and table[field.name].null_count:
+            values = frame[field.name]
+            frame[field.name] = values.where(values.notna(), None)
     frame.attrs["decoded_bytes"] = table.nbytes
     return frame
 
@@ -271,13 +296,20 @@ def validate_rows(dataset: EDNADataset, tables: dict[str, pd.DataFrame]):
             raise ValueError("Cumulative frozen eDNA decoded budget exceeded")
         if len({row[KEYS[name]] for row in rows}) != len(rows):
             raise ValueError("Duplicate frozen eDNA row identity")
+        records[name] = rows
+    _validate_relations(dataset, specs, records)
+
+
+def _validate_relations(dataset, specs, records):
+    for name, rows in records.items():
+        columns = set(TABLE_COLUMNS[name])
+        identities = {KEYS[name], "sample_id", "assay_id", "source_occurrence_id"} & columns
         for row in rows:
-            for identity in ({KEYS[name], "sample_id", "assay_id", "source_occurrence_id"} & set(row)):
+            for identity in identities:
                 if not _SHA256.fullmatch(row[identity]):
                     raise ValueError("Frozen eDNA canonical identities require exact SHA-256")
-            if "scientific_content_sha256" in row and not _SHA256.fullmatch(row["scientific_content_sha256"]):
+            if "scientific_content_sha256" in columns and not _SHA256.fullmatch(row["scientific_content_sha256"]):
                 raise ValueError("Frozen eDNA records require exact scientific SHA-256")
-        records[name] = rows
 
     occurrences = {row["sample_id"]: row for row in records.get("occurrences", [])}
     classifications = {row["sample_id"]: row for row in records.get("classifications", [])}
@@ -438,7 +470,7 @@ def load_dataset(manifest: SnapshotManifest, contents, obj: SnapshotObject, *, d
             dataset.source_id, "edna_metabarcoding", f"c12:edna_metabarcoding:{item.role}", ADAPTER_VERSION,
         ):
             raise ValueError("Frozen eDNA source/operation ownership mismatch")
-    tables = {}
+    tables, records = {}, {}
     if sum(item.row_count or 0 for item in dataset.tables) > MAX_ROWS:
         raise ValueError("Cumulative frozen eDNA row budget exceeded")
     decoded = 0
@@ -448,13 +480,19 @@ def load_dataset(manifest: SnapshotManifest, contents, obj: SnapshotObject, *, d
         item = objects[spec.object_id]
         if (item.role, item.schema_version) != (spec.name, TABLE_VERSION):
             raise ValueError("Frozen eDNA table role/schema mismatch")
-        tables[spec.name] = parse_table(spec, _verified_bytes(item, contents), decoded_budget=budget - decoded)
-        decoded += tables[spec.name].attrs["decoded_bytes"]
+        frame = parse_table(spec, _verified_bytes(item, contents), decoded_budget=budget - decoded)
+        tables[spec.name] = frame
+        decoded += frame.attrs["decoded_bytes"]
+        columns = _DETECTION_RELATIONS if spec.name == "detections" else tuple(frame.columns)
+        records[spec.name] = [dict(zip(columns, values, strict=True))
+            for values in frame[list(columns)].itertuples(index=False, name=None)]
     if classifications.object_id is None:
         item = objects[state_id]
         if (item.role, item.schema_version) != ("classifications", CLASSIFICATION_STATE_VERSION) or _verified_bytes(item, contents) != _classification_state(dataset):
             raise ValueError("Absent classifications require exact frozen qualification metadata")
-    validate_rows(dataset, tables)
+    # The decoder already verified exact typed rows and the remaining byte
+    # budget. Use those same records for ownership and cross-table invariants.
+    _validate_relations(dataset, {spec.name: spec for spec in dataset.tables}, records)
     return DatasetInputs(dataset, tables, tuple(objects.values()))
 
 

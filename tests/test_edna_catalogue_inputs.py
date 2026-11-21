@@ -182,6 +182,30 @@ def test_opaque_parquet_nonfinite_payloads_do_not_become_nullable_unknowns(role,
         inputs.parse_table(spec(metadata, role), parquet(role, records))
 
 
+@pytest.mark.parametrize("value", ["\x1c\u2003\u3000", "海" * 1334])
+def test_opaque_parquet_requires_nonblank_text_with_a_utf8_byte_limit(value):
+    metadata, frames = fixture(1)
+    records = inputs._frame_records("occurrences", frames["occurrences"])
+    records[0]["provider_sample_id"] = value
+    with pytest.raises(ValueError, match="text value"):
+        inputs.parse_table(spec(metadata, "occurrences"), parquet("occurrences", records))
+
+
+@pytest.mark.parametrize("role", ROLES)
+def test_arrow_decode_preserves_nullable_values_and_exact_python_primitives(role):
+    metadata, frames = fixture(3)
+    records = inputs._frame_records(role, frames[role])
+    if role == "detections":
+        records[0]["read_count"] = 2**63 - 1
+        records[0]["copies_per_ml"] = None
+        records[0]["assigned_taxon_name"] = None
+    decoded = inputs.parse_table(spec(metadata, role), parquet(role, records))
+    assert list(decoded.columns) == list(inputs.TABLE_COLUMNS[role])
+    for actual, expected in zip(decoded.to_dict("records"), records, strict=True):
+        assert actual == expected
+        assert all(type(actual[key]) is type(value) for key, value in expected.items())
+
+
 @pytest.mark.parametrize("role,column,value", [
     ("occurrences", "sample_id", "root:invented"),
     ("occurrences", "source_occurrence_id", "not-a-hash"),

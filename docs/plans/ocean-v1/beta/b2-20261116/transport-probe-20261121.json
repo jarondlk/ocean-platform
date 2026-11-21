@@ -1,0 +1,142 @@
+{
+  "broad_ci": {
+    "conclusion": "cancelled",
+    "rerun_deferred": true,
+    "run_id": 44883287089
+  },
+  "candidate_promoted": false,
+  "candidate_usable": false,
+  "diagnostic_only": {
+    "captured_utc": "2026-11-21T08:17:52.727164+00:00",
+    "execution": "ocean-v1-beta-b2-edna-profile-1121-p449j",
+    "failure_logs": [],
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:9b59a4cfaa152ddfdcaa51a76fe29647b17f659ab611b41df9149b81b36169ad",
+    "job_status": "EXECUTION_SUCCEEDED",
+    "passed": true,
+    "report": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "diagnostics_complete": true,
+      "exact_dataset_membership": 39,
+      "measurements": [
+        {
+          "cpu_seconds": 29.387110692,
+          "phase_timings": {
+            "FrozenEDNACatalogueAdapter._load_verified": {
+              "calls": 39,
+              "cpu_seconds": 25.15613283000001,
+              "wall_seconds": 25.552396092999942
+            },
+            "FrozenScientificCatalogueAdapter._load": {
+              "calls": 1,
+              "cpu_seconds": 29.14196965,
+              "wall_seconds": 29.694466127000005
+            },
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 1,
+              "cpu_seconds": 0.011342056000000156,
+              "wall_seconds": 0.09410862499999695
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 3.6507553050000006,
+              "wall_seconds": 3.7163415049999955
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 25.08764433399999,
+              "wall_seconds": 25.48371679899998
+            }
+          }
+        },
+        {
+          "cpu_seconds": 3.5450922679999977,
+          "phase_timings": {
+            "FrozenEDNACatalogueAdapter._load_verified": {
+              "calls": 39,
+              "cpu_seconds": 0.3627089209999852,
+              "wall_seconds": 0.36948822899994127
+            },
+            "FrozenScientificCatalogueAdapter._load": {
+              "calls": 1,
+              "cpu_seconds": 3.2997867190000036,
+              "wall_seconds": 3.423447667000005
+            },
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 1,
+              "cpu_seconds": 0.011446606999996334,
+              "wall_seconds": 0.0793408640000024
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 2.604827347000004,
+              "wall_seconds": 2.64589063599999
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 0.3114116990000042,
+              "wall_seconds": 0.31520986699995035
+            }
+          }
+        }
+      ],
+      "peak_rss_bytes": 1144938496,
+      "request_seconds": [
+        30.092312008999997,
+        3.821622538999989
+      ],
+      "response_hashes": [
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5",
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5"
+      ],
+      "signed_in_http_acceptance": false,
+      "startup_seconds": 3.087604728999999,
+      "version": "ocean-beta-b2-gcs-list-profile-v1",
+      "within_15_second_and_3_gib_budgets": false
+    }
+  },
+  "image_proof": {
+    "build_id": "d8be9486-4006-4d4f-bf6e-78f0b3200371",
+    "build_service_account": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "build_status": "SUCCESS",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:9b59a4cfaa152ddfdcaa51a76fe29647b17f659ab611b41df9149b81b36169ad",
+    "offline_proof": "success",
+    "packaging_revision": "665802056f2759106385d0b31078c92bd6405c6e",
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "registry_tag_readback": "exact",
+    "runtime_qualification_sha256": "94cb8d03bb42f6349bad53c6f048bb2202421ca4c06b7d625aa47ea0ca5bde6a",
+    "runtime_revision": "854498da0a6dc20e3691c9636a86904a0c672be5",
+    "source_manifest_sha256": "837dfc1d0b72981d26b680e6dce3c389a23e423019562ee2cecffdecb9f20d17",
+    "staged_source": {
+      "bucket": "ocean-v1-beta-20261101-build-source",
+      "generation": "1795248756170421",
+      "object": "source/1795248755.776904-7d9cbb972908405789a180ea59b650f9.tgz"
+    },
+    "version": "ocean-beta-b2-transport-image-v1"
+  },
+  "new_model_calls": 0,
+  "required_cold_and_warm_gate": {
+    "captured_utc": "2026-11-21T08:15:27.935471+00:00",
+    "execution": "ocean-v1-beta-b2-edna-fast-1121-8dkql",
+    "failure_logs": [],
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:9b59a4cfaa152ddfdcaa51a76fe29647b17f659ab611b41df9149b81b36169ad",
+    "job_status": "EXECUTION_FAILED",
+    "passed": false,
+    "report": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "exact_dataset_membership": 39,
+      "peak_rss_bytes": 1138909184,
+      "request_seconds": [
+        28.562146046000002
+      ],
+      "response_hashes": [
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5"
+      ],
+      "signed_in_http_acceptance": false,
+      "startup_seconds": 2.7864851510000044,
+      "version": "ocean-beta-b2-gcs-list-probe-v1",
+      "within_15_second_and_3_gib_budgets": false
+    }
+  },
+  "version": "ocean-beta-b2-transport-probe-v1"
+}

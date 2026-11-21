@@ -1,5 +1,23 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 21 — Registered B2 candidate still needs a qualified cold path
+
+The transport repair at `854498d` passed its owning hosted workflow and image
+proof. Its [private GCS result](../beta/b2-20261116/transport-probe-20261121.json)
+returned the exact 39-dataset response hash in 28.56 seconds. A separate
+read-only diagnostic recorded 30.09 seconds cold and 3.82 seconds warm. It
+isolated 25.48 cold seconds in validation and 3.72 in the batched immutable reads.
+The new decode path uses the already verified typed Arrow data for primitive
+and byte-bound checks, then runs complete existing relations over its decoded
+fields. Resume the owning hosted checks, image build and one actual cold/warm
+GCS deadline probe. Do not promote on warm measurements alone.
+
+Both live services remain on the verified original binding below. The original
+237 object-generation readbacks and sanitized registration receipts are indexed
+in `~/Library/Application Support/OCEAN/private-handoff-20261121-b2-registration`.
+Use targeted release checks first. The long repeated timing matrix and broad CI
+can follow later. Record whether candidate journeys and acceptance actually run.
+
 ## November 21 — B2 registered, serving on the original binding
 
 Resume from the [registration and failed probe receipt](../beta/b2-20261116/registration-and-failed-probe-20261121.json).

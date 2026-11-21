@@ -20,6 +20,7 @@ RECEIPTS = "docs/plans/ocean-v1/beta/"
 BASE_INVENTORY = RECEIPTS + "b1-20261114/ready-list-production-source-manifest.json"
 QUALIFICATION = RECEIPTS + "b2-20261116/qualified-private-candidate.json"
 TRANSPORT_QUALIFICATION = RECEIPTS + "b2-20261116/transport-hosted-20261121.json"
+DECODE_QUALIFICATION = RECEIPTS + "b2-20261116/decode-hosted-20261121.json"
 SUPERSEDED = (
     "api/v1_catalogue_host.py",
     "ingestion/edna_catalogue_inputs.py",
@@ -161,6 +162,12 @@ def prepare(revision, output):
         if runtime_receipt["supersedes_runtime_revision"] != receipt["source_revision"]:
             raise ValueError("Expected an intentional supersession of the original qualified runtime")
         superseded = TRANSPORT_SUPERSEDED
+        if runtime_receipt["source_revision"] != revision:
+            preceding_revision = runtime_receipt["source_revision"]
+            runtime_raw = committed(head, DECODE_QUALIFICATION, current=True)
+            runtime_receipt = json.loads(runtime_raw)
+            if runtime_receipt["supersedes_runtime_revision"] != preceding_revision:
+                raise ValueError("Expected an intentional supersession of the transport-qualified runtime")
     if runtime_receipt["source_revision"] != revision or runtime_receipt["hosted"]["conclusion"] != "success":
         raise ValueError("The selected B2 runtime needs accepted hosted checks")
     package_name = Path(__file__).relative_to(ROOT).as_posix()

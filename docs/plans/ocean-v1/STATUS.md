@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 21 — eDNA cold validation isolated
+
+The transport repair passed [hosted verification](beta/b2-20261116/transport-hosted-20261121.json)
+and reduced the private cold list from 49.16 to 28.56 seconds while returning
+the same response for all 39 datasets. A separate diagnostic found 25.48
+seconds in cold input validation and a 3.82-second warm request. The 15-second
+gate remains open. The typed-Parquet validation repair is now under qualification.
+See the [transport image and timing receipt](beta/b2-20261116/transport-probe-20261121.json).
+
 ## November 21 — eDNA registered and live catalogue deadline still open
 
 The public beta and private Research controller now run the verified B2 API
