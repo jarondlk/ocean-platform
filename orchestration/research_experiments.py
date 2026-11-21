@@ -601,7 +601,7 @@ class ResearchExperimentService:
             if self._environment(proposal, dispatch=kind == 'dispatch') != environment:
                 raise ResearchExperimentError('environment_unavailable')
         self._verify(frozen=frozen, proposal=proposal, actor=actor, exported=exported)
-        self._require_enabled(dispatch=True)
+        self._require_enabled(dispatch=kind == 'dispatch')
         self._verify(frozen=frozen, proposal=proposal, actor=actor, exported=exported, access_only=True)
         with self._transaction() as session:
             actor = self._actor(session, user=user)

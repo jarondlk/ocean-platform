@@ -175,10 +175,7 @@ def _research_experiments(configuration, user, research_status, investigations, 
             experiments._actor(session, user=user)
         approval = False
         try:
-            # The retained C22 decision path currently closes both its review
-            # and fake-dispatch preflights even for an approval. Discovery must
-            # reflect that actual contract; this never enables a C25 start.
-            experiments._require_enabled(dispatch=True)
+            experiments._require_enabled()
             approval = True
         except Exception:
             pass

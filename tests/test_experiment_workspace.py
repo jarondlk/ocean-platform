@@ -353,10 +353,9 @@ def test_runtime_capability_flags_and_explicit_synthetic_source(actual):
     assert capability['execution_source'] == 'synthetic-fixture' and capability['start_enabled'] is False
     assert capability['approval_enabled'] and capability['cancel_enabled'] and capability['artifacts_enabled']
     fixture.state['dispatch_enabled'] = False
-    no_approval = _research_experiments(configuration, fixture.user, 'ready', fixture.investigations, fixture.service, workspace)
-    assert no_approval['proposal_transport'] == 'http-v1' and no_approval['approval_enabled'] is False
-    assert no_approval['start_enabled'] is False
-    fixture.state['dispatch_enabled'] = True
+    approval_only = _research_experiments(configuration, fixture.user, 'ready', fixture.investigations, fixture.service, None)
+    assert approval_only['proposal_transport'] == 'http-v1' and approval_only['approval_enabled'] is True
+    assert approval_only['execution_transport'] == 'unavailable' and approval_only['start_enabled'] is False
     fixture.state['enabled'] = False
     paused = _research_experiments(configuration, fixture.user, 'ready', fixture.investigations, fixture.service, None)
     assert paused['proposal_transport'] == 'http-v1' and not paused['approval_enabled']

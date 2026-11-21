@@ -286,6 +286,25 @@ def test_retained_fake_approval_cannot_be_promoted_by_operator_registry(case):
     assert failure.value.code == 'environment_unavailable'
 
 
+def test_linux_approval_can_be_retained_without_fake_dispatch(case, monkeypatch):
+    fixture = case.fixture
+    monkeypatch.setattr(fixture.service, 'executor', None)
+    fixture.state['dispatch_enabled'] = False
+    initial = fixture.create()
+    decision = fixture.decision(initial)
+    approved = fixture.service.invoke('approve', decision, fixture.user)['experiment']
+    assert approved['approval']['status'] == 'current'
+    assert approved['dispatch']['eligible'] is approved['execution_performed'] is False
+    assert fixture.service.invoke('approve', decision, fixture.user)['experiment'] == approved
+    inspection = {key: value for key, value in decision.items() if key != 'idempotency_key'}
+    with no_writes(case):
+        candidate = inspect(case, inspection)
+        assert candidate.proposal_revision_id == approved['proposal_revision_id']
+        assert candidate.execution_authorized is candidate.capacity_reserved is False
+        with pytest.raises(ResearchExperimentError, match='dispatch is unavailable'):
+            fixture.service.invoke('dispatch', fixture.decision(approved), fixture.user)
+
+
 @pytest.mark.parametrize('mutation', ['missing', 'hash', 'request_binding', 'recomputed_request_hash'])
 def test_retained_approval_is_required_and_request_integrity_is_independent(case, mutation):
     with case.fixture.factory.begin() as session:
