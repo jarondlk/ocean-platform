@@ -46,6 +46,8 @@ def retained(role_database, tmp_path, monkeypatch):
             if table.name not in execution_tables:
                 connection.exec_driver_sql(f'GRANT SELECT,INSERT,UPDATE ON TABLE {database["schema"]}.{table.name} TO {serving}')
     fixture = make_experiment_fixture(database['role_engines'][serving], tmp_path)
+    fixture.service.executor = None
+    fixture.state['dispatch_enabled'] = False
     fixture.environment = EnvironmentDescriptor(kind='linux-gvisor', test_only=False,
         python_version='3.12.15', image_digest='sha256:' + 'a' * 64, lockfile_sha256='b' * 64,
         packages={name: '1.0.0' for name in ('numpy','pandas','pyarrow','scipy','statsmodels','matplotlib')},
@@ -61,12 +63,9 @@ def retained(role_database, tmp_path, monkeypatch):
     bridge = configured(fixture, factory=database['controller_factory'], config=config)
     def approved(*, actor=None):
         actor = fixture.user if actor is None else actor
-        # Accepted C22 approve requires its existing fake-capable enable check;
-        # only application approval is invoked. Linux dispatch remains invalid.
-        fixture.state['dispatch_enabled'] = True
         created = fixture.service.invoke('create', fixture.request(user=actor), actor)['experiment']
         current = fixture.service.invoke('approve', fixture.decision(created), actor)['experiment']
-        fixture.state['dispatch_enabled'] = False
+        assert current['approval']['status'] == 'current' and not current['dispatch']['eligible']
         return fixture.decision(current)
     return SimpleNamespace(database=database, fixture=fixture, bridge=bridge, approved=approved)
 
@@ -92,7 +91,7 @@ def test_actual_restricted_controller_reserves_exact_real_approval_and_replays(r
     replay = case.bridge.reserve(request, current_owner=case.fixture.user)
     assert replay.document == result.document and counts(case) == (1, 1, 0)
     assert result.document['capacity_reserved_at_commit'] is True
-    assert result.execution_authorized is False and case.fixture.executor.deliveries == []
+    assert result.execution_authorized is False and case.fixture.service.executor is None
 
 
 def test_native_current_c22_read_grants_and_only_three_id_writes(retained):
@@ -180,7 +179,7 @@ def test_native_bridge_global_capacity_is_two_and_never_creates_fake_delivery(re
     request = case.approved(actor=case.fixture.admin)
     with pytest.raises(DBAPIError):
         case.bridge.reserve(request, current_owner=case.fixture.admin)
-    assert counts(case) == (2, 2, 0) and case.fixture.executor.deliveries == []
+    assert counts(case) == (2, 2, 0)
 
 
 def test_native_concurrent_exact_replay_has_one_retained_reservation(retained):

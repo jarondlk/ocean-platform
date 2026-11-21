@@ -1,5 +1,23 @@
 # Implementation status
 
+## November 22 — B2 catalogue ledger and B3 approval checkpoint
+
+The exact deployed B2 binding accounts for 42 active datasets across four
+collections. The metadata-only SST listing reached its last page at 53,559
+objects and agrees with the earlier complete listing on object count and bytes.
+The regional MUR preview stays active. Additional SST sources remain held,
+including JCOPE pending a complete bounded partition manifest. Export files and
+live disposable withdrawal still require verification. See the
+[catalogue disposition receipt](beta/b2-20261116/catalogue-disposition-20261122.json).
+
+B3 source `7531dc3` allows an owner to retain approval for an exact Linux
+proposal while dispatch is disabled. C25 still advertises start as disabled.
+The focused suite passed 208 tests. Ten real PostgreSQL 18.3 cases on a stopped
+disposable loopback cluster verified restricted-controller reservation and replay
+with the fake executor absent. The durable execution port, private start and
+supervisor integration, and current physical worker qualification remain open.
+See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 22 — Cold snapshot discovery repaired and live
 
 The B2 API image `64f99fceba74…` is live on serving generation 69 and private

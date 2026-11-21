@@ -17,6 +17,13 @@ independent scientific verification is not claimed. C22 executes no Python.
 Its dispatch acceptance uses an explicitly configured fake executor. Real
 execution awaits C23 containment and C24 configuration gates.
 
+The B3 approval checkpoint allows exact retained review with the C22 review
+flag alone. The fake dispatch flag and fake executor remain required for the
+C22 dispatch action. Retaining approval alone creates no dispatch or capacity
+reservation. The C23 bridge rechecks retained approval and all current inputs
+under its separate authority before reserving capacity. See the
+[B3 checkpoint](handoffs/BETA_DEPLOYMENT.md#november-22--b2-and-b3-parallel-checkpoint).
+
 Requests bind the expected C17 investigation/conversation/revision, snapshot
 and context payload hash. Revision changes create immutable history. Approval
 and dispatch additionally bind the exact proposal revision, optimistic head

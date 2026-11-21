@@ -1,0 +1,355 @@
+{
+  "active": {
+    "ctd": {
+      "casts": 162,
+      "dataset_count": 1,
+      "datasets": [
+        {
+          "dataset_id": "beta:ctd:raw:e5f8ab6f47b3cadecde16518062795e7ae148d4a0b58097d4b24b441819dd529",
+          "metadata_sha256": "f42771c1ebbeb6cf6f5fdb8c24781da28105fbfe6bd8b7719545bf96860ca283",
+          "snapshot_id": "04f779af23dae93a82f80923115ca3c7fe2784994e222bd455ab21ad4538798d"
+        }
+      ],
+      "depth_observations": 10955,
+      "descriptor_snapshot_id": "50bfdf551337e0b2ff1db4f1df83fe075c6a6b980cb8659f36d614d4d8bca459",
+      "status": "active_authenticated_beta",
+      "use": "Qualified descriptive data; original cast and depth support retained."
+    },
+    "edna_metabarcoding": {
+      "assays": 3498,
+      "classifications": 3498,
+      "dataset_count": 39,
+      "datasets": [
+        {
+          "dataset_id": "beta:edna:normalization:0689d3ac22a706fdaaaf9a6e4bd80790bf87b3e9f55e9ccb402184ec1b5ef97e:bf65027b4a6b8c967ece0f8e",
+          "metadata_sha256": "7c98d5cff28000596798a4cc9e13f33bc4386ad3cfd4c41e4966e95f7747e67b",
+          "snapshot_id": "0e4213917d319632a7be67a755f0d9b85d6d025df9315aa93f743d2a3b5c2fda"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:087423add3f161f35c8da228e7066cc0f6d0e3ecd4efeeeb3706bcbe1b808ce2:0632b3c5829e645792d041e0",
+          "metadata_sha256": "f2c4782db26f19499123a8326a6c0508e433ff10b09804a807142eae66d0bc10",
+          "snapshot_id": "9cccd4d9c780810a55a433d7659f0bdaf85a9624ec54247b794856863c78425a"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:11ed602299cd843b1f3f9b9753348db03fe1a6a5019e579c9ab02d48b74dd781:0632b3c5829e645792d041e0",
+          "metadata_sha256": "e2cbb08c05588df69464a64c47773a011e3b677d0ba75817fc3635707c281fe2",
+          "snapshot_id": "32ade2b68f737749abddb2874832f1461f42661ec1c9e2be957e5c2b5bdca0cb"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:17d5b7f79d094e9206a23e94be264b42b99032cbb841c50039859d732b89ca06:b68146b9c1e04d617c97d205",
+          "metadata_sha256": "9ebcf7c0a9ba97349ffa13619526817edd52edea30ccc66c68b1dd25fb6e4b26",
+          "snapshot_id": "d5a4eef9ea1ca10e89dd33e24a262212d441631a23d39a2d2c2d32cc4fcec5fd"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:1dac7dfc5934fc769d3dda07b46837726a6d5b6178b3031f479a8d6bf3a0d338:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "96f1af32a947d4cf55edaea9055753bf5c9e0992abe1c69f4b8f3c18eeb38fb0",
+          "snapshot_id": "a78a51e651f23429cdd8a81572c7fa4e89d83bf694265d3f9bfe8527c07cc0a9"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:213e7e0dded3f49b1702579bce313263f838b8130dfa5c602921c85599ea5fa9:41659039727ef9c729191ba5",
+          "metadata_sha256": "7247046d34b38ec5917d1a0c45ef3f624c1e7c96e0ace39a5820ae93adf55277",
+          "snapshot_id": "31f173541d87125d1899088905d990064dd1fde0291b9ee8fd51462af5cec60c"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:2f92662e37faa0b46225a68e290694b448f35f1514e1c4de196be3a57178832b:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "31eb26281e4bae89a5134e7fdc2a774d5edb83aa67f623c06c54f47270669566",
+          "snapshot_id": "ddd2b4f2659c35ef6bcfbcc9280111d37ed5bddbc45153bbfb3695ae327b13f4"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:31df9687a60c7535e3f3a68d4b2e400f0198fe1f9aef3613c4f0ae74774be89d:b68146b9c1e04d617c97d205",
+          "metadata_sha256": "0aeeacb0685c8ac4fdf7c7f6b661f7adf6f0715ce0cbe67bf80a563806a012c1",
+          "snapshot_id": "777e5046281b698acda90cd115959cc0b0dc8e9df9ce8faaf21bc6a2476b3037"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:3e9df63ebfbb2fb8c4ced092afc004ece7c1ec1fc0c90b829908c05ef7276f30:c6023451922d23f808b5a000",
+          "metadata_sha256": "be990036cdaef926b4e7296c0ad733a16d953cfdb6c3f41429572569358a3bac",
+          "snapshot_id": "348cd91af9b3d519d0bbb8ae586e6d64f4871e2bd7024b40ed62baee75ce5efd"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:3f2ebdcf61f320cc39054404089d6e86c02a2c022f3708633b7d1f867748b60f:c6023451922d23f808b5a000",
+          "metadata_sha256": "ac43bef5458eb560de56478ec28561127cb989169ee930898b249f89e8d81381",
+          "snapshot_id": "f4fe4bd720014ef2b7762812c373a3afc236c80734d67f33a42faf70499eaee9"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:48ab1c375f8bf7ca36a8488a27eadee999c6a2db3e6ae2f512651a46108245e8:c6023451922d23f808b5a000",
+          "metadata_sha256": "303a4023fe8ddb63f912242d631703569d90d357ec841db5eadc94b029fe8c30",
+          "snapshot_id": "ae3ddf9c851eaa6671a2fd55f8239e7afa9246256650d55e012f010c9271d8ff"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:4caeb617f03fd783bab8c16ff7e1619ec8c48c7a97eb67b1e2648d401a9b9536:c6023451922d23f808b5a000",
+          "metadata_sha256": "5c5758b8dd9d7e0ad1530f1a50e05feef1b1e7bedc13c65050054a6a94d1b463",
+          "snapshot_id": "767a25d89969fae0bc0e26408ad1f5c79d3d1d166fb48c06eb382834fbc01bf7"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:532bb8068f37ca5e99413dbe969b9c49c7b9bb85f506605a326ff862f683661c:41659039727ef9c729191ba5",
+          "metadata_sha256": "acdecbe4294bedd29c0b7ac6b4b87043f938a86e1b7364a24464557b3ab6e927",
+          "snapshot_id": "533c6b671966bdee5aaf8db3b9f8355dba1c32b3ed5cccb375055cd1e012421a"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:5dc3d668afa1cae67105b302fe50b0b0b727f236b32f5b2b5e1f6728161fcbd9:c6023451922d23f808b5a000",
+          "metadata_sha256": "8ac346a2ac796bd2c8f4a94ba77e00fbc140dd1ac3e8fd6f53df0160135102e0",
+          "snapshot_id": "7068079aed0116ee95fbaac27c170c63b38dbcba950f20ea103608f6840fb6d5"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:5e144136c7844bed5f1d6d68231dfe6a8be5de2a82905a9adb7c0df7b8d0a795:41659039727ef9c729191ba5",
+          "metadata_sha256": "91b1095b3038f262e8081617258c810046eb52456a31f13859586c715db80019",
+          "snapshot_id": "8e22dfe0936aa2eba347473b91660acdf0337d7ebb9fd3b3697f582874f11248"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:6623580f180e3fed3bf32b49570d9f02fcd55af6be8722dac99cafff05e3688b:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "74735d737e314fb95fc40c89c2b16dcb5b79f3f0c21aa94d9b36894aab091b90",
+          "snapshot_id": "9ae3cdd7c516e11fd94c184ed13ed89791a7379cd521c094c2fe7f590eeb7c74"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:6a1f95dc14d25c7d765f6453d3ec0c0da888b676c5b41f30e6b768302ca76513:c6023451922d23f808b5a000",
+          "metadata_sha256": "62c4b88297bf7e4ad17d497193839fdcb97cd26a8f1c8e26d55a93ef11028f06",
+          "snapshot_id": "f42c77dbca99d8d5fdb38dbb2339bb5c0e1ff5ce4eb1d923562a4e77a653dab8"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:6b874b89c9a799bb433349ea017db7de90a930c7a92ff5a6d17ea3a46d718c8a:c6023451922d23f808b5a000",
+          "metadata_sha256": "ab27f2c1e519d35af49e9046f2b6eca7187fdc8af2a1dd5ae6ededb02a7c81a4",
+          "snapshot_id": "83ee0807921563e4126543be97b063b124ab6fb45eed1918f2bebbcbe2474926"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:80e0d0532c7e92a77bad2a0c25dc5e709a65585e40e81b0a1d3a417e7d6f4747:0632b3c5829e645792d041e0",
+          "metadata_sha256": "2b6485e0666bf837a55d8a0e588ee2a107144a22a91bd01eba2106fe7603c475",
+          "snapshot_id": "2e65b697f5185835727ba3444329c6fcdd7683dd27ec07b0d626d9e90ee84da1"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:8fe8a5f54d5a45300d6d71a02bc3aebfa96e581f59987e513a6678c374c73afa:b68146b9c1e04d617c97d205",
+          "metadata_sha256": "f799259b9b6833174d5194bd5c44dc558842e362b96d78bce6754cdfde7c036d",
+          "snapshot_id": "c95f3bdd9507ae4a2dfd6240bd1abac697d73d4dc40d6cddac5d7347ba301e3c"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:94d03ffe7160a1c2112dccc1bd98fbd468d484a638827eaed02a04f82a6f7117:bf65027b4a6b8c967ece0f8e",
+          "metadata_sha256": "e6314d8192a4ad21d34d536c56649b48bd75f813516bc36e8b15359a42311d45",
+          "snapshot_id": "60ea50ad7cf369fb8002b17b193a24eee5d8b5a17bc03b180ac67ac942a4ac25"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:97ec06deb94ebc7fea275d994ea23630bc4f4ca627986a13fb756494a461dd8b:0632b3c5829e645792d041e0",
+          "metadata_sha256": "6c64e5a539a80df45e22b631c31a6b70b116ed99d62f008127c44c5d1565c13d",
+          "snapshot_id": "9ac65ceb6913b11fbc0e607eb0022263074b7b710ac0c435e3af19345133eded"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:9befc50d26d10f6047305bbe99ed5ce5fd2c7ed57a08ed88af4a4fbddc6448f0:c6023451922d23f808b5a000",
+          "metadata_sha256": "c1b46ec7f973ba9f20860ea982e90176b6c41eaa665956d20773bba852eaff5c",
+          "snapshot_id": "c668f66b65704d929de33dc0bf120b77b5102b108d6d53dab94d836607343315"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:a4b3e5bdd95a9ee994c7f7b4bc2767f023561b89e3e39ef02bc11a9a2df67e83:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "737d45e983a5197bed5a5b0d46d69a336a3a4a47c05fa9badc0e9304e6c137f4",
+          "snapshot_id": "c200959f4a221c74a5fc52bd09b00eebf7a433b116fba7dddb68f6dedc852959"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:a4e3d2cb1bea5d33452017d3c023e4e8e76ef7bcfb9c4ea467e64260a2243d05:4200fc71e959c8eb2a40ece4",
+          "metadata_sha256": "e624f2e61bff63632ccddd66bd9c0a8220e8dc780366630d044fdd8f727379b5",
+          "snapshot_id": "7fcc2facfcfa79969151cde678d7932616f1d964ca7d4c98d58d38a20be2c390"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:a6a29c13823b2a2f3f1d98a08695ec2e6c25668147f075be285eea273b480b0d:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "67677af6906df3fc40fe4a2756e64f34cc3fe4db36eb05479830e1713360d235",
+          "snapshot_id": "0a3310432fec820ece454043bde314fa45f684cfc4b3c5371da2b37b695a76a7"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:a74e5dd81f8f14239f5440bd5143dd896f5e0aa669b24b94ce03d81f23fc5ae2:0632b3c5829e645792d041e0",
+          "metadata_sha256": "ac8f88d76f00603d719aee1f8f04f0b36e7b93861a6938a4095f0c5049666d36",
+          "snapshot_id": "c90e00f7784354d711685e8933f6d0a493173daed8e983acda6b7e9261f857ac"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:a7f0370d057745c02b37893d3130eb3ab9b34878f2cc350c5bcb162ca0cbd034:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "c396a97527194e6256e81575323c861d81683e95db6ac728779b659fdab0438b",
+          "snapshot_id": "a7fd7f3e74df06a37347a8628a711f1866d8c556bcc9caada134a74a03bdebde"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:bb6de9353492dec9d2de98d95380acefbe3c80bf252bf6cd7ee767a5696b6224:bf65027b4a6b8c967ece0f8e",
+          "metadata_sha256": "fccb9f4aedac65ea3e1166a87696fe2ae21b1b2b57d3e01271b6f2114ba5b0a4",
+          "snapshot_id": "b9c6ea5c16abc6694eccbdf707e774c199e60cdc5194c7960d417b8cf05bdc44"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:c43ce342406e02660b0c374ad3e85115b8cdf2619e9eba674e6aa0f42ab2b242:0632b3c5829e645792d041e0",
+          "metadata_sha256": "26a4173cec0cc1b06c84f9650150c1f98f931f55a4afc6559ed9507bdffebfb6",
+          "snapshot_id": "7170e914ce51ae7b3bf24e7779a4b23581671ee2390807b1efe82efbebce0fcb"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:c4c041dea1ec84fa35ddc39ce5f258a4a42dfaf0c1b6054ebd6de15085089410:b68146b9c1e04d617c97d205",
+          "metadata_sha256": "d6d7a506c2011b9ce7ea406822f41468deb02467ad2ed47616937798ccb528d1",
+          "snapshot_id": "311f303681f22e97f8eec1128a56f554a6f237ccd3be50a2728309297be20c64"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:c7194a3a93bb30d05aea9fc2a1bf1a769391c14d2f290736b19f9b8d24dd89c4:b68146b9c1e04d617c97d205",
+          "metadata_sha256": "79f00bc4155f0ba4f53b6e72dddf9432c95c46676fd2bdb2a91a7d1bd2a32fc3",
+          "snapshot_id": "2ca81af8fef3d3e6202817522507fec617ea491ca8c584df315d72b16ed4b63f"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:cbcea264ec85f41bc2895333dd152cce1a7c4c38943f34716fc5fd93bc0637e4:4d04ff8582ebc27f9ae48618",
+          "metadata_sha256": "141b42b18ac46e0e38c01e1f96e9118618cd1811ec3c9f16c50552f882c7b36b",
+          "snapshot_id": "94c4ddcb759f83c3c886f7937679b7e849285dc2e1732b9a7fd3363ef73fbc9d"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:cc70180acc9d9f41c5e3bad4769c7563423ecd83727bc65c6fb382ff5fdb2c7b:0632b3c5829e645792d041e0",
+          "metadata_sha256": "d73d72813b08eb9706635cef265b4511d4d1aac065ea551e98c9d550a1880abe",
+          "snapshot_id": "4674e30262db6a04e8acb7f6bfe23865eefaa5a1d7e83505080d3c8e25f47066"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:d02c0ff21d21ae9b1fb096414653e63e9addec65c1dd946fcdfe54fe628298d8:5bd3d90a4d88044b910b1411",
+          "metadata_sha256": "9f01a62238cd6c219678f0f1de03b08e322eae2ea418b860fa23ae67cc92da8a",
+          "snapshot_id": "d1ef1883b2b267ac3f4c10bd7a33c56cab568e24f2dabba9da49f36fd9e9964e"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:da6a5c2c4dc1b9bddc8e27ee32bf62d3508bc7bf17195e78b2ae9af15afedc13:7f6e5bf319bf383eb8a34402",
+          "metadata_sha256": "145de51e4e6c6f2daf820e218ed794970891d26a8445185470e71ca32833d6bd",
+          "snapshot_id": "558e86b0adacdb23377f5c017566c9a75febcc7f4128330f9b8de6e58711d1ae"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:dad5d8021ccc065e32d7791397a0dbd131872e2c90d433df3405d1ed1979af47:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "c14702fece09c67ad316c5d50f5f69cfb4a85b23051ea70f7c5988f94f160e23",
+          "snapshot_id": "dd55ee73aecaf891ed335bdfac5d2d19d682eb5f22e43e6578fda1f903a0c120"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:e41a9df0f998088b6f9c86c52b31cc1b2a5c92b39f3a5d0528321c9ee8a723aa:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "7bd836ced79e5ea8ba60209a95e4ef9708552163a66a99a3a5b6b5d94909b058",
+          "snapshot_id": "1049a0b263e9710296fef542736e87be1142bfa8e7fc86b82961ea3e4a44c4b2"
+        },
+        {
+          "dataset_id": "beta:edna:normalization:e445ce89943ed8b8221318f833ffb77136a5a2a5f9d2dc50e7dfd927dc2730de:fd1eeb53fdc7f91143ff03ae",
+          "metadata_sha256": "605bc4ccc111b9eedcaf7b7df3869b3af819f92d8e547326ae8e0d5ed0191f38",
+          "snapshot_id": "8e855207618df0333ef9a05bec733b4069c82d92622d5ecc715bc0e63c440cb1"
+        }
+      ],
+      "descriptor_snapshot_id": "f24636cb28e4e7e8d263ce4d9aeefba8deb70dfeca3218813c4af7435a3f440e",
+      "detections": 349638,
+      "negative_controls": 343,
+      "occurrences": 3498,
+      "resolved_physical_sample_identities": 0,
+      "status": "active_authenticated_beta",
+      "unknown_classifications": 3155,
+      "use": "Raw inventory; controls and unknowns remain explicit and physical samples are unresolved."
+    },
+    "metagenome": {
+      "abundance_denominator": "unknown",
+      "dataset_count": 1,
+      "datasets": [
+        {
+          "dataset_id": "beta:metagenome:raw:c74b6572ddf1f17fc7fad29ffd5abb35ea215f6ea9be3f7340754f6b08b44164",
+          "metadata_sha256": "721ca64647750cbf539eabc33b83ab26f7e7899fe64c9ce5b0a7feb6879af591",
+          "snapshot_id": "d4bf3da06414a9d9c1991423c07701ee5f6afb9b1e3c87c488c494717d8bf231"
+        }
+      ],
+      "descriptor_snapshot_id": "3619da772ec351fb1308720c91c47f71545fbb026d5fd14290508ed794a21175",
+      "kraken_rows": 58712,
+      "metaeuk_rows": 67240,
+      "status": "active_authenticated_beta",
+      "use": "Separate source matrices with source units and no inferred relative abundance."
+    },
+    "remote_sensing": {
+      "dataset_count": 1,
+      "datasets": [
+        {
+          "dataset_id": "beta:sst:regional-preview:a02e205a70cc43532631b10ec170a3500052e01e9f75d9f050bac202236bdc33",
+          "metadata_sha256": "2441cb44319c65b70a8b5b929a2c3339da41473b39fa902812e62792636f4245",
+          "snapshot_id": "904f43c3a35f7559ded2781ea6987f8f55291b79140b063b19ee41ca981a53b5"
+        }
+      ],
+      "descriptor_snapshot_id": "bbdd9dccff2173552076e7883606c38b0c7093aa0d3b3f359d53f49c9ad3c6b6",
+      "observations": 1455,
+      "product": "MUR regional SST",
+      "regional_area_reviewed": false,
+      "status": "active_authenticated_beta",
+      "use": "Descriptive regional preview; valid_ocean_pixels is the subsampled grid-point count. Coverage gaps and support are retained."
+    }
+  },
+  "active_dataset_count": 42,
+  "basis": {
+    "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+    "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "control_generation": 1795271687024996,
+    "control_sha256": "1b1059ca9fca50b8a5feeb4956ec7cb8630da88ac5d4d4ef80ee596cdbe3764a",
+    "controller_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "linked_evidence_sha256": {
+      "b2-20261116/discovery-live-20261122.json": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+      "b2-20261116/implementation-local-checkpoint.json": "9985c7aa1ac1a2fd424615d05b71897479ac62fd399efd108d05dfd227729ee9",
+      "b2-20261116/qualified-private-candidate.json": "f35f2db4d841d47f00c6755693d9d5c4eab901511d97c5338ef992b7bd64ddf1",
+      "cohorts-20261103/edna-conversion-audit-20261103.json": "1514019e50eb0302d00c885a05adce90b3d416fd994ed55e3285aaeefba7131a",
+      "cohorts-20261103/jcope-audit-20261103-amendment01.json": "ae938c707674e99f411dc7cfc82d5688690006f4fdeaae88ec5d825f83c884bf",
+      "cohorts-20261103/regional-sst-preparation-audit-20261103-amendment01.json": "fd30fed438f0cf7f1e9ccffa873898aa7c4783ec493021ae47527d0b887c087c",
+      "raw-quarantine-20261102/origin-inventory-summary.json": "6d1822425e5d3d8daddf0fa5c72f0982994c6cd336a2a4965cb153b4ce34451d",
+      "raw-quarantine-20261102/regional-publication-source-readback.json": "5d9c271af2fef5876dd7249c34802f2b9f3fa42a6e7ba711db7eb7ecdd73a0ab"
+    },
+    "live_evidence_reused": true,
+    "manifest_and_exact_metadata_bytes_rehashed_locally": true,
+    "project": "ocean-v1-beta-20261101",
+    "runtime_source": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+    "site": "https://beta.oceaninfobio.com"
+  },
+  "captured_utc": "2026-11-21T15:42:02.232889+00:00",
+  "cloud_writes": false,
+  "current_origin_sst_metadata_readback": {
+    "complete": true,
+    "content_validated": false,
+    "current_bytes": 8177248351,
+    "current_objects": 53559,
+    "disposition": "Only the separately qualified registered regional MUR dataset is active. Keep additional objects held in their original location pending grouping by product, generation and coverage, source qualification and explicit activation.",
+    "finished_utc": "2026-11-21T15:39:57.319653+00:00",
+    "full_dataset_membership_inferred_from_metadata": false,
+    "groups": {
+      "issue103_hybrid_nasa_context": {
+        "bytes": 1048929234,
+        "objects": 17905,
+        "sha256": "408f69c4dd8598ae4ddbf54b0aa2f484e02b074453f1614a60342cf9abda5f36"
+      },
+      "issue103_hybrid_other": {
+        "bytes": 30524184,
+        "objects": 1041,
+        "sha256": "f6cea151b4710b444f5afb9f179d46f6796bc0bb8f76c3b27be8b5618214d1dd"
+      },
+      "issue103_other": {
+        "bytes": 7097794933,
+        "objects": 34613,
+        "sha256": "97bf659c0990b546145a41e4e697670f30db6d105105a9c9798bb6b1c759bcbf"
+      }
+    },
+    "historical_object_versions_included": false,
+    "list_sha256": "457b3c086df94c3329dbcab763a5f57457cca441dcaba123ec7fb43c661d5610",
+    "list_sha256_format": "SHA256 of ordered newline-delimited canonical JSON for name, generation, size and crc32c; names were hashed in memory.",
+    "metadata_pages": 72,
+    "object_bodies_read": false,
+    "origin_bucket": "data-infra-infobio-ocean-data",
+    "origin_mutations": false,
+    "origin_project": "data-infra-infobio",
+    "page_limit": 150,
+    "point_in_time_snapshot": false,
+    "prefix": "research-sst/",
+    "prior_complete_metadata_list_counts_and_bytes_match": true,
+    "started_utc": "2026-11-21T15:39:41.608264+00:00"
+  },
+  "full_b2_accepted": false,
+  "remaining_source_dispositions": [
+    {
+      "grid_cells": 2380752,
+      "input": "JCOPE model-assimilation files",
+      "parsed_distinct_granules": 1837,
+      "reason": "Preserve embedded model UTC instants, product and missing cells. Qualify a complete partition manifest before staging because the per-snapshot limit is 2,000,000 rows.",
+      "status": "quarantined_unregistered"
+    },
+    {
+      "distinct_payloads": 1,
+      "input": "JCOPE invalid placeholder",
+      "paths": 11,
+      "reason": "No valid observations or timestamps are available from the placeholder.",
+      "status": "excluded_from_catalogue_preserved_in_quarantine"
+    },
+    {
+      "input": "Two older eDNA bundles",
+      "reason": "Use the exact 39 current v3 normalized registries selected in the private preparation receipt. Preserve older registry inputs and lineage.",
+      "status": "superseded_from_active_edition"
+    },
+    {
+      "input": "Historical SST derived analyses and other MUR products or processing generations",
+      "reason": "Keep each source product and support distinct. Derived analyses and other product/generation series require their own provenance and scientific review.",
+      "status": "held_unregistered"
+    }
+  ],
+  "scientific_approval": false,
+  "version": "ocean-beta-b2-catalogue-disposition-20261122-v1"
+}

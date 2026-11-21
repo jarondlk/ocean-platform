@@ -1,5 +1,47 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 22 — B2 and B3 parallel checkpoint
+
+B2's [catalogue disposition receipt](../beta/b2-20261116/catalogue-disposition-20261122.json)
+binds all 42 dataset IDs and metadata hashes to the accepted serving/controller
+image, activation and control generation. The read-only source listing covered
+72 pages and completed at 53,559 historical SST objects and 8,177,248,351 bytes.
+Counts and bytes agree with the earlier complete listing. Retain the four active
+collections and hold additional SST sources pending qualification. Keep the
+invalid JCOPE placeholder quarantined and the two older eDNA editions preserved.
+Historical listing completeness does not establish scientific coverage or review.
+
+The live signed-in C21 receipt reopened and both export controls were available.
+The in-app browser download bridge timed out again and supplied no output file.
+Reuse the prior HTTP 200 observations and synthetic export/withdrawal regression.
+Verify downloaded CSV/JSON in a download-capable signed-in browser and use a
+separately scoped disposable source for live withdrawal. The existing CTD pin
+fixture refers to a real dataset and cannot be used to revoke that dataset.
+
+B3 started at `7531dc3a8a82c6a46052bce5d745b4cf604df581`. That source
+intentionally supersedes the C22 decision preflight and corresponding runtime
+discovery source pins. Approval still checks the exact current owner, proposal,
+context, hashes and source access. The wire shape, fake dispatch rules and C25
+start gate are intact. The 208 focused tests passed. The amended controller
+fixture also passed all 10 actual PostgreSQL 18.3 cases with the fake executor
+absent. Its isolated cluster was stopped after testing. Historical C23 physical
+receipts remain scoped to their original source and runtime. See the
+[approval checkpoint receipt](../beta/b3-20261122/approval-checkpoint.json).
+
+On the [source-bound hosted run](https://github.com/jarondlk/ocean-platform/actions/runs/44920277073),
+both v1 frontend jobs passed. Backend and PostgreSQL were still running at this
+checkpoint. The separate legacy frontend job failed on its existing Next.js
+dependency audit. Preserve the failure and keep legacy maintenance separate from
+this beta change. The newer PostgreSQL fixture amendment was verified locally.
+
+Continue B3 with a durable private start handoff and C25 execution projection.
+The current C23 bridge requires an isolated controller store with a distinct
+recorder. Preserve that authority boundary while reconciling the beta C22
+approval store. Keep the separate roles, records, methods and transitions
+through cancellation, recovery and independent physical release. Qualify exact
+Tokyo worker image, boot material, network, credentials, lifecycle and cost
+before activation. No beta Cloud Run update or worker was started here.
+
 ## November 22 — Cold discovery repair accepted on the beta user path
 
 Resume from the [live discovery receipt](../beta/b2-20261116/discovery-live-20261122.json).

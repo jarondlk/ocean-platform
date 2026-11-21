@@ -1,0 +1,100 @@
+{
+  "b3_complete": false,
+  "beta_runtime_changed": false,
+  "captured_utc": "2026-11-21T15:44:30.896310+00:00",
+  "focused": {
+    "elapsed_seconds": 463.38,
+    "passed": 208,
+    "test_paths": [
+      "tests/test_research_experiment_api.py",
+      "tests/test_research_experiments.py",
+      "tests/test_experiment_workspace.py",
+      "tests/test_experiment_sandbox_operator_inspection.py",
+      "tests/test_experiment_sandbox_retained_bridge.py",
+      "tests/test_experiment_sandbox_retained_admission.py",
+      "tests/test_experiment_sandbox_retained_runner.py",
+      "tests/test_research_evidence_api.py"
+    ]
+  },
+  "hosted": {
+    "full_hosted_acceptance": false,
+    "hosted_run_contains_local_native_fixture_amendment": false,
+    "legacy_audit_failure": "Legacy frontend npm production dependency audit flags locked Next.js <=15.5.28.",
+    "run_id": 44920277073,
+    "snapshot": [
+      {
+        "conclusion": "success",
+        "id": 136894660283,
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": null,
+        "id": 136894660441,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "success",
+        "id": 136894660451,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": null,
+        "id": 136894660461,
+        "name": "Backend tests and security boundary",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "failure",
+        "id": 136894660519,
+        "name": "Frontend typecheck and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "id": 136894661251,
+        "name": "Dependency review",
+        "status": "completed"
+      }
+    ],
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/44920277073"
+  },
+  "local_native": {
+    "elapsed_seconds": 31.62,
+    "execution_store_controller_and_recorder_are_distinct": true,
+    "fake_executor_configured": false,
+    "isolated_loopback_cluster_stopped": true,
+    "passed": 10,
+    "physical_execution_performed": false,
+    "server_version": "18.3",
+    "test_path": "tests/integration/test_retained_reserve_postgres.py"
+  },
+  "preserved_historical_evidence": [
+    "docs/plans/ocean-v1/evidence/C23/completion-20261028.json",
+    "docs/plans/ocean-v1/evidence/C25/delivery.json"
+  ],
+  "production_admission_or_execution_enabled": false,
+  "runtime_source_commit": "7531dc3a8a82c6a46052bce5d745b4cf604df581",
+  "scientific_approval": false,
+  "scope": "Owner retains exact reviewed proposal approval with fake dispatch disabled.",
+  "source_sha256": {
+    "api/v1_runtime_routes.py": "e8bf260a8a063fa573df5efeb54aef001625238e30823fdc2c70ffe1f8c5adc1",
+    "orchestration/research_experiments.py": "abb2aceca579035806579b4f9e9240879752cf19afcf73a4f5d38a1c8b768938",
+    "tests/integration/test_retained_reserve_postgres.py": "a5b4f55a7f89a2003a6a447be9afe78b3833b391b61ef229aa62ee0615c5e8c4",
+    "tests/test_experiment_sandbox_operator_inspection.py": "d0f8c5c770b9aa2c7c1fb8ddfac07f21801a3bf61ddcf15c9f002545e8ab1eda",
+    "tests/test_experiment_sandbox_retained_admission.py": "406d66f110a5ac9c34a23a9a1d3ea7c7dec1c289bd65f9818a564a50534da244",
+    "tests/test_experiment_sandbox_retained_bridge.py": "178870f289b552f2f16cd0b50311eb01542b141a78a394efb9b983af389c25a3",
+    "tests/test_experiment_sandbox_retained_runner.py": "607d70f0cf89d1632e1dd80270dfe2a6df4a22037e5397868020e9b30fa6f411",
+    "tests/test_experiment_workspace.py": "f82e86944aa879c0b475cb4405353f493c6df3afa687216814da77b2a9ab5577",
+    "tests/test_research_evidence_api.py": "9389cef24d34b1653e8007312bbb53ed08f4a9b64ec17a5e261e15bc0f2b2422",
+    "tests/test_research_experiment_api.py": "f7c65e360ff49799ddbb8d9333f433448e48cc0bbcd86faa582b4bc4238de5fa",
+    "tests/test_research_experiments.py": "eb33fdfb5f435f047b44c104ca406efa09f55b4913312ac30ef2d47cd396a749"
+  },
+  "superseded_runtime_sha256": {
+    "api/v1_runtime_routes.py": "e944453a55c96258f73bfa0cfacfce0e8458de704c0b0e081e9f49c3933e5c32",
+    "orchestration/research_experiments.py": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6"
+  },
+  "version": "ocean-beta-b3-approval-preflight-v1"
+}
