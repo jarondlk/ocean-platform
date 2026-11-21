@@ -21,6 +21,7 @@ BASE_INVENTORY = RECEIPTS + "b1-20261114/ready-list-production-source-manifest.j
 QUALIFICATION = RECEIPTS + "b2-20261116/qualified-private-candidate.json"
 TRANSPORT_QUALIFICATION = RECEIPTS + "b2-20261116/transport-hosted-20261121.json"
 DECODE_QUALIFICATION = RECEIPTS + "b2-20261116/decode-hosted-20261121.json"
+DISCOVERY_QUALIFICATION = RECEIPTS + "b2-20261116/discovery-hosted-20261122.json"
 SUPERSEDED = (
     "api/v1_catalogue_host.py",
     "ingestion/edna_catalogue_inputs.py",
@@ -29,6 +30,7 @@ SUPERSEDED = (
     "orchestration/frozen_edna_catalogue.py",
 )
 TRANSPORT_SUPERSEDED = (*SUPERSEDED, "orchestration/frozen_scientific_catalogue.py")
+DISCOVERY_SUPERSEDED = (*TRANSPORT_SUPERSEDED, "ingestion/artifact_store.py", "ingestion/catalogue_adapter_inputs.py")
 ADDED = ("ingestion/edna_input_cache.py",)
 BINDINGS = {
     "baseline": "/opt/ocean/beta-catalogue-source.json",
@@ -156,18 +158,19 @@ def prepare(revision, output):
     runtime_raw = receipt_raw
     runtime_receipt = receipt
     superseded = SUPERSEDED
-    if receipt["source_revision"] != revision:
-        runtime_raw = committed(head, TRANSPORT_QUALIFICATION, current=True)
+    for checkpoint, superseded_paths in (
+        (TRANSPORT_QUALIFICATION, TRANSPORT_SUPERSEDED),
+        (DECODE_QUALIFICATION, TRANSPORT_SUPERSEDED),
+        (DISCOVERY_QUALIFICATION, DISCOVERY_SUPERSEDED),
+    ):
+        if runtime_receipt["source_revision"] == revision:
+            break
+        preceding_revision = runtime_receipt["source_revision"]
+        runtime_raw = committed(head, checkpoint, current=True)
         runtime_receipt = json.loads(runtime_raw)
-        if runtime_receipt["supersedes_runtime_revision"] != receipt["source_revision"]:
-            raise ValueError("Expected an intentional supersession of the original qualified runtime")
-        superseded = TRANSPORT_SUPERSEDED
-        if runtime_receipt["source_revision"] != revision:
-            preceding_revision = runtime_receipt["source_revision"]
-            runtime_raw = committed(head, DECODE_QUALIFICATION, current=True)
-            runtime_receipt = json.loads(runtime_raw)
-            if runtime_receipt["supersedes_runtime_revision"] != preceding_revision:
-                raise ValueError("Expected an intentional supersession of the transport-qualified runtime")
+        if runtime_receipt["supersedes_runtime_revision"] != preceding_revision:
+            raise ValueError("Expected an intentional supersession of the preceding qualified runtime")
+        superseded = superseded_paths
     if runtime_receipt["source_revision"] != revision or runtime_receipt["hosted"]["conclusion"] != "success":
         raise ValueError("The selected B2 runtime needs accepted hosted checks")
     package_name = Path(__file__).relative_to(ROOT).as_posix()

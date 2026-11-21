@@ -10,12 +10,12 @@ from datetime import datetime
 import hashlib
 from io import BytesIO
 import json
-import math
 import re
 import time
 
 import pandas as pd
 import pyarrow as pa
+import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
 from ingestion.catalogue_snapshot_capture import CapturedSource, SourceExportRequirement
@@ -34,12 +34,16 @@ from schema.time_range import utc_time
 
 MAX_ROWS = 2_000_000
 MAX_DECODED_BYTES = 512 * 1024 * 1024
+MAX_SAFE_JSON_INTEGER = 2**53 - 1
 ARROW_TYPES = {
     "string": pa.string(),
     "number": pa.float64(),
     "integer": pa.int64(),
     "boolean": pa.bool_(),
 }
+# Use the same whitespace characters as Python's str.strip. Arrow lengths
+# here count characters, matching the original C10 text limit.
+_TEXT_WHITESPACE = "\t\n\v\f\r\x1c\x1d\x1e\x1f \x85\xa0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
 
 
 class AdapterUnavailable(ValueError):
@@ -135,25 +139,30 @@ def parse_table(spec: FrozenTable, data: bytes) -> pd.DataFrame:
         table = parquet.read(use_threads=False)
         if table.nbytes > MAX_DECODED_BYTES:
             raise ValueError("Decoded Parquet budget exceeded")
-        records = table.to_pylist()
+        table.validate(full=True)
+        for column, values in zip(spec.columns, table.columns, strict=True):
+            if not column.nullable and values.null_count:
+                raise ValueError("Null in required frozen column")
+            if column.dtype == "string":
+                blank = pc.equal(pc.utf8_trim(values, characters=_TEXT_WHITESPACE), "")
+                long = pc.greater(pc.utf8_length(values), 4000)
+                if pc.any(blank).as_py() or pc.any(long).as_py():
+                    raise ValueError("Invalid frozen text value")
+            if column.dtype == "number" and pc.any(pc.invert(pc.is_finite(values))).as_py():
+                raise ValueError("Nonfinite frozen measurement")
+            if column.dtype in {"number", "integer"}:
+                # A finite binary64 outside this range is always integral.
+                outside = pc.or_(pc.less(values, -MAX_SAFE_JSON_INTEGER), pc.greater(values, MAX_SAFE_JSON_INTEGER))
+                if pc.any(outside).as_py():
+                    raise ValueError("Integral JSON values must fit the exact browser integer range")
+        keys = table[KEYS[spec.name]]
+        if keys.null_count or pc.count_distinct(keys).as_py() != table.num_rows:
+            raise ValueError("Frozen row identities must be nonnull and unique")
+        if table.num_rows == 0:
+            return pd.DataFrame(columns=table.column_names)
+        return table.to_pandas(use_threads=False, ignore_metadata=True)
     except (pa.ArrowException, OSError) as exc:
         raise ValueError("Invalid frozen Parquet") from exc
-    for row in records:
-        _finite_json(row)
-        for column in spec.columns:
-            value = row[column.name]
-            if value is None:
-                if not column.nullable:
-                    raise ValueError("Null in required frozen column")
-            elif column.dtype == "string" and (not value.strip() or len(value) > 4000):
-                raise ValueError("Invalid frozen text value")
-            elif column.dtype in {"number", "integer"} and not math.isfinite(value):
-                raise ValueError("Nonfinite frozen measurement")
-    frame = pd.DataFrame.from_records(records, columns=[c.name for c in spec.columns])
-    key = KEYS[spec.name]
-    if frame[key].isna().any() or frame[key].duplicated().any():
-        raise ValueError("Frozen row identities must be nonnull and unique")
-    return frame
 
 
 @dataclass

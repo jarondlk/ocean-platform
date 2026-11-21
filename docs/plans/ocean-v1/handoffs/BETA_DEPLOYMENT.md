@@ -1,5 +1,22 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 22 — Cold discovery repair under qualification
+
+Resume with the [exact Tokyo baseline](../beta/b2-20261116/discovery-baseline-20261122.json).
+The previous context test added two C17 dependency references. Current control
+generation `1795271687024996` was verified as an append-only extension of
+`1795247849876921` with the same registered snapshots and activation. Keep those
+additions when deploying or rolling back.
+
+Cold discovery was 19.62 seconds on the current API image, with 17.48 seconds
+of CPU time. The new C10 Arrow validation preserves the exact JSON integer
+range and scientific semantics. C12 identity checks use typed columns before
+materialization. The bounded media read retains the exact size, digest, and
+responding GCS generation, with the existing current-access and closing fences.
+The local full-cohort output is unchanged. An isolated catalogue-only proof
+must cover cold discovery on the candidate image before any service update.
+B3 production execution stays gated while the B2 user journey is repaired.
+
 ## November 21 — B2 context and page exports exercised on serving generation 68
 
 Resume from the [picker and context receipt](../beta/b2-20261116/picker-live-20261121.json).

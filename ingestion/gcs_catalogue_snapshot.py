@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from contextvars import ContextVar
 from copy import deepcopy
+from functools import partial
 from threading import get_ident
 
 from ingestion.artifact_store import BoundedGcsStore, safe_key
@@ -246,8 +247,12 @@ class GcsCatalogueSnapshotStore:
             raise ValueError("Snapshot manifest is not canonical")
         return manifest, source.generation
 
-    def _read_payload(self, digest, size):
-        payload = self._read(f"objects/{digest}", size)
+    def _read_payload(self, digest, size, *, exact_media=False):
+        suffix = f"objects/{digest}"
+        if exact_media and isinstance(self._store, BoundedGcsStore):
+            payload = self._store.read_exact(self._key(suffix), size=size)
+        else:
+            payload = self._read(suffix, size)
         if len(payload.data) != size or hashlib.sha256(payload.data).hexdigest() != digest:
             raise ValueError("Snapshot object integrity failure")
         return payload
@@ -262,6 +267,7 @@ class GcsCatalogueSnapshotStore:
     def read(self, identity):
         validate_id(identity)
         state, before = self._state()
+        scope = self._active_read_scope()
         self._registered(state, identity)
         try:
             manifest, generation = self._read_manifest(identity)
@@ -269,7 +275,7 @@ class GcsCatalogueSnapshotStore:
             self._access(state, identity, manifest)
             contents = {}
             for obj in manifest.objects:
-                payload = self._read_payload(obj.sha256, obj.size_bytes)
+                payload = self._read_payload(obj.sha256, obj.size_bytes, exact_media=scope is not None)
                 contents[obj.object_id] = payload.data
                 generations.update(canonical_bytes([obj.sha256, payload.generation]))
         except SnapshotNotFound:
@@ -277,7 +283,6 @@ class GcsCatalogueSnapshotStore:
         current, after = self._state()
         self._same_control(before, after)
         self._access(current, identity, manifest)
-        scope = self._active_read_scope()
         if scope is not None:
             self._record_binding(scope, identity, generations.hexdigest())
         return manifest, contents
@@ -311,7 +316,8 @@ class GcsCatalogueSnapshotStore:
                     total_bytes += obj.size_bytes
                     if len(selected) > MAX_EDNA_BATCH_OBJECTS or total_bytes > MAX_EDNA_BATCH_BYTES:
                         return None
-            payloads = self._immutable_reads.map(self._read_payload, selected.keys(), selected.values())
+            download = partial(self._read_payload, exact_media=True)
+            payloads = self._immutable_reads.map(download, selected.keys(), selected.values())
             fetched = dict(zip(selected, payloads, strict=True))
         except SnapshotNotFound:
             raise ValueError("Registered snapshot immutable bytes are unavailable") from None

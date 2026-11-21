@@ -421,3 +421,35 @@ def test_actual_bounded_gcs_transport_pins_generations_and_never_lists(setup):
     assert manifest_id(actual) == manifest_id(manifest) and payloads == contents
     assert [key for key, _ in calls].count(PREFIX + "/control.json") == 2
     assert all(generation == 1 for _, generation in calls)
+
+
+@pytest.mark.parametrize("received,generation", [
+    (b"good", 11), (b"goo", 11), (b"goodx", 11), (b"evil", 11), (b"good", None),
+])
+def test_batched_content_read_requires_exact_range_bytes_hash_and_generation(monkeypatch, received, generation):
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    digest = hashlib.sha256(b"good").hexdigest()
+
+    class Blob:
+        def download_to_file(self, sink, **kwargs):
+            assert kwargs == {"start": 0, "end": 4, "raw_download": True, "checksum": None, "retry": None}
+            for part in (received[:2], received[2:]):
+                sink.write(part)
+            self.generation = generation
+
+    class Bucket:
+        def blob(self, key):
+            assert key == f"{PREFIX}/objects/{digest}"
+            return Blob()
+
+    class Client:
+        def bucket(self, name):
+            assert name == BUCKET
+            return Bucket()
+
+    store = GcsCatalogueSnapshotStore(access_gate=lambda _: True, client=Client())
+    if received == b"good" and generation == 11:
+        assert store._read_payload(digest, 4, exact_media=True) == StoredObject(received, generation)
+    else:
+        with pytest.raises(ValueError):
+            store._read_payload(digest, 4, exact_media=True)

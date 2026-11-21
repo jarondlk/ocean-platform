@@ -90,10 +90,14 @@ _TAXONOMY_MEMO_BYTES = 4 * 1024 * 1024
 # Python str.strip whitespace, including the four information separators.
 _TEXT_WHITESPACE = "\t\n\v\f\r\x1c\x1d\x1e\x1f \x85\xa0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000"
 _DETECTION_RELATIONS = (
-    "detection_id", "assay_id", "scientific_content_sha256", "sequence_sha256",
-    "assignment_method", "target_status", "copies_per_ml", "concentration_status",
+    "assay_id", "sequence_sha256", "assignment_method", "target_status", "copies_per_ml", "concentration_status",
     "taxonomy_json", "assigned_taxon_name", "assigned_taxon_rank",
 )
+_HASH_COLUMNS = {
+    role: ({key, "sample_id", "assay_id", "source_occurrence_id", "scientific_content_sha256", "sequence_sha256"}
+           & set(TABLE_COLUMNS[role]))
+    for role, key in KEYS.items()
+}
 
 
 class AdapterUnavailable(ValueError):
@@ -239,6 +243,10 @@ def parse_table(spec: EDNATable, data: bytes, *, decoded_budget: int | None = No
                 raise ValueError("Frozen eDNA counts require nonnegative primitive int64")
             if field.type == pa.float64() and pc.any(pc.invert(pc.is_finite(column))).as_py():
                 raise ValueError("Frozen eDNA numbers require finite primitive values")
+            if field.name in _HASH_COLUMNS[spec.name]:
+                exact = pc.match_substring_regex(column, pattern=r"\A[0-9a-f]{64}\z")
+                if pc.any(pc.invert(exact)).as_py():
+                    raise ValueError("Frozen eDNA identities require exact SHA-256")
         if pc.count_distinct(table[KEYS[spec.name]]).as_py() != table.num_rows:
             raise ValueError("Frozen eDNA row identities must be unique")
         frame = table.to_pandas(use_threads=False, ignore_metadata=True).astype(object)
@@ -296,21 +304,13 @@ def validate_rows(dataset: EDNADataset, tables: dict[str, pd.DataFrame]):
             raise ValueError("Cumulative frozen eDNA decoded budget exceeded")
         if len({row[KEYS[name]] for row in rows}) != len(rows):
             raise ValueError("Duplicate frozen eDNA row identity")
+        if any(not _SHA256.fullmatch(row[field]) for row in rows for field in _HASH_COLUMNS[name]):
+            raise ValueError("Frozen eDNA identities require exact SHA-256")
         records[name] = rows
     _validate_relations(dataset, specs, records)
 
 
 def _validate_relations(dataset, specs, records):
-    for name, rows in records.items():
-        columns = set(TABLE_COLUMNS[name])
-        identities = {KEYS[name], "sample_id", "assay_id", "source_occurrence_id"} & columns
-        for row in rows:
-            for identity in identities:
-                if not _SHA256.fullmatch(row[identity]):
-                    raise ValueError("Frozen eDNA canonical identities require exact SHA-256")
-            if "scientific_content_sha256" in columns and not _SHA256.fullmatch(row["scientific_content_sha256"]):
-                raise ValueError("Frozen eDNA records require exact scientific SHA-256")
-
     occurrences = {row["sample_id"]: row for row in records.get("occurrences", [])}
     classifications = {row["sample_id"]: row for row in records.get("classifications", [])}
     assays = {row["assay_id"]: row for row in records.get("assays", [])}
@@ -380,8 +380,6 @@ def _validate_relations(dataset, specs, records):
             raise ValueError("Frozen detection method/target status mismatch")
         key = (row["assay_id"], method)
         counts[key] = counts.get(key, 0) + 1
-        if not _SHA256.fullmatch(row["sequence_sha256"]):
-            raise ValueError("Frozen sequence identity requires exact SHA-256")
         sequence_key = (*key, row["sequence_sha256"])
         if sequence_key in sequence_keys:
             raise ValueError("Duplicate assay/method/sequence identity")

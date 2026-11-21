@@ -1,5 +1,18 @@
 # Implementation status
 
+## November 22 — Cold discovery bottleneck quantified
+
+The live 15-second timeout is reproducible in the private Tokyo diagnostic.
+Full C16 discovery took 19.62 seconds cold and 8.91 seconds warm, with the
+same response hash and all four registered collections. Cold eDNA verification
+took 14.43 seconds and metagenome verification took 3.65 seconds.
+
+The new source uses bounded media reads for known-size catalogue payloads and
+validates C10 scalar values and C12 identities on typed Arrow columns. Full
+local response parity is recorded. The new source and image still need hosted,
+actual GCS and signed-in deadline checks. See the
+[discovery profile](beta/b2-20261116/discovery-baseline-20261122.json).
+
 ## November 21 — Research snapshot picker repair live
 
 Serving generation 68 runs the patched frontend and Next.js 15.5.29. Both

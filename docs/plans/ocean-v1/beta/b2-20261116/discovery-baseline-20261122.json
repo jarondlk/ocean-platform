@@ -1,0 +1,324 @@
+{
+  "baseline_under_15_seconds": false,
+  "current_control": {
+    "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+    "append_only_c17_references": 2,
+    "captured_utc": "2026-11-21T15:00:02.080469+00:00",
+    "observed_generation": 1795271687024996,
+    "observed_sha256": "1b1059ca9fca50b8a5feeb4956ec7cb8630da88ac5d4d4ef80ee596cdbe3764a",
+    "original_generation": 1795247849876921,
+    "original_sha256": "80fe05b887e16527b574974b7cf10788de6119506f77efec1587487515b2967c",
+    "registered_snapshots_unchanged": true,
+    "version": "ocean-beta-b2-additive-control-read-v1"
+  },
+  "first_diagnostic": {
+    "execution": "ocean-v1-beta-b2-discovery-base-1122-tznmp",
+    "reason": "isolated Jobs need both catalogue read feature flags",
+    "result": "startup_failed",
+    "runtime_content_checks_passed": false
+  },
+  "linked_live_frontend": "picker-live-20261121.json",
+  "local_full_cohort": {
+    "baseline": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "exact_descriptor_membership": 4,
+      "measurements": [
+        {
+          "cpu_seconds": 3.2600079999999996,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.0902649999999997,
+              "wall_seconds": 1.5541349621489644
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 0.346746,
+              "wall_seconds": 0.963342041708529
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 1.9885159999999977,
+              "wall_seconds": 1.9965723743662238
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.06978600000000001,
+              "wall_seconds": 0.518980541266501
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 2.453977,
+              "wall_seconds": 3.177960083819926
+            },
+            "metagenome": {
+              "cpu_seconds": 0.620695,
+              "wall_seconds": 1.2134768329560757
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.084287,
+              "wall_seconds": 0.4409279581159353
+            }
+          }
+        },
+        {
+          "cpu_seconds": 1.2618680000000007,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.0798210000000017,
+              "wall_seconds": 1.5332921640947461
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 0.34438699999999933,
+              "wall_seconds": 0.9348682081326842
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 0.04609599999999858,
+              "wall_seconds": 0.04608725383877754
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.06573200000000057,
+              "wall_seconds": 0.48793687485158443
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 0.5113589999999997,
+              "wall_seconds": 1.1902606673538685
+            },
+            "metagenome": {
+              "cpu_seconds": 0.6174490000000006,
+              "wall_seconds": 1.2213926669210196
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.045404999999999696,
+              "wall_seconds": 0.3936762921512127
+            }
+          }
+        }
+      ],
+      "peak_rss_bytes": 676742561792,
+      "request_seconds": [
+        5.563729583285749,
+        3.5047839172184467
+      ],
+      "response_hashes": [
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b",
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b"
+      ],
+      "startup_seconds": 1.4552095830440521,
+      "version": "ocean-beta-b2-discovery-profile-v1"
+    },
+    "candidate": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "exact_descriptor_membership": 4,
+      "measurements": [
+        {
+          "cpu_seconds": 2.3069800000000003,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.026263999999999843,
+              "wall_seconds": 1.528281956911087
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 0.14615600000000006,
+              "wall_seconds": 0.9532848335802555
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 1.8491899999999986,
+              "wall_seconds": 1.8492450388148427
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.016141000000000072,
+              "wall_seconds": 0.45244408305734396
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 2.1174850000000003,
+              "wall_seconds": 3.02150437515229
+            },
+            "metagenome": {
+              "cpu_seconds": 0.10705599999999993,
+              "wall_seconds": 0.7295851670205593
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.04258700000000004,
+              "wall_seconds": 0.39837533328682184
+            }
+          }
+        },
+        {
+          "cpu_seconds": 0.895035,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.1046509999999996,
+              "wall_seconds": 1.547182914800942
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 0.4265659999999998,
+              "wall_seconds": 1.009706917218864
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 0.04668500000000009,
+              "wall_seconds": 0.04667762853205204
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.045933000000000224,
+              "wall_seconds": 0.4583774162456393
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 0.5959820000000002,
+              "wall_seconds": 1.2779690828174353
+            },
+            "metagenome": {
+              "cpu_seconds": 0.17064900000000005,
+              "wall_seconds": 0.7637619581073523
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.05460799999999999,
+              "wall_seconds": 0.40199049934744835
+            }
+          }
+        }
+      ],
+      "peak_rss_bytes": 636024258560,
+      "request_seconds": [
+        4.8061115415766835,
+        3.1163225835189223
+      ],
+      "response_hashes": [
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b",
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b"
+      ],
+      "startup_seconds": 1.4099804582074285,
+      "version": "ocean-beta-b2-discovery-profile-v1"
+    }
+  },
+  "local_simulated_transport_delay_seconds": 0.035,
+  "predecessor_receipt_sha256": "f4f5c00007b064a743ecee5c8903ae5deb2536e546e9fb957085217703e7a856",
+  "real_gcs_one_object_media_parity": {
+    "bytes": true,
+    "generation": true,
+    "manifest_sha256": true
+  },
+  "remaining_gates": [
+    "candidate hosted and image proof",
+    "actual Tokyo cold and warm discovery",
+    "actual signed-in fresh picker request",
+    "remaining B2 acceptance"
+  ],
+  "timed_baseline": {
+    "captured_utc": "2026-11-21T15:03:27.324747+00:00",
+    "execution": "ocean-v1-beta-b2-discovery-base02-1122-kz4p4",
+    "failure_logs": [],
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:ab72b1b92edf987b87457aebc54507e0a3b46f4ffeed3bf05b580140d8a054b4",
+    "job_status": "EXECUTION_SUCCEEDED",
+    "passed": true,
+    "report": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "exact_descriptor_membership": 4,
+      "measurements": [
+        {
+          "cpu_seconds": 17.482903985,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.3482814339999978,
+              "wall_seconds": 1.9212413290000043
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 3.802821532000001,
+              "wall_seconds": 3.9563943550000005
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 9.691197205000007,
+              "wall_seconds": 9.841194887999993
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.27967558499999967,
+              "wall_seconds": 0.7430230399999971
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 14.028899236,
+              "wall_seconds": 14.426791541000004
+            },
+            "metagenome": {
+              "cpu_seconds": 2.9353520279999996,
+              "wall_seconds": 3.6541549710000005
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.12956836199999877,
+              "wall_seconds": 0.49387483900000007
+            }
+          }
+        },
+        {
+          "cpu_seconds": 7.186572476999999,
+          "phase_timings": {
+            "GcsCatalogueSnapshotStore.read": {
+              "calls": 10,
+              "cpu_seconds": 0.3612255069999968,
+              "wall_seconds": 1.8613134730000098
+            },
+            "GcsCatalogueSnapshotStore.read_edna_batch": {
+              "calls": 1,
+              "cpu_seconds": 2.660482310999999,
+              "wall_seconds": 2.6827660719999997
+            },
+            "ValidatedEDNAInputCache.load": {
+              "calls": 39,
+              "cpu_seconds": 0.30368992900001146,
+              "wall_seconds": 0.30424334199998526
+            }
+          },
+          "source_seconds": {
+            "ctd": {
+              "cpu_seconds": 0.23008163800000148,
+              "wall_seconds": 0.6265841490000028
+            },
+            "edna_metabarcoding": {
+              "cpu_seconds": 3.5796415800000005,
+              "wall_seconds": 3.692150306000002
+            },
+            "metagenome": {
+              "cpu_seconds": 3.0858666680000013,
+              "wall_seconds": 3.7682818159999982
+            },
+            "remote_sensing": {
+              "cpu_seconds": 0.13959947700000086,
+              "wall_seconds": 0.5177809360000012
+            }
+          }
+        }
+      ],
+      "peak_rss_bytes": 677347328,
+      "request_seconds": [
+        19.618032110999998,
+        8.909056313999997
+      ],
+      "response_hashes": [
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b",
+        "5fa9eb89fc9ee11dc087e687ec9993668aa3186e4aa4fa9a0cadce100b234d0b"
+      ],
+      "startup_seconds": 3.298939807000002,
+      "version": "ocean-beta-b2-discovery-profile-v1"
+    }
+  },
+  "version": "ocean-beta-b2-discovery-baseline-v1"
+}

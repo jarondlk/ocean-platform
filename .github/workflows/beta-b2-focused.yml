@@ -4,6 +4,8 @@ on:
   push:
     branches: [overhaul]
     paths:
+      - 'ingestion/artifact_store.py'
+      - 'ingestion/catalogue_adapter_inputs.py'
       - 'ingestion/edna_catalogue_inputs.py'
       - 'ingestion/edna_input_cache.py'
       - 'ingestion/gcs_catalogue_snapshot.py'
@@ -20,6 +22,9 @@ on:
       - 'tests/test_beta_append_revision_compatibility.py'
       - 'tests/integration/test_beta_b2_retained_append_postgres.py'
       - 'tests/test_gcs_catalogue_snapshot.py'
+      - 'tests/test_artifact_store.py'
+      - 'tests/test_catalogue_adapter_inputs.py'
+      - 'tests/test_frozen_catalogue_adapters.py'
       - '.github/workflows/beta-b2-focused.yml'
   workflow_dispatch:
 
@@ -67,6 +72,7 @@ jobs:
       - name: Check changed sources
         run: >-
           python -m ruff check ingestion/edna_catalogue_inputs.py
+          ingestion/artifact_store.py ingestion/catalogue_adapter_inputs.py
           ingestion/edna_input_cache.py ingestion/gcs_catalogue_snapshot.py
           orchestration/frozen_edna_catalogue.py orchestration/catalogue_service.py
           orchestration/frozen_scientific_catalogue.py
@@ -75,12 +81,14 @@ jobs:
           tests/test_edna_validation_reuse.py tests/test_beta_edna_cached_host.py
           tests/test_beta_research_catalogue_append.py tests/test_gcs_catalogue_snapshot.py
           tests/test_beta_catalogue_append.py
+          tests/test_artifact_store.py tests/test_catalogue_adapter_inputs.py tests/test_frozen_catalogue_adapters.py
           deploy/gcp/beta/data/prepare_research_edna.py
           tests/test_beta_research_edna_preparation.py tests/test_beta_append_revision_compatibility.py
           tests/integration/test_beta_b2_retained_append_postgres.py
       - name: Verify input semantics, current authority and Research-preserving publication
         run: >-
           python -m pytest -q --tb=short
+          tests/test_artifact_store.py tests/test_catalogue_adapter_inputs.py tests/test_frozen_catalogue_adapters.py
           tests/test_edna_input_cache.py tests/test_edna_validation_reuse.py
           tests/test_edna_catalogue_inputs.py tests/test_edna_catalogue_adversarial.py
           tests/test_frozen_edna_catalogue.py tests/test_gcs_catalogue_snapshot.py

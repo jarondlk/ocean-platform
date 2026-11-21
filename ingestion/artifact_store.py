@@ -7,6 +7,7 @@ be POSIX storage. The index retains every registration; latest is separate.
 from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 import hashlib
+from io import BytesIO
 import json
 import os
 import stat
@@ -91,6 +92,42 @@ class BoundedGcsStore(GcsSnapshotStore):
             raise self._translate_error(exc, key=key) from exc
         if len(data) > max_bytes:
             raise ValueError("Artifact byte limit exceeded")
+        return StoredObject(data, generation)
+
+    def read_exact(self, key, *, size):
+        """Return an exact-length media response and its observed generation.
+
+        This path is for content-addressed objects whose size and digest are
+        already trusted. The caller must verify the digest before use.
+        """
+        safe_key(key)
+        if type(size) is not int or not 0 <= size <= MAX_BYTES:
+            raise ValueError("Bounded exact artifact size required")
+        if size == 0:
+            return self.read(key, max_bytes=0)
+
+        class LimitedBuffer(BytesIO):
+            def write(self, data):
+                # Servers can ignore Range. Keep the limit at the sink too.
+                if self.tell() + len(data) > size:
+                    raise ValueError("Artifact byte limit exceeded")
+                return super().write(data)
+
+        blob = self.bucket.blob(self._name(key))
+        try:
+            with LimitedBuffer() as buffer:
+                # Request one extra byte so an oversized object cannot look
+                # like a complete object with the expected prefix.
+                blob.download_to_file(buffer, start=0, end=size, raw_download=True,
+                                      checksum=None, retry=None)
+                data = buffer.getvalue()
+            generation = blob.generation
+        except ValueError:
+            raise
+        except Exception as exc:
+            raise self._translate_error(exc, key=key) from exc
+        if len(data) != size or type(generation) is not int or generation <= 0:
+            raise ValueError("Exact generation-identified artifact required")
         return StoredObject(data, generation)
 
 
