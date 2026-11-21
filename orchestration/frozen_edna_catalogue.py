@@ -398,6 +398,10 @@ class FrozenEDNACatalogueAdapter(FrozenCatalogueAdapter):
         self.input_cache = input_cache
 
     def _load(self, request):
+        self._check_request(request)
+        return self._load_verified(request, *self.store.read(request.snapshot_id))
+
+    def _check_request(self, request):
         if (request.access_binding, request.access_revision) != (
             self.access.binding,
             self.access.revision,
@@ -409,7 +413,10 @@ class FrozenEDNACatalogueAdapter(FrozenCatalogueAdapter):
             if family != "edna_metabarcoding"
         ):
             raise ValueError("C12 supports only the canonical eDNA source selection")
-        manifest, contents = self.store.read(request.snapshot_id)
+
+    def _load_verified(self, request, manifest, contents):
+        """Decode a bundle already read under this request's current authority."""
+        self._check_request(request)
         if any(
             getattr(manifest.scope.sources, family).filters.model_dump(
                 exclude_none=True

@@ -1,6 +1,7 @@
 """Warm semantic inputs never replace current hosted authority or data reads."""
 import hashlib
 import json
+from collections import Counter
 
 import pytest
 
@@ -21,12 +22,13 @@ def cached(sealed):
     store.access_gate = lambda _: True
     old = json.loads((output / 'activation.json').read_bytes())
     old['research_enabled'] = True
-    metadata, tables = edna_fixture(3)
-    captured = dataset_exports(metadata, tables, generation='synthetic:b2-cache-host')
+    datasets = [edna_fixture(3, dataset_id=f'synthetic:edna:{name}',
+        source_id=f'synthetic-edna-{name}', provider_project_id=f'Project-{name}') for name in ('a', 'b')]
     activation, _ = append_groups(store=store, activation=old, groups=[{
         'label': {'en': 'Synthetic eDNA', 'ja': '合成eDNA'},
         'qualifications': ['Synthetic only; scientific approval false'],
-        'datasets': [(metadata, tables, captured)]}],
+        'datasets': [(metadata, tables, dataset_exports(metadata, tables,
+            generation='synthetic:b2-cache-host')) for metadata, tables in datasets]}],
         authorization_ref='synthetic-b2', research_enabled=True)
     raw = _canonical(activation)
     digest = hashlib.sha256(raw).hexdigest()
@@ -47,7 +49,7 @@ def cached(sealed):
     user = fixture_user(role='admin')
     service.overview(request, user)
     cache = service.resolver.edna_input_cache
-    assert cache.stats()['entries'] == 1
+    assert cache.stats()['entries'] == 2
     return service, request, user, store, output, key, entry, cache
 
 
@@ -62,7 +64,7 @@ def test_warm_cached_host_fails_closed_on_current_source_withdrawal(cached, chan
         store.remove_reference(child, reference)
     with pytest.raises(CatalogueServiceError):
         service.overview(request, user)
-    assert cache.stats()['entries'] == 1
+    assert cache.stats()['entries'] == 2
 
 
 @pytest.mark.parametrize('change', ['activation', 'control', 'payload'])
@@ -86,7 +88,7 @@ def test_warm_cached_host_rechecks_bytes_and_closing_fences(cached, monkeypatch,
     monkeypatch.setattr(BoundedLocalStore, 'read', changing)
     with pytest.raises(CatalogueServiceError):
         service.overview(request, user)
-    assert changed and cache.stats()['entries'] == 1
+    assert changed and cache.stats()['entries'] == 2
     assert service.resolver.store._active_read_scope() is None
 
 
@@ -97,3 +99,25 @@ def test_cached_host_does_not_share_a_previous_users_authority(cached):
     assert cache.stats()['hits'] > before
     with pytest.raises(CatalogueServiceError):
         service.overview(request, fixture_user(role='viewer'))
+
+
+def test_cohort_transport_is_verified_once_per_request_and_matches_serial_results(cached, monkeypatch):
+    service, request, user, _, _, _, entry, _ = cached
+    store = service.resolver.store
+    original = BoundedLocalStore.read
+    reads = []
+
+    def record(transport, key, **kwargs):
+        reads.append(key)
+        return original(transport, key, **kwargs)
+
+    monkeypatch.setattr(BoundedLocalStore, 'read', record)
+    children = {f'v1/catalogue/manifests/{identity}.json' for identity in entry['registration']['child_snapshot_ids']}
+    batch = service.overview(request, user)
+    assert Counter(key for key in reads if key in children) == dict.fromkeys(children, 1)
+    reads.clear()
+    assert service.overview(request, user) == batch
+    assert Counter(key for key in reads if key in children) == dict.fromkeys(children, 1)
+
+    monkeypatch.setattr(store, 'read_edna_batch', None)
+    assert service.overview(request, user) == batch

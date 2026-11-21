@@ -1,0 +1,101 @@
+{
+  "after_append_q6": {
+    "actual_signed_in_beta": true,
+    "captured_utc": "2026-11-21T08:00:24.129363+00:00",
+    "control_generation": 1795247849876921,
+    "full_page_reload": true,
+    "new_model_call": false,
+    "note": "After the C09 append, a fresh signed-in browser reload reopened the exact original Q6 answer and its retained citation from the existing binding.",
+    "original_b1_readback": "docs/plans/ocean-v1/beta/b1-20261114/question06-answer-outcome.json",
+    "retained_answer_visible": true,
+    "retained_citation_opened": true,
+    "retained_citations_visible": 2,
+    "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "serving_revision": "ocean-v1-beta-serving-b2-base-1121"
+  },
+  "before_append_q6": {
+    "actual_signed_in_beta": true,
+    "captured_utc": "2026-11-21T07:57:19.843293+00:00",
+    "new_model_call": false,
+    "note": "Selected the original submitted exploration in the signed-in beta, read its completed answer and opened one of its two retained citations.",
+    "original_b1_readback": "docs/plans/ocean-v1/beta/b1-20261114/question06-answer-outcome.json",
+    "retained_answer_visible": true,
+    "retained_citation_opened": true,
+    "retained_citations_visible": 2,
+    "run_id": "f7e35a7a-4196-4431-9f3f-d5edbca66bc8",
+    "serving_revision": "ocean-v1-beta-serving-b2-base-1121"
+  },
+  "candidate_live": false,
+  "controller_original_binding": {
+    "captured_utc": "2026-11-21T07:50:23.605076+00:00",
+    "configuration_sha256": "5c7431477cc0ddd924b100ec34ce982ec60ca28f18c7cae201da68df86f5a67a",
+    "generation": 8,
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+    "revision": "ocean-v1-beta-research-controller-b2-base-1121"
+  },
+  "new_model_calls": 0,
+  "original_image_receipt_sha256": "07b016766e625cef5ace67367271b015e1a6e23f27b2006aa0b12089bca7f431",
+  "preflight": {
+    "captured_utc": "2026-11-21T07:49:40.958724+00:00",
+    "dispatch_fenced_by_active_serving": true,
+    "execution": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/jobs/ocean-v1-beta-b2-preflight-20261121/executions/ocean-v1-beta-b2-preflight-20261121-hghp9",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+    "quiescence_proven": true,
+    "result": {
+      "aggregate_only_quiescence_verified": true,
+      "captured_utc": "2026-11-21T07:47:18.424232+00:00",
+      "snapshot_is_not_an_admission_fence": true
+    }
+  },
+  "private_gcs_probe": {
+    "captured_utc": "2026-11-21T07:59:30.244885+00:00",
+    "execution": "ocean-v1-beta-b2-edna-probe-20261121-xhmr5",
+    "failure_logs": [],
+    "job_status": "EXECUTION_FAILED",
+    "passed": false,
+    "report": {
+      "activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+      "exact_dataset_membership": 39,
+      "peak_rss_bytes": 1064161280,
+      "request_seconds": [
+        49.16153182599999
+      ],
+      "response_hashes": [
+        "3263d532edfe3586d702e6117943e51f145a445958e0aeb89ec1faab41fd45f5"
+      ],
+      "signed_in_http_acceptance": false,
+      "startup_seconds": 2.7752767180000006,
+      "version": "ocean-beta-b2-gcs-list-probe-v1",
+      "within_15_second_and_3_gib_budgets": false
+    }
+  },
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "registration": {
+    "active_catalogue_binding": "4843e61b95c0c0af27079e669d9c661556a362fef3a4c17ce6a30ebe959a7694",
+    "candidate_activation_sha256": "5460e99c15fcd5241356f254c752c7cad77fffdf4988af6b9d86809ecffa9894",
+    "captured_utc": "2026-11-21T07:57:30.000907+00:00",
+    "immutable_generation_readbacks": 237,
+    "new_generation": 1795247849876921,
+    "new_sha256": "80fe05b887e16527b574974b7cf10788de6119506f77efec1587487515b2967c",
+    "original_generation": 1794766025753161
+  },
+  "remain_open": [
+    "Qualified transport and live catalogue deadline",
+    "Candidate signed-in journeys",
+    "Remaining dataset ledger",
+    "Full B2 acceptance"
+  ],
+  "runtime_revision": "a5f61caf8bad63c993853d26d96115fafec45b9e",
+  "scientific_approval": false,
+  "serving_original_binding": {
+    "binding_path": "/opt/ocean/beta-catalogue-source.json",
+    "captured_utc": "2026-11-21T08:01:08.074735+00:00",
+    "configuration_sha256": "8f30be2923d78e7ee8cc93eb3cb402264ea8a00599cfe8e11c64a54197cfb70f",
+    "generation": 64,
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:525145a88ef8bfc5c93cf468753432f16babb49597298370bcc00f98ff1e5e04",
+    "revision": "ocean-v1-beta-serving-b2-base-live-1121",
+    "service": "serving"
+  },
+  "version": "ocean-beta-b2-registration-checkpoint-v1"
+}

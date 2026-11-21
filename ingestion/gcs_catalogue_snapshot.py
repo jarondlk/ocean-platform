@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from contextvars import ContextVar
 from copy import deepcopy
@@ -28,6 +29,9 @@ from schema.catalogue_snapshot import (
 BUCKET = "ocean-v1-beta-20261101-snapshots"
 PREFIX = "v1/catalogue"
 MAX_READ_SCOPE_SNAPSHOTS = 256
+MAX_EDNA_BATCH_SNAPSHOTS = 64
+MAX_EDNA_BATCH_OBJECTS = 512
+MAX_EDNA_BATCH_BYTES = 128 * 1024 * 1024
 
 
 def _unique(pairs):
@@ -152,6 +156,8 @@ class GcsCatalogueSnapshotStore:
             self._store = BoundedGcsStore(bucket=bucket, prefix="", client=client)
         self.bucket_name, self.prefix, self.access_gate = bucket, prefix, access_gate
         self._control_scope = ContextVar("catalogue_control_scope", default=None)
+        # One budget per store, even when several API requests share it.
+        self._immutable_reads = ThreadPoolExecutor(max_workers=12, thread_name_prefix="catalogue-gcs")
 
     def _key(self, suffix):
         return safe_key(self.prefix + "/" + safe_key(suffix))
@@ -231,27 +237,40 @@ class GcsCatalogueSnapshotStore:
         if before.generation != after.generation or before.data != after.data:
             raise SnapshotConflict("Catalogue control changed during read; retry under current authority")
 
+    def _read_manifest(self, identity):
+        source = self._read(f"manifests/{identity}.json", MAX_MANIFEST_BYTES)
+        if hashlib.sha256(source.data).hexdigest() != identity:
+            raise ValueError("Snapshot manifest integrity failure")
+        manifest = validated_manifest(_json(source.data))
+        if manifest_bytes(manifest) != source.data:
+            raise ValueError("Snapshot manifest is not canonical")
+        return manifest, source.generation
+
+    def _read_payload(self, digest, size):
+        payload = self._read(f"objects/{digest}", size)
+        if len(payload.data) != size or hashlib.sha256(payload.data).hexdigest() != digest:
+            raise ValueError("Snapshot object integrity failure")
+        return payload
+
+    @staticmethod
+    def _record_binding(scope, identity, binding):
+        previous = scope["generation_bindings"].get(identity)
+        if previous is not None and previous != binding:
+            raise SnapshotConflict("Snapshot transport generation changed during read")
+        scope["generation_bindings"][identity] = binding
+
     def read(self, identity):
         validate_id(identity)
         state, before = self._state()
         self._registered(state, identity)
         try:
-            source = self._read(f"manifests/{identity}.json", MAX_MANIFEST_BYTES)
-            raw = source.data
-            generations = hashlib.sha256(canonical_bytes([identity, source.generation]))
-            if hashlib.sha256(raw).hexdigest() != identity:
-                raise ValueError("Snapshot manifest integrity failure")
-            manifest = validated_manifest(_json(raw))
-            if manifest_bytes(manifest) != raw:
-                raise ValueError("Snapshot manifest is not canonical")
+            manifest, generation = self._read_manifest(identity)
+            generations = hashlib.sha256(canonical_bytes([identity, generation]))
             self._access(state, identity, manifest)
             contents = {}
             for obj in manifest.objects:
-                payload = self._read(f"objects/{obj.sha256}", obj.size_bytes)
-                data = payload.data
-                if len(data) != obj.size_bytes or hashlib.sha256(data).hexdigest() != obj.sha256:
-                    raise ValueError("Snapshot object integrity failure")
-                contents[obj.object_id] = data
+                payload = self._read_payload(obj.sha256, obj.size_bytes)
+                contents[obj.object_id] = payload.data
                 generations.update(canonical_bytes([obj.sha256, payload.generation]))
         except SnapshotNotFound:
             raise ValueError("Registered snapshot immutable bytes are unavailable") from None
@@ -260,12 +279,54 @@ class GcsCatalogueSnapshotStore:
         self._access(current, identity, manifest)
         scope = self._active_read_scope()
         if scope is not None:
-            binding = generations.hexdigest()
-            previous = scope['generation_bindings'].get(identity)
-            if previous is not None and previous != binding:
-                raise SnapshotConflict('Snapshot transport generation changed during read')
-            scope['generation_bindings'][identity] = binding
+            self._record_binding(scope, identity, generations.hexdigest())
         return manifest, contents
+
+    def read_edna_batch(self, identities):
+        """Read one verified eDNA cohort for the enclosing request.
+
+        Deliver only fully verified content. Workers perform immutable
+        transport and integrity checks. Registration, policy and generation
+        reconciliation remain in the caller's authority scope.
+        """
+        scope = self._active_read_scope()
+        identities = tuple(dict.fromkeys(identities))
+        if scope is None or not 2 <= len(identities) <= MAX_EDNA_BATCH_SNAPSHOTS:
+            return None
+        state, _ = self._state()
+        for identity in identities:
+            self._registered(state, identity)
+
+        try:
+            manifests = tuple(self._immutable_reads.map(self._read_manifest, identities))
+            selected = {}
+            total_bytes = 0
+            for identity, (manifest, _) in zip(identities, manifests, strict=True):
+                self._access(state, identity, manifest)
+                for obj in manifest.objects:
+                    if obj.source_family != "edna_metabarcoding":
+                        return None
+                    if selected.setdefault(obj.sha256, obj.size_bytes) != obj.size_bytes:
+                        raise ValueError("Conflicting immutable object size")
+                    total_bytes += obj.size_bytes
+                    if len(selected) > MAX_EDNA_BATCH_OBJECTS or total_bytes > MAX_EDNA_BATCH_BYTES:
+                        return None
+            payloads = self._immutable_reads.map(self._read_payload, selected.keys(), selected.values())
+            fetched = dict(zip(selected, payloads, strict=True))
+        except SnapshotNotFound:
+            raise ValueError("Registered snapshot immutable bytes are unavailable") from None
+        verified = {}
+        for identity, (manifest, generation) in zip(identities, manifests, strict=True):
+            generations = hashlib.sha256(canonical_bytes([identity, generation]))
+            contents = {}
+            for obj in manifest.objects:
+                blob = fetched[obj.sha256]
+                contents[obj.object_id] = blob.data
+                generations.update(canonical_bytes([obj.sha256, blob.generation]))
+            self._access(state, identity, manifest)
+            self._record_binding(scope, identity, generations.hexdigest())
+            verified[identity] = (manifest, contents)
+        return verified
 
     def input_generation_binding(self, identity):
         """Only an exact verified read in the current request can bind inputs."""

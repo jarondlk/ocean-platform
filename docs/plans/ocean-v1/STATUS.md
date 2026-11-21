@@ -1,5 +1,20 @@
 # Implementation status
 
+## November 21 — eDNA registered and live catalogue deadline still open
+
+The public beta and private Research controller now run the verified B2 API
+image with the original catalogue binding. The signed-in beta reopened the
+original completed Q6 answer and its citations before and after the append.
+Research admission resumed on the original binding. The managed Research queue
+remains paused, with zero tasks and zero Scheduler jobs at the rollout readback.
+
+The 39-dataset eDNA candidate is privately registered after 237 immutable
+generation readbacks and one control generation update to `1795247849876921`.
+The private Tokyo probe returned all 39 expected datasets in 49.16 seconds,
+exceeding the existing 15-second deadline. The candidate binding is still
+inactive. B2 and scientific review remain open. See the
+[registration and probe receipt](beta/b2-20261116/registration-and-failed-probe-20261121.json).
+
 ## November 21 — B2 API image verified
 
 B2 has a Tokyo-built API image at digest `525145a88ef8…`. The build verified

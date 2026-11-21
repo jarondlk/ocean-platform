@@ -19,6 +19,7 @@ BASE_SOURCE_DIGEST = "b3a1bb1e03b55466070f621e71c7a906a146adb093cf558b4e04a067f0
 RECEIPTS = "docs/plans/ocean-v1/beta/"
 BASE_INVENTORY = RECEIPTS + "b1-20261114/ready-list-production-source-manifest.json"
 QUALIFICATION = RECEIPTS + "b2-20261116/qualified-private-candidate.json"
+TRANSPORT_QUALIFICATION = RECEIPTS + "b2-20261116/transport-hosted-20261121.json"
 SUPERSEDED = (
     "api/v1_catalogue_host.py",
     "ingestion/edna_catalogue_inputs.py",
@@ -26,6 +27,7 @@ SUPERSEDED = (
     "orchestration/catalogue_service.py",
     "orchestration/frozen_edna_catalogue.py",
 )
+TRANSPORT_SUPERSEDED = (*SUPERSEDED, "orchestration/frozen_scientific_catalogue.py")
 ADDED = ("ingestion/edna_input_cache.py",)
 BINDINGS = {
     "baseline": "/opt/ocean/beta-catalogue-source.json",
@@ -82,7 +84,7 @@ def binding(activation_sha):
     }
 
 
-def review_sources(revision):
+def review_sources(revision, superseded):
     """Reconstruct the 180 original pins and permit exactly the B2 runtime changes."""
     base_paths = json.loads(committed(BASE_REVISION, BASE_INVENTORY))["sources"]
     base_pins = {name: digest(committed(BASE_REVISION, name)) for name in base_paths}
@@ -94,7 +96,7 @@ def review_sources(revision):
     for name, original in base_pins.items():
         data = committed(revision, name, current=True)
         pins[name] = digest(data)
-        if name in SUPERSEDED:
+        if name in superseded:
             if pins[name] == original:
                 raise ValueError(f"Expected B2 supersession missing: {name}")
             overlays[name] = data
@@ -105,15 +107,15 @@ def review_sources(revision):
             raise ValueError(f"Expected new runtime path: {name}")
         overlays[name] = committed(revision, name, current=True)
         pins[name] = digest(overlays[name])
-    if set(overlays) != set(SUPERSEDED) | set(ADDED):
+    if set(overlays) != set(superseded) | set(ADDED):
         raise ValueError("The runtime overlay inventory is incomplete")
     return pins, overlays
 
 
-def dockerfile():
+def dockerfile(superseded):
     # Inherit the existing image's user, entrypoint, host settings and default binding.
     lines = ["FROM " + BASE_IMAGE]
-    for name in (*SUPERSEDED, *ADDED):
+    for name in (*superseded, *ADDED):
         lines.append(f"COPY --chown=0:0 --chmod=0444 application/{name} /opt/ocean/{name}")
     lines.extend([
         "COPY --chown=0:0 --chmod=0444 source-manifest.json /opt/ocean/source-manifest.json",
@@ -150,12 +152,21 @@ def prepare(revision, output):
     head = git("rev-parse", "HEAD^{commit}").decode().strip()
     receipt_raw = committed(head, QUALIFICATION, current=True)
     receipt = json.loads(receipt_raw)
-    if receipt["source_revision"] != revision or receipt["hosted"]["conclusion"] != "success":
+    runtime_raw = receipt_raw
+    runtime_receipt = receipt
+    superseded = SUPERSEDED
+    if receipt["source_revision"] != revision:
+        runtime_raw = committed(head, TRANSPORT_QUALIFICATION, current=True)
+        runtime_receipt = json.loads(runtime_raw)
+        if runtime_receipt["supersedes_runtime_revision"] != receipt["source_revision"]:
+            raise ValueError("Expected an intentional supersession of the original qualified runtime")
+        superseded = TRANSPORT_SUPERSEDED
+    if runtime_receipt["source_revision"] != revision or runtime_receipt["hosted"]["conclusion"] != "success":
         raise ValueError("The selected B2 runtime needs accepted hosted checks")
     package_name = Path(__file__).relative_to(ROOT).as_posix()
     package_source = committed(head, package_name, current=True)
     proof_source = committed(head, package_name.replace("prepare_api_context.py", "verify_api_image.py"), current=True)
-    pins, overlays = review_sources(revision)
+    pins, overlays = review_sources(revision, superseded)
     old_sha = receipt["base_read_only_selection"]["activation_sha256"]
     new_sha = receipt["private_preparation"]["activation_sha256"]
     if old_sha == new_sha or receipt["private_preparation"]["base_activation_sha256"] != old_sha:
@@ -175,17 +186,18 @@ def prepare(revision, output):
         "version": "ocean-beta-b2-api-package-v1", "runtime_revision": revision,
         "packaging_revision": head, "base_revision": BASE_REVISION, "base_image": BASE_IMAGE,
         "base_source_manifest_sha256": BASE_SOURCE_DIGEST, "qualification_sha256": digest(receipt_raw),
+        "runtime_qualification_sha256": digest(runtime_raw),
         "packaging_source_sha256": digest(package_source), "image_proof_sha256": digest(proof_source),
         "source_manifest_sha256": sources["source_manifest_sha256"],
         "host_configuration_sha256": digest(canonical(host)), "image_tag": image,
-        "superseded_sources": list(SUPERSEDED), "added_sources": list(ADDED),
+        "superseded_sources": list(superseded), "added_sources": list(ADDED),
         "default_binding": "baseline",
         "bindings": {name: {"path": BINDINGS[name], "sha256": digest(canonical(doc)),
                             "activation_sha256": doc["activation_sha256"]}
                      for name, doc in bindings.items()},
     }
     files = {
-        "Dockerfile": dockerfile(), "source-manifest.json": canonical(sources),
+        "Dockerfile": dockerfile(superseded), "source-manifest.json": canonical(sources),
         "b2-package.json": canonical(package), "beta-host-config.json": canonical(host),
         "baseline.json": canonical(bindings["baseline"]), "candidate.json": canonical(bindings["candidate"]),
         "cloudbuild.json": canonical(build_config(revision, image, proof_source.decode())),

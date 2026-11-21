@@ -252,6 +252,19 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
         rows = sum(len(value) for value in registry.tables.values())
         decoded = _decoded_size(registry.tables)
         encoded = sum(obj.size_bytes for obj in manifest.objects)
+        verified_edna = {}
+        edna_adapter = self.adapters.get("edna_metabarcoding")
+        read_edna = getattr(self.store, "read_edna_batch", None)
+        if (
+            callable(read_edna)
+            and edna_adapter is not None
+            and edna_adapter.store is self.store
+            and callable(getattr(edna_adapter, "_load_verified", None))
+            and (edna_adapter.access.binding, edna_adapter.access.revision)
+                == (self.access.binding, self.access.revision)
+            and all(binding.source_family == "edna_metabarcoding" for binding in bindings.values())
+        ):
+            verified_edna = read_edna(binding.snapshot_id for binding in bindings.values()) or {}
         for binding in registry.metadata.datasets:
             adapter = self.adapters.get(binding.source_family)
             if adapter is None:
@@ -265,7 +278,8 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
                 raise AdapterAccessDenied("Current source access context mismatch")
             key = (id(adapter.store), binding.snapshot_id)
             if key not in child_snapshots:
-                child, payloads = adapter.store.read(binding.snapshot_id)
+                checked = verified_edna.get(binding.snapshot_id)
+                child, payloads = checked if checked is not None else adapter.store.read(binding.snapshot_id)
                 if _filters_present(child.scope):
                     raise AdapterUnavailable(
                         "Scientific source bindings require whole-source snapshots"
@@ -362,7 +376,8 @@ class FrozenScientificCatalogueAdapter(FrozenCatalogueAdapter):
                 continue
             key = (id(adapter), binding.snapshot_id)
             if key not in loaded:
-                loaded[key] = adapter._load(native)
+                checked = verified_edna.get(binding.snapshot_id)
+                loaded[key] = adapter._load_verified(native, *checked) if checked is not None else adapter._load(native)
             selected = adapter._membership(loaded[key], native.scope)
             value = selected.get(binding.dataset_id)
             if value is not None:

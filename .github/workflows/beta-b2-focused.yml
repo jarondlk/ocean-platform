@@ -8,6 +8,7 @@ on:
       - 'ingestion/edna_input_cache.py'
       - 'ingestion/gcs_catalogue_snapshot.py'
       - 'orchestration/frozen_edna_catalogue.py'
+      - 'orchestration/frozen_scientific_catalogue.py'
       - 'orchestration/catalogue_service.py'
       - 'api/v1_catalogue_host.py'
       - 'deploy/gcp/beta/data/**'
@@ -68,6 +69,7 @@ jobs:
           python -m ruff check ingestion/edna_catalogue_inputs.py
           ingestion/edna_input_cache.py ingestion/gcs_catalogue_snapshot.py
           orchestration/frozen_edna_catalogue.py orchestration/catalogue_service.py
+          orchestration/frozen_scientific_catalogue.py
           api/v1_catalogue_host.py deploy/gcp/beta/data/append_catalogue.py
           deploy/gcp/beta/data/publish_append.py tests/test_edna_input_cache.py
           tests/test_edna_validation_reuse.py tests/test_beta_edna_cached_host.py

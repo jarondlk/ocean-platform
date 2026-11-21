@@ -1,5 +1,25 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 21 — B2 registered, serving on the original binding
+
+Resume from the [registration and failed probe receipt](../beta/b2-20261116/registration-and-failed-probe-20261121.json).
+The read-only B2 observer completed once. Both beta services run image
+`525145a88ef8…` on the original binding. Serving generation 64
+`ocean-v1-beta-serving-b2-base-live-1121` has Research admission restored.
+Controller generation 8 remains at `ocean-v1-beta-research-controller-b2-base-1121`.
+The signed-in administrator reopened the exact retained Q6 answer and a citation
+before and again after the candidate registration. Zero model calls were made.
+
+All 237 immutable objects are registered at exact generations. Current
+control `1795247849876921` extends the original `1794766025753161`; the immutable
+candidate activation `5460e99c15fc…` remains private. The single no-retry
+Tokyo GCS probe ran in 49.16 seconds and returned all 39 datasets with
+1,064,161,280 peak RSS bytes. Preserve the failed deadline gate and its receipt.
+The next image needs a source-bound transport fix and a passing private Tokyo
+probe before selecting the candidate on either service. Preserve working
+rollback to the original binding, keep the queue and scheduled delivery paused,
+and do not replay the uploads, observer, control update or model submission.
+
 ## November 21 — B2 image built and serving preview accepted
 
 Resume from the [image, build and preview receipt](../beta/b2-20261116/api-image-20261121.json).
