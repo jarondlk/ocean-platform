@@ -1,0 +1,23 @@
+{
+  "actual_candidate_profile_passed": false,
+  "baseline_receipt_sha256": "65395335e0d87e9416248816170606586bf6a292b670a42436aa18a4db939683",
+  "hosted": {
+    "conclusion": "success",
+    "job_id": 136886640062,
+    "postgres16_c12_passed": 43,
+    "postgres16_retained_c21_passed": 4,
+    "run_id": 44917663096,
+    "runtime_passed": 902,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/44917663096",
+    "workflow": "beta-b2-focused.yml"
+  },
+  "local_archived_c10_parity": {
+    "exact_dtypes": true,
+    "exact_values": true,
+    "rows": 137257,
+    "tables": 6
+  },
+  "source_revision": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+  "supersedes_runtime_revision": "6d18925a8f51996f155af0b1d7429870a91ff335",
+  "version": "ocean-beta-b2-discovery-qualification-v1"
+}
