@@ -1,0 +1,103 @@
+{
+  "b2_disposable": {
+    "authenticated_HTTP_with_synthetic_principal_and_transport": true,
+    "beta_storage_adapter": true,
+    "live_browser_file_bytes_verified": false,
+    "live_disposable_source_withdrawal_verified": false,
+    "remaining_receipt_and_dependency_references_verified": true,
+    "saved_csv_and_json_reopened": true,
+    "withdrawal_denied_open_page_and_both_exports": true
+  },
+  "beta_deployment_changed": false,
+  "captured_utc": "2026-11-22T04:05:59.313720+00:00",
+  "focused_passed": 156,
+  "hosted": {
+    "release_acceptance": false,
+    "snapshot": [
+      {
+        "conclusion": "failure",
+        "id": 137088393669,
+        "name": "Frontend typecheck and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 137088393858,
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 137088393862,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": null,
+        "id": 137088393884,
+        "name": "Backend tests and security boundary",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": null,
+        "id": 137088393931,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "skipped",
+        "id": 137088394986,
+        "name": "Dependency review",
+        "status": "completed"
+      }
+    ],
+    "source_run": 44983326647,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/44983326647"
+  },
+  "local_native": {
+    "different_owner_denied": true,
+    "distinct_roles_and_loopback_owned_schema": true,
+    "fresh_controller_exact_envelope_and_files": true,
+    "lost_response_same_key_one_reservation": true,
+    "passed": 27,
+    "physical_runtime_executed": false,
+    "server": "PostgreSQL 18.3",
+    "temporary_cluster_stopped": true,
+    "unknown_owner_cannot_substitute": true,
+    "withdrawn_source_and_consumed_start_denied": true
+  },
+  "production_execution_enabled": false,
+  "production_router_mounted": false,
+  "scientific_approval": false,
+  "source_revision": "32323cd733660f50659ac0ed9eacca5b49a57fd1",
+  "source_sha256": {
+    "api/v1_experiment_start.py": "e1b009020080eda6b4768117e2141c240b36438f81f0c14d11d2b6aa2ad9cf8e",
+    "orchestration/experiment_sandbox/retained_bridge.py": "6baa808b7c669d5880f0434d32a31746fc55f10421ba53851d19872811675bce",
+    "sandbox/experiment/gcp/run_retained_acceptance.py": "89b55d90dfe3f3dada53c186170ee7c94e8a1ec2802a209ce46488bc4cf7f2ef",
+    "tests/integration/test_retained_acceptance_helpers_postgres.py": "2ad2c6bb1789afb7d8f29935f0919c135c996b14370dcadfbec5459218aa2b19",
+    "tests/integration/test_retained_admission_edges_postgres.py": "bfbb25ddf0827e4a219f75d090a268b45d6f56380ba70475b36da24477a8d827",
+    "tests/integration/test_retained_admission_postgres.py": "b51c5a9a7daafd61d06b31ea39712b266e654a206a02a2050d9ef91b8a99619b",
+    "tests/integration/test_retained_reserve_postgres.py": "9677184c5b98209e42ae0438fc049ebcb594bfc9fc35a99bb8ccb22e6f5fa2c4",
+    "tests/retained_admission_support.py": "dfade9e4d704ae673a9bfca1de1aea7191d09d6ddfd4fca34f9de4623c5a1cbf",
+    "tests/test_beta_catalogue_retention.py": "eff3ef7da9e9552951c117c19471eb0d8a3382c2177b763349880fdd1a2ef9ff",
+    "tests/test_experiment_sandbox_retained_acceptance.py": "334f850d9a445b55d1edcc51da2215104b58e8658d8f1b713113c9a345b8b9ff",
+    "tests/test_experiment_sandbox_retained_admission.py": "406d66f110a5ac9c34a23a9a1d3ea7c7dec1c289bd65f9818a564a50534da244",
+    "tests/test_experiment_sandbox_retained_bridge.py": "178870f289b552f2f16cd0b50311eb01542b141a78a394efb9b983af389c25a3",
+    "tests/test_experiment_sandbox_retained_runner.py": "607d70f0cf89d1632e1dd80270dfe2a6df4a22037e5397868020e9b30fa6f411",
+    "tests/test_research_evidence_api.py": "efc81a8ced1d492b1f3b35d44fb8fff738bb6611ca15f445dbbf5356bbdc6a38"
+  },
+  "version": "ocean-beta-private-experiment-start-checkpoint-v1",
+  "worker_preflight": {
+    "candidate_boot_disk_gib": 50,
+    "candidate_machine": "e2-standard-4",
+    "candidate_session_max_seconds": 7200,
+    "candidate_zone": "asia-northeast1-a",
+    "operator_reauthentication_pending": true,
+    "physical_containment_acceptance": false,
+    "project": "ocean-v1-beta-20261101",
+    "provisioned": false,
+    "wrapper_compute_scope_missing": true
+  },
+  "worker_source_archive_sha256": "923b43836804fd6afa7faa4766966dbccf42270a72c4b8ad6c2d8f65ed898ff6",
+  "worker_source_manifest_sha256": "9f6cddce02fd819baf877d2ccdd4c0a8681311a7368a34aab43609993b7a0deb"
+}

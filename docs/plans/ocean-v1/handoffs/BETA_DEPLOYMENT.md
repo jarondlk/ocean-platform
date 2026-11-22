@@ -21,7 +21,8 @@ cancellation and recovery proofs remain gated.
 156 focused tests and 27 isolated PostgreSQL 18.3 cases passed. The latter
 covered a lost HTTP response after commit, an identical retry, a wrong owner,
 source withdrawal and an already consumed start. The loopback-only test
-database was stopped after verification.
+database was stopped after verification. [Source and test receipt](../beta/b3-20261122/private-start-32323cd.json)
+· [Hosted checks](https://github.com/jarondlk/ocean-platform/actions/runs/44983326647).
 
 B2 has a stronger disposable test on the real HTTP route and beta storage
 adapter with a synthetic transport. Both exported files were saved and reopened.
@@ -46,6 +47,11 @@ does not qualify concurrent production capacity.
 [Compute machine types](https://docs.cloud.google.com/compute/docs/general-purpose-machines#e2_standard)
 · [VM runtime limits](https://docs.cloud.google.com/compute/docs/instances/limit-vm-runtime)
 · [C23 operator preparation](../C23_GCP_TEST_WORKER_PLAN.md).
+
+The private source archive contains 247 exact committed files. All member
+hashes and 20 entry imports were verified locally. The manifest records the
+superseded source pins and new import paths. The archive awaits transfer and
+the actual Linux source/material checks. [Worker source manifest](../beta/b3-20261122/worker-source-32323cd.json).
 
 ## November 22 — B2 and B3 parallel checkpoint
 
