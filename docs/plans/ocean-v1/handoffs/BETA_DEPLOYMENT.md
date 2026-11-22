@@ -1,5 +1,52 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 22 — Private start and worker handoff prepared
+
+The private `/internal/experiments/start` router is available for explicit
+controller composition. A trusted host must supply a current authenticated
+owner. The fixed request selects an exact retained approval and retry key.
+The commit stores the C23 reservation and immutable execution record together.
+A lost response can be retried with the same request and key. The HTTP reply
+contains only the durable IDs and a capacity snapshot. Preparation, execution,
+publication and release require their separate checks.
+
+`C23RetainedBridge.reopen_pending` reopens verified input bytes using a fresh
+controller and the current owner. It compares exact persisted request, material
+and envelope identities and repeats owner/source checks before returning. An
+already consumed start and a withdrawn source deny reopen. The synthetic Linux
+operator harness now consumes the same reopened reservation. The public serving
+and Research hosts do not mount the route. Production dispatch and the physical
+cancellation and recovery proofs remain gated.
+
+156 focused tests and 27 isolated PostgreSQL 18.3 cases passed. The latter
+covered a lost HTTP response after commit, an identical retry, a wrong owner,
+source withdrawal and an already consumed start. The loopback-only test
+database was stopped after verification.
+
+B2 has a stronger disposable test on the real HTTP route and beta storage
+adapter with a synthetic transport. Both exported files were saved and reopened.
+Withdrawal through canonical lifecycle state denied open, page and both exports,
+while retaining the ready receipt and evidence dependencies. Chrome access was
+unavailable from the computer-use session. The signed-in browser file readback
+and live withdrawal from a separate disposable source remain open. Preserve the
+live catalogue and prior HTTP delivery evidence.
+
+The beta wrapper could list the prior diagnostic Jobs but lacked Compute
+inventory rights. The operator's subsequent Compute preflight expired at
+reauthentication. Resume after operator sign-in with a fresh instance, quota,
+network, exact Ubuntu image, gVisor and billing readback. The first candidate
+is one synthetic-only `e2-standard-4` in `asia-northeast1-a`, with a 50 GiB
+balanced boot disk, private IAP administration and a two-hour stop limit.
+Select and pin the exact materials and validate the dedicated network, no VM
+service account, no external IP/NAT during execution and ephemeral independent
+database roles before creating it. Measure disk retention, transfer and cost
+against the beta-only budget. Historical C23 receipts qualify the old isolated
+project and source only, and remain immutable. A one-job validation worker
+does not qualify concurrent production capacity.
+[Compute machine types](https://docs.cloud.google.com/compute/docs/general-purpose-machines#e2_standard)
+· [VM runtime limits](https://docs.cloud.google.com/compute/docs/instances/limit-vm-runtime)
+· [C23 operator preparation](../C23_GCP_TEST_WORKER_PLAN.md).
+
 ## November 22 — B2 and B3 parallel checkpoint
 
 B2's [catalogue disposition receipt](../beta/b2-20261116/catalogue-disposition-20261122.json)

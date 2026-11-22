@@ -11,7 +11,6 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 import pytest
 
 from orchestration.experiment_sandbox import physical_termination as physical
-from orchestration.experiment_sandbox.contracts import verify_execution_envelope
 from orchestration.experiment_sandbox.execution_store import C23ExecutionStore
 from orchestration.experiment_sandbox.journal import DurableExecutionJournal, _safe_sqlite_version
 from orchestration.experiment_sandbox.linux_runtime import LinuxExecutionAdapter
@@ -82,14 +81,8 @@ def configured_native(retained,directory,monkeypatch):
     bridge=C23RetainedBridge(inspection=native.bridge.inspection,store=store,material_policy=material,enabled=lambda:True)
     request=native.approved()
     identity=bridge.reserve(request,current_owner=native.fixture.user)
-    address={name:value for name,value in request.items() if name!='idempotency_key'}
-    candidate=bridge.inspection.inspect_approved(address,current_owner=native.fixture.user)
-    with config.controller_session_factory() as session:
-        from sqlalchemy import text
-        metadata=json.loads(session.scalar(text('SELECT envelope_json FROM research_experiment_execution')))
-    envelope=verify_execution_envelope({'metadata':metadata,'files':dict(candidate.files)},
-        expected_envelope_sha256=identity.document['envelope_sha256'],
-        environments={native.fixture.environment.identity_sha256:native.fixture.environment.model_dump(mode='json')})
+    reopened,envelope=bridge.reopen_pending(identity.document['execution_id'],current_owner=native.fixture.user)
+    assert reopened==identity
     worker=directory/'inert-worker'
     worker.mkdir(mode=0o700)
     envelope,job,image,actual_runtime=_layout(worker,envelope)

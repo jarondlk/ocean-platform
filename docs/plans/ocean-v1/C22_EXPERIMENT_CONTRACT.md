@@ -24,6 +24,14 @@ reservation. The C23 bridge rechecks retained approval and all current inputs
 under its separate authority before reserving capacity. See the
 [B3 checkpoint](handoffs/BETA_DEPLOYMENT.md#november-22--b2-and-b3-parallel-checkpoint).
 
+The private B3 Start route is composed separately from the C22 public routes.
+It uses the same exact approval address and an explicit idempotency key. It
+records the C23 reservation and execution row in one commit and returns their
+IDs. An independently configured controller can reopen a still-pending
+reservation with freshly verified owner, source, approval and material checks.
+Only the C23 runtime admission gate can issue a start permit. See the
+[private start handoff](handoffs/BETA_DEPLOYMENT.md#november-22--private-start-and-worker-handoff-prepared).
+
 Requests bind the expected C17 investigation/conversation/revision, snapshot
 and context payload hash. Revision changes create immutable history. Approval
 and dispatch additionally bind the exact proposal revision, optimistic head

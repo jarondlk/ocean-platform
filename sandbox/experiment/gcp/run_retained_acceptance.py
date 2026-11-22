@@ -335,15 +335,12 @@ def _make_fixture(application, attempt, image):
         ],
     )
     request["proposal"]["resources"] = ExperimentResources().model_dump(mode="json")
-    # Existing approve checks its unchanged fake-capable gate. No dispatch is
-    # invoked; the stored environment is the real pinned Linux descriptor.
+    fixture.service.executor = None
+    fixture.state["dispatch_enabled"] = False
     created = fixture.service.invoke("create", request, fixture.user)["experiment"]
     approved = fixture.service.invoke(
         "approve", fixture.decision(created), fixture.user
     )["experiment"]
-    fixture.state["dispatch_enabled"] = False
-    if fixture.executor.deliveries:
-        raise base.OperatorError("retained_unexpected_fake_dispatch")
     return fixture, fixture.decision(approved)
 
 
@@ -608,9 +605,7 @@ def run(arguments):
     try:
         from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
         from sqlalchemy.orm import sessionmaker
-        from sqlalchemy import text
         from orchestration.experiment_sandbox import physical_termination as physical
-        from orchestration.experiment_sandbox.contracts import verify_execution_envelope
         from orchestration.experiment_sandbox.execution_store import (
             C23ExecutionStore,
             ExecutionStoreConfig,
@@ -764,31 +759,12 @@ def run(arguments):
             material_policy=RetainedMaterialPolicy(**scope.model_dump(mode="json")),
             enabled=enabled,
         )
-        address = {
-            name: value for name, value in request.items() if name != "idempotency_key"
-        }
-        candidate = inspection.inspect_approved(address, current_owner=fixture.user)
         identity = bridge.reserve(request, current_owner=fixture.user)
-        with store.controller_transaction() as session:
-            metadata = json.loads(
-                session.scalar(
-                    text(
-                        "SELECT envelope_json FROM "
-                        + config["schema"]
-                        + ".research_experiment_execution WHERE execution_id=CAST(:id AS uuid)"
-                    ),
-                    {"id": identity.document["execution_id"]},
-                )
-            )
-        envelope = verify_execution_envelope(
-            {"metadata": metadata, "files": dict(candidate.files)},
-            expected_envelope_sha256=identity.document["envelope_sha256"],
-            environments={
-                fixture.environment.identity_sha256: fixture.environment.model_dump(
-                    mode="json"
-                )
-            },
+        reopened, envelope = bridge.reopen_pending(
+            identity.document["execution_id"], current_owner=fixture.user
         )
+        if reopened != identity:
+            raise base.OperatorError("retained_reservation_reopen_mismatch")
         base._create(
             attempt / "retained-reservation.json", base._canonical(identity.document)
         )

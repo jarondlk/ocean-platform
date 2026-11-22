@@ -94,6 +94,9 @@ def test_actual_admission_publication_or_revocation_then_independent_close_and_r
     with case.hold() as context:
         payload = start(case, context)
         assert payload['start_fence'] == 2 and payload['start_id'] == payload['start_event_id']
+        with pytest.raises(ResearchExperimentError) as consumed:
+            case.bridge.reopen_pending(case.identity.document['execution_id'], current_owner=case.native.fixture.user)
+        assert consumed.value.status_code == 409
         terminal, outputs, cleanup, termination = finish(case, context)
         if revoked:
             case.native.fixture.state['enabled'] = False

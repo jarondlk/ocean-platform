@@ -306,6 +306,7 @@ def test_authentic_fixture_setup_uses_valid_original_resource_defaults_and_no_di
     }
     module._make_fixture(object(), Path("/inert-fixture"), image)
     assert [action for action, _ in calls] == ["create", "approve"]
+    assert fixture.service.executor is None and not fixture.state["dispatch_enabled"]
     proposal = calls[0][1]["proposal"]
     assert (
         ExperimentResources.model_validate(proposal["resources"])

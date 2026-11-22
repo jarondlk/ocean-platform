@@ -1,5 +1,20 @@
 # Implementation status
 
+## November 22 — Private experiment start and disposable export verification
+
+B3 has a private, explicitly composed Start endpoint. It checks the current
+C22 owner, proposal, approval and source binding, then records one durable
+reservation. A fresh controller can reopen the exact envelope and inputs.
+The Linux acceptance harness now uses the same path. All 156 focused tests
+and 27 isolated PostgreSQL 18.3 cases passed. Public beta start remains disabled
+while the worker, supervisor and hosted authorization are qualified.
+
+B2's disposable HTTP test saved and parsed CSV and JSON and exercised a
+withdrawal through the beta storage adapter with synthetic transport. Access
+was denied while the receipt and source references stayed retained. Actual
+browser files and live disposable withdrawal still need separate verification.
+See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 22 — B2 catalogue ledger and B3 approval checkpoint
 
 The exact deployed B2 binding accounts for 42 active datasets across four

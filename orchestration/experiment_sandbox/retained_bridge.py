@@ -13,13 +13,14 @@ import json
 from types import SimpleNamespace
 import uuid
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, TypeAdapter
 from sqlalchemy import text
 
+from api.auth import CurrentUser
 from db.app_models import ResearchExperimentApproval, ResearchExperimentRevision
-from orchestration.experiment_sandbox.contracts import ExecutionMetadata, SandboxError
+from orchestration.experiment_sandbox.contracts import ExecutionMetadata, SandboxError, verify_execution_envelope
 from orchestration.experiment_sandbox.execution_store import (
-    C23ExecutionStore, ExecutionReservationBinding, planned_reservation_ids,
+    C23ExecutionStore, ExecutionReservationBinding, execution_job_id, planned_reservation_ids,
 )
 from orchestration.experiment_sandbox.operator_inspection import (
     ApprovedInspectionRequest, C23OperatorInspection,
@@ -29,6 +30,8 @@ from schema.context_catalogue import canonical_json
 from schema.experiment_execution import Digest, Hash, Site
 from schema.investigations import UUIDString
 from schema.research_experiments import content_sha256
+
+_execution_id = TypeAdapter(UUIDString)
 
 
 def _disabled():
@@ -125,6 +128,64 @@ class C23RetainedBridge:
             raise SandboxError('sandbox_retained_material_identity')
         return policy
 
+    def _compose_reservation(self, session, data, candidate, policy, current_owner):
+        service = self._service
+        actor = service._actor(session, user=current_owner)
+        head = service._owned(session, actor, data['experiment_id'])
+        revision, frozen = service._revision(session, actor, head, active=True)
+        address = {key: value for key, value in data.items() if key != 'idempotency_key'}
+        current, proposal, exported = self.inspection._candidate(session, head, revision, address)
+        if current != candidate:
+            raise ResearchExperimentError('integrity_error', 409)
+        execution_id, reservation_id = planned_reservation_ids(site_id=candidate.site_id,
+            owner_user_id=candidate.owner_user_id, idempotency_key=data['idempotency_key'])
+        approval = session.get(ResearchExperimentApproval, uuid.UUID(candidate.approval_id))
+        metadata = service._metadata(head, revision, approval,
+            SimpleNamespace(id=uuid.UUID(reservation_id)), proposal, candidate.environment, exported)
+        metadata = ExecutionMetadata.model_validate(metadata).model_dump(mode='json')
+        envelope_json, request_json = canonical_json(metadata), canonical_json(data)
+        envelope_sha = content_sha256(metadata)
+        binding = ExecutionReservationBinding.model_validate({
+            **policy, 'execution_id': execution_id, 'reservation_id': reservation_id,
+            'owner_user_id': candidate.owner_user_id, 'experiment_id': candidate.experiment_id,
+            'proposal_revision_id': candidate.proposal_revision_id, 'approval_id': candidate.approval_id,
+            'idempotency_key': data['idempotency_key'], 'request_json': request_json,
+            'envelope_json': envelope_json, 'envelope_sha256': envelope_sha,
+            'execution_request_sha256': hashlib.sha256(request_json.encode()).hexdigest(),
+            'approval_request_sha256': candidate.approval_request_sha256,
+            'source_sha256': candidate.source_sha256,
+            'job_id': execution_job_id(site_id=candidate.site_id, reservation_id=reservation_id,
+                                        envelope_sha256=envelope_sha)})
+
+        def final_fence():
+            # External access and feature callbacks precede the closing DB fence.
+            self._enabled()
+            service._verify(frozen=frozen, proposal=proposal, actor=actor, exported=exported, access_only=True)
+            self._binding()
+            session.expire_all()
+            final_actor = service._closing_gate(session, user=current_owner,
+                head_id=data['experiment_id'], revision_id=data['expected_proposal_revision_id'], active=True)
+            final_head = service._owned(session, final_actor, data['experiment_id'])
+            final_revision = session.get(ResearchExperimentRevision, final_head.head_revision_id)
+            final_candidate, _, _ = self.inspection._candidate(session, final_head, final_revision, address)
+            if final_candidate != candidate:
+                raise ResearchExperimentError('integrity_error', 409)
+
+        return binding, final_fence
+
+    @staticmethod
+    def _receipt(binding, *, released):
+        value = object.__new__(RetainedExecutionIdentity)
+        document = {'version': 'c23-retained-reserve-identity-v1',
+            **{name: getattr(binding, name) for name in (
+                'execution_id', 'reservation_id', 'site_id', 'owner_user_id', 'experiment_id',
+                'proposal_revision_id', 'approval_id', 'envelope_sha256', 'execution_request_sha256', 'job_id')},
+            'capacity_reserved_at_commit': not released, 'capacity_snapshot_only': True,
+            'execution_authorized': False, 'publication_authorized': False,
+            'reservation_release_authorized': False, 'scientific_approval': 'not_independently_verified'}
+        object.__setattr__(value, '_json', canonical_json(document))
+        return value
+
     def reserve(self, request, *, current_owner):
         """Retain exact current application approval and capacity, never execute.
 
@@ -140,71 +201,66 @@ class C23RetainedBridge:
         address = {key: value for key, value in data.items() if key != 'idempotency_key'}
         candidate = self.inspection.inspect_approved(address, current_owner=current_owner)
         policy = self._material(candidate)
-        service = self._service
-        execution_id, reservation_id = planned_reservation_ids(site_id=candidate.site_id,
-            owner_user_id=candidate.owner_user_id, idempotency_key=data['idempotency_key'])
         with self.store.controller_transaction() as session:
-            actor = service._actor(session, user=current_owner)
-            head = service._owned(session, actor, data['experiment_id'])
-            revision, frozen = service._revision(session, actor, head, active=True)
-            current, proposal, exported = self.inspection._candidate(session, head, revision, address)
-            if current != candidate:
-                raise ResearchExperimentError('integrity_error', 409)
-            approval = session.get(ResearchExperimentApproval, uuid.UUID(candidate.approval_id))
-            # This object supplies only the stable future reservation ID to the
-            # existing pure C22 metadata constructor; it is never inserted.
-            metadata = service._metadata(head, revision, approval,
-                SimpleNamespace(id=uuid.UUID(reservation_id)), proposal, candidate.environment, exported)
-            metadata = ExecutionMetadata.model_validate(metadata).model_dump(mode='json')
-            envelope_json, request_json = canonical_json(metadata), canonical_json(data)
-            envelope_sha = content_sha256(metadata)
-            binding = ExecutionReservationBinding.model_validate({
-                **policy, 'execution_id': execution_id, 'reservation_id': reservation_id,
-                'owner_user_id': candidate.owner_user_id, 'experiment_id': candidate.experiment_id,
-                'proposal_revision_id': candidate.proposal_revision_id, 'approval_id': candidate.approval_id,
-                'idempotency_key': data['idempotency_key'], 'request_json': request_json,
-                'envelope_json': envelope_json, 'envelope_sha256': envelope_sha,
-                'execution_request_sha256': hashlib.sha256(request_json.encode()).hexdigest(),
-                'approval_request_sha256': candidate.approval_request_sha256,
-                'source_sha256': candidate.source_sha256,
-                'job_id': 'c23-' + content_sha256({'site': candidate.site_id,
-                    'reservation': reservation_id, 'envelope': envelope_sha})[:48]})
-
-            def final_fence():
-                # Store enablement has already run. Run every remaining flag
-                # callback before the last access/source check; only then take
-                # the closing DB fence. No external callback follows that fence.
-                self._binding()
-                self._enabled()
-                service._verify(frozen=frozen, proposal=proposal, actor=actor, exported=exported, access_only=True)
-                self._binding()
-                session.expire_all()
-                final_actor = service._closing_gate(session, user=current_owner,
-                    head_id=data['experiment_id'], revision_id=data['expected_proposal_revision_id'], active=True)
-                final_head = service._owned(session, final_actor, data['experiment_id'])
-                final_revision = session.get(ResearchExperimentRevision, final_head.head_revision_id)
-                final_candidate, _, _ = self.inspection._candidate(session, final_head, final_revision, address)
-                if final_candidate != candidate:
-                    raise ResearchExperimentError('integrity_error', 409)
-
+            binding, final_fence = self._compose_reservation(session, data, candidate, policy, current_owner)
             retained = self.store.reserve_after_fence_in_transaction(session, binding, final_fence=final_fence)
-            if retained != execution_id:
+            if retained != binding.execution_id:
                 raise SandboxError('sandbox_retained_reservation_identity')
             # Capacity is a commit snapshot, not future action authority. A
             # historical idempotent retry may already have a release ledger.
             released = session.scalar(text(f'SELECT EXISTS(SELECT 1 FROM {self._store_config.schema}.'
-                'research_experiment_release WHERE execution_id=CAST(:id AS uuid))'), {'id': execution_id})
+                'research_experiment_release WHERE execution_id=CAST(:id AS uuid))'), {'id': binding.execution_id})
             if type(released) is not bool:
                 raise SandboxError('sandbox_retained_reservation_identity')
-        value = object.__new__(RetainedExecutionIdentity)
-        document = {'version': 'c23-retained-reserve-identity-v1',
-            'execution_id': execution_id, 'reservation_id': reservation_id,
-            'site_id': candidate.site_id, 'owner_user_id': candidate.owner_user_id,
-            'experiment_id': candidate.experiment_id, 'proposal_revision_id': candidate.proposal_revision_id,
-            'approval_id': candidate.approval_id, 'envelope_sha256': envelope_sha,
-            'execution_request_sha256': binding.execution_request_sha256, 'job_id': binding.job_id,
-            'capacity_reserved_at_commit': not released, 'capacity_snapshot_only': True,
-            'execution_authorized': False, 'publication_authorized': False,
-            'reservation_release_authorized': False, 'scientific_approval': 'not_independently_verified'}
-        object.__setattr__(value, '_json', canonical_json(document))
-        return value
+        return self._receipt(binding, released=released)
+
+    def _pending_binding(self, session, execution_id, actor):
+        schema = self._store_config.schema
+        row = session.execute(text(f"SELECT to_jsonb(e)-'created_at', s.state, s.fence FROM {schema}."
+            f'research_experiment_execution e JOIN {schema}.research_experiment_execution_state s USING (execution_id) '
+            'WHERE e.execution_id=CAST(:id AS uuid) AND e.site_id=:site AND e.owner_user_id=:owner'),
+            {'id': execution_id, 'site': self._store_config.site_id, 'owner': actor.id}).one_or_none()
+        if row is None:
+            raise ResearchExperimentError('not_found', 404)
+        if (row.state, row.fence) != ('reserved', 1):
+            raise ResearchExperimentError('conflict', 409)
+        try:
+            return ExecutionReservationBinding.model_validate(row[0])
+        except (ValueError, TypeError):
+            raise SandboxError('sandbox_retained_execution_binding') from None
+
+    def reopen_pending(self, execution_id, *, current_owner):
+        """Reload the verified worker inputs from an unstarted durable reservation.
+
+        The caller supplies an authenticated owner. The reservation is only a
+        snapshot; preparation and start still need the separate runtime fences.
+        No queued data or Python is accepted from the caller.
+        """
+        if not isinstance(current_owner, CurrentUser):
+            raise ResearchExperimentError('authentication_required', 401)
+        try:
+            execution_id = _execution_id.validate_python(execution_id, strict=True)
+        except (ValueError, TypeError):
+            raise ResearchExperimentError('invalid_request', 422) from None
+        self._enabled()
+        with self.store.controller_transaction() as session:
+            actor = self._service._actor(session, user=current_owner)
+            stored = self._pending_binding(session, execution_id, actor)
+        try:
+            data = RetainedReserveRequest.model_validate_json(stored.request_json).model_dump(mode='json')
+        except ValueError:
+            raise SandboxError('sandbox_retained_execution_binding') from None
+        address = {key: value for key, value in data.items() if key != 'idempotency_key'}
+        candidate = self.inspection.inspect_approved(address, current_owner=current_owner)
+        policy = self._material(candidate)
+        envelope = verify_execution_envelope({'metadata': json.loads(stored.envelope_json),
+            'files': candidate.files}, expected_envelope_sha256=stored.envelope_sha256,
+            environments={policy['environment_sha256']: candidate.environment})
+        with self.store.controller_transaction() as session:
+            binding, final_fence = self._compose_reservation(session, data, candidate, policy, current_owner)
+            if binding != stored:
+                raise SandboxError('sandbox_retained_execution_binding')
+            final_fence()
+            if self._pending_binding(session, execution_id, current_owner) != binding:
+                raise SandboxError('sandbox_retained_execution_binding')
+        return self._receipt(binding, released=False), envelope

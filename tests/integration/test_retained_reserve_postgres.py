@@ -10,10 +10,13 @@ import os
 from types import SimpleNamespace
 import uuid
 
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 import pytest
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
 
+from api.v1_experiment_start import create_experiment_start_router
 from db.app_models import AppBase
 from db.experiment_execution_models import EXECUTION_MODELS
 from orchestration.experiment_sandbox.contracts import SandboxError
@@ -92,6 +95,65 @@ def test_actual_restricted_controller_reserves_exact_real_approval_and_replays(r
     assert replay.document == result.document and counts(case) == (1, 1, 0)
     assert result.document['capacity_reserved_at_commit'] is True
     assert result.execution_authorized is False and case.fixture.service.executor is None
+
+
+def test_private_start_records_one_job_and_fresh_controller_reopens_exact_inputs(retained, monkeypatch):
+    case = retained
+    request = case.approved()
+    app = FastAPI()
+    state = {'owner': None}
+
+    @app.middleware('http')
+    async def authenticated_owner(request, call_next):
+        request.state.current_user = state['owner']
+        return await call_next(request)
+
+    app.include_router(create_experiment_start_router(bridge=case.bridge))
+    with TestClient(app) as client:
+        path = '/internal/experiments/start'
+        assert client.post(path, json=request).status_code == 401
+        state['owner'] = case.fixture.admin
+        assert client.post(path, json=request).status_code == 404
+        state['owner'] = case.fixture.user
+        assert client.post(path, json={**request, 'owner_user_id': str(case.fixture.admin.id)}).status_code == 422
+        assert counts(case) == (0, 0, 0)
+
+        reserve = case.bridge.reserve
+
+        def lose_acknowledgement(*args, **kwargs):
+            reserve(*args, **kwargs)
+            raise SandboxError('simulated_response_lost_after_commit')
+
+        with monkeypatch.context() as patch:
+            patch.setattr(case.bridge, 'reserve', lose_acknowledgement)
+            assert client.post(path, json=request).status_code == 503
+        assert counts(case) == (1, 1, 0)
+        first = client.post(path, json=request)
+        assert first.status_code == 200 and first.headers['cache-control'] == 'no-store'
+        result = first.json()
+        assert set(result) == {'version', 'execution_id', 'reservation_id',
+            'capacity_reserved_at_commit', 'execution_authorized'}
+        assert result['capacity_reserved_at_commit'] is True and result['execution_authorized'] is False
+        assert client.post(path, json=request).json() == result
+
+    reopened = configured(case.fixture, factory=case.database['controller_factory'], config=case.bridge.store.config)
+    with pytest.raises(ResearchExperimentError) as denied:
+        reopened.reopen_pending(result['execution_id'], current_owner=case.fixture.admin)
+    assert denied.value.status_code == 404
+    identity, envelope = reopened.reopen_pending(result['execution_id'], current_owner=case.fixture.user)
+    assert identity.document['reservation_id'] == result['reservation_id']
+    assert identity.document['job_id'] == envelope.job_id
+    assert identity.document['envelope_sha256'] == envelope.envelope_sha256
+    assert envelope.metadata['hashes'] == request['expected_hashes'] and envelope.files
+    assert counts(case) == (1, 1, 0)
+
+    catalogue = case.fixture.retained
+    child = catalogue.registrations[request['snapshot_id']].child_snapshot_ids[0]
+    catalogue.store.revoke(child)
+    with pytest.raises(ResearchExperimentError) as withdrawn:
+        reopened.reopen_pending(result['execution_id'], current_owner=case.fixture.user)
+    assert (withdrawn.value.code, withdrawn.value.status_code) == ('experiments_unavailable', 503)
+    assert counts(case) == (1, 1, 0)
 
 
 def test_native_current_c22_read_grants_and_only_three_id_writes(retained):

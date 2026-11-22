@@ -120,11 +120,12 @@ candidate:
 | B5 — Accept and release beta | Repeat C26 integrated evaluation on the deployed candidate and C27 rollout/rollback rehearsal; obtain actual review and final release decision | B1–B4 and required scientific/operational evidence | Completed 43-row evaluation plus 20-gate overlay, evidence manifest, source-bound CI, signed-in UX acceptance, recovery/rollback observations and final release receipt |
 
 B1 is accepted; B2 data/catalogue completion is the next implementation priority.
-B2 has a deployed 42-dataset disposition ledger. Exported-file readback and live
-disposable withdrawal remain open. B3's approval-only checkpoint is implemented
-locally and leaves production start gated. The durable execution port,
-supervisor and live worker qualification remain open. See the
-[parallel checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-22--b2-and-b3-parallel-checkpoint).
+B2 has a deployed 42-dataset disposition ledger. Disposable export and
+withdrawal tests pass locally. Verification of actual browser files and live
+withdrawal remains open. B3 has a private Start reservation and worker input
+reload path for the isolated controller. Public start, the durable execution
+projection, supervisor and live worker qualification remain open. See the
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-22--private-start-and-worker-handoff-prepared).
 Local eDNA and worker preparation can proceed independently when their inputs are
 available; neither borrows acceptance from Research. B2 and B3 can overlap after
 their own readiness checks. Backup/alert preparation can begin early. These are dependency-based

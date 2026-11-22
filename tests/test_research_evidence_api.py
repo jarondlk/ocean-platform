@@ -1,5 +1,6 @@
 """Actual C20/C21 HTTP wire, current authorization and bounded public actions."""
 from dataclasses import replace
+import csv
 import hashlib
 import json
 import os
@@ -15,7 +16,9 @@ from api import auth
 from api import research_evidence_routes as routes
 from api.rate_limit import policy_for_request
 from db.app_models import ResearchEvidenceReceipt
+from ingestion.beta_catalogue_retention import BetaResearchRetentionStore
 from tests import test_research_answers as answer_fixtures
+from tests.test_beta_catalogue_retention import WritableMemory, append
 
 retained = answer_fixtures.retained
 actual = answer_fixtures.actual
@@ -134,23 +137,48 @@ def test_fresh_export_permission_and_synthesis_disabled_history(http, monkeypatc
         assert client.post('/research/answers/status', json=answer_fixtures.address(job)).status_code == 403
 
 
-def test_child_withdrawal_blocks_both_retained_page_exports_and_keeps_receipt(http):
+def test_child_withdrawal_blocks_both_retained_page_exports_and_keeps_receipt(http, tmp_path, monkeypatch):
     app, _, fixture, evidence, _ = http
+    catalogue = fixture.retained
+    memory = WritableMemory(catalogue.store.root)
+    store = BetaResearchRetentionStore(access_gate=lambda _: True, _test_store=memory)
+    monkeypatch.setattr(catalogue.service.catalogue.resolver, 'store', store)
+    monkeypatch.setattr(catalogue.service, 'store', store)
+    monkeypatch.setattr(evidence, 'store', store)
     run, _ = answer_fixtures.request(fixture)
     receipt = evidence.ensure_retained(run['id'], 1, fixture.user).receipts[0]
     address = {'receipt_id': receipt.id, 'expected_sha256': receipt.sha256}
     page = {**address, 'section': 'rows', 'offset': 0, 'limit': 100}
-    catalogue = fixture.retained
     child = catalogue.registrations[receipt.binding.snapshot_id].child_snapshot_ids[0]
     with TestClient(app) as client:
+        response = client.post('/research/evidence/page', json=page)
+        assert response.status_code == 200
+        expected_rows = response.json()['rows']
         for format in ('csv', 'json'):
             response = client.post('/research/evidence/export', json={**page, 'format': format})
             assert response.status_code == 200
             export = response.json()
-            assert export['returned_count'] > 0
+            assert export['returned_count'] == len(expected_rows) > 0
             assert export['provenance']['receipt_sha256'] == receipt.sha256
-            assert hashlib.sha256(export['content_text'].encode()).hexdigest() == export['content_sha256']
-        catalogue.store.revoke(child)
+            output = tmp_path / export['filename']
+            assert output.parent == tmp_path and output.suffix == '.' + format
+            output.write_bytes(export['content_text'].encode('utf-8'))
+            raw = output.read_bytes()
+            assert hashlib.sha256(raw).hexdigest() == export['content_sha256']
+            if format == 'json':
+                assert json.loads(raw) == {'provenance': export['provenance'], 'rows': expected_rows}
+            else:
+                with output.open(newline='', encoding='utf-8') as stream:
+                    written = list(csv.DictReader(stream))
+                assert len(written) == len(expected_rows)
+                for parsed, row in zip(written, expected_rows, strict=True):
+                    assert set(row) <= set(parsed)
+                    assert all(parsed[key] == str(value) for key, value in row.items() if type(value) in {int, float})
+        before = store.lifecycle()
+        assert child in {snapshot for ref, snapshot in before['references'].items() if ref.startswith('c21:dependency:')}
+        memory.control(lambda state: append(state, 'revoke', child))
+        after = store.lifecycle()
+        assert after['snapshots'][child]['revoked'] and after['references'] == before['references']
         for route, request in (
             ('open', address), ('page', page),
             ('export', {**page, 'format': 'csv'}), ('export', {**page, 'format': 'json'}),
