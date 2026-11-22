@@ -1,5 +1,35 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 22 — Worker restart recovery and restore rehearsal
+
+The worker now discovers unreleased rows from its exact C23 store and worker
+identity. The restricted controller reloads the current owner's data from
+the committed row. Only a pending row with identical materials can enter
+`reopen_pending`. Pausing admission keeps held states observable while refusing
+new work. A consumed start, an unavailable source or any changed materials
+cannot be reopened as pending. Only the existing independent release removes
+the row from the held inventory. The Linux harness exercises this discovery
+and reload path. Production start, physical execution and cancellation remain
+unqualified for the beta worker.
+
+Both live services still receive all traffic on the B2 discovery revisions
+at serving generation 69 and controller generation 10. The service account
+verified this directly. It cannot read Cloud Tasks or Scheduler state, and the
+last accepted queue observation remains the paused, empty B2 readback. Leave
+the scoped roles in place. No operator sign-in or deployment occurred.
+
+B2 local frontend tests exercised the Blob download handoff in both formats,
+reopening the exact UTF-8 bytes and checking the MIME types, names and URL
+release. This supplements the disposable HTTP fixture. Signed-in browser disk
+readback and isolated live disposable withdrawal remain open.
+
+B4 exercised a native backup and separate local restore at migration head
+`20261027_0021` with separately recovered C09 control that included a withdrawal
+made after the SQL backup. The retained ready receipt and source references matched
+and all four read/export requests were denied. The fixture used synthetic data,
+and the temporary PostgreSQL server was stopped. Live backup/restore, recovery
+objectives and recovery under beta traffic remain separate gates.
+
 ## November 22 — Private start and worker handoff prepared
 
 The private `/internal/experiments/start` router is available for explicit

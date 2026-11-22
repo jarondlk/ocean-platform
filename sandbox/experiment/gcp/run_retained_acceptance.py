@@ -175,6 +175,7 @@ def parse_config(document):
 
     required = physical.WORKER_FILES | {
         "orchestration/experiment_sandbox/retained_admission.py",
+        "orchestration/experiment_sandbox/retained_work.py",
         "sandbox/experiment/gcp/run_retained_acceptance.py",
         "sandbox/experiment/gcp/run_operator_acceptance.py",
         "tests/research_experiment_support.py",
@@ -633,6 +634,7 @@ def run(arguments):
             RetainedMaterialPolicy,
         )
         from orchestration.experiment_sandbox.retained_runner import run_retained
+        from orchestration.experiment_sandbox.retained_work import RetainedWorkQueue
         from schema.experiment_execution import TerminationIssuerScope
 
         _prepare_source_imports(config)
@@ -760,11 +762,15 @@ def run(arguments):
             enabled=enabled,
         )
         identity = bridge.reserve(request, current_owner=fixture.user)
-        reopened, envelope = bridge.reopen_pending(
-            identity.document["execution_id"], current_owner=fixture.user
-        )
-        if reopened != identity:
+        work = RetainedWorkQueue(bridge=bridge)
+        pending = work.list_unreleased()
+        if (len(pending) != 1 or pending[0].execution_id != identity.document["execution_id"]
+                or pending[0].state != "reserved" or not pending[0].exact_material):
+            raise base.OperatorError("retained_worker_pending_binding")
+        reopened = work.reopen(pending[0].execution_id)
+        if reopened.identity != identity or reopened.owner != fixture.user:
             raise base.OperatorError("retained_reservation_reopen_mismatch")
+        envelope = reopened.envelope
         base._create(
             attempt / "retained-reservation.json", base._canonical(identity.document)
         )

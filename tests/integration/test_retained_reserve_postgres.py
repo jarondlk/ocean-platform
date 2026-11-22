@@ -23,6 +23,8 @@ from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.execution_store import (
     ExecutionStoreConfig, bootstrap_retained_controller_reads,
 )
+from orchestration.experiment_sandbox.retained_bridge import C23RetainedBridge, RetainedMaterialPolicy
+from orchestration.experiment_sandbox.retained_work import RetainedWorkQueue
 from orchestration.research_experiments import ResearchExperimentError
 from schema.research_experiments import EnvironmentDescriptor
 from tests import experiment_execution_postgres_support as pg
@@ -128,19 +130,26 @@ def test_private_start_records_one_job_and_fresh_controller_reopens_exact_inputs
             patch.setattr(case.bridge, 'reserve', lose_acknowledgement)
             assert client.post(path, json=request).status_code == 503
         assert counts(case) == (1, 1, 0)
+
+        restarted = configured(case.fixture, factory=case.database['controller_factory'], config=case.bridge.store.config)
+        work = RetainedWorkQueue(bridge=restarted)
+        status, = work.list_unreleased()
+        assert status.state == 'reserved' and status.exact_material is True
+        pending = work.reopen(status.execution_id)
+        assert pending.owner == case.fixture.user
         first = client.post(path, json=request)
         assert first.status_code == 200 and first.headers['cache-control'] == 'no-store'
         result = first.json()
         assert set(result) == {'version', 'execution_id', 'reservation_id',
             'capacity_reserved_at_commit', 'execution_authorized'}
         assert result['capacity_reserved_at_commit'] is True and result['execution_authorized'] is False
+        assert result['execution_id'] == status.execution_id == pending.identity.document['execution_id']
         assert client.post(path, json=request).json() == result
 
-    reopened = configured(case.fixture, factory=case.database['controller_factory'], config=case.bridge.store.config)
     with pytest.raises(ResearchExperimentError) as denied:
-        reopened.reopen_pending(result['execution_id'], current_owner=case.fixture.admin)
+        restarted.reopen_pending(result['execution_id'], current_owner=case.fixture.admin)
     assert denied.value.status_code == 404
-    identity, envelope = reopened.reopen_pending(result['execution_id'], current_owner=case.fixture.user)
+    identity, envelope = pending.identity, pending.envelope
     assert identity.document['reservation_id'] == result['reservation_id']
     assert identity.document['job_id'] == envelope.job_id
     assert identity.document['envelope_sha256'] == envelope.envelope_sha256
@@ -151,8 +160,39 @@ def test_private_start_records_one_job_and_fresh_controller_reopens_exact_inputs
     child = catalogue.registrations[request['snapshot_id']].child_snapshot_ids[0]
     catalogue.store.revoke(child)
     with pytest.raises(ResearchExperimentError) as withdrawn:
-        reopened.reopen_pending(result['execution_id'], current_owner=case.fixture.user)
+        work.reopen(result['execution_id'])
     assert (withdrawn.value.code, withdrawn.value.status_code) == ('experiments_unavailable', 503)
+    assert counts(case) == (1, 1, 0)
+
+
+def test_paused_and_mismatched_workers_cannot_reopen_held_work(retained):
+    case = retained
+    result = case.bridge.reserve(case.approved(), current_owner=case.fixture.user)
+    execution_id = result.document['execution_id']
+    policy = json.loads(case.bridge._material_json)
+
+    def queue(**changes):
+        return RetainedWorkQueue(bridge=C23RetainedBridge(inspection=case.bridge.inspection,
+            store=case.bridge.store, material_policy=RetainedMaterialPolicy.model_validate({**policy, **changes}),
+            enabled=lambda: case.fixture.state['enabled']))
+
+    same_worker_new_runtime = queue(runtime_sha256='d' * 64)
+    held, = same_worker_new_runtime.list_unreleased()
+    assert held.execution_id == execution_id and held.exact_material is False
+    with pytest.raises(ResearchExperimentError) as conflict:
+        same_worker_new_runtime.reopen(execution_id)
+    assert conflict.value.status_code == 409
+    another_worker = queue(worker_id='e' * 64)
+    assert another_worker.list_unreleased() == ()
+    with pytest.raises(ResearchExperimentError) as missing:
+        another_worker.reopen(execution_id)
+    assert missing.value.status_code == 404
+    case.fixture.state['enabled'] = False
+    paused = queue()
+    held, = paused.list_unreleased()
+    assert held.execution_id == execution_id and held.exact_material is True
+    with pytest.raises(SandboxError, match='sandbox_retained_bridge_disabled'):
+        paused.reopen(execution_id)
     assert counts(case) == (1, 1, 0)
 
 

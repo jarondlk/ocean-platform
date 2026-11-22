@@ -17,6 +17,7 @@ def config():
         for name in physical.WORKER_FILES
         | {
             "orchestration/experiment_sandbox/retained_admission.py",
+            "orchestration/experiment_sandbox/retained_work.py",
             "sandbox/experiment/gcp/run_retained_acceptance.py",
             "sandbox/experiment/gcp/run_operator_acceptance.py",
             "tests/research_experiment_support.py",

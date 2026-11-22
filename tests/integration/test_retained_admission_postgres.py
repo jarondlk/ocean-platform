@@ -15,6 +15,7 @@ from sqlalchemy import text
 from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.journal import _safe_sqlite_version
 from orchestration.experiment_sandbox.proofs import canonical_packet_bytes, sign_termination_claims
+from orchestration.experiment_sandbox.retained_work import RetainedWorkQueue
 from orchestration.research_experiments import ResearchExperimentError
 from schema.experiment_execution import TerminationClaims
 from schema.research_experiments import content_sha256
@@ -91,11 +92,14 @@ def synthetic_packet(case, context, binding, terminal, cleanup, termination):
 
 @pytest.mark.parametrize('revoked', [False, True])
 def test_actual_admission_publication_or_revocation_then_independent_close_and_release(case, revoked):
+    work = RetainedWorkQueue(bridge=case.bridge)
     with case.hold() as context:
         payload = start(case, context)
         assert payload['start_fence'] == 2 and payload['start_id'] == payload['start_event_id']
+        held, = work.list_unreleased()
+        assert held.execution_id == context.execution_id and held.state == 'start_consumed'
         with pytest.raises(ResearchExperimentError) as consumed:
-            case.bridge.reopen_pending(case.identity.document['execution_id'], current_owner=case.native.fixture.user)
+            work.reopen(context.execution_id)
         assert consumed.value.status_code == 409
         terminal, outputs, cleanup, termination = finish(case, context)
         if revoked:
@@ -110,11 +114,14 @@ def test_actual_admission_publication_or_revocation_then_independent_close_and_r
             assert publication.document['publication_retained'] is True
         closed = case.hooks.close_execution(context, terminal)
         assert case.hooks.close_execution(context, terminal) == closed
+        held, = work.list_unreleased()
+        assert held.execution_id == context.execution_id and held.state == 'closed'
         packet = synthetic_packet(case, context, closed, terminal, cleanup, termination)
         proof = case.hooks.record_termination(context, packet)
         release = case.hooks.release_terminated(context, proof, closed.closed_fence)
         assert case.hooks.record_termination(context, packet) == proof
         assert case.hooks.release_terminated(context, proof, closed.closed_fence) == release
+        assert work.list_unreleased() == ()
         with case.native.database['engine'].connect() as connection:
             assert connection.scalar(text('SELECT state FROM research_experiment_reservation')) == 'released'
             assert connection.scalar(text('SELECT count(*) FROM research_experiment_release')) == 1

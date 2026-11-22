@@ -1,5 +1,21 @@
 # Implementation status
 
+## November 22 — Worker restart recovery and local restore rehearsal
+
+The private worker can discover its held C23 reservations after a controller
+restart and reopen a pending job with the current owner resolved from the
+database. A paused, mismatched or already-started reservation remains held.
+All 28 restricted PostgreSQL cases passed, including recovery after a lost
+Start response. The beta execution route and worker remain gated.
+
+The B2 frontend checks verified both UTF-8 download blobs, MIME types and
+filenames. Actual saved files and live disposable withdrawal remain open.
+The B4 synthetic PostgreSQL rehearsal restored a backup at migration head
+`20261027_0021`. It preserved the evidence receipt and catalogue references
+while applying the newer withdrawal and denying open, page and both exports.
+The live beta restore and recovery measurements remain open. See the
+[deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 22 — Private experiment start and disposable export verification
 
 B3 has a private, explicitly composed Start endpoint. It checks the current

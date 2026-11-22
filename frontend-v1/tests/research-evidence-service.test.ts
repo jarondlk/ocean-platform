@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { resolveObjectURL } from "node:buffer";
 import test from "node:test";
+import { downloadBlob } from "../src/exports.ts";
 import { parseEvidenceModel } from "../src/research-evidence-contract.ts";
 import { createAnswerClient, createEvidenceClient } from "../src/research-evidence-service.ts";
 import { ResearchEvidenceClientError } from "../src/research-evidence-http.ts";
@@ -28,6 +30,42 @@ test("page/export preserve literal retained values, scoped page totals, UTF8 con
   const client = createEvidenceClient({ fetcher: async path => json(path.endsWith("export") ? exported : f.page()) });
   assert.equal((await client.page(f.receiptAddress)).rows[0].literal, "海洋 / literal"); assert.equal((await client.export(f.receiptAddress)).content_text, content);
   exported.content_text = "unbound altered bytes"; await assert.rejects(client.export(f.receiptAddress), bad);
+});
+test("retained evidence downloads pass exact UTF8 bytes, media type, and filenames to the browser", async t => {
+  const { rows: _rows, ...base } = f.page();
+  const previous = Object.getOwnPropertyDescriptor(globalThis, "document");
+  const downloads: { filename: string; url: string }[] = [];
+  Object.defineProperty(globalThis, "document", { configurable: true, value: {
+    createElement(tag: string) {
+      assert.equal(tag, "a");
+      return { href: "", download: "", click() { downloads.push({ filename: this.download, url: this.href }); } };
+    },
+  } });
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, "document", previous);
+    else Reflect.deleteProperty(globalThis, "document");
+    for (const item of downloads) URL.revokeObjectURL(item.url);
+  });
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const csv = "sample,value\r\n海洋,-1\r\n";
+  const jsonText = JSON.stringify({ provenance: { snapshot: f.sha }, rows: [{ sample: "海洋", value: -1 }] });
+  for (const [format, content, mime] of [["csv", csv, "text/csv; charset=utf-8"],
+    ["json", jsonText, "application/json; charset=utf-8"]] as const) {
+    const response = { ...base, returned_count: 1, format, filename: `retained-page.${format}`,
+      mime_type: mime, content_text: content, content_sha256: await hash(content), provenance: { snapshot: f.sha } };
+    const client = createEvidenceClient({ fetcher: async () => json(response) });
+    const verified = await client.export({ ...f.receiptAddress, format });
+    downloadBlob(verified.content_text, verified.filename, verified.mime_type);
+    const saved = downloads.at(-1)!;
+    assert.equal(saved.filename, response.filename);
+    const blob = resolveObjectURL(saved.url);
+    assert.ok(blob);
+    assert.equal(blob.type, mime);
+    assert.deepEqual(new Uint8Array(await blob.arrayBuffer()), new TextEncoder().encode(content));
+    t.mock.timers.tick(1000);
+    assert.equal(resolveObjectURL(saved.url), undefined);
+  }
+  assert.equal(downloads.length, 2);
 });
 for (const [name, mutate] of [
   ["missing version", (v: any) => { delete v.version; }], ["wrong version", (v: any) => { v.version = "research-runs-v1"; }], ["unknown field", (v: any) => { v.legacy = true; }], ["synthetic flag", (v: any) => { v.job.synthetic = true; }], ["bool cursor", (v: any) => { v.job.event_cursor = false; }], ["snapshot activity injection", (v: any) => { v.job.activity = [{}]; }], ["unpublished prose", (v: any) => { v.job.status = "queued"; }], ["independent scientific approval", (v: any) => { v.job.answer.scientific_verification = "approved"; }], ["missing scientific qualification", (v: any) => { delete v.job.answer.scientific_verification; }], ["uncited receipt", (v: any) => { v.job.answer.receipt_ids = []; }], ["repeated block", (v: any) => { v.job.answer.blocks.push(v.job.answer.blocks[0]); }], ["unsafe elapsed", (v: any) => { v.job.active_elapsed_ms = Number.MAX_SAFE_INTEGER + 1; }],

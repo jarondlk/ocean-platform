@@ -123,9 +123,11 @@ B1 is accepted; B2 data/catalogue completion is the next implementation priority
 B2 has a deployed 42-dataset disposition ledger. Disposable export and
 withdrawal tests pass locally. Verification of actual browser files and live
 withdrawal remains open. B3 has a private Start reservation and worker input
-reload path for the isolated controller. Public start, the durable execution
-projection, supervisor and live worker qualification remain open. See the
-[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-22--private-start-and-worker-handoff-prepared).
+reload path with restart recovery for the isolated controller. Public start,
+the durable execution projection, supervisor and live worker qualification
+remain open. B4's local backup/restore rehearsal verified retained evidence and
+current withdrawal on the migration head. See the
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-22--worker-restart-recovery-and-restore-rehearsal).
 Local eDNA and worker preparation can proceed independently when their inputs are
 available; neither borrows acceptance from Research. B2 and B3 can overlap after
 their own readiness checks. Backup/alert preparation can begin early. These are dependency-based
