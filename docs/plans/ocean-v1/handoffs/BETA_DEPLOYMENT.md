@@ -10,7 +10,10 @@ new work. A consumed start, an unavailable source or any changed materials
 cannot be reopened as pending. Only the existing independent release removes
 the row from the held inventory. The Linux harness exercises this discovery
 and reload path. Production start, physical execution and cancellation remain
-unqualified for the beta worker.
+unqualified for the beta worker. The updated archive rechecked all 248 source
+files and 21 protected-source entry imports. [Verification receipt](../beta/b3-20261122/restart-recovery-a7a3731.json)
+· [Current worker source](../beta/b3-20261122/worker-source-a7a3731.json)
+· [Hosted checks](https://github.com/jarondlk/ocean-platform/actions/runs/44991905346).
 
 Both live services still receive all traffic on the B2 discovery revisions
 at serving generation 69 and controller generation 10. The service account
@@ -29,6 +32,7 @@ made after the SQL backup. The retained ready receipt and source references matc
 and all four read/export requests were denied. The fixture used synthetic data,
 and the temporary PostgreSQL server was stopped. Live backup/restore, recovery
 objectives and recovery under beta traffic remain separate gates.
+[Restore rehearsal receipt](../beta/b4-20261122/retained-restore-rehearsal.json).
 
 ## November 22 — Private start and worker handoff prepared
 

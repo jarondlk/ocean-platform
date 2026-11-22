@@ -1,0 +1,52 @@
+{
+  "b3_complete": false,
+  "captured_utc": "2026-11-22T06:03:02.763133+00:00",
+  "checks": {
+    "consumed_start_held_until_proof_and_release": true,
+    "lost_HTTP_response_then_controller_restart": true,
+    "material_and_worker_mismatch_denied": true,
+    "one_durable_reservation": true,
+    "owner_resolved_from_persisted_work": true,
+    "paused_status_visible_but_no_reopen": true
+  },
+  "cloud_mutations": false,
+  "confirmed_live_service_generations": {
+    "research_controller": 10,
+    "serving": 69
+  },
+  "hosted": {
+    "current_source_run": {
+      "conclusion": null,
+      "head_sha": "a7a373150c57cb94d08a5867ce537a6b65ae3368",
+      "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/44991905346",
+      "id": 44991905346,
+      "status": "in_progress"
+    },
+    "prior_backend_postgres_and_v1_jobs_passed": true,
+    "prior_legacy_frontend_audit_failed": true,
+    "prior_private_start_run": 44983326647
+  },
+  "local_checks": {
+    "actual_PostgreSQL_18_3_passed": 28,
+    "focused_backend_passed": 134,
+    "frontend_evidence_tests_passed": 49,
+    "frontend_typecheck_passed": true,
+    "loopback_database_stopped": true
+  },
+  "operator_login_used": false,
+  "physical_worker_run": false,
+  "production_execution_enabled": false,
+  "service_account_queue_scheduler_reads_denied": true,
+  "source_revision": "a7a373150c57cb94d08a5867ce537a6b65ae3368",
+  "source_sha256": {
+    "frontend-v1/tests/research-evidence-service.test.ts": "1ae13a78ed8f31ebe8980c531e59c00b05956862e72a9f67f3e2e5922d3ef9a1",
+    "orchestration/experiment_sandbox/retained_bridge.py": "6baa808b7c669d5880f0434d32a31746fc55f10421ba53851d19872811675bce",
+    "orchestration/experiment_sandbox/retained_work.py": "eb1bc8168df4bf465f8031ebf02f3e10eeda60d6c14906450da425e4b1bee604",
+    "sandbox/experiment/gcp/run_retained_acceptance.py": "2f963e939ce0723ce9c25fc9dc4765800f12cac3cd6b3b6e5e5a2b23743b83e8",
+    "tests/integration/test_retained_admission_postgres.py": "495533a3f06473059046553000429d622232b9b36de02d659dd988024e8df14f",
+    "tests/integration/test_retained_reserve_postgres.py": "498acd5da84cce277356e0703abacee19a10e92f80d3a06dae6b1dcb4422c6c3",
+    "tests/test_experiment_sandbox_retained_acceptance.py": "f577a9bc9c4190991dc825a1aff7462e93272fa455217cfc0d10ab73f00a1204"
+  },
+  "version": "ocean-beta-b3-retained-worker-restart-v1",
+  "worker_source_manifest_sha256": "a3d5d392b6bf88da2266790e6fcdde82f12b9e8558418934e891a5e1790d9fd4"
+}
