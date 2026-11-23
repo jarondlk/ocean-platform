@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 23 — Refreshed worker verified on the private Tokyo VM
+
+B3 installed and verified source `3ef11f9` on the existing isolated Tokyo
+worker. The exact source, protected imports, retained image and runtime passed.
+The fresh boot had an empty worker cgroup. The VM stayed private and was stopped
+after verification. The same-boot connectivity control, physical trial on the
+new source, and signed-in publish and download remain open.
+See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Restart recovery for committed termination proofs
 
 B3 can recover a held execution slot after a lost proof or release response.

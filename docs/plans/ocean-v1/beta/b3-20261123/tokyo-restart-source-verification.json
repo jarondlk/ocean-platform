@@ -1,0 +1,104 @@
+{
+  "acceptance": {
+    "b3_complete": false,
+    "fresh_physical_execution_requalified": false,
+    "hosted_supervisor_and_storage_access_verified": false,
+    "production_execution_enabled": false,
+    "same_boot_host_connectivity_positive_control": "unrun; operator chose private-only offline checks",
+    "target_source_and_retained_materials_verified": true
+  },
+  "accepted_gvisor_binary_hashes_verified": 8,
+  "actual_worker_verification": {
+    "archive_sha256": "471bfcc1173ada38da77b7e24194755d6b7c89e3c869f98742e966af6c0998b2",
+    "boot_id": "9e626fa2-4b34-43d7-8b85-ab107545ab28",
+    "guest_executed": false,
+    "image_digest": "sha256:0bbf97f52defc46e2a187562e28599d40730e51848ab527859b644e40f232030",
+    "installed_path": "/var/lib/ocean-c23/operator-source-beta-b3-restart-3ef11f9",
+    "instance_id": "4080105203514106848",
+    "live_metadata_no_public_ip": true,
+    "manifest_sha256": "2089e3dc231d39fddfcb2060c374c03c68630cdd4be14ec8763e19a8b4d97234",
+    "protected_source_files_verified": 249,
+    "required_host_imports_verified": 19,
+    "required_source_paths_verified": 20,
+    "retained_image_materials_verified": true,
+    "rootfs_inventory_sha256": "5108c404be01831f488d8898f13767ad7b1e3aa2b6f40e5423f64cacb51e3348",
+    "runtime_manifest_sha256": "3bf90990a2c037fed3dc72fadface76a66247f595bce5a22588a1153970d4fa8",
+    "source_commit": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+    "sqlite_version": "3.54.1",
+    "target": {
+      "instance": "ocean-v1-beta-b3-worker-1123",
+      "linux_root_guard": true,
+      "project": "ocean-v1-beta-20261101"
+    }
+  },
+  "captured_utc": "2026-11-23T10:31:35.773399+00:00",
+  "cgroup_boot_preparation": {
+    "boot_id": "9e626fa2-4b34-43d7-8b85-ab107545ab28",
+    "controllers": [
+      "cpu",
+      "memory",
+      "pids"
+    ],
+    "dispatch_eligible": false,
+    "old_job_termination_inferred": false,
+    "sqlite_version": "3.54.1",
+    "version": "c23-trusted-worker-resume-v1"
+  },
+  "ci_observation": {
+    "backend": "in_progress",
+    "legacy_frontend_dependency_audit": "failed",
+    "postgresql": "in_progress",
+    "run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/45154043628",
+    "source": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+    "v1_frontend_jobs": "passed"
+  },
+  "live_beta": {
+    "https_signin_status": 200,
+    "iam_policy_updated": false,
+    "redirects": 1,
+    "serving_deployment_updated": false,
+    "signed_in_journey_checked": false
+  },
+  "operator_bootstrap_sha256": "9717d98773af9fde3523c4f0576604dbca5e1b356355c7dfd9a5d04281423cc1",
+  "previous_physical_receipt": "tokyo-worker-trial.json",
+  "project": "ocean-v1-beta-20261101",
+  "scope": "Source, retained materials and trusted cgroup setup on a fresh private boot of the existing synthetic VM",
+  "source": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+  "source_preparation_receipt": "restart-release-checkpoint.json",
+  "version": "ocean-beta-b3-tokyo-restart-source-verification-v1",
+  "vm": {
+    "boot_disk_source_image_id": "1892012953239034119",
+    "existing_isolated_network_control": {
+      "peering": false,
+      "same_network_routers": 0
+    },
+    "iap_loopback_tunnel_closed": true,
+    "instance_runtime_seconds": 489.024,
+    "previous_installation_preserved": true,
+    "provider_running_readback": {
+      "has_public_ip": false,
+      "instance_id": "4080105203514106848",
+      "last_start": "2026-11-23T02:22:28.363-08:00",
+      "last_stop": "2026-11-22T22:49:59.322-08:00",
+      "max_run_duration_s": 7200,
+      "network": "ocean-v1-beta-b3-isolated",
+      "service_account_attached": false,
+      "status": "RUNNING",
+      "subnet": "ocean-v1-beta-b3-tokyo"
+    },
+    "provider_stopped_readback": {
+      "has_public_ip": false,
+      "instance_id": "4080105203514106848",
+      "last_start": "2026-11-23T02:22:28.363-08:00",
+      "last_stop": "2026-11-23T02:30:37.387-08:00",
+      "max_run_duration_s": 7200,
+      "network": "ocean-v1-beta-b3-isolated",
+      "service_account_attached": false,
+      "status": "TERMINATED",
+      "subnet": "ocean-v1-beta-b3-tokyo"
+    },
+    "public_ip_attached_during_trial": false,
+    "temporary_os_login_key_removed": true
+  },
+  "zone": "asia-northeast1-a"
+}

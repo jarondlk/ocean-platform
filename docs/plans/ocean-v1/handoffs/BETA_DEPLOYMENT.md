@@ -1,5 +1,26 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Refreshed worker verified on the private Tokyo VM
+
+The approved synthetic VM booted on the same disk and source image with its
+two-hour stop limit. It stayed private. Over host-key-pinned IAP SSH, the
+worker installed source `3ef11f9` into a separate root-owned directory and
+verified all 249 files, the origins of 19 required host imports and the bytes
+of the guest init. The retained image, normalized rootfs, eight gVisor binaries
+and SQLite 3.54.1 passed fresh checks. The boot preparation verified an empty
+worker cgroup and enabled the CPU, memory and PID controllers. The earlier
+source, receipts and material pins remain available.
+
+The VM was stopped and the temporary OS Login key was removed. This visit
+qualified the installed source and retained materials. The current acceptance
+runner requires a positive host connectivity control on the same boot as the
+sandbox trial. Under the operator's private-only direction, this boot stayed
+offline for guest work. A verified private control acceptable under the C23
+contract is needed for a new physical trial. The earlier live trial remains
+evidence for its original source. Production supervisor, runtime storage
+access and signed-in execution through verified download remain open.
+[Private VM verification receipt](../beta/b3-20261123/tokyo-restart-source-verification.json).
+
 ## November 23 — Restart recovery for committed termination proofs
 
 The private C23 poll can release capacity when a previous controller saved

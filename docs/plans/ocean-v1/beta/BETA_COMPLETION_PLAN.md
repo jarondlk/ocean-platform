@@ -132,13 +132,16 @@ access, public start, the supervisor, and production capacity and recovery
 remain open.
 The private worker poll can recover capacity from a committed and independently
 verified termination proof after a lost acknowledgement. The remaining worker
-checks include a target-bound source rebuild, actual supervisor restart and
-drain, and a signed-in execution that publishes and downloads the exact bytes.
+checks include a physical trial on the refreshed source, actual supervisor
+restart and drain, and a signed-in execution that publishes and downloads the
+exact bytes. The refreshed source and sealed materials were verified on the
+private Tokyo worker. A same-boot host connectivity control under the private
+network boundary is still needed for the physical trial.
 B4's local restore rehearsal preserved retained evidence and honored a newer
 withdrawal. The live Tokyo database has seven successful automated backups
 and point-in-time recovery enabled. A hosted restore and measured recovery
 objectives are still required. See the
-[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--restart-recovery-for-committed-termination-proofs).
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--refreshed-worker-verified-on-the-private-tokyo-vm).
 Local eDNA and worker preparation can proceed independently when their inputs are
 available; neither borrows acceptance from Research. B2 and B3 can overlap after
 their own readiness checks. Backup/alert preparation can begin early. These are dependency-based
