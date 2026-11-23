@@ -9,6 +9,7 @@ from api.auth import CurrentUser
 from orchestration.experiment_sandbox.contracts import SandboxError, VerifiedEnvelope
 from orchestration.experiment_sandbox.retained_bridge import C23RetainedBridge, RetainedExecutionIdentity
 from orchestration.research_experiments import ResearchExperimentError
+from schema.experiment_execution import TerminationIssuerScope
 from schema.investigations import UUIDString
 
 _execution_id = TypeAdapter(UUIDString)
@@ -74,6 +75,19 @@ class RetainedWorkQueue:
         if len(rows) > 2:
             raise SandboxError('sandbox_retained_work_capacity')
         return tuple(RetainedWorkStatus(str(row.execution_id), row.state, row.exact_material) for row in rows)
+
+    def reconcile_recorded_releases(self):
+        """Retry release for closed work with a committed proof, even while paused."""
+        held = self.list_unreleased()
+        scope = TerminationIssuerScope.model_validate_json(self._policy_json)
+        released = []
+        for item in held:
+            if item.state == 'closed' and item.exact_material:
+                self._binding()
+                release_id = self._store.reconcile_recorded_release(execution_id=item.execution_id, scope=scope)
+                if release_id is not None:
+                    released.append((item.execution_id, release_id))
+        return tuple(released)
 
     def reopen(self, execution_id):
         """Resolve current owner and exact inputs for this worker's pending row."""

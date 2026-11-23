@@ -4,6 +4,7 @@ No generated Python, Linux runtime, cgroup or physical issuer executes here.
 These tests cannot clear the separate actual retained GCP execution gate.
 """
 from contextlib import contextmanager
+from dataclasses import replace
 import hashlib
 import json
 import os
@@ -14,10 +15,12 @@ from sqlalchemy import text
 
 from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.journal import _safe_sqlite_version
+from orchestration.experiment_sandbox.execution_store import C23ExecutionStore
 from orchestration.experiment_sandbox.proofs import canonical_packet_bytes, sign_termination_claims
+from orchestration.experiment_sandbox.retained_bridge import C23RetainedBridge, RetainedMaterialPolicy
 from orchestration.experiment_sandbox.retained_work import RetainedWorkQueue
 from orchestration.research_experiments import ResearchExperimentError
-from schema.experiment_execution import TerminationClaims
+from schema.experiment_execution import TerminationClaims, TerminationIssuerScope
 from schema.research_experiments import content_sha256
 from tests import experiment_execution_postgres_support as pg
 from tests.integration import test_retained_reserve_postgres as reserve_tests
@@ -98,6 +101,7 @@ def test_actual_admission_publication_or_revocation_then_independent_close_and_r
         assert payload['start_fence'] == 2 and payload['start_id'] == payload['start_event_id']
         held, = work.list_unreleased()
         assert held.execution_id == context.execution_id and held.state == 'start_consumed'
+        assert work.reconcile_recorded_releases() == ()
         with pytest.raises(ResearchExperimentError) as consumed:
             work.reopen(context.execution_id)
         assert consumed.value.status_code == 409
@@ -116,6 +120,7 @@ def test_actual_admission_publication_or_revocation_then_independent_close_and_r
         assert case.hooks.close_execution(context, terminal) == closed
         held, = work.list_unreleased()
         assert held.execution_id == context.execution_id and held.state == 'closed'
+        assert work.reconcile_recorded_releases() == ()
         packet = synthetic_packet(case, context, closed, terminal, cleanup, termination)
         proof = case.hooks.record_termination(context, packet)
         release = case.hooks.release_terminated(context, proof, closed.closed_fence)
@@ -125,6 +130,55 @@ def test_actual_admission_publication_or_revocation_then_independent_close_and_r
         with case.native.database['engine'].connect() as connection:
             assert connection.scalar(text('SELECT state FROM research_experiment_reservation')) == 'released'
             assert connection.scalar(text('SELECT count(*) FROM research_experiment_release')) == 1
+
+
+def test_restarted_retained_poll_releases_only_the_exact_committed_proof(case, monkeypatch):
+    with case.hold() as context:
+        start(case, context)
+        terminal, _, cleanup, termination = finish(case, context)
+        closed = case.hooks.close_execution(context, terminal)
+        packet = synthetic_packet(case, context, closed, terminal, cleanup, termination)
+        original = case.store._recorder_transaction
+
+        @contextmanager
+        def lose_proof_ack():
+            with original() as session:
+                yield session
+            raise OSError('Synthetic lost proof acknowledgement')
+
+        # Call the recorder directly so the injected outage is after proof commit.
+        with monkeypatch.context() as outage:
+            outage.setattr(case.store, '_recorder_transaction', lose_proof_ack)
+            with pytest.raises(OSError, match='lost proof acknowledgement'):
+                case.store.record_verified_termination(execution_id=context.execution_id, packet_bytes=packet)
+
+    config = replace(case.store.config, enabled=lambda: False)
+    restarted = C23ExecutionStore(config=config)
+    scope = TerminationIssuerScope.model_validate_json(case.bridge._material_json)
+
+    def queue_for(policy):
+        return RetainedWorkQueue(bridge=C23RetainedBridge(inspection=case.bridge.inspection, store=restarted,
+            material_policy=RetainedMaterialPolicy.model_validate(policy), enabled=lambda: False))
+
+    with case.native.fixture.factory.begin() as session:
+        session.execute(text("UPDATE app_user SET status='suspended' WHERE id=:id"),
+            {'id': case.native.fixture.user.id})
+    wrong_source = {**scope.model_dump(), 'worker_source_sha256': '0' * 64}
+    assert queue_for(wrong_source).reconcile_recorded_releases() == ()
+    assert restarted.reconcile_recorded_release(execution_id=closed.execution_id,
+        scope=TerminationIssuerScope.model_validate(wrong_source)) is None
+    work = queue_for(scope.model_dump())
+    held, = work.list_unreleased()
+    assert (held.state, held.exact_material) == ('closed', True)
+    (execution_id, release_id), = work.reconcile_recorded_releases()
+    assert execution_id == closed.execution_id
+    assert restarted.reconcile_recorded_release(execution_id=execution_id, scope=scope) == release_id
+    assert work.reconcile_recorded_releases() == ()
+    with case.native.database['engine'].connect() as connection:
+        assert connection.scalar(text('SELECT state FROM research_experiment_reservation')) == 'released'
+        assert connection.scalar(text('SELECT count(*) FROM research_experiment_release')) == 1
+        assert connection.scalar(text('SELECT count(*) FROM research_experiment_termination_proof')) == 1
+        assert connection.scalar(text("SELECT count(*) FROM research_experiment_execution_event WHERE kind='start_consumed'")) == 1
 
 
 def test_commit_ack_loss_never_mints_or_retries_a_start(case, monkeypatch):

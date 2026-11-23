@@ -761,8 +761,14 @@ def run(arguments):
             material_policy=RetainedMaterialPolicy(**scope.model_dump(mode="json")),
             enabled=enabled,
         )
-        identity = bridge.reserve(request, current_owner=fixture.user)
         work = RetainedWorkQueue(bridge=bridge)
+        physical.require_loaded_source_provenance(
+            Path(config["source_root"]),
+            config["worker_source_files"],
+            check=lambda: None,
+        )
+        receipt["reconciled_releases"] = work.reconcile_recorded_releases()
+        identity = bridge.reserve(request, current_owner=fixture.user)
         pending = work.list_unreleased()
         if (len(pending) != 1 or pending[0].execution_id != identity.document["execution_id"]
                 or pending[0].state != "reserved" or not pending[0].exact_material):
@@ -808,12 +814,6 @@ def run(arguments):
         )
         hooks = RetainedRuntimeHooks(bridge, fixture.user, policy)
         evidence = base._private_directory(attempt / "issuer", create=True)
-        # Every required trusted host module is imported from the protected
-        # archive before actual origin checks. Guest init is never run here.
-        for relative in sorted(
-            physical.WORKER_FILES - {"sandbox/experiment/trusted_init.py"}
-        ):
-            importlib.import_module(relative[:-3].replace("/", "."))
         issuer = physical.LinuxTerminationIssuer(
             config=physical.PhysicalIssuerConfig(
                 store=store,

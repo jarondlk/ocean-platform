@@ -24,7 +24,7 @@ from db.experiment_execution_models import EXECUTION_MODELS
 from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.proofs import TerminationVerifierRegistry, verify_termination_packet
 from schema.context_catalogue import canonical_json
-from schema.experiment_execution import ClosedExecutionBinding, Digest, Hash, Job, Site, UUID
+from schema.experiment_execution import ClosedExecutionBinding, Digest, Hash, Job, Site, TerminationIssuerScope, UUID
 
 _IDENTIFIER = re.compile(r'^[a-z][a-z0-9_]{0,62}$')
 _NAMESPACE = uuid.UUID('4188090c-7b91-4fb9-a91b-45b327deba09')
@@ -458,13 +458,17 @@ class C23ExecutionStore:
             self._check_session(session, self.config.roles.verifier_role)
             yield session
 
+    def _closed_binding(self, session, execution_id):
+        raw = session.scalar(text(f'SELECT {self.config.schema}.ocean_c23_closed_binding(CAST(:id AS uuid))'),
+            {'id': execution_id})
+        binding = ClosedExecutionBinding.model_validate(raw)
+        if binding.site_id != self.config.site_id:
+            raise SandboxError('sandbox_execution_binding')
+        return binding
+
     def load_closed_binding(self, execution_id):
         with self._recorder_transaction() as session:
-            raw = session.scalar(text(f'SELECT {self.config.schema}.ocean_c23_closed_binding(CAST(:id AS uuid))'), {'id': execution_id})
-            binding = ClosedExecutionBinding.model_validate(raw)
-            if binding.site_id != self.config.site_id:
-                raise SandboxError('sandbox_execution_binding')
-            return binding
+            return self._closed_binding(session, execution_id)
 
     def record_verified_termination(self, *, execution_id, packet_bytes):
         """Reverify raw bytes against retained closed rows and pinned registry.
@@ -477,10 +481,7 @@ class C23ExecutionStore:
         if type(packet_bytes) is not bytes:
             raise SandboxError('sandbox_termination_unverified')
         with self._recorder_transaction() as session:
-            raw = session.scalar(text(f'SELECT {self.config.schema}.ocean_c23_closed_binding(CAST(:id AS uuid))'), {'id': execution_id})
-            expected = ClosedExecutionBinding.model_validate(raw)
-            if expected.site_id != self.config.site_id:
-                raise SandboxError('sandbox_execution_binding')
+            expected = self._closed_binding(session, execution_id)
             verified = verify_termination_packet(packet_bytes, expected=expected, registry=self.config.verifier_registry)
             claims = verified.claims
             b, j, k = claims.binding, claims.journal, claims.kernel
@@ -499,12 +500,46 @@ class C23ExecutionStore:
                 'verification_key_sha256': verified.verification_key_sha256}
             return self._call(session, 'ocean_c23_record_proof(CAST(:p AS jsonb))', {'p': _canonical(p)})
 
+    def _release(self, session, execution_id, proof_id, expected_fence):
+        release_id = str(uuid.uuid5(_NAMESPACE, 'release:' + str(execution_id) + ':' + str(proof_id)))
+        return self._call(session, 'ocean_c23_release(CAST(:e AS uuid),CAST(:p AS uuid),:f,CAST(:r AS uuid))',
+            {'e': execution_id, 'p': proof_id, 'f': expected_fence, 'r': release_id})
+
     def release_terminated(self, *, execution_id, proof_id, expected_fence):
         """Atomic proof-correlated capacity release; conveys no result success."""
-        release_id = str(uuid.uuid5(_NAMESPACE, 'release:' + str(execution_id) + ':' + str(proof_id)))
         with self._recorder_transaction() as session:
             site = session.scalar(text(f'SELECT site_id FROM {self.config.schema}.research_experiment_execution WHERE execution_id=CAST(:e AS uuid)'), {'e': execution_id})
             if site != self.config.site_id:
                 raise SandboxError('sandbox_execution_binding')
-            return self._call(session, 'ocean_c23_release(CAST(:e AS uuid),CAST(:p AS uuid),:f,CAST(:r AS uuid))',
-                {'e': execution_id, 'p': proof_id, 'f': expected_fence, 'r': release_id})
+            return self._release(session, execution_id, proof_id, expected_fence)
+
+    def reconcile_recorded_release(self, *, execution_id, scope: TerminationIssuerScope):
+        """Release capacity using committed proof for the configured worker material."""
+        if type(scope) is not TerminationIssuerScope or scope.site_id != self.config.site_id:
+            raise SandboxError('sandbox_execution_binding')
+        schema = self.config.schema
+        with self._recorder_transaction() as session:
+            row = session.execute(text(f'''
+                SELECT p.id, p.packet_bytes, p.packet_sha256, p.trust_scope,
+                    ev.terminal_sequence, ev.terminal_head_sha256, ev.result_sha256
+                FROM {schema}.research_experiment_execution e
+                JOIN {schema}.research_experiment_execution_state s USING (execution_id)
+                JOIN {schema}.research_experiment_execution_event ev ON ev.id=s.current_event_id
+                JOIN {schema}.research_experiment_termination_proof p
+                    ON p.execution_id=e.execution_id AND p.closed_event_id=ev.id AND p.closed_fence=s.fence
+                WHERE e.execution_id=CAST(:id AS uuid) AND s.state='closed' AND ev.kind='closed'
+                    AND to_jsonb(e) @> CAST(:scope AS jsonb)
+            '''), {'id': execution_id, 'scope': scope.model_dump_json()}).one_or_none()
+            if row is None:
+                return None
+            expected = self._closed_binding(session, execution_id)
+            verified = verify_termination_packet(bytes(row.packet_bytes), expected=expected,
+                registry=self.config.verifier_registry)
+            witness = verified.claims.journal
+            proof_id = str(uuid.uuid5(_NAMESPACE, 'proof:' + verified.packet_sha256))
+            if ((str(row.id), row.packet_sha256, row.trust_scope)
+                    != (proof_id, verified.packet_sha256, verified.trust_scope)
+                    or (witness.terminal_sequence, witness.terminal_head_sha256, witness.terminal_result_sha256)
+                    != (row.terminal_sequence, row.terminal_head_sha256, row.result_sha256)):
+                raise SandboxError('sandbox_termination_binding')
+            return self._release(session, execution_id, proof_id, expected.closed_fence)
