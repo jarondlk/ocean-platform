@@ -23,6 +23,13 @@ The prior hosted PostgreSQL job rejected a test directory created under the
 runner's default umask. The fixture now sets mode 0700 explicitly. The
 production check that rejected the earlier directory still applies.
 
+The increment passed 53 output and workspace regressions, 66 GCS catalogue
+tests, and 42 scoped PostgreSQL cases under umask 022. Both hosted v1 jobs
+passed. The hosted backend, PostgreSQL and B2 catalogue checks were still
+running at readback. The separate legacy frontend dependency audit failed.
+The refreshed worker archive retains 249 files and rechecks the 18 mandatory
+imports locally. [Verification and source receipt](../beta/b3-20261123/download-transport-ea34784.json).
+
 The existing beta supervisor service account and the deployed serving and
 Research controller identities were confirmed. The hosted worker and download
 reader still need their own verified access to the results prefix. Scope the

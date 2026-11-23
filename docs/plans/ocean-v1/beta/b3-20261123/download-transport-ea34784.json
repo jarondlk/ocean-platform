@@ -1,0 +1,187 @@
+{
+  "captured_utc": "2026-11-23T07:59:31.165142+00:00",
+  "checks": {
+    "gcs_catalogue_passed": 66,
+    "generated_contract_current": true,
+    "output_and_workspace_passed": 53,
+    "postgresql_c23_c25_passed": 42,
+    "postgresql_cluster_stopped": true,
+    "postgresql_test_umask": "022",
+    "sqlite_version": "3.54.1"
+  },
+  "current_beta": {
+    "hosted_runtime_access_verified": false,
+    "iam_changed": false,
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "research_controller_generation": 10,
+    "service_deployment_changed": false,
+    "serving_generation": 69,
+    "supervisor_service_account_exists": true
+  },
+  "hosted": {
+    "b2_catalogue": {
+      "jobs": [
+        {
+          "conclusion": null,
+          "failed_steps": [],
+          "name": "catalogue",
+          "status": "in_progress"
+        }
+      ],
+      "run_id": 45134822865,
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45134822865"
+    },
+    "ci": {
+      "jobs": [
+        {
+          "conclusion": null,
+          "failed_steps": [],
+          "name": "Backend tests and security boundary",
+          "status": "in_progress"
+        },
+        {
+          "conclusion": "failure",
+          "failed_steps": [
+            "Audit production frontend dependencies"
+          ],
+          "name": "Frontend typecheck and build",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "failed_steps": [],
+          "name": "OCEAN v1 prototype tests and build",
+          "status": "completed"
+        },
+        {
+          "conclusion": null,
+          "failed_steps": [],
+          "name": "PostgreSQL migration and metadata integration",
+          "status": "in_progress"
+        },
+        {
+          "conclusion": "success",
+          "failed_steps": [],
+          "name": "OCEAN v1 authenticated host tests and build",
+          "status": "completed"
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Dependency review",
+          "status": "completed"
+        }
+      ],
+      "run_id": 45134822732,
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45134822732"
+    }
+  },
+  "implementation_sha256": {
+    "ingestion/artifact_store.py": "4520e67236b70090fb204ea9d464040cf8e4d82f412269d80aa196786d719f72",
+    "orchestration/experiment_sandbox/retained_output_store.py": "9f7d68ad1d2f437afa52d9fd16d4165485c82e395daa748d62b837956d7ff1ac",
+    "orchestration/experiment_workspace.py": "208b813ba85333de048eeb985f82c34197474de608c9e146d178948f98dbcffc",
+    "tests/integration/test_experiment_execution_postgres.py": "65c98075ec19c99c0c538537ac8ee4e3d200c94014ca5f1419adf54bdd214a99",
+    "tests/test_experiment_workspace.py": "3bb9b9bca63ded0ee24ac3291566bc5fdb791ba8ca7c7a30e985aa39035b8666",
+    "tests/test_retained_output_cache.py": "7840d3f42681b4c3b4599a5ee777638e5563978edbb8604cc768b8fea09bed1e"
+  },
+  "qualification": {
+    "concurrent_cross_instance_performance_qualified": false,
+    "hosted_application_download_qualified": false,
+    "live_gcs_storage_transport": true,
+    "production_start_enabled": false
+  },
+  "source_commit": "ea3478485c092ae62857dce5be0354f6c6c4e8c5",
+  "superseded_hosted": {
+    "jobs": [
+      {
+        "conclusion": "failure",
+        "failed_steps": [
+          "Verify C23 execution fences, restricted proof release and C25 public read compatibility"
+        ],
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "cancelled",
+        "failed_steps": [],
+        "name": "Backend tests and security boundary",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "failed_steps": [
+          "Audit production frontend dependencies"
+        ],
+        "name": "Frontend typecheck and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Dependency review",
+        "status": "completed"
+      }
+    ],
+    "postgresql_failure": "Output fixture used the process default directory mode. Corrected it to 0700 without altering the production guard.",
+    "prior_receipt": "retained-output-delivery-468e152.json",
+    "reason": "The fixed implementation started CI on the same branch and workflow concurrency cancelled the outstanding broad backend job.",
+    "run_id": 45132492177,
+    "source_commit": "468e152f7b188b7ce51b53ab71e150897e7941d1"
+  },
+  "transport_probe": {
+    "base_source": "69517c957b251413b1ac6162375d2829ea26a9a1",
+    "bucket": "ocean-v1-beta-20261101-results",
+    "captured_utc": "2026-11-23T07:54:37.412751+00:00",
+    "generation": 1795420480807073,
+    "media_bytes": 8388107,
+    "media_downloads": 1,
+    "metadata_checks": 33,
+    "mode": "operator synthetic transport probe",
+    "probe_passed": true,
+    "production_mutation": false,
+    "project": "ocean-v1-beta-20261101",
+    "read_seconds": 2.813,
+    "region": "ASIA-NORTHEAST1",
+    "runtime_principals_exercised": false,
+    "sha256": "107c2dcbed3f0675e5fbed972475e86554c021e0b0a9f638b61b8a6f84f6a91d",
+    "synthetic_bytes": 8388107,
+    "temporary_live_object_removed": true,
+    "upload_seconds": 2.616
+  },
+  "version": "ocean-beta-b3-generation-checked-download-v1",
+  "worker_archive": {
+    "archive_sha256": "e84b1b1e04fc5bac120a3be4949614f3803b626eabf6b2ed0921d1feaf6b0077",
+    "changes": {
+      "ingestion/artifact_store.py": {
+        "current": "4520e67236b70090fb204ea9d464040cf8e4d82f412269d80aa196786d719f72",
+        "previous": "5454e53f18d42047f5bba3b4d38b0708f54b535144994d1d70f85b2ee182f9b8"
+      },
+      "orchestration/experiment_sandbox/retained_output_store.py": {
+        "current": "9f7d68ad1d2f437afa52d9fd16d4165485c82e395daa748d62b837956d7ff1ac",
+        "previous": "4d8f7fcbde076b6186fb9a30fa66f2906bd746d12fef2b437dff6050f286db76"
+      },
+      "orchestration/experiment_workspace.py": {
+        "current": "208b813ba85333de048eeb985f82c34197474de608c9e146d178948f98dbcffc",
+        "previous": "3cead1e83b02dce58caaaddc47f8906793f9fce0531256dd4206dff249f5eb84"
+      }
+    },
+    "cloud_transfer": false,
+    "parent_archive_source": "468e152f7b188b7ce51b53ab71e150897e7941d1",
+    "previous_archive_sha256": "40f5b6e21480164750f05e80ea933c9075e4adbbe3b3f4dd7c517631ccbefb60",
+    "required_import_origins_verified_locally": 18,
+    "source": "ea3478485c092ae62857dce5be0354f6c6c4e8c5",
+    "source_files": 249,
+    "target_bound": false
+  }
+}
