@@ -1,0 +1,89 @@
+{
+  "beta_service_deployed": false,
+  "captured_utc": "2026-11-23T10:42:49.962915+00:00",
+  "cloud_runtime_or_iam_changed": false,
+  "focus": "One retained job per poll on the private worker, including job preparation and teardown",
+  "hosted": {
+    "observation": "in_progress",
+    "previous_source_postgresql_passed": true,
+    "previous_source_run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/45154043628",
+    "run_id": 45158441916,
+    "source_commit": "f2652180a6de64354980f06d595185fb8ad51bf3",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45158441916"
+  },
+  "local_verification": {
+    "coverage": [
+      "An overlapping poll cannot prepare while another poll holds the worker lock",
+      "The worker lock stays held through teardown",
+      "A drain during owner lookup prevents the selected job from reaching preparation",
+      "A drain during preparation lets the active scope finish teardown",
+      "A failed preparation drains the supervisor",
+      "A prior real journal claim keeps the work held"
+    ],
+    "disposable_postgresql_clusters_stopped": true,
+    "focused_sandbox_tests_passed": 161,
+    "guest_analysis_executed": false,
+    "overlapping_restricted_postgresql_final_rerun_passed": 6,
+    "restricted_postgresql_tests_passed": 30,
+    "ruff_passed": true,
+    "sqlite_version": "3.54.1"
+  },
+  "prior_vm_source_verification_receipt": "tokyo-restart-source-verification.json",
+  "private_candidate_manifest_local_path": "/private/tmp/ocean-b3-supervisor-worker-f265218.elpyejf5/tokyo-candidate/tokyo-worker-source.json",
+  "production_execution_enabled": false,
+  "remaining": [
+    "Qualify the private same-boot host control and test the refreshed C23 source physically",
+    "Install the hosted supervisor and verify restart, cancellation and persisted drain",
+    "Verify scoped live storage using the actual runtime identities",
+    "Complete the signed-in publish and verified download journey"
+  ],
+  "source_commit": "f2652180a6de64354980f06d595185fb8ad51bf3",
+  "tokyo_candidate": {
+    "archive_sha256": "60fded5712a11926eb78e86105d9610eb57641548fcde9c2bbfab32c7bbf7d96",
+    "current_boot_qualified": false,
+    "installed_on_target": false,
+    "intended_remote_root": "/var/lib/ocean-c23/operator-source-beta-b3-supervisor-f265218",
+    "intended_target": {
+      "boot_source_image_id": "1892012953239034119",
+      "instance": "ocean-v1-beta-b3-worker-1123",
+      "instance_id": "4080105203514106848",
+      "network": "ocean-v1-beta-b3-isolated",
+      "project": "ocean-v1-beta-20261101",
+      "subnet": "ocean-v1-beta-b3-tokyo",
+      "zone": "asia-northeast1-a"
+    },
+    "manifest_sha256": "f6637592c2b93b9951829db410e02ad13cee26802ca42754967cca94aead9294",
+    "parent_target_archive_sha256": "471bfcc1173ada38da77b7e24194755d6b7c89e3c869f98742e966af6c0998b2",
+    "prior_target_bindings_reused": 6,
+    "source_commit": "f2652180a6de64354980f06d595185fb8ad51bf3",
+    "source_files": 250
+  },
+  "version": "ocean-beta-b3-private-supervisor-poll-v1",
+  "worker_archive": {
+    "all_archive_bytes_rechecked": true,
+    "archive_bytes": 4454400,
+    "archive_sha256": "129e4309aa8d77777fcaf0c451da33bf6e30dc327e7306d7fcb0fe3c38b78999",
+    "changes": {
+      "orchestration/experiment_sandbox/physical_termination.py": {
+        "current": "a276aa923efc55dfc7c955df63ae79732667a3fbbe48f07825a75e98cf14db59",
+        "previous": "7f258a70fd95198ea6bb4dceb73bb93b0ccdfe7ddbd0f123c920d2f9e6dfd162"
+      },
+      "orchestration/experiment_sandbox/retained_supervisor.py": {
+        "current": "18e1a62c52f1d2c8daeeb5274357b2ab873701101e0488c0a001f24bb8c55004",
+        "previous": null
+      },
+      "sandbox/experiment/gcp/run_retained_acceptance.py": {
+        "current": "8a7dd6d226b880c58db566e0243c223ec84ad6d39873fc95f77c4898d644a41c",
+        "previous": "1b58491d34683af5e9ff6d0fc412915b7d0dd0889b17ce28469bbbf2df1bb136"
+      }
+    },
+    "cloud_transfer": false,
+    "guest_init_mode_and_bytes_verified_without_import": true,
+    "parent_archive_source": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+    "previous_archive_sha256": "4a2435266564c89cf900659919dae7cc690445d675b680d763999d31b73ded99",
+    "required_host_import_origins_verified_locally": 20,
+    "source": "f2652180a6de64354980f06d595185fb8ad51bf3",
+    "source_files": 250,
+    "target_bound": false
+  }
+}

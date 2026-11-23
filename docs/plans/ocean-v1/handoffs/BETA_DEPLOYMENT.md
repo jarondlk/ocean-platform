@@ -1,5 +1,25 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Private experiment supervisor polling and drain
+
+The C23 acceptance harness now uses a single-job private supervisor with
+the existing retained bridge, Linux adapter and termination issuer. The poll
+reconciles recorded proofs, then loads only exact reserved work through the
+current owner checks. The worker's private journal directory lock covers staging,
+execution and cleanup. A prior journal claim, mismatched source, or consumed
+start without release keeps the worker held. Local drain prevents further
+selection and allows an active scope to finish cleanup. A failure opening or
+closing that scope drains the process. No serving route mounts this supervisor.
+
+The change passed 161 focused sandbox and 30 restricted PostgreSQL tests. The
+final six-case restricted rerun also passed and both disposable clusters were
+stopped. The locally checked Tokyo candidate contains 250 source files. It
+supersedes the staged November 23 source for a future trial. The previous
+private VM readback and actual synthetic receipts identify their own source. A private
+same-boot connectivity control, hosted restart/cancel/drain tests, runtime
+storage access and signed-in publication and download remain open.
+[Verification receipt](../beta/b3-20261123/private-supervisor-poll.json).
+
 ## November 23 — Refreshed worker verified on the private Tokyo VM
 
 The approved synthetic VM booted on the same disk and source image with its

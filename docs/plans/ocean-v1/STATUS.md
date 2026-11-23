@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 23 — Private experiment supervisor polling and drain
+
+B3 has a single-job worker poll over the retained C23 ledger. It reconciles
+committed proofs while draining, reopens current owner inputs for exact pending
+work, and serializes staging, execution and cleanup. Unresolved prior work holds
+the worker. The private acceptance harness uses this poll, with actual hosted
+execution, cancellation and restart still gated. See the
+[deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Refreshed worker verified on the private Tokyo VM
 
 B3 installed and verified source `3ef11f9` on the existing isolated Tokyo
