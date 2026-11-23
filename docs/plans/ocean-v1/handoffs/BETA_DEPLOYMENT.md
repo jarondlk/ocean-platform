@@ -26,10 +26,18 @@ in the November 23 worker archive. Its original hashes and physical receipts
 still identify the trial source. A future worker refresh must bind the source
 it actually installs.
 
-Next, connect validated artifact reads and the isolated read service to the
-hosted control store. Qualify the supervisor and its cancellation and capacity
-boundaries before public dispatch. No cloud resources changed in this
-increment.
+The projection passed 79 backend tests, 43 restricted PostgreSQL tests and
+1,095 frontend tests. The disposable PostgreSQL server was stopped. Both
+hosted v1 jobs passed. The broader backend and PostgreSQL jobs were still
+running at readback. The separate legacy frontend dependency audit failed.
+Serving generation 69 and Research controller generation 10 were verified.
+[Source-bound verification](../beta/b3-20261123/execution-projection-757b778.json).
+
+The publication event contains an output manifest hash, and the validated
+files currently live in the worker's private spool. Hosted artifact reads
+need private immutable retention for the exact manifest and file bytes plus
+the existing C25 closing authority check. Qualify the hosted read service,
+supervisor, cancellation and concurrent capacity before public dispatch.
 
 ## November 23 — Isolated Tokyo worker and hosted backup readback
 

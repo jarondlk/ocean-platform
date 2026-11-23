@@ -1,0 +1,97 @@
+{
+  "captured_utc": "2026-11-23T07:24:42.611226+00:00",
+  "hosted": {
+    "jobs": [
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "id": 137544055058,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "failed_steps": [
+          "Audit production frontend dependencies"
+        ],
+        "id": 137544055321,
+        "name": "Frontend typecheck and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": null,
+        "failed_steps": [],
+        "id": 137544055373,
+        "name": "Backend tests and security boundary",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": null,
+        "failed_steps": [],
+        "id": 137544055415,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "id": 137544055696,
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "id": 137544056535,
+        "name": "Dependency review",
+        "status": "completed"
+      }
+    ],
+    "run_id": 45130310715,
+    "run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/45130310715"
+  },
+  "live": {
+    "cloud_mutation": false,
+    "origin_http_status": 307,
+    "production_execution_enabled": false,
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "research_controller_generation": 10,
+    "serving_generation": 69
+  },
+  "local_checks": {
+    "backend_passed": 79,
+    "frontend_passed": 1095,
+    "frontend_typecheck_passed": true,
+    "postgresql_cluster_stopped": true,
+    "protected_postgresql_passed": 43,
+    "retained_historical_packets_revalidated": 2
+  },
+  "scope": {
+    "cancel": false,
+    "download_artifacts": false,
+    "owner_bound_status_and_history": true,
+    "production_beta_deployment": false,
+    "public_start": false
+  },
+  "source_commit": "757b778956bb705b76341f31c0de723e811acc90",
+  "source_files_sha256": {
+    "api/v1_host.py": "257e1caf7be16efbf6093f25e66e1ca1ce836174d1187d43f2c79df6dc8f55c9",
+    "frontend-v1/src/experiment-execution-service.ts": "26bf9094c4a6a871d2995cdeda4fa6483515e37232ca19e5cc422b0cbece1874",
+    "frontend-v1/src/generated/experiment-execution.generated.ts": "c9bfe4923bad8d99dce504b7549c8c45e296c863376371afae42c2912ab9c211",
+    "frontend-v1/src/research-experiments.tsx": "984e378acc6bf8cd0c2b0b61639de93160a3ef0f26c6869502e9a07b00852993",
+    "orchestration/experiment_sandbox/workspace_projection.py": "2a6e0be21d3eeb2da5edb46877b6be4d62f2f427852a1a0b334b383185c1a8b3",
+    "orchestration/experiment_workspace.py": "3cead1e83b02dce58caaaddc47f8906793f9fce0531256dd4206dff249f5eb84",
+    "schema/experiment_workspace.py": "984f3afb6fe20a1db060634f3701c15887f01c5d2b62cc0755348808e292c5bd",
+    "tests/integration/test_experiment_execution_postgres.py": "4a96d3c882c58581c91570c1d9fd89fa78dbe29c16122d1ecd49f02bcf9eb7b4",
+    "tests/test_experiment_workspace.py": "a9031131e9f266373cd220cfcb827afb9383a3b46a21c17527f6ee123f15bc62"
+  },
+  "version": "ocean-beta-b3-execution-projection-readback-v1",
+  "worker_evidence": {
+    "superseded_workspace_paths": [
+      "orchestration/experiment_workspace.py",
+      "schema/experiment_workspace.py"
+    ],
+    "trial_receipt": "tokyo-worker-trial.json",
+    "trial_source_reused_as_current": false
+  }
+}
