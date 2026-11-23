@@ -1,5 +1,6 @@
 """Read-only C25 projection from the isolated C23 execution and release ledger."""
 
+from dataclasses import asdict
 import json
 
 from sqlalchemy import text
@@ -8,6 +9,7 @@ from orchestration.experiment_sandbox.contracts import ExecutionMetadata, Sandbo
 from orchestration.experiment_sandbox.execution_store import C23ExecutionStore, ExecutionReservationBinding
 from orchestration.experiment_sandbox.proofs import verify_termination_packet
 from orchestration.experiment_sandbox.retained_bridge import RetainedReserveRequest
+from orchestration.experiment_sandbox.retained_output_store import RetainedOutputReader
 from orchestration.experiment_workspace import ExperimentExecutionPort, ExperimentWorkspaceError
 from schema.experiment_execution import ClosedExecutionBinding
 
@@ -31,20 +33,22 @@ _LEDGER_STATES = {
 
 
 class RetainedExecutionProjection(ExperimentExecutionPort):
-    """Expose confirmed metadata from an explicitly bound isolated controller.
+    """Expose confirmed metadata and output bytes from an isolated controller.
 
     The existing C22 service authorizes each request and repeats its authority
     check after the read. This port uses a separate read-only SQL transaction
-    and never reads the worker's filesystem or accepts runtime authority.
+    and can read validated outputs from explicitly configured private storage.
     """
 
-    def __init__(self, *, experiments, store):
+    def __init__(self, *, experiments, store, output_reader=None):
         super().__init__(experiments=experiments, source='retained-operator',
-                         cancel_available=False, artifacts_available=False)
+                         cancel_available=False, artifacts_available=output_reader is not None)
         if (type(store) is not C23ExecutionStore or store.config.site_id != self.site_id
-                or store.config.controller_session_factory is self.session_factory):
+                or store.config.controller_session_factory is self.session_factory
+                or (output_reader is not None and type(output_reader) is not RetainedOutputReader)):
             raise ValueError('An exact, separate C23 store is required for the execution projection')
         self._store, self._config = store, store.config
+        self._output_reader = output_reader
 
     @staticmethod
     def _verify_identity(row, access):
@@ -91,11 +95,11 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
             raise ExperimentWorkspaceError('integrity_error', 409)
         return verified.packet_sha256
 
-    def _read(self, access, execution_id):
+    def _read(self, access, execution_id, *, artifact_id=None):
         if access.site_id != self.site_id or self._store.config is not self._config:
             raise ExperimentWorkspaceError('integrity_error', 409)
         if access.approval_id is None:
-            return None, []
+            return None, [], None
         schema = self._config.schema
         parameters = {'site': access.site_id, 'owner': access.owner_user_id, 'experiment': access.experiment_id,
                       'revision': access.proposal_revision_id, 'approval': access.approval_id,
@@ -120,7 +124,7 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
                 'AND e.approval_id=CAST(:approval AS uuid) AND e.approval_request_sha256=:approval_sha256'
                 + id_filter), parameters).one_or_none()
             if row is None:
-                return None, []
+                return None, [], None
             binding = self._verify_identity(row, access)
             ledger = session.execute(text(
                 'SELECT id,fence,kind,host_boot_id,journal_id,journal_epoch,profile_sha256,'
@@ -142,6 +146,20 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
         state = 'queued' if not ledger else 'verifying'
         if proof is not None:
             state = 'completed' if output_hash is not None else 'outcome_unavailable'
+        files, artifact_bytes = (), None
+        try:
+            if state == 'completed' and self._output_reader is not None:
+                files = self._output_reader.describe(binding, output_hash,
+                    expected_outputs=json.loads(access.expected_outputs_json), max_bytes=access.output_limit)
+            if artifact_id is not None:
+                file = next((item for item in files if item.id == artifact_id), None)
+                if file is None:
+                    raise ExperimentWorkspaceError('not_found', 404)
+                artifact_bytes = self._output_reader.read_file(binding, output_hash, file)
+        except SandboxError as exc:
+            if exc.reason == 'sandbox_output_store_integrity':
+                raise ExperimentWorkspaceError('integrity_error', 409) from None
+            raise ExperimentWorkspaceError() from None
 
         event_kinds = ['reserved', *kinds]
         if proof is not None:
@@ -154,15 +172,16 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
                     'state_revision': len(items), 'latest_event_cursor': len(items),
                     'execution_performed': state == 'completed', 'cancel_requested': False,
                     'termination_verified': proof is not None, 'termination_proof_sha256': proof,
-                    'outputs_manifest_sha256': output_hash if state == 'completed' else None, 'artifacts': []}
-        return {'access_sha256': access.sha256, 'execution': snapshot}, items
+                    'outputs_manifest_sha256': output_hash if state == 'completed' else None,
+                    'artifacts': [asdict(file) for file in files]}
+        return {'access_sha256': access.sha256, 'execution': snapshot}, items, artifact_bytes
 
     def status(self, access, execution_id=None):
-        status, _ = self._read(access, execution_id)
+        status, _, _ = self._read(access, execution_id)
         return status
 
     def status_and_events(self, access, execution_id, after_cursor, limit):
-        status, items = self._read(access, execution_id)
+        status, items, _ = self._read(access, execution_id)
         if status is None:
             raise ExperimentWorkspaceError('not_found', 404)
         if after_cursor > len(items):
@@ -180,4 +199,9 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
         raise ExperimentWorkspaceError()
 
     def artifact(self, access, execution_id, artifact_id):
-        raise ExperimentWorkspaceError()
+        if self._output_reader is None:
+            raise ExperimentWorkspaceError()
+        status, _, raw = self._read(access, execution_id, artifact_id=artifact_id)
+        if status is None:
+            raise ExperimentWorkspaceError('not_found', 404)
+        return raw

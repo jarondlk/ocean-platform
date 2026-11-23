@@ -13,8 +13,11 @@ import pytest
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
 
+from ingestion.artifact_store import BoundedLocalStore
+from ingestion.provenance_snapshot import SnapshotError
 from orchestration.experiment_sandbox import retained_admission as module
 from orchestration.experiment_sandbox.contracts import SandboxError
+from orchestration.experiment_sandbox.retained_output_store import RetainedOutputWriter
 from orchestration.research_experiments import ResearchExperimentError
 from tests import experiment_execution_postgres_support as pg
 from tests.integration import test_retained_admission_postgres as accepted
@@ -150,3 +153,52 @@ def test_queued_terminal_and_consumed_start_without_journal_intent_keep_capacity
         with pytest.raises(SandboxError,match='start_binding'):
             case.hooks.close_execution(context,terminal)
         assert execution_state(case)==('start_consumed',2)
+
+
+@pytest.mark.parametrize('revoke', [False, True])
+def test_private_copy_is_retryable_and_cannot_authorize_publication(case, revoke, tmp_path, monkeypatch):
+    transport = BoundedLocalStore(tmp_path / 'private-outputs')
+    case.hooks = module.RetainedRuntimeHooks(case.bridge, case.native.fixture.user, case.policy,
+        output_writer=RetainedOutputWriter(transport))
+    create = transport.create
+
+    def interrupt_manifest(key, raw):
+        assert execution_state(case) == ('start_consumed', 2)
+        if not key.endswith('/manifest.json'):
+            return create(key, raw)
+        if not revoke:
+            raise SnapshotError('fixture interrupted during manifest creation')
+        generation = create(key, raw)
+        with case.native.fixture.factory.begin() as session:
+            session.execute(text("UPDATE app_user SET status='suspended' WHERE id=:owner"),
+                            {'owner': case.native.fixture.user.id})
+        return generation
+
+    monkeypatch.setattr(transport, 'create', interrupt_manifest)
+    with case.hold() as context:
+        accepted.start(case, context)
+        terminal, outputs, cleanup, terminated = accepted.finish(case, context)
+        digest = hashlib.sha256(outputs.manifest_bytes).hexdigest()
+        with pytest.raises((ResearchExperimentError, SandboxError)):
+            case.hooks.admit_publication(context, terminal, digest)
+        assert execution_state(case) == ('start_consumed', 2)
+        copied, = transport.root.rglob('files/*')
+        assert copied.read_bytes() == outputs.files['summary.json']
+        assert not list(transport.root.rglob('logs'))
+        assert len(list(transport.root.rglob('manifest.json'))) == int(revoke)
+
+        if not revoke:
+            monkeypatch.setattr(transport, 'create', create)
+            original = copied.stat().st_ino
+            publication = case.hooks.admit_publication(context, terminal, digest)
+            assert publication.document['outputs_manifest_sha256'] == digest
+            assert case.hooks.admit_publication(context, terminal, digest).document == publication.document
+            assert copied.stat().st_ino == original
+            manifest, = transport.root.rglob('manifest.json')
+            assert manifest.read_bytes() == outputs.manifest_bytes
+            assert execution_state(case) == ('publication_retained', 3)
+
+        closed = case.hooks.close_execution(context, terminal)
+        packet = accepted.synthetic_packet(case, context, closed, terminal, cleanup, terminated)
+        proof = case.hooks.record_termination(context, packet)
+        assert case.hooks.release_terminated(context, proof, closed.closed_fence)

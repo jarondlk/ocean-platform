@@ -23,6 +23,7 @@ from db.app_models import ResearchExperimentRevision
 from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.execution_store import ExecutionReservationBinding
 from orchestration.experiment_sandbox.retained_bridge import C23RetainedBridge
+from orchestration.experiment_sandbox.retained_output_store import RetainedOutputWriter
 from orchestration.research_experiments import ResearchExperimentError
 from schema.context_catalogue import canonical_json
 from schema.research_experiments import content_sha256
@@ -172,15 +173,17 @@ class PublicationReceipt:
 
 
 class RetainedRuntimeHooks:
-    def __init__(self, bridge, current_owner, source_policy):
+    def __init__(self, bridge, current_owner, source_policy, *, output_writer=None):
         if (type(bridge) is not C23RetainedBridge or type(current_owner) is not CurrentUser
-                or type(source_policy) is not RetainedAdmissionSourcePolicy):
+                or type(source_policy) is not RetainedAdmissionSourcePolicy
+                or (output_writer is not None and type(output_writer) is not RetainedOutputWriter)):
             raise ValueError('Exact retained bridge and authenticated application owner required')
         bridge._binding()
         self.bridge, self.current_owner = bridge, current_owner
         self._store, self._config = bridge.store, bridge.store.config
         self._policy_json = bridge._material_json
         self.source_policy=self._source_policy=source_policy
+        self._output_writer = output_writer
         binding=json.loads(source_policy._binding_json)
         if (any(json.loads(self._policy_json).get(name)!=value for name,value in binding.items())
                 or source_policy.trust_scope!=self._config.verifier_registry.trust_scope):
@@ -414,7 +417,17 @@ class RetainedRuntimeHooks:
             _error('sandbox_retained_publication_bytes')
         with self._store.controller_transaction() as session:
             row = self._execution(session,context)
+            if self._output_writer is not None:
+                state, _ = self._start(session, context, snapshot)
+                if state['state'] not in {'start_consumed', 'publication_retained'}:
+                    _error('sandbox_retained_publication_state')
         address,candidate = self._candidate(context,row)
+        if self._output_writer is not None:
+            # A failed/uncertain upload never grants publication. The short SQL
+            # transaction below rechecks owner, source and journal after I/O.
+            self._output_writer.publish(ExecutionReservationBinding.model_validate(row),
+                                        outputs, outputs_manifest_sha256)
+            self._terminal(context, terminal)
         event_id = str(uuid.uuid5(_NAMESPACE,'publication:'+context.execution_id+':'+terminal.terminal_result_sha256+':'+outputs_manifest_sha256))
         with self._store.controller_transaction() as session:
             self._execution(session,context)

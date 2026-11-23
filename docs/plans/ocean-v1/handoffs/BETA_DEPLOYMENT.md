@@ -1,5 +1,31 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Retained experiment output downloads
+
+The worker publication hook now supports an explicitly supplied private
+output writer. It copies only validated files, checks the stored bytes and
+writes the exact C23 manifest last. Create-only writes and exact readback
+allow retry after a partial copy. The existing owner, source and journal
+checks still precede the publication event. Suspension during the copy
+denies publication, and independent proof and capacity release can still
+complete. Raw worker logs stay in the private spool.
+
+An explicitly supplied output reader lets the workspace list and download
+only the files bound to a published manifest and verified release. It checks
+the approved file profiles, size limits and content hashes. The C25 service
+rechecks current access after reading the bytes. Earlier releases with only a
+worker-local manifest still show status and history with no downloadable
+files. Public Start, cancellation and artifact attachment remain separate.
+
+The worker hook, protected source list and workspace reader changed. The
+earlier Tokyo trial and signed receipts continue to identify their original
+source. The new worker source needs a refreshed protected archive and
+physical qualification before activation. Hosted validation also needs the
+private output transport and credentials scoped to beta, a measured download
+at the intended size, and a disposition for staged files whose publication
+was denied. The current C25 transport rereads and verifies the whole file for
+each requested chunk. The live beta keeps its existing deployment.
+
 ## November 23 — Durable experiment status and history
 
 C25 can project the exact owner, approval, proposal and context revision

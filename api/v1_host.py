@@ -162,7 +162,8 @@ class V1ReadServices:
 
 def compose_read_services(*, session_factory, site_id, snapshot_store, registrations,
                           policy_resolver, snapshots, discovery_policy, policy_revision,
-                          cursor_key, experiment_environments=None, experiment_execution_store=None):
+                          cursor_key, experiment_environments=None, experiment_execution_store=None,
+                          experiment_output_reader=None):
     """Build actual read services from explicitly supplied source authority.
 
     This is a trusted programmatic composition seam, not configuration-driven
@@ -174,6 +175,8 @@ def compose_read_services(*, session_factory, site_id, snapshot_store, registrat
         raise HostConfigurationError('Explicit sealed registrations are required for configured catalogue access')
     if experiment_execution_store is not None and experiment_environments is None:
         raise HostConfigurationError('An execution projection requires configured experiment review')
+    if experiment_output_reader is not None and experiment_execution_store is None:
+        raise HostConfigurationError('An output reader requires a configured execution projection')
     catalogue = CatalogueService(resolver=FrozenCatalogueResolver(store=snapshot_store,
         policy_resolver=policy_resolver, registrations=registrations))
     browser = CatalogueBrowser(service=catalogue, snapshots=snapshots, permitted=discovery_policy,
@@ -197,7 +200,8 @@ def compose_read_services(*, session_factory, site_id, snapshot_store, registrat
         if experiment_execution_store is not None:
             from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
 
-            port = RetainedExecutionProjection(experiments=experiments, store=experiment_execution_store)
+            port = RetainedExecutionProjection(experiments=experiments, store=experiment_execution_store,
+                                               output_reader=experiment_output_reader)
         workspace = ExperimentWorkspaceService(experiments=experiments, port=port, enabled=lambda: True)
     return V1ReadServices(catalogue, browser, investigations, runs, evidence, answers, experiments, workspace)
 

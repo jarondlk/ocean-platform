@@ -4,6 +4,7 @@ Ephemeral synthetic keys authenticate software assertions only. No real issuer,
 Linux proof, root bridge admission or physical acceptance is exercised here.
 """
 from concurrent.futures import ThreadPoolExecutor
+import base64
 import hashlib
 import json
 import os
@@ -22,6 +23,7 @@ from sqlalchemy.exc import DBAPIError
 from db.app_models import ResearchExperiment, ResearchExperimentApproval, ResearchExperimentRevision
 from api.experiment_workspace_routes import router as workspace_router
 from db.experiment_execution_models import EXECUTION_MODELS, IDENTITY_HASH_FIELDS
+from ingestion.artifact_store import BoundedLocalStore
 from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.execution_store import (
     C23ExecutionStore, ExecutionReservationBinding, ExecutionStoreConfig,
@@ -30,6 +32,8 @@ from orchestration.experiment_sandbox.execution_store import (
 from orchestration.experiment_sandbox.proofs import (
     PinnedTerminationIssuer, TerminationVerifierRegistry, canonical_packet_bytes, sign_termination_claims,
 )
+from orchestration.experiment_sandbox.files import validate_outputs
+from orchestration.experiment_sandbox.retained_output_store import RetainedOutputReader, RetainedOutputWriter
 from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
 from orchestration.experiment_workspace import ExperimentWorkspaceService
 from schema.context_catalogue import canonical_json
@@ -110,7 +114,7 @@ def reserved(case, *, actor=None):
     return store,binding
 
 
-def closed(store,binding, *, publish=False, observe_started=None):
+def closed(store,binding, *, publish=False, observe_started=None, output_sha256=None):
     start_id = str(uuid.uuid4())
     args = dict(execution_id=binding.execution_id,start_id=start_id,host_boot_id=str(uuid.uuid4()),
         journal_id=str(uuid.uuid4()),journal_epoch=1,profile_sha256=_hash('prepared-profile'),
@@ -123,7 +127,7 @@ def closed(store,binding, *, publish=False, observe_started=None):
     if publish:
         with store.controller_transaction() as session:
             store.record_event_in_transaction(session,expected_fence=fence,event_id=str(uuid.uuid4()),
-                kind='publication_retained',result_sha256=_hash('validated-output'),**args)
+                kind='publication_retained',result_sha256=output_sha256 or _hash('validated-output'),**args)
         fence += 1
     with store.controller_transaction(cleanup=True) as session:
         store.record_event_in_transaction(session,expected_fence=fence,event_id=str(uuid.uuid4()),kind='closed',result_sha256=_claims().journal.terminal_result_sha256,
@@ -501,7 +505,7 @@ def test_altered_authenticated_witness_replay_cannot_replace_recorded_proof(actu
 
 
 @pytest.mark.parametrize('publish', [True, False])
-def test_retained_workspace_reports_only_proven_execution(actual, publish, monkeypatch):
+def test_retained_workspace_reports_only_proven_execution(actual, publish, monkeypatch, tmp_path):
     fixture = actual.fixture
     fixture.service.executor = None
     binding = prepared(actual)
@@ -509,9 +513,21 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
     request = json.loads(binding.request_json)
     request.pop('idempotency_key')
 
-    def workspace(bound_store):
+    def workspace(bound_store, reader=None):
         return ExperimentWorkspaceService(experiments=fixture.service, enabled=lambda: True,
-            port=RetainedExecutionProjection(experiments=fixture.service, store=bound_store))
+            port=RetainedExecutionProjection(experiments=fixture.service, store=bound_store, output_reader=reader))
+
+    proposal = json.loads(binding.envelope_json)['proposal']
+    output_bytes = b'{"columns":["value"],"rows":[[42]]}'
+    raw_outputs = tmp_path / 'outputs'
+    raw_outputs.mkdir()
+    (raw_outputs / 'summary.json').write_bytes(output_bytes)
+    payload = validate_outputs(raw_outputs, expected_outputs=proposal['expected_outputs'],
+                               max_output_bytes=proposal['resources']['max_output_bytes'])
+    manifest_sha256 = hashlib.sha256(payload.manifest_bytes).hexdigest()
+    writer = RetainedOutputWriter(BoundedLocalStore(tmp_path / 'private-objects'))
+    transport = BoundedLocalStore(tmp_path / 'private-objects')
+    reader = RetainedOutputReader(transport)
 
     app = FastAPI()
     app.state.research_experiment_service = fixture.service
@@ -547,13 +563,20 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
         call('status', {**identified, 'execution_id': str(uuid.uuid4())}, 404)
         call('cancel', {**identified, 'idempotency_key': str(uuid.uuid4())}, 503)
 
+        app.state.experiment_workspace_service = workspace(store, reader)
+        # Even a fully copied manifest stays private until the exact ledger
+        # publication and release are recorded.
+        writer.publish(binding, payload, manifest_sha256)
+        assert call('status', identified)['execution']['artifacts'] == []
+
         def observe_start():
             started = call('events', {**identified, 'after_cursor': 1})
             assert [event['kind'] for event in started['items']] == ['start_consumed']
             assert started['execution']['state'] == 'verifying'
             assert not started['execution']['execution_performed']
 
-        bound = closed(store, binding, publish=publish, observe_started=observe_start)
+        bound = closed(store, binding, publish=publish, observe_started=observe_start,
+                       output_sha256=manifest_sha256)
         signed = packet(actual, bound)
         proof_id = store.record_verified_termination(execution_id=binding.execution_id, packet_bytes=signed)
         pending = call('status', identified)['execution']
@@ -563,7 +586,7 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
         store.release_terminated(execution_id=binding.execution_id, proof_id=proof_id,
                                  expected_fence=bound.closed_fence)
         paused = C23ExecutionStore(config=replace(store.config, enabled=lambda: False))
-        app.state.experiment_workspace_service = workspace(paused)
+        app.state.experiment_workspace_service = workspace(paused, reader)
         call('status', identified, 409)
 
         # Exercise the HTTP representation downstream of a successful proof
@@ -578,8 +601,7 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
         assert completed['state'] == ('completed' if publish else 'outcome_unavailable')
         assert completed['execution_performed'] is publish
         assert completed['termination_verified'] and completed['termination_proof_sha256'] == hashlib.sha256(signed).hexdigest()
-        assert completed['outputs_manifest_sha256'] == (_hash('validated-output') if publish else None)
-        assert completed['artifacts'] == []
+        assert completed['outputs_manifest_sha256'] == (manifest_sha256 if publish else None)
 
         observed = []
         cursor = 0
@@ -592,6 +614,39 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
         call('events', {**identified, 'after_cursor': cursor + 1}, 409)
 
         child = fixture.retained.registrations[request['snapshot_id']].child_snapshot_ids[0]
-        fixture.retained.store.revoke(child)
-        withheld = client.post('/research/experiment-executions/status', json=identified)
-        assert withheld.status_code in (403, 404, 503) and 'execution' not in withheld.json()
+        if not publish:
+            assert completed['artifacts'] == []
+            return
+
+        item, = completed['artifacts']
+        assert item['name'] == 'summary.json' and item['attachment_reference'] is None
+        fetch = {**identified, 'artifact_id': item['id'], 'expected_sha256': item['sha256']}
+        first = call('artifact', {**fetch, 'limit': 8})
+        final = call('artifact', {**fetch, 'offset': first['next_offset']})
+        assert base64.b64decode(first['content_base64']) + base64.b64decode(final['content_base64']) == output_bytes
+        assert first['preview']['rows'] == [['42']] and final['eof']
+        call('artifact', {**fetch, 'expected_sha256': '0' * 64}, 409)
+        actor = fixture.admin
+        call('artifact', fetch, 404)
+        actor = fixture.user
+
+        read = transport.read
+
+        def corrupt(key, *, max_bytes):
+            observed = read(key, max_bytes=max_bytes)
+            if '/files/' in key:
+                return replace(observed, data=b'x' + observed.data[1:])
+            return observed
+
+        monkeypatch.setattr(transport, 'read', corrupt)
+        call('artifact', fetch, 409)
+
+        def revoke_after_read(key, *, max_bytes):
+            observed = read(key, max_bytes=max_bytes)
+            if '/files/' in key:
+                fixture.retained.store.revoke(child)
+            return observed
+
+        monkeypatch.setattr(transport, 'read', revoke_after_read)
+        withheld = client.post('/research/experiment-executions/artifact', json=fetch)
+        assert withheld.status_code in (403, 404, 503) and 'content_base64' not in withheld.json()

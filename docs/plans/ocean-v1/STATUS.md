@@ -1,5 +1,15 @@
 # Implementation status
 
+## November 23 — Retained experiment output downloads
+
+B3 now has an explicit private output writer and a C25 reader for validated
+files. The workspace requires the ledger publication, verified termination
+and capacity release. Download reads check the original hashes and current
+owner and source access. The local checks cover interrupted writes, revocation
+while publishing and downloading, and byte-for-byte chunk delivery.
+Hosted storage, worker refresh, supervisor and production Start remain open.
+See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Durable experiment status and history
 
 The experiment workspace can read C23 status and consecutive history from an
