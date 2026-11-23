@@ -520,7 +520,7 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
     proposal = json.loads(binding.envelope_json)['proposal']
     output_bytes = b'{"columns":["value"],"rows":[[42]]}'
     raw_outputs = tmp_path / 'outputs'
-    raw_outputs.mkdir()
+    raw_outputs.mkdir(mode=0o700)
     (raw_outputs / 'summary.json').write_bytes(output_bytes)
     payload = validate_outputs(raw_outputs, expected_outputs=proposal['expected_outputs'],
                                max_output_bytes=proposal['resources']['max_output_bytes'])

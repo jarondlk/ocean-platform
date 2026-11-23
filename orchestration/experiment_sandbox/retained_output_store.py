@@ -3,7 +3,9 @@
 from dataclasses import dataclass
 import json
 import re
+from threading import Lock
 
+from ingestion.artifact_store import BoundedGcsStore
 from ingestion.provenance_snapshot import SnapshotConflict, SnapshotError, SnapshotNotFound
 from orchestration.experiment_sandbox.contracts import ExecutionMetadata, SandboxError
 from orchestration.experiment_sandbox.execution_store import ExecutionReservationBinding
@@ -99,6 +101,8 @@ class RetainedOutputReader:
         if not callable(getattr(store, 'read', None)):
             raise ValueError('An explicit bounded output transport is required')
         self._store = store
+        self._cache_lock = Lock()
+        self._cached_file = None
 
     def describe(self, binding, manifest_sha256, *, expected_outputs, max_bytes):
         prefix = _prefix(binding, manifest_sha256)
@@ -114,12 +118,45 @@ class RetainedOutputReader:
                 or type(file.size_bytes) is not int or not 1 <= file.size_bytes <= MAX_OUTPUT_BYTES):
             raise SandboxError('sandbox_output_store_integrity')
         prefix = _prefix(binding, manifest_sha256)
+        key = f'{prefix}/files/{file.sha256}'
+        if isinstance(self._store, BoundedGcsStore):
+            return self._read_gcs_file(key, file)
         try:
-            data = _read_bytes(self._store, f'{prefix}/files/{file.sha256}', file.size_bytes)
+            data = _read_bytes(self._store, key, file.size_bytes)
         except SnapshotNotFound:
             raise SandboxError('sandbox_output_store_unavailable') from None
+        return self._checked_bytes(data, file)
+
+    @staticmethod
+    def _checked_bytes(data, file):
         if (type(data) is not bytes or len(data) != file.size_bytes or _hash(data) != file.sha256):
             raise SandboxError('sandbox_output_store_integrity')
+        return data
+
+    def _read_gcs_file(self, key, file):
+        # Retain at most one validated file per reader. The key includes the
+        # execution and owner. Every request still checks the live generation.
+        with self._cache_lock:
+            cached = self._cached_file
+        if cached is not None and cached[0] != key:
+            cached = None
+        try:
+            observed = self._store.read_exact_if_changed(
+                key, size=file.size_bytes, previous_generation=cached[1] if cached else None)
+            if observed is None and cached is not None:
+                return cached[2]
+            if observed is None:
+                raise ValueError('Missing object generation')
+            data = self._checked_bytes(observed.data, file)
+        except (OSError, SnapshotError, TypeError, ValueError) as exc:
+            with self._cache_lock:
+                if self._cached_file is cached:
+                    self._cached_file = None
+            reason = ('sandbox_output_store_unavailable' if isinstance(exc, (OSError, SnapshotError))
+                      else 'sandbox_output_store_integrity')
+            raise SandboxError(reason) from None
+        with self._cache_lock:
+            self._cached_file = (key, observed.generation, data)
         return data
 
 

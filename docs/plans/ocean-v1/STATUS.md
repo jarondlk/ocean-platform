@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 23 — Generation-checked downloads and Tokyo transport probe
+
+The download path checks the current Cloud Storage generation on every chunk
+and downloads the bytes again when the generation changes. One operator
+probe in Tokyo transferred the 8 MiB synthetic output once across 33
+generation checks and verified its exact hash. The temporary live object
+was removed. Runtime identity access and signed-in hosted application testing
+remain open. See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Retained experiment output downloads
 
 B3 now has an explicit private output writer and a C25 reader for validated

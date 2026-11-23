@@ -105,7 +105,26 @@ class BoundedGcsStore(GcsSnapshotStore):
             raise ValueError("Bounded exact artifact size required")
         if size == 0:
             return self.read(key, max_bytes=0)
+        return self._download_exact(self.bucket.blob(self._name(key)), key, size)
 
+    def read_exact_if_changed(self, key, *, size, previous_generation=None):
+        """Check the live generation before allowing reuse of verified bytes."""
+        safe_key(key)
+        if type(size) is not int or not 1 <= size <= MAX_BYTES:
+            raise ValueError("Bounded exact artifact size required")
+        blob = self.bucket.blob(self._name(key))
+        try:
+            blob.reload()
+        except Exception as exc:
+            raise self._translate_error(exc, key=key) from exc
+        generation = blob.generation
+        if blob.size != size or type(generation) is not int or generation <= 0:
+            raise ValueError("Exact generation-identified artifact required")
+        if generation == previous_generation:
+            return None
+        return self._download_exact(blob, key, size, generation=generation)
+
+    def _download_exact(self, blob, key, size, *, generation=None):
         class LimitedBuffer(BytesIO):
             def write(self, data):
                 # Servers can ignore Range. Keep the limit at the sink too.
@@ -113,22 +132,23 @@ class BoundedGcsStore(GcsSnapshotStore):
                     raise ValueError("Artifact byte limit exceeded")
                 return super().write(data)
 
-        blob = self.bucket.blob(self._name(key))
+        precondition = {} if generation is None else {"if_generation_match": generation}
         try:
             with LimitedBuffer() as buffer:
                 # Request one extra byte so an oversized object cannot look
                 # like a complete object with the expected prefix.
                 blob.download_to_file(buffer, start=0, end=size, raw_download=True,
-                                      checksum=None, retry=None)
+                                      checksum=None, retry=None, **precondition)
                 data = buffer.getvalue()
-            generation = blob.generation
+            observed_generation = blob.generation
         except ValueError:
             raise
         except Exception as exc:
             raise self._translate_error(exc, key=key) from exc
-        if len(data) != size or type(generation) is not int or generation <= 0:
+        if (len(data) != size or type(observed_generation) is not int or observed_generation <= 0
+                or (generation is not None and observed_generation != generation)):
             raise ValueError("Exact generation-identified artifact required")
-        return StoredObject(data, generation)
+        return StoredObject(data, observed_generation)
 
 
 class ArtifactStore:

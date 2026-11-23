@@ -284,11 +284,21 @@ def test_cancel_closing_authority_failure_rolls_back_intent(actual, monkeypatch)
     assert port.status(access)['execution']['latest_event_cursor'] == 1
 
 
-def test_artifact_exact_bytes_display_int64_chunks_and_attachment(actual):
+def test_artifact_exact_bytes_display_int64_chunks_and_attachment(actual, monkeypatch):
+    from orchestration import experiment_workspace
+
     fixture, _, _ = actual
     raw = b'{"columns":["int64","missing"],"rows":[[9223372036854775807,null]]}'
     _, request, _, initial = prepared(actual, state='completed', raw=raw)
     item = initial['artifacts'][0]
+    validate = experiment_workspace._json_table
+    parses = []
+
+    def counted(data):
+        parses.append(len(data))
+        return validate(data)
+
+    monkeypatch.setattr(experiment_workspace, '_json_table', counted)
     payload = {**request, 'execution_id': initial['id'], 'artifact_id': item['id'], 'expected_sha256': item['sha256'], 'limit': 11}
     response = invoke(actual, 'artifact', payload)
     assert response['artifact']['attachment_reference'] is not None
@@ -299,6 +309,7 @@ def test_artifact_exact_bytes_display_int64_chunks_and_attachment(actual):
         assert response['preview'] is None
         parts.append(base64.b64decode(response['content_base64']))
     assert b''.join(parts) == raw and hashlib.sha256(b''.join(parts)).hexdigest() == item['sha256']
+    assert parses == [len(raw)]
     attached = fixture.investigations.invoke('context/change', {
         'investigation_id': request['investigation_id'], 'expected_revision_id': request['context_revision_id'],
         'idempotency_key': str(uuid.uuid4()), 'change': {'op': 'attach',

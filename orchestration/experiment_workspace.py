@@ -126,6 +126,7 @@ class ExperimentWorkspaceService:
         if enabled is not None and not callable(enabled):
             raise ValueError('Workspace availability must be a trusted callback')
         self.enabled = enabled if enabled is not None else config.v1_experiment_workspace_enabled
+        self._verified_artifact_profile = None
         self._binding()
 
     def _binding(self):
@@ -352,10 +353,27 @@ class ExperimentWorkspaceService:
             raise ExperimentWorkspaceError('not_found', 404)
         if item['sha256'] != data['expected_sha256']:
             raise ExperimentWorkspaceError('conflict', 409)
+        offset = data['offset']
+        if offset > item['size_bytes']:
+            raise ExperimentWorkspaceError('invalid_request', 422)
         raw = self._port_call('artifact', access, execution['id'], item['id'])
         if (type(raw) is not bytes or len(raw) != item['size_bytes'] or len(raw) > access.output_limit
                 or hashlib.sha256(raw).hexdigest() != item['sha256']):
             raise ExperimentWorkspaceError('integrity_error', 409)
+        profile_key = (access.sha256, execution['id'], item['id'], item['sha256'], item['media_type'])
+        cached = self._verified_artifact_profile
+        if cached is None or cached[0] != profile_key:
+            preview = self._validate_artifact(raw, item)
+            cached = (profile_key, canonical_json(preview))
+            self._verified_artifact_profile = cached
+        chunk = raw[offset:offset + min(data['limit'], MAX_ARTIFACT_CHUNK)]
+        return {'artifact': ExecutionArtifact.model_validate(item).model_dump(mode='json'),
+            'offset': offset, 'next_offset': offset + len(chunk), 'eof': offset + len(chunk) == len(raw),
+            'content_base64': base64.b64encode(chunk).decode(),
+            'preview': json.loads(cached[1]) if offset == 0 else None}
+
+    @staticmethod
+    def _validate_artifact(raw, item):
         try:
             validation = {'application/json': _json_table, 'text/csv': _csv_table, 'image/png': _png}[item['media_type']](raw)
             preview = None
@@ -374,12 +392,6 @@ class ExperimentWorkspaceService:
                         or any(cell is not None and len(cell) > 4096 for row in rows for cell in row)
                         or len(canonical_json(preview).encode()) > 256 * 1024):
                     preview = None  # Download remains available; oversized display is not silently truncated.
+            return preview
         except (ValueError, TypeError, KeyError, UnicodeError, csv.Error, struct.error, zlib.error, StopIteration, RecursionError):
             raise ExperimentWorkspaceError('integrity_error', 409) from None
-        offset = data['offset']
-        if offset > len(raw):
-            raise ExperimentWorkspaceError('invalid_request', 422)
-        chunk = raw[offset:offset + min(data['limit'], MAX_ARTIFACT_CHUNK)]
-        return {'artifact': ExecutionArtifact.model_validate(item).model_dump(mode='json'),
-            'offset': offset, 'next_offset': offset + len(chunk), 'eof': offset + len(chunk) == len(raw),
-            'content_base64': base64.b64encode(chunk).decode(), 'preview': preview if offset == 0 else None}

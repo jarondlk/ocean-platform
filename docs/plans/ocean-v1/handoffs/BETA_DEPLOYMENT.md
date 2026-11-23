@@ -1,5 +1,36 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Generation-checked downloads and Tokyo transport probe
+
+C25 now reuses one verified file per configured Cloud Storage reader. Every
+chunk checks the live object generation and size. A new generation requires a
+bounded download pinned to that generation and exact digest verification.
+Missing, denied, replaced or oversized responses cannot fall back to earlier
+bytes. The workspace continues to check authorization and the file hash for
+each chunk. It validates the file profile and builds the preview once for the
+same authorized artifact and hash. Existing wire and manifest formats apply.
+
+The operator wrote a unique synthetic object under the private Tokyo results
+bucket's C23 qualification prefix. The transport performed 33 metadata checks
+and one media download for 8,388,107 bytes. Reads took 2.813 seconds on this
+client. The reassembled hash matched and the exact live object generation was
+removed. This probe measured the storage transport with operator credentials.
+It did not exercise the hosted API, the runtime principals or concurrent
+downloads across different instances.
+[Cloud Storage generation preconditions](https://docs.cloud.google.com/storage/docs/request-preconditions).
+
+The prior hosted PostgreSQL job rejected a test directory created under the
+runner's default umask. The fixture now sets mode 0700 explicitly. The
+production check that rejected the earlier directory still applies.
+
+The existing beta supervisor service account and the deployed serving and
+Research controller identities were confirmed. The hosted worker and download
+reader still need their own verified access to the results prefix. Scope the
+writer to create and read for exact readback and the reader to get objects.
+Production dispatch still needs the refreshed worker, private supervisor
+integration and a signed-in end-to-end run. The live deployment still serves
+generation 69 and Research controller generation 10.
+
 ## November 23 — Retained experiment output downloads
 
 The worker publication hook now supports an explicitly supplied private
