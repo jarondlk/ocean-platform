@@ -1,5 +1,36 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Durable experiment status and history
+
+C25 can project the exact owner, approval, proposal and context revision
+from the isolated C23 ledger when a trusted host supplies that store
+explicitly. Status and event pages share a single read-only PostgreSQL
+snapshot. The ordinary C22 access check still runs before and after the
+read, including current source permissions. Existing beta environment
+configuration has no execution projection.
+
+A consumed start moves the view to verification pending. A retained release
+requires revalidation of the signed termination packet against the same
+execution, closed fence and journal result. The view reports completion
+only when the release also has a retained output manifest. A verified
+release without a published manifest reports that the outcome is
+unavailable. Start, cancellation and output downloads remain gated.
+
+The local verification includes real restricted PostgreSQL logins and the
+current HTTP routes, plus revalidation of the two original C23 Linux
+termination packets using the original public pins. The PostgreSQL tests
+exercise a separately injected verified-result fixture for terminal response
+shape and explicitly show the synthetic signing scope being rejected.
+The workspace module and its API schema now differ from the versions pinned
+in the November 23 worker archive. Its original hashes and physical receipts
+still identify the trial source. A future worker refresh must bind the source
+it actually installs.
+
+Next, connect validated artifact reads and the isolated read service to the
+hosted control store. Qualify the supervisor and its cancellation and capacity
+boundaries before public dispatch. No cloud resources changed in this
+increment.
+
 ## November 23 — Isolated Tokyo worker and hosted backup readback
 
 The approved synthetic trial ran on one `e2-standard-4` in

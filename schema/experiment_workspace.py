@@ -16,7 +16,9 @@ MAX_ARTIFACT_CHUNK = 256 * 1024
 MAX_OUTPUT_BYTES = 50 * 1024 * 1024
 Cursor = Annotated[int, Field(strict=True, ge=0, le=9007199254740991)]
 Source = Literal['synthetic-fixture', 'retained-operator']
-ExecutionState = Literal['queued', 'running', 'cancelling', 'completed', 'failed', 'cancelled', 'timed_out']
+ExecutionState = Literal['queued', 'running', 'cancelling', 'verifying',
+                         'completed', 'failed', 'cancelled', 'timed_out', 'outcome_unavailable']
+TERMINAL_STATES = frozenset({'completed', 'failed', 'cancelled', 'timed_out', 'outcome_unavailable'})
 DisplayCell = Annotated[str, StringConstraints(max_length=4096)] | None
 
 
@@ -123,11 +125,12 @@ class ExecutionSnapshot(InvestigationRequest):
 
     @model_validator(mode='after')
     def honest_observations(self):
-        terminal = self.state in {'completed', 'failed', 'cancelled', 'timed_out'}
+        terminal = self.state in TERMINAL_STATES
         if self.event_cursor > self.latest_event_cursor or self.event_cursor != 0:
             raise ValueError('Status does not consume event pages')
         if self.source == 'synthetic-fixture':
-            if self.execution_performed or self.termination_verified or self.termination_proof_sha256 is not None:
+            if (self.execution_performed or self.termination_verified or self.termination_proof_sha256 is not None
+                    or self.state in {'verifying', 'outcome_unavailable'}):
                 raise ValueError('Synthetic execution cannot claim physical observations')
         elif terminal and (not self.termination_verified or self.termination_proof_sha256 is None):
             raise ValueError('Real terminal state requires verified termination evidence')
@@ -137,6 +140,9 @@ class ExecutionSnapshot(InvestigationRequest):
             raise ValueError('Termination is a separate verified terminal observation')
         if self.state == 'cancelling' and not self.cancel_requested:
             raise ValueError('Cancelling requires a retained request')
+        if self.state in {'verifying', 'outcome_unavailable'} and (
+                self.execution_performed or self.outputs_manifest_sha256 is not None):
+            raise ValueError('Unconfirmed analysis outcomes cannot claim execution or outputs')
         if self.artifacts and (self.state != 'completed' or self.outputs_manifest_sha256 is None):
             raise ValueError('Only retained completed outputs may be inspected')
         if len({a.id for a in self.artifacts}) != len(self.artifacts) or len({a.name for a in self.artifacts}) != len(self.artifacts):
@@ -206,7 +212,7 @@ class ExecutionCancelResponse(ExecutionResponse):
             raise ValueError('Cancellation must identify a retained execution')
         if self.cancellation.status == 'requested' and not self.execution.cancel_requested:
             raise ValueError('Cancellation request must be durably retained')
-        if self.cancellation.status == 'already_terminal' and self.execution.state not in {'completed', 'failed', 'cancelled', 'timed_out'}:
+        if self.cancellation.status == 'already_terminal' and self.execution.state not in TERMINAL_STATES:
             raise ValueError('A cancellation acknowledgement cannot invent termination')
         return self
 

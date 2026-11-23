@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from types import SimpleNamespace
 import uuid
 
 from fastapi import FastAPI
@@ -20,6 +21,9 @@ from api import auth, experiment_workspace_routes as routes
 from api.rate_limit import policy_for_request
 from api.v1_runtime_routes import V1RuntimeConfiguration, _research_experiments
 from db.app_models import AppBase, AppUser, ResearchExperimentReservation
+from orchestration.experiment_sandbox.execution_store import ExecutionReservationBinding
+from orchestration.experiment_sandbox.proofs import PinnedTerminationIssuer, TerminationVerifierRegistry
+from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
 from orchestration.experiment_workspace import ExperimentWorkspaceError, ExperimentWorkspaceService
 from orchestration.research_experiments import ResearchExperimentError
 from schema.experiment_workspace import (
@@ -27,6 +31,7 @@ from schema.experiment_workspace import (
     ExecutionSnapshot, MAX_ARTIFACT_CHUNK, TablePreview,
 )
 from schema.research_experiments import ExperimentDispatchSnapshot
+from schema.experiment_execution import TerminationIssuerScope
 from tests.experiment_workspace_support import DurableSyntheticExecutionPort
 from tests.research_experiment_support import make_experiment_fixture
 
@@ -489,3 +494,32 @@ def test_auth_and_rate_scopes_are_fixed():
     assert auth.route_permission('POST', prefix + 'start') is None
     assert policy_for_request('POST', prefix + 'cancel').scope == 'experiment_cancel'
     assert policy_for_request('POST', prefix + 'artifact').scope == 'experiment_artifact'
+
+
+@pytest.mark.parametrize('attempt', ['retained-scientific-20261028-01', 'retained-owner-revoked-20261028-01'])
+def test_projection_revalidates_original_physical_proof_without_worker_access(attempt):
+    evidence = (Path(__file__).resolve().parents[1]
+                / 'docs/plans/ocean-v1/evidence/C23/cloud-session-20261028-retained')
+    observations = json.loads((evidence / 'actual-export01/operator-acceptance'
+                               / attempt / 'observations.json').read_text())
+    public = json.loads((evidence / 'control-public-pins.json').read_text())['cases'][observations['case']]
+    assert observations['evaluation']['passed'] and public['config_sha256'] == observations['config_sha256']
+    database = observations['database']
+    recorded, = database['research_experiment_execution']
+    binding = ExecutionReservationBinding.model_validate({k: v for k, v in recorded.items() if k != 'created_at'})
+    proof, = database['research_experiment_termination_proof']
+    release, = database['research_experiment_release']
+    closed = next(row for row in database['research_experiment_execution_event'] if row['id'] == proof['closed_event_id'])
+    assert release['proof_id'] == proof['id'] and release['closed_fence'] == closed['fence']
+    scope = TerminationIssuerScope.model_validate(binding.model_dump(include=set(TerminationIssuerScope.model_fields)))
+    issuer = PinnedTerminationIssuer(issuer_id=public['issuer_id'], key_id=public['key_id'], scope=scope,
+        public_key=bytes.fromhex(public['issuer_public_key_hex']), trust_scope='retained-operator')
+    registry = TerminationVerifierRegistry(issuers=[issuer], trust_scope='retained-operator', enabled=True)
+    assert registry.policy_sha256 == proof['verification_policy_sha256']
+    assert proof['packet_bytes'].startswith('\\x')
+    observed = SimpleNamespace(packet=bytes.fromhex(proof['packet_bytes'][2:]), packet_sha256=proof['packet_sha256'])
+    assert RetainedExecutionProjection._verified_release(observed, binding, SimpleNamespace(**closed), registry) == proof['packet_sha256']
+    with pytest.raises(ExperimentWorkspaceError) as mismatch:
+        RetainedExecutionProjection._verified_release(
+            observed, binding, SimpleNamespace(**{**closed, 'result_sha256': '0' * 64}), registry)
+    assert (mismatch.value.code, mismatch.value.status_code) == ('integrity_error', 409)

@@ -21,7 +21,7 @@ export type ExecutionResponses = { capability: ExecutionCapabilityResponse; stat
 export type ExperimentExecutionClient = { [K in keyof ExecutionRequests]: (request: ExecutionRequests[K], signal?: AbortSignal) => Promise<ExecutionResponses[K]> };
 export type PendingExecutionCancel = Readonly<{ request: ExecutionRequests["cancel"]; binding: ExperimentContextBinding }>;
 const defs = executionContractSchema.$defs as unknown as Record<string, ExperimentRule>;
-const terminal = (state: string) => ["completed", "failed", "cancelled", "timed_out"].includes(state);
+const terminal = (state: string) => ["completed", "failed", "cancelled", "timed_out", "outcome_unavailable"].includes(state);
 const invalid = (): never => { throw new ExperimentClientError("invalid_response", "The execution or artifact response could not be verified"); };
 export function sameExecutionBinding(a: ExperimentContextBinding, b: ExperimentContextBinding) { return a.investigation_id === b.investigation_id && a.conversation_id === b.conversation_id && a.context_revision_id === b.context_revision_id && a.snapshot_id === b.snapshot_id && a.context_payload_sha256 === b.context_payload_sha256; }
 export function executionRequest(value: ExperimentSnapshot) {
@@ -38,9 +38,10 @@ function semantics(name: string, value: any) {
   if (name === "ExecutionSnapshot") {
     if (value.event_cursor !== 0 || value.latest_event_cursor < value.event_cursor
       || value.termination_verified !== (value.termination_proof_sha256 !== null) || value.termination_verified && !terminal(value.state)
-      || value.source === "synthetic-fixture" && (value.execution_performed || value.termination_verified || value.termination_proof_sha256 !== null)
+      || value.source === "synthetic-fixture" && (value.execution_performed || value.termination_verified || value.termination_proof_sha256 !== null || ["verifying", "outcome_unavailable"].includes(value.state))
       || value.source === "retained-operator" && terminal(value.state) && (!value.termination_verified || value.termination_proof_sha256 === null)
       || value.source === "retained-operator" && value.state === "completed" && !value.execution_performed
+      || ["verifying", "outcome_unavailable"].includes(value.state) && (value.execution_performed || value.outputs_manifest_sha256 !== null)
       || value.state === "cancelling" && !value.cancel_requested
       || value.artifacts.length && (value.state !== "completed" || value.outputs_manifest_sha256 === null)
       || new Set(value.artifacts.map((a: any) => a.id)).size !== value.artifacts.length || new Set(value.artifacts.map((a: any) => a.name)).size !== value.artifacts.length
@@ -120,7 +121,7 @@ export function mergeExecution(previous: ExecutionResponse | null, next: Executi
   if (next.execution.latest_event_cursor < previous.execution.latest_event_cursor) return invalid();
   if (next.execution.state_revision === previous.execution.state_revision && experimentCanonical(next.execution) !== experimentCanonical(previous.execution)) return invalid();
   if (terminal(previous.execution.state) && experimentCanonical(previous.execution) !== experimentCanonical(next.execution)) return invalid();
-  if (previous.execution.state === "running" && next.execution.state === "queued" || previous.execution.state === "cancelling" && ["queued", "running"].includes(next.execution.state)
+  if (["running", "verifying"].includes(previous.execution.state) && next.execution.state === "queued" || previous.execution.state === "cancelling" && ["queued", "running"].includes(next.execution.state)
     || previous.execution.cancel_requested && !next.execution.cancel_requested) return invalid();
   return next;
 }

@@ -162,7 +162,7 @@ class V1ReadServices:
 
 def compose_read_services(*, session_factory, site_id, snapshot_store, registrations,
                           policy_resolver, snapshots, discovery_policy, policy_revision,
-                          cursor_key, experiment_environments=None):
+                          cursor_key, experiment_environments=None, experiment_execution_store=None):
     """Build actual read services from explicitly supplied source authority.
 
     This is a trusted programmatic composition seam, not configuration-driven
@@ -172,6 +172,8 @@ def compose_read_services(*, session_factory, site_id, snapshot_store, registrat
     """
     if not registrations:
         raise HostConfigurationError('Explicit sealed registrations are required for configured catalogue access')
+    if experiment_execution_store is not None and experiment_environments is None:
+        raise HostConfigurationError('An execution projection requires configured experiment review')
     catalogue = CatalogueService(resolver=FrozenCatalogueResolver(store=snapshot_store,
         policy_resolver=policy_resolver, registrations=registrations))
     browser = CatalogueBrowser(service=catalogue, snapshots=snapshots, permitted=discovery_policy,
@@ -191,7 +193,12 @@ def compose_read_services(*, session_factory, site_id, snapshot_store, registrat
         experiments = ResearchExperimentService(session_factory=session_factory, site_id=site_id,
             investigations=investigations, exporter=exporter, environments=experiment_environments,
             enabled=lambda: True, dispatch_enabled=lambda: False)
-        workspace = ExperimentWorkspaceService(experiments=experiments, enabled=lambda: True)
+        port = None
+        if experiment_execution_store is not None:
+            from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
+
+            port = RetainedExecutionProjection(experiments=experiments, store=experiment_execution_store)
+        workspace = ExperimentWorkspaceService(experiments=experiments, port=port, enabled=lambda: True)
     return V1ReadServices(catalogue, browser, investigations, runs, evidence, answers, experiments, workspace)
 
 

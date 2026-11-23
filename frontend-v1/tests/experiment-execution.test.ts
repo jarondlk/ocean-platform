@@ -80,7 +80,7 @@ for (const [description, mutate] of [
 
 test("retained operator terminal states require a separate termination proof and completed execution observation", () => {
   const value = status(); value.capability.source = "retained-operator"; value.execution!.source = "retained-operator";
-  for (const state of ["completed", "failed", "cancelled", "timed_out"] as const) {
+  for (const state of ["completed", "failed", "cancelled", "timed_out", "outcome_unavailable"] as const) {
     const next = structuredClone(value); next.execution!.state = state;
     assert.throws(() => parseExecutionModel("ExecutionResponse", next));
     next.execution!.termination_verified = true; next.execution!.termination_proof_sha256 = "a".repeat(64);
@@ -89,6 +89,25 @@ test("retained operator terminal states require a separate termination proof and
   }
   value.execution!.termination_verified = true; value.execution!.termination_proof_sha256 = "a".repeat(64);
   assert.throws(() => parseExecutionModel("ExecutionResponse", value));
+});
+
+test("unconfirmed retained outcomes preserve verification and expose no result", () => {
+  const pending = status();
+  pending.capability.source = "retained-operator";
+  pending.execution!.source = "retained-operator";
+  pending.execution!.state = "verifying";
+  parseExecutionModel("ExecutionResponse", pending);
+  const stopped = structuredClone(pending);
+  stopped.execution!.state = "outcome_unavailable";
+  stopped.execution!.termination_verified = true;
+  stopped.execution!.termination_proof_sha256 = "a".repeat(64);
+  stopped.execution!.state_revision++;
+  parseExecutionModel("ExecutionResponse", stopped);
+  assert.equal(mergeExecution(pending, stopped), stopped);
+  stopped.execution!.outputs_manifest_sha256 = "b".repeat(64);
+  assert.throws(() => parseExecutionModel("ExecutionResponse", stopped), ExperimentClientError);
+  pending.execution!.execution_performed = true;
+  assert.throws(() => parseExecutionModel("ExecutionResponse", pending), ExperimentClientError);
 });
 
 test("all response binding fields and explicit execution address must match the request", async () => {

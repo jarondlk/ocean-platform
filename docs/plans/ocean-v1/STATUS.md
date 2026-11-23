@@ -1,5 +1,16 @@
 # Implementation status
 
+## November 23 — Durable experiment status and history
+
+The experiment workspace can read C23 status and consecutive history from an
+explicit isolated store. It binds the current owner and frozen review and
+verifies a release's signed termination packet before returning terminal
+status. Consumed start remains pending verification. Confirmed release
+without published output reports an unavailable outcome. This is an
+undeployed B3 increment. The hosted store, supervisor, cancellation and
+validated artifact delivery remain open. See the
+[deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Isolated Tokyo worker and hosted backup readback
 
 The rebuilt gVisor worker passed two actual synthetic C22 runs in the beta

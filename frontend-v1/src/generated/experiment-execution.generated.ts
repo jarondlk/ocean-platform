@@ -152,7 +152,7 @@ export type ExecutionResponse = {
 
 export type ExecutionSnapshot = {
   "id": string;
-  "state": "queued" | "running" | "cancelling" | "completed" | "failed" | "cancelled" | "timed_out";
+  "state": "queued" | "running" | "cancelling" | "verifying" | "completed" | "failed" | "cancelled" | "timed_out" | "outcome_unavailable";
   "state_revision": number;
   "source": "synthetic-fixture" | "retained-operator";
   "execution_performed": boolean;
@@ -1180,10 +1180,12 @@ export const executionContractSchema = {
             "queued",
             "running",
             "cancelling",
+            "verifying",
             "completed",
             "failed",
             "cancelled",
-            "timed_out"
+            "timed_out",
+            "outcome_unavailable"
           ],
           "title": "State",
           "type": "string"

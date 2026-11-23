@@ -124,13 +124,15 @@ B2 has a deployed 42-dataset disposition ledger. Disposable export and
 withdrawal tests pass locally. Verification of actual browser files and live
 withdrawal remains open. B3's dedicated Tokyo worker used a fresh isolated
 database for an actual synthetic C22 approval, reservation, sandbox run,
-artifact publication and independent release. Public start, the live execution
-projection, supervisor, and production capacity and recovery remain open.
+artifact publication and independent release. The workspace now has a local
+owner-scoped ledger reader for status and event history. Hosted read and
+artifact delivery, public start, the supervisor, and production capacity and
+recovery remain open.
 B4's local restore rehearsal preserved retained evidence and honored a newer
 withdrawal. The live Tokyo database has seven successful automated backups
 and point-in-time recovery enabled. A hosted restore and measured recovery
 objectives are still required. See the
-[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--isolated-tokyo-worker-and-hosted-backup-readback).
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--durable-experiment-status-and-history).
 Local eDNA and worker preparation can proceed independently when their inputs are
 available; neither borrows acceptance from Research. B2 and B3 can overlap after
 their own readiness checks. Backup/alert preparation can begin early. These are dependency-based

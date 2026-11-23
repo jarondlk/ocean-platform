@@ -7,16 +7,20 @@ from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
 import os
+from dataclasses import replace
 import threading
 from types import SimpleNamespace
 import uuid
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from sqlalchemy import inspect, select, text
 from sqlalchemy.exc import DBAPIError
 
 from db.app_models import ResearchExperiment, ResearchExperimentApproval, ResearchExperimentRevision
+from api.experiment_workspace_routes import router as workspace_router
 from db.experiment_execution_models import EXECUTION_MODELS, IDENTITY_HASH_FIELDS
 from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.execution_store import (
@@ -26,6 +30,8 @@ from orchestration.experiment_sandbox.execution_store import (
 from orchestration.experiment_sandbox.proofs import (
     PinnedTerminationIssuer, TerminationVerifierRegistry, canonical_packet_bytes, sign_termination_claims,
 )
+from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
+from orchestration.experiment_workspace import ExperimentWorkspaceService
 from schema.context_catalogue import canonical_json
 from schema.experiment_execution import TerminationClaims, TerminationIssuerScope
 from schema.research_experiments import EnvironmentDescriptor
@@ -104,13 +110,15 @@ def reserved(case, *, actor=None):
     return store,binding
 
 
-def closed(store,binding, *, publish=False):
+def closed(store,binding, *, publish=False, observe_started=None):
     start_id = str(uuid.uuid4())
     args = dict(execution_id=binding.execution_id,start_id=start_id,host_boot_id=str(uuid.uuid4()),
         journal_id=str(uuid.uuid4()),journal_epoch=1,profile_sha256=_hash('prepared-profile'),
         preceding_journal_sha256=_hash('journal-before-start'))
     with store.controller_transaction() as session:
         store.record_event_in_transaction(session,expected_fence=1,event_id=start_id,kind='start_consumed',**args)
+    if observe_started is not None:
+        observe_started()
     fence = 2
     if publish:
         with store.controller_transaction() as session:
@@ -490,3 +498,100 @@ def test_altered_authenticated_witness_replay_cannot_replace_recorded_proof(actu
     with pytest.raises(DBAPIError):
         replay_store.record_verified_termination(execution_id=b.execution_id,packet_bytes=changed)
     assert count(actual,'research_experiment_termination_proof')==1
+
+
+@pytest.mark.parametrize('publish', [True, False])
+def test_retained_workspace_reports_only_proven_execution(actual, publish, monkeypatch):
+    fixture = actual.fixture
+    fixture.service.executor = None
+    binding = prepared(actual)
+    store = store_for(actual, binding)
+    request = json.loads(binding.request_json)
+    request.pop('idempotency_key')
+
+    def workspace(bound_store):
+        return ExperimentWorkspaceService(experiments=fixture.service, enabled=lambda: True,
+            port=RetainedExecutionProjection(experiments=fixture.service, store=bound_store))
+
+    app = FastAPI()
+    app.state.research_experiment_service = fixture.service
+    app.state.experiment_workspace_service = workspace(store)
+    actor = fixture.user
+
+    @app.middleware('http')
+    async def authorize(http_request, call_next):
+        http_request.state.current_user = actor
+        return await call_next(http_request)
+
+    app.include_router(workspace_router)
+    with TestClient(app) as client:
+        def call(action, payload, code=200):
+            response = client.post('/research/experiment-executions/' + action, json=payload)
+            assert response.status_code == code
+            assert response.headers['cache-control'] == 'no-store'
+            return response.json()
+
+        assert call('status', request)['execution'] is None
+        with store.controller_transaction() as session:
+            assert store.reserve_in_transaction(session, binding) == binding.execution_id
+        identified = {**request, 'execution_id': binding.execution_id}
+        result = call('status', identified)
+        assert result['execution']['state'] == 'queued'
+        assert result['execution']['state_revision'] == 1
+        assert result['capability']['source'] == 'retained-operator'
+        assert not any(result['capability'][flag] for flag in
+                       ('start_enabled', 'cancel_enabled', 'artifacts_enabled'))
+        actor = fixture.admin
+        call('status', identified, 404)
+        actor = fixture.user
+        call('status', {**identified, 'execution_id': str(uuid.uuid4())}, 404)
+        call('cancel', {**identified, 'idempotency_key': str(uuid.uuid4())}, 503)
+
+        def observe_start():
+            started = call('events', {**identified, 'after_cursor': 1})
+            assert [event['kind'] for event in started['items']] == ['start_consumed']
+            assert started['execution']['state'] == 'verifying'
+            assert not started['execution']['execution_performed']
+
+        bound = closed(store, binding, publish=publish, observe_started=observe_start)
+        signed = packet(actual, bound)
+        proof_id = store.record_verified_termination(execution_id=binding.execution_id, packet_bytes=signed)
+        pending = call('status', identified)['execution']
+        assert pending['state'] == 'verifying' and not pending['termination_verified']
+        assert pending['outputs_manifest_sha256'] is None
+
+        store.release_terminated(execution_id=binding.execution_id, proof_id=proof_id,
+                                 expected_fence=bound.closed_fence)
+        paused = C23ExecutionStore(config=replace(store.config, enabled=lambda: False))
+        app.state.experiment_workspace_service = workspace(paused)
+        call('status', identified, 409)
+
+        # Exercise the HTTP representation downstream of a successful proof
+        # check. The actual port above refuses the synthetic software proof.
+        def verified_fixture_release(row, retained_binding, closed_event, _registry):
+            assert row.packet_sha256 == hashlib.sha256(signed).hexdigest()
+            assert retained_binding == binding and closed_event.fence == bound.closed_fence
+            return row.packet_sha256
+
+        monkeypatch.setattr(RetainedExecutionProjection, '_verified_release', staticmethod(verified_fixture_release))
+        completed = call('status', identified)['execution']
+        assert completed['state'] == ('completed' if publish else 'outcome_unavailable')
+        assert completed['execution_performed'] is publish
+        assert completed['termination_verified'] and completed['termination_proof_sha256'] == hashlib.sha256(signed).hexdigest()
+        assert completed['outputs_manifest_sha256'] == (_hash('validated-output') if publish else None)
+        assert completed['artifacts'] == []
+
+        observed = []
+        cursor = 0
+        while cursor < completed['latest_event_cursor']:
+            page = call('events', {**identified, 'after_cursor': cursor, 'limit': 2})
+            assert page['execution'] == completed
+            observed.extend(event['kind'] for event in page['items'])
+            cursor = page['next_cursor']
+        assert observed == ['reserved', 'start_consumed', *(['publication_retained'] if publish else []), 'closed', 'released']
+        call('events', {**identified, 'after_cursor': cursor + 1}, 409)
+
+        child = fixture.retained.registrations[request['snapshot_id']].child_snapshot_ids[0]
+        fixture.retained.store.revoke(child)
+        withheld = client.post('/research/experiment-executions/status', json=identified)
+        assert withheld.status_code in (403, 404, 503) and 'execution' not in withheld.json()

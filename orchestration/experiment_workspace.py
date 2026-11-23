@@ -100,6 +100,11 @@ class ExperimentExecutionPort(ABC):
     def events(self, access: ExecutionAccess, execution_id, after_cursor, limit):
         """Return bounded consecutive {items,next_cursor,latest_event_cursor,has_more}."""
 
+    def status_and_events(self, access: ExecutionAccess, execution_id, after_cursor, limit):
+        """Ports may use one durable read for both the snapshot and page."""
+        page = self.events(access, execution_id, after_cursor, limit)
+        return self.status(access, execution_id), page
+
     @abstractmethod
     def cancel(self, access: ExecutionAccess, execution_id, idempotency_key, *, closing_authorize):
         """Durably retain exact retry key; return a CancellationAcknowledgement, never termination."""
@@ -241,6 +246,9 @@ class ExperimentWorkspaceService:
 
     def _snapshot(self, access, user, execution_id=None, *, resolve_attachments=True):
         result = self._port_call('status', access, execution_id)
+        return self._verified_snapshot(access, user, execution_id, result, resolve_attachments=resolve_attachments)
+
+    def _verified_snapshot(self, access, user, execution_id, result, *, resolve_attachments=True):
         if result is None:
             return None
         if type(result) is not dict or set(result) != {'access_sha256', 'execution'} or result['access_sha256'] != access.sha256:
@@ -297,18 +305,21 @@ class ExperimentWorkspaceService:
             if name == 'status':
                 return self._response(access, capability, None)
             raise ExperimentWorkspaceError()
-        execution = self._snapshot(access, user, data.get('execution_id'))
-        if name != 'status' and execution is None:
+        if name == 'events':
+            projected, page = self._port_call('status_and_events', access, data['execution_id'],
+                                             data['after_cursor'], data['limit'])
+            execution = self._verified_snapshot(access, user, data['execution_id'], projected)
+        else:
+            execution = self._snapshot(access, user, data.get('execution_id'))
+        if execution is None and (name != 'status' or data.get('execution_id') is not None):
             raise ExperimentWorkspaceError('not_found', 404)
         result = self._response(access, capability, execution)
         if name == 'events':
-            page = self._port_call('events', access, execution['id'], data['after_cursor'], data['limit'])
             if type(page) is not dict or set(page) != {'items', 'next_cursor', 'latest_event_cursor', 'has_more'}:
                 raise ExperimentWorkspaceError('integrity_error', 409)
             if len(page['items']) > data['limit']:
                 raise ExperimentWorkspaceError('integrity_error', 409)
             result.update(execution_id=execution['id'], after_cursor=data['after_cursor'], **page)
-            result['execution'] = self._snapshot(access, user, execution['id'])
         elif name == 'cancel':
             if not capability['cancel_enabled']:
                 raise ExperimentWorkspaceError()
