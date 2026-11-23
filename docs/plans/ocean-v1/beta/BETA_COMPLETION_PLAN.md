@@ -119,7 +119,7 @@ candidate:
 | B4 — Prove durable operations | Finish supervised outbox lifecycle, observability, retention and live recovery; measure actual scale and cost | Research sweep follows B1 acceptance and budget; worker recovery follows B3 | Independent beta backup and isolated restore; observed RPO/RTO; held evidence and withdrawal preserved; uncertain ACK/crash recovery; alert/pause/drain readbacks |
 | B5 — Accept and release beta | Repeat C26 integrated evaluation on the deployed candidate and C27 rollout/rollback rehearsal; obtain actual review and final release decision | B1–B4 and required scientific/operational evidence | Completed 43-row evaluation plus 20-gate overlay, evidence manifest, source-bound CI, signed-in UX acceptance, recovery/rollback observations and final release receipt |
 
-B1 is accepted; B2 data/catalogue completion is the next implementation priority.
+B1 is accepted. Finish the remaining B2 data and catalogue checks alongside B3.
 B2 has a deployed 42-dataset disposition ledger. Disposable export and
 withdrawal tests pass locally. Verification of actual browser files and live
 withdrawal remains open. B3's dedicated Tokyo worker used a fresh isolated
@@ -137,19 +137,41 @@ restart and drain, and a signed-in execution that publishes and downloads the
 exact bytes. The refreshed source and sealed materials were verified on the
 private Tokyo worker. A same-boot host connectivity control under the private
 network boundary is still needed for the physical trial.
-The private worker poll now serializes execution and teardown and provides a
-process-local drain. The hosted supervisor still needs persistent operations,
-privileged installation, cancellation and physical restart evidence.
+The private worker poll serializes execution and teardown. Its drain state
+survives replacement of the supervisor process and requires an explicit resume
+for the current drain generation. The hosted supervisor still needs privileged
+installation, cancellation and physical restart evidence.
 B4's local restore rehearsal preserved retained evidence and honored a newer
 withdrawal. The live Tokyo database has seven successful automated backups
 and point-in-time recovery enabled. A hosted restore and measured recovery
 objectives are still required. See the
-[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--private-experiment-supervisor-polling-and-drain).
-Local eDNA and worker preparation can proceed independently when their inputs are
-available; neither borrows acceptance from Research. B2 and B3 can overlap after
-their own readiness checks. Backup/alert preparation can begin early. These are dependency-based
-milestones, not calendar promises; actual model quality and production worker
-qualification remain material uncertainties.
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--durable-experiment-worker-drain).
+B2 and B3 can overlap after their own readiness checks. Begin backup and alert
+preparation while the worker and signed-in tests are pending.
+
+### Remaining release sequence
+
+1. **Qualify the private worker.** Install the exact current archive on the
+   Tokyo worker. Validate the boot, protected imports and private networking.
+   The current C23 harness also requires a same-boot host-positive control.
+   Qualify a control under the private topology against the C23 contract
+   before crediting the physical trial. Exercise drain/restart, explicit
+   resume, cancellation and independently verified release. Measure the
+   required production concurrency on the selected host.
+2. **Complete the signed-in B3 journey.** Verify actual runtime identities
+   against the private results prefix, including narrowly scoped writes,
+   exact readback and denial outside the scope. Run one approved experiment
+   from proposal and reservation through publication and a fresh signed-in
+   download. Compare the downloaded digest with the published manifest.
+3. **Close B2 and B4.** Reopen saved CSV/JSON in a download-capable signed-in
+   browser and verify withdrawal on a disposable source. Exercise the beta
+   private queue, alerts and isolated restore. Record measured recovery time
+   and recovery point, and verify evidence and later withdrawals against the
+   restored state.
+4. **Accept the release.** Run the applicable C26 evaluation and C27 rollout
+   and rollback rehearsal against the exact deployed candidate. Record beta
+   sign-off against the evidence manifest and the existing ¥50,000 monthly
+   beta target.
 
 ### B0/B1: immediate execution sequence
 

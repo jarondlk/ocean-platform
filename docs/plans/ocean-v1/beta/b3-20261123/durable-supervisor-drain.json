@@ -1,0 +1,82 @@
+{
+  "acceptance": {
+    "cloud_or_iam_updated": false,
+    "durable_control_implemented": true,
+    "hosted_restart_and_physical_control_qualified": false,
+    "hosted_scoped_storage_and_signed_in_download_qualified": false,
+    "production_dispatch_enabled": false,
+    "production_worker_installed": false
+  },
+  "captured_utc": "2026-11-23T10:58:30.884229+00:00",
+  "hosted": {
+    "observation": "in_progress",
+    "run_id": 45160738195,
+    "source_commit": "3f5698088e309cdab310eb5d07496ecc0ae33b54",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45160738195"
+  },
+  "local_verification": {
+    "disposable_postgresql_stopped": true,
+    "focused_sandbox_and_journal_tests_passed": 298,
+    "legacy_journal_opens": true,
+    "physical_guest_run": false,
+    "previous_worker_fails_closed_after_control_initialization": true,
+    "restricted_postgresql_tests_passed": 30,
+    "ruff_passed": true,
+    "scenarios": [
+      "Drain persists after process kill and stays visible to journals reopened with a new boot identifier",
+      "Latest drain generation invalidates stale resume",
+      "Active worker lock rejects resume until cleanup has finished",
+      "Initialized journal with a missing control table or row fails closed",
+      "Drained peer and replacement supervisors do not pick up reserved work"
+    ],
+    "sqlite_version": "3.54.1"
+  },
+  "previous_supervisor_receipt": "private-supervisor-poll.json",
+  "private_candidate_manifest_local_path": "/private/tmp/ocean-b3-drain-worker-3f56980.ylfmxaqf/tokyo-candidate/tokyo-worker-source.json",
+  "release_plan": "../BETA_COMPLETION_PLAN.md#remaining-release-sequence",
+  "source_commit": "3f5698088e309cdab310eb5d07496ecc0ae33b54",
+  "tokyo_candidate": {
+    "archive_sha256": "33f8d3779cd8ad5ea74d0d460c4989bb07fb4f837b6183d842458f09cf11b47d",
+    "current_boot_qualified": false,
+    "installed_on_target": false,
+    "intended_remote_root": "/var/lib/ocean-c23/operator-source-beta-b3-drain-3f56980",
+    "intended_target": {
+      "boot_source_image_id": "1892012953239034119",
+      "instance": "ocean-v1-beta-b3-worker-1123",
+      "instance_id": "4080105203514106848",
+      "network": "ocean-v1-beta-b3-isolated",
+      "project": "ocean-v1-beta-20261101",
+      "subnet": "ocean-v1-beta-b3-tokyo",
+      "zone": "asia-northeast1-a"
+    },
+    "manifest_sha256": "317ea8f7ad57ef68eb5a1cfdb6d54214c4240bce95344660d65f6e3c93de014e",
+    "parent_target_archive_sha256": "60fded5712a11926eb78e86105d9610eb57641548fcde9c2bbfab32c7bbf7d96",
+    "prior_target_bindings_reused": 6,
+    "source_commit": "3f5698088e309cdab310eb5d07496ecc0ae33b54",
+    "source_files": 250
+  },
+  "version": "ocean-beta-b3-durable-supervisor-drain-v1",
+  "worker_archive": {
+    "all_archive_bytes_rechecked": true,
+    "archive_bytes": 4464640,
+    "archive_sha256": "7fa146308b520c590e41c6a2aa57d0409344aa861e8617cc9bc62f63f092cda2",
+    "changes": {
+      "orchestration/experiment_sandbox/journal.py": {
+        "current": "257ebfeaa3533339ffd5babdff4786a4e378b3d7e8f7e4ddb5596b20f07fab34",
+        "previous": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b"
+      },
+      "orchestration/experiment_sandbox/retained_supervisor.py": {
+        "current": "ac1f25db635c0981aa15fdc4f87dab3cc0e7b2a12a0e59903da6367886ad48be",
+        "previous": "18e1a62c52f1d2c8daeeb5274357b2ab873701101e0488c0a001f24bb8c55004"
+      }
+    },
+    "cloud_transfer": false,
+    "guest_init_mode_and_bytes_verified_without_import": true,
+    "parent_archive_source": "f2652180a6de64354980f06d595185fb8ad51bf3",
+    "previous_archive_sha256": "129e4309aa8d77777fcaf0c451da33bf6e30dc327e7306d7fcb0fe3c38b78999",
+    "required_host_import_origins_verified_locally": 20,
+    "source": "3f5698088e309cdab310eb5d07496ecc0ae33b54",
+    "source_files": 250,
+    "target_bound": false
+  }
+}

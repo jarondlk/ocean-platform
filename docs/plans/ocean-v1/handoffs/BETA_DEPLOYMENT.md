@@ -1,5 +1,31 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Durable experiment worker drain
+
+The supervisor persists its drain in the local SQLite journal. Worker polls
+read the shared state before preparing a job and recorded proofs can still
+release capacity while drained. Resume requires the exact drain generation
+and an idle private worker lock. A later drain invalidates an earlier resume
+request. The status readback includes the drain generation and the local
+process's active-work observation.
+
+Existing journals open in the new worker without a manual migration. On the
+first drain, the worker writes the control table and its immutable metadata
+record in one transaction. An older binary rejects that journal in its schema
+check after initialization. Worker rollback and recovery require a source
+revision that preserves the initialized drain format.
+
+The change passed 298 focused sandbox/journal tests and 30 restricted
+PostgreSQL tests. The worker was also checked against an older journal and the
+prior binary's fail-closed schema check. The refreshed private Tokyo candidate
+contains 250 verified source files. It is staged locally for the physical trial.
+
+Follow the [remaining release sequence](../beta/BETA_COMPLETION_PLAN.md#remaining-release-sequence).
+Qualify the refreshed archive and same-boot connectivity control within the
+private Tokyo boundary, then verify runtime storage access and a signed-in
+publication and download. The earlier physical and private-boot receipts remain
+bound to their original source. [Verification receipt](../beta/b3-20261123/durable-supervisor-drain.json).
+
 ## November 23 — Private experiment supervisor polling and drain
 
 The C23 acceptance harness now uses a single-job private supervisor with

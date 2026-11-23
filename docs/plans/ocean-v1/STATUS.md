@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 23 — Durable experiment worker drain
+
+B3 records the private worker's drain in its SQLite journal. A restarted
+supervisor observes the same state. A resume requires the current drain
+generation and an idle worker lock. Reconciliation of independently recorded
+proofs still runs while drained. The physical Tokyo trial, runtime storage
+permissions and signed-in publish and download remain open.
+See the [remaining release sequence](beta/BETA_COMPLETION_PLAN.md#remaining-release-sequence).
+
 ## November 23 — Private experiment supervisor polling and drain
 
 B3 has a single-job worker poll over the retained C23 ledger. It reconciles
