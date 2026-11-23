@@ -10,6 +10,13 @@ Unsupported crash/reboot/queued capacity-held cases, raw-frame retention limits,
 scientific approval and separate production/deployment boundaries retain their
 explicit qualifications; completion enables no serving route or feature flag.
 
+The explicitly scoped private retained trial can exercise the synthetic C22
+lifecycle on a worker with no public IP and Private Google Access disabled.
+Its same-boot control connects only to the bound loopback transport, checks live
+metadata and requires the fresh private network seal. Its receipt covers the
+observed lifecycle only. The full C23 network suite still requires its separate
+host external connectivity control and corresponding guest enforcement evidence.
+
 Original local checkpoint, version `c23-sandbox-contract-v1`: the paragraphs
 below describe the earlier local implementation checkpoint
 on `overhaul`, following delivered C22 source `66b4106`, CI `39539257759` and

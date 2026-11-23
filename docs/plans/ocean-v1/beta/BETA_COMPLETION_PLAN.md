@@ -141,23 +141,24 @@ The private worker poll serializes execution and teardown. Its drain state
 survives replacement of the supervisor process and requires an explicit resume
 for the current drain generation. The hosted supervisor still needs privileged
 installation, cancellation and physical restart evidence.
+The private Tokyo trial now verifies one actual retained synthetic lifecycle on
+source `286a508`, from approval through signed termination and release. This
+closes the scoped private lifecycle trial. Scoped runtime storage, signed-in
+artifact delivery, the full C23 network gate and production capacity remain open.
 B4's local restore rehearsal preserved retained evidence and honored a newer
 withdrawal. The live Tokyo database has seven successful automated backups
 and point-in-time recovery enabled. A hosted restore and measured recovery
 objectives are still required. See the
-[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--durable-experiment-worker-drain).
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--private-tokyo-retained-lifecycle-passed).
 B2 and B3 can overlap after their own readiness checks. Begin backup and alert
 preparation while the worker and signed-in tests are pending.
 
 ### Remaining release sequence
 
-1. **Qualify the private worker.** Install the exact current archive on the
-   Tokyo worker. Validate the boot, protected imports and private networking.
-   The current C23 harness also requires a same-boot host-positive control.
-   Qualify a control under the private topology against the C23 contract
-   before crediting the physical trial. Exercise drain/restart, explicit
-   resume, cancellation and independently verified release. Measure the
-   required production concurrency on the selected host.
+1. **Complete worker qualification.** The private Tokyo lifecycle passed on
+   the installed source. The remaining checks include the full C23 network
+   control, hosted drain/restart, explicit resume, cancellation and measured
+   production concurrency on the selected host.
 2. **Complete the signed-in B3 journey.** Verify actual runtime identities
    against the private results prefix, including narrowly scoped writes,
    exact readback and denial outside the scope. Run one approved experiment

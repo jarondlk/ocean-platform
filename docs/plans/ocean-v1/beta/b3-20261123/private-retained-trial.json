@@ -1,0 +1,136 @@
+{
+  "acceptance": {
+    "b3_complete": false,
+    "hosted_runtime_storage_qualified": false,
+    "production_execution_enabled": false,
+    "real_signed_in_beta_execution_and_download_qualified": false,
+    "serving_deployment_or_iam_policy_changed": false,
+    "synthetic_private_retained_lifecycle_passed": true
+  },
+  "actual_retained_trial": {
+    "actual_approved_c22_reservation": true,
+    "cgroup_empty": true,
+    "checks": {
+      "C22_reservation_released": true,
+      "actual_analysis_success": true,
+      "actual_cleanup_retained": true,
+      "durable_terminal": true,
+      "no_fake_outbox": true,
+      "one_actual_start": true,
+      "one_proof": true,
+      "one_release": true,
+      "operator_pipeline_healthy": true,
+      "publication_expected": true,
+      "publication_ledger_expected": true,
+      "release_acknowledged": true,
+      "revocation_observed": true,
+      "rootfs_unmounted": true,
+      "scientific_unverified": true,
+      "whole_cgroup_empty": true
+    },
+    "elapsed_runtime_seconds": 74.68939862600001,
+    "passed": true,
+    "published_outputs_manifest_sha256": "0e28260f59a7b6ec506038a1fb57013dcd19aa52a964fa7ea55966e55fdce79c",
+    "real_beta_data_or_user_used": false,
+    "release_id": "c1a5845a-eb4b-57ab-be6c-206b3283897d",
+    "rootfs_unmounted": true,
+    "scientific_approval": "not_independently_verified",
+    "sealed_terminal": {
+      "journal_epoch": 1,
+      "journal_id": "fa84c874-615c-4fa8-9dc3-37236eaffffb",
+      "terminal_head_sha256": "a76a02eea683a4ebd71db5e813b4621e0aab4aa0fca208dcb37cef3bba3d130e",
+      "terminal_result_sha256": "033945f495ca4695965d5a26e0fec4d7d69cd197f8721f9b81151fc037e46ed6",
+      "terminal_sequence": 11
+    },
+    "termination_proof_id": "8e6a8150-ff20-53d8-9bd6-15e93903816b"
+  },
+  "captured_utc": "2026-11-23T11:42:42.177631+00:00",
+  "fresh_process_journal_readback": {
+    "drain_generation": 1,
+    "draining": true,
+    "fresh_operator_process": true,
+    "observations_sha256": "d214c6db53a112551ef30c9887933fa90e7f884e362803b988e44ff5672654e3",
+    "same_boot": true,
+    "terminal_head_matched": true
+  },
+  "network": {
+    "external_host_positive_control_verified": false,
+    "full_c23_network_qualified": false,
+    "host_control_receipt_sha256": "3a1cbb262e5718c85ec3ddea782a387e0e290b9851c6d00d8d58b901ae1ce5f8",
+    "network_seal_sha256": "738f668446c484819ada663c1bd1d48f0d6dfc5cf1b648f8d0e292d00476eec4",
+    "private_google_access_enabled": false,
+    "private_loopback_control_verified": true,
+    "service_account_attached": false,
+    "verified_no_public_ip_or_cloud_nat": true
+  },
+  "previous_source_receipt": "durable-supervisor-drain.json",
+  "scope": "private-retained-only",
+  "source": {
+    "archive_sha256": "ba816c931e77772726dd8a8df3ba906e803d8945ca07206473eec4661ba4abbe",
+    "manifest_sha256": "19a7d1a8d887c307bc190ae5c7cc94504f08c438b53e88350f7a9964d717d80f",
+    "parent_source": "3f5698088e309cdab310eb5d07496ecc0ae33b54",
+    "source": "286a5088cf335f0622c7b11f8f87c2880ae272d0",
+    "source_files": 250,
+    "source_supersessions": {
+      "sandbox/experiment/gcp/run_operator_acceptance.py": {
+        "current": "5c0066c84f26e11ed537208bea281848ec8c6e4710e00a7802efd48d08ab3682",
+        "previous": "65c40b26082b3dab0236ad9f37c9b47a97771a21fa4839369f04d85582ff7d04"
+      },
+      "sandbox/experiment/gcp/run_retained_acceptance.py": {
+        "current": "ebd307401781a8cdb546c1219b3ce67329b8314aeb2365243c69fcf88b7800a8",
+        "previous": "8a7dd6d226b880c58db566e0243c223ec84ad6d39873fc95f77c4898d644a41c"
+      }
+    },
+    "tokyo_bindings": 6
+  },
+  "source_worker_verification": {
+    "archive_sha256": "ba816c931e77772726dd8a8df3ba906e803d8945ca07206473eec4661ba4abbe",
+    "boot_id": "9a595c85-ca8b-41c2-9e50-a5e93b482716",
+    "guest_executed": false,
+    "image_digest": "sha256:0bbf97f52defc46e2a187562e28599d40730e51848ab527859b644e40f232030",
+    "installed_path": "/var/lib/ocean-c23/operator-source-beta-b3-private-286a508",
+    "instance_id": "4080105203514106848",
+    "live_metadata_no_public_ip": true,
+    "manifest_sha256": "19a7d1a8d887c307bc190ae5c7cc94504f08c438b53e88350f7a9964d717d80f",
+    "protected_source_files_verified": 250,
+    "required_host_imports_verified": 20,
+    "required_source_paths_verified": 21,
+    "retained_image_materials_verified": true,
+    "rootfs_inventory_sha256": "5108c404be01831f488d8898f13767ad7b1e3aa2b6f40e5423f64cacb51e3348",
+    "runtime_manifest_sha256": "3bf90990a2c037fed3dc72fadface76a66247f595bce5a22588a1153970d4fa8",
+    "source_commit": "286a5088cf335f0622c7b11f8f87c2880ae272d0",
+    "sqlite_version": "3.54.1",
+    "target": {
+      "instance": "ocean-v1-beta-b3-worker-1123",
+      "linux_root_guard": true,
+      "project": "ocean-v1-beta-20261101"
+    }
+  },
+  "teardown": {
+    "disabled_disposable_postgresql_logins": 3,
+    "disposable_postgresql_stopped": true,
+    "instance_runtime_seconds": 747.627,
+    "provider_vm_readback": {
+      "has_public_ip": false,
+      "instance_id": "4080105203514106848",
+      "last_start": "2026-11-23T03:29:37.537-08:00",
+      "last_stop": "2026-11-23T03:42:05.164-08:00",
+      "max_run_duration_seconds": 7200,
+      "service_account_attached": false,
+      "status": "TERMINATED"
+    },
+    "temporary_db_credentials_and_signer_removed": true,
+    "temporary_os_login_key_revoked": true,
+    "trial_tunnels_closed": true
+  },
+  "verification": {
+    "focused_local_tests_passed": 213,
+    "legacy_frontend_dependency_audit_failed": true,
+    "prior_durable_drain_source_backend_cancelled": true,
+    "prior_durable_drain_source_postgresql_passed": true,
+    "source_bound_backend_and_postgresql_pending_at_readback": true,
+    "source_bound_ci_run": "https://github.com/jarondlk/ocean-platform/actions/runs/45165585546",
+    "source_bound_v1_jobs_passed": 2
+  },
+  "version": "ocean-beta-b3-private-retained-trial-v1"
+}

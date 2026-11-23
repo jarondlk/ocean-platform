@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 23 — Private Tokyo retained lifecycle passed
+
+Source `286a508` passed an actual synthetic C22 experiment on the existing
+private Tokyo worker. The run consumed one start, published its validated
+output, recorded one signed physical termination proof and released the
+reservation. The same-boot private transport and isolation checks passed.
+The full C23 network gate and the signed-in beta storage and download journey
+remain open. See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Durable experiment worker drain
 
 B3 records the private worker's drain in its SQLite journal. A restarted

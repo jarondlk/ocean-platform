@@ -1,5 +1,28 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Private Tokyo retained lifecycle passed
+
+The existing Tokyo VM ran the approved synthetic science fixture on source
+`286a508` from a 250-file verified archive. The retained runner verified
+the same-boot metadata and loopback database controls and a fresh network
+seal. The VM kept its private network, no public IP or service account,
+and disabled Private Google Access. The disposable database used three
+separate restricted SCRAM roles through the approved private IAP connection.
+
+The run used one retained C22 approval and one consumed start. It published
+the validated synthetic output, recorded one signed physical termination proof
+and independently released the slot. The rootfs unmounted and the cgroup was
+empty. A fresh worker process matched the terminal journal head and read the
+persisted drain at generation one. The on-host publication used the isolated
+worker spool. The trial VM and disposable database are stopped, and the
+temporary operator key and trial credentials were removed. The full C23
+network acceptance still requires its separate
+external control and guest enforcement evidence.
+
+Qualify scoped runtime storage and a signed-in publish and download next.
+Production supervisor cancellation, capacity, recovery and release acceptance
+remain open. [Private trial receipt](../beta/b3-20261123/private-retained-trial.json).
+
 ## November 23 — Durable experiment worker drain
 
 The supervisor persists its drain in the local SQLite journal. Worker polls
