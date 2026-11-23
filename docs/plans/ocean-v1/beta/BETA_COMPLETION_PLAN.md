@@ -159,8 +159,9 @@ preparation while the worker and signed-in tests are pending.
    the installed source. The remaining checks include the full C23 network
    control, hosted drain/restart, explicit resume, cancellation and measured
    production concurrency on the selected host.
-2. **Complete the signed-in B3 journey.** Verify actual runtime identities
-   against the private results prefix, including narrowly scoped writes,
+2. **Complete the signed-in B3 journey.** Wire the workspace into the deployed
+   Research host with the dedicated read-only ledger login and pinned verifier.
+   Verify actual runtime identities against the private results prefix, including narrowly scoped writes,
    exact readback and denial outside the scope. Run one approved experiment
    from proposal and reservation through publication and a fresh signed-in
    download. Compare the downloaded digest with the published manifest.

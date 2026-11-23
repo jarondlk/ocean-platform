@@ -1,5 +1,36 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Read-only ledger for experiment downloads
+
+The v1 workspace now requires a dedicated ledger reader for a serving host.
+The PostgreSQL setup grants only the projection's columns across the execution,
+state, event, release and termination-proof tables. Each repeatable-read,
+read-only transaction checks the login, database, schema and effective grants.
+A controller credential or extra application table access blocks serving.
+Owner and current source checks, proof verification and artifact hashing still
+apply. The explicit operator projection remains available to its operator callers.
+The change passed 73 host/workspace tests and 31 native PostgreSQL tests,
+including HTTP status and artifact byte reads under the dedicated login.
+
+The live serving service is generation 69 with the existing beta serving
+identity. The results bucket in Tokyo has uniform bucket-level access and
+enforced public access prevention. Neither the serving nor supervisor
+identity has a direct results-storage binding on the bucket or project.
+Tokyo Cloud Run lists the serving and Research controller services.
+Effective inherited or runtime access has yet to be checked. For the intended
+`c23/outputs-v1/` prefix, scope the writer to `storage.objects.create` and
+`storage.objects.get`, and the serving reader to `storage.objects.get`.
+Bind roles only on the results bucket with an object-type condition and the
+exact object prefix. Verify positive and denied operations as the actual
+runtime identities. The transport starts at the bucket root because its
+immutable keys already include `c23/outputs-v1/`.
+[Cloud Storage IAM conditions](https://docs.cloud.google.com/storage/docs/access-control/iam#conditions).
+
+The deployed Research-mode host still needs explicit workspace composition,
+the independent live ledger login and the pinned retained-operator verifier
+registry. Install and qualify that composition and its storage grants before
+the signed-in publish and download. [Verification receipt](../beta/b3-20261123/serving-ledger-reader.json).
+
 ## November 23 — Private Tokyo retained lifecycle passed
 
 The existing Tokyo VM ran the approved synthetic science fixture on source

@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 23 — Read-only ledger for experiment downloads
+
+C25 can use an independent PostgreSQL login for execution history and released
+artifact metadata. The v1 serving composition requires that login before it
+mounts the projection. The local role checks reject controller credentials and
+extra application data grants. The deployed beta still needs explicit Research
+host wiring, the live ledger login and verification of scoped GCS access.
+See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Private Tokyo retained lifecycle passed
 
 Source `286a508` passed an actual synthetic C22 experiment on the existing

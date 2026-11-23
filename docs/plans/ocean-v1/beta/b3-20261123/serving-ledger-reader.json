@@ -1,0 +1,136 @@
+{
+  "captured_utc": "2026-11-23T12:09:29.298120+00:00",
+  "hosted_ci": {
+    "run_id": 45171408046,
+    "source_commit": "07fe7873966630f708c9d498c41d67fa6750f561",
+    "state_at_readback": "in_progress",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45171408046"
+  },
+  "live_beta_readback": {
+    "effective_runtime_storage_probe_run": false,
+    "explicit_bucket_memberships_for_serving_and_supervisor": [],
+    "explicit_project_storage_memberships_for_serving_and_supervisor": [],
+    "listed_tokyo_cloud_run_services": [
+      "ocean-v1-beta-research-controller",
+      "ocean-v1-beta-serving"
+    ],
+    "project": "ocean-v1-beta-20261101",
+    "public_access_prevention": "enforced",
+    "region": "asia-northeast1",
+    "results_bucket": "ocean-v1-beta-20261101-results",
+    "serving_generation": 69,
+    "serving_latest_ready_revision": "ocean-v1-beta-serving-b2-discovery-1122",
+    "serving_service_account": "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "uniform_bucket_access": true
+  },
+  "live_deployment_or_iam_changed": false,
+  "local_verification": {
+    "both_disposable_postgresql_clusters_stopped": true,
+    "host_and_workspace_tests_passed": 73,
+    "native_postgresql_tests_passed": 31,
+    "proof_scope": "explicitly synthetic PostgreSQL fixture; success-response shape uses a test verifier",
+    "ruff_and_diff_check_passed": true
+  },
+  "postgresql_reader": {
+    "additional_application_read_grants_fail_closed": true,
+    "controller_and_release_privileges_denied": true,
+    "granted_projection_columns": {
+      "research_experiment_execution": [
+        "execution_id",
+        "reservation_id",
+        "owner_user_id",
+        "experiment_id",
+        "proposal_revision_id",
+        "approval_id",
+        "site_id",
+        "idempotency_key",
+        "request_json",
+        "envelope_json",
+        "job_id",
+        "image_digest",
+        "approval_request_sha256",
+        "execution_request_sha256",
+        "envelope_sha256",
+        "worker_id",
+        "source_sha256",
+        "source_policy_sha256",
+        "worker_source_sha256",
+        "environment_sha256",
+        "runtime_sha256",
+        "profile_policy_sha256",
+        "trusted_init_sha256",
+        "adapter_source_sha256",
+        "created_at"
+      ],
+      "research_experiment_execution_event": [
+        "execution_id",
+        "id",
+        "fence",
+        "kind",
+        "host_boot_id",
+        "journal_id",
+        "journal_epoch",
+        "profile_sha256",
+        "result_sha256",
+        "terminal_sequence",
+        "terminal_head_sha256"
+      ],
+      "research_experiment_execution_state": [
+        "execution_id",
+        "state",
+        "fence",
+        "start_event_id",
+        "current_event_id"
+      ],
+      "research_experiment_release": [
+        "id",
+        "execution_id",
+        "proof_id"
+      ],
+      "research_experiment_termination_proof": [
+        "id",
+        "closed_event_id",
+        "closed_fence",
+        "packet_bytes",
+        "packet_sha256"
+      ]
+    },
+    "independent_restricted_login_required": true,
+    "read_only_repeatable_read": true
+  },
+  "previous_worker_physical_receipt": "private-retained-trial.json",
+  "proposed_storage_scope": {
+    "applied": false,
+    "bucket": "ocean-v1-beta-20261101-results",
+    "condition_expression": "resource.type == 'storage.googleapis.com/Object' && resource.name.startsWith('projects/_/buckets/ocean-v1-beta-20261101-results/objects/c23/outputs-v1/')",
+    "object_prefix": "c23/outputs-v1/",
+    "required_denials": [
+      "bucket listing",
+      "object deletion",
+      "outside-prefix access",
+      "serving writes"
+    ],
+    "required_runtime_permissions": {
+      "ocean-v1-beta-serving@ocean-v1-beta-20261101.iam.gserviceaccount.com": [
+        "storage.objects.get"
+      ],
+      "ocean-v1-beta-supervisor@ocean-v1-beta-20261101.iam.gserviceaccount.com": [
+        "storage.objects.create",
+        "storage.objects.get"
+      ]
+    }
+  },
+  "remaining": [
+    "Compose the dedicated ledger and operator verifier in the deployed Research-mode host",
+    "Provision and validate the live SQL login and exact scoped storage access under the actual runtimes",
+    "Run a signed-in experiment through publication and verified artifact download"
+  ],
+  "source_commit": "07fe7873966630f708c9d498c41d67fa6750f561",
+  "source_sha256": {
+    "api/v1_host.py": "00f806965d2c68c929ff26b74244a473eee02a364068e287498ef0a92ec3d28b",
+    "orchestration/experiment_sandbox/ledger_reader.py": "82404ab7143d427711012130553bee5339356a6a0e6a3947004608356675cf6b",
+    "orchestration/experiment_sandbox/workspace_projection.py": "b12b60c3875020e9cecba4b46d75aaf8f849368f8246e029bb8f9fbc22d1f92d",
+    "tests/integration/test_experiment_execution_postgres.py": "eab60a1358ee8308668bdad0d45f7c93c8f86a954b4cae6800858f636a159ad3"
+  },
+  "version": "ocean-beta-b3-serving-ledger-reader-v1"
+}
