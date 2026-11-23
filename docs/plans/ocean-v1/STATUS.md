@@ -1,5 +1,23 @@
 # Implementation status
 
+## November 23 — Isolated Tokyo worker and hosted backup readback
+
+The rebuilt gVisor worker passed two actual synthetic C22 runs in the beta
+project. The first retained its validated artifact. Owner suspension after
+terminal state denied publication in the second. Both recorded one physical
+termination proof, one capacity release and successful cleanup against
+separate disposable PostgreSQL roles. The same worker also passed recovery
+after lost create and start acknowledgments and replay of a terminal result.
+B3 production dispatch stays gated on the durable execution projection,
+live supervisor and production recovery and capacity checks.
+[Trial receipt](beta/b3-20261123/tokyo-worker-trial.json).
+
+B4 verified seven successful beta Cloud SQL backups and point-in-time
+recovery configuration. A hosted restore with measured recovery objectives is
+still open. B2 browser file integrity and live disposable withdrawal remain
+open. The serving and Research controller revisions stayed on the accepted
+B2 images. See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 22 — Worker restart recovery and local restore rehearsal
 
 The private worker can discover its held C23 reservations after a controller

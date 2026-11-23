@@ -1,0 +1,144 @@
+{
+  "b3_complete": false,
+  "captured_utc": "2026-11-23T06:50:24.404037+00:00",
+  "cost": {
+    "actual_billed_amount_verified": false,
+    "approved_allowance": 2000,
+    "compute_list_rate_per_hour_estimate": 27.2,
+    "compute_only_estimate_jpy": 9.67,
+    "compute_runtime_seconds": 1279.737,
+    "currency": "JPY",
+    "retained_disk_list_rate_per_month_estimate": 1028.33
+  },
+  "defensive_recovery_episodes": {
+    "lost-create-ack": {
+      "cleanup_deferred": false,
+      "episode_passed": true,
+      "receipt_sha256": "9eb67abc8439363957955115cd89b9ba26e7ccb346317f15c31cc3d3c932806b"
+    },
+    "lost-start-ack": {
+      "cleanup_deferred": false,
+      "episode_passed": true,
+      "receipt_sha256": "2f09608c4012431ac62a4bd53a6f7ed117da6967e70ec0a18207e48b5b525ae3"
+    },
+    "terminal-replay": {
+      "cleanup_deferred": false,
+      "episode_passed": true,
+      "receipt_sha256": "693e243d39a45c2798f855a08e6fcb4b95f9bde94099442defffdbd2842baa6c"
+    }
+  },
+  "hosted_ci": {
+    "backend_postgres_and_two_v1_jobs_passed": true,
+    "legacy_frontend_dependency_audit_failed": true,
+    "new_host_binding_verified_by_trial": true,
+    "reused_source_run": "https://github.com/jarondlk/ocean-platform/actions/runs/44991905346"
+  },
+  "isolation": {
+    "iap_ssh_verified_with_provider_host_key": true,
+    "loopback_database_stopped_and_six_trial_logins_revoked": true,
+    "network_seal_sha256": "ed8e0d54abd110bbf5331b58cb564d0d5bf4dc892cc3589c21f9163de218ecd8",
+    "no_beta_database_or_scientific_data": true,
+    "no_service_account_public_ip_nat_or_peering_during_trial": true,
+    "positive_controls_sha256": "644602fbf488e7bbde7a4f19688dc3ae8e7ca554651f5e1f3922fe9f0d15fae4",
+    "temporary_os_login_key_removed": true,
+    "temporary_setup_egress_removed_before_offline_build": true,
+    "trial_signing_and_login_files_removed": true
+  },
+  "operator_material_verification": {
+    "base_image_digest": "sha256:57d96f71de145a98e7ceca18ee4ade77bba4103a33a72dfaea026b23625c6bf0",
+    "gvisor_material_archive_sha256": "8637abfb50f81552af25ca08f7172589c09292a7c881efe8d9e09a9f3b6bec7b",
+    "gvisor_release": "release-20261019.0",
+    "linux_protected_source_and_imports_verified": true,
+    "materialization_receipt_sha256": "397f0d060f52919bb74a16b8b455084a7b9593196a46e7b2cc6b8d22a8a890a4",
+    "rootfs_inventory_sha256": "5108c404be01831f488d8898f13767ad7b1e3aa2b6f40e5423f64cacb51e3348",
+    "scientific_context_archive_sha256": "2adbed53ee4ccebd3e9bc8d632720d71744e3a09b268205219bbcb0d48900639",
+    "scientific_image_digest": "sha256:0bbf97f52defc46e2a187562e28599d40730e51848ab527859b644e40f232030",
+    "scientific_package_inventory_verified": true,
+    "scientific_python_version": "3.12.15",
+    "worker_manifest_members": 248
+  },
+  "production_execution_enabled": false,
+  "research_controller_generation": 10,
+  "research_queue_preflight": {
+    "schedulers": 0,
+    "state": "PAUSED",
+    "tasks": 0
+  },
+  "scope": "Synthetic data on one isolated worker, real restricted disposable PostgreSQL roles",
+  "serving_generation": 69,
+  "source_archive_sha256": "29dbbf2917249cbd8f4ecab3d2e59ba0ecf04509ff1e23ffd15166d1f9b04a3f",
+  "source_commit": "a7a373150c57cb94d08a5867ce537a6b65ae3368",
+  "source_manifest_sha256": "f67d28f1724c763201e250aae114a2acb54fe769dcc2305b94e256bab9d4eb97",
+  "target": {
+    "actual_stop_at": "2026-11-22T22:49:59.322-08:00",
+    "boot_disk_retained": true,
+    "boot_disk_size_gib": 50,
+    "boot_disk_type": "pd-balanced",
+    "boot_id": "d81e8a95-a5e7-4f87-a5b1-0be6b72bdf12",
+    "boot_source_image": "ubuntu-2404-noble-amd64-v20261105",
+    "boot_source_image_id": "1892012953239034119",
+    "hard_stop_at": "2026-11-23T08:28:34.473468Z",
+    "host_maintenance_policy": "MIGRATE",
+    "instance": "ocean-v1-beta-b3-worker-1123",
+    "instance_id": "4080105203514106848",
+    "machine_type": "e2-standard-4",
+    "network": "ocean-v1-beta-b3-isolated",
+    "project": "ocean-v1-beta-20261101",
+    "subnet": "ocean-v1-beta-b3-tokyo",
+    "terminal_state": "TERMINATED",
+    "zone": "asia-northeast1-a"
+  },
+  "trials": {
+    "publication_revoked": {
+      "checks": {
+        "C22_reservation_released": true,
+        "actual_analysis_success": true,
+        "actual_cleanup_retained": true,
+        "durable_terminal": true,
+        "no_fake_outbox": true,
+        "one_actual_start": true,
+        "one_proof": true,
+        "one_release": true,
+        "operator_pipeline_healthy": true,
+        "publication_expected": true,
+        "publication_ledger_expected": true,
+        "release_acknowledged": true,
+        "revocation_observed": true,
+        "rootfs_unmounted": true,
+        "scientific_unverified": true,
+        "whole_cgroup_empty": true
+      },
+      "independent_release_status": "acknowledged",
+      "observations_sha256": "0476d899a36fbd4c7ff6370102c832c586d9bf39028b276aba4c2708f33b9ee2",
+      "publication_status": "denied_or_uncertain",
+      "runtime_seconds": 60.031,
+      "scientific_approval": "not_independently_verified"
+    },
+    "scientific": {
+      "checks": {
+        "C22_reservation_released": true,
+        "actual_analysis_success": true,
+        "actual_cleanup_retained": true,
+        "durable_terminal": true,
+        "no_fake_outbox": true,
+        "one_actual_start": true,
+        "one_proof": true,
+        "one_release": true,
+        "operator_pipeline_healthy": true,
+        "publication_expected": true,
+        "publication_ledger_expected": true,
+        "release_acknowledged": true,
+        "revocation_observed": true,
+        "rootfs_unmounted": true,
+        "scientific_unverified": true,
+        "whole_cgroup_empty": true
+      },
+      "independent_release_status": "acknowledged",
+      "observations_sha256": "f781b078192001a2b8b2600b03b6408a619de9fca4a1a982d6c9009aa67ad6de",
+      "publication_status": "acknowledged",
+      "runtime_seconds": 70.45,
+      "scientific_approval": "not_independently_verified"
+    }
+  },
+  "version": "ocean-beta-b3-tokyo-isolated-worker-v1"
+}

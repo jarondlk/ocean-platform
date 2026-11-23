@@ -1,0 +1,74 @@
+{
+  "automated_backups_enabled": true,
+  "availability": "ZONAL",
+  "backup_contents_accessed": false,
+  "cloud_mutation": false,
+  "deletion_protection_enabled": true,
+  "engine": "POSTGRES_16",
+  "instance": "ocean-v1-beta-sql",
+  "network_access": {
+    "private": true,
+    "public": false
+  },
+  "observed_utc": "2026-11-23T06:38:08.000212+00:00",
+  "point_in_time_recovery_enabled": true,
+  "prior_local_restore_receipt": "../b4-20261122/retained-restore-rehearsal.json",
+  "project": "ocean-v1-beta-20261101",
+  "recent_backups": [
+    {
+      "endTime": "2026-11-22T20:46:11.317Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-22T20:44:40.113Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    },
+    {
+      "endTime": "2026-11-21T19:22:58.131Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-21T19:21:26.958Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    },
+    {
+      "endTime": "2026-11-20T18:53:43.342Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-20T18:52:12.113Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    },
+    {
+      "endTime": "2026-11-19T18:44:52.509Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-19T18:43:21.329Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    },
+    {
+      "endTime": "2026-11-18T18:14:38.415Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-18T18:13:06.824Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    },
+    {
+      "endTime": "2026-11-17T19:22:12.652Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-17T19:20:41.485Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    },
+    {
+      "endTime": "2026-11-16T19:01:28.573Z",
+      "location": "asia-northeast1",
+      "startTime": "2026-11-16T18:59:37.108Z",
+      "status": "SUCCESSFUL",
+      "type": "AUTOMATED"
+    }
+  ],
+  "recovery_point_and_time_observed": false,
+  "region": "asia-northeast1",
+  "restore_rehearsal_performed": false,
+  "retained_backup_limit": 7,
+  "transaction_log_retention_days": 7,
+  "version": "ocean-beta-b4-hosted-backup-readback-v1"
+}

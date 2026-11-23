@@ -122,12 +122,15 @@ candidate:
 B1 is accepted; B2 data/catalogue completion is the next implementation priority.
 B2 has a deployed 42-dataset disposition ledger. Disposable export and
 withdrawal tests pass locally. Verification of actual browser files and live
-withdrawal remains open. B3 has a private Start reservation and worker input
-reload path with restart recovery for the isolated controller. Public start,
-the durable execution projection, supervisor and live worker qualification
-remain open. B4's local backup/restore rehearsal verified retained evidence and
-current withdrawal on the migration head. See the
-[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-22--worker-restart-recovery-and-restore-rehearsal).
+withdrawal remains open. B3's dedicated Tokyo worker used a fresh isolated
+database for an actual synthetic C22 approval, reservation, sandbox run,
+artifact publication and independent release. Public start, the live execution
+projection, supervisor, and production capacity and recovery remain open.
+B4's local restore rehearsal preserved retained evidence and honored a newer
+withdrawal. The live Tokyo database has seven successful automated backups
+and point-in-time recovery enabled. A hosted restore and measured recovery
+objectives are still required. See the
+[current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--isolated-tokyo-worker-and-hosted-backup-readback).
 Local eDNA and worker preparation can proceed independently when their inputs are
 available; neither borrows acceptance from Research. B2 and B3 can overlap after
 their own readiness checks. Backup/alert preparation can begin early. These are dependency-based

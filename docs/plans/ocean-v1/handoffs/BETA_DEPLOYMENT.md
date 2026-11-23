@@ -1,5 +1,56 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Isolated Tokyo worker and hosted backup readback
+
+The approved synthetic trial ran on one `e2-standard-4` in
+`ocean-v1-beta-20261101`, zone `asia-northeast1-a`. The two-hour stop policy
+was verified at creation. IAP SSH matched the host key from the provider boot
+console. The temporary setup IP was detached before the offline image build.
+The execution checks reconfirmed the external-IP absence from live metadata.
+The sealed provider readback found no VM service account, external IP, Cloud
+NAT or peering. The scientific OCI image `0bbf97f52defc…` contains the pinned
+Python 3.12.15 dependencies and used gVisor `release-20261019.0`.
+
+Both retained C22 cases passed with actual Linux execution and disjoint
+restricted SCRAM roles in the disposable local PostgreSQL cluster. The first
+published its validated artifact. In the second, suspending the fixture owner
+after durable termination prevented publication. Both recorded one consumed
+start, one termination proof and one independent release, and verified the
+rootfs was unmounted and the job cgroup empty. Three additional synthetic
+worker recovery episodes passed for a lost start acknowledgment, a lost create
+acknowledgment and terminal replay. These exercised fresh controller processes
+and the same boot. Trial logins and signing files were removed and the
+disposable database stopped. The scoped runner uses synthetic datasets and a
+synthetic issuer. Scientific approval remains unverified.
+[Worker trial receipt](../beta/b3-20261123/tokyo-worker-trial.json).
+
+The VM was stopped after verification. Its 50 GiB disk retains the raw
+observations. The quoted Tokyo list rates are about ¥27.20 per running hour
+and ¥1,028 per month for the retained disk. Actual charges remain unverified.
+Use the receipts for the next acceptance pass and retire the trial disk when
+raw evidence is no longer needed.
+
+The worker archive retains 242 exact source files and six explicit host/setup
+supersessions from `a7a373150c57cb94d08a5867ce537a6b65ae3368`. The historical
+C23 evidence is unchanged. The scoped renderer and trusted host installer are
+in `deploy/gcp/beta/b3/`. The hosted backend, PostgreSQL and both v1 workflows
+passed on the base source. The existing separate legacy frontend dependency
+audit failed. [Worker source manifest](../beta/b3-20261123/worker-target-source.json)
+· [Base-source hosted checks](https://github.com/jarondlk/ocean-platform/actions/runs/44991905346).
+
+Live beta still runs the accepted B2 revisions at serving generation 69 and
+Research controller generation 10. The preflight found the Research queue
+paused with no tasks and no Scheduler job. For the next B3 increment, implement
+the C25 durable execution projection over exact owner-bound C23 records and
+qualify the supervisor with the hosted control store. Public Start, production
+cancellation and measured concurrent capacity remain gated.
+
+B4's live metadata read found seven successful automated backups and
+point-in-time recovery with seven days of transaction log retention. No backup
+contents were accessed. The live restore gate needs a separately scoped hosted
+target and measurements for recovery time and recovery point.
+[Cloud SQL backup readback](../beta/b4-20261123/backup-readback.json).
+
 ## November 22 — Worker restart recovery and restore rehearsal
 
 The worker now discovers unreleased rows from its exact C23 store and worker
