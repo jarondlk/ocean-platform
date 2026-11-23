@@ -1,0 +1,166 @@
+{
+  "captured_utc": "2026-11-23T07:40:20.892596+00:00",
+  "cloud_readback": {
+    "bucket": "ocean-v1-beta-20261101-results",
+    "explicit_public_members": 0,
+    "explicit_service_account_members": 0,
+    "iam_mutation": false,
+    "inherited_runtime_access_verified": false,
+    "objects_read_or_written": false,
+    "operator_metadata_read_succeeded": true,
+    "project": "ocean-v1-beta-20261101",
+    "public_access_prevention": "enforced",
+    "region": "ASIA-NORTHEAST1",
+    "scoped_cli_permitted_bucket_metadata": false,
+    "soft_delete_seconds": 604800,
+    "uniform_bucket_level_access": true
+  },
+  "hosted": {
+    "jobs": [
+      {
+        "conclusion": null,
+        "failed_steps": [],
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": null,
+        "failed_steps": [],
+        "name": "Backend tests and security boundary",
+        "status": "in_progress"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "failed_steps": [
+          "Audit production frontend dependencies"
+        ],
+        "name": "Frontend typecheck and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Dependency review",
+        "status": "completed"
+      }
+    ],
+    "run_id": 45132492177,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45132492177"
+  },
+  "implementation_sha256": {
+    "api/v1_host.py": "bce26724be90573d35b2078ed9d7f113864f8ef82ef804fc0149f193e285e6e8",
+    "orchestration/experiment_sandbox/physical_termination.py": "b33fd0ce11f743009eaec1454c67ea83b005cbd7c3a46fd935ea78570eb1dfad",
+    "orchestration/experiment_sandbox/retained_admission.py": "3084f5c74853cac5cad769de36f3517f8d5fa0f13ce4636343433ed62440c58d",
+    "orchestration/experiment_sandbox/retained_output_store.py": "4d8f7fcbde076b6186fb9a30fa66f2906bd746d12fef2b437dff6050f286db76",
+    "orchestration/experiment_sandbox/workspace_projection.py": "ca5d2d726a89499fc54bbefc2c2e1b5c726442ec5b0a880c0e74db9744f0be55",
+    "tests/integration/test_experiment_execution_postgres.py": "d67796f5f2006f07cb29f0269ea31582211e6489679bf4f7def39969a6575190",
+    "tests/integration/test_retained_admission_edges_postgres.py": "ffeb35c0ba9d529630f52516c1e03751eaf9dfa2e351756b2755765184511857"
+  },
+  "local_checks": {
+    "backend_passed": 187,
+    "contract_export_current": true,
+    "new_outputs_cases_passed": 4,
+    "postgresql_cluster_stopped": true,
+    "postgresql_passed": 48,
+    "sqlite_version": "3.54.1"
+  },
+  "qualification": {
+    "actual_hosted_output_transfer": false,
+    "attachment": false,
+    "cancel": false,
+    "download_transport": "C25 bounded chunks with full-file hash verification on each read",
+    "production_execution_enabled": false,
+    "public_start": false,
+    "target_bound_archive": false
+  },
+  "source_commit": "468e152f7b188b7ce51b53ab71e150897e7941d1",
+  "superseded_hosted": {
+    "jobs": [
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "failed_steps": [
+          "Audit production frontend dependencies"
+        ],
+        "name": "Frontend typecheck and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "cancelled",
+        "failed_steps": [],
+        "name": "Backend tests and security boundary",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "failed_steps": [],
+        "name": "OCEAN v1 authenticated host tests and build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Dependency review",
+        "status": "completed"
+      }
+    ],
+    "prior_receipt": "execution-projection-757b778.json",
+    "reason": "Output integration pushed on the same branch after the old PostgreSQL and v1 jobs completed. Workflow concurrency cancelled the remaining long backend job.",
+    "run_id": 45130310715,
+    "source_commit": "757b778956bb705b76341f31c0de723e811acc90"
+  },
+  "version": "ocean-beta-b3-retained-output-delivery-v1",
+  "worker_archive": {
+    "archive_recipe": "Use Git bytes of the 248 paths in the prior base manifest plus retained_output_store.py. Sort paths, use Python tarfile default PAX format, regular files mode 0400, mtime 0 and uid/gid 0.",
+    "archive_sha256": "40f5b6e21480164750f05e80ea933c9075e4adbbe3b3f4dd7c517631ccbefb60",
+    "archive_source_files": 249,
+    "base_manifest_sha256": "a3d5d392b6bf88da2266790e6fcdde82f12b9e8558418934e891a5e1790d9fd4",
+    "cloud_transfer": false,
+    "intentional_source_supersessions": {
+      "orchestration/experiment_sandbox/physical_termination.py": {
+        "current": "b33fd0ce11f743009eaec1454c67ea83b005cbd7c3a46fd935ea78570eb1dfad",
+        "previous": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798"
+      },
+      "orchestration/experiment_sandbox/retained_admission.py": {
+        "current": "3084f5c74853cac5cad769de36f3517f8d5fa0f13ce4636343433ed62440c58d",
+        "previous": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3"
+      },
+      "orchestration/experiment_sandbox/retained_output_store.py": {
+        "current": "4d8f7fcbde076b6186fb9a30fa66f2906bd746d12fef2b437dff6050f286db76",
+        "previous": null
+      },
+      "orchestration/experiment_workspace.py": {
+        "current": "3cead1e83b02dce58caaaddc47f8906793f9fce0531256dd4206dff249f5eb84",
+        "previous": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24"
+      },
+      "schema/experiment_workspace.py": {
+        "current": "984f3afb6fe20a1db060634f3701c15887f01c5d2b62cc0755348808e292c5bd",
+        "previous": "7101217dd94b935c29f30c5d1043503750cebcbaeb7db175bf68a9357d2e8b8a"
+      }
+    },
+    "required_import_origins_verified_locally": 18,
+    "source_commit": "468e152f7b188b7ce51b53ab71e150897e7941d1",
+    "target_bound": false
+  }
+}

@@ -19,12 +19,26 @@ files. Public Start, cancellation and artifact attachment remain separate.
 
 The worker hook, protected source list and workspace reader changed. The
 earlier Tokyo trial and signed receipts continue to identify their original
-source. The new worker source needs a refreshed protected archive and
-physical qualification before activation. Hosted validation also needs the
-private output transport and credentials scoped to beta, a measured download
-at the intended size, and a disposition for staged files whose publication
-was denied. The current C25 transport rereads and verifies the whole file for
-each requested chunk. The live beta keeps its existing deployment.
+source. A refreshed archive verified all 249 source files and the origins
+of 18 mandatory imports locally. The next physical worker trial still needs
+to bind and install that source on its exact target.
+
+The code passed 187 backend and 48 restricted PostgreSQL tests. Both hosted
+v1 jobs passed. The current hosted backend and PostgreSQL jobs were still
+running at readback, and the legacy frontend dependency audit failed again.
+The previous projection run's PostgreSQL and v1 jobs passed before the
+new push cancelled its remaining backend job.
+[Source and verification receipt](../beta/b3-20261123/retained-output-delivery-468e152.json).
+
+The existing beta results bucket is in Tokyo with enforced public access
+prevention and uniform bucket-level access. Its bucket policy has no explicit
+service-account members. Effective runtime access and a scoped output
+transport remain to be validated before deployment. Measure hosted downloads
+at the intended size. The C25 transport rereads and verifies the whole file
+for each requested chunk. Set a retention disposition for staged unpublished
+files. A failed copy can leave a closed execution with no published output
+while still permitting independent capacity release. The live beta remains
+on the current approved deployment.
 
 ## November 23 — Durable experiment status and history
 
