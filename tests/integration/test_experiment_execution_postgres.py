@@ -8,6 +8,7 @@ import base64
 import hashlib
 import json
 import os
+import secrets
 from dataclasses import replace
 import threading
 from types import SimpleNamespace
@@ -17,11 +18,13 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import inspect, select, text
+from sqlalchemy import create_engine, inspect, select, text
 from sqlalchemy.exc import DBAPIError
+from sqlalchemy.orm import sessionmaker
 
 from db.app_models import ResearchExperiment, ResearchExperimentApproval, ResearchExperimentRevision
 from api.experiment_workspace_routes import router as workspace_router
+from api.v1_host import HostConfigurationError, V1ReadServices
 from db.experiment_execution_models import EXECUTION_MODELS, IDENTITY_HASH_FIELDS
 from ingestion.artifact_store import BoundedLocalStore
 from orchestration.experiment_sandbox.contracts import SandboxError
@@ -33,6 +36,9 @@ from orchestration.experiment_sandbox.proofs import (
     PinnedTerminationIssuer, TerminationVerifierRegistry, canonical_packet_bytes, sign_termination_claims,
 )
 from orchestration.experiment_sandbox.files import validate_outputs
+from orchestration.experiment_sandbox.ledger_reader import (
+    RetainedLedgerReader, RetainedLedgerReaderConfig, bootstrap_ledger_reader,
+)
 from orchestration.experiment_sandbox.retained_output_store import RetainedOutputReader, RetainedOutputWriter
 from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
 from orchestration.experiment_workspace import ExperimentWorkspaceService
@@ -504,18 +510,72 @@ def test_altered_authenticated_witness_replay_cannot_replace_recorded_proof(actu
     assert count(actual,'research_experiment_termination_proof')==1
 
 
+@pytest.fixture
+def ledger_login(actual):
+    database = actual.database
+    role = 'c23_reader_' + uuid.uuid4().hex
+    password = secrets.token_hex(32)
+    with database['engine'].begin() as connection:
+        connection.exec_driver_sql(f"CREATE ROLE {role} LOGIN PASSWORD '{password}'")
+    engine = create_engine(database['url'].set(username=role, password=password),
+        connect_args={'options': database['options']})
+    try:
+        yield role, sessionmaker(bind=engine, expire_on_commit=False)
+    finally:
+        engine.dispose()
+        with database['engine'].begin() as connection:
+            connection.exec_driver_sql(f'DROP OWNED BY {role}')
+            connection.exec_driver_sql(f'DROP ROLE {role}')
+
+
+def configured_ledger(actual, ledger_login, store):
+    role, factory = ledger_login
+    config = RetainedLedgerReaderConfig(site_id=store.config.site_id,
+        database_name=store.config.database_name, schema=store.config.schema, role=role,
+        session_factory=factory, verifier_registry=store.config.verifier_registry)
+    with actual.database['engine'].begin() as connection:
+        bootstrap_ledger_reader(connection, config=config)
+    return RetainedLedgerReader(config=config)
+
+
+def test_ledger_reader_rejects_controller_credentials_and_privilege_drift(actual, ledger_login):
+    store = store_for(actual, prepared(actual))
+    ledger = configured_ledger(actual, ledger_login, store)
+    with ledger.transaction() as session:
+        assert session.scalar(text('SHOW transaction_read_only')) == 'on'
+        assert session.scalar(text("SELECT has_function_privilege(current_user, "
+            "'ocean_c23_release(uuid,uuid,bigint,uuid)', 'EXECUTE')")) is False
+    bad = RetainedLedgerReader(config=replace(ledger.config,
+        session_factory=store.config.controller_session_factory))
+    with pytest.raises(SandboxError, match='sandbox_ledger_reader_role_boundary'), bad.transaction():
+        pytest.fail('Controller credentials must not back the serving projection')
+    with ledger.config.session_factory.begin() as session:
+        assert not session.scalar(text("SELECT has_any_column_privilege(current_user, 'app_user', 'SELECT,UPDATE')"))
+    with actual.database['engine'].begin() as connection:
+        connection.exec_driver_sql(f'GRANT SELECT (id) ON TABLE {ledger.config.schema}.app_user TO {ledger.config.role}')
+    with pytest.raises(SandboxError, match='sandbox_ledger_reader_role_boundary'), ledger.transaction():
+        pytest.fail('Extra application data grants must block serving readback')
+
+
 @pytest.mark.parametrize('publish', [True, False])
-def test_retained_workspace_reports_only_proven_execution(actual, publish, monkeypatch, tmp_path):
+def test_retained_workspace_reports_only_proven_execution(actual, ledger_login, publish, monkeypatch, tmp_path):
     fixture = actual.fixture
     fixture.service.executor = None
     binding = prepared(actual)
     store = store_for(actual, binding)
+    ledger = configured_ledger(actual, ledger_login, store)
     request = json.loads(binding.request_json)
     request.pop('idempotency_key')
 
-    def workspace(bound_store, reader=None):
+    def workspace(reader=None):
         return ExperimentWorkspaceService(experiments=fixture.service, enabled=lambda: True,
-            port=RetainedExecutionProjection(experiments=fixture.service, store=bound_store, output_reader=reader))
+            port=RetainedExecutionProjection(experiments=fixture.service, ledger_reader=ledger, output_reader=reader))
+
+    def validate_serving(workspace_service):
+        investigations = fixture.service.investigations
+        V1ReadServices(catalogue_service=investigations.catalogue, investigation_service=investigations,
+            research_experiment_service=fixture.service, experiment_workspace_service=workspace_service).validate(
+                session_factory=fixture.service.session_factory, site_id=fixture.service.site_id)
 
     proposal = json.loads(binding.envelope_json)['proposal']
     output_bytes = b'{"columns":["value"],"rows":[[42]]}'
@@ -531,7 +591,8 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
 
     app = FastAPI()
     app.state.research_experiment_service = fixture.service
-    app.state.experiment_workspace_service = workspace(store)
+    app.state.experiment_workspace_service = workspace()
+    validate_serving(app.state.experiment_workspace_service)
     actor = fixture.user
 
     @app.middleware('http')
@@ -563,7 +624,7 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
         call('status', {**identified, 'execution_id': str(uuid.uuid4())}, 404)
         call('cancel', {**identified, 'idempotency_key': str(uuid.uuid4())}, 503)
 
-        app.state.experiment_workspace_service = workspace(store, reader)
+        app.state.experiment_workspace_service = workspace(reader)
         # Even a fully copied manifest stays private until the exact ledger
         # publication and release are recorded.
         writer.publish(binding, payload, manifest_sha256)
@@ -586,7 +647,12 @@ def test_retained_workspace_reports_only_proven_execution(actual, publish, monke
         store.release_terminated(execution_id=binding.execution_id, proof_id=proof_id,
                                  expected_fence=bound.closed_fence)
         paused = C23ExecutionStore(config=replace(store.config, enabled=lambda: False))
-        app.state.experiment_workspace_service = workspace(paused, reader)
+        app.state.experiment_workspace_service = ExperimentWorkspaceService(experiments=fixture.service, enabled=lambda: True,
+            port=RetainedExecutionProjection(experiments=fixture.service, store=paused, output_reader=reader))
+        with pytest.raises(HostConfigurationError, match='dedicated read-only experiment ledger'):
+            validate_serving(app.state.experiment_workspace_service)
+        call('status', identified, 409)
+        app.state.experiment_workspace_service = workspace(reader)
         call('status', identified, 409)
 
         # Exercise the HTTP representation downstream of a successful proof

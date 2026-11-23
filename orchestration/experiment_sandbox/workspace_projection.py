@@ -1,5 +1,6 @@
 """Read-only C25 projection from the isolated C23 execution and release ledger."""
 
+from contextlib import contextmanager
 from dataclasses import asdict
 import json
 
@@ -7,6 +8,7 @@ from sqlalchemy import text
 
 from orchestration.experiment_sandbox.contracts import ExecutionMetadata, SandboxError
 from orchestration.experiment_sandbox.execution_store import C23ExecutionStore, ExecutionReservationBinding
+from orchestration.experiment_sandbox.ledger_reader import RetainedLedgerReader
 from orchestration.experiment_sandbox.proofs import verify_termination_packet
 from orchestration.experiment_sandbox.retained_bridge import RetainedReserveRequest
 from orchestration.experiment_sandbox.retained_output_store import RetainedOutputReader
@@ -40,15 +42,35 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
     and can read validated outputs from explicitly configured private storage.
     """
 
-    def __init__(self, *, experiments, store, output_reader=None):
+    def __init__(self, *, experiments, store=None, ledger_reader=None, output_reader=None):
         super().__init__(experiments=experiments, source='retained-operator',
                          cancel_available=False, artifacts_available=output_reader is not None)
-        if (type(store) is not C23ExecutionStore or store.config.site_id != self.site_id
-                or store.config.controller_session_factory is self.session_factory
+        if (store is None) == (ledger_reader is None):
+            raise ValueError('An explicit C23 ledger source is required')
+        if ledger_reader is not None and type(ledger_reader) is RetainedLedgerReader:
+            source, sessions = ledger_reader, ledger_reader.config.session_factory
+        elif store is not None and type(store) is C23ExecutionStore:
+            source, sessions = store, store.config.controller_session_factory
+        else:
+            raise ValueError('An exact C23 ledger source is required')
+        if (source.config.site_id != self.site_id or sessions is self.session_factory
                 or (output_reader is not None and type(output_reader) is not RetainedOutputReader)):
-            raise ValueError('An exact, separate C23 store is required for the execution projection')
-        self._store, self._config = store, store.config
+            raise ValueError('An exact, separate C23 ledger is required for the execution projection')
+        self._source, self._config = source, source.config
+        self._read_transaction = ledger_reader.transaction if ledger_reader is not None else self._operator_transaction
         self._output_reader = output_reader
+
+    @property
+    def uses_read_only_ledger(self):
+        return type(self._source) is RetainedLedgerReader
+
+    @contextmanager
+    def _operator_transaction(self):
+        """Keep the explicit operator-only projection available to existing callers."""
+        with self._config.controller_session_factory.begin() as session:
+            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY'))
+            self._source._check_session(session, self._config.roles.controller_role)
+            yield session
 
     @staticmethod
     def _verify_identity(row, access):
@@ -96,7 +118,7 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
         return verified.packet_sha256
 
     def _read(self, access, execution_id, *, artifact_id=None):
-        if access.site_id != self.site_id or self._store.config is not self._config:
+        if access.site_id != self.site_id or self._source.config is not self._config:
             raise ExperimentWorkspaceError('integrity_error', 409)
         if access.approval_id is None:
             return None, [], None
@@ -108,9 +130,7 @@ class RetainedExecutionProjection(ExperimentExecutionPort):
         if execution_id is not None:
             id_filter = ' AND e.execution_id=CAST(:execution AS uuid)'
             parameters['execution'] = execution_id
-        with self._config.controller_session_factory.begin() as session:
-            session.execute(text('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY'))
-            self._store._check_session(session, self._config.roles.controller_role)
+        with self._read_transaction() as session:
             row = session.execute(text(
                 f"SELECT to_jsonb(e)-'created_at' AS identity,s.state,s.fence,s.start_event_id,s.current_event_id,"
                 'r.id IS NOT NULL AS released,p.packet_bytes AS packet,p.packet_sha256 '

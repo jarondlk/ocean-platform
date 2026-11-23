@@ -156,13 +156,16 @@ class V1ReadServices:
             raise HostConfigurationError('Answer evidence binding mismatch')
         if workspace and workspace.experiments is not experiments:
             raise HostConfigurationError('Workspace experiment binding mismatch')
-        if workspace and workspace.port is not None and workspace.port.source != 'retained-operator' and not allow_test:
-            raise HostConfigurationError('Production host cannot expose a synthetic execution port')
+        if workspace and workspace.port is not None and not allow_test:
+            from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
+
+            if type(workspace.port) is not RetainedExecutionProjection or not workspace.port.uses_read_only_ledger:
+                raise HostConfigurationError('Production host requires a dedicated read-only experiment ledger')
 
 
 def compose_read_services(*, session_factory, site_id, snapshot_store, registrations,
                           policy_resolver, snapshots, discovery_policy, policy_revision,
-                          cursor_key, experiment_environments=None, experiment_execution_store=None,
+                          cursor_key, experiment_environments=None, experiment_ledger_reader=None,
                           experiment_output_reader=None):
     """Build actual read services from explicitly supplied source authority.
 
@@ -173,9 +176,9 @@ def compose_read_services(*, session_factory, site_id, snapshot_store, registrat
     """
     if not registrations:
         raise HostConfigurationError('Explicit sealed registrations are required for configured catalogue access')
-    if experiment_execution_store is not None and experiment_environments is None:
+    if experiment_ledger_reader is not None and experiment_environments is None:
         raise HostConfigurationError('An execution projection requires configured experiment review')
-    if experiment_output_reader is not None and experiment_execution_store is None:
+    if experiment_output_reader is not None and experiment_ledger_reader is None:
         raise HostConfigurationError('An output reader requires a configured execution projection')
     catalogue = CatalogueService(resolver=FrozenCatalogueResolver(store=snapshot_store,
         policy_resolver=policy_resolver, registrations=registrations))
@@ -197,10 +200,13 @@ def compose_read_services(*, session_factory, site_id, snapshot_store, registrat
             investigations=investigations, exporter=exporter, environments=experiment_environments,
             enabled=lambda: True, dispatch_enabled=lambda: False)
         port = None
-        if experiment_execution_store is not None:
+        if experiment_ledger_reader is not None:
+            from orchestration.experiment_sandbox.ledger_reader import RetainedLedgerReader
             from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
 
-            port = RetainedExecutionProjection(experiments=experiments, store=experiment_execution_store,
+            if type(experiment_ledger_reader) is not RetainedLedgerReader:
+                raise HostConfigurationError('An independent read-only experiment ledger is required for serving')
+            port = RetainedExecutionProjection(experiments=experiments, ledger_reader=experiment_ledger_reader,
                                                output_reader=experiment_output_reader)
         workspace = ExperimentWorkspaceService(experiments=experiments, port=port, enabled=lambda: True)
     return V1ReadServices(catalogue, browser, investigations, runs, evidence, answers, experiments, workspace)
