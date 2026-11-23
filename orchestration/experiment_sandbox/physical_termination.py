@@ -52,7 +52,7 @@ WORKER_FILES = frozenset({
         'physical_termination', 'linux_runtime', 'journal', 'contracts', 'files', 'traversal', 'profile',
         'profile_execution', 'proofs', 'execution_store', 'operator_inspection',
         'retained_runner', 'retained_bridge', 'retained_context', 'retained_admission', 'retained_output_store',
-        'retained_work')
+        'retained_work', 'retained_supervisor')
 } | {'schema/experiment_execution.py', 'schema/research_experiments.py',
      'sandbox/experiment/trusted_init.py'})
 PROFILE_FILES = frozenset({'orchestration/experiment_sandbox/profile.py',

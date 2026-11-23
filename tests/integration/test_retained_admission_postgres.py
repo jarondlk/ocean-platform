@@ -13,9 +13,11 @@ import sqlite3
 import pytest
 from sqlalchemy import text
 
+from orchestration.experiment_sandbox import retained_supervisor
 from orchestration.experiment_sandbox.contracts import SandboxError
-from orchestration.experiment_sandbox.journal import _safe_sqlite_version
 from orchestration.experiment_sandbox.execution_store import C23ExecutionStore
+from orchestration.experiment_sandbox.journal import _safe_sqlite_version
+from orchestration.experiment_sandbox.physical_termination import LinuxTerminationIssuer, PhysicalIssuerConfig
 from orchestration.experiment_sandbox.proofs import canonical_packet_bytes, sign_termination_claims
 from orchestration.experiment_sandbox.retained_bridge import C23RetainedBridge, RetainedMaterialPolicy
 from orchestration.experiment_sandbox.retained_work import RetainedWorkQueue
@@ -179,6 +181,79 @@ def test_restarted_retained_poll_releases_only_the_exact_committed_proof(case, m
         assert connection.scalar(text('SELECT count(*) FROM research_experiment_release')) == 1
         assert connection.scalar(text('SELECT count(*) FROM research_experiment_termination_proof')) == 1
         assert connection.scalar(text("SELECT count(*) FROM research_experiment_execution_event WHERE kind='start_consumed'")) == 1
+
+
+def test_supervisor_serializes_preparation_and_drain_without_restarting_held_work(case, tmp_path, monkeypatch):
+    source = case.policy
+    evidence = tmp_path / 'issuer-evidence'
+    evidence.mkdir(mode=0o700)
+    registry = case.store.config.verifier_registry
+    issuer = LinuxTerminationIssuer(config=PhysicalIssuerConfig(store=case.store, registry=registry,
+        scope=case.scope, issuer_id='synthetic-admission', key_id='ephemeral-admission', private_key=case.key,
+        source_root=source.source_root, evidence_root=evidence, worker_source_files=dict(source._worker_files),
+        profile_source_files=dict(source._profile_files), source_policy_bytes=source._policy_bytes, enabled=True))
+    queue = RetainedWorkQueue(bridge=case.bridge)
+    calls = []
+
+    @contextmanager
+    def prepare(work):
+        calls.append('prepare')
+        assert work.owner == case.native.fixture.user and work.identity == case.identity
+        assert peer.poll().state == 'busy'
+        supervisor.drain()
+        assert supervisor.status() == {'draining': True, 'active': True}
+        try:
+            yield case.profile
+        finally:
+            assert peer.poll().state == 'busy'
+            calls.append('teardown')
+
+    def worker():
+        return retained_supervisor.RetainedWorkerSupervisor(queue=queue, adapter=case.adapter,
+            issuer=issuer, source_policy=source, prepare=prepare)
+
+    report = object.__new__(retained_supervisor.RetainedRunReport)
+
+    def run(adapter, identity, envelope, profile, *, hooks, issuer):
+        calls.append('run')
+        assert (adapter, identity, profile) == (case.adapter, case.identity, case.profile)
+        assert envelope.envelope_sha256 == case.envelope.envelope_sha256
+        assert hooks.current_owner == case.native.fixture.user
+        with case.hold():
+            pass  # Keep a real journal claim without starting a guest.
+        return report
+
+    monkeypatch.setattr(retained_supervisor, 'run_retained', run)
+    supervisor, peer = worker(), worker()
+    draining = worker()
+    reopen = queue.reopen
+
+    def reopen_during_drain(execution_id):
+        opened = reopen(execution_id)
+        draining.drain()
+        return opened
+
+    with monkeypatch.context() as polling:
+        polling.setattr(queue, 'reopen', reopen_during_drain)
+        assert draining.poll().state == 'draining'
+        assert calls == []
+
+    def interrupted_prepare(work):
+        raise OSError('synthetic preparation failure')
+
+    interrupted = retained_supervisor.RetainedWorkerSupervisor(queue=queue, adapter=case.adapter,
+        issuer=issuer, source_policy=source, prepare=interrupted_prepare)
+    with pytest.raises(OSError, match='synthetic preparation failure'):
+        interrupted.poll()
+    assert interrupted.poll().state == 'draining'
+    assert interrupted.status() == {'draining': True, 'active': False}
+
+    cycle = supervisor.poll()
+    assert cycle.state == 'ran' and cycle.report is report
+    assert supervisor.status() == {'draining': True, 'active': False}
+    assert supervisor.poll().state == 'draining'
+    assert peer.poll().state == 'held'
+    assert calls == ['prepare', 'run', 'teardown']
 
 
 def test_commit_ack_loss_never_mints_or_retries_a_start(case, monkeypatch):

@@ -9,6 +9,7 @@ is used. Analysis code is stored/approved first and executes only in gVisor.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import importlib
 import json
 import os
@@ -569,6 +570,19 @@ def evaluate(case, report, database, cleanup):
     }
 
 
+def _cleanup_observation(journal, envelope, mount_intent):
+    try:
+        return base._cleanup(journal, envelope, mount_intent)
+    except Exception as error:
+        return {
+            "verified": False,
+            "rootfs_unmounted": False,
+            "cgroup_empty": False,
+            "exception_type": type(error).__name__,
+            "reservation_release_authorized": False,
+        }
+
+
 def run(arguments):
     # This must precede config reads, DB imports/connections, filesystem effects
     # and every possible Linux effect. There is no Mac/ordinary-container path.
@@ -626,14 +640,11 @@ def run(arguments):
             PinnedTerminationIssuer,
             TerminationVerifierRegistry,
         )
-        from orchestration.experiment_sandbox.retained_admission import (
-            RetainedRuntimeHooks,
-        )
         from orchestration.experiment_sandbox.retained_bridge import (
             C23RetainedBridge,
             RetainedMaterialPolicy,
         )
-        from orchestration.experiment_sandbox.retained_runner import run_retained
+        from orchestration.experiment_sandbox.retained_supervisor import RetainedWorkerSupervisor
         from orchestration.experiment_sandbox.retained_work import RetainedWorkQueue
         from schema.experiment_execution import TerminationIssuerScope
 
@@ -769,50 +780,9 @@ def run(arguments):
         )
         receipt["reconciled_releases"] = work.reconcile_recorded_releases()
         identity = bridge.reserve(request, current_owner=fixture.user)
-        pending = work.list_unreleased()
-        if (len(pending) != 1 or pending[0].execution_id != identity.document["execution_id"]
-                or pending[0].state != "reserved" or not pending[0].exact_material):
-            raise base.OperatorError("retained_worker_pending_binding")
-        reopened = work.reopen(pending[0].execution_id)
-        if reopened.identity != identity or reopened.owner != fixture.user:
-            raise base.OperatorError("retained_reservation_reopen_mismatch")
-        envelope = reopened.envelope
-        base._create(
-            attempt / "retained-reservation.json", base._canonical(identity.document)
-        )
-        receipt.update(
-            job_id=envelope.job_id,
-            execution_id=identity.document["execution_id"],
-            source_policy=json.loads(policy._policy_bytes),
-            verifier_policy_sha256=registry.policy_sha256,
-        )
-        stage_inputs(worker, envelope)
-        inputs = worker / envelope.job_id / "inputs"
-        for path in inputs.iterdir():
-            os.chown(path, base.APP_UID, base.APP_GID, follow_symlinks=False)
-        os.chown(inputs, base.APP_UID, base.APP_GID, follow_symlinks=False)
-        inputs.chmod(0o500)
-        rootfs = worker / envelope.job_id / "rootfs"
-        rootfs.mkdir(mode=0o755)
-        mount_intent = base.MountIntent(Path(materials["rootfs"]), rootfs)
-        base._perform_mount(mount_intent, attempt)
-        receipt["gofer_traversal"] = base._grant_gofer_traversal(
-            attempt, worker, worker / envelope.job_id
-        )
-        profile = render_execution_profile(
-            envelope,
-            job_root=worker / envelope.job_id,
-            image_receipt=image,
-            runtime_manifest=runtime,
-            control_host_uid=base.CONTROL_UID,
-            control_host_gid=base.CONTROL_GID,
-            trusted_init_sha256=scope.trusted_init_sha256,
-        )
-        base._create(attempt / "profile.json", base._canonical(profile.document))
         adapter = LinuxExecutionAdapter(
             worker, materials["runtime_directory"], runtime, journal
         )
-        hooks = RetainedRuntimeHooks(bridge, fixture.user, policy)
         evidence = base._private_directory(attempt / "issuer", create=True)
         issuer = physical.LinuxTerminationIssuer(
             config=physical.PhysicalIssuerConfig(
@@ -830,22 +800,51 @@ def run(arguments):
                 enabled=True,
             )
         )
-        if private_bytes(arguments.config, 2 * 1024**2) != raw:
-            raise base.OperatorError("retained_operator_config_changed")
-        physical.require_loaded_source_provenance(
-            Path(config["source_root"]),
-            config["worker_source_files"],
-            check=lambda: None,
-        )
-        started = time.monotonic()
-        result = run_retained(
-            adapter, identity, envelope, profile, hooks=hooks, issuer=issuer
-        )
-        receipt["elapsed_runtime_seconds"] = time.monotonic() - started
-        receipt["report"] = result.document
-        receipt["metrics"] = base._collect_metrics(
-            journal, envelope, observation_dir=attempt
-        )
+
+        @contextmanager
+        def prepare(reopened):
+            nonlocal envelope, mount_intent
+            if reopened.identity != identity or reopened.owner != fixture.user:
+                raise base.OperatorError("retained_reservation_reopen_mismatch")
+            envelope = reopened.envelope
+            base._create(attempt / "retained-reservation.json", base._canonical(identity.document))
+            receipt.update(job_id=envelope.job_id, execution_id=identity.document["execution_id"],
+                source_policy=json.loads(policy._policy_bytes), verifier_policy_sha256=registry.policy_sha256)
+            try:
+                staged = stage_inputs(worker, envelope)
+                for path in staged.input_dir.iterdir():
+                    os.chown(path, base.APP_UID, base.APP_GID, follow_symlinks=False)
+                os.chown(staged.input_dir, base.APP_UID, base.APP_GID, follow_symlinks=False)
+                staged.input_dir.chmod(0o500)
+                rootfs = staged.root / "rootfs"
+                rootfs.mkdir(mode=0o755)
+                mount_intent = base.MountIntent(Path(materials["rootfs"]), rootfs)
+                base._perform_mount(mount_intent, attempt)
+                receipt["gofer_traversal"] = base._grant_gofer_traversal(attempt, worker, staged.root)
+                profile = render_execution_profile(envelope, job_root=staged.root,
+                    image_receipt=image, runtime_manifest=runtime, control_host_uid=base.CONTROL_UID,
+                    control_host_gid=base.CONTROL_GID, trusted_init_sha256=scope.trusted_init_sha256)
+                base._create(attempt / "profile.json", base._canonical(profile.document))
+                if private_bytes(arguments.config, 2 * 1024**2) != raw:
+                    raise base.OperatorError("retained_operator_config_changed")
+                physical.require_loaded_source_provenance(
+                    Path(config["source_root"]), config["worker_source_files"], check=lambda: None
+                )
+                started = time.monotonic()
+                yield profile
+                receipt["elapsed_runtime_seconds"] = time.monotonic() - started
+                receipt["metrics"] = base._collect_metrics(journal, envelope, observation_dir=attempt)
+            finally:
+                receipt["cleanup"] = _cleanup_observation(journal, envelope, mount_intent)
+
+        supervisor = RetainedWorkerSupervisor(queue=work, adapter=adapter, issuer=issuer,
+            source_policy=policy, prepare=prepare)
+        cycle = supervisor.poll()
+        if cycle.state != "ran" or cycle.report is None:
+            raise base.OperatorError("retained_worker_pending_binding")
+        receipt["report"] = cycle.report.document
+        supervisor.drain()
+        receipt["supervisor"] = supervisor.status()
     except Exception as error:
         reason = getattr(error, "reason", None)
         receipt["error"] = {
@@ -865,17 +864,8 @@ def run(arguments):
                 )
             except Exception as error:
                 receipt["database_observation_error"] = type(error).__name__
-        if journal is not None and envelope is not None:
-            try:
-                receipt["cleanup"] = base._cleanup(journal, envelope, mount_intent)
-            except Exception as error:
-                receipt["cleanup"] = {
-                    "verified": False,
-                    "rootfs_unmounted": False,
-                    "cgroup_empty": False,
-                    "exception_type": type(error).__name__,
-                    "reservation_release_authorized": False,
-                }
+        if journal is not None and envelope is not None and "cleanup" not in receipt:
+            receipt["cleanup"] = _cleanup_observation(journal, envelope, mount_intent)
         if journal is not None:
             journal.close()
         for engine in engines:
