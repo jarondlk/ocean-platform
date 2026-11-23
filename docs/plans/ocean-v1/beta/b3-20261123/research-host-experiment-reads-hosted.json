@@ -1,0 +1,27 @@
+{
+  "version": "ocean-beta-b3-experiment-read-hosted-v1",
+  "build_source_revision": "e5684c8e9738ee97ff1e336d06bd07e811f18b1e",
+  "hosted_source_revision": "1737023bf1bdb261c3de318c27537cb308974f7b",
+  "source_manifest_sha256": "0a6ae8d289a463849366dbab2cd943f18d9822e403c338434a20486d1833c80e",
+  "same_runtime_source_files": 191,
+  "verified_image_digest": "sha256:1000900cb67c9fbc62f4621b3391bb0e5f2f1e49a862c2a77ff27c69f05ddd57",
+  "focused_workflow": {
+    "run_id": 45175126156,
+    "job_id": 137694259955,
+    "source_inventory": "success",
+    "authenticated_serving_and_experiment_boundaries": "success",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45175126156"
+  },
+  "cloud_target_readback": {
+    "serving_generation": 69,
+    "proxy_target": "ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql",
+    "database_version": "POSTGRES_16",
+    "backup_and_point_in_time_recovery_enabled": true,
+    "serving_login_present": true,
+    "dedicated_ledger_login_present": false,
+    "supervisor_identity_present": true,
+    "sql_grants_readback": false,
+    "sql_or_iam_changed": false,
+    "candidate_deployed": false
+  }
+}

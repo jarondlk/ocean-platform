@@ -24,10 +24,15 @@ The live serving service remains at generation 69 on `0994e9d`'s B2 image.
 The first hosted run for `e5684c8` passed both v1 frontend jobs. The legacy
 frontend dependency audit failed. Two older B1 focused jobs stopped at their
 historical image closure or exact-source check. They test B1's package
-boundary. The B3 workflow now checks the B2-to-B3 source inventory and
-focused backend tests against its own checkout. Keep the B1 receipts intact.
+boundary. The new B3 workflow passed the source inventory and focused backend
+tests at `1737023`, whose 191 runtime files exactly match the built image's
+source. [Hosted and target verification](../beta/b3-20261123/research-host-experiment-reads-hosted.json).
 
-Before enabling reads, verify the live beta SQL target and retained schema.
+The live proxy points to `ocean-v1-beta-20261101:asia-northeast1:ocean-v1-beta-sql`.
+Operator metadata confirms PostgreSQL 16 with backups and point-in-time
+recovery enabled. The existing serving login is present, and the proposed
+ledger login is absent. The supervisor service account exists. Verify the
+retained schema and effective SQL grants before enabling reads.
 Install the proposed restricted `ocean_v1_beta_experiment_ledger_reader`
 login under its own credentials with only the accepted C23 projection grants.
 The serving role needs C22 SELECT on the seven relations listed in the startup
