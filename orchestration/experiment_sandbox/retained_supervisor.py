@@ -1,4 +1,5 @@
 """Private, single-job worker loop over the retained execution ledger."""
+from contextlib import contextmanager
 from dataclasses import dataclass
 import fcntl
 import json
@@ -24,7 +25,7 @@ class RetainedPollResult:
 
 
 class RetainedWorkerSupervisor:
-    """Poll one exact worker and drain locally without cancelling active work.
+    """Poll one exact worker and persist drains without cancelling active work.
 
     The host supplies a context manager for preparing and cleaning up the
     read-only job mount. The retained runner owns all admission and execution.
@@ -42,7 +43,7 @@ class RetainedWorkerSupervisor:
         self._journal, self._issuer_config = adapter.journal, issuer.config
         self._source_policy, self._prepare, self._output_writer = source_policy, prepare, output_writer
         self._state_lock = threading.Lock()
-        self._draining = False
+        self._drain_write_failed = False
         self._active = False
         self._binding()
 
@@ -62,13 +63,30 @@ class RetainedWorkerSupervisor:
     def drain(self):
         """Stop picking up new work. An accepted local poll may finish cleanup."""
         with self._state_lock:
-            self._draining = True
+            self._drain_write_failed = True
+            state = self._journal.drain_worker()
+            self._drain_write_failed = False
+            return state.generation
+
+    def resume(self, *, expected_generation):
+        """Resume this worker only when idle and the observed drain is current."""
+        with self._worker_slot() as acquired:
+            if not acquired:
+                raise SandboxError('sandbox_worker_busy')
+            with self._state_lock:
+                state = self._journal.resume_worker(expected_generation=expected_generation)
+                self._drain_write_failed = False
+                return state.generation
 
     def status(self):
+        """Current shared drain state and this process's active-work observation."""
         with self._state_lock:
-            return {'draining': self._draining, 'active': self._active}
+            state = self._journal.worker_drain()
+            return {'draining': state.draining or self._drain_write_failed,
+                'drain_generation': state.generation, 'active': self._active}
 
-    def poll(self):
+    @contextmanager
+    def _worker_slot(self):
         self._binding()
         # Lock the pinned journal directory itself, separate from its per-job
         # effect leases. Hold this lock through staging, execution and teardown.
@@ -80,15 +98,20 @@ class RetainedWorkerSupervisor:
             try:
                 fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except BlockingIOError:
-                return RetainedPollResult('busy')
-            return self._poll_locked()
+                yield False
+            else:
+                yield True
         finally:
             os.close(fd)
+
+    def poll(self):
+        with self._worker_slot() as acquired:
+            return self._poll_locked() if acquired else RetainedPollResult('busy')
 
     def _poll_locked(self):
         released = self._queue.reconcile_recorded_releases()
         with self._state_lock:
-            if self._draining:
+            if self._drain_write_failed or self._journal.worker_drain().draining:
                 return RetainedPollResult('draining', released)
         held = self._queue.list_unreleased()
         if any(row.state != 'reserved' or not row.exact_material for row in held):
@@ -104,7 +127,7 @@ class RetainedWorkerSupervisor:
             if self._journal.read(envelope.job_id, envelope.envelope_sha256) is not None:
                 return RetainedPollResult('held', released)
             with self._state_lock:
-                if self._draining:
+                if self._drain_write_failed or self._journal.worker_drain().draining:
                     return RetainedPollResult('draining', released)
                 self._active = True
             try:

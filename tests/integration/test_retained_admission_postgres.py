@@ -200,8 +200,11 @@ def test_supervisor_serializes_preparation_and_drain_without_restarting_held_wor
         calls.append('prepare')
         assert work.owner == case.native.fixture.user and work.identity == case.identity
         assert peer.poll().state == 'busy'
-        supervisor.drain()
-        assert supervisor.status() == {'draining': True, 'active': True}
+        generation = supervisor.drain()
+        assert supervisor.status() == {'draining': True, 'drain_generation': generation, 'active': True}
+        assert peer.status() == {'draining': True, 'drain_generation': generation, 'active': False}
+        with pytest.raises(SandboxError, match='sandbox_worker_busy'):
+            peer.resume(expected_generation=generation)
         try:
             yield case.profile
         finally:
@@ -237,6 +240,9 @@ def test_supervisor_serializes_preparation_and_drain_without_restarting_held_wor
         polling.setattr(queue, 'reopen', reopen_during_drain)
         assert draining.poll().state == 'draining'
         assert calls == []
+    drain_generation = draining.status()['drain_generation']
+    assert peer.poll().state == 'draining'
+    assert peer.resume(expected_generation=drain_generation) == drain_generation + 1
 
     def interrupted_prepare(work):
         raise OSError('synthetic preparation failure')
@@ -246,12 +252,17 @@ def test_supervisor_serializes_preparation_and_drain_without_restarting_held_wor
     with pytest.raises(OSError, match='synthetic preparation failure'):
         interrupted.poll()
     assert interrupted.poll().state == 'draining'
-    assert interrupted.status() == {'draining': True, 'active': False}
+    failure_generation = interrupted.status()['drain_generation']
+    assert peer.status() == {'draining': True, 'drain_generation': failure_generation, 'active': False}
+    assert peer.resume(expected_generation=failure_generation) == failure_generation + 1
 
     cycle = supervisor.poll()
     assert cycle.state == 'ran' and cycle.report is report
-    assert supervisor.status() == {'draining': True, 'active': False}
+    final_generation = supervisor.status()['drain_generation']
+    assert supervisor.status() == {'draining': True, 'drain_generation': final_generation, 'active': False}
     assert supervisor.poll().state == 'draining'
+    assert worker().poll().state == 'draining'
+    assert peer.resume(expected_generation=final_generation) == final_generation + 1
     assert peer.poll().state == 'held'
     assert calls == ['prepare', 'run', 'teardown']
 

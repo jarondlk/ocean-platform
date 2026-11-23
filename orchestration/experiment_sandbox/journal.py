@@ -40,6 +40,11 @@ _ZERO = '0' * 64
 _RESERVED = {'claimed', 'finished'}
 _AUTHORITY = {'dispatch_eligible': False, 'reservation_released': False,
               'scientific_approval': 'not_independently_verified'}
+_WORKER_CONTROL = '''CREATE TABLE worker_control (
+        singleton INTEGER PRIMARY KEY CHECK(singleton = 1),
+        generation INTEGER NOT NULL CHECK(generation >= 1),
+        draining INTEGER NOT NULL CHECK(draining IN (0, 1)))'''
+_WORKER_CONTROL_VERSION = 'c23-worker-drain-v1'
 _DATABASE_MUTEX = threading.RLock()
 _LIVE_DATABASES = {}
 
@@ -82,6 +87,12 @@ _TRIGGERS.update({
     'jobs_identity': "CREATE TRIGGER jobs_identity BEFORE UPDATE OF job_id, envelope_sha256, lock_device, lock_inode ON jobs BEGIN SELECT RAISE(ABORT, 'immutable job identity'); END",
     'jobs_no_delete': "CREATE TRIGGER jobs_no_delete BEFORE DELETE ON jobs BEGIN SELECT RAISE(ABORT, 'immutable job identity'); END",
 })
+
+
+@dataclass(frozen=True)
+class WorkerDrainState:
+    generation: int
+    draining: bool
 
 
 def _error(reason):
@@ -702,13 +713,61 @@ class DurableExecutionJournal:
         expected = {**_TABLES, **_TRIGGERS}
         query = ('SELECT ' + _text_column('name', 128) + ',' + _text_column('sql', 16384)
                  + " FROM sqlite_master WHERE type IN ('table','trigger') LIMIT ?")
-        actual = {row['name']: row['sql'] for row in connection.execute(query, (len(expected) + 1,))}
+        actual = {row['name']: row['sql'] for row in connection.execute(query, (len(expected) + 2,))}
+        metadata = {'identity': self._marker_encoded}
+        if 'worker_control' in actual:
+            expected['worker_control'] = _WORKER_CONTROL
+            metadata['worker_control'] = _WORKER_CONTROL_VERSION
         if actual != expected:
             _error('sandbox_journal_integrity')
         rows = connection.execute('SELECT ' + _text_column('key', 64) + ','
-                                  + _text_column('value', 4096) + ' FROM metadata LIMIT 2').fetchall()
-        if len(rows) != 1 or rows[0]['key'] != 'identity' or rows[0]['value'] != self._marker_encoded:
+                                  + _text_column('value', 4096) + ' FROM metadata LIMIT 3').fetchall()
+        if {row['key']: row['value'] for row in rows} != metadata:
             _error('sandbox_journal_integrity')
+
+    @staticmethod
+    def _worker_drain(connection):
+        if connection.execute("SELECT 1 FROM metadata WHERE key='worker_control'").fetchone() is None:
+            return WorkerDrainState(generation=0, draining=False)
+        rows = connection.execute('SELECT singleton,generation,draining FROM worker_control LIMIT 2').fetchall()
+        if len(rows) != 1 or rows[0]['singleton'] != 1:
+            _error('sandbox_worker_drain_integrity')
+        _, generation, draining = rows[0]
+        if (type(generation) is not int or not 1 <= generation <= MAX_EPOCH
+                or type(draining) is not int or draining not in (0, 1)):
+            _error('sandbox_worker_drain_integrity')
+        return WorkerDrainState(generation=generation, draining=bool(draining))
+
+    def worker_drain(self):
+        with self._connection() as connection:
+            return self._worker_drain(connection)
+
+    def drain_worker(self):
+        return self._set_worker_drain(draining=True, expected_generation=None)
+
+    def resume_worker(self, *, expected_generation):
+        if type(expected_generation) is not int or expected_generation < 1:
+            _error('sandbox_worker_drain_conflict')
+        return self._set_worker_drain(draining=False, expected_generation=expected_generation)
+
+    def _set_worker_drain(self, *, draining, expected_generation):
+        with self._connection(write=True) as connection:
+            current = self._worker_drain(connection)
+            if not draining and (not current.draining or current.generation != expected_generation):
+                _error('sandbox_worker_drain_conflict')
+            if current.generation == MAX_EPOCH:
+                _error('sandbox_worker_drain_integrity')
+            generation = current.generation + 1
+            if current.generation == 0:
+                # Mark initialization in immutable metadata in the same transaction.
+                # A missing control table after this point is not a legacy journal.
+                connection.execute(_WORKER_CONTROL)
+                connection.execute('INSERT INTO metadata VALUES (?,?)', ('worker_control', _WORKER_CONTROL_VERSION))
+                connection.execute('INSERT INTO worker_control VALUES (1,?,?)', (generation, draining))
+            else:
+                connection.execute('UPDATE worker_control SET generation=?,draining=? WHERE singleton=1',
+                                   (generation, draining))
+            return WorkerDrainState(generation=generation, draining=draining)
 
     def _now(self):
         try:

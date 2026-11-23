@@ -121,6 +121,54 @@ def _hold_in_process(root, pipe, uncommitted):
                 pipe.recv()
 
 
+def _drain_in_process(root, pipe):
+    with create(root) as journal:
+        state = journal.drain_worker()
+        pipe.send(state.generation)
+        pipe.recv()
+
+
+def test_worker_drain_survives_process_exit_and_rejects_stale_resume(root):
+    with create(root) as journal:
+        assert journal.worker_drain() == module.WorkerDrainState(generation=0, draining=False)
+    context = multiprocessing.get_context('spawn')
+    parent, child = context.Pipe()
+    process = context.Process(target=_drain_in_process, args=(str(root), child))
+    process.start()
+    child.close()
+    try:
+        assert parent.poll(15), 'drain did not commit'
+        generation = parent.recv()
+        process.kill()
+        process.join(5)
+        assert not process.is_alive()
+        with create(root, host_boot_id=NEXT_BOOT) as restarted, create(root, host_boot_id=NEXT_BOOT) as peer:
+            assert restarted.worker_drain() == module.WorkerDrainState(generation=generation, draining=True)
+            newer = peer.drain_worker()
+            with pytest.raises(SandboxError, match='sandbox_worker_drain_conflict'):
+                restarted.resume_worker(expected_generation=generation)
+            assert restarted.worker_drain() == newer
+            opened = restarted.resume_worker(expected_generation=newer.generation)
+            assert opened == module.WorkerDrainState(generation=newer.generation + 1, draining=False)
+            assert peer.worker_drain() == opened
+    finally:
+        if process.is_alive():
+            process.kill()
+            process.join(5)
+        parent.close()
+
+
+@pytest.mark.parametrize('tamper, error', [
+    ('DROP TABLE worker_control', 'sandbox_journal_integrity'),
+    ('DELETE FROM worker_control', 'sandbox_worker_drain_integrity'),
+])
+def test_worker_drain_control_disappearance_fails_closed(journal, root, tamper, error):
+    journal.drain_worker()
+    raw(root, tamper)
+    with pytest.raises(SandboxError, match=error):
+        journal.worker_drain()
+
+
 def test_durable_reopen_detached_events_and_immutable_control_result(root):
     with create(root) as journal:
         assert journal.read(JOB, ENVELOPE) is None
