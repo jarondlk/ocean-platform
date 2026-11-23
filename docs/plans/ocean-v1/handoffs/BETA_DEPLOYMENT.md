@@ -1,5 +1,34 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — Restart recovery for committed termination proofs
+
+The private C23 poll can release capacity when a previous controller saved
+the termination proof and lost the response or exited before release. It
+reads only closed work for the configured site and exact worker material,
+revalidates the persisted packet against the pinned signer and exact closed
+journal result, and calls the idempotent native release. The path works with
+new launches paused and the owner suspended. Missing proof leaves the slot
+held. The Tokyo acceptance runner invokes this check before reservation.
+Its source preparation now includes the poll in the required import pins.
+
+The new source passed 59 restricted PostgreSQL and 160 focused sandbox
+tests. The PostgreSQL cluster was stopped after validation. The previous
+download increment's hosted backend, PostgreSQL, B2 catalogue and both v1
+jobs passed. Beta project and results-bucket policy readback found no
+direct storage grant for the candidate supervisor or serving identity. The
+Policy Troubleshooter API is disabled in this project. Effective access still
+needs exact runtime tests. Before output activation, qualify the supervisor
+for create and exact readback and serving for reads under the private
+`c23/outputs-v1/` prefix. Include negative checks for listing, deleting and
+access outside the prefix. The original synthetic proofs and source receipts
+retain their original scope.
+
+Locally prepared archives reproduce all 249 members and the six previously
+accepted Tokyo host bindings. The intended VM's current readback shows it
+stopped with its two-hour run limit. The new archive still needs installation
+and verification on a fresh boot. Qualify the private supervisor, cancellation
+and a signed-in publish and download. [Verification receipt](../beta/b3-20261123/restart-release-checkpoint.json).
+
 ## November 23 — Generation-checked downloads and Tokyo transport probe
 
 C25 now reuses one verified file per configured Cloud Storage reader. Every

@@ -1,0 +1,118 @@
+{
+  "beta_readback": {
+    "beta_changed": false,
+    "bucket_scope": "gs://ocean-v1-beta-20261101-results/c23/outputs-v1/",
+    "effective_storage_access_verified": false,
+    "explicit_bucket_memberships_for_serving_and_supervisor": [],
+    "explicit_project_storage_memberships_for_serving_and_supervisor": [],
+    "policy_troubleshooter_result": "SERVICE_DISABLED",
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "research_controller_generation": 10,
+    "serving_generation": 69,
+    "trial_vm_limit_action": "STOP",
+    "trial_vm_start_limit_seconds": 7200,
+    "trial_vm_status": "TERMINATED"
+  },
+  "captured_utc": "2026-11-23T10:16:07.412569+00:00",
+  "hosted": {
+    "backend": "in_progress",
+    "legacy_frontend_dependency_audit": "failed",
+    "postgresql": "in_progress",
+    "run_id": 45154043628,
+    "source_commit": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/45154043628",
+    "v1_frontend_jobs_passed": 2
+  },
+  "local_verification": {
+    "fixture_termination_trust_scope": "synthetic-software-test",
+    "focused_sandbox_tests_passed": 160,
+    "postgresql_cluster_stopped": true,
+    "postgresql_umask": "022",
+    "restricted_postgresql_tests_passed": 59,
+    "ruff_passed": true,
+    "scenarios": [
+      "Committed proof acknowledgement loss recovered by a new queue and store",
+      "Launches paused and owner suspended during cleanup",
+      "Different worker source leaves capacity held",
+      "Consumed start and closed execution without committed proof remain held",
+      "Release retry returns the original release ID without an extra proof, release, or start"
+    ],
+    "sqlite_version": "3.54.1"
+  },
+  "open_gates": [
+    "Install and verify the new candidate on the exact fresh Linux boot",
+    "Qualify scoped result writer and reader through the actual runtime identities",
+    "Hosted private supervisor restart, cancellation, recovery, and capacity",
+    "Signed-in real execution, retention, and exact verified download",
+    "Hosted backup restore and measured recovery objectives"
+  ],
+  "private_candidate_manifest_local_path": "/private/tmp/ocean-b3-restart-worker-3ef11f9.nbqt3kr9/tokyo-candidate/tokyo-worker-source.json",
+  "reused_previous_hosted_results": {
+    "b2_catalogue": "passed",
+    "b2_catalogue_url": "https://github.com/jarondlk/ocean-platform/actions/runs/45134822865",
+    "backend": "passed",
+    "ci_url": "https://github.com/jarondlk/ocean-platform/actions/runs/45134822732",
+    "legacy_frontend_dependency_audit": "failed",
+    "postgresql": "passed",
+    "source_commit": "ea3478485c092ae62857dce5be0354f6c6c4e8c5",
+    "v1_frontend_jobs_passed": 2
+  },
+  "source_commit": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+  "tokyo_candidate": {
+    "archive_members": 249,
+    "archive_sha256": "471bfcc1173ada38da77b7e24194755d6b7c89e3c869f98742e966af6c0998b2",
+    "base_archive_sha256": "4a2435266564c89cf900659919dae7cc690445d675b680d763999d31b73ded99",
+    "current_boot_qualified": false,
+    "installed_on_target": false,
+    "intended_remote_root": "/var/lib/ocean-c23/operator-source-beta-b3-restart-3ef11f9",
+    "intended_target": {
+      "boot_source_image_id": "1892012953239034119",
+      "instance": "ocean-v1-beta-b3-worker-1123",
+      "instance_id": "4080105203514106848",
+      "network": "ocean-v1-beta-b3-isolated",
+      "project": "ocean-v1-beta-20261101",
+      "subnet": "ocean-v1-beta-b3-tokyo",
+      "zone": "asia-northeast1-a"
+    },
+    "manifest_sha256": "2089e3dc231d39fddfcb2060c374c03c68630cdd4be14ec8763e19a8b4d97234",
+    "previous_hard_stop_utc": "2026-11-23T08:28:34.473468Z",
+    "previous_physical_archive_sha256": "29dbbf2917249cbd8f4ecab3d2e59ba0ecf04509ff1e23ffd15166d1f9b04a3f",
+    "previous_target_bindings_rechecked": 6,
+    "scientific_build_context_sha256": "2adbed53ee4ccebd3e9bc8d632720d71744e3a09b268205219bbcb0d48900639",
+    "source_commit": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+    "version": "ocean-beta-b3-restart-target-candidate-v1"
+  },
+  "version": "ocean-beta-b3-restart-release-checkpoint-v1",
+  "worker_archive": {
+    "all_archive_bytes_rechecked": true,
+    "archive_bytes": 4454400,
+    "archive_sha256": "4a2435266564c89cf900659919dae7cc690445d675b680d763999d31b73ded99",
+    "changes": {
+      "orchestration/experiment_sandbox/execution_store.py": {
+        "current": "880e988f9a34aee6144ae6984ab0a5ce9783e42def8a1ffc9c2b86f67c947768",
+        "previous": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2"
+      },
+      "orchestration/experiment_sandbox/physical_termination.py": {
+        "current": "7f258a70fd95198ea6bb4dceb73bb93b0ccdfe7ddbd0f123c920d2f9e6dfd162",
+        "previous": "b33fd0ce11f743009eaec1454c67ea83b005cbd7c3a46fd935ea78570eb1dfad"
+      },
+      "orchestration/experiment_sandbox/retained_work.py": {
+        "current": "62b8c12dfb616264af52d84a81503e7f4fbb061cd96da05c63369922861e5851",
+        "previous": "eb1bc8168df4bf465f8031ebf02f3e10eeda60d6c14906450da425e4b1bee604"
+      },
+      "sandbox/experiment/gcp/run_retained_acceptance.py": {
+        "current": "1b58491d34683af5e9ff6d0fc412915b7d0dd0889b17ce28469bbbf2df1bb136",
+        "previous": "2f963e939ce0723ce9c25fc9dc4765800f12cac3cd6b3b6e5e5a2b23743b83e8"
+      }
+    },
+    "cloud_transfer": false,
+    "guest_init_mode_and_bytes_verified_without_import": true,
+    "parent_archive_source": "ea3478485c092ae62857dce5be0354f6c6c4e8c5",
+    "previous_archive_sha256": "e84b1b1e04fc5bac120a3be4949614f3803b626eabf6b2ed0921d1feaf6b0077",
+    "required_source_origins_verified_locally": 20,
+    "source": "3ef11f9cd6b4cf891672957ddf9068a16eca4192",
+    "source_files": 249,
+    "target_bound": false
+  }
+}

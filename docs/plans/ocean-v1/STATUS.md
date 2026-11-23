@@ -1,5 +1,15 @@
 # Implementation status
 
+## November 23 — Restart recovery for committed termination proofs
+
+B3 can recover a held execution slot after a lost proof or release response.
+The private worker poll revalidates the committed signature, closed fence and
+journal result against its exact source policy before releasing capacity. It
+can perform this cleanup with launches paused and the owner suspended. A
+closed row without the matching proof remains held. Hosted runtime access,
+the supervisor and the signed-in experiment journey still need verification.
+See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Generation-checked downloads and Tokyo transport probe
 
 The download path checks the current Cloud Storage generation on every chunk
