@@ -1,0 +1,55 @@
+name: Beta B3 experiment read acceptance
+
+on:
+  push:
+    branches: [overhaul]
+    paths:
+      - '.github/workflows/beta-b3-experiment-reads.yml'
+      - 'api/v1_beta_experiment_reads.py'
+      - 'api/v1_beta_question_entry.py'
+      - 'api/v1_beta_question_services.py'
+      - 'api/v1_host.py'
+      - 'api/v1_research_controller_host.py'
+      - 'api/v1_runtime_routes.py'
+      - 'db/experiment_execution_models.py'
+      - 'ingestion/artifact_store.py'
+      - 'orchestration/experiment_sandbox/**'
+      - 'orchestration/experiment_workspace.py'
+      - 'orchestration/research_experiments.py'
+      - 'schema/experiment_execution.py'
+      - 'schema/experiment_workspace.py'
+      - 'deploy/gcp/beta/b3/prepare_experiment_read_context.py'
+      - 'tests/test_beta_experiment_reads.py'
+
+permissions:
+  contents: read
+
+jobs:
+  serving-reads:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      AUTH_MODE: disabled
+      DEPLOYMENT_ENV: test
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements/dev.txt
+      - name: Install hash-locked dependencies
+        run: python -m pip install --require-hashes -r requirements/dev.txt
+      - name: Verify the B3 image inventory and inherited B2 pins
+        run: |
+          python -m deploy.gcp.beta.b3.prepare_experiment_read_context \
+            --revision "$GITHUB_SHA" --output "$RUNNER_TEMP/b3-read-context"
+      - name: Verify signed-in serving discovery and experiment boundaries
+        run: |
+          python -m pytest -q --tb=short \
+            tests/test_beta_experiment_reads.py tests/test_beta_question_entry.py \
+            tests/test_beta_question_services.py tests/test_v1_host.py \
+            tests/test_experiment_workspace.py tests/test_research_experiments.py

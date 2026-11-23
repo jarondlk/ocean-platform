@@ -1,0 +1,50 @@
+{
+  "version": "ocean-beta-b3-experiment-read-candidate-v1",
+  "source_revision": "e5684c8e9738ee97ff1e336d06bd07e811f18b1e",
+  "supersedes_serving_candidate_revision": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+  "base_source_manifest_sha256": "44bedc906bec71ca6ddcc9189036c1f9bf2006e498cfa76238f3ec5666fa2caf",
+  "source_manifest_sha256": "0a6ae8d289a463849366dbab2cd943f18d9822e403c338434a20486d1833c80e",
+  "host_configuration_sha256": "4287c5c37644cb5f6398eaebdba0171f308ae9abe25d2a458e2005315facfaa2",
+  "local_verification": {
+    "focused_tests_passed": 121,
+    "native_postgresql_version": "18",
+    "native_database_scope": "Disposable beta-shaped schema, seven C22 read grants, exact row-lock and owner-lock privileges",
+    "account_update_experiment_version_update_and_experiment_delete_denied": true,
+    "disposable_database_stopped": true,
+    "staged_file_count": 24,
+    "runtime_file_count": 191,
+    "imports_verified_against_packaged_source": true,
+    "ruff_and_diff_check_passed": true
+  },
+  "hosted_ci_first_readback": {
+    "main_run_id": 45174133438,
+    "v1_jobs": "success",
+    "legacy_frontend_audit_job": "failure",
+    "historical_b1_focused_run_id": 45174133564,
+    "historical_b1_focused_job": "failed at historical package closure check",
+    "historical_b1_shared_owner_run_id": 45174133560,
+    "historical_b1_shared_owner_job": "failed at historical runtime pin check"
+  },
+  "image": {
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "cloud_build_id": "cfffb761-2fa1-438f-981c-dfd082bc4aff",
+    "build_identity": "projects/ocean-v1-beta-20261101/serviceAccounts/ocean-v1-beta-build@ocean-v1-beta-20261101.iam.gserviceaccount.com",
+    "build_status": "SUCCESS",
+    "build_logging": "CLOUD_LOGGING_ONLY",
+    "offline_proof_passed": true,
+    "source_bucket": "ocean-v1-beta-20261101-build-source",
+    "source_object": "source/1795436778.315557-f1d8e48f88e349bd8a79d15687621851.tgz",
+    "source_generation": "1795436778670435",
+    "tag": "b3-experiment-reads-e5684c8e9738",
+    "registry_digest_readback": "sha256:1000900cb67c9fbc62f4621b3391bb0e5f2f1e49a862c2a77ff27c69f05ddd57"
+  },
+  "live_readback": {
+    "serving_generation": 69,
+    "latest_ready_revision": "ocean-v1-beta-serving-b2-discovery-1122",
+    "serving_api_digest": "sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "live_candidate_deployed": false,
+    "live_database_or_iam_changed": false,
+    "signed_in_live_download_accepted": false
+  }
+}

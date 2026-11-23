@@ -1,5 +1,52 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 23 — B3 serving candidate built
+
+Source `e5684c8` composes the C25 workspace through the normal beta Research
+host. It accepts `OCEAN_V1_EXPERIMENT_READ_CONFIG` and the dedicated
+`OCEAN_V1_EXPERIMENT_LEDGER_URL` together, only on the serving API. The
+trusted bounded configuration names the exact ledger database/schema, retained
+Linux environment, pinned worker public keys and explicit source publication
+decisions. Keep the DSN in a serving-only secret version. The public API exposes
+review, status, history and validated artifact reads. Experiment proposal
+changes, approval, start and cancellation remain disabled. Keep all experiment
+effect flags off for this candidate.
+
+All 121 local focused checks passed. A disposable PostgreSQL 18 fixture at
+migration head `20261027_0021` confirmed the existing owner-lock function,
+the C22 table reads and the precise experiment-head lock grant. The probe
+rejected the missing grant and verified denial of account edits, experiment
+version changes and deletion. Tokyo Cloud Build passed its offline proof for
+the 191-source image. The registry tag matches the immutable image digest.
+The live serving service remains at generation 69 on `0994e9d`'s B2 image.
+[Source and image receipt](../beta/b3-20261123/research-host-experiment-reads.json).
+
+The first hosted run for `e5684c8` passed both v1 frontend jobs. The legacy
+frontend dependency audit failed. Two older B1 focused jobs stopped at their
+historical image closure or exact-source check. They test B1's package
+boundary. The B3 workflow now checks the B2-to-B3 source inventory and
+focused backend tests against its own checkout. Keep the B1 receipts intact.
+
+Before enabling reads, verify the live beta SQL target and retained schema.
+Install the proposed restricted `ocean_v1_beta_experiment_ledger_reader`
+login under its own credentials with only the accepted C23 projection grants.
+The serving role needs C22 SELECT on the seven relations listed in the startup
+probe and `UPDATE(id)` on `research_experiment` for row locking. The C22
+identity guard protects that column. Verify the installed guard, current
+investigation lock and existing owner-lock function before applying the
+scoped grants. Keep AppUser write privileges and C23 writer or release
+privileges out of this change.
+
+Verify exact-key reads as the real serving identity and create plus exact-key
+read for the selected writer, with explicit denials outside
+`c23/outputs-v1/`. Supply the real verifier scope and approved publication
+witness for the retained material. The earlier private synthetic trial used
+disposable credentials and a different output spool. Its receipt remains
+evidence for the isolated trial. Roll out only the serving API candidate
+after the SQL and storage prerequisites pass, then verify a signed-in
+artifact download against the retained manifest. The production worker,
+full containment, recovery and release gates remain open.
+
 ## November 23 — Read-only ledger for experiment downloads
 
 The v1 workspace now requires a dedicated ledger reader for a serving host.

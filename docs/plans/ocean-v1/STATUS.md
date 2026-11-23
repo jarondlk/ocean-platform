@@ -1,5 +1,15 @@
 # Implementation status
 
+## November 23 — B3 serving candidate built
+
+The beta Research host can now be configured to show retained experiment
+history and validated downloads. Signed-in synthetic HTTP checks verified
+discovery and denied proposal changes, approval and launch. The Tokyo
+candidate image passed an offline source and import proof. The live beta is
+still serving B2. B3 activation needs the live ledger credential, narrowly
+scoped output access, pinned worker and publication material, and a real
+signed-in download. See the [deployment handoff](handoffs/BETA_DEPLOYMENT.md).
+
 ## November 23 — Read-only ledger for experiment downloads
 
 C25 can use an independent PostgreSQL login for execution history and released
