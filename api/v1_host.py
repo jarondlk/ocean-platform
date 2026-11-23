@@ -54,6 +54,9 @@ from orchestration.research_experiments import ResearchExperimentService
 from orchestration.research_runs import ResearchRunService
 
 MIGRATION_HEAD = '20261027_0021'
+EXPERIMENT_READ_CONFIG = 'OCEAN_V1_EXPERIMENT_READ_CONFIG'
+EXPERIMENT_LEDGER_URL = 'OCEAN_V1_EXPERIMENT_LEDGER_URL'
+EXPERIMENT_READ_ENV = frozenset({EXPERIMENT_READ_CONFIG, EXPERIMENT_LEDGER_URL})
 EXECUTION_FLAGS = (
     'ENABLE_V1_RESEARCH_CONTROLLER', 'ENABLE_V1_RESEARCH_DISPATCH',
     'ENABLE_V1_SYNTHESIS', 'ENABLE_V1_EXPERIMENT_DISPATCH',
@@ -291,7 +294,7 @@ def _failure(status, code, message):
 def create_host_app(*, settings: V1HostSettings, session_factory, internal_secret: SecretStr,
                     services: V1ReadServices | None = None, context_mutations=False,
                     research_execution=False,
-                    _allow_test_sqlite=False, _owned_engine=None):
+                    _allow_test_sqlite=False, _owned_engine=None, _owned_ledger_engine=None):
     """Compose trusted explicit dependencies. Only tests may request SQLite."""
     if not isinstance(settings, V1HostSettings) or not callable(session_factory):
         raise HostConfigurationError('Explicit validated settings and independent session factory required')
@@ -339,8 +342,9 @@ def create_host_app(*, settings: V1HostSettings, session_factory, internal_secre
         try:
             yield
         finally:
-            if _owned_engine is not None:
-                await run_in_threadpool(_owned_engine.dispose)
+            for engine in (_owned_ledger_engine, _owned_engine):
+                if engine is not None:
+                    await run_in_threadpool(engine.dispose)
 
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
     for name in services.__dataclass_fields__:
@@ -428,7 +432,7 @@ def _unique(items):
     return result
 
 
-def catalogue_services_from_environment(settings, secret, environ, *, session_factory=None):
+def catalogue_services_from_environment(settings, secret, environ, *, session_factory=None, experiment_reads=None):
     """Bind only an explicitly configured, operator-owned catalogue inventory.
 
     The initial production registry is empty. It attests no scientific data,
@@ -436,10 +440,12 @@ def catalogue_services_from_environment(settings, secret, environ, *, session_fa
     Missing configuration retains the existing unavailable-service behavior.
     """
     path = environ.get('OCEAN_V1_CATALOGUE_CONFIG')
+    mode = environ.get('OCEAN_V1_CATALOGUE_MODE', 'empty')
+    if experiment_reads is not None and (path is None or mode != 'sealed-gcs-research-v1'):
+        raise HostConfigurationError('Experiment reads require the beta Research catalogue')
     if path is None:
         return None
     from api.v1_catalogue_host import load_empty_catalogue, load_snapshot_catalogue
-    mode = environ.get('OCEAN_V1_CATALOGUE_MODE', 'empty')
     if mode not in {'empty', 'sealed-gcs-v1', 'sealed-gcs-context-v1', 'sealed-gcs-research-v1'}:
         raise HostConfigurationError('Explicit supported catalogue mode required')
     key = hmac.digest(secret.get_secret_value().encode('utf-8'),
@@ -456,7 +462,7 @@ def catalogue_services_from_environment(settings, secret, environ, *, session_fa
             document_json=environ.get('OCEAN_V1_RESEARCH_CONFIG_JSON'))
         return compose_beta_question_services(session_factory=session_factory,
             catalogue_service=catalogue, catalogue_browser=browser,
-            cloud_settings=cloud_settings, model_settings=model_settings)
+            cloud_settings=cloud_settings, model_settings=model_settings, experiment_reads=experiment_reads)
     if mode == 'sealed-gcs-context-v1':
         from api.v1_beta_research_host import compose_beta_context_services
         return compose_beta_context_services(session_factory=session_factory, site_id=settings.site_id,
@@ -466,7 +472,7 @@ def catalogue_services_from_environment(settings, secret, environ, *, session_fa
 
 def create_from_environment():
     """Separate production factory: never reads DATABASE_URL or api.main."""
-    engine = None
+    engine = ledger_engine = None
     try:
         path = Path(os.environ['OCEAN_V1_HOST_CONFIG'])
         if not path.is_absolute() or path.is_symlink() or not path.is_file() or path.stat().st_size > 65536:
@@ -494,14 +500,21 @@ def create_from_environment():
         secret = SecretStr(os.environ['OCEAN_V1_INTERNAL_AUTH_SECRET'])
         engine = create_engine(dsn, pool_pre_ping=True, connect_args={'connect_timeout': 10})
         factory = sessionmaker(bind=engine, expire_on_commit=False)
-        services = catalogue_services_from_environment(settings, secret, os.environ, session_factory=factory)
+        experiment_reads = None
+        if EXPERIMENT_READ_ENV & os.environ.keys():
+            from api.v1_beta_experiment_reads import load_beta_experiment_reads
+
+            experiment_reads, ledger_engine = load_beta_experiment_reads(os.environ, session_factory=factory)
+        services = catalogue_services_from_environment(settings, secret, os.environ, session_factory=factory,
+            experiment_reads=experiment_reads)
         app = create_host_app(settings=settings, session_factory=factory, internal_secret=secret,
-            services=services, _owned_engine=engine,
+            services=services, _owned_engine=engine, _owned_ledger_engine=ledger_engine,
             context_mutations=os.environ.get('OCEAN_V1_CATALOGUE_MODE') in {'sealed-gcs-context-v1', 'sealed-gcs-research-v1'},
             research_execution=os.environ.get('OCEAN_V1_CATALOGUE_MODE') == 'sealed-gcs-research-v1')
         app.state.v1_owned_engine = engine
         return app
     except Exception:
-        if engine is not None:
-            engine.dispose()
+        for current in (ledger_engine, engine):
+            if current is not None:
+                current.dispose()
         raise HostConfigurationError('Independent v1 host startup rejected; check explicit configuration and migration readiness') from None

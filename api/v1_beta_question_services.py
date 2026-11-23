@@ -1,8 +1,8 @@
 """Explicit beta Research composition; no cloud provisioning or ambient model.
 
 Used by the serving API and the private delivery host with their independently
-configured SQL identities. Experiments stay unavailable. Merely composing these
-services never dispatches an outbox or calls a provider.
+configured SQL identities. Experiment reads require a separate explicit binding.
+Merely composing these services never dispatches an outbox or calls a provider.
 """
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -106,9 +106,17 @@ class BetaQuestionServices(V1ReadServices):
         super().validate(session_factory=session_factory, site_id=site_id,
             allow_test=allow_test, research_execution=True)
         if (site_id != SITE_ID or not isinstance(self.cloud_settings, CloudResearchSettings)
-                or not isinstance(self.model_settings, BetaModelSettings)
-                or self.research_experiment_service is not None or self.experiment_workspace_service is not None):
+                or not isinstance(self.model_settings, BetaModelSettings)):
             raise HostConfigurationError("Exact beta question services required")
+        experiments, workspace = self.research_experiment_service, self.experiment_workspace_service
+        if experiments is not None or workspace is not None:
+            from api.v1_beta_experiment_reads import BetaReadOnlyExperimentService
+            from orchestration.experiment_sandbox.workspace_projection import RetainedExecutionProjection
+
+            if (type(experiments) is not BetaReadOnlyExperimentService or experiments.owner_locker is not lock_research_owner
+                    or experiments.dispatch_enabled() is not False or workspace is None
+                    or type(workspace.port) is not RetainedExecutionProjection or not workspace.port.uses_read_only_ledger):
+                raise HostConfigurationError("Explicit beta experiment read-only composition required")
         runs, answers = self.research_run_service, self.research_answer_service
         if runs is None or answers is None or self.research_evidence_service is None:
             raise HostConfigurationError("Complete durable question services required")
@@ -133,7 +141,7 @@ class BetaQuestionServices(V1ReadServices):
 
 
 def question_execution_fence(environ=None):
-    """Research flags may be disabled to drain; experiments always stay off."""
+    """Research flags may be drained. Experiment writes and dispatch stay off."""
     import os
     env = os.environ if environ is None else environ
     try:
@@ -149,7 +157,7 @@ def question_execution_fence(environ=None):
 
 
 def compose_beta_question_services(*, session_factory, catalogue_service, catalogue_browser,
-                                   cloud_settings, model_settings):
+                                   cloud_settings, model_settings, experiment_reads=None):
     if not isinstance(cloud_settings, CloudResearchSettings) or not isinstance(model_settings, BetaModelSettings):
         raise HostConfigurationError("Explicit beta cloud and model configuration required")
     if not isinstance(catalogue_service.resolver.store, BetaResearchRetentionStore):
@@ -182,9 +190,15 @@ def compose_beta_question_services(*, session_factory, catalogue_service, catalo
         runtime=runtime, model=model_settings.model, runtime_identity=identity)
     investigations.artifact_resolver = evidence.attachment_resolver()
     investigations.evidence_protection = evidence
+    experiments = workspace = None
+    if experiment_reads is not None:
+        from api.v1_beta_experiment_reads import compose_beta_experiment_reads
+
+        experiments, workspace = compose_beta_experiment_reads(investigations, experiment_reads)
     services = BetaQuestionServices(catalogue_service=catalogue_service, catalogue_browser=catalogue_browser,
         investigation_service=investigations, research_run_service=runs,
         research_evidence_service=evidence, research_answer_service=answers,
+        research_experiment_service=experiments, experiment_workspace_service=workspace,
         cloud_settings=cloud_settings, model_settings=model_settings)
     services.validate(session_factory=session_factory, site_id=SITE_ID, research_execution=True)
     return services

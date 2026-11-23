@@ -10,11 +10,15 @@ import sys
 def validate_environment(environ, role):
     from sqlalchemy.engine import make_url
     from api.v1_beta_question_services import load_question_configuration, question_execution_fence
+    from api.v1_host import EXPERIMENT_READ_ENV
     if (role not in {"api", "controller"} or environ.get("DEPLOYMENT_ENV") != "production"
             or environ.get("OCEAN_V1_PROJECT_ID") != "ocean-v1-beta-20261101"
             or environ.get("OCEAN_V1_CATALOGUE_MODE") != "sealed-gcs-research-v1"
             or "DATABASE_URL" in environ):
         raise ValueError("Explicit beta research entry required")
+    read_keys = EXPERIMENT_READ_ENV & environ.keys()
+    if read_keys and (role != "api" or read_keys != EXPERIMENT_READ_ENV):
+        raise ValueError("Complete serving-only experiment read configuration required")
     expected_user = "ocean_v1_serving" if role == "api" else "ocean_v1_research_controller"
     url = make_url(environ["OCEAN_V1_DATABASE_URL"])
     if (url.drivername != "postgresql+psycopg2" or url.database != "ocean_v1_beta"

@@ -176,7 +176,7 @@ def _research_experiments(configuration, user, research_status, investigations, 
         approval = False
         try:
             experiments._require_enabled()
-            approval = True
+            approval = not experiments.read_only
         except Exception:
             pass
         capability.update(proposal_transport='http-v1', approval_enabled=approval,

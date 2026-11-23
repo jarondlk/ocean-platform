@@ -126,8 +126,10 @@ class FakeExperimentExecutor:
 
 
 class ResearchExperimentService:
+    read_only = False
+
     def __init__(self, *, session_factory, site_id, investigations, exporter, environments,
-                 executor=None, enabled=None, dispatch_enabled=None):
+                 executor=None, enabled=None, dispatch_enabled=None, owner_locker=None):
         from orchestration.frozen_experiment_export import FrozenExperimentExporter
         if (not isinstance(investigations, InvestigationService) or session_factory is not investigations.session_factory
                 or site_id != investigations.site_id or not site_id.startswith('v1:')):
@@ -138,6 +140,8 @@ class ResearchExperimentService:
             raise ValueError('Exporter and investigation scientific sources must match')
         if executor is not None and (not isinstance(executor, FakeExperimentExecutor) or executor.kind != 'c22-fake'):
             raise ValueError('C22 accepts only the explicit non-executing fake adapter')
+        if owner_locker is not None and not callable(owner_locker):
+            raise ValueError('Explicit owner locking capability required')
         parsed = {}
         for identity, descriptor in dict(environments).items():
             item = EnvironmentDescriptor.model_validate(descriptor)
@@ -147,6 +151,7 @@ class ResearchExperimentService:
         self.session_factory, self.site_id = session_factory, site_id
         self.investigations, self.exporter = investigations, exporter
         self.environments, self.executor = parsed, executor
+        self.owner_locker = owner_locker
         self.enabled = enabled if enabled is not None else config.v1_experiments_enabled
         self.dispatch_enabled = dispatch_enabled if dispatch_enabled is not None else config.v1_experiment_dispatch_enabled
 
@@ -177,8 +182,12 @@ class ResearchExperimentService:
         identity = user.id if user is not None else owner_id
         if identity is None:
             raise ResearchExperimentError('authentication_required', 401)
-        current = session.scalar(select(AppUser).where(AppUser.id == identity)
-            .with_for_update(key_share=True).execution_options(populate_existing=True))
+        query = select(AppUser).where(AppUser.id == identity)
+        if self.owner_locker is not None and session.bind.dialect.name == 'postgresql':
+            self.owner_locker(session, identity)
+        else:
+            query = query.with_for_update(key_share=True)
+        current = session.scalar(query.execution_options(populate_existing=True))
         if current is None:
             raise ResearchExperimentError('access_denied', 403)
         actor = current_user_from_model(current)
