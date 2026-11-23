@@ -313,6 +313,38 @@ def prepare_host_controls(output):
     }
 
 
+PRIVATE_RETAINED_CONTROLS = "c23-retained-private-host-controls-v1"
+
+
+def prepare_private_retained_controls(output, port):
+    """Observe only the private synthetic trial's trusted loopback transport."""
+    target = require_worker()
+    _control_output(output)
+    if type(port) is not int or not 1024 <= port <= 65535:
+        raise OperatorError("host_private_control_port")
+    target.update(host_boot_id=_boot_id(), instance_id=_metadata("instance/id"))
+    if (_metadata("instance/network-interfaces/") != "0/"
+            or _metadata("instance/network-interfaces/0/access-configs/") not in {"", "0/"}
+            or _metadata(METADATA_EXTERNAL_IP) != ""):
+        raise OperatorError("host_external_ip_not_absent")
+    endpoint = {"address": "127.0.0.1", "port": port}
+    with socket.create_connection((endpoint["address"], endpoint["port"]), timeout=3):
+        pass
+    document = {
+        "version": PRIVATE_RETAINED_CONTROLS,
+        "purpose": PURPOSE,
+        "target": target,
+        "monotonic_ns": time.monotonic_ns(),
+        "private_loopback_endpoint": endpoint,
+        "host_private_loopback_tcp_connect": True,
+        "metadata_read_positive": True,
+        "untrusted_execution_performed": False,
+    }
+    encoded = _canonical(document)
+    _create(output, encoded)
+    return {"path": str(output), "sha256": _sha(encoded), "untrusted_execution_performed": False}
+
+
 def _control_output(path):
     path = Path(path)
     if path.parent != FIXED_ROOT / "evidence" or not re.fullmatch(
@@ -363,22 +395,31 @@ def validate_network_controls(
     access_configs,
     external_ip,
     now_ns,
+    private_loopback_port=None,
 ):
     """Validate retained trusted observations plus live metadata; no cloud API."""
     if any(type(value) is not dict for value in (host, isolated, target)):
         raise OperatorError("host_network_receipt_shape")
     if (
-        host.get("version") != "c23-host-positive-controls-v1"
-        or host.get("purpose") != PURPOSE
-        or host.get("host_external_tcp_connect") is not True
+        host.get("purpose") != PURPOSE
         or host.get("metadata_read_positive") is not True
         or host.get("untrusted_execution_performed") is not False
-        or host.get("external_endpoint") != {"address": "1.1.1.1", "port": 443}
         or type(host.get("monotonic_ns")) is not int
         or type(now_ns) is not int
         or not 0 <= now_ns - host["monotonic_ns"] <= 2 * 3600 * 10**9
     ):
         raise OperatorError("host_network_positive_control_invalid")
+    if private_loopback_port is None:
+        if (host.get("version") != "c23-host-positive-controls-v1"
+                or host.get("host_external_tcp_connect") is not True
+                or host.get("external_endpoint") != {"address": "1.1.1.1", "port": 443}):
+            raise OperatorError("host_network_positive_control_invalid")
+    elif (type(private_loopback_port) is not int or not 1024 <= private_loopback_port <= 65535
+            or host.get("version") != PRIVATE_RETAINED_CONTROLS
+            or host.get("host_private_loopback_tcp_connect") is not True
+            or host.get("private_loopback_endpoint") != {"address": "127.0.0.1", "port": private_loopback_port}
+            or "host_external_tcp_connect" in host or "external_endpoint" in host):
+        raise OperatorError("host_private_control_invalid")
     expected_target = {**target, "host_boot_id": boot_id, "instance_id": instance_id}
     if (
         type(host.get("target")) is not dict
@@ -467,8 +508,12 @@ def validate_network_controls(
             raise OperatorError("host_router_inventory")
         if router["network"] in networks and router.get("nats"):
             raise OperatorError("host_cloud_nat_present")
+    if private_loopback_port is not None and (resource.get("serviceAccounts")
+            or subnet.get("privateIpGoogleAccess") is not False):
+        raise OperatorError("host_private_trial_not_isolated")
     return {
-        "host_external_tcp_positive_before_egress_removal": True,
+        "host_external_tcp_positive_before_egress_removal": private_loopback_port is None,
+        **({"private_retained_loopback_control_verified": True} if private_loopback_port is not None else {}),
         "current_metadata_external_ip_absent": True,
         "current_metadata_access_configs": access_configs,
         "current_metadata_terminal_external_ip": external_ip,
@@ -2182,6 +2227,9 @@ def main(argv=None):
     commands.add_parser("list-cases")
     host = commands.add_parser("prepare-host-controls")
     host.add_argument("--output", type=Path, required=True)
+    private_host = commands.add_parser("prepare-private-retained-controls")
+    private_host.add_argument("--output", type=Path, required=True)
+    private_host.add_argument("--loopback-port", type=int, required=True)
     seal = commands.add_parser("seal-network-isolation")
     for name in (
         "instance-resource",
@@ -2253,6 +2301,9 @@ def main(argv=None):
         return run_case(arguments)
     if arguments.action == "prepare-host-controls":
         print(json.dumps(prepare_host_controls(arguments.output), sort_keys=True))
+        return 0
+    if arguments.action == "prepare-private-retained-controls":
+        print(json.dumps(prepare_private_retained_controls(arguments.output, arguments.loopback_port), sort_keys=True))
         return 0
     if arguments.action == "seal-network-isolation":
         print(json.dumps(seal_network_isolation(arguments), sort_keys=True))

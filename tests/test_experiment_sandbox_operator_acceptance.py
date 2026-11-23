@@ -575,6 +575,25 @@ def test_two_phase_network_controls_bind_positive_to_current_no_egress_target():
     assert "snapshot" in result["qualification"]
 
 
+def test_private_retained_control_is_bound_to_loopback_and_cannot_pass_external_gate():
+    host, isolated, target, observation = network_receipts()
+    host.pop("host_external_tcp_connect")
+    host.pop("external_endpoint")
+    host.update(version=operator.PRIVATE_RETAINED_CONTROLS,
+        host_private_loopback_tcp_connect=True, private_loopback_endpoint={"address": "127.0.0.1", "port": 55423})
+    isolated["subnetwork_resource"]["privateIpGoogleAccess"] = False
+    result = operator.validate_network_controls(host, isolated, target, **observation, private_loopback_port=55423)
+    assert result["private_retained_loopback_control_verified"] is True
+    assert result["host_external_tcp_positive_before_egress_removal"] is False
+    with pytest.raises(operator.OperatorError, match="host_network_positive_control_invalid"):
+        operator.validate_network_controls(host, isolated, target, **observation)
+    with pytest.raises(operator.OperatorError, match="host_private_control_invalid"):
+        operator.validate_network_controls(host, isolated, target, **observation, private_loopback_port=55424)
+    isolated["subnetwork_resource"]["privateIpGoogleAccess"] = True
+    with pytest.raises(operator.OperatorError, match="host_private_trial_not_isolated"):
+        operator.validate_network_controls(host, isolated, target, **observation, private_loopback_port=55423)
+
+
 @pytest.mark.parametrize(
     "change",
     [

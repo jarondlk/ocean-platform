@@ -78,6 +78,15 @@ def test_explicit_private_config_uses_distinct_loopback_roles_and_detached_pins(
     assert "application_dsn" not in module.evaluate("scientific", {}, {}, {})
 
 
+def test_private_retained_scope_requires_one_trusted_loopback_transport():
+    document = config()
+    document["network"]["scope"] = module.PRIVATE_NETWORK_SCOPE
+    assert module.parse_config(document) == document
+    document["verifier_dsn"] = document["verifier_dsn"].replace(":55432/", ":55433/")
+    with pytest.raises(module.base.OperatorError, match="retained_operator_dsn"):
+        module.parse_config(document)
+
+
 @pytest.mark.parametrize(
     "change",
     [

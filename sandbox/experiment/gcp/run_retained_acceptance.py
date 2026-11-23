@@ -61,6 +61,7 @@ NETWORK_KEYS = {
     "network_isolation",
     "network_isolation_sha256",
 }
+PRIVATE_NETWORK_SCOPE = "private-retained-only"
 ROLE_KEYS = {"serving_role", "controller_role", "verifier_role", "function_owner_role"}
 FIXTURE_MODULES = (
     "tests.research_experiment_support",
@@ -115,7 +116,8 @@ def parse_config(document):
         or type(document["materials"]) is not dict
         or set(document["materials"]) != MATERIAL_KEYS
         or type(document["network"]) is not dict
-        or set(document["network"]) != NETWORK_KEYS
+        or set(document["network"]) not in (NETWORK_KEYS, NETWORK_KEYS | {"scope"})
+        or ("scope" in document["network"] and document["network"]["scope"] != PRIVATE_NETWORK_SCOPE)
     ):
         raise base.OperatorError("retained_operator_config")
     names = list(document["roles"].values())
@@ -124,6 +126,7 @@ def parse_config(document):
         for name in names
     ):
         raise base.OperatorError("retained_operator_roles")
+    ports = set()
     for field, role in (
         ("application_dsn", "serving_role"),
         ("controller_dsn", "controller_role"),
@@ -146,6 +149,9 @@ def parse_config(document):
             valid = False
         if not valid:
             raise base.OperatorError("retained_operator_dsn")
+        ports.add(url.port)
+    if "scope" in document["network"] and len(ports) != 1:
+        raise base.OperatorError("retained_operator_dsn")
     for name in ("expected_worker_id", "issuer_public_key_hex"):
         if type(document[name]) is not str or not re.fullmatch(
             r"[a-f0-9]{64}", document[name]
@@ -159,6 +165,8 @@ def parse_config(document):
     paths = [document["source_root"], document["private_key_path"]]
     for group in ("materials", "network"):
         for name, value in document[group].items():
+            if group == "network" and name == "scope":
+                continue
             if name.endswith("sha256"):
                 if type(value) is not str or not re.fullmatch(r"[a-f0-9]{64}", value):
                     raise base.OperatorError("retained_operator_pin")
@@ -665,6 +673,12 @@ def run(arguments):
             normalization_sha256=materials["normalization_sha256"],
         )
         net = config["network"]
+        private_loopback_port = None
+        if net.get("scope") == PRIVATE_NETWORK_SCOPE:
+            from sqlalchemy.engine import make_url
+
+            private_loopback_port = make_url(config["controller_dsn"]).port
+            receipt["acceptance_scope"] = PRIVATE_NETWORK_SCOPE
         receipt["network_controls"] = base.validate_network_controls(
             base._immutable_document(net["host_controls"], net["host_controls_sha256"]),
             base._immutable_document(
@@ -679,6 +693,7 @@ def run(arguments):
             ),
             external_ip=base._metadata(base.METADATA_EXTERNAL_IP),
             now_ns=time.monotonic_ns(),
+            private_loopback_port=private_loopback_port,
         )
         worker = base._private_directory(attempt / "worker", create=True)
         journal = DurableExecutionJournal(
