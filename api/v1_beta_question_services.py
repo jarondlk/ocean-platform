@@ -49,6 +49,7 @@ class BetaResearchTrial(BaseModel):
     closes_at: datetime
     run_limit: int = Field(ge=1, le=3)
     answer_limit: int = Field(ge=1, le=3)
+    sweep_only: bool = False
 
     @field_validator("opens_at", "closes_at", mode="before")
     @classmethod
@@ -247,13 +248,16 @@ def compose_beta_question_services(*, session_factory, catalogue_service, catalo
                     "orchestration/beta_vertex_research.py").read_bytes()).hexdigest()}
     factory = partial(_controller, investigations=investigations, catalogue=catalogue_service,
         runtime=runtime, model=model_settings.model, runtime_identity=identity)
+    nudge_on_accept = trial is None or not trial.sweep_only
     runs = BetaResearchRunService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, controller_factory=factory,
-        queue=CloudResearchQueue(settings=cloud_settings, kind="run"), owner_locker=lock_research_owner,
+        queue=CloudResearchQueue(settings=cloud_settings, kind="run", nudge_on_accept=nudge_on_accept),
+        owner_locker=lock_research_owner,
         admission=trial.admit if trial is not None else None)
     evidence = BetaResearchEvidenceService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, runs=runs)
-    answers = BetaResearchAnswerService(evidence=evidence, queue=CloudResearchQueue(settings=cloud_settings, kind="answer"),
+    answers = BetaResearchAnswerService(evidence=evidence,
+        queue=CloudResearchQueue(settings=cloud_settings, kind="answer", nudge_on_accept=nudge_on_accept),
         runtime=runtime, model=model_settings.model, runtime_identity=identity)
     investigations.artifact_resolver = evidence.attachment_resolver()
     investigations.evidence_protection = evidence

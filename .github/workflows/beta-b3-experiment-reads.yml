@@ -15,6 +15,7 @@ on:
       - 'ingestion/artifact_store.py'
       - 'orchestration/experiment_sandbox/**'
       - 'orchestration/experiment_workspace.py'
+      - 'orchestration/cloud_research_dispatch.py'
       - 'orchestration/research_answers.py'
       - 'orchestration/research_experiments.py'
       - 'orchestration/research_runs.py'
@@ -50,10 +51,11 @@ jobs:
       - name: Verify the beta API candidate inventory and inherited B2 pins
         run: |
           python -m deploy.gcp.beta.b3.prepare_experiment_read_context \
-            --research-trial --revision "$GITHUB_SHA" --output "$RUNNER_TEMP/beta-api-context"
+            --research-sweep-trial --revision "$GITHUB_SHA" --output "$RUNNER_TEMP/beta-api-context"
       - name: Verify signed-in serving discovery and experiment boundaries
         run: |
           python -m pytest -q --tb=short \
             tests/test_beta_experiment_reads.py tests/test_beta_question_entry.py \
             tests/test_beta_question_services.py tests/test_v1_host.py \
-            tests/test_experiment_workspace.py tests/test_research_experiments.py
+            tests/test_experiment_workspace.py tests/test_research_experiments.py \
+            tests/test_cloud_research_dispatch.py

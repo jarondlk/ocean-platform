@@ -28,7 +28,7 @@ from tests.test_v1_host import independent as independent
 
 
 @pytest.fixture
-def questions(context, monkeypatch):
+def questions(context, monkeypatch, request):
     services, actor, factory, sealed = context
     from api.v1_catalogue_host import _canonical, load_snapshot_catalogue
     # Append a distinct synthetic activation; never reinterpret a context-only
@@ -56,10 +56,13 @@ def questions(context, monkeypatch):
         monkeypatch.setenv("ENABLE_V1_" + flag, "true")
     for flag in ("EXPERIMENTS", "EXPERIMENT_DISPATCH", "EXPERIMENT_WORKSPACE"):
         monkeypatch.setenv("ENABLE_V1_" + flag, "false")
+    trial = getattr(request, "param", None)
     bundle = compose_beta_question_services(session_factory=factory,
         catalogue_service=catalogue, catalogue_browser=browser,
         cloud_settings=cloud_settings(), model_settings=BetaModelSettings.model_validate({
-            "model": "gemini-3.8-flash", "location": "global", "max_output_tokens": 4096}))
+            "model": "gemini-3.8-flash", "location": "global", "max_output_tokens": 4096}), trial=trial)
+    if trial is not None:
+        bundle.research_run_service.db_clock = lambda: datetime.fromisoformat("2026-11-24T02:00:00Z")
     for service in (bundle.research_run_service, bundle.research_answer_service):
         service.queue._session = Transport()
     def no_model(**kwargs):
@@ -168,17 +171,39 @@ def test_trial_clarification_requires_an_in_window_run_and_clock(questions):
             trial.admit(session, lambda _: trial.closes_at, "clarify", new_run)
 
 
+@pytest.mark.parametrize("questions", [
+    None, BetaResearchTrial.model_validate(trial_configuration(sweep_only=True)),
+], indirect=True, ids=["immediate", "sweep-only"])
 def test_question_is_durable_before_private_delivery_and_answer_reopens(questions):
     bundle, actor, _, _ = questions
+    worker_auth = {"Authorization": "Bearer synthetic-test", "Content-Type": "application/json"}
+
+    def deliver(kind, service):
+        queue = service.queue
+        transport = queue._session
+        with TestClient(private_app(questions)) as worker:
+            if not queue.nudge_on_accept:
+                assert not transport.calls
+                sweep = "/internal/research/dispatch"
+                request = {"version": "research-cloud-dispatch-v1"}
+                # The provider may persist the task before the create response
+                # fails. The next sweep must prove the original task exists.
+                transport.post_status = 503
+                assert worker.post(sweep, json=request, headers=worker_auth).status_code == 503
+                original = transport.task
+                transport.post_status = 409
+                assert worker.post(sweep, json=request, headers=worker_auth).status_code == 200
+                assert worker.post(sweep, json=request, headers=worker_auth).status_code == 200
+                assert transport.task == original
+                assert [entry[0] for entry in transport.calls] == ["POST", "POST", "GET"]
+            payload = base64.b64decode(transport.task["httpRequest"]["body"])
+            for _ in range(2):
+                response = worker.post(f"/internal/research/{kind}", content=payload, headers=worker_auth)
+                assert response.status_code == 200, response.text
+
     run = submitted(questions)
     assert run["status"] == "queued"
-    task = bundle.research_run_service.queue._session.task
-    payload = base64.b64decode(task["httpRequest"]["body"])
-    with TestClient(private_app(questions)) as worker:
-        for _ in range(2):  # Duplicate delivery must retain the same result.
-            response = worker.post("/internal/research/run", content=payload,
-                headers={"Authorization": "Bearer synthetic-test", "Content-Type": "application/json"})
-            assert response.status_code == 200, response.text
+    deliver("run", bundle.research_run_service)
     address = {"run_id": run["id"], "investigation_id": run["context"]["binding"]["investigation_id"],
                "conversation_id": run["context"]["binding"]["conversation_id"]}
     with TestClient(public_app(questions), base_url="http://127.0.0.1:8000") as client:
@@ -191,11 +216,7 @@ def test_question_is_durable_before_private_delivery_and_answer_reopens(question
             "locale": "en", "idempotency_key": str(uuid.uuid4())}, headers=headers(actor, sub="subject-1"))
         assert response.status_code == 200, response.text
         job = response.json()["job"]
-    task = bundle.research_answer_service.queue._session.task
-    with TestClient(private_app(questions)) as worker:
-        response = worker.post("/internal/research/answer", content=base64.b64decode(task["httpRequest"]["body"]),
-            headers={"Authorization": "Bearer synthetic-test", "Content-Type": "application/json"})
-        assert response.status_code == 200, response.text
+    deliver("answer", bundle.research_answer_service)
     # A newly built public app reads the committed answer and current authority.
     with TestClient(public_app(questions), base_url="http://127.0.0.1:8000") as client:
         response = client.post("/research/answers/status", json={**address, "job_id": job["id"]}, headers=headers(actor, sub="subject-1"))

@@ -1,5 +1,16 @@
 # Implementation status
 
+## November 24 — B4 scheduled recovery candidate
+
+The bounded Research trial can now leave the saved exploration and answer in
+their durable outboxes for the private recovery sweep. Disposable tests recover
+both lost enqueue acknowledgements and repeat both deliveries using the same
+identities. The Research chat card now reports exploration completion without
+asserting the separate answer status. Both changes are local candidates.
+The existing beta queue is paused and empty. The current readback found seven
+successful automated SQL backups and zero Monitoring alert policies or channels.
+[B4 acceptance and live gates](beta/b4-20261124/OPERATIONS_ACCEPTANCE.md).
+
 ## November 24 — Bounded automatic Research trial passed
 
 The signed-in beta delivered one Research exploration and its answer through

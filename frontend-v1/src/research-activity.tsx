@@ -36,7 +36,7 @@ function RunCard({ locale, run, busy, onStatus, onEvents, onCancel, onClarify, o
     {run.synthetic && <p className="ra-synthetic">{say(locale, "Synthetic development activity · test data", "合成された開発用の処理・テストデータ")}</p>}
     <div className="ra-run-meta"><span>{say(locale, "Active elapsed time", "実行時間")}: <time>{formatActiveElapsed(run.active_elapsed_ms)}</time>{(waiting || approval) && ` · ${say(locale, "paused while waiting", "確認待ちのため一時停止中")}`}</span><code>{run.id}</code></div>
     {approval && <p className="ra-unavailable">{say(locale, "Approval is required. Approval controls are not available here yet.", "承認が必要です。ここでは承認操作をまだ利用できません。")}</p>}
-    {run.status === "completed" && !run.result && <p className="ra-unavailable">{say(locale, "Exploration finished. An answer is not available yet.", "探索が完了しました。回答はまだありません。")}</p>}
+    {run.status === "completed" && !run.result && <p>{say(locale, "Exploration finished.", "探索が完了しました。")}</p>}
     {run.continuation_of && <p className="ra-continuation">{say(locale, "Continuation of", "継続元")}: <code>{run.continuation_of}</code></p>}
     <details className="ra-binding"><summary>{say(locale, "Submitted context — fixed for this run", "送信時の対象範囲・この実行では固定")}</summary><dl>
       {([["Snapshot", "スナップショット", run.context.binding.snapshot_id], ["Context revision", "コンテキストの版", run.context.binding.revision_id], ["Context payload SHA-256", "コンテキストのSHA-256", run.context.binding.payload_sha256], ["Investigation", "調査", run.context.binding.investigation_id], ["Conversation", "会話", run.context.binding.conversation_id]] as const).map(([en, ja, value]) => <div key={en}><dt>{say(locale, en, ja)}</dt><dd><code>{value}</code></dd></div>)}

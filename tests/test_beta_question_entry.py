@@ -60,9 +60,11 @@ def trial_configuration(**overrides):
 
 
 def test_trial_is_optional_and_serving_only():
-    raw = json.dumps(trial_configuration())
     assert load_research_trial(environment()) is None
-    assert validate_environment({**environment(), RESEARCH_TRIAL_ENV: raw}, "api") is None
+    for trial, sweep_only in ((trial_configuration(), False), (trial_configuration(sweep_only=True), True)):
+        raw = json.dumps(trial)
+        assert validate_environment({**environment(), RESEARCH_TRIAL_ENV: raw}, "api") is None
+        assert load_research_trial({**environment(), RESEARCH_TRIAL_ENV: raw}).sweep_only is sweep_only
     with pytest.raises(ValueError):
         validate_environment({**environment("controller"), RESEARCH_TRIAL_ENV: raw}, "controller")
 
@@ -70,7 +72,7 @@ def test_trial_is_optional_and_serving_only():
 @pytest.mark.parametrize("overrides", [
     {"closes_at": "2026-11-25T00:00:01Z"}, {"closes_at": "2026-11-23T00:00:00Z"},
     {"opens_at": "2026-11-24T00:00:00+09:00"}, {"run_limit": True}, {"answer_limit": 4},
-    {"extra_key": "refused"},
+    {"sweep_only": "true"}, {"extra_key": "refused"},
 ])
 def test_trial_rejects_unbounded_or_ambiguous_configuration(overrides):
     with pytest.raises(ValueError):

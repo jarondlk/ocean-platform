@@ -25,6 +25,7 @@ SUPERSEDED = (
     'schema/experiment_workspace.py',
 )
 TRIAL_SUPERSEDED = (*SUPERSEDED, 'orchestration/research_answers.py', 'orchestration/research_runs.py')
+SWEEP_SUPERSEDED = (*TRIAL_SUPERSEDED, 'orchestration/cloud_research_dispatch.py')
 ADDED = (
     'api/v1_beta_experiment_reads.py',
     'db/experiment_execution_models.py',
@@ -83,9 +84,11 @@ print('Verified the packaged Research trial imports and opt-in default')
 '''
 
 
-def prepare(revision, output, *, research_trial=False):
+def prepare(revision, output, *, research_trial=False, research_sweep_trial=False):
     if not re.fullmatch(r'[0-9a-f]{40}', revision):
         raise ValueError('Select an exact serving runtime commit')
+    if research_trial and research_sweep_trial:
+        raise ValueError('Select one explicit Research trial profile')
     b2.git('merge-base', '--is-ancestor', BASE_REVISION, revision)
     b2.committed(revision, Path(__file__).relative_to(b2.ROOT).as_posix(), current=True)
     receipt_raw = b2.committed(revision, LIVE_RECEIPT, current=True)
@@ -96,7 +99,11 @@ def prepare(revision, output, *, research_trial=False):
             or proof['offline_proof'] != 'success'):
         raise ValueError('Expected the accepted B2 serving image receipt')
 
-    superseded = TRIAL_SUPERSEDED if research_trial else SUPERSEDED
+    profile, superseded = 'b3-experiment-reads', SUPERSEDED
+    if research_trial:
+        profile, superseded = 'b4-research-trial', TRIAL_SUPERSEDED
+    if research_sweep_trial:
+        profile, superseded = 'b4-research-sweep-trial', SWEEP_SUPERSEDED
     inventory = json.loads(b2.committed(b2.BASE_REVISION, b2.BASE_INVENTORY))['sources']
     base_pins = {name: b2.digest(b2.committed(BASE_REVISION, name)) for name in (*inventory, *b2.ADDED)}
     if (b2.source_digest(base_pins) != BASE_SOURCE_DIGEST or not set(superseded) <= base_pins.keys()
@@ -116,7 +123,6 @@ def prepare(revision, output, *, research_trial=False):
     })
     manifest = {'version': 'ocean-v1-beta-api-context-v1', 'project_id': b2.PROJECT, 'revision': revision,
         'sources': pins, 'source_manifest_sha256': b2.source_digest(pins)}
-    profile = 'b4-research-trial' if research_trial else 'b3-experiment-reads'
     image = f'{b2.REGISTRY}:{profile}-{revision[:12]}'
     package = {'version': 'ocean-beta-b3-experiment-read-package-v1', 'runtime_revision': revision,
         'base_revision': BASE_REVISION, 'base_image': BASE_IMAGE, 'base_source_manifest_sha256': BASE_SOURCE_DIGEST,
@@ -129,7 +135,15 @@ def prepare(revision, output, *, research_trial=False):
     dockerfile = ['FROM ' + BASE_IMAGE]
     dockerfile.extend(f'COPY --chown=0:0 --chmod=0444 {name} /opt/ocean/{name.removeprefix("application/")}'
                       for name in files)
-    verification = OFFLINE_PROOF + TRIAL_PROOF if research_trial else OFFLINE_PROOF
+    verification = OFFLINE_PROOF
+    if research_trial or research_sweep_trial:
+        verification += TRIAL_PROOF
+    if research_sweep_trial:
+        verification += '''
+from api.v1_beta_question_services import BetaResearchTrial
+assert BetaResearchTrial.model_fields['sweep_only'].default is False
+print('Verified the packaged sweep-only opt-in default')
+'''
     build = b2.build_config(revision, image, verification)
     build['steps'][0]['id'] = f'build-{profile}-api'
     build['steps'][2]['id'] = f'verify-{profile}-api-offline'
@@ -152,6 +166,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--revision', required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--research-trial', action='store_true')
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument('--research-trial', action='store_true')
+    selection.add_argument('--research-sweep-trial', action='store_true')
     args = parser.parse_args()
-    print(b2.canonical(prepare(args.revision, args.output, research_trial=args.research_trial)).decode(), end='')
+    print(b2.canonical(prepare(args.revision, args.output, research_trial=args.research_trial,
+        research_sweep_trial=args.research_sweep_trial)).decode(), end='')

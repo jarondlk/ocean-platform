@@ -63,10 +63,11 @@ def delivery_body(kind, identity, delivery_id):
 
 
 class CloudResearchQueue:
-    def __init__(self, *, settings, kind, session=None):
-        if not isinstance(settings, CloudResearchSettings) or kind not in KINDS:
+    def __init__(self, *, settings, kind, session=None, nudge_on_accept=True):
+        if not isinstance(settings, CloudResearchSettings) or kind not in KINDS or type(nudge_on_accept) is not bool:
             raise ValueError("Explicit beta queue binding required")
         self.settings, self.kind, self._session = settings, kind, session
+        self.nudge_on_accept = nudge_on_accept
 
     def _transport(self):
         if self._session is None:
@@ -124,7 +125,8 @@ def accepted_delivery_background(service, identity):
     Other users' pending or revoked rows cannot delay this question. The private
     scheduled sweep retries transport failures; it uses the original delivery ID.
     """
-    if not isinstance(getattr(service, "queue", None), CloudResearchQueue):
+    queue = getattr(service, "queue", None)
+    if not isinstance(queue, CloudResearchQueue) or not queue.nudge_on_accept:
         return None
     from starlette.background import BackgroundTask
 

@@ -1,5 +1,18 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 24 — B4 scheduled recovery candidate
+
+The bounded serving trial now accepts `sweep_only` to suppress its immediate
+enqueue while preserving durable admissions, ownership and limits. The private
+controller already serves the authenticated sweep endpoint. Local tests checked
+loss of the create acknowledgement, exact task readback, duplicate delivery
+and reopening the saved answer with a deterministic test fixture. The chat
+card now reports exploration completion independently of answer availability.
+No recovery candidate is deployed. The queue is paused and empty, with no
+Scheduler jobs. Cloud SQL retains seven successful automated backups and
+Monitoring currently has zero alert policies or notification channels.
+[B4 acceptance and live gates](../beta/b4-20261124/OPERATIONS_ACCEPTANCE.md).
+
 ## November 24 — Bounded automatic Research trial passed
 
 Source `baca646` adds the optional serving-only `OCEAN_V1_RESEARCH_TRIAL_JSON`
