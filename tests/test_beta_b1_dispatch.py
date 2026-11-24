@@ -124,7 +124,7 @@ def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous
 @pytest.mark.parametrize('state', [
     'original', 'controller_drift', 'restored', 'unqualified_generation',
     'restored_image_drift', 'restored_config_drift', 'bad_restoration_receipt',
-    'changed_baseline',
+    'changed_baseline', 'sweep_restored', 'sweep_restored_config_drift',
 ])
 def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, state):
     import hashlib
@@ -156,6 +156,7 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
     controller = f'{delivery.rollout.PREFIX}/services/ocean-v1-beta-research-controller'
     serving = services[f'{delivery.rollout.PREFIX}/services/ocean-v1-beta-serving']
     if state not in ('original', 'controller_drift'):
+        sweep = state.startswith('sweep_')
         revision = 'ocean-v1-beta-serving-restored'
         serving.update(generation='3', observedGeneration='3', latestCreatedRevision=revision,
                        latestReadyRevision=revision, trafficStatuses=[{'revision': revision, 'percent': 100}])
@@ -164,7 +165,8 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
             # A new configuration digest cannot qualify unrelated changes as a restoration.
             serving['template']['timeout'] = '240s'
         restoration = {
-            'version': 'ocean-beta-b4-research-trial-live-v1', 'project': delivery.rollout.PROJECT,
+            'version': 'ocean-beta-b4-research-sweep-live-v1' if sweep else 'ocean-beta-b4-research-trial-live-v1',
+            'project': delivery.rollout.PROJECT,
             'region': delivery.rollout.REGION, 'baseline_receipt_sha256': baseline_sha,
             'restoration': {
                 'restored_revision': revision, 'generation': 3, 'image': image,
@@ -176,13 +178,16 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
         restoration_path = tmp_path / 'restoration.json'
         restoration_raw = json.dumps(restoration).encode()
         restoration_path.write_bytes(restoration_raw)
-        monkeypatch.setattr(delivery, 'B2_RESTORATION_RECEIPT', restoration_path)
-        monkeypatch.setattr(delivery, 'B2_RESTORATION_RECEIPT_SHA256', hashlib.sha256(restoration_raw).hexdigest())
+        field = 'B2_SWEEP_RESTORATION_RECEIPT' if sweep else 'B2_RESTORATION_RECEIPT'
+        monkeypatch.setattr(delivery, field, restoration_path)
+        monkeypatch.setattr(delivery, field + '_SHA256', hashlib.sha256(restoration_raw).hexdigest())
+        if sweep:
+            monkeypatch.setattr(delivery, 'B2_SWEEP_RESTORATION_GENERATION', '3')
     if state == 'unqualified_generation':
         serving.update(generation='4', observedGeneration='4')
     elif state == 'restored_image_drift':
         serving['template']['containers'][0]['image'] = 'different-image'
-    elif state == 'restored_config_drift':
+    elif state in ('restored_config_drift', 'sweep_restored_config_drift'):
         serving['template']['timeout'] = '240s'
     elif state == 'bad_restoration_receipt':
         restoration_path.write_bytes(restoration_raw + b'\n')
@@ -196,7 +201,7 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
 
     monkeypatch.setattr(delivery, 'dispatch', dispatch)
     cloud = type('Cloud', (), {'request': lambda _, url: services[url.split('/v2/', 1)[1]]})()
-    if state not in ('original', 'restored'):
+    if state not in ('original', 'restored', 'sweep_restored'):
         with pytest.raises(delivery.guard.Rejected):
             delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True)
         assert not calls

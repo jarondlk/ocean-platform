@@ -1,0 +1,104 @@
+{
+  "version": "ocean-beta-b4-research-sweep-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "8e365cec68985cf1f406ed842e9f98690e096036",
+  "candidate_receipt_sha256": "54c1a3e85826f975bb4b0252629efc76c2055329254192dd7189eac69018abb1",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "previous_restoration_receipt_sha256": "2ff012cca762a03e7501b03381a29900c7dc8bfe328485d1f0671c170db997a9",
+  "candidate": {
+    "serving_generation": 72,
+    "revision": "ocean-v1-beta-serving-b4-sweep-1124-111046",
+    "ready_utc": "2026-11-24T11:12:24.697431Z",
+    "configuration_sha256": "de4d7f538aed389f3c7a19e7636ccc05cd9f768d7637c652e51cf8e5a0f77dac",
+    "image_sha256": "958c869d87fd16912f38f30ade904dce323bca17f499c83e0e10b015c126caca",
+    "opens_utc": "2026-11-24T11:15:00Z",
+    "closes_utc": "2026-11-24T11:30:00Z",
+    "sweep_only": true,
+    "exploration_limit": 1,
+    "answer_limit": 1
+  },
+  "observer": {
+    "job_generation": 1,
+    "execution": "ocean-v1-beta-b2-preflight-20261121-z9xml",
+    "template_sha256": "9bc2a47df73744bf5d883423c4d7f29a7d45d9131c14f4170585b0ee401a3c34",
+    "execution_count_before": 2,
+    "execution_count_after": 3,
+    "captured_utc": "2026-11-24T11:13:48.543444Z",
+    "aggregate_only_quiescence_verified": true
+  },
+  "scheduler": {
+    "job": "ocean-v1-beta-b4-sweep-trial-20261124",
+    "finite_trial_cron_utc": "17,19,21,23,25,27 11 24 11 *",
+    "exact_existing_invoker_and_controller_audience_verified": true,
+    "scheduler_retries": 0,
+    "manual_scheduler_runs": 0,
+    "manual_task_deliveries": 0,
+    "controller_generation": 10,
+    "requests": [
+      {
+        "path": "/internal/research/dispatch",
+        "utc": "2026-11-24T11:17:00.913194Z",
+        "user_agent": "Google-Cloud-Scheduler",
+        "status": 200,
+        "seconds": 22.373183106
+      },
+      {
+        "path": "/internal/research/run",
+        "utc": "2026-11-24T11:17:58.702269Z",
+        "user_agent": "Google-Cloud-Tasks",
+        "status": 200,
+        "seconds": 12.270210884
+      },
+      {
+        "path": "/internal/research/dispatch",
+        "utc": "2026-11-24T11:19:03.632117Z",
+        "user_agent": "Google-Cloud-Scheduler",
+        "status": 200,
+        "seconds": 1.319949702
+      },
+      {
+        "path": "/internal/research/answer",
+        "utc": "2026-11-24T11:19:04.970515Z",
+        "user_agent": "Google-Cloud-Tasks",
+        "status": 200,
+        "seconds": 13.361935461
+      }
+    ]
+  },
+  "signed_in_journey": {
+    "question": "How many datasets are in the current context?",
+    "question_queued_utc": "2026-11-24T11:15:20.352Z",
+    "queue_empty_before_exploration_sweep_utc": "2026-11-24T11:15:38.371186Z",
+    "undelivered_canonical_exploration_task_verified_before_resume": true,
+    "queue_resume_utc": "2026-11-24T11:17:44.381499Z",
+    "answer_preparation_requested_in_ui": true,
+    "answer_queued_utc": "2026-11-24T11:18:49.444Z",
+    "queue_empty_before_answer_sweep_utc": "2026-11-24T11:19:02.706507Z",
+    "selected_snapshot_id": "bbdd9dccff2173552076e7883606c38b0c7093aa0d3b3f359d53f49c9ad3c6b6",
+    "answer_dataset_count": 1,
+    "citation_table": "c13.inventory",
+    "citation_count_matches": true,
+    "answer_reopened_after_api_restoration_utc": "2026-11-24T11:20:43.631Z"
+  },
+  "restoration": {
+    "restored_revision": "ocean-v1-beta-serving-b2-post-sweep-1124-111046",
+    "generation": 73,
+    "baseline_configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "configuration_sha256": "ef36cd5cb5e78eaccc834cded28a91069003a7c43af83d5f86e408dec77543d5",
+    "normalized_previous_configuration_matches": true,
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "queue": "PAUSED",
+    "queued_tasks": 0,
+    "scheduler_state": "PAUSED",
+    "active_schedules": 0,
+    "queue_and_job_paused_utc": "2026-11-24T11:19:45.476082Z",
+    "observed_utc": "2026-11-24T11:20:26.170653Z"
+  },
+  "bounded_scheduled_recovery_passed": true,
+  "sustained_delivery_enabled": false,
+  "alert_delivery_verified": false,
+  "hosted_restore_verified": false,
+  "integrated_worker_recovery_verified": false,
+  "b4_complete": false
+}

@@ -1,9 +1,16 @@
 # B4 operations acceptance
 
+The signed-in scheduled recovery trial passed. Two Scheduler callbacks
+enqueued the exploration and answer while both were pending in SQL, and Cloud
+Tasks delivered each to the existing private controller. The restored B2 API
+reopened the cited result at generation 73. The queue and the single trial
+job are paused, and the queue is empty.
+[Scheduled trial receipt](research-sweep-live.json).
+
 Use the [bounded trial receipt](research-trial-live.json) for the successful
 automatic exploration, cited answer and restoration. The November 24 provider
-readback passed the restoration guard. The private controller is generation 10
-and accepts the exact existing task invoker. The Tokyo Research queue was paused
+readback before the scheduled trial passed the restoration guard. The private
+controller is generation 10 and accepts the exact existing task invoker. The Tokyo Research queue was paused
 and empty. It permits one concurrent dispatch, ten attempts, an hour of retry
 duration, and 30 to 300 seconds of backoff. Scheduler had zero jobs.
 

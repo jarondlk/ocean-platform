@@ -32,13 +32,22 @@ B2_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b2-20261116/discovery-live
 B2_RECEIPT_SHA256 = 'd8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556'
 B2_RESTORATION_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b4-20261124/research-trial-live.json'
 B2_RESTORATION_RECEIPT_SHA256 = '2ff012cca762a03e7501b03381a29900c7dc8bfe328485d1f0671c170db997a9'
+B2_SWEEP_RESTORATION_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b4-20261124/research-sweep-live.json'
+B2_SWEEP_RESTORATION_RECEIPT_SHA256 = '23a3ac6a6a4e875fd3e198a3f4eaa7f2839aed1e2ef9ae73f6eeb6e2feafe887'
+B2_SWEEP_RESTORATION_GENERATION = '73'
 
 
 def restored_b2_serving(service, original):
-    raw = B2_RESTORATION_RECEIPT.read_bytes()
-    guard.require(hashlib.sha256(raw).hexdigest() == B2_RESTORATION_RECEIPT_SHA256)
+    if str(service['generation']) == B2_SWEEP_RESTORATION_GENERATION:
+        path, digest = B2_SWEEP_RESTORATION_RECEIPT, B2_SWEEP_RESTORATION_RECEIPT_SHA256
+        version = 'ocean-beta-b4-research-sweep-live-v1'
+    else:
+        path, digest = B2_RESTORATION_RECEIPT, B2_RESTORATION_RECEIPT_SHA256
+        version = 'ocean-beta-b4-research-trial-live-v1'
+    raw = path.read_bytes()
+    guard.require(hashlib.sha256(raw).hexdigest() == digest)
     receipt = guard.document(raw)
-    guard.require(receipt['version'] == 'ocean-beta-b4-research-trial-live-v1'
+    guard.require(receipt['version'] == version
                   and receipt['project'] == rollout.PROJECT and receipt['region'] == rollout.REGION
                   and receipt['baseline_receipt_sha256'] == B2_RECEIPT_SHA256)
     restored = receipt['restoration']

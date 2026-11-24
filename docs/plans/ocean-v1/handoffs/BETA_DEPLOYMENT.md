@@ -1,5 +1,33 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 24 — B4 scheduled Research recovery trial passed
+
+The approved `sweep_only` trial on serving generation 72 admitted one
+exploration and one answer. One execution of the existing read-only observer
+verified zero prior active work, leases, dispatchable outboxes and prepared
+model steps. The trial kept the private controller at generation 10 and reused
+its exact invoker. The beta saved the exploration before Cloud Tasks had a
+task. A scheduled callback enqueued it, and the queue resumed only after the
+canonical, undispatched task was verified. After the operator prepared the
+answer in the UI, the answer also stayed queued until the second callback.
+Both Scheduler callbacks and both Cloud Tasks deliveries returned HTTP 200.
+
+The **Scheduled Research recovery trial** conversation counted **1 dataset**.
+The retained `c13.inventory` citation showed the same count. The trial paused
+both delivery controls at 11:19:45 UTC with zero tasks. The original B2
+configuration was restored at generation 73, and the signed-in answer and
+citation link reopened after reload. The manual delivery guard now recognizes
+this exact restore and still verifies the controller and the original B2
+configuration. No active schedule remains. The trial used the existing
+frontend, so the stale answer-status copy is still visible on the live chat
+card. The separate frontend candidate remains built.
+[Live scheduled recovery receipt](../beta/b4-20261124/research-sweep-live.json).
+
+Sustained Research delivery remains gated on alerting and operator recovery
+for work that outlives Cloud Tasks retries. The hosted restore and integrated
+B3 worker recovery and drain also remain open. The operator requested a beta
+UI spacing and padding pass with square corners on box components after B4.
+
 ## November 24 — B4 scheduled recovery candidate
 
 The bounded serving trial now accepts `sweep_only` to suppress its immediate
@@ -12,15 +40,12 @@ The exact API and frontend builds passed in Tokyo. The focused hosted job
 and both v1 frontend jobs passed on the same source. The legacy frontend
 dependency audit and historical B1 package jobs failed. Cloud Run accepted the API
 validation-only request, and the generation 71 readback preserved its
-configuration and traffic. No recovery candidate is deployed. The queue is
-paused and empty, with no Scheduler jobs. Cloud SQL retains seven successful
-automated backups and Monitoring currently has zero alert policies or
+configuration and traffic. At this pretrial checkpoint the queue was paused
+and empty, with no Scheduler jobs. Cloud SQL retained seven successful
+automated backups and Monitoring had zero alert policies or
 notification channels.
 [Candidate receipt](../beta/b4-20261124/research-sweep-candidate.json).
 [B4 acceptance and live gates](../beta/b4-20261124/OPERATIONS_ACCEPTANCE.md).
-
-After B4, the operator requested a beta UI cleanup focused on spacing and
-padding, with square corners on box components.
 
 ## November 24 — Bounded automatic Research trial passed
 

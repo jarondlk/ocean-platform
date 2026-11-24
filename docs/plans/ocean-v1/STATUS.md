@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 24 — B4 scheduled Research recovery trial passed
+
+Two scheduled callbacks recovered a queued exploration and answer without a
+manual task run. The signed-in beta reopened the cited one-dataset result
+after restoring the B2 API at generation 73. The Scheduler job is paused and
+the queue is paused and empty. Alert delivery, isolated hosted restore,
+integrated worker recovery and sustained delivery remain open.
+[Live scheduled recovery receipt](beta/b4-20261124/research-sweep-live.json).
+
 ## November 24 — B4 scheduled recovery candidate
 
 The bounded Research trial can now leave the saved exploration and answer in

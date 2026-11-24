@@ -152,8 +152,11 @@ objectives are still required. See the
 [current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--private-tokyo-retained-lifecycle-passed).
 B4 also verified one automatic Research exploration and cited answer using
 the existing private queue. The signed-in answer survived the return to the
-B2 API. The queue is paused again. Unattended outbox recovery remains open.
-[Live trial receipt](b4-20261124/research-trial-live.json).
+B2 API. A separate scheduled trial recovered one pending exploration and
+answer through the private controller, and preserved the cited result after
+restoration. The trial job and queue are paused. Sustained delivery and
+operator recovery after queue retry exhaustion remain open.
+[Scheduled recovery receipt](b4-20261124/research-sweep-live.json).
 B2 and B3 can overlap after their own readiness checks. Begin backup and alert
 preparation while the worker and signed-in tests are pending.
 
