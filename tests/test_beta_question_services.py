@@ -3,6 +3,8 @@
 No provider, GCS, Cloud Tasks or production SQL operation is performed here.
 """
 import base64
+from datetime import datetime
+from types import SimpleNamespace
 import hashlib
 import json
 import time
@@ -13,10 +15,12 @@ from fastapi.testclient import TestClient
 from pydantic import SecretStr
 import pytest
 
-from api.v1_beta_question_services import BetaModelSettings, compose_beta_question_services
+from api.v1_beta_question_services import BetaModelSettings, BetaResearchTrial, compose_beta_question_services
 from api.v1_host import HostConfigurationError, create_host_app
 from api.v1_research_controller_host import create_controller_app
+from orchestration.research_runs import ResearchRunError
 from tests.test_beta_research_host import context as context
+from tests.test_beta_question_entry import trial_configuration
 from tests.test_beta_snapshot_catalogue import sealed as sealed
 from tests.test_cloud_research_dispatch import Transport, cloud_settings
 from tests.test_v1_host import SECRET, headers, settings
@@ -84,7 +88,7 @@ def private_app(questions, **claims):
         token_verifier=lambda token, audience: invoker(bundle.cloud_settings, **claims))
 
 
-def submitted(questions):
+def submission_request(questions):
     bundle, actor, _, sealed = questions
     investigation = bundle.investigation_service.invoke("create", {"name": "Synthetic research integration",
         "snapshot_id": sealed[2]["index_id"], "scope": {"version": 1, "sources": {
@@ -94,10 +98,15 @@ def submitted(questions):
     conversation = bundle.investigation_service.invoke("conversations/create", {
         "investigation_id": investigation["investigation"]["id"], "name": "Synthetic question",
         "idempotency_key": str(uuid.uuid4())}, actor)["conversation"]
-    request = {"investigation_id": investigation["investigation"]["id"], "conversation_id": conversation["id"],
+    return {"investigation_id": investigation["investigation"]["id"], "conversation_id": conversation["id"],
         "revision_id": investigation["context"]["id"], "expected_snapshot_id": investigation["context"]["snapshot_id"],
         "expected_payload_sha256": investigation["context"]["payload_sha256"], "question": "Count all datasets",
         "idempotency_key": str(uuid.uuid4())}
+
+
+def submitted(questions):
+    _, actor, _, _ = questions
+    request = submission_request(questions)
     with TestClient(public_app(questions), base_url="http://127.0.0.1:8000") as client:
         bootstrap = client.get("/v1/runtime", headers=headers(actor, sub="subject-1"))
         assert bootstrap.status_code == 200, bootstrap.text
@@ -106,6 +115,57 @@ def submitted(questions):
         response = client.post("/research/runs/submit", json=request, headers=headers(actor, sub="subject-1"))
         assert response.status_code == 200, response.text
         return response.json()["run"]
+
+
+def test_trial_limits_new_durable_work_but_retains_existing_replays(questions):
+    bundle, actor, _, _ = questions
+    trial = BetaResearchTrial.model_validate(trial_configuration())
+    now = datetime.fromisoformat("2026-11-24T02:00:00Z")
+    bundle.research_run_service.admission = trial.admit
+    bundle.research_run_service.db_clock = lambda: now
+    auth = headers(actor, sub="subject-1")
+    worker_auth = {"Authorization": "Bearer synthetic-test", "Content-Type": "application/json"}
+    request = submission_request(questions)
+    with (TestClient(public_app(questions), base_url="http://127.0.0.1:8000") as client,
+          TestClient(private_app(questions)) as worker):
+        runs = []
+        for _ in range(trial.run_limit):
+            payload = {**request, "idempotency_key": str(uuid.uuid4())}
+            response = client.post("/research/runs/submit", json=payload, headers=auth)
+            assert response.status_code == 200, response.text
+            runs.append(response.json()["run"]["id"])
+            task = bundle.research_run_service.queue._session.task
+            response = worker.post("/internal/research/run", content=base64.b64decode(task["httpRequest"]["body"]), headers=worker_auth)
+            assert response.status_code == 200, response.text
+        denied = client.post("/research/runs/submit", json=request, headers=auth)
+        assert denied.status_code == 429 and denied.json()["error"]["code"] == "budget_exhausted"
+        replay = client.post("/research/runs/submit", json=payload, headers=auth)
+        assert replay.status_code == 200 and replay.json()["run"]["id"] == runs[1]
+        binding = {key: request[key] for key in ("investigation_id", "conversation_id")}
+        answer = {**binding, "run_id": runs[0], "input_version": 1, "locale": "en", "idempotency_key": str(uuid.uuid4())}
+        first = client.post("/research/answers/submit", json=answer, headers=auth)
+        assert first.status_code == 200, first.text
+        denied = client.post("/research/answers/submit", json={**answer, "run_id": runs[1], "idempotency_key": str(uuid.uuid4())}, headers=auth)
+        assert denied.status_code == 429 and denied.json()["error"]["code"] == "budget_exhausted"
+        now = trial.closes_at
+        replay = client.post("/research/answers/submit", json=answer, headers=auth)
+        assert replay.status_code == 200 and replay.json()["job"]["id"] == first.json()["job"]["id"]
+        history = client.post("/research/runs/status", json={**binding, "run_id": runs[0]}, headers=auth)
+        assert history.status_code == 200 and history.json()["run"]["status"] == "completed"
+
+
+def test_trial_clarification_requires_an_in_window_run_and_clock(questions):
+    _, _, factory, _ = questions
+    trial = BetaResearchTrial.model_validate(trial_configuration())
+    now = trial.opens_at
+    old_run = SimpleNamespace(created_at=datetime.fromisoformat("2026-11-23T23:59:59Z"))
+    new_run = SimpleNamespace(created_at=now)
+    with factory.begin() as session:
+        with pytest.raises(ResearchRunError, match="budget_exhausted"):
+            trial.admit(session, lambda _: now, "clarify", old_run)
+        assert trial.admit(session, lambda _: now, "clarify", new_run) == now
+        with pytest.raises(ResearchRunError, match="budget_exhausted"):
+            trial.admit(session, lambda _: trial.closes_at, "clarify", new_run)
 
 
 def test_question_is_durable_before_private_delivery_and_answer_reopens(questions):

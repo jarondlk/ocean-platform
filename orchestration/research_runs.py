@@ -69,6 +69,7 @@ class ResearchRunError(Exception):
             "not_found": "Research run was not found",
             "conflict": "Research run request conflicts with retained state",
             "invalid_request": "Research run request is invalid",
+            "budget_exhausted": "The research admission window or allowance is exhausted",
         }.get(code, "Research execution is unavailable")
 
 
@@ -82,7 +83,7 @@ class RunLease:
 class ResearchRunService:
     def __init__(self, *, session_factory, site_id, investigations,
                  controller_factory=None, queue=None, enabled=None,
-                 dispatch_enabled=None, lease_seconds=180, db_clock=None, owner_locker=None):
+                 dispatch_enabled=None, lease_seconds=180, db_clock=None, owner_locker=None, admission=None):
         if (not callable(session_factory) or not isinstance(site_id, str)
                 or not site_id.startswith("v1:") or investigations.site_id != site_id
                 or investigations.session_factory is not session_factory
@@ -94,6 +95,8 @@ class ResearchRunService:
             raise ValueError("Queue must implement enqueue")
         if owner_locker is not None and not callable(owner_locker):
             raise ValueError("Explicit owner lock capability required")
+        if admission is not None and not callable(admission):
+            raise ValueError("Explicit research admission capability required")
         if type(lease_seconds) not in (int, float) or not 0 < lease_seconds <= 180:
             raise ValueError("Lease must be bounded by the active execution limit")
         self.session_factory, self.site_id, self.investigations = session_factory, site_id, investigations
@@ -101,7 +104,7 @@ class ResearchRunService:
         self.enabled = enabled if enabled is not None else config.v1_research_runs_enabled
         self.dispatch_enabled = dispatch_enabled if dispatch_enabled is not None else config.v1_research_dispatch_enabled
         self.lease_seconds, self.db_clock = float(lease_seconds), db_clock
-        self.owner_locker = owner_locker
+        self.owner_locker, self.admission = owner_locker, admission
 
     @property
     def dispatch_available(self):
@@ -122,6 +125,10 @@ class ResearchRunService:
         if not isinstance(value, datetime):
             raise ResearchRunError()
         return _utc(value)
+
+    def _admit(self, session, kind, *, run=None):
+        if self.admission is not None:
+            return self.admission(session, self._now, kind, run)
 
     def _principal(self, session, *, user=None, owner_id=None):
         if user is not None and not isinstance(user, CurrentUser):
@@ -313,6 +320,7 @@ class ResearchRunService:
                         self._check_context(run, actor, require_active=True, session=session)
                         if run.status != "awaiting_clarification" or str(run.clarification_id) != data["clarification_id"]:
                             raise ResearchRunError("conflict", 409)
+                        self._admit(session, "clarify", run=run)
                         run.effective_question = data["answer"]
                         run.input_version += 1
                         run.status, run.clarification_id, run.checkpoint_json = "queued", None, "{}"
@@ -341,10 +349,10 @@ class ResearchRunService:
             context_json=_json(frozen), original_question=question, effective_question=question,
             continuation_of=parent.id if parent else None, status="queued", version=1, input_version=1,
             event_cursor=0, active_elapsed_ms=0, tool_actions=0, model_calls=0, malformed_repairs=0,
-            lease_epoch=0, cancellation_requested=False, checkpoint_json="{}",
-            created_at=self._now(session), updated_at=self._now(session))
-        session.add(run)
+            lease_epoch=0, cancellation_requested=False, checkpoint_json="{}")
         self._check_context(run, actor, require_active=True, session=session)
+        run.created_at = run.updated_at = self._admit(session, "run") or self._now(session)
+        session.add(run)
         session.flush()
         self._event(session, run, "accepted")
         self._outbox(session, run)

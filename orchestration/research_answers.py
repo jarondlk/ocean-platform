@@ -269,7 +269,7 @@ class ResearchAnswerService:
             return self._envelope(session, actor, prior, run)
         if not self._eligible(session, run):
             raise ResearchAnswerError('budget_exhausted' if run.active_elapsed_ms >= 180000 else 'synthesis_unavailable', 409)
-        now = self.runs._now(session)
+        now = self.runs._admit(session, 'answer') or self.runs._now(session)
         job = ResearchAnswerJob(user_id=actor.id, run_id=run.id,
             investigation_id=run.investigation_id, conversation_id=run.conversation_id, revision_id=run.revision_id,
             snapshot_id=run.snapshot_id, payload_sha256=run.payload_sha256, input_version=run.input_version,

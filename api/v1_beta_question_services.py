@@ -6,20 +6,25 @@ Merely composing these services never dispatches an outbox or calls a provider.
 """
 from contextlib import contextmanager
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 from functools import partial
+import json
+import re
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from sqlalchemy import func, select, text
 
 import config
 from api.v1_beta_research_host import SITE_ID, compose_beta_context_services
-from api.v1_host import HostConfigurationError, V1ReadServices
+from api.v1_host import HostConfigurationError, RESEARCH_TRIAL_ENV, V1ReadServices
+from db.app_models import ResearchAnswerJob, ResearchRun
 from orchestration.beta_vertex_research import BetaVertexResearchRuntime
 from orchestration.cloud_research_dispatch import CloudResearchQueue, CloudResearchSettings, PROJECT
 from orchestration.research_answers import ResearchAnswerError, ResearchAnswerService
 from orchestration.research_controller import ResearchController
 from orchestration.research_evidence import ResearchEvidenceService
-from orchestration.research_runs import ResearchRunService
+from orchestration.research_runs import ResearchRunError, ResearchRunService, _utc
 from ingestion.beta_catalogue_retention import BetaResearchRetentionStore
 
 QUESTION_MUTATION_PATHS = frozenset({
@@ -34,6 +39,65 @@ class BetaModelSettings(BaseModel):
     model: Literal["gemini-3.8-flash"]
     location: Literal["global"]
     max_output_tokens: Literal[4096]
+
+
+class BetaResearchTrial(BaseModel):
+    """One fixed beta testing window with independent durable admission limits."""
+    model_config = ConfigDict(strict=True, extra="forbid", frozen=True)
+    version: Literal["ocean-v1-beta-research-trial-v1"]
+    opens_at: datetime
+    closes_at: datetime
+    run_limit: int = Field(ge=1, le=3)
+    answer_limit: int = Field(ge=1, le=3)
+
+    @field_validator("opens_at", "closes_at", mode="before")
+    @classmethod
+    def utc_time(cls, value):
+        if type(value) is not str or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", value) is None:
+            raise ValueError("Explicit UTC trial time required")
+        return datetime.fromisoformat(value)
+
+    @model_validator(mode="after")
+    def finite_window(self):
+        if not timedelta(0) < self.closes_at - self.opens_at <= timedelta(days=1):
+            raise ValueError("Trial must close within 24 hours")
+        return self
+
+    def admit(self, session, clock, kind, run):
+        # Serialize new admissions until commit across API instances. The next
+        # count must see the preceding transaction's durable rows.
+        if session.get_bind().dialect.name == "postgresql":
+            if session.connection().get_isolation_level() != "READ COMMITTED":
+                raise ResearchRunError()
+            session.execute(text("SELECT pg_advisory_xact_lock(hashtextextended('ocean-v1-beta-research-trial-v1', 0))"))
+        now = clock(session)
+        if not self.opens_at <= now < self.closes_at:
+            raise ResearchRunError("budget_exhausted", 429)
+        if kind == "clarify":
+            if run is None or not self.opens_at <= _utc(run.created_at) < self.closes_at:
+                raise ResearchRunError("budget_exhausted", 429)
+            return now
+        model, limit = {"run": (ResearchRun, self.run_limit), "answer": (ResearchAnswerJob, self.answer_limit)}[kind]
+        admitted = select(model.created_at).where(model.created_at >= self.opens_at).limit(limit).subquery()
+        if session.scalar(select(func.count()).select_from(admitted)) >= limit:
+            raise ResearchRunError("budget_exhausted", 429)
+        return now
+
+
+def load_research_trial(environ):
+    from api.v1_host import _unique
+
+    if RESEARCH_TRIAL_ENV not in environ:
+        return None
+    try:
+        raw = environ[RESEARCH_TRIAL_ENV]
+        if (environ.get("OCEAN_V1_CATALOGUE_MODE") != "sealed-gcs-research-v1"
+                or environ.get("OCEAN_V1_DATABASE_USER") != "ocean_v1_serving"
+                or type(raw) is not str or len(raw.encode()) > 1024):
+            raise ValueError("Explicit serving-only trial required")
+        return BetaResearchTrial.model_validate(json.loads(raw, object_pairs_hook=_unique))
+    except (KeyError, ValueError, TypeError, RecursionError):
+        raise HostConfigurationError("Explicit beta Research trial unavailable") from None
 
 
 class BetaResearchRunService(ResearchRunService):
@@ -157,9 +221,11 @@ def question_execution_fence(environ=None):
 
 
 def compose_beta_question_services(*, session_factory, catalogue_service, catalogue_browser,
-                                   cloud_settings, model_settings, experiment_reads=None):
+                                   cloud_settings, model_settings, experiment_reads=None, trial=None):
     if not isinstance(cloud_settings, CloudResearchSettings) or not isinstance(model_settings, BetaModelSettings):
         raise HostConfigurationError("Explicit beta cloud and model configuration required")
+    if trial is not None and type(trial) is not BetaResearchTrial:
+        raise HostConfigurationError("Explicit beta Research trial required")
     if not isinstance(catalogue_service.resolver.store, BetaResearchRetentionStore):
         raise HostConfigurationError("Explicit evidence retention authority required")
     from api.v1_catalogue_host import _activation
@@ -183,7 +249,8 @@ def compose_beta_question_services(*, session_factory, catalogue_service, catalo
         runtime=runtime, model=model_settings.model, runtime_identity=identity)
     runs = BetaResearchRunService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, controller_factory=factory,
-        queue=CloudResearchQueue(settings=cloud_settings, kind="run"), owner_locker=lock_research_owner)
+        queue=CloudResearchQueue(settings=cloud_settings, kind="run"), owner_locker=lock_research_owner,
+        admission=trial.admit if trial is not None else None)
     evidence = BetaResearchEvidenceService(session_factory=session_factory, site_id=SITE_ID,
         investigations=investigations, runs=runs)
     answers = BetaResearchAnswerService(evidence=evidence, queue=CloudResearchQueue(settings=cloud_settings, kind="answer"),

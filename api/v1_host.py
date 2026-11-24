@@ -57,6 +57,7 @@ MIGRATION_HEAD = '20261027_0021'
 EXPERIMENT_READ_CONFIG = 'OCEAN_V1_EXPERIMENT_READ_CONFIG'
 EXPERIMENT_LEDGER_URL = 'OCEAN_V1_EXPERIMENT_LEDGER_URL'
 EXPERIMENT_READ_ENV = frozenset({EXPERIMENT_READ_CONFIG, EXPERIMENT_LEDGER_URL})
+RESEARCH_TRIAL_ENV = 'OCEAN_V1_RESEARCH_TRIAL_JSON'
 EXECUTION_FLAGS = (
     'ENABLE_V1_RESEARCH_CONTROLLER', 'ENABLE_V1_RESEARCH_DISPATCH',
     'ENABLE_V1_SYNTHESIS', 'ENABLE_V1_EXPERIMENT_DISPATCH',
@@ -443,6 +444,8 @@ def catalogue_services_from_environment(settings, secret, environ, *, session_fa
     mode = environ.get('OCEAN_V1_CATALOGUE_MODE', 'empty')
     if experiment_reads is not None and (path is None or mode != 'sealed-gcs-research-v1'):
         raise HostConfigurationError('Experiment reads require the beta Research catalogue')
+    if RESEARCH_TRIAL_ENV in environ and (path is None or mode != 'sealed-gcs-research-v1'):
+        raise HostConfigurationError('Research trial requires the beta Research catalogue')
     if path is None:
         return None
     from api.v1_catalogue_host import load_empty_catalogue, load_snapshot_catalogue
@@ -457,12 +460,13 @@ def catalogue_services_from_environment(settings, secret, environ, *, session_fa
     catalogue, browser = loader(path, project_id=settings.project_id,
         site_id=settings.site_id, cursor_key=key, **kwargs)
     if mode == 'sealed-gcs-research-v1':
-        from api.v1_beta_question_services import load_question_configuration, compose_beta_question_services
+        from api.v1_beta_question_services import compose_beta_question_services, load_question_configuration, load_research_trial
         cloud_settings, model_settings = load_question_configuration(environ.get('OCEAN_V1_RESEARCH_CONFIG'),
             document_json=environ.get('OCEAN_V1_RESEARCH_CONFIG_JSON'))
         return compose_beta_question_services(session_factory=session_factory,
             catalogue_service=catalogue, catalogue_browser=browser,
-            cloud_settings=cloud_settings, model_settings=model_settings, experiment_reads=experiment_reads)
+            cloud_settings=cloud_settings, model_settings=model_settings, experiment_reads=experiment_reads,
+            trial=load_research_trial(environ))
     if mode == 'sealed-gcs-context-v1':
         from api.v1_beta_research_host import compose_beta_context_services
         return compose_beta_context_services(session_factory=session_factory, site_id=settings.site_id,

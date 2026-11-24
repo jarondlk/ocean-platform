@@ -141,9 +141,9 @@ def create_from_environment():
     provider calls start at import, startup or health checks.
     """
     import os
-    from api.v1_host import EXPERIMENT_READ_ENV, HostConfigurationError, create_from_environment as create_api
+    from api.v1_host import EXPERIMENT_READ_ENV, RESEARCH_TRIAL_ENV, HostConfigurationError, create_from_environment as create_api
     if (os.environ.get("OCEAN_V1_CATALOGUE_MODE") != "sealed-gcs-research-v1"
-            or EXPERIMENT_READ_ENV & os.environ.keys()):
+            or EXPERIMENT_READ_ENV & os.environ.keys() or RESEARCH_TRIAL_ENV in os.environ):
         raise HostConfigurationError("Explicit private beta research mode required")
     host = create_api()
     try:

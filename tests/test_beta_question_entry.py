@@ -4,7 +4,8 @@ import json
 import pytest
 
 from api.v1_beta_question_entry import validate_environment
-from api.v1_beta_question_services import load_question_configuration
+from api.v1_beta_question_services import load_question_configuration, load_research_trial
+from api.v1_host import RESEARCH_TRIAL_ENV
 from tests.test_cloud_research_dispatch import cloud_settings
 
 
@@ -51,3 +52,26 @@ def test_configuration_has_exactly_one_bounded_explicit_source(tmp_path):
                    {"document_json": '{"cloud":{},"cloud":{},"model":{}}'}, {"document_json": "x" * 16385}]:
         with pytest.raises(ValueError):
             load_question_configuration(**kwargs)
+
+
+def trial_configuration(**overrides):
+    return {"version": "ocean-v1-beta-research-trial-v1", "opens_at": "2026-11-24T00:00:00Z",
+            "closes_at": "2026-11-24T10:00:00Z", "run_limit": 2, "answer_limit": 1, **overrides}
+
+
+def test_trial_is_optional_and_serving_only():
+    raw = json.dumps(trial_configuration())
+    assert load_research_trial(environment()) is None
+    assert validate_environment({**environment(), RESEARCH_TRIAL_ENV: raw}, "api") is None
+    with pytest.raises(ValueError):
+        validate_environment({**environment("controller"), RESEARCH_TRIAL_ENV: raw}, "controller")
+
+
+@pytest.mark.parametrize("overrides", [
+    {"closes_at": "2026-11-25T00:00:01Z"}, {"closes_at": "2026-11-23T00:00:00Z"},
+    {"opens_at": "2026-11-24T00:00:00+09:00"}, {"run_limit": True}, {"answer_limit": 4},
+    {"extra_key": "refused"},
+])
+def test_trial_rejects_unbounded_or_ambiguous_configuration(overrides):
+    with pytest.raises(ValueError):
+        load_research_trial({**environment(), RESEARCH_TRIAL_ENV: json.dumps(trial_configuration(**overrides))})

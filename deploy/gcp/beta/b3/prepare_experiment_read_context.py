@@ -24,6 +24,7 @@ SUPERSEDED = (
     'orchestration/research_experiments.py',
     'schema/experiment_workspace.py',
 )
+TRIAL_SUPERSEDED = (*SUPERSEDED, 'orchestration/research_answers.py', 'orchestration/research_runs.py')
 ADDED = (
     'api/v1_beta_experiment_reads.py',
     'db/experiment_execution_models.py',
@@ -74,8 +75,15 @@ assert not (root / 'data').exists()
 print('Verified the B3 serving overlay, inherited source pins and offline read-port imports')
 '''
 
+TRIAL_PROOF = '''
+from api.v1_beta_question_services import load_research_trial
+assert 'OCEAN_V1_RESEARCH_TRIAL_JSON' not in os.environ
+assert load_research_trial(os.environ) is None
+print('Verified the packaged Research trial imports and opt-in default')
+'''
 
-def prepare(revision, output):
+
+def prepare(revision, output, *, research_trial=False):
     if not re.fullmatch(r'[0-9a-f]{40}', revision):
         raise ValueError('Select an exact serving runtime commit')
     b2.git('merge-base', '--is-ancestor', BASE_REVISION, revision)
@@ -88,15 +96,16 @@ def prepare(revision, output):
             or proof['offline_proof'] != 'success'):
         raise ValueError('Expected the accepted B2 serving image receipt')
 
+    superseded = TRIAL_SUPERSEDED if research_trial else SUPERSEDED
     inventory = json.loads(b2.committed(b2.BASE_REVISION, b2.BASE_INVENTORY))['sources']
     base_pins = {name: b2.digest(b2.committed(BASE_REVISION, name)) for name in (*inventory, *b2.ADDED)}
-    if (b2.source_digest(base_pins) != BASE_SOURCE_DIGEST or not set(SUPERSEDED) <= base_pins.keys()
+    if (b2.source_digest(base_pins) != BASE_SOURCE_DIGEST or not set(superseded) <= base_pins.keys()
             or set(ADDED) & base_pins.keys()):
         raise ValueError('The B2 runtime inventory differs from the accepted image')
-    overlays = {name: b2.committed(revision, name, current=True) for name in (*SUPERSEDED, *ADDED)}
+    overlays = {name: b2.committed(revision, name, current=True) for name in (*superseded, *ADDED)}
     for name, digest in base_pins.items():
         changed = b2.digest(b2.committed(revision, name, current=True)) != digest
-        if changed != (name in SUPERSEDED):
+        if changed != (name in superseded):
             raise ValueError(f'Unexpected change or missing supersession: {name}')
     pins = {**base_pins, **{name: b2.digest(raw) for name, raw in overlays.items()}}
     host = b2.canonical({
@@ -107,11 +116,12 @@ def prepare(revision, output):
     })
     manifest = {'version': 'ocean-v1-beta-api-context-v1', 'project_id': b2.PROJECT, 'revision': revision,
         'sources': pins, 'source_manifest_sha256': b2.source_digest(pins)}
-    image = b2.REGISTRY + ':b3-experiment-reads-' + revision[:12]
+    profile = 'b4-research-trial' if research_trial else 'b3-experiment-reads'
+    image = f'{b2.REGISTRY}:{profile}-{revision[:12]}'
     package = {'version': 'ocean-beta-b3-experiment-read-package-v1', 'runtime_revision': revision,
         'base_revision': BASE_REVISION, 'base_image': BASE_IMAGE, 'base_source_manifest_sha256': BASE_SOURCE_DIGEST,
         'base_receipt_sha256': b2.digest(receipt_raw), 'source_manifest_sha256': manifest['source_manifest_sha256'],
-        'host_configuration_sha256': b2.digest(host), 'superseded_sources': SUPERSEDED, 'added_sources': ADDED,
+        'host_configuration_sha256': b2.digest(host), 'superseded_sources': superseded, 'added_sources': ADDED,
         'image_tag': image}
     files = {f'application/{name}': raw for name, raw in overlays.items()}
     files.update({'source-manifest.json': b2.canonical(manifest), 'beta-host-config.json': host,
@@ -119,9 +129,10 @@ def prepare(revision, output):
     dockerfile = ['FROM ' + BASE_IMAGE]
     dockerfile.extend(f'COPY --chown=0:0 --chmod=0444 {name} /opt/ocean/{name.removeprefix("application/")}'
                       for name in files)
-    build = b2.build_config(revision, image, OFFLINE_PROOF)
-    build['steps'][0]['id'] = 'build-b3-read-api'
-    build['steps'][2]['id'] = 'verify-b3-read-api-offline'
+    verification = OFFLINE_PROOF + TRIAL_PROOF if research_trial else OFFLINE_PROOF
+    build = b2.build_config(revision, image, verification)
+    build['steps'][0]['id'] = f'build-{profile}-api'
+    build['steps'][2]['id'] = f'verify-{profile}-api-offline'
     files.update({'Dockerfile': ('\n'.join(dockerfile) + '\n').encode(), 'cloudbuild.json': b2.canonical(build)})
     output = output.absolute()
     if (output.exists() or output.resolve() != output or output.is_relative_to(b2.ROOT)
@@ -141,5 +152,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--revision', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--research-trial', action='store_true')
     args = parser.parse_args()
-    print(b2.canonical(prepare(args.revision, args.output)).decode(), end='')
+    print(b2.canonical(prepare(args.revision, args.output, research_trial=args.research_trial)).decode(), end='')

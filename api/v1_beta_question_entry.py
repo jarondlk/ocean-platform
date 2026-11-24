@@ -9,7 +9,7 @@ import sys
 
 def validate_environment(environ, role):
     from sqlalchemy.engine import make_url
-    from api.v1_beta_question_services import load_question_configuration, question_execution_fence
+    from api.v1_beta_question_services import load_question_configuration, load_research_trial, question_execution_fence
     from api.v1_host import EXPERIMENT_READ_ENV
     if (role not in {"api", "controller"} or environ.get("DEPLOYMENT_ENV") != "production"
             or environ.get("OCEAN_V1_PROJECT_ID") != "ocean-v1-beta-20261101"
@@ -36,6 +36,7 @@ def validate_environment(environ, role):
     elif url.host not in {"127.0.0.1", "localhost"} or url.port != 5432:
         raise ValueError("Private beta SQL proxy required")
     question_execution_fence(environ)
+    load_research_trial(environ)
     load_question_configuration(environ.get("OCEAN_V1_RESEARCH_CONFIG"),
         document_json=environ.get("OCEAN_V1_RESEARCH_CONFIG_JSON"))
 
