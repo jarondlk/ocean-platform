@@ -35,10 +35,18 @@ B2_RESTORATION_RECEIPT_SHA256 = '2ff012cca762a03e7501b03381a29900c7dc8bfe328485d
 B2_SWEEP_RESTORATION_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b4-20261124/research-sweep-live.json'
 B2_SWEEP_RESTORATION_RECEIPT_SHA256 = '23a3ac6a6a4e875fd3e198a3f4eaa7f2839aed1e2ef9ae73f6eeb6e2feafe887'
 B2_SWEEP_RESTORATION_GENERATION = '73'
+B2_LAYOUT_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b4-20261124/frontend-layout-live.json'
+B2_LAYOUT_RECEIPT_SHA256 = 'b0c6d241e3d1db4b5977c7ac0183149b00756d7468b7a92535bacf941f5d6f27'
+B2_LAYOUT_GENERATION = '74'
 
 
-def restored_b2_serving(service, original):
-    if str(service['generation']) == B2_SWEEP_RESTORATION_GENERATION:
+def qualified_b2_serving(service, original):
+    generation = str(service['generation'])
+    layout = generation == B2_LAYOUT_GENERATION
+    if layout:
+        path, digest = B2_LAYOUT_RECEIPT, B2_LAYOUT_RECEIPT_SHA256
+        version = 'ocean-beta-frontend-layout-live-v1'
+    elif generation == B2_SWEEP_RESTORATION_GENERATION:
         path, digest = B2_SWEEP_RESTORATION_RECEIPT, B2_SWEEP_RESTORATION_RECEIPT_SHA256
         version = 'ocean-beta-b4-research-sweep-live-v1'
     else:
@@ -50,14 +58,24 @@ def restored_b2_serving(service, original):
     guard.require(receipt['version'] == version
                   and receipt['project'] == rollout.PROJECT and receipt['region'] == rollout.REGION
                   and receipt['baseline_receipt_sha256'] == B2_RECEIPT_SHA256)
-    restored = receipt['restoration']
-    normalized = {'template': {**service['template'], 'revision': original['revision']},
-                  'traffic': service['traffic']}
-    guard.require(restored['normalized_previous_configuration_matches'] is True
-                  and restored['baseline_configuration_sha256'] == original['configuration_sha256']
-                  and rollout.sha(normalized) == original['configuration_sha256'])
-    return {'revision': restored['restored_revision'], 'generation': restored['generation'],
-            'configuration_sha256': restored['configuration_sha256'], 'new_image': restored['image']}
+    selection = receipt['deployment' if layout else 'restoration']
+    template = {**service['template'], 'revision': original['revision']}
+    if layout:
+        frontend, = (item for item in template['containers'] if item.get('name') == 'frontend')
+        guard.require(selection['only_frontend_image_and_revision_changed'] is True
+                      and frontend['image'] == selection['frontend_after'])
+        template['containers'] = [
+            {**item, 'image': selection['frontend_before']} if item is frontend else item
+            for item in template['containers']
+        ]
+    else:
+        guard.require(selection['normalized_previous_configuration_matches'] is True)
+    guard.require(selection['baseline_configuration_sha256'] == original['configuration_sha256']
+                  and rollout.sha({'template': template, 'traffic': service['traffic']})
+                  == original['configuration_sha256'])
+    return {'revision': selection['revision' if layout else 'restored_revision'],
+            'generation': selection['generation'],
+            'configuration_sha256': selection['configuration_sha256'], 'new_image': selection['image']}
 
 
 def verify_b2_deployment(cloud):
@@ -74,7 +92,7 @@ def verify_b2_deployment(cloud):
         selection = receipt[key]
         service = cloud.request('https://run.googleapis.com/v2/' + name)
         if kind == 'serving' and str(service['generation']) != str(selection['generation']):
-            selection = restored_b2_serving(service, selection)
+            selection = qualified_b2_serving(service, selection)
         revision = selection['revision']
         active, = service['trafficStatuses']
         guard.require(service['name'] == name

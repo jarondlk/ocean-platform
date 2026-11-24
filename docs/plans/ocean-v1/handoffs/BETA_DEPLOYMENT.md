@@ -1,5 +1,24 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 24 — Beta UI spacing update live
+
+Source `9454061` aligns Research and Context Catalog headings and gutters,
+squares cards and panels, adds consistent Workspace padding and moves the
+existing sign-out action into the app header. It removes a redundant mobile
+toolbar and returns focus to Chat when closing the Workspace. The deployed
+frontend also shows exploration completion without the stale answer message.
+Both v1 frontend CI jobs and the Tokyo frontend build passed. The separate
+legacy frontend dependency audit failed at its existing audit step.
+
+Serving generation 74 changed only the frontend image and revision. The
+signed-in desktop browser and 390-pixel layout showed square cards,
+aligned gutters and no horizontal overflow. The saved one-dataset answer and
+its `c13.inventory` citation reopened, and the catalogue loaded. The existing
+Research API configuration, controller, paused queue and paused Scheduler job
+were preserved. The guarded manual delivery workflow recognizes this exact
+frontend update.
+[Frontend deployment receipt](../beta/b4-20261124/frontend-layout-live.json).
+
 ## November 24 — B4 scheduled Research recovery trial passed
 
 The approved `sweep_only` trial on serving generation 72 admitted one
@@ -18,15 +37,15 @@ both delivery controls at 11:19:45 UTC with zero tasks. The original B2
 configuration was restored at generation 73, and the signed-in answer and
 citation link reopened after reload. The manual delivery guard now recognizes
 this exact restore and still verifies the controller and the original B2
-configuration. No active schedule remains. The trial used the existing
-frontend, so the stale answer-status copy is still visible on the live chat
-card. The separate frontend candidate remains built.
+configuration. No active schedule remains. The scheduled trial used the
+prior frontend. The later frontend update above fixes the stale chat-card
+answer message.
 [Live scheduled recovery receipt](../beta/b4-20261124/research-sweep-live.json).
 
 Sustained Research delivery remains gated on alerting and operator recovery
 for work that outlives Cloud Tasks retries. The hosted restore and integrated
-B3 worker recovery and drain also remain open. The operator requested a beta
-UI spacing and padding pass with square corners on box components after B4.
+B3 worker recovery and drain also remain open. The UI spacing update was
+delivered independently while these gates remain open.
 
 ## November 24 — B4 scheduled recovery candidate
 

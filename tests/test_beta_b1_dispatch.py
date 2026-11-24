@@ -125,12 +125,14 @@ def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous
     'original', 'controller_drift', 'restored', 'unqualified_generation',
     'restored_image_drift', 'restored_config_drift', 'bad_restoration_receipt',
     'changed_baseline', 'sweep_restored', 'sweep_restored_config_drift',
+    'layout_deployed', 'layout_wrong_frontend', 'layout_unrelated_change',
 ])
 def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, state):
     import hashlib
     import json
 
     image = 'synthetic-image-pin'
+    layout = state.startswith('layout_')
     receipt = {'image_proof': {'image': image, 'build_status': 'SUCCESS', 'offline_proof': 'success'},
                'initial_cold_discovery_delivery_passed': True}
     services = {}
@@ -141,6 +143,8 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
         revision = slug + '-fixture'
         env = [{'name': flag, 'value': 'true'} for flag in delivery.rollout.FLAGS] if key == 'serving' else []
         template = {'revision': revision, 'containers': [{'name': container, 'image': image, 'env': env}]}
+        if key == 'serving' and layout:
+            template['containers'].append({'name': 'frontend', 'image': 'original-frontend'})
         receipt[key] = {'new_image': image, 'revision': revision, 'generation': 1,
                         'configuration_sha256': delivery.rollout.sha({'template': template, 'traffic': traffic})}
         services[name] = {'name': name, 'generation': '1', 'observedGeneration': '1', 'template': template,
@@ -164,21 +168,34 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
         if state == 'changed_baseline':
             # A new configuration digest cannot qualify unrelated changes as a restoration.
             serving['template']['timeout'] = '240s'
-        restoration = {
-            'version': 'ocean-beta-b4-research-sweep-live-v1' if sweep else 'ocean-beta-b4-research-trial-live-v1',
-            'project': delivery.rollout.PROJECT,
-            'region': delivery.rollout.REGION, 'baseline_receipt_sha256': baseline_sha,
-            'restoration': {
+        if layout:
+            serving['template']['containers'][1]['image'] = 'qualified-frontend'
+            field = 'B2_LAYOUT_RECEIPT'
+            version = 'ocean-beta-frontend-layout-live-v1'
+            monkeypatch.setattr(delivery, 'B2_LAYOUT_GENERATION', '3')
+            proof = {
+                'revision': revision, 'generation': 3, 'image': image,
+                'frontend_before': 'original-frontend', 'frontend_after': 'qualified-frontend',
+                'only_frontend_image_and_revision_changed': True,
+                'baseline_configuration_sha256': receipt['serving']['configuration_sha256'],
+                'configuration_sha256': delivery.rollout.sha({'template': serving['template'], 'traffic': traffic}),
+            }
+        else:
+            field = 'B2_SWEEP_RESTORATION_RECEIPT' if sweep else 'B2_RESTORATION_RECEIPT'
+            version = 'ocean-beta-b4-research-sweep-live-v1' if sweep else 'ocean-beta-b4-research-trial-live-v1'
+            proof = {
                 'restored_revision': revision, 'generation': 3, 'image': image,
                 'normalized_previous_configuration_matches': True,
                 'baseline_configuration_sha256': receipt['serving']['configuration_sha256'],
                 'configuration_sha256': delivery.rollout.sha({'template': serving['template'], 'traffic': traffic}),
-            },
+            }
+        restoration = {
+            'version': version, 'project': delivery.rollout.PROJECT, 'region': delivery.rollout.REGION,
+            'baseline_receipt_sha256': baseline_sha, 'deployment' if layout else 'restoration': proof,
         }
         restoration_path = tmp_path / 'restoration.json'
         restoration_raw = json.dumps(restoration).encode()
         restoration_path.write_bytes(restoration_raw)
-        field = 'B2_SWEEP_RESTORATION_RECEIPT' if sweep else 'B2_RESTORATION_RECEIPT'
         monkeypatch.setattr(delivery, field, restoration_path)
         monkeypatch.setattr(delivery, field + '_SHA256', hashlib.sha256(restoration_raw).hexdigest())
         if sweep:
@@ -187,8 +204,10 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
         serving.update(generation='4', observedGeneration='4')
     elif state == 'restored_image_drift':
         serving['template']['containers'][0]['image'] = 'different-image'
-    elif state in ('restored_config_drift', 'sweep_restored_config_drift'):
+    elif state in ('restored_config_drift', 'sweep_restored_config_drift', 'layout_unrelated_change'):
         serving['template']['timeout'] = '240s'
+    elif state == 'layout_wrong_frontend':
+        serving['template']['containers'][1]['image'] = 'unqualified-frontend'
     elif state == 'bad_restoration_receipt':
         restoration_path.write_bytes(restoration_raw + b'\n')
     elif state == 'controller_drift':
@@ -201,7 +220,7 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
 
     monkeypatch.setattr(delivery, 'dispatch', dispatch)
     cloud = type('Cloud', (), {'request': lambda _, url: services[url.split('/v2/', 1)[1]]})()
-    if state not in ('original', 'restored', 'sweep_restored'):
+    if state not in ('original', 'restored', 'sweep_restored', 'layout_deployed'):
         with pytest.raises(delivery.guard.Rejected):
             delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True)
         assert not calls

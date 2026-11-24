@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 24 — Beta UI spacing update live
+
+The signed-in beta uses aligned Research and catalogue gutters, square
+cards, padded Workspace panels and one header with the sign-out control.
+The saved Research answer and citation reopened on serving generation 74.
+The 390-pixel layout fit without horizontal overflow. B4 operations remain
+open, with scheduled delivery paused.
+[Frontend deployment receipt](beta/b4-20261124/frontend-layout-live.json).
+
 ## November 24 — B4 scheduled Research recovery trial passed
 
 Two scheduled callbacks recovered a queued exploration and answer without a
