@@ -153,6 +153,25 @@ objectives are still required. See the
 B2 and B3 can overlap after their own readiness checks. Begin backup and alert
 preparation while the worker and signed-in tests are pending.
 
+### June fish comparison in Research
+
+The live B2 activation contains 39 eDNA datasets for raw inventory. Its
+3,498 source occurrences comprise 343 negative controls and 3,155 unknown
+classifications, with zero resolved physical sample identities. The current
+host marks the activation scientifically ineligible. The accepted B1 CTD
+lookup demonstrates the cited Research delivery path. It gives no evidence
+for a June fish ranking. [Current eDNA inventory](b2-20261116/catalogue-disposition-20261122.json).
+
+A first comparable Research question is “Which fish species were detected most
+often in eligible June eDNA samples, by year, under the same method?” Select a
+reviewed environmental cohort with reliable dates, sites, taxonomy and assay
+protocol. Report each year's positive count and eligible denominator, flag
+coverage gaps, and match both numbers to an independent result before trying
+the signed-in question. The current single-dataset frequency operation needs
+an exact taxon and protocol. A multi-year ranking needs a complete aggregation
+over the reviewed cohort. Estimating organism abundance requires actual fish
+counts or a separately validated calibration.
+
 ### Remaining release sequence
 
 1. **Complete worker qualification.** The private Tokyo lifecycle passed on

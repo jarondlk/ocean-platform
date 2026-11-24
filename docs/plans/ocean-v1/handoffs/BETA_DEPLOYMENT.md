@@ -1,5 +1,31 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 24 — B3 read access preparation
+
+`deploy/gcp/beta/b3/experiment_read_access.py` checks migration, owners and
+the current C22 identity and B1 shared owner-lock functions in a read-only SQL
+transaction. It prepares separate grants for the database and table owners.
+This split reflects the accepted live database ownership. The `public` schema
+uses `pg_database_owner`; the C22 and C23 relations belong to `ocean_v1_migrator`.
+The new ledger credential remains a separate SQL role and secret operation.
+Use the accepted SCRAM and password-log checks before that operation and
+verify the actual PostgreSQL 16 creator membership and ACL readback.
+
+The proposed storage policy retains the provider etag and unrelated bindings.
+The two project custom roles would be bound only on the Tokyo results bucket
+for `c23/outputs-v1/`. The serving role permits exact-object reads. The
+supervisor role permits create and exact-object reads. Confirm the actual
+role definitions and inherited access, then verify denied listing, deletion,
+serving writes and outside-prefix reads as the real identities.
+[Cloud Storage IAM conditions](https://docs.cloud.google.com/storage/docs/access-control/iam#conditions).
+
+15 focused tests passed. Disposable PostgreSQL 18 passed absent, partial and
+exact ledger states, both startup ACL checks and refusal of extra application
+reads. The live generation is still 69 and the dedicated login remains
+absent. The scoped build CLI cannot inspect bucket IAM or the Research queue.
+Those operator readbacks now require Google Cloud reauthentication. The plan
+performed zero live grants, secret operations or deployments.
+
 ## November 23 — B3 serving candidate built
 
 Source `e5684c8` composes the C25 workspace through the normal beta Research

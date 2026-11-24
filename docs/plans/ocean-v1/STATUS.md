@@ -1,5 +1,14 @@
 # Implementation status
 
+## November 24 — B3 access preparation and June fish question
+
+The B3 ledger grant plan and prefix-scoped storage policy passed local
+qualification. Live SQL and storage activation remain open. The current eDNA
+catalogue is available for raw inventory. A June-by-year Research comparison
+needs a reviewed environmental cohort, consistent protocol and complete
+aggregation before the beta can answer it with citations. See the
+[beta completion plan](beta/BETA_COMPLETION_PLAN.md#june-fish-comparison-in-research).
+
 ## November 23 — B3 serving candidate built
 
 The beta Research host can now be configured to show retained experiment
