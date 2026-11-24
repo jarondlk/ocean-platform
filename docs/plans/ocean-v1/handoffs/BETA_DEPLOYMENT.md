@@ -2,33 +2,35 @@
 
 ## November 24 — First usable beta Research session
 
-Prioritize one new cited answer in the signed-in beta Research workspace.
-B3 experiment activation can proceed separately. The serving and private
-Research controller still match both B2 discovery service snapshots, including
-full templates, ready revisions, API images and traffic. Research submission
-and answer preparation are enabled. A signed-out visit currently reaches the
-normal Google sign-in page.
+The signed-in investigation **Beta Research · Regional SST** contains a
+completed and persisted answer in **MUR product lookup**. Its citation opens
+the retained SST object and shows MUR final version 04.1, consistent with the
+independent B2 disposition. The chat card and answer panel show separate
+states. After reload, the chat card can still say that an answer is unavailable
+while the completed answer reopens from **Review answers and retained
+evidence**. The main answer names the retained object ID. The readable product
+name and version are in the retained evidence. The compound product question
+needed clarification to the exact `Find object` lookup under the same run.
+[Live receipt](../beta/b2-20261116/first-sst-question-20261124.json).
 
-`scripts/beta_b1_dispatch.py --b2-candidate` qualifies both live services
-against the immutable B2 receipt before using the existing one-task delivery
-guard. Twenty-four dispatch tests passed and a live read-only check matched the
-accepted pair. Keep the completed Q6 answer as historical evidence. The new
-question has not been submitted or delivered.
+The CLI sign-in succeeded. Serving generation 69 and controller generation 10
+match the accepted B2 templates and image. The private controller retains the
+exact task invoker. `scripts/beta_b1_dispatch.py --b2-candidate` verified and
+delivered the initial exploration, a distinct clarification task and one
+answer task. Each request returned HTTP 200. Two Vertex invocations appeared
+in the bounded project monitoring window. The queue is paused and empty and
+Scheduler has zero jobs. Q6 and the live service configurations were preserved.
 
-The Google Cloud SDK passkey check is open. After authentication, confirm the
-current paused and empty queue, Scheduler and controller invoker readbacks,
-and the current cost envelope. Then use the signed-in Research workspace to
-submit one new question against the regional MUR SST catalogue. Ask which
-product the selected dataset is based on and request a citation. The accepted
-disposition records MUR and its regional preview limitations. Verify against
-the cited frozen dataset. Record any limitations or incomplete response.
-[Independent catalogue receipt](../beta/b2-20261116/catalogue-disposition-20261122.json).
+The cold picker returned HTTP 503 after 15.03 seconds. One retry returned
+HTTP 200 in 5.38 seconds. The evidence panel needed a reload after the
+exploration completed. The Cloud Billing Budget API remains disabled and the
+Console prompted for separate verification. The single question used the
+existing beta model budget authorization and incurred bounded delivery only.
+No current monthly invoice is inferred from the monitoring readback.
 
-Deliver the exact new exploration task, then prepare and deliver its answer
-once. Open its citation and reload the signed-in answer. Keep automatic queue
-delivery paused for this check. The next usability increment is bounded
-automatic Research delivery for the beta account after verifying current cost,
-recovery and pause behavior. Full beta and experiment release remain open.
+The next usability increment is bounded automatic Research delivery after
+checking its cost, recovery and pause behavior. Full beta and experiment
+release remain open.
 
 ## November 24 — B3 read access preparation
 

@@ -1,0 +1,41 @@
+{
+  "version": "ocean-beta-b2-signed-in-sst-question-v1",
+  "captured_utc": "2026-11-24T04:44:55Z",
+  "project": "ocean-v1-beta-20261101",
+  "runtime_source_revision": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+  "operator_revision": "32a5b84",
+  "accepted_deployment_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "api_image_sha256": "64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+  "serving_generation": 69,
+  "controller_generation": 10,
+  "investigation_id": "1139cbdb-e2c5-4448-87ee-04cf87fcb4b5",
+  "conversation_id": "8f119259-8ed0-43e0-97ea-281f0dfb061c",
+  "exploration_id": "ea5ff875-7f50-4934-bc00-079797220454",
+  "answer_job_id": "738e8285-785e-4f43-a3ad-62de8d721ae5",
+  "selected_snapshot_id": "bbdd9dccff2173552076e7883606c38b0c7093aa0d3b3f359d53f49c9ad3c6b6",
+  "source_object": "beta:sst:regional-preview:a02e205a70cc43532631b10ec170a3500052e01e9f75d9f050bac202236bdc33",
+  "observed_source_product": "MUR final 04.1 regional descriptive SST preview",
+  "independent_catalogue_receipt": "catalogue-disposition-20261122.json",
+  "completion": {
+    "original_compound_question_awaited_clarification": true,
+    "same_run_clarified_to_exact_object_lookup": true,
+    "completed_answer_reopened_after_reload": true,
+    "exact_object_citation_opened": true,
+    "product_metadata_matches_catalogue": true,
+    "main_answer_sentence_names_object_id": true,
+    "product_version_visible_in_evidence": true,
+    "direct_compound_question_answered": false
+  },
+  "controller_deliveries": [
+    {"phase": "initial_exploration", "status": 200, "latency_seconds": 32.923994915},
+    {"phase": "clarified_exploration", "status": 200, "latency_seconds": 28.083596189},
+    {"phase": "answer_synthesis", "status": 200, "latency_seconds": 24.627014380}
+  ],
+  "observed_vertex_invocations_in_project_window": 2,
+  "cold_snapshot_lookup": {"status": 503, "seconds": 15.032386623, "retry_status": 200, "retry_seconds": 5.379503441},
+  "answer_evidence_reload_required": true,
+  "chat_completion_copy_can_understate_available_answer": true,
+  "final_delivery_control": {"queue": "PAUSED", "tasks": 0, "scheduler_jobs": 0, "automatic_delivery_enabled": false},
+  "new_deployment_or_iam_changes": false,
+  "full_beta_acceptance": false
+}

@@ -1,12 +1,14 @@
 # Implementation status
 
-## November 24 — Prioritize a fresh beta Research answer
+## November 24 — A fresh beta Research answer completed
 
-The live B2 serving and controller match their accepted images and complete
-templates. The single-task delivery helper now verifies that exact B2 pair.
-A fresh cited question and reload are pending operator reauthentication,
-current queue readback and a signed-in beta session. See the
-[deployment handoff](handoffs/BETA_DEPLOYMENT.md#november-24--first-usable-beta-research-session).
+The signed-in beta completed a new regional SST lookup on B2 and reopened its
+cited answer after reload. Retained evidence identified MUR final version 04.1.
+The compound prompt needed an exact-lookup clarification, and the first
+catalogue read timed out before a successful retry. Two Vertex invocations
+were observed. The queue remains paused following manual delivery. Unattended
+answering and full release remain open. See the
+[live question receipt](beta/b2-20261116/first-sst-question-20261124.json).
 
 ## November 24 — B3 access preparation and June fish question
 
