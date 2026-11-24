@@ -1,0 +1,66 @@
+{
+  "version": "ocean-beta-b4-research-sweep-candidate-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "8e365cec68985cf1f406ed842e9f98690e096036",
+  "local": {
+    "focused_backend_tests_passed": 159,
+    "v1_frontend_tests_passed": 1095,
+    "v1_frontend_typecheck_passed": true,
+    "lost_create_acknowledgement_and_duplicate_delivery_passed_with_synthetic_transport": true
+  },
+  "hosted": {
+    "focused_run_id": 45379063621,
+    "focused_job_id": 138392997574,
+    "focused_conclusion": "success",
+    "serving_source_inventory_passed": true,
+    "frontend_run_id": 45379063802,
+    "v1_frontend_jobs_passed": true,
+    "legacy_frontend_dependency_audit": "failure",
+    "historical_b1_package_checks": "failure"
+  },
+  "api": {
+    "build_id": "f01e6e94-d312-48ed-9980-11bdb74e4ee2",
+    "status": "SUCCESS",
+    "offline_proof_passed": true,
+    "source_manifest_sha256": "08dfbcc22ebf5b43edfc2f555065264cbfd0280328231d2effbb895c60f2f792",
+    "image_sha256": "958c869d87fd16912f38f30ade904dce323bca17f499c83e0e10b015c126caca",
+    "registry_tag_digest_matches": true,
+    "staging_generation": "1795517646596544"
+  },
+  "frontend": {
+    "build_id": "d37069ef-4b09-4523-81a5-e14ca98f9ebc",
+    "status": "SUCCESS",
+    "offline_proof_passed": true,
+    "source_manifest_sha256": "8097618a728acc065856855f4ef990326af500d3952b8c2100e9d7c32bc7b1d1",
+    "image_sha256": "304d6d02d167eda13158de71039747fa21ba17af5541ec6bcb16710f5b7ea3e4",
+    "registry_tag_digest_matches": true,
+    "staging_generation": "1795517672646837"
+  },
+  "live_readback": {
+    "serving_generation": 71,
+    "controller_generation": 10,
+    "controller_ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+    "controller_invoker_exact": true,
+    "operator_act_as_on_exact_task_invoker_verified": true,
+    "project_test_iam_permissions_api_disabled": true,
+    "queue": "PAUSED",
+    "queued_tasks": 0,
+    "scheduler_jobs": 0,
+    "validate_only_sweep_api_accepted": true,
+    "serving_template_and_traffic_unchanged": true,
+    "new_trial_deployed": false,
+    "scheduled_sweep_exercised": false
+  },
+  "operations_readback": {
+    "queue_depth_task_attempts_and_controller_request_metrics_available": true,
+    "successful_automated_backups_returned": 7,
+    "successful_automated_backup_audit_records": 7,
+    "pitr_retention_days": 7,
+    "monitoring_alert_policies": 0,
+    "monitoring_notification_channels": 0,
+    "hosted_restore_exercised": false,
+    "alert_delivery_exercised": false
+  },
+  "b4_complete": false
+}

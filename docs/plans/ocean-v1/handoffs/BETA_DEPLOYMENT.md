@@ -8,10 +8,19 @@ controller already serves the authenticated sweep endpoint. Local tests checked
 loss of the create acknowledgement, exact task readback, duplicate delivery
 and reopening the saved answer with a deterministic test fixture. The chat
 card now reports exploration completion independently of answer availability.
-No recovery candidate is deployed. The queue is paused and empty, with no
-Scheduler jobs. Cloud SQL retains seven successful automated backups and
-Monitoring currently has zero alert policies or notification channels.
+The exact API and frontend builds passed in Tokyo. The focused hosted job
+and both v1 frontend jobs passed on the same source. The legacy frontend
+dependency audit and historical B1 package jobs failed. Cloud Run accepted the API
+validation-only request, and the generation 71 readback preserved its
+configuration and traffic. No recovery candidate is deployed. The queue is
+paused and empty, with no Scheduler jobs. Cloud SQL retains seven successful
+automated backups and Monitoring currently has zero alert policies or
+notification channels.
+[Candidate receipt](../beta/b4-20261124/research-sweep-candidate.json).
 [B4 acceptance and live gates](../beta/b4-20261124/OPERATIONS_ACCEPTANCE.md).
+
+After B4, the operator requested a beta UI cleanup focused on spacing and
+padding, with square corners on box components.
 
 ## November 24 — Bounded automatic Research trial passed
 

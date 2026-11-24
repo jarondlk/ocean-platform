@@ -68,6 +68,19 @@ Record measured load and the beta-only cost readback before leaving sustained
 delivery enabled. Use the existing ¥50,000 monthly beta target.
 [Cloud Tasks monitoring](https://docs.cloud.google.com/tasks/docs/monitor).
 
+The November 24 metrics readback returned time series for the exact Tokyo
+queue depth, task attempts and private controller requests. The seven Cloud
+SQL backup audit records reported `STATUS_SUCCEEDED`. Start with the following
+policy scopes and verify their behavior on the selected notification channel.
+
+| Signal | Draft policy |
+| --- | --- |
+| Queue backlog | `cloudtasks.googleapis.com/queue/depth` for the beta project, Tokyo location and `ocean-v1-beta-research` queue, above zero continuously for ten minutes during normal delivery. Review planned queue pauses separately. |
+| Research sweep error | Cloud Run request logs for the private controller's exact `/internal/research/dispatch` URL and HTTP 5xx. Rate-limit repeated notifications to one per incident window. |
+| Backup failure | Cloud SQL system events for `ocean-v1-beta-sql`, method `cloudsql.instances.automatedBackup`, and window status `STATUS_FAILED` or `STATUS_SKIPPED`. Check through the successful backup audit signal as well. |
+
+[Cloud SQL automated backup audit fields](https://docs.cloud.google.com/sql/docs/postgres/backup-recovery/view-audit-logs-for-automated-backups).
+
 The same readback found seven successful automated beta Cloud SQL backups,
 seven days of retained point-in-time logs and a private PostgreSQL 16 instance.
 The isolated B3 worker network has no service peering. The live beta network
