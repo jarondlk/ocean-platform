@@ -1,0 +1,56 @@
+{
+  "version": "ocean-beta-b4-research-trial-candidate-v1",
+  "source_revision": "baca646a646bdc85a15b9a658a309f2dbed940c9",
+  "source_manifest_sha256": "a40d38047038ec12959b8c7a079c09df0ad9f73973b063a169e4250fe4f54d90",
+  "runtime_source_files": 191,
+  "staged_files": 26,
+  "scope": {
+    "maximum_window_hours": 24,
+    "maximum_new_explorations": 3,
+    "maximum_new_answer_preparations": 3,
+    "serving_only_and_opt_in": true,
+    "retained_request_replays_preserved": true
+  },
+  "local": {
+    "focused_tests_passed": 122,
+    "postgresql_18_disposable_concurrent_limits_and_rollback_passed": true,
+    "postgresql_repeatable_read_refused": true,
+    "disposable_cluster_cleaned_up": true
+  },
+  "hosted": {
+    "source_revision": "baca646a646bdc85a15b9a658a309f2dbed940c9",
+    "focused_run_id": 45337311911,
+    "focused_job_id": 138252327772,
+    "focused_conclusion": "success",
+    "legacy_frontend_dependency_audit": "failure",
+    "historical_b1_exact_source_checks": "failure"
+  },
+  "image": {
+    "project": "ocean-v1-beta-20261101",
+    "region": "asia-northeast1",
+    "build_id": "9eea514b-589a-4a58-afda-bf6db9e3e76f",
+    "build_status": "SUCCESS",
+    "offline_proof_passed": true,
+    "candidate_registry_digest": "sha256:8f2b6e228385765cdc41c820a93f6442f7f2c560e0cf2483625ad2c3d5c30454",
+    "staging_bucket": "ocean-v1-beta-20261101-build-source",
+    "staging_generation": "1795500081270231"
+  },
+  "pre_activation_control": {
+    "serving_generation": 69,
+    "controller_generation": 10,
+    "existing_serving_timeout_seconds": 60,
+    "existing_controller_timeout_seconds": 240,
+    "unchanged_serving_template_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "validate_only_accepted_with_expired_window": true,
+    "queue": "PAUSED",
+    "queued_tasks": 0,
+    "scheduler_jobs": 0,
+    "controller_invoker_exact": true,
+    "observer_job": "ocean-v1-beta-b2-preflight-20261121",
+    "observer_template_sha256": "9bc2a47df73744bf5d883423c4d7f29a7d45d9131c14f4170585b0ee401a3c34",
+    "observer_execution_count_unchanged": 1,
+    "fresh_sql_quiescence_verified": false,
+    "candidate_deployed": false,
+    "automatic_delivery_accepted": false
+  }
+}

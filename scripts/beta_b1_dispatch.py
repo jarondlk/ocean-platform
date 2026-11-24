@@ -30,6 +30,25 @@ SETTINGS = CloudResearchSettings(version="ocean-v1-beta-research-cloud-v1",
     task_invoker_subject="105490365082123397320")
 B2_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b2-20261116/discovery-live-20261122.json'
 B2_RECEIPT_SHA256 = 'd8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556'
+B2_RESTORATION_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b4-20261124/research-trial-live.json'
+B2_RESTORATION_RECEIPT_SHA256 = '2ff012cca762a03e7501b03381a29900c7dc8bfe328485d1f0671c170db997a9'
+
+
+def restored_b2_serving(service, original):
+    raw = B2_RESTORATION_RECEIPT.read_bytes()
+    guard.require(hashlib.sha256(raw).hexdigest() == B2_RESTORATION_RECEIPT_SHA256)
+    receipt = guard.document(raw)
+    guard.require(receipt['version'] == 'ocean-beta-b4-research-trial-live-v1'
+                  and receipt['project'] == rollout.PROJECT and receipt['region'] == rollout.REGION
+                  and receipt['baseline_receipt_sha256'] == B2_RECEIPT_SHA256)
+    restored = receipt['restoration']
+    normalized = {'template': {**service['template'], 'revision': original['revision']},
+                  'traffic': service['traffic']}
+    guard.require(restored['normalized_previous_configuration_matches'] is True
+                  and restored['baseline_configuration_sha256'] == original['configuration_sha256']
+                  and rollout.sha(normalized) == original['configuration_sha256'])
+    return {'revision': restored['restored_revision'], 'generation': restored['generation'],
+            'configuration_sha256': restored['configuration_sha256'], 'new_image': restored['image']}
 
 
 def verify_b2_deployment(cloud):
@@ -45,6 +64,8 @@ def verify_b2_deployment(cloud):
         name = f'{rollout.PREFIX}/services/{slug}'
         selection = receipt[key]
         service = cloud.request('https://run.googleapis.com/v2/' + name)
+        if kind == 'serving' and str(service['generation']) != str(selection['generation']):
+            selection = restored_b2_serving(service, selection)
         revision = selection['revision']
         active, = service['trafficStatuses']
         guard.require(service['name'] == name

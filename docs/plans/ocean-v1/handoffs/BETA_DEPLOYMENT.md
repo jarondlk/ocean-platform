@@ -1,5 +1,49 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 24 — Bounded automatic Research trial passed
+
+Source `baca646` adds the optional serving-only `OCEAN_V1_RESEARCH_TRIAL_JSON`
+configuration. The operator sets UTC opening and closing times with a maximum
+24-hour span and separate caps of up to three exploration and three answer
+records. PostgreSQL serializes admissions and counts committed records at a
+fresh read-committed snapshot. Replays retain their existing outcome and a
+rollback consumes no slot. Clarification can continue a run admitted in the
+same window and shares that run's existing limits. New work closes at the
+configured cutoff. Saved answers and existing read and cancel paths remain
+available. The controller uses its existing execution and lease limits.
+
+The 122 focused tests and the focused hosted workflow passed. A disposable
+PostgreSQL 18 exercise verified concurrent limits for both tables, rollback
+and the isolation requirement. The Tokyo Cloud Build passed an offline proof
+for the exact 191-file runtime inventory. Cloud Run accepted a validation-only
+update and the readback preserved the original generation 69 API.
+[Candidate and preflight receipt](../beta/b4-20261124/research-trial-candidate.json).
+
+The staged API became ready at serving generation 70. An early signed-in
+request received HTTP 429 and created no run. After the previous request
+envelope drained, one execution of the existing read-only SQL observer
+reported zero active work, leases, dispatchable outboxes and prepared model
+steps. The existing research queue resumed for the trial with the original
+private controller at generation 10.
+
+The **Automatic Research trial** conversation under **Beta Research · Regional
+SST** answered **1 dataset**, citing the retained `c13.inventory` row. The
+operator clicked **Prepare answer** in the beta UI. Cloud Tasks delivered
+both controller requests without manual dispatch, with HTTP 200 in 33.82 and
+15.27 seconds. The answer and citation link reopened after reload from
+**Review answers and retained evidence**. The chat card still showed its
+earlier answer-unavailable message while the Results panel showed the
+completed answer.
+
+The queue was paused at 06:16:59 UTC with zero tasks. The original B2
+image and configuration were restored at generation 71, with all traffic
+on the restored revision. The saved answer and citation link still opened.
+The manual delivery guard accepts this exact restoration alongside the
+original B2 receipt and rechecks the current serving and controller
+configurations before delivery. Scheduler has zero jobs. Continuous delivery,
+recovery and experiment execution remain gated.
+[Live trial and restoration receipt](../beta/b4-20261124/research-trial-live.json).
+
 ## November 24 — First usable beta Research session
 
 The signed-in investigation **Beta Research · Regional SST** contains a
@@ -13,7 +57,7 @@ name and version are in the retained evidence. The compound product question
 needed clarification to the exact `Find object` lookup under the same run.
 [Live receipt](../beta/b2-20261116/first-sst-question-20261124.json).
 
-The CLI sign-in succeeded. Serving generation 69 and controller generation 10
+The CLI sign-in succeeded. At the time of this test, serving generation 69 and controller generation 10
 match the accepted B2 templates and image. The private controller retains the
 exact task invoker. `scripts/beta_b1_dispatch.py --b2-candidate` verified and
 delivered the initial exploration, a distinct clarification task and one
@@ -28,8 +72,7 @@ Console prompted for separate verification. The single question used the
 existing beta model budget authorization and incurred bounded delivery only.
 No current monthly invoice is inferred from the monitoring readback.
 
-The next usability increment is bounded automatic Research delivery after
-checking its cost, recovery and pause behavior. Full beta and experiment
+The later bounded automatic trial is recorded above. Full beta and experiment
 release remain open.
 
 ## November 24 — B3 read access preparation

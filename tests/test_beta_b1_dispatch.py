@@ -121,8 +121,12 @@ def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous
     assert seen == ['synthetic-list-contract'] and not requests
 
 
-@pytest.mark.parametrize('drift', [False, True])
-def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, drift):
+@pytest.mark.parametrize('state', [
+    'original', 'controller_drift', 'restored', 'unqualified_generation',
+    'restored_image_drift', 'restored_config_drift', 'bad_restoration_receipt',
+    'changed_baseline',
+])
+def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, state):
     import hashlib
     import json
 
@@ -146,10 +150,43 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
     path = tmp_path / 'accepted-b2.json'
     raw = json.dumps(receipt).encode()
     path.write_bytes(raw)
+    baseline_sha = hashlib.sha256(raw).hexdigest()
     monkeypatch.setattr(delivery, 'B2_RECEIPT', path)
-    monkeypatch.setattr(delivery, 'B2_RECEIPT_SHA256', hashlib.sha256(raw).hexdigest())
+    monkeypatch.setattr(delivery, 'B2_RECEIPT_SHA256', baseline_sha)
     controller = f'{delivery.rollout.PREFIX}/services/ocean-v1-beta-research-controller'
-    if drift:
+    serving = services[f'{delivery.rollout.PREFIX}/services/ocean-v1-beta-serving']
+    if state not in ('original', 'controller_drift'):
+        revision = 'ocean-v1-beta-serving-restored'
+        serving.update(generation='3', observedGeneration='3', latestCreatedRevision=revision,
+                       latestReadyRevision=revision, trafficStatuses=[{'revision': revision, 'percent': 100}])
+        serving['template']['revision'] = revision
+        if state == 'changed_baseline':
+            # A new configuration digest cannot qualify unrelated changes as a restoration.
+            serving['template']['timeout'] = '240s'
+        restoration = {
+            'version': 'ocean-beta-b4-research-trial-live-v1', 'project': delivery.rollout.PROJECT,
+            'region': delivery.rollout.REGION, 'baseline_receipt_sha256': baseline_sha,
+            'restoration': {
+                'restored_revision': revision, 'generation': 3, 'image': image,
+                'normalized_previous_configuration_matches': True,
+                'baseline_configuration_sha256': receipt['serving']['configuration_sha256'],
+                'configuration_sha256': delivery.rollout.sha({'template': serving['template'], 'traffic': traffic}),
+            },
+        }
+        restoration_path = tmp_path / 'restoration.json'
+        restoration_raw = json.dumps(restoration).encode()
+        restoration_path.write_bytes(restoration_raw)
+        monkeypatch.setattr(delivery, 'B2_RESTORATION_RECEIPT', restoration_path)
+        monkeypatch.setattr(delivery, 'B2_RESTORATION_RECEIPT_SHA256', hashlib.sha256(restoration_raw).hexdigest())
+    if state == 'unqualified_generation':
+        serving.update(generation='4', observedGeneration='4')
+    elif state == 'restored_image_drift':
+        serving['template']['containers'][0]['image'] = 'different-image'
+    elif state == 'restored_config_drift':
+        serving['template']['timeout'] = '240s'
+    elif state == 'bad_restoration_receipt':
+        restoration_path.write_bytes(restoration_raw + b'\n')
+    elif state == 'controller_drift':
         services[controller]['template']['containers'][0]['env'].append({'name': 'CONFIG', 'value': 'changed'})
     calls = []
 
@@ -159,7 +196,7 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
 
     monkeypatch.setattr(delivery, 'dispatch', dispatch)
     cloud = type('Cloud', (), {'request': lambda _, url: services[url.split('/v2/', 1)[1]]})()
-    if drift:
+    if state not in ('original', 'restored'):
         with pytest.raises(delivery.guard.Rejected):
             delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True)
         assert not calls

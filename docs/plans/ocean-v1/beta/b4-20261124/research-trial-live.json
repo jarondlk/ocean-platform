@@ -1,0 +1,82 @@
+{
+  "version": "ocean-beta-b4-research-trial-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "baca646a646bdc85a15b9a658a309f2dbed940c9",
+  "candidate_receipt_sha256": "66a0bbb31ea4d4f689b9a4a63d2a3c9fbabe54a34c9c87f9d4567f2344f73e92",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "staged_serving": {
+    "revision": "ocean-v1-beta-serving-b4-trial-1124-060953",
+    "generation": 70,
+    "ready_utc": "2026-11-24T06:10:43.658037Z",
+    "image_sha256": "8f2b6e228385765cdc41c820a93f6442f7f2c560e0cf2483625ad2c3d5c30454",
+    "configuration_sha256": "901d55c7c2b70aa6b722699c0107e6338061713e93185b2ac442b5bba78adde7",
+    "traffic_percent": 100,
+    "opens_utc": "2026-11-24T06:14:53Z",
+    "closes_utc": "2026-11-24T06:34:53Z",
+    "max_explorations": 3,
+    "max_answer_preparations": 3,
+    "early_admission_http_status": 429,
+    "early_admission_created_work": false
+  },
+  "preflight": {
+    "observer_job_generation": 1,
+    "observer_execution": "ocean-v1-beta-b2-preflight-20261121-mp6mn",
+    "observer_template_sha256": "9bc2a47df73744bf5d883423c4d7f29a7d45d9131c14f4170585b0ee401a3c34",
+    "observer_execution_count_before": 1,
+    "observer_execution_count_after": 2,
+    "observed_utc": "2026-11-24T06:12:24.641145Z",
+    "read_only_aggregate_passed": true,
+    "active_runs": 0,
+    "active_answer_jobs": 0,
+    "open_leases": 0,
+    "dispatchable_outbox_items": 0,
+    "prepared_model_steps": 0
+  },
+  "delivery": {
+    "controller_generation": 10,
+    "queue_running_utc": "2026-11-24T06:15:00.320350Z",
+    "automatic_controller_requests": [
+      {
+        "path": "/internal/research/run",
+        "request_utc": "2026-11-24T06:15:20.074985Z",
+        "status": 200,
+        "latency_seconds": 33.818534814
+      },
+      {
+        "path": "/internal/research/answer",
+        "request_utc": "2026-11-24T06:16:28.728215Z",
+        "status": 200,
+        "latency_seconds": 15.268244951
+      }
+    ],
+    "manual_dispatches": 0,
+    "question": "How many datasets are in the current context?",
+    "answer_preparation_requested_in_ui": true,
+    "selected_snapshot_id": "bbdd9dccff2173552076e7883606c38b0c7093aa0d3b3f359d53f49c9ad3c6b6",
+    "answer_dataset_count": 1,
+    "citation_table": "c13.inventory",
+    "citation_row_matches_dataset_count": true,
+    "saved_answer_reopened_after_reload": true,
+    "queue_paused_utc": "2026-11-24T06:16:59.701807Z",
+    "queued_tasks_after_pause": 0,
+    "scheduler_jobs": 0
+  },
+  "restoration": {
+    "restored_revision": "ocean-v1-beta-serving-b2-post-trial-1124-101236",
+    "generation": 71,
+    "normalized_previous_configuration_matches": true,
+    "baseline_configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "configuration_sha256": "019f8f840201881380398418f85d5cf048cbc1cd6771dfb42c3b9adc2914e565",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "traffic_percent": 100,
+    "queue": "PAUSED",
+    "queued_tasks": 0,
+    "scheduler_jobs": 0,
+    "observed_utc": "2026-11-24T10:13:12.436421Z",
+    "saved_answer_and_citation_link_visible_after_reload": true
+  },
+  "bounded_automatic_delivery_passed": true,
+  "unattended_operations_accepted": false,
+  "full_beta_acceptance": false
+}

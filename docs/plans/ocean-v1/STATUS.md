@@ -1,5 +1,15 @@
 # Implementation status
 
+## November 24 — Bounded automatic Research trial passed
+
+The signed-in beta delivered one Research exploration and its answer through
+Cloud Tasks. The answer counted one dataset in the selected SST context and
+reopened with its citation link after the previous B2 API was restored. The
+queue is paused and empty, with zero Scheduler jobs. Unattended recovery and
+full beta acceptance remain open.
+[Live receipt](beta/b4-20261124/research-trial-live.json).
+[Deployment handoff](handoffs/BETA_DEPLOYMENT.md#november-24--bounded-automatic-research-trial-passed).
+
 ## November 24 — A fresh beta Research answer completed
 
 The signed-in beta completed a new regional SST lookup on B2 and reopened its

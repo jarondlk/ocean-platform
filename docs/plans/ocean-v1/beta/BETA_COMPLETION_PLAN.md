@@ -150,6 +150,10 @@ withdrawal. The live Tokyo database has seven successful automated backups
 and point-in-time recovery enabled. A hosted restore and measured recovery
 objectives are still required. See the
 [current checkpoint](../handoffs/BETA_DEPLOYMENT.md#november-23--private-tokyo-retained-lifecycle-passed).
+B4 also verified one automatic Research exploration and cited answer using
+the existing private queue. The signed-in answer survived the return to the
+B2 API. The queue is paused again. Unattended outbox recovery remains open.
+[Live trial receipt](b4-20261124/research-trial-live.json).
 B2 and B3 can overlap after their own readiness checks. Begin backup and alert
 preparation while the worker and signed-in tests are pending.
 
