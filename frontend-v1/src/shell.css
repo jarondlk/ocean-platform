@@ -1,19 +1,21 @@
 /* C15 shared chrome extends the accepted P00 design tokens and wordmark. */
-.runtime-shell .topbar { gap: 26px; }
+.runtime-shell .topbar { gap: 24px; }
 .runtime-shell .brand { width: 184px; }
 .runtime-shell .topbar-actions { gap: 6px; }
-.runtime-account { display: flex; align-items: center; gap: 7px; text-align: left; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; margin-right: 6px; }
+.runtime-account { display: flex; align-items: center; gap: 7px; text-align: left; border: 1px solid var(--line); border-radius: var(--box-radius); padding: 6px 8px; margin-right: 4px; }
 .runtime-account > svg { color: var(--blue-ink); }
 .runtime-account > span { display: grid; font-size: 11px; line-height: 1.4; color: var(--muted); }
 .runtime-account strong { font-size: 11px; font-weight: 550; color: var(--text); }
 .runtime-account:hover { background: var(--blue-wash); }
+.runtime-sign-out { flex: none; }
+.runtime-sign-out .icon-button { gap: 6px; padding-inline: 8px; border-radius: var(--box-radius); font-size: 12px; white-space: nowrap; }
 .runtime-notice { padding: 8px 22px; font-size: 12px; border-bottom: 1px solid var(--line); background: var(--blue-wash); }
 .runtime-sidebar-context { display: flex; align-items: flex-start; gap: 8px; font-size: 11px; color: var(--muted); margin: 28px 10px 40px; }
 .runtime-sidebar-context svg { margin-top: 3px; }
 .runtime-support-links { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 20px; }
 .runtime-main { background: var(--canvas); }
 .runtime-page { max-width: 980px; margin: 0 auto; padding: 44px 40px; }
-.runtime-page-heading { padding: 32px 34px 25px; flex-shrink: 0; }
+.runtime-page-heading { padding: 24px var(--page-gutter) 16px; flex-shrink: 0; }
 .runtime-page .runtime-page-heading { padding: 0 0 23px; }
 .runtime-page-heading h1 { font-size: 31px; line-height: 1.25; font-weight: 550; margin-top: 0; }
 .runtime-intro { color: var(--muted); max-width: 680px; font-size: 15px; margin-bottom: 30px; }
@@ -98,9 +100,10 @@
   .runtime-account > span { max-width: 115px; font-size: 10px; }
   .runtime-account strong { font-size: 10px; }
   .runtime-shell .topbar-actions .icon-button { min-width: 29px; padding: 5px; }
+  .runtime-sign-out .icon-button span { display: none; }
   .runtime-shell .language-button span { display: none; }
   .runtime-page { padding: 28px 22px; }
-  .runtime-page-heading { padding: 25px 22px 20px; }
+  .runtime-page-heading { padding: 20px var(--page-gutter) 16px; }
   .runtime-page-heading h1 { font-size: 27px; }
   .runtime-state { min-height: 280px; padding: 34px 22px; }
   .runtime-state h2 { font-size: 18px; }

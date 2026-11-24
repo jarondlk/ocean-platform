@@ -4,7 +4,7 @@
 .catalogue-overview-intro p { font-size: 11px; color: var(--muted); margin-top: 7px; }
 .catalogue-overview-intro .button { font-size: 11px; white-space: nowrap; }
 .catalogue-root-links { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
-.catalogue-root-links button { display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; background: var(--surface); font-size: 11px; min-height: 39px; }
+.catalogue-root-links button { display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: var(--box-radius); padding: 9px 11px; background: var(--surface); font-size: 11px; min-height: 39px; }
 .catalogue-root-links button:not(:disabled):hover { background: var(--blue-wash); border-color: var(--accent); }
 .catalogue-root-links svg { color: var(--blue-ink); }
 .catalogue-root-links small { color: var(--muted); font-size: 11px; margin-left: 6px; }
@@ -27,24 +27,23 @@
 .catalogue-source-count small { font-size: 11px; color: var(--muted); }
 .catalogue-relationship-section { margin-top: 35px; }
 .catalogue-map-filters { display: flex; flex-wrap: wrap; gap: 7px; border: 0; padding: 0; margin: 16px 0 9px; }
-.catalogue-map-filters label { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 7px 10px; font-size: 11px; background: var(--surface); color: var(--muted); cursor: pointer; }
+.catalogue-map-filters label { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: var(--box-radius); padding: 7px 10px; font-size: 11px; background: var(--surface); color: var(--muted); cursor: pointer; }
 .catalogue-map-filters label:hover, .catalogue-map-filters label.selected { background: var(--selected); color: var(--text); border-color: var(--accent); }
 .catalogue-map-filters input { width: 24px; height: 24px; min-height: 0; padding: 0; margin: 0; accent-color: var(--blue-ink); }
 .catalogue-map-qualification { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
-.catalogue-map-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--blue-wash); }
+.catalogue-map-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--box-radius); background: var(--blue-wash); }
 .catalogue-map { position: relative; height: 310px; min-width: 590px; max-width: 940px; margin: 0 auto; }
 .catalogue-map-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
 .catalogue-map-link { fill: none; stroke: var(--muted); stroke-width: 1.3px; opacity: .65; }
 .catalogue-map-link.candidate { stroke: var(--blue-ink); stroke-dasharray: 5 5; opacity: .8; }
-.catalogue-map-node { position: absolute; transform: translate(-50%, -50%); width: 24%; max-width: 178px; min-height: 57px; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 10px 8px; display: grid; gap: 4px; text-align: center; }
+.catalogue-map-node { position: absolute; transform: translate(-50%, -50%); width: 24%; max-width: 178px; min-height: 57px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--box-radius); padding: 10px 8px; display: grid; gap: 4px; text-align: center; }
 .catalogue-map-node strong { font-size: 11px; font-weight: 550; }
 .catalogue-map-node span { font-size: 11px; color: var(--muted); }
-.catalogue-map-node.analysis-record { border-radius: 2px 8px 8px 8px; }
 .catalogue-map-node:hover { border-color: var(--accent); background: var(--selected); }
 .catalogue-map-node.selected { background: var(--selected); border: 2px solid var(--blue-ink); padding: 9px 7px; }
 .catalogue-map-node:focus-visible { outline-offset: 5px; }
 .catalogue-map-record-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
-.catalogue-map-record-list button { display: flex; align-items: center; gap: 5px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 5px; font-size: 11px; min-height: 32px; background: var(--surface); }
+.catalogue-map-record-list button { display: flex; align-items: center; gap: 5px; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--box-radius); font-size: 11px; min-height: 32px; background: var(--surface); }
 .catalogue-map-record-list button > svg { color: var(--blue-ink); }
 .catalogue-map-record-list button[aria-pressed="true"] { background: var(--selected); border-color: var(--blue-ink); }
 .catalogue-map-record-list button:hover { background: var(--blue-wash); }

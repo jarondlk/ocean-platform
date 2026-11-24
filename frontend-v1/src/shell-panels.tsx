@@ -38,7 +38,9 @@ export function ShellSplitPanels({ primary, secondary, primaryLabel, secondaryLa
   primary: ReactNode; secondary: ReactNode; primaryLabel: string; secondaryLabel: string; locale: Locale;
   width: number; open: boolean; active: "primary" | "secondary"; onWidth: (width: number) => void; onOpen: (open: boolean) => void; onActive: (active: "primary" | "secondary") => void;
 }) {
-  const trigger = useRef<HTMLButtonElement>(null); const id = useId();
+  const trigger = useRef<HTMLButtonElement>(null);
+  const primaryTab = useRef<HTMLButtonElement>(null);
+  const id = useId();
   const [narrow, setNarrow] = useState(false);
   useEffect(() => {
     const media = window.matchMedia("(max-width: 950px)");
@@ -46,10 +48,14 @@ export function ShellSplitPanels({ primary, secondary, primaryLabel, secondaryLa
     media.addEventListener("change", update); return () => media.removeEventListener("change", update);
   }, []);
   const selected = open ? active : "primary";
-  const close = () => { onOpen(false); onActive("primary"); requestAnimationFrame(() => trigger.current?.focus()); };
+  const close = () => {
+    onOpen(false);
+    onActive("primary");
+    requestAnimationFrame(() => (narrow ? primaryTab.current : trigger.current)?.focus());
+  };
   return <section className={`shell-split ${open ? "secondary-open" : ""}`} data-pane={selected} style={{ "--workspace-width": `${width}px` } as CSSProperties}>
     <div className="shell-panel-toolbar"><span>{primaryLabel}</span><button ref={trigger} className="icon-button" aria-controls={`${id}-secondary`} aria-expanded={open} aria-label={`${open ? locale === "en" ? "Close" : "閉じる" : locale === "en" ? "Open" : "開く"} ${secondaryLabel}`} onClick={() => { onOpen(!open); onActive(open ? "primary" : "secondary"); }}>{open ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}</button></div>
-    <div className="shell-mobile-tabs" role="tablist" aria-label={locale === "en" ? `${primaryLabel} panels` : `${primaryLabel}パネル`}>{(["primary", "secondary"] as const).map((pane, index) => <button key={pane} role="tab" id={`${id}-${pane}-tab`} aria-controls={`${id}-${pane}`} aria-selected={selected === pane} tabIndex={selected === pane ? 0 : -1} onClick={() => { onActive(pane); if (pane === "secondary") onOpen(true); }} onKeyDown={(event) => {
+    <div className="shell-mobile-tabs" role="tablist" aria-label={locale === "en" ? `${primaryLabel} panels` : `${primaryLabel}パネル`}>{(["primary", "secondary"] as const).map((pane, index) => <button key={pane} ref={pane === "primary" ? primaryTab : undefined} role="tab" id={`${id}-${pane}-tab`} aria-controls={`${id}-${pane}`} aria-selected={selected === pane} tabIndex={selected === pane ? 0 : -1} onClick={() => { onActive(pane); if (pane === "secondary") onOpen(true); }} onKeyDown={(event) => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
       event.preventDefault(); const next = event.key === "Home" ? "primary" : event.key === "End" ? "secondary" : pane === "primary" ? "secondary" : "primary";
       onActive(next); if (next === "secondary") onOpen(true); event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('button')[next === "primary" ? 0 : 1]?.focus();

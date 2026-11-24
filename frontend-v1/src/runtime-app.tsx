@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, ChevronDown, Database, Globe2, Info, Layers3, LockKeyhole, MessageSquare, Moon, RefreshCw, Settings2, ShieldCheck, Sun, UserRound, Wrench } from "lucide-react";
+import { ArrowRight, ChevronDown, Database, Globe2, Info, Layers3, LockKeyhole, LogOut, MessageSquare, Moon, RefreshCw, Settings2, ShieldCheck, Sun, UserRound, Wrench } from "lucide-react";
 import { ApplicationShell, ShellDialog, type ShellLink } from "./application-shell";
 import { ShellSplitPanels } from "./shell-panels";
 import { CatalogueBrowser } from "./catalogue-browser";
@@ -34,7 +34,10 @@ const canonical = (destination: ShellDestination): RuntimeDestination => destina
 const label = (destination: RuntimeDestination, locale: Locale) => labels[destination][locale === "en" ? 0 : 1];
 const language = (locale: Locale, english: string, japanese: string) => locale === "en" ? english : japanese;
 
-export function RuntimeApp({ initialDestination = "research", transport, researchRunTransport, fetcher }: { initialDestination?: ShellDestination; transport?: RuntimeTransport; researchRunTransport?: ResearchRunTransport; fetcher?: Fetcher }) {
+export function RuntimeApp({ initialDestination = "research", transport, researchRunTransport, fetcher, signOutAction }: {
+  initialDestination?: ShellDestination; transport?: RuntimeTransport; researchRunTransport?: ResearchRunTransport;
+  fetcher?: Fetcher; signOutAction?: () => Promise<void>;
+}) {
   const dependency = useMemo(() => transport ?? createRuntimeTransport({ fetcher }), [transport, fetcher]);
   const serviceExperiments = useMemo(() => createExperimentClient({ fetcher }), [fetcher]);
   const serviceExecutions = useMemo(() => createExperimentExecutionClient({ fetcher }), [fetcher]);
@@ -132,6 +135,11 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
     <button className="icon-button language-button" aria-label={language(locale, "Switch language", "言語を切り替え")} onClick={() => setPreferences((current) => ({ ...current, locale: current.locale === "en" ? "ja" : "en" }))}><Globe2 size={16} /><span>{locale === "en" ? "EN" : "JA"}</span></button>
     <button className="icon-button" aria-label={language(locale, preferences.theme === "light" ? "Dark theme" : "Light theme", preferences.theme === "light" ? "ダークテーマ" : "ライトテーマ")} onClick={() => setPreferences((current) => ({ ...current, theme: current.theme === "light" ? "dark" : "light" }))}>{preferences.theme === "light" ? <Moon size={17} /> : <Sun size={17} />}</button>
     <button className="icon-button" aria-label={language(locale, "Refresh access", "アクセス権を再確認")} title={language(locale, "Refresh access", "アクセス権を再確認")} onClick={reload}><RefreshCw size={16} className={runtime.status === "loading" ? "runtime-refreshing" : undefined} /></button>
+    {signOutAction && <form className="runtime-sign-out" action={signOutAction}>
+      <button type="submit" className="icon-button" aria-label={language(locale, "Sign out", "ログアウト")} title={language(locale, "Sign out", "ログアウト")}>
+        <LogOut size={16} /><span>{language(locale, "Sign out", "ログアウト")}</span>
+      </button>
+    </form>}
   </>;
   const sidebar = <>
     <nav aria-label={language(locale, "Destinations", "移動先")}>{primaryLinks.map((link) => <a key={link.id} className={`sidebar-link ${destination === link.id ? "selected" : ""}`} href={link.href} aria-current={destination === link.id ? "page" : undefined} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); navigate(link); }}>{link.icon}<span>{link.label}</span></a>)}</nav>
