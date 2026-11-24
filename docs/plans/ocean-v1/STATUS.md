@@ -1,5 +1,13 @@
 # Implementation status
 
+## November 24 — Prioritize a fresh beta Research answer
+
+The live B2 serving and controller match their accepted images and complete
+templates. The single-task delivery helper now verifies that exact B2 pair.
+A fresh cited question and reload are pending operator reauthentication,
+current queue readback and a signed-in beta session. See the
+[deployment handoff](handoffs/BETA_DEPLOYMENT.md#november-24--first-usable-beta-research-session).
+
 ## November 24 — B3 access preparation and June fish question
 
 The B3 ledger grant plan and prefix-scoped storage policy passed local

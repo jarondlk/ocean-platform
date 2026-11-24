@@ -121,6 +121,53 @@ def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous
     assert seen == ['synthetic-list-contract'] and not requests
 
 
+@pytest.mark.parametrize('drift', [False, True])
+def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, drift):
+    import hashlib
+    import json
+
+    image = 'synthetic-image-pin'
+    receipt = {'image_proof': {'image': image, 'build_status': 'SUCCESS', 'offline_proof': 'success'},
+               'initial_cold_discovery_delivery_passed': True}
+    services = {}
+    traffic = [{'type': 'TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST', 'percent': 100}]
+    for key, slug, container in (('serving', 'ocean-v1-beta-serving', 'api'),
+                                 ('research_controller', 'ocean-v1-beta-research-controller', 'controller')):
+        name = f'{delivery.rollout.PREFIX}/services/{slug}'
+        revision = slug + '-fixture'
+        env = [{'name': flag, 'value': 'true'} for flag in delivery.rollout.FLAGS] if key == 'serving' else []
+        template = {'revision': revision, 'containers': [{'name': container, 'image': image, 'env': env}]}
+        receipt[key] = {'new_image': image, 'revision': revision, 'generation': 1,
+                        'configuration_sha256': delivery.rollout.sha({'template': template, 'traffic': traffic})}
+        services[name] = {'name': name, 'generation': '1', 'observedGeneration': '1', 'template': template,
+                          'traffic': traffic, 'latestCreatedRevision': revision, 'latestReadyRevision': revision,
+                          'terminalCondition': {'state': 'CONDITION_SUCCEEDED'},
+                          'trafficStatuses': [{'revision': revision, 'percent': 100}]}
+    path = tmp_path / 'accepted-b2.json'
+    raw = json.dumps(receipt).encode()
+    path.write_bytes(raw)
+    monkeypatch.setattr(delivery, 'B2_RECEIPT', path)
+    monkeypatch.setattr(delivery, 'B2_RECEIPT_SHA256', hashlib.sha256(raw).hexdigest())
+    controller = f'{delivery.rollout.PREFIX}/services/ocean-v1-beta-research-controller'
+    if drift:
+        services[controller]['template']['containers'][0]['env'].append({'name': 'CONFIG', 'value': 'changed'})
+    calls = []
+
+    def dispatch(_cloud, _directory, kind, identity, name):
+        calls.append((kind, identity, name))
+        return 'delivered'
+
+    monkeypatch.setattr(delivery, 'dispatch', dispatch)
+    cloud = type('Cloud', (), {'request': lambda _, url: services[url.split('/v2/', 1)[1]]})()
+    if drift:
+        with pytest.raises(delivery.guard.Rejected):
+            delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True)
+        assert not calls
+    else:
+        assert delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True) == 'delivered'
+        assert calls == [('run', IDENTITY, controller)]
+
+
 def page_cloud(pages):
     class Cloud:
         def __init__(self):

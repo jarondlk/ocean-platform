@@ -7,6 +7,7 @@ must be inspected; this command never retries or creates a replacement task.
 
 import argparse
 import base64
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -27,6 +28,37 @@ SETTINGS = CloudResearchSettings(version="ocean-v1-beta-research-cloud-v1",
     controller_origin="https://ocean-v1-beta-research-controller-534831104543.asia-northeast1.run.app",
     task_invoker_email="ocean-v1-beta-task-invoker@ocean-v1-beta-20261101.iam.gserviceaccount.com",
     task_invoker_subject="105490365082123397320")
+B2_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b2-20261116/discovery-live-20261122.json'
+B2_RECEIPT_SHA256 = 'd8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556'
+
+
+def verify_b2_deployment(cloud):
+    raw = B2_RECEIPT.read_bytes()
+    guard.require(hashlib.sha256(raw).hexdigest() == B2_RECEIPT_SHA256)
+    receipt = guard.document(raw)
+    image = receipt['image_proof']['image']
+    guard.require(receipt['image_proof']['build_status'] == 'SUCCESS'
+                  and receipt['image_proof']['offline_proof'] == 'success'
+                  and receipt['initial_cold_discovery_delivery_passed'] is True)
+    for kind, slug, key in (('serving', 'ocean-v1-beta-serving', 'serving'),
+                            ('controller', 'ocean-v1-beta-research-controller', 'research_controller')):
+        name = f'{rollout.PREFIX}/services/{slug}'
+        selection = receipt[key]
+        service = cloud.request('https://run.googleapis.com/v2/' + name)
+        revision = selection['revision']
+        active, = service['trafficStatuses']
+        guard.require(service['name'] == name
+                      and str(service['generation']) == str(service['observedGeneration']) == str(selection['generation'])
+                      and service['terminalCondition']['state'] == 'CONDITION_SUCCEEDED'
+                      and service['latestCreatedRevision'] == service['latestReadyRevision']
+                      and service['latestReadyRevision'].split('/')[-1] == revision
+                      and active['revision'] == revision and active['percent'] == 100
+                      and selection['new_image'] == rollout.main_container(service, kind)['image'] == image
+                      and rollout.sha({'template': service['template'], 'traffic': service['traffic']})
+                      == selection['configuration_sha256'])
+        if kind == 'serving':
+            guard.require(rollout.flag_state(service))
+    return f'{rollout.PREFIX}/services/ocean-v1-beta-research-controller'
 
 
 def validate_task(task, kind, identity):
@@ -68,8 +100,10 @@ def one_queued_task(cloud, queue):
     raise guard.Rejected("Task listing incomplete")
 
 
-def execute(cloud, directory, kind, identity, *, repair_candidate=False, list_candidate=False):
-    guard.require(not (repair_candidate and list_candidate))
+def execute(cloud, directory, kind, identity, *, repair_candidate=False, list_candidate=False, b2_candidate=False):
+    guard.require(sum((repair_candidate, list_candidate, b2_candidate)) <= 1)
+    if b2_candidate:
+        return dispatch(cloud, directory, kind, identity, verify_b2_deployment(cloud))
     if repair_candidate or list_candidate:
         from scripts import beta_b1_repair_rollout as repair
         contract = guard.document((repair.LIST_CONTRACT if list_candidate else repair.CONTRACT).read_bytes())
@@ -88,7 +122,11 @@ def execute(cloud, directory, kind, identity, *, repair_candidate=False, list_ca
         if name == "serving":
             guard.require(rollout.flag_state(service)
                           and guard.same_document(service["traffic"], rollout.fixed_traffic(revision)))
-    iam = cloud.request("https://run.googleapis.com/v1/" + contract["services"]["controller"]["name"] + ":getIamPolicy")
+    return dispatch(cloud, directory, kind, identity, contract['services']['controller']['name'])
+
+
+def dispatch(cloud, directory, kind, identity, controller):
+    iam = cloud.request("https://run.googleapis.com/v1/" + controller + ":getIamPolicy")
     guard.require(iam["bindings"] == [{"role": "roles/run.invoker", "members": [
         "serviceAccount:" + SETTINGS.task_invoker_email]}])
     queue = "https://cloudtasks.googleapis.com/v2/" + SETTINGS.queue_path
@@ -115,6 +153,7 @@ def main():
     candidate = parser.add_mutually_exclusive_group()
     candidate.add_argument('--repair-candidate', action='store_true', help='Require the separately qualified exact B1 repair image/CI contract')
     candidate.add_argument('--list-candidate', action='store_true', help='Require the separately qualified exact list-read image/CI contract')
+    candidate.add_argument('--b2-candidate', action='store_true', help='Require the accepted B2 discovery images and service configurations')
     args = parser.parse_args()
     try:
         directory = args.directory.resolve()
@@ -122,7 +161,7 @@ def main():
                       and directory.stat().st_uid == os.geteuid() and not directory.stat().st_mode & 0o077)
         os.umask(0o077)
         print(json.dumps(execute(Cloud(), directory, args.kind, args.identity,
-            repair_candidate=args.repair_candidate, list_candidate=args.list_candidate), sort_keys=True))
+            repair_candidate=args.repair_candidate, list_candidate=args.list_candidate, b2_candidate=args.b2_candidate), sort_keys=True))
         return 0
     except (guard.Rejected, KeyError, OSError, ValueError):
         print('{"state":"manual_delivery_stopped_inspect_intent_before_retry"}')

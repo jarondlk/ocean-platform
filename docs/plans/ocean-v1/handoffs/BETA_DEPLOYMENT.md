@@ -1,5 +1,35 @@
 # Beta deployment continuation — 2026-11-21 JST
 
+## November 24 — First usable beta Research session
+
+Prioritize one new cited answer in the signed-in beta Research workspace.
+B3 experiment activation can proceed separately. The serving and private
+Research controller still match both B2 discovery service snapshots, including
+full templates, ready revisions, API images and traffic. Research submission
+and answer preparation are enabled. A signed-out visit currently reaches the
+normal Google sign-in page.
+
+`scripts/beta_b1_dispatch.py --b2-candidate` qualifies both live services
+against the immutable B2 receipt before using the existing one-task delivery
+guard. Twenty-four dispatch tests passed and a live read-only check matched the
+accepted pair. Keep the completed Q6 answer as historical evidence. The new
+question has not been submitted or delivered.
+
+The Google Cloud SDK passkey check is open. After authentication, confirm the
+current paused and empty queue, Scheduler and controller invoker readbacks,
+and the current cost envelope. Then use the signed-in Research workspace to
+submit one new question against the regional MUR SST catalogue. Ask which
+product the selected dataset is based on and request a citation. The accepted
+disposition records MUR and its regional preview limitations. Verify against
+the cited frozen dataset. Record any limitations or incomplete response.
+[Independent catalogue receipt](../beta/b2-20261116/catalogue-disposition-20261122.json).
+
+Deliver the exact new exploration task, then prepare and deliver its answer
+once. Open its citation and reload the signed-in answer. Keep automatic queue
+delivery paused for this check. The next usability increment is bounded
+automatic Research delivery for the beta account after verifying current cost,
+recovery and pause behavior. Full beta and experiment release remain open.
+
 ## November 24 — B3 read access preparation
 
 `deploy/gcp/beta/b3/experiment_read_access.py` checks migration, owners and
