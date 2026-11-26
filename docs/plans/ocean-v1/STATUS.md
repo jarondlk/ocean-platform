@@ -1,5 +1,13 @@
 # Implementation status
 
+## November 26 — Counts-only Research outbox observer prepared
+
+The outbox observer reports aged pending and sent work, missing current
+outboxes, and inconsistent timestamps for active explorations and answers.
+A disposable PostgreSQL fixture verified both outboxes, lease filtering,
+and rejection of a writable transaction. The observer and its disabled
+alert definition await a scoped live check. [B4 operations acceptance](beta/b4-20261124/OPERATIONS_ACCEPTANCE.md#counts-only-outbox-observer).
+
 ## November 26 — Beta operational alerts live
 
 The university inbox received the synthetic Cloud Monitoring alert. The beta

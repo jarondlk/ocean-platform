@@ -1,0 +1,18 @@
+{
+  "displayName": "OCEAN Beta | Research outbox needs review",
+  "documentation": {
+    "mimeType": "text/markdown",
+    "content": "Check whether Research delivery is paused. Use the affected work item's diagnostic and reconcile the current SQL head, lease and exact task before recovery. Aged delivery counts do not prove retry exhaustion."
+  },
+  "combiner": "OR",
+  "enabled": false,
+  "alertStrategy": {"notificationRateLimit": {"period": "1800s"}, "autoClose": "1800s"},
+  "conditions": [
+    {
+      "displayName": "Counts-only outbox observer reported review or read failure",
+      "conditionMatchedLog": {
+        "filter": "logName=\"projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Fstdout\" AND resource.type=\"cloud_run_job\" AND resource.labels.project_id=\"ocean-v1-beta-20261101\" AND resource.labels.location=\"asia-northeast1\" AND resource.labels.job_name=\"ocean-v1-beta-provider-preflight-20261111\" AND jsonPayload.version=\"ocean-beta-b4-outbox-health-v1\" AND (jsonPayload.state=\"review_required\" OR jsonPayload.state=\"read_failed\")"
+      }
+    }
+  ]
+}

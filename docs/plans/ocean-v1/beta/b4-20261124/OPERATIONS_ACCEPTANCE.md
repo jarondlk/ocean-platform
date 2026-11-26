@@ -89,6 +89,35 @@ are enabled and the dedicated test policy is disabled. The counts-only outbox
 signal and the integrated recovery checks remain open.
 [Live Monitoring receipt](../b4-20261126/monitoring-live.json).
 
+### Counts-only outbox observer
+
+The observer reads one PostgreSQL repeatable-read snapshot and emits counts
+for explorations and answers. It counts active work with no current outbox,
+inconsistent outbox timestamps, and unleased work with a pending outbox at
+least 10 minutes old or a sent outbox at least 65 minutes old. The sent
+threshold covers the observed one-hour retry duration and the four-minute
+task deadline, with a minute of margin. It reports age only. Use the exact
+delivery diagnostic and provider history to investigate retry exhaustion.
+Waiting and terminal work, superseded exploration inputs, and valid active
+leases do not contribute aged counts. A failed query emits a fixed failure
+state without details from the driver.
+
+For a separately authorized live check, render the exact source with
+`python -m scripts.beta_b4_outbox_trial --revision FULL_COMMIT --output PRIVATE_PLAN`.
+Verify the existing generation-1 observer before launching. The plan replaces
+the diagnostics arguments for one execution and leaves its image, SQL binding,
+proxy, network, timeout and retries intact. The operator records the intent
+before the provider request, then compares the execution's complete configuration
+and its aggregate log with the source-bound plan. An uncertain launch requires
+readback before any retry. [Cloud Run execution overrides](https://docs.cloud.google.com/run/docs/execute/jobs#override_job_configuration_for_a_specific_execution).
+
+Review the [disabled alert definition](../../../../../deploy/gcp/beta/b4/outbox-health-alert.json)
+against actual observer logs before binding the verified channel. A healthy
+one-off sample verifies only the sampler and its log shape. It does not verify
+incident delivery, detect a sampler that never ran, or qualify a periodic
+production sampler. Those checks and their separate deployment scope remain
+open before unattended delivery.
+
 The November 24 beta metadata readback found zero Monitoring alert policies
 and zero notification channels. Configure an owned, monitored project channel
 and verify delivery of a test incident. Cover repeated private dispatch errors,
