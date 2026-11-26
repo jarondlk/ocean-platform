@@ -35,6 +35,9 @@ This folder is the portable source of truth for accepted architecture, component
 contracts, progress and resumable work. The root repository README's unrelated
 local changes remain outside this update.
 
+Component-era raw evidence (C01–C27) is archived rather than kept in the
+working tree; see [EVIDENCE_ARCHIVE.md](EVIDENCE_ARCHIVE.md) to open it.
+
 ## Read and choose
 
 1. Read [MASTER_PLAN.md](MASTER_PLAN.md) and [DECISIONS.md](DECISIONS.md).
@@ -66,15 +69,15 @@ the original component receipts remain historical after the audit corrections.
 C03/C04 delivery and hosted acceptance now pass;
 [C05 readiness audit](C05_READINESS_AUDIT_2026-10-15.md) records the current source
 and records readiness before C05 was selected. Current C05 acceptance is
-recorded separately in [its receipt](evidence/C05/verification.json).
+recorded separately in [its receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C05/verification.json).
 C05 is now committed/pushed as `fd8f520` with passing hosted CI;
 [the C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) verifies its prerequisite
 and 99-test baseline. C06 was explicitly selected after the readiness checkpoint and is Complete locally;
 read [its handoff](handoffs/C06.md). C06 is committed/pushed as `27d76c9`
-with passing hosted CI; [delivery receipt](evidence/C06/delivery.json).
+with passing hosted CI; [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C06/delivery.json).
 C07 export safety is complete and committed/pushed as `1195796` with
 [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411); read [its handoff](handoffs/C07.md) and
-[delivery receipt](evidence/C07/delivery.json). C08 is Complete locally; read its handoff and contract guide. C09 is now selected and Complete locally; see its handoff.
+[delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C07/delivery.json). C08 is Complete locally; read its handoff and contract guide. C09 is now selected and Complete locally; see its handoff.
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
@@ -170,7 +173,7 @@ setup receipt retains its historical counts and records this amendment.
 
 C08 catalogue contracts and synthetic fixtures are complete, committed/pushed as
 `6d20a75` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706);
-[delivery receipt](evidence/C08/delivery.json). Read
+[delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C08/delivery.json). Read
 [its handoff](handoffs/C08.md) and [contract guide](C08_CATALOGUE_CONTRACT.md)
 before C09 or later integration.
 
@@ -180,7 +183,7 @@ C09 readiness is verified: C03/C08 source receipts match, 51 baseline tests and
 
 C09 is complete and delivered as `9214bbe` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38703483565).
 Read [its handoff](handoffs/C09.md), [snapshot contract](C09_SNAPSHOT_CONTRACT.md)
-and [delivery receipt](evidence/C09/delivery.json). C10 remains unselected.
+and [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C09/delivery.json). C10 remains unselected.
 
 C10 readiness is verified at `ae02e89`: 36 baseline and 534 prerequisite tests
 pass; C02/C09 accepted sources reconcile and generated contracts are current.
@@ -188,14 +191,14 @@ See [the readiness audit](C10_READINESS_AUDIT_2026-10-15.md). C10 was subsequent
 
 C10 is complete and delivered as `c3d5b8b` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38731722030).
 Read [its handoff](handoffs/C10.md), [adapter contract](C10_ADAPTER_CONTRACT.md)
-and [delivery receipt](evidence/C10/delivery.json). C11 was subsequently selected; see [its handoff](handoffs/C11.md).
+and [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C10/delivery.json). C11 was subsequently selected; see [its handoff](handoffs/C11.md).
 
 C11 readiness is verified at `7570345`: 55 baseline, 482 prerequisite and 69
 additional SST semantic/calendar tests pass; six generated contracts are current.
 C02/C09 accepted sources reconcile, and C10 exact-source hosted CI is green.
 See [the readiness audit](C11_READINESS_AUDIT_2026-10-15.md). C11 was subsequently
 selected and is Complete locally; read [its handoff](handoffs/C11.md) and
-[SST contract](C11_SST_ADAPTER_CONTRACT.md). Source `41cd876` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298); [delivery receipt](evidence/C11/delivery.json).
+[SST contract](C11_SST_ADAPTER_CONTRACT.md). Source `41cd876` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298); [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C11/delivery.json).
 
 C12 readiness is verified at `1d3b7b6`: 116 baseline, 677 prerequisite and 83
 additional eDNA semantic tests pass; seven generated contracts are current.
@@ -206,13 +209,13 @@ C12 was explicitly selected; [implementation handoff](handoffs/C12.md).
 C12 local acceptance is complete: 1,646 required tests, full backend 3,220/127
 PostgreSQL skips at 84.11% coverage, 82 actual PostgreSQL cases and 163 v1 browser tests
 plus typecheck/build/audit. Read [handoff](handoffs/C12.md),
-[contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json).
-Source `d3ef699` is committed/pushed with [passing exact-source CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): 3,211 backend/84.85% coverage, 127 actual PostgreSQL cases and both frontend gates. [Delivery receipt](evidence/C12/delivery.json). C13 is not selected.
+[contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C12/verification.json).
+Source `d3ef699` is committed/pushed with [passing exact-source CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): 3,211 backend/84.85% coverage, 127 actual PostgreSQL cases and both frontend gates. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C12/delivery.json). C13 is not selected.
 
 C13 local acceptance is complete: 1,969 required tests, 3,503 backend/127 gated
 PostgreSQL skips at 84.49% coverage, nine generated checks and preserved previous
 artifacts. [Handoff](handoffs/C13.md), [contract](C13_SCIENTIFIC_CATALOGUE_CONTRACT.md),
-[receipt](evidence/C13/verification.json). Source checkpoint and exact-source hosted
+[receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C13/verification.json). Source checkpoint and exact-source hosted
 delivery are pending. Three-hour continuation and later sequential readiness/
 implementation are user-authorized; real scientific/transfer/cloud gates remain explicit.
 
@@ -220,28 +223,28 @@ C13 final eligibility amendment is delivered as `98c2769` with [passing hosted C
 3,516 backend/85.22% coverage, 127 actual PostgreSQL, 163 v1/132 legacy frontend
 tests and both builds/typechecks/audits. Final local acceptance is 1,991 required
 and 3,525 backend/84.50% coverage; 305 new C13 cases. Earlier local counts above
-are historical. [Delivery receipt](evidence/C13/delivery.json),
-[final local receipt](evidence/C13/method-alias-amendment/verification.json).
+are historical. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C13/delivery.json),
+[final local receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verification.json).
 
 C14 local acceptance is complete: 2,367 required tests; 3,799 backend/127 gated
 PostgreSQL skips/84.75% coverage; 274 new cases and nine generated checks. One
 authenticated service powers seven routes/tools, complete path/ID/name search,
 100,000-object traversal and actual frozen-source parity. [Handoff](handoffs/C14.md),
-[contract](C14_CATALOGUE_SERVICE_CONTRACT.md), [receipt](evidence/C14/verification.json).
+[contract](C14_CATALOGUE_SERVICE_CONTRACT.md), [receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C14/verification.json).
 Exact-source hosted delivery precedes automatic C15 readiness/implementation.
 
 C14 source `19ba911` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38916279621):
 3,790 backend/85.45% coverage, 127 actual PostgreSQL, 163 v1/132 legacy frontend
-tests and both builds/typechecks/audits. [Delivery receipt](evidence/C14/delivery.json).
+tests and both builds/typechecks/audits. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C14/delivery.json).
 C15 local readiness preparation passes; final selection follows this delivery.
 
 ### C15 delivered; C16 started — 2026-10-17 JST
 
 C15 source7b1659c passes source-bound hosted CI38923128922 and is delivered
 at9688867. Trusted identity, isolated preview, responsive shell and browser gates
-pass; [handoff](handoffs/C15.md), [delivery receipt](evidence/C15/delivery.json).
+pass; [handoff](handoffs/C15.md), [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C15/delivery.json).
 C16 formal prerequisites reconcile across75 accepted-current entries and the
-[user-authorized readiness audit](evidence/c16-readiness-2026-10-17/audit.md)
+[user-authorized readiness audit](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c16-readiness-2026-10-17/audit.md)
 selects implementation. [Current C16 handoff](handoffs/C16.md). No cloud or real
 data operation is implied.
 
@@ -252,7 +255,7 @@ pass local acceptance:510 v1 tests,3895 backend/127 gated skips/84.87%,134 actua
 HTTP/tool wire cases, all51 parent paths and100000-object client/HTTP traversal.
 Rendered EN/JA, light/dark, mobile/desktop, history, revocation and keyboard/
 accessibility-tree observations are recorded in the [C16 handoff](handoffs/C16.md).
-Source4981642 is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39080160597):3886 backend/85.57%,127 actual PostgreSQL,510 v1/132 legacy tests and both builds/typechecks/audits. [Delivery receipt](evidence/C16/delivery.json). Original evidence
+Source4981642 is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39080160597):3886 backend/85.57%,127 actual PostgreSQL,510 v1/132 legacy tests and both builds/typechecks/audits. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C16/delivery.json). Original evidence
 and unrelated/scientific/legacy files remain unchanged. C17 formal source audit
 may now be finalized before automatic local implementation.
 
@@ -264,7 +267,7 @@ skips/85.08%,60 actual disposable PostgreSQL cases,155 affected API and177 requi
 regression/guard cases pass. All19 final source hashes remain stable; original
 receipts and protected unrelated/scientific/legacy files are preserved. See
 [handoff](handoffs/C17.md) and [contract](C17_INVESTIGATION_CONTRACT.md).
-Source39bb811 is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39101652175):4178 backend/85.76%,187 actual PostgreSQL,510 v1/132 legacy frontend tests and both builds/typechecks/audits. [Delivery receipt](evidence/C17/delivery.json). C18 readiness selection follows the delivery checkpoint.
+Source39bb811 is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39101652175):4178 backend/85.76%,187 actual PostgreSQL,510 v1/132 legacy frontend tests and both builds/typechecks/audits. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C17/delivery.json). C18 readiness selection follows the delivery checkpoint.
 
 C18 readiness verifies98 prerequisite entries and C17 exact-source hosted delivery. All3 local interface checkpoints are selected; see [handoff](handoffs/C18.md).
 
@@ -272,26 +275,26 @@ C18 local acceptance passes:4214 backend/187 gated skips/85.08%;673 frontend,
 production typecheck/build and development strict typecheck. Actual C17/C16
 browser journeys cover private navigation/context/refresh/account isolation;
 production execution remains unavailable. [Contract](C18_CHAT_WORKSPACE_CONTRACT.md),
-[handoff](handoffs/C18.md), [receipt](evidence/C18/verification.json). Exact-source
+[handoff](handoffs/C18.md), [receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C18/verification.json). Exact-source
 hosted delivery is complete; C19 readiness follows.
 
-Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39124675912) passes:4205 backend/187 gated skips/85.76%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](evidence/C18/delivery.json). C19 readiness follows delivery.
+Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39124675912) passes:4205 backend/187 gated skips/85.76%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C18/delivery.json). C19 readiness follows delivery.
 
 C19 final readiness passes59 entries/52 unique paths after C18 delivery; local implementation is selected automatically. [Handoff](handoffs/C19.md).
 
-C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Exact-source hosted delivery is complete. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).
+C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Exact-source hosted delivery is complete. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C19/verification.json).
 
 C19 hosted CI reached98percent before its20-minute job timeout. The CI-only
-[amendment](evidence/C19/ci-budget-amendment/verification.json) permits30minutes;
+[amendment](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C19/ci-budget-amendment/verification.json) permits30minutes;
 all application/test sources and original receipts remain unchanged. This historical
 attempt is superseded by the complete exact-source delivery below.
 
-Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](evidence/C19/delivery.json). C20 readiness follows delivery.
+Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C19/delivery.json). C20 readiness follows delivery.
 
 C20 final36-entry/34-path readiness passes after C19 exact-source delivery; isolated local implementation is selected. [Handoff](handoffs/C20.md).
 
-C20 amended local acceptance passes: unchanged4847 backend/231 gated skips/85.64%,104 actual PostgreSQL,805 v1 frontend/typecheck/build/audit, nine generated checks/Ruff and independent source reviews. The final pagination amendment keeps newly acknowledged off-page runs visible through fresh authorization. All1005 evidence files tracked at the original source and protected files remain unchanged. Amended sourcea149239 is pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39209113719) and final delivery pass. [Handoff](handoffs/C20.md), [contract](C20_DURABLE_EXECUTION_CONTRACT.md), [receipt](evidence/C20/verification.json).
+C20 amended local acceptance passes: unchanged4847 backend/231 gated skips/85.64%,104 actual PostgreSQL,805 v1 frontend/typecheck/build/audit, nine generated checks/Ruff and independent source reviews. The final pagination amendment keeps newly acknowledged off-page runs visible through fresh authorization. All1005 evidence files tracked at the original source and protected files remain unchanged. Amended sourcea149239 is pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39209113719) and final delivery pass. [Handoff](handoffs/C20.md), [contract](C20_DURABLE_EXECUTION_CONTRACT.md), [receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C20/verification.json).
 
-C20 final hosted delivery: Sourcea149239 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39209113719) passes: 4838 backend / 231 gated skips / 86.27% coverage, 231 actual PostgreSQL cases, 805 v1 and 132 legacy frontend tests, both typechecks/builds/audits, generated contracts, migrations/idempotence and isolated backup/restore. [Receipt](evidence/C20/delivery.json). C21 final readiness and selection follow this committed/pushed delivery checkpoint.
+C20 final hosted delivery: Sourcea149239 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39209113719) passes: 4838 backend / 231 gated skips / 86.27% coverage, 231 actual PostgreSQL cases, 805 v1 and 132 legacy frontend tests, both typechecks/builds/audits, generated contracts, migrations/idempotence and isolated backup/restore. [Receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C20/delivery.json). C21 final readiness and selection follow this committed/pushed delivery checkpoint.
 
-C21 final hosted delivery: source567684b is committed/pushed; [CI39452550964](https://github.com/jarondlk/ocean-platform/actions/runs/39452550964) passes5031 backend/254 gated skips/86.48% coverage,254 actual PostgreSQL cases,930 v1/132 legacy tests, both typechecks/builds/audits, generated contracts and backup/restore. [Delivery receipt](evidence/C21/delivery.json) preserves the original local receipt and cancelled CI attempt with an explicit workflow-only time allowance amendment. C22 readiness follows the pushed delivery metadata checkpoint.
+C21 final hosted delivery: source567684b is committed/pushed; [CI39452550964](https://github.com/jarondlk/ocean-platform/actions/runs/39452550964) passes5031 backend/254 gated skips/86.48% coverage,254 actual PostgreSQL cases,930 v1/132 legacy tests, both typechecks/builds/audits, generated contracts and backup/restore. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C21/delivery.json) preserves the original local receipt and cancelled CI attempt with an explicit workflow-only time allowance amendment. C22 readiness follows the pushed delivery metadata checkpoint.

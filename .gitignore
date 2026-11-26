@@ -254,3 +254,14 @@ onagawa_sst_subset/
 onagawa_sst_raw/
 himawari_test/
 himawari_test_unzipped/
+
+# Raw evidence output (logs, binaries, databases, copied source trees) stays
+# out of git. Commit small JSON/Markdown receipts only; keep raw output in a
+# private bucket. See docs/plans/ocean-v1/EVIDENCE_ARCHIVE.md.
+docs/plans/**/*.bin
+docs/plans/**/*.stdout
+docs/plans/**/*.stderr
+docs/plans/**/*.sqlite3
+docs/plans/**/*.gz
+docs/plans/**/*.log
+docs/plans/**/source/

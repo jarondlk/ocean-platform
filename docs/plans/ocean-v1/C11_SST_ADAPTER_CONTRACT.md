@@ -163,7 +163,7 @@ Inspection retains C09 copy origins without resolving or opening origin paths.
 
 ## Acceptance and recovery
 
-Read [the handoff](handoffs/C11.md) and [verification receipt](evidence/C11/verification.json)
+Read [the handoff](handoffs/C11.md) and [verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C11/verification.json)
 for final source bindings and acceptance results. Independent reference checks
 cover populations beyond 500 rows, quality states, product isolation, calendars,
 unsupported geography, exact synthetic legacy parity, old-snapshot replay,

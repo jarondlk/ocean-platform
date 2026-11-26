@@ -63,5 +63,5 @@ provider or cloud operation is part of C15. Real OIDC integration and target
 configuration remain deployment gates. Later components may explicitly supersede
 unintegrated capability restrictions as their services pass acceptance.
 
-See [handoff](handoffs/C15.md), [browser observations](evidence/C15/browser-qa.md)
-and [local receipt](evidence/C15/verification.json) for source-bound evidence.
+See [handoff](handoffs/C15.md), [browser observations](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C15/browser-qa.md)
+and [local receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C15/verification.json) for source-bound evidence.

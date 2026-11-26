@@ -21,7 +21,7 @@ accepted hosted implementation `eeec2e1`. Every historical source pin matches
 its original accepted commit. The machine receipt names each later supersession
 and its actual implementation commit; original receipts and the accepted P00
 screenshot remain unchanged. All 42 protected unrelated paths are preserved.
-[Verification](evidence/C25/readiness-20261028/verification.json).
+[Verification](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json).
 
 Current source-bound CI is [40663077852](https://github.com/jarondlk/ocean-platform/actions/runs/40663077852):
 all four required jobs pass, including 6,601 backend cases, 315 actual PostgreSQL,

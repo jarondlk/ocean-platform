@@ -32,9 +32,9 @@ adjacent implementation reference, rather than a formal prerequisite.
   files, seven real scientific artifacts, two serving files, 36 current P00
   files and 308 previously committed evidence files remain unchanged.
 
-[The verification receipt](evidence/c11-readiness-2026-10-15/verification.json)
+[The verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/verification.json)
 binds source reconciliation, commands, hosted status and preservation. The
-[start snapshot](evidence/c11-readiness-2026-10-15/start-snapshot.json) retains
+[start snapshot](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/start-snapshot.json) retains
 the individual preservation hashes.
 
 ## Fresh offline verification

@@ -11,11 +11,11 @@ it does not claim a registered DNS record, available hosting or a deployed beta.
 
 | Prerequisite | Accepted evidence | Current reconciliation |
 | --- | --- | --- |
-| C20 durable research execution | Source `a149239`, hosted run `39209113719`, [delivery](evidence/C20/delivery.json) | All 169 transitive source entries reconciled. 150 remain exact; 19 intentionally changed in accepted C21/C22/C23 work. All 169 current bytes match accepted source `f6f823b`. All 135 original delivery evidence files remain exact. |
+| C20 durable research execution | Source `a149239`, hosted run `39209113719`, [delivery](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C20/delivery.json) | All 169 transitive source entries reconciled. 150 remain exact; 19 intentionally changed in accepted C21/C22/C23 work. All 169 current bytes match accepted source `f6f823b`. All 135 original delivery evidence files remain exact. |
 | C23 isolated Python execution | Source `f6f823b`, hosted run `40652395233`, [completion](evidence/C23/completion-20261028.json) | All 236 actual-worker source pins match current and accepted source. Both retained Linux cases and raw audit pass; four required hosted jobs pass. Original capacity-held recovery limitations remain. |
 | Checkout preservation | Baseline `838b424` | 370 distinct predecessor source paths reconciled, 5,006 prior tracked evidence files preserved and 42 unrelated paths unchanged. No predecessor receipt was rewritten. |
 
-[Machine-readable verification](evidence/C24/readiness-20261028/verification.json)
+[Machine-readable verification](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C24/readiness-20261028/verification.json)
 records every source pin and all 19 intentional C20 supersessions, including
 the accepted implementation commits. The old C20 hashes are historical evidence,
 not a reason to reset the newer evidence, experiment or security implementation.

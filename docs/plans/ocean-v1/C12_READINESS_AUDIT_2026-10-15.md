@@ -35,8 +35,8 @@ adjacent implementation references, rather than formal prerequisites.
   files, seven real scientific artifacts, two serving files, 36 current P00 files
   and 345 previously committed evidence files remain unchanged.
 
-[Verification receipt](evidence/c12-readiness-2026-10-15/verification.json),
-[start snapshot](evidence/c12-readiness-2026-10-15/start-snapshot.json).
+[Verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c12-readiness-2026-10-15/verification.json),
+[start snapshot](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c12-readiness-2026-10-15/start-snapshot.json).
 
 ## Fresh checks
 

@@ -267,7 +267,7 @@ UI, evidence and exports.
 ## Original operational-gate reconciliation
 
 This is a progress overlay on the immutable
-[C27 gate inventory](../evidence/C27/release-gates.json). `Partial` means actual
+[C27 gate inventory](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/release-gates.json). `Partial` means actual
 sub-evidence exists, while full applicable acceptance remains open. No original
 gate is silently changed from `not_run` to passed by this planning update.
 
@@ -295,7 +295,7 @@ gate is silently changed from `not_run` to passed by this planning update.
 | `C24.C26_C27_integrated_acceptance_and_release_promotion` | Local component preparation accepted; complete deployed acceptance/promotion not run | B5 |
 
 The full requirement matrix remains
-[R01–R33/G0–G9](../evidence/C27/requirement-evidence.json); all 43 IDs must be
+[R01–R33/G0–G9](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/requirement-evidence.json); all 43 IDs must be
 carried into B5, including inventory/numerical parity, bilingual scope refusals,
 deep-link/Back/Forward/reload behavior, Attach versus Pin, hostile source/model
 actions, revocation, continuation and access-safe historical evidence.

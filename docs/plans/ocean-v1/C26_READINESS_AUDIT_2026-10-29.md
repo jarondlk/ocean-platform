@@ -13,7 +13,7 @@ The audit starts at `01dc65384504bdd78a2b5071b51399c42cf694a7` on `overhaul`. It
 
 These are prerequisite results, not a completed C26 system evaluation. The unchanged application suites were reused; this readiness audit ran source/receipt verification and audit lint only. Skipped/live gates do not count as passes.
 
-The earlier [pointer-preparation draft](evidence/C25/c26-preparation-20261029.json) was recorded while C25 CI was pending. Its quoted historical notes remain intact. This audit closes that software-delivery prerequisite using the final C25 receipt and live GitHub readback.
+The earlier [pointer-preparation draft](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C25/c26-preparation-20261029.json) was recorded while C25 CI was pending. Its quoted historical notes remain intact. This audit closes that software-delivery prerequisite using the final C25 receipt and live GitHub readback.
 
 ## What can start locally
 
@@ -40,7 +40,7 @@ Missing live configuration does **not** block starting the local C26 preparation
 
 ## Evidence and next action
 
-[Verification receipt](evidence/C26/readiness-20261029/verification.json), [source audit](evidence/C26/readiness-20261029/audit.py), [remote readback](evidence/C26/readiness-20261029/remote-verification.json).
+[Verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C26/readiness-20261029/verification.json), [source audit](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C26/readiness-20261029/audit.py), [remote readback](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C26/readiness-20261029/remote-verification.json).
 
 Read-only verification from the repository root:
 

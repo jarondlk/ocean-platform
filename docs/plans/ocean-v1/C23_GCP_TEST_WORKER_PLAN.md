@@ -44,7 +44,7 @@ hosted CI 40652395233 passes all four required jobs; component completion is
 recorded in evidence/C23/completion-20261028.json. Scheduling
 stays PAUSED; no legacy, real-data or whole-site deployment action occurred.
 
-[Raw audit](evidence/C23/retained-final-audit-20261028/final-receipt.json),
+[Raw audit](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C23/retained-final-audit-20261028/final-receipt.json),
 [session/shutdown records](evidence/C23/cloud-session-20261028-retained/worker-final-stopped.json).
 
 ## Current session — 2026-10-26 JST
@@ -109,7 +109,7 @@ E2 core-hour, USD0.003739110 per GiB RAM-hour and USD0.13 per balanced-disk
 GiB-month. Four cores/16GiB cost USD0.17193144 per hour. Two hours plus50GiB
 disk prorated over744hours is approximately USD0.36, excluding temporary IPv4,
 transfer and tax; a retained disk is USD6.50/month. This is an estimate, not a
-cap. [Exact pricing/preflight record](evidence/C23/cloud-worker-2026-10-24/pricing-preflight.json).
+cap. [Exact pricing/preflight record](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C23/cloud-worker-2026-10-24/pricing-preflight.json).
 
 ## Original resource plan
 

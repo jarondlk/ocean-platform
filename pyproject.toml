@@ -10,3 +10,9 @@ select = ["E4", "E7", "E9", "F"]
 "api/main.py" = ["E402"]
 "evaluation/benchmark.py" = ["E402"]
 "scripts/*.py" = ["E402"]
+
+[tool.pytest.ini_options]
+# Evidence folders under docs/ keep copied source trees, including test files.
+# Collect only the real suite so a bare `pytest` works from the repo root.
+testpaths = ["tests"]
+norecursedirs = ["docs", "archive", "frontend", "frontend-v1", "node_modules", ".venv", ".git"]

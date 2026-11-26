@@ -117,9 +117,9 @@ scientific approval is required merely to start this bounded component.
 The command checks the frozen evidence tree, protected files, C26 proof hashes
 and verifier, exact source composition, pending gates, migration AST and C24
 operator policy. It writes nothing and performs no cloud or application test
-operation. [Start record](evidence/C27/readiness-20261101/start.json),
-[verification](evidence/C27/readiness-20261101/verification.json),
-[audit source](evidence/C27/readiness-20261101/audit.py).
+operation. [Start record](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/readiness-20261101/start.json),
+[verification](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/readiness-20261101/verification.json),
+[audit source](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/readiness-20261101/audit.py).
 
 Next authorized action: implement the local C27 manifest, migration and rollback
 rehearsals and operator package; update the component status and handoff after

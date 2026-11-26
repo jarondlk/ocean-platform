@@ -31,7 +31,7 @@ The specification and component manifest require **C02 and C09**.
   prototype files, 30 unrelated files, seven real scientific artifacts, two
   serving files and previously committed evidence remain unchanged.
 
-[The verification receipt](evidence/c10-readiness-2026-10-15/verification.json)
+[The verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c10-readiness-2026-10-15/verification.json)
 records current and historical source bindings, command results and preservation.
 
 ## Fresh offline checks

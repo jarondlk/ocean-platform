@@ -13,13 +13,13 @@ into production hosting or a worker service.
 | Artifact | Purpose |
 |---|---|
 | [Readiness audit](C27_READINESS_AUDIT_2026-11-01.md) | Formal prerequisite, source and receipt reconciliation |
-| [Release manifest](evidence/C27/release-manifest.json) | Candidate, migration head, v1-only target worksheet and evidence identities |
-| [Requirement evidence](evidence/C27/requirement-evidence.json) | Every C26 R01–R33/G0–G9 row, plus separate C27 local acceptance |
-| [Release gates](evidence/C27/release-gates.json) | All 20 original pending operational gates and the open P2 |
-| [Operator runbook](evidence/C27/operator-runbook.md) | Preflight, ordered activation, abort, drain and recovery criteria |
-| [Approved-data procedure](evidence/C27/data-transfer-runbook.md) | Explicit eligible copies, quarantine, provenance and withdrawal |
-| [Migration rehearsal](evidence/C27/migrations-20261101/receipt.json) | Exact offline SQL and disposable native PostgreSQL observations |
-| [Rollback rehearsal](evidence/C27/rollback-20261101/accepted/result.json) | Actual local flag/service behavior and retained-history observations |
+| [Release manifest](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/release-manifest.json) | Candidate, migration head, v1-only target worksheet and evidence identities |
+| [Requirement evidence](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/requirement-evidence.json) | Every C26 R01–R33/G0–G9 row, plus separate C27 local acceptance |
+| [Release gates](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/release-gates.json) | All 20 original pending operational gates and the open P2 |
+| [Operator runbook](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/operator-runbook.md) | Preflight, ordered activation, abort, drain and recovery criteria |
+| [Approved-data procedure](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/data-transfer-runbook.md) | Explicit eligible copies, quarantine, provenance and withdrawal |
+| [Migration rehearsal](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/migrations-20261101/receipt.json) | Exact offline SQL and disposable native PostgreSQL observations |
+| [Rollback rehearsal](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C27/rollback-20261101/accepted/result.json) | Actual local flag/service behavior and retained-history observations |
 | [C26 defects](C26_DEFECT_REGISTER_2026-10-30.md) | Open P2 first-history latency and historical CI qualifications |
 
 C27's completion concerns the release-preparation package. It cannot pass a

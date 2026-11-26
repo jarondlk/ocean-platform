@@ -77,7 +77,7 @@ FastAPI/httpx, NumPy/netCDF4 and xarray/pandas warnings remain visible in logs.
 The original C01/C02 acceptance receipts remain historical. The audit deliberately
 changes api/main.py, publication_scope.py and the corresponding regression files;
 the final source hashes and receipt drift are recorded in
-[delivery verification](evidence/delivery-2026-10-14/verification.json).
+[delivery verification](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json).
 Frontend-v1 application source is unchanged from the accepted P00 revision.
 
 ## Remaining boundaries

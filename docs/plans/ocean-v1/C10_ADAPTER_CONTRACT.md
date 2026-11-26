@@ -173,7 +173,7 @@ reference aggregates, source collisions, all pages/sections, coarse/mixed dates,
 missing/partial tables, zero/missing/ranked omission, malformed/corrupt inputs,
 current revocation, stale export generations and old-snapshot/imported-copy parity.
 No model or embedding service is needed. See [C10 handoff](handoffs/C10.md) and
-[the verification receipt](evidence/C10/verification.json) for final results.
+[the verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C10/verification.json) for final results.
 
 C11/C12 source adapters, C13 scientific catalogue sections, C14 authenticated
 service/tools and later UI integration remain separate components. C02 real

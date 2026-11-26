@@ -319,7 +319,7 @@ C07 is committed/pushed as `119579646919da83a2a53159a599a66c488ff607`. [Hosted C
 frontend typechecks/builds and production dependency audits, 63 actual PostgreSQL
 cases, idempotent upsert and isolated backup/restore. The nine older unrelated
 local benchmark tests are excluded from delivery; dependency review is skipped
-on push as configured. [Delivery evidence](evidence/C07/delivery.json) is saved
+on push as configured. [Delivery evidence](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C07/delivery.json) is saved
 separately from the frozen local receipt. Source, scientific/serving artifacts,
 canonical bundle bytes, historical receipts and all 30 unrelated files remain
 preserved. C08 remains unselected; no provider call, regeneration or deployment.
@@ -354,7 +354,7 @@ C08 is committed/pushed as `6d20a75ef74770346a80c815c234b50348ae650a`. [Hosted C
 frontend typechecks/builds and production dependency audits, all 63 actual
 PostgreSQL cases, idempotent upsert and isolated backup/restore. Nine older
 unrelated local benchmark tests are excluded from delivery; dependency review
-is skipped on push as configured. [Delivery evidence](evidence/C08/delivery.json)
+is skipped on push as configured. [Delivery evidence](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C08/delivery.json)
 is separate from the frozen local receipt. All 12 accepted C08 hashes and
 current P00/C01/C07 sources, historical evidence, scientific/serving artifacts
 and 30 unrelated files remain preserved. C09 remains unselected; no provider,
@@ -581,7 +581,7 @@ green. Current formal P00/C14/C15 sources and receipts reconcile; completed C15
 checks are reused without repetition. Under the user's sequential authorization,
 C16 now implements the standalone catalogue service browser, explicit eligible
 snapshot discovery, complete navigation/paging and history, with no automatic
-scientific context mutation. [Readiness](evidence/c16-readiness-2026-10-17/audit.md),
+scientific context mutation. [Readiness](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c16-readiness-2026-10-17/audit.md),
 [handoff](handoffs/C16.md). External scientific, identity, transfer and cloud
 configuration/authorization gates remain separate.
 
@@ -614,7 +614,7 @@ is not applied to the separate v1 project.
 
 C23 preparation sourceb8e929e passes exact-source CI39578854643:5556 backend,
 275 actual PostgreSQL,930 v1/132 legacy tests and all four required jobs.
-[Hosted receipt](evidence/C23/hosted-preparation.json) preserves original pending
+[Hosted receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C23/hosted-preparation.json) preserves original pending
 evidence and verifies17 unchanged preparation paths. C23 stays In progress;
 actual runtime, durability, extraction, containment and numerical gates remain.
 
@@ -689,7 +689,7 @@ C24 source `eeec2e1` passes all four required jobs in hosted run `40663077852`:
 6,601 backend tests/83.34% coverage, 315 actual PostgreSQL cases, 930 v1 and
 132 legacy frontend tests, both builds/typechecks/audits, generated contracts
 and backup/restore. All 160 scoped local cases, Ruff, schema/example checks and
-independent software review pass. [Delivery](evidence/C24/delivery.json) records
+independent software review pass. [Delivery](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C24/delivery.json) records
 configuration-only completion and preserved source/evidence/unrelated work.
 No provider validation, DNS/cloud/OAuth/data operation or beta deployment occurred.
 Actual hosting/queue/supervisor implementations and live acceptance remain gates;

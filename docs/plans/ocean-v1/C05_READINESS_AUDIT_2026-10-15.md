@@ -60,6 +60,6 @@ vector correctness. Production regeneration, reindexing and paid embedding calls
 remain outside component selection.
 
 Commands, source/evidence hashes, synthetic probes, review and exact hosted source
-identity are retained in [the verification receipt](evidence/c05-readiness-2026-10-15/verification.json).
+identity are retained in [the verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verification.json).
 The follow-up commit containing this audit is documentation/evidence only; its
 application, tests and workflow sources match the successful hosted source.

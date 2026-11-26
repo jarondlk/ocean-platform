@@ -7,7 +7,7 @@ not been regenerated.
 
 ## Inventory and mapping
 
-[The read-only inventory](evidence/C05/synthetic-rebuild.json) binds the local
+[The read-only inventory](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C05/synthetic-rebuild.json) binds the local
 serving inputs by SHA256. `retrieval_documents.parquet` has 323 documents:
 162 CTD, 82 metagenome and 79 remote-sensing. All 82 legacy `meta_<sample_id>`
 documents include the MetaEuk label and omit the Kraken taxa label. They have no

@@ -27,6 +27,9 @@ from evaluation.system_acceptance_matrix import build_matrix  # noqa: E402
 from tests.system_acceptance_comparison_support import run_publication_comparison  # noqa: E402
 
 START = ROOT / 'docs/plans/ocean-v1/evidence/C26/implementation-20261029/start.json'
+# Commit holding the full original evidence tree (also tagged
+# evidence/ocean-v1-2026-11-26). A commit ID needs no tag fetch.
+EVIDENCE_ARCHIVE_COMMIT = '8f70cceb3a1a279d484a54d703530706c1a8af35'
 REGRESSIONS = {
     'regression-auth': ('test_auth.py',),
     'regression-retention': ('test_retention.py',),
@@ -48,6 +51,7 @@ EXTRA_TESTS = ('test_system_acceptance.py', 'test_system_acceptance_matrix.py',
     'test_system_acceptance_integration.py')
 AUTHORIZED_SUPERSESSIONS = {
     '.github/workflows/tests.yml': 'C26 isolated scale and native retained-artifact CI selection',
+    'pyproject.toml': 'User-approved 2026-11-26 repository cleanup: pytest collects only tests/ (ruff settings unchanged)',
     'orchestration/investigations.py': 'User-approved C17 foreign retained-artifact composition and same-session resolution',
     'orchestration/research_evidence.py': 'User-approved C21 foreign retained-artifact durable protection/current authority',
     'orchestration/research_runs.py': 'User-approved C20 same-session artifact context resolution',
@@ -87,6 +91,22 @@ def source_manifest():
     return {path: sha(ROOT / path) for path in sorted(paths)}
 
 
+def archived_evidence_objects():
+    """Map archived evidence paths to their Git blob IDs in the archive commit."""
+    try:
+        tree = subprocess.check_output(['git', 'ls-tree', '-r', '-z', EVIDENCE_ARCHIVE_COMMIT,
+            '--', 'docs/plans/ocean-v1/evidence'], cwd=ROOT)
+    except subprocess.CalledProcessError as error:
+        raise ValueError(f'Evidence archive commit {EVIDENCE_ARCHIVE_COMMIT} is unavailable; '
+            'fetch the full overhaul history (`git fetch --unshallow origin`)') from error
+    objects = {}
+    for entry in tree.split(b'\0'):
+        if entry:
+            metadata, raw_path = entry.split(b'\t', 1)
+            objects[raw_path.decode()] = metadata.decode().split()[2]
+    return objects
+
+
 def audit_originals():
     start = json.loads(START.read_text())
     mismatched = [path for path, expected in start['protected_sha256'].items()
@@ -108,10 +128,17 @@ def audit_originals():
         entries.append((path, metadata.decode().split()[2]))
     if any('\n' in str(path) for path, _ in entries):
         raise ValueError('Unexpected newline in original receipt path')
-    actuals = subprocess.check_output(['git', 'hash-object', '--stdin-paths'],
-        input=''.join(str(path) + '\n' for path, _ in entries).encode(), cwd=ROOT).decode().splitlines()
-    if len(actuals) != len(entries):
+    # Most original receipts now live only in the archive commit (see
+    # docs/plans/ocean-v1/EVIDENCE_ARCHIVE.md). Files still in the checkout are
+    # hashed from disk; the rest are read from that commit's Git objects.
+    archived = archived_evidence_objects()
+    present = [path for path, _ in entries if path.is_file()]
+    hashed = dict(zip(present, subprocess.check_output(['git', 'hash-object', '--stdin-paths'],
+        input=''.join(str(path) + '\n' for path in present).encode(), cwd=ROOT).decode().splitlines()))
+    if len(hashed) != len(present):
         raise ValueError('Original receipt hash accounting mismatch')
+    actuals = [hashed[path] if path in hashed else archived.get(str(path.relative_to(ROOT)), 'missing')
+        for path, _ in entries]
     failures, checked = [], len(entries)
     for (path, expected), actual in zip(entries, actuals):
         if actual != expected:

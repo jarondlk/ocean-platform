@@ -40,8 +40,8 @@ approval. The actual retained approval→reservation→execution→physical sign
 termination→verified capacity release bridge remains mandatory and incomplete.
 
 Latest scoped local acceptance:891 tests, Ruff and shell syntax;53 paths steady.
-[Receipt](evidence/C23/operator-local-20261027-native02/verification.json).
-[Raw scientific evidence](evidence/C23/cloud-session-20261027-0248/native-science-export02-manifest.json).
+[Receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C23/operator-local-20261027-native02/verification.json).
+[Raw scientific evidence](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-export02-manifest.json).
 That core receipt excludes low-level DB work. The separate native03-final
 receipt now verifies24 local and28 PostgreSQL storage/role cases, with independent
 physical authority still absent. Pushed
@@ -116,7 +116,7 @@ rests on the actual acceptance and source-bound delivery recorded above.
 
 Source `b8e929e` passes CI39578854643 (5556 backend,275 actual PostgreSQL,
 930 v1/132 legacy tests; all four required jobs). The separate
-[hosted receipt](evidence/C23/hosted-preparation.json) retains raw decoded logs
+[hosted receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C23/hosted-preparation.json) retains raw decoded logs
 and verifies all17 preparation source hashes. This is software preparation
 evidence; no runsc installation or real containment test occurred in those jobs.
 The user's later GCP approval removes the missing authorization for a temporary

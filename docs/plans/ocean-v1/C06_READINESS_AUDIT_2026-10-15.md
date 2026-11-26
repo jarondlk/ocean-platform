@@ -34,7 +34,7 @@ skips are separately covered by the three actual PostgreSQL suites. Local C05's
 1,806-test run includes nine older uncommitted benchmark tests absent from the
 hosted checkout, explaining the count difference.
 
-[Delivery/readiness evidence](evidence/c06-readiness-2026-10-15/verification.json)
+[Delivery/readiness evidence](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/verification.json)
 binds source hashes, CI job/step conclusions, extracted job summaries, prerequisite
 verification, current runtime and offline baseline probes. The source checkpoint
 is delivered to origin/overhaul; main and the legacy deployment are unchanged.
@@ -68,7 +68,7 @@ Result: **99 passed, zero skips** with explicit test settings, unused loopback
 database/model URLs and mocked providers. This baseline is regression/readiness
 evidence, not acceptance of the future C06 result contract.
 
-[Sixteen mocked payload probes](evidence/c06-readiness-2026-10-15/readiness-probes.json)
+[Sixteen mocked payload probes](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/readiness-probes.json)
 exercise both adapters and both methods with completion, output limit, missing
 and unknown termination reasons. A seventeenth mocked call invokes the actual
 API handler with the actual Ollama adapter and stubbed retrieval/persistence.

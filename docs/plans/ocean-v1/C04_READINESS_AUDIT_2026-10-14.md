@@ -81,4 +81,4 @@ for starting C04. No application implementation, commit, push, merge, deployment
 production cleanup or provider call occurred in this audit.
 
 Exact receipts, replay scripts, logs and preservation evidence:
-[audit evidence](evidence/c04-readiness-2026-10-14/verification.json).
+[audit evidence](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verification.json).

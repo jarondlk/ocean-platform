@@ -28,7 +28,7 @@ The specification and component manifest both require **C03 and C08**.
   All 36 current accepted P00 files, 30 older unrelated files, 7 scientific
   artifacts and 2 serving files remain unchanged.
 
-[Verification receipt](evidence/c09-readiness-2026-10-15/verification.json) binds
+[Verification receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/verification.json) binds
 current sources, prerequisite history, command/results, preserved hashes and
 this audit. Earlier component receipts remain historical.
 
