@@ -1,0 +1,38 @@
+{
+  "version": "ocean-beta-b2-browser-export-live-v1",
+  "observed_date_jst": "2026-11-26",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "origin": "https://beta.oceaninfobio.com",
+  "serving_generation": 75,
+  "controller_generation": 10,
+  "frontend_source_revision": "2e887cd787ecb3154bd759253d659ed5fffffba2",
+  "frontend_rollout_receipt_sha256": "9905548daf8bb9e24d675543ef4fbf56220f7ec76ab427f269839f10bad5b1d4",
+  "scheduled_recovery_receipt_sha256": "23a3ac6a6a4e875fd3e198a3f4eaa7f2839aed1e2ef9ae73f6eeb6e2feafe887",
+  "signed_in_journey": {
+    "conversation": "Scheduled Research recovery trial",
+    "answer_reopened": true,
+    "citation_reopened": true,
+    "operation": "c13.inventory",
+    "retained_receipt_sha256": "4e05b3cebf89c5b86608dcbb06422f4a8b7a372908390eaa956890d699690ed2",
+    "result_rows": 1,
+    "dataset_count": 1,
+    "retained_snapshot_matches_trial": true,
+    "same_result_in_both_formats": true,
+    "csv_matches_canonical_serialization_byte_for_byte": true
+  },
+  "downloads": {
+    "csv": {
+      "local_readback_passed": true,
+      "bytes": 140,
+      "sha256": "70a7c81fe9b05afece7c73d5deea3dd6430de26bcfd235c58ee4838138881507"
+    },
+    "json": {
+      "local_readback_passed": true,
+      "bytes": 3055,
+      "sha256": "6f2f74357272fd6b205b0fc7925074f4de8e75802acfde2730262d4ab1e205de"
+    }
+  },
+  "new_questions_or_model_calls": 0,
+  "live_disposable_withdrawal_verified": false
+}

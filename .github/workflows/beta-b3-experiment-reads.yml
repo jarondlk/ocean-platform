@@ -22,6 +22,8 @@ on:
       - 'schema/experiment_execution.py'
       - 'schema/experiment_workspace.py'
       - 'deploy/gcp/beta/b3/prepare_experiment_read_context.py'
+      - 'scripts/beta_b4_delivery_diagnostic.py'
+      - 'tests/test_beta_b4_delivery_diagnostic.py'
       - 'tests/test_beta_experiment_reads.py'
       - 'tests/test_beta_question_entry.py'
       - 'tests/test_beta_question_services.py'
@@ -58,4 +60,4 @@ jobs:
             tests/test_beta_experiment_reads.py tests/test_beta_question_entry.py \
             tests/test_beta_question_services.py tests/test_v1_host.py \
             tests/test_experiment_workspace.py tests/test_research_experiments.py \
-            tests/test_cloud_research_dispatch.py
+            tests/test_cloud_research_dispatch.py tests/test_beta_b4_delivery_diagnostic.py

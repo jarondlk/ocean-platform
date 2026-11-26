@@ -1,0 +1,61 @@
+[
+  {
+    "displayName": "OCEAN Beta | Research queue backlog",
+    "documentation": {
+      "mimeType": "text/markdown",
+      "content": "Check the Research queue and Scheduler state, the controller, and the SQL outbox. Check for a planned queue pause before escalating."
+    },
+    "combiner": "OR",
+    "enabled": false,
+    "conditions": [
+      {
+        "displayName": "Tokyo Research queue depth above zero for ten minutes",
+        "conditionThreshold": {
+          "filter": "metric.type = \"cloudtasks.googleapis.com/queue/depth\" AND resource.type = \"cloud_tasks_queue\" AND resource.labels.project_id = \"ocean-v1-beta-20261101\" AND resource.labels.location = \"asia-northeast1\" AND resource.labels.queue_id = \"ocean-v1-beta-research\"",
+          "comparison": "COMPARISON_GT",
+          "thresholdValue": 0,
+          "duration": "600s",
+          "aggregations": [{"alignmentPeriod": "60s", "perSeriesAligner": "ALIGN_MAX"}],
+          "trigger": {"count": 1},
+          "evaluationMissingData": "EVALUATION_MISSING_DATA_INACTIVE"
+        }
+      }
+    ]
+  },
+  {
+    "displayName": "OCEAN Beta | Private Research delivery failure",
+    "documentation": {
+      "mimeType": "text/markdown",
+      "content": "Check the private controller and canonical Cloud Tasks delivery. Reconcile the current SQL head and outbox before taking recovery action."
+    },
+    "combiner": "OR",
+    "enabled": false,
+    "alertStrategy": {"notificationRateLimit": {"period": "1800s"}, "autoClose": "1800s"},
+    "conditions": [
+      {
+        "displayName": "Private Research POST returned HTTP 5xx",
+        "conditionMatchedLog": {
+          "filter": "logName=\"projects/ocean-v1-beta-20261101/logs/run.googleapis.com%2Frequests\" AND resource.type=\"cloud_run_revision\" AND resource.labels.project_id=\"ocean-v1-beta-20261101\" AND resource.labels.location=\"asia-northeast1\" AND resource.labels.service_name=\"ocean-v1-beta-research-controller\" AND httpRequest.requestMethod=\"POST\" AND httpRequest.requestUrl=~\"/internal/research/(dispatch|run|answer)$\" AND httpRequest.status>=500 AND httpRequest.status<600"
+        }
+      }
+    ]
+  },
+  {
+    "displayName": "OCEAN Beta | Automated SQL backup window failed or skipped",
+    "documentation": {
+      "mimeType": "text/markdown",
+      "content": "Check the reported backup window and the age of the most recent successful backup. Use the approved isolated restore procedure to verify recovery."
+    },
+    "combiner": "OR",
+    "enabled": false,
+    "alertStrategy": {"notificationRateLimit": {"period": "1800s"}, "autoClose": "1800s"},
+    "conditions": [
+      {
+        "displayName": "Beta Cloud SQL automated backup failed or skipped",
+        "conditionMatchedLog": {
+          "filter": "logName=\"projects/ocean-v1-beta-20261101/logs/cloudaudit.googleapis.com%2Fsystem_event\" AND resource.type=\"cloudsql_database\" AND resource.labels.project_id=\"ocean-v1-beta-20261101\" AND resource.labels.region=\"ASIA_NORTHEAST1\" AND protoPayload.methodName=\"cloudsql.instances.automatedBackup\" AND protoPayload.resourceName=\"projects/ocean-v1-beta-20261101/instances/ocean-v1-beta-sql\" AND (protoPayload.metadata.windowStatus=\"STATUS_FAILED\" OR protoPayload.metadata.windowStatus=\"STATUS_SKIPPED\")"
+        }
+      }
+    ]
+  }
+]

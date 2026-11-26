@@ -1,5 +1,16 @@
 # Implementation status
 
+## November 26 — Live evidence exports verified
+
+The signed-in beta reopened the scheduled Research trial's saved answer and
+`c13.inventory` citation on serving generation 75. The downloaded CSV and JSON
+reopened from disk and matched the single retained result row and the original
+snapshot. Live withdrawal on a separately scoped disposable source remains
+open. The B4 delivery diagnostic passed focused and native PostgreSQL checks.
+The three alert policies are prepared for the approved operator inbox. Cloud
+activation and delivery verification require the operator credential.
+[Browser export receipt](beta/b2-20261116/evidence-export-live-20261126.json).
+
 ## November 26 — Mockup navigation and IBM Plex live
 
 Research, Context Catalog and Tools appear once in the header. The Research

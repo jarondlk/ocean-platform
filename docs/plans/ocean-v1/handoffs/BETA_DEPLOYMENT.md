@@ -1,5 +1,30 @@
 # Beta deployment continuation — 2026-11-26 JST
 
+## November 26 — Evidence export readback and B4 recovery preparation
+
+The signed-in Research workspace reopened the scheduled recovery trial after
+the UI rollout. The completed answer and its `c13.inventory` citation both
+showed one dataset. A real browser downloaded the result page as CSV and JSON.
+Both files reopened from disk. The CSV matched the canonical rendering of the
+JSON row byte for byte, and the JSON provenance points to the source snapshot
+in the accepted trial. The receipt keeps the hashes and sizes. The deployed
+serving and controller generations matched their accepted receipts, and the
+check used the existing saved answer.
+[Browser export receipt](../beta/b2-20261116/evidence-export-live-20261126.json).
+
+B4 now has a read-only diagnostic for an exact exploration or answer delivery.
+It compares the SQL outbox, current lease and prepared model count against the
+canonical Cloud Task and checks whether the database changed during provider
+readback. It leaves ambiguous work for operator reconciliation. The disposable
+check used native PostgreSQL with synthetic delivery records and a simulated
+task readback. The approved university inbox and three disabled policy
+definitions are ready for Monitoring installation. Current live permissions
+for Monitoring and the new diagnostic still require operator sign-in and
+verification. A separately scoped live disposable withdrawal, exhausted-task
+trial, isolated hosted restore, integrated worker recovery and release
+acceptance remain open.
+[B4 operations acceptance](../beta/b4-20261124/OPERATIONS_ACCEPTANCE.md).
+
 ## November 26 — Mockup navigation and IBM Plex live
 
 Source `2e887cd` puts Research, Context Catalog and Tools in the header as in

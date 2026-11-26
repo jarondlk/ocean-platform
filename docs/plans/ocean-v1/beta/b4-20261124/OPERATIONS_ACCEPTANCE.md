@@ -63,6 +63,25 @@ unresolved. Preserve the original work and model-attempt journal. Alert and
 verify the operator recovery path for this case before sustained operation.
 [Cloud Tasks retry behavior](https://docs.cloud.google.com/tasks/docs/configuring-queues).
 
+Use `python -m scripts.beta_b4_delivery_diagnostic --kind run|answer --work-id UUID`
+in the separately authorized beta observer environment for one affected work
+item. The tool needs the existing beta PostgreSQL diagnostic binding and a
+principal with FULL read access to the canonical task. It reads the current
+outbox delivery and lease in SQL before and after a single Cloud Tasks GET.
+The report contains delivery state, the count of prepared model steps and a
+hash of the task name. Exit 3 means review the disposition. Exit 2 means the
+readback failed.
+
+For a missing sent task with unfinished SQL, leave admission closed, verify
+queue and Scheduler state, and correlate the retained delivery and provider
+attempt history. Lease expiry fences durable publication. Physical provider
+termination still needs its own evidence. An authorized owner can cancel the
+original work through its existing Research action once the operator has
+reconciled the outcome. Preserve the original outbox and model journal. Use
+current source authorization and the normal admission and budget checks for
+any separately authorized continuation. The diagnostic runs no replacement
+task. The live exhausted-retry case still needs a bounded trial.
+
 ## Alerts and hosted restore
 
 The November 24 beta metadata readback found zero Monitoring alert policies
@@ -87,6 +106,20 @@ policy scopes and verify their behavior on the selected notification channel.
 | Backup failure | Cloud SQL system events for `ocean-v1-beta-sql`, method `cloudsql.instances.automatedBackup`, and window status `STATUS_FAILED` or `STATUS_SKIPPED`. Check through the successful backup audit signal as well. |
 
 [Cloud SQL automated backup audit fields](https://docs.cloud.google.com/sql/docs/postgres/backup-recovery/view-audit-logs-for-automated-backups).
+
+The three staged policy definitions are in
+[`alert-policies.json`](../../../../../deploy/gcp/beta/b4/alert-policies.json).
+The operator selected their existing university inbox. After operator sign-in,
+list channels and policies in the beta project, reuse an exact channel if it
+exists and verify its service-side state. Bind each definition to the exact
+channel resource and read it back disabled before activation. Compare metric
+and log filters against the existing signals. Verify notification by emitting
+one synthetic log under a dedicated test log name with a separate, rate-limited
+test policy. Record receipt of the test message and disable the test policy.
+Then enable and read back the three scoped policies. Keep the recipient and
+any message content in the operator's private records.
+[Cloud Monitoring policies and notification channels](https://docs.cloud.google.com/monitoring/alerts/using-alerting-api).
+[Log-based alert testing](https://docs.cloud.google.com/logging/docs/alerting/log-based-alerts).
 
 The same readback found seven successful automated beta Cloud SQL backups,
 seven days of retained point-in-time logs and a private PostgreSQL 16 instance.
