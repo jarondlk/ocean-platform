@@ -84,6 +84,11 @@ task. The live exhausted-retry case still needs a bounded trial.
 
 ## Alerts and hosted restore
 
+The November 26 alert delivery test passed. The three operational policies
+are enabled and the dedicated test policy is disabled. The counts-only outbox
+signal and the integrated recovery checks remain open.
+[Live Monitoring receipt](../b4-20261126/monitoring-live.json).
+
 The November 24 beta metadata readback found zero Monitoring alert policies
 and zero notification channels. Configure an owned, monitored project channel
 and verify delivery of a test incident. Cover repeated private dispatch errors,
@@ -102,7 +107,7 @@ policy scopes and verify their behavior on the selected notification channel.
 | Signal | Draft policy |
 | --- | --- |
 | Queue backlog | `cloudtasks.googleapis.com/queue/depth` for the beta project, Tokyo location and `ocean-v1-beta-research` queue, above zero continuously for ten minutes during normal delivery. Review planned queue pauses separately. |
-| Research sweep error | Cloud Run request logs for the private controller's exact `/internal/research/dispatch` URL and HTTP 5xx. Rate-limit repeated notifications to one per incident window. |
+| Research delivery error | Cloud Run request logs for HTTP 5xx on the private controller's `/internal/research/dispatch`, `/internal/research/run` and `/internal/research/answer` POST routes. Repeat notifications are limited to one per 30 minutes. |
 | Backup failure | Cloud SQL system events for `ocean-v1-beta-sql`, method `cloudsql.instances.automatedBackup`, and window status `STATUS_FAILED` or `STATUS_SKIPPED`. Check through the successful backup audit signal as well. |
 
 [Cloud SQL automated backup audit fields](https://docs.cloud.google.com/sql/docs/postgres/backup-recovery/view-audit-logs-for-automated-backups).
@@ -139,6 +144,26 @@ reads. Check retained evidence and denial of a source withdrawn after the
 recovery point, using a disposable fixture where the source mutation is needed.
 Capture aggregate evidence and retire the isolated resources after acceptance.
 [Cloud SQL PostgreSQL restore](https://docs.cloud.google.com/sql/docs/postgres/backup-recovery/restore).
+
+### November 26 restore readiness
+
+The operator readback found seven successful automated backups. The latest
+completed at `2026-11-25T18:52:26Z`. The sole beta instance runs PostgreSQL 16
+in Tokyo on `db-custom-2-7680`, with a 20 GiB disk and a private address. The
+serving network has Private Services Access. The separate B3 network has no
+service peering and its worker is stopped. The restore drill still needs a
+target isolated from both networks and its own cost and teardown scope.
+
+The next hosted rehearsal can use a disposable synthetic PostgreSQL 16 source
+and restore target on a dedicated network in Tokyo. Use separate verifier
+credentials, explicit private networking and encrypted connections. Seed a
+retained receipt plus a recovery marker, take a provider backup, then add a
+newer withdrawal in the fixture. After restoring, compare the recovered
+marker to the backup point and apply the fixture's current withdrawal before
+opening evidence. Record the latest recovered marker, restore duration,
+access-denial checks and retirement of each temporary resource. That trial
+would qualify the hosted procedure with synthetic data. Actual beta-backup
+recovery requires its own approved source and target scope.
 
 B4 also depends on recovery and drain on the integrated B3 production worker.
 Reuse the accepted private synthetic lifecycle and local restore receipts.

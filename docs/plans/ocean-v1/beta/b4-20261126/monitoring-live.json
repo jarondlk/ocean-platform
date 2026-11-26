@@ -1,0 +1,129 @@
+{
+  "version": "ocean-beta-b4-monitoring-live-v1",
+  "recorded_utc": "2026-11-26T07:25:01.031297+00:00",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "aebf92a07c61132a92621629f8165d881ce47584",
+  "policy_definitions_sha256": "e150d262a65a9f8dc16442bbeb2736e5f9eb5a152e90cc4b057e6dd86c62c8a1",
+  "focused_hosted_workflow": {
+    "run_id": 45771867850,
+    "job_id": 139746172994,
+    "conclusion": "success"
+  },
+  "notification_channel": {
+    "created": true,
+    "enabled": true,
+    "name": "projects/ocean-v1-beta-20261101/notificationChannels/6696040657636344129",
+    "type": "email",
+    "verification_status": "VERIFICATION_STATUS_UNSPECIFIED",
+    "destination_matches_approved_university_inbox": true
+  },
+  "policy_configuration": [
+    {
+      "configuration_readback_matches": true,
+      "display_name": "OCEAN Beta | Research queue backlog",
+      "enabled": true,
+      "name": "projects/ocean-v1-beta-20261101/alertPolicies/7535460324513902992"
+    },
+    {
+      "configuration_readback_matches": true,
+      "display_name": "OCEAN Beta | Private Research delivery failure",
+      "enabled": true,
+      "name": "projects/ocean-v1-beta-20261101/alertPolicies/6894630714070072874"
+    },
+    {
+      "configuration_readback_matches": true,
+      "display_name": "OCEAN Beta | Automated SQL backup window failed or skipped",
+      "enabled": true,
+      "name": "projects/ocean-v1-beta-20261101/alertPolicies/7535460324513903371"
+    }
+  ],
+  "read_only_signal_matches": {
+    "research_queue_time_series": 1,
+    "observed_controller_status_codes": [
+      200,
+      200,
+      200,
+      200
+    ],
+    "last_successful_backup_log_matches": 2
+  },
+  "synthetic_test": {
+    "policy": {
+      "configuration_readback_matches": true,
+      "display_name": "OCEAN Beta | Synthetic inbox verification 20261126",
+      "enabled": false,
+      "name": "projects/ocean-v1-beta-20261101/alertPolicies/14316150368666718724"
+    },
+    "marker": "ocean-beta-channel-check-20261126",
+    "first_write_utc": "2026-11-26T07:16:44.093045+00:00",
+    "retry_write_utc": "2026-11-26T07:22:01.472745+00:00",
+    "monitoring_incident": {
+      "observed_utc": "2026-11-26T07:23:01.118403+00:00",
+      "matching_alerts": [
+        {
+          "name": "projects/ocean-v1-beta-20261101/alerts/0.ofgopc0n25mw",
+          "state": "OPEN",
+          "open_time": "2026-11-26T07:22:44Z",
+          "policy": "projects/ocean-v1-beta-20261101/alertPolicies/14316150368666718724"
+        }
+      ]
+    },
+    "mailbox_readback": {
+      "received": true,
+      "provider_sender_matches": true,
+      "destination_matches_approved_inbox": true,
+      "synthetic_policy_title_matches": true,
+      "received_utc": "2026-11-26T07:22:44.000Z",
+      "seconds_after_incident": 0
+    }
+  },
+  "controls": {
+    "observed_utc": "2026-11-26T07:24:28.069457+00:00",
+    "services": {
+      "ocean-v1-beta-serving": {
+        "generation": 75,
+        "latest_ready_revision": "ocean-v1-beta-serving-plex-2e887cd",
+        "all_traffic_ready_revision": true
+      },
+      "ocean-v1-beta-research-controller": {
+        "generation": 10,
+        "latest_ready_revision": "ocean-v1-beta-research-controller-b2-discovery-1122",
+        "all_traffic_ready_revision": true
+      }
+    },
+    "queue": {
+      "state": "PAUSED",
+      "tasks": 0,
+      "retry_config": {
+        "maxAttempts": 10,
+        "maxRetryDuration": "3600s",
+        "minBackoff": "30s",
+        "maxBackoff": "300s",
+        "maxDoublings": 4
+      }
+    },
+    "scheduler": [
+      {
+        "id": "ocean-v1-beta-b4-sweep-trial-20261124",
+        "state": "PAUSED",
+        "has_schedule_time": false
+      }
+    ]
+  },
+  "restore_readback": {
+    "latest_automated_backup_completed_utc": "2026-11-25T18:52:26.485Z",
+    "successful_automated_backups": 7,
+    "serving_network_private_services_access": true,
+    "isolated_b3_network_private_services_access": false,
+    "b3_worker_status": "TERMINATED",
+    "hosted_restore_run": false,
+    "production_experiment_ledger_login_present": false,
+    "direct_results_bucket_grants_for_serving_or_supervisor": false
+  },
+  "counts_only_outbox_alert_live": false,
+  "sustained_research_delivery_enabled": false,
+  "live_exhausted_delivery_recovery_verified": false,
+  "integrated_worker_recovery_verified": false,
+  "b4_complete": false
+}

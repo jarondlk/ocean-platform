@@ -1,5 +1,16 @@
 # Implementation status
 
+## November 26 — Beta operational alerts live
+
+The university inbox received the synthetic Cloud Monitoring alert. The beta
+now has active policies for the Tokyo Research queue backlog, private Research
+delivery failures, and failed or skipped automated SQL backups. The synthetic
+policy is disabled. Serving generation 75 and controller generation 10 remain
+active, with the Research queue paused and empty and the Scheduler job paused.
+The isolated restore, live exhausted-task recovery, integrated worker recovery,
+and final release gates remain open.
+[Monitoring receipt](beta/b4-20261126/monitoring-live.json).
+
 ## November 26 — Live evidence exports verified
 
 The signed-in beta reopened the scheduled Research trial's saved answer and

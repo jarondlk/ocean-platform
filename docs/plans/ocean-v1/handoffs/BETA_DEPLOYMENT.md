@@ -1,5 +1,28 @@
 # Beta deployment continuation — 2026-11-26 JST
 
+## November 26 — Beta operational alerts enabled and inbox verified
+
+The operator account staged the three definitions from `aebf92a`. An exact
+provider readback confirmed the notification channel and disabled policies.
+The queue depth filter matched one live Tokyo series. The controller request
+and Cloud SQL backup filters matched the intended live resources. The first
+synthetic log reached Logging, with no observed alert in the five-minute
+window. A single retry opened a Cloud Monitoring incident. The matching
+Google notification arrived in the approved university inbox. The synthetic
+policy was disabled and all three operational policies were enabled and
+read back. The focused hosted workflow for `aebf92a` passed.
+
+Serving generation 75 and controller generation 10 still match the accepted
+receipts. Research delivery controls remain paused and the queue is empty.
+The latest of seven successful automated SQL backups completed on November 25
+at 18:52 UTC. The serving network has Private Services Access. The isolated
+B3 worker remains stopped and its network lacks that peering. The dedicated
+B3 ledger login and direct serving or supervisor bindings on the results
+bucket are still absent. Those grants and an isolated restore target require
+their own scope. Live exhausted-task recovery, the counts-only outbox alert
+path, integrated worker recovery, and final release acceptance remain open.
+[Monitoring receipt](../beta/b4-20261126/monitoring-live.json).
+
 ## November 26 — Evidence export readback and B4 recovery preparation
 
 The signed-in Research workspace reopened the scheduled recovery trial after
