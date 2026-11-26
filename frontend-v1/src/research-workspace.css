@@ -26,7 +26,7 @@
 .rw-context-summary { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--line); border-radius: var(--box-radius); background: var(--blue-wash); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
 .rw-context-summary details { color: var(--muted); }
 .rw-context-summary dl { margin: 8px 0 0; }
-.rw-context-summary dd { margin: 0 0 9px; font-family: monospace; font-size: 10px; overflow-wrap: anywhere; }
+.rw-context-summary dd { margin: 0 0 9px; font-family: var(--font-code); font-size: 10px; overflow-wrap: anywhere; }
 .rw-context-panel { font-size: 12px; line-height: 1.7; }
 .rw-context-panel h3 { margin-top: 21px; font-size: 13px; }
 .rw-context-panel > p { color: var(--muted); }

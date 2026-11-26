@@ -80,8 +80,28 @@ test("built Next host performs guarded login, encrypted session, private proxy, 
     const login = await call("/login"); assert.equal(login.status, 200);
     assert.match(login.headers.get("content-security-policy")!, /form-action 'self' https:\/\/accounts.google.com/);
     const loginHtml = await login.text(); assert.match(loginHtml, /Sign in with Google/);
-    const stylesheet = loginHtml.match(/href="([^\"]+\.css)"/); assert(stylesheet);
-    const style = await call(stylesheet[1]); assert.equal(style.status, 200); assert.match(style.headers.get("content-type")!, /text\/css/);
+    const stylesheetPaths = Array.from(loginHtml.matchAll(/href="([^\"]+\.css)"/g), match => match[1]);
+    assert(stylesheetPaths.length > 0);
+    const stylesheets = await Promise.all(stylesheetPaths.map(async path => {
+      const style = await call(path);
+      assert.equal(style.status, 200);
+      assert.match(style.headers.get("content-type")!, /text\/css/);
+      return style.text();
+    }));
+    const css = stylesheets.join("\n");
+    for (const family of ["IBM Plex Sans Variable", "IBM Plex Sans JP", "IBM Plex Mono"]) {
+      const declaration = css.split("}").find(rule => rule.includes("@font-face") && rule.includes(family));
+      const fontPath = declaration?.match(/url\(["']?(\/_next\/static\/media\/[^)"']+\.woff2)/)?.[1];
+      assert(fontPath, `${family} uses a bundled WOFF2 font`);
+      const font = await call(fontPath);
+      assert.equal(font.status, 200);
+      assert.equal(Buffer.from(await font.arrayBuffer()).subarray(0, 4).toString(), "wOF2");
+    }
+    for (const name of ["IBM-Plex-Sans", "IBM-Plex-Sans-JP", "IBM-Plex-Mono"]) {
+      const license = await call(`/_next/static/licenses/${name}.txt`);
+      assert.equal(license.status, 200);
+      assert.match(await license.text(), /SIL OPEN FONT LICENSE/);
+    }
     const action = loginHtml.match(/name="(\$ACTION_ID_[^"]+)"/); assert(action, "Actual Next server action form is rendered");
     const loginAction = actionBody(action[1]);
     const start = await call("/login", { method: "POST", headers: { Origin: SETTINGS.origin, "Content-Type": loginAction.contentType }, body: loginAction.body });

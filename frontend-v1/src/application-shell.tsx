@@ -25,13 +25,17 @@ export function ShellNavigation({ links, current, locale, onNavigate }: {
   </nav>;
 }
 
-export function ShellHeader({ locale, drawerOpen, onMenu, onHome, navigation, actions, inert = false }: {
+export function ShellHeader({ locale, drawerOpen, onMenu, onHome, navigation, actions, inert = false, menuInActions = false }: {
   locale: Locale; drawerOpen: boolean; onMenu: () => void; onHome?: () => void;
-  navigation: ReactNode; actions: ReactNode; inert?: boolean;
+  navigation: ReactNode; actions: ReactNode; inert?: boolean; menuInActions?: boolean;
 }) {
+  const menu = <button className={`icon-button ${menuInActions ? "runtime-menu" : "mobile-menu"}`} onClick={onMenu}
+    aria-label={menuInActions ? (locale === "en" ? "Open application menu" : "アプリのメニューを開く")
+      : (locale === "en" ? "Open navigation" : "ナビゲーションを開く")}
+    aria-expanded={drawerOpen} aria-controls="app-sidebar"><Menu size={menuInActions ? 17 : 20} /></button>;
   return <header className="topbar" inert={inert}>
-    <button className="mobile-menu icon-button" onClick={onMenu} aria-label={locale === "en" ? "Open navigation" : "ナビゲーションを開く"} aria-expanded={drawerOpen} aria-controls="app-sidebar"><Menu size={20} /></button>
-    <ShellWordmark onHome={onHome} />{navigation}<div className="topbar-actions">{actions}</div>
+    {!menuInActions && menu}
+    <ShellWordmark onHome={onHome} />{navigation}<div className="topbar-actions">{actions}{menuInActions && menu}</div>
   </header>;
 }
 
@@ -89,7 +93,7 @@ export function ApplicationShell({ locale, current, primaryLinks, onNavigate, on
   const navigate = (link: ShellLink) => { onNavigate(link); setDrawerOpen(false); };
   return <div className="app runtime-shell" inert={dialogOpen}>
     <a className="skip-link" inert={drawerOpen} href="#main-content">{locale === "en" ? "Skip to content" : "コンテンツへ移動"}</a>
-    <ShellHeader locale={locale} drawerOpen={drawerOpen} onMenu={() => setDrawerOpen(!drawerOpen)} onHome={onHome} inert={drawerOpen}
+    <ShellHeader locale={locale} drawerOpen={drawerOpen} onMenu={() => setDrawerOpen(!drawerOpen)} onHome={onHome} inert={drawerOpen} menuInActions
       navigation={<ShellNavigation locale={locale} current={current} links={primaryLinks} onNavigate={navigate} />} actions={actions} />
     {notice && <div className="runtime-notice" inert={drawerOpen}>{notice}</div>}
     <div className="app-body">

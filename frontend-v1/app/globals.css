@@ -1,5 +1,12 @@
+@import "@fontsource-variable/ibm-plex-sans";
+@import "@fontsource/ibm-plex-sans-jp/400.css";
+@import "@fontsource/ibm-plex-sans-jp/600.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+
 :root {
   color-scheme: light;
+  --font-ui: "IBM Plex Sans Variable", "IBM Plex Sans JP", system-ui, sans-serif;
+  --font-code: "IBM Plex Mono", ui-monospace, monospace;
   --canvas: #f8fbfd;
   --surface: #ffffff;
   --text: #193448;
@@ -38,8 +45,9 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: clip; }
-body { color: var(--text); background: var(--canvas); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Arial, sans-serif; font-size: 14px; line-height: 1.5; }
+body { color: var(--text); background: var(--canvas); font-family: var(--font-ui); font-size: 14px; line-height: 1.5; }
 button, input, textarea, select { font: inherit; color: inherit; }
+code, pre, kbd, samp { font-family: var(--font-code); }
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; min-width: 24px; min-height: 24px; }
 button:disabled { cursor: not-allowed; opacity: .48; }
@@ -268,7 +276,7 @@ details code { display: block; font-size: 11px; overflow-wrap: anywhere; margin-
 .proposal-field > span:first-child { display: block; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
 .proposal-card .button { width: 100%; font-size: 11px; margin-top: 10px; }
 .code-label { display: block; font-size: 11px; margin-top: 12px; }
-.code-editor { width: 100%; min-height: 170px; background: var(--canvas); margin: 7px 0; font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; line-height: 1.6; }
+.code-editor { width: 100%; min-height: 170px; background: var(--canvas); margin: 7px 0; font-family: var(--font-code); font-size: 11px; line-height: 1.6; }
 .experiment-output { border-top: 1px solid var(--line); margin-top: 15px; padding-top: 14px; }
 .experiment-output > strong { font-weight: 500; font-size: 11px; display: block; margin-bottom: 12px; }
 .catalogue-view, .tools-view { padding: 34px 42px 40px; max-width: 1180px; margin: 0 auto; }

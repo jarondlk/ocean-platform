@@ -12,7 +12,11 @@
 .runtime-notice { padding: 8px 22px; font-size: 12px; border-bottom: 1px solid var(--line); background: var(--blue-wash); }
 .runtime-sidebar-context { display: flex; align-items: flex-start; gap: 8px; font-size: 11px; color: var(--muted); margin: 28px 10px 40px; }
 .runtime-sidebar-context svg { margin-top: 3px; }
-.runtime-support-links { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 20px; }
+.runtime-shell .sidebar { display: none; }
+.runtime-shell .sidebar.drawer-open { display: flex; position: fixed; inset: 0 auto 0 0; width: min(288px, 85vw); z-index: 40; visibility: visible; box-shadow: var(--shadow); }
+.runtime-shell .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-weight: 600; }
+.runtime-shell .drawer-header .icon-button { min-height: 40px; min-width: 40px; }
+.runtime-shell .drawer-scrim { display: block; position: fixed; inset: 0; z-index: 35; background: #15344c66; }
 .runtime-main { background: var(--canvas); }
 .runtime-page { max-width: 980px; margin: 0 auto; padding: 44px 40px; }
 .runtime-page-heading { padding: 24px var(--page-gutter) 16px; flex-shrink: 0; }
@@ -94,8 +98,6 @@
   .runtime-shell .primary-nav { gap: 10px; justify-content: flex-start; }
   .runtime-shell .primary-nav a { font-size: 12px; }
   .runtime-shell .primary-nav a svg { display: block; }
-  .runtime-shell .sidebar { top: 112px; }
-  .runtime-shell .drawer-scrim { inset: 112px 0 0; }
   .runtime-account { padding: 3px; margin: 0 3px 0 0; }
   .runtime-account > span { max-width: 115px; font-size: 10px; }
   .runtime-account strong { font-size: 10px; }

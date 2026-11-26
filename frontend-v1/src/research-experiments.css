@@ -21,10 +21,10 @@
 .re-limits div { padding: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--box-radius); }
 .re-limits dt, .re-identities dt { color: var(--muted); font-size: 11px; }
 .re-limits dd, .re-identities dd { margin: 2px 0 8px; overflow-wrap: anywhere; }
-.re-identities dd { font-family: monospace; font-size: 10px; }
+.re-identities dd { font-family: var(--font-code); font-size: 10px; }
 .re-wrap { overflow-wrap: anywhere; display: block; }
 .re-revise { border: 1px solid var(--control-line); border-radius: var(--box-radius); padding: 12px; margin-top: 15px; }
-.re-code-editor { font-family: monospace !important; min-height: 160px; }
+.re-workspace .re-code-editor { font-family: var(--font-code); min-height: 160px; }
 .re-execution { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 12px; }
 .re-events { padding-left: 20px; }
 .re-events li { padding: 6px 0; border-bottom: 1px solid var(--line); }

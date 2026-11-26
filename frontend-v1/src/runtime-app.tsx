@@ -141,10 +141,13 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
       </button>
     </form>}
   </>;
-  const sidebar = <>
-    <nav aria-label={language(locale, "Destinations", "移動先")}>{primaryLinks.map((link) => <a key={link.id} className={`sidebar-link ${destination === link.id ? "selected" : ""}`} href={link.href} aria-current={destination === link.id ? "page" : undefined} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); navigate(link); }}>{link.icon}<span>{link.label}</span></a>)}</nav>
-    <nav className="runtime-support-links" aria-label={language(locale, "Account and support", "アカウントとサポート")}>{supportLinks.map((link) => <a key={link.id} className={`sidebar-link ${destination === link.id ? "selected" : ""}`} href={link.href} aria-current={destination === link.id ? "page" : undefined} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); navigate(link); }}>{link.icon}<span>{link.label}</span></a>)}</nav>
-  </>;
+  const sidebar = <nav aria-label={language(locale, "Account and support", "アカウントとサポート")}>
+    {supportLinks.map((link) => <a key={link.id} className={`sidebar-link ${destination === link.id ? "selected" : ""}`}
+      href={link.href} aria-current={destination === link.id ? "page" : undefined} onClick={(event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault(); navigate(link);
+      }}>{link.icon}<span>{link.label}</span></a>)}
+  </nav>;
   const permitted = bootstrap && routeAccessible(bootstrap, destination);
   const content = !bootstrap ? <RuntimeBoundary state={runtime} locale={locale} retry={reload} />
     : !permitted ? <RuntimeMessage kind="denied" locale={locale} title={language(locale, "Access is restricted", "アクセスが制限されています")} />
