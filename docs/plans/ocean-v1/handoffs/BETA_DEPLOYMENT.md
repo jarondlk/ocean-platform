@@ -11,10 +11,13 @@ The temporary cluster was stopped. A writable transaction was denied.
 The accepted Tokyo observer job matched its generation-1 contract. Its
 existing execution record and rollout source were preserved. The new plan
 qualifies an argument-only override for one separately authorized execution.
+Cloud Run accepted the validation-only request, and the execution count stayed
+at 20. The focused hosted workflow for `28e9031` passed.
 The disabled Monitoring definition matches only this observer's aggregate
 review and failure states. The hosted sample and alert delivery, ongoing
 outbox sampling, isolated restore and integrated worker acceptance remain
-open. [B4 operations acceptance](../beta/b4-20261124/OPERATIONS_ACCEPTANCE.md#counts-only-outbox-observer).
+open. [Candidate receipt](../beta/b4-20261126/outbox-health-candidate.json).
+[B4 operations acceptance](../beta/b4-20261124/OPERATIONS_ACCEPTANCE.md#counts-only-outbox-observer).
 
 ## November 26 — Beta operational alerts enabled and inbox verified
 

@@ -1,0 +1,42 @@
+{
+  "version": "ocean-beta-b4-outbox-candidate-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "recorded_utc": "2026-11-26T07:40:21.704668+00:00",
+  "source_revision": "28e903126fd2cd85220e155ed22ec8da5dbdb94a",
+  "source_sha256": {
+    "deploy/gcp/beta/b0/observer-contract.json": "b4364fb35068d36eab5f8bd406407deb49b521b8bbf7d1d6cfed2901094c3726",
+    "deploy/gcp/beta/b4/outbox_health.py": "9630df6d13671dbd22df7456a0b41cf9e3eda781a9dc4701ab5bce13e75ac785",
+    "scripts/beta_b1_diagnostic.py": "3a004dad50528767c74f3b48c5146b76071bedadd8c5f22ab193bce7ac60a6dc",
+    "scripts/beta_b4_outbox_trial.py": "b3edc530d49faec6ee52db49df1e6751a0b0f1b9d2e875e3f96fa47956555ab3"
+  },
+  "execution_plan_sha256": "0308be8115648d78dce1bf401d541e92efe095ff33de72590e2b7a8b1b43a562",
+  "alert_definition_sha256": "d6f12ad9da845a25e597d594e84a056eebe278ecc7eaa9f482227e46390eb3b5",
+  "local_verification": {
+    "focused_tests_passed": 122,
+    "native_postgresql": "18.3",
+    "native_fixture_synthetic": true,
+    "empty_snapshot_clear": true,
+    "old_input_and_terminal_filtered": true,
+    "active_lease_suppresses_age_alert": true,
+    "bad_timestamps_and_missing_outboxes_detected": true,
+    "read_write_transaction_rejected": true,
+    "disposable_cluster_stopped": true
+  },
+  "focused_hosted_workflow": {
+    "run_id": 45776064561,
+    "job_id": 139759891205,
+    "conclusion": "success"
+  },
+  "validation_only": {
+    "already_pinned_job": "ocean-v1-beta-provider-preflight-20261111",
+    "execution_count_unchanged": 20,
+    "generation": "1",
+    "source_revision": "28e903126fd2cd85220e155ed22ec8da5dbdb94a",
+    "validation_only": true
+  },
+  "live_observer_execution_verified": false,
+  "outbox_health_alert_enabled": false,
+  "recurring_sampler_configured": false,
+  "b4_complete": false
+}

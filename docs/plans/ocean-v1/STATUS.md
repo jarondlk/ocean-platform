@@ -5,8 +5,9 @@
 The outbox observer reports aged pending and sent work, missing current
 outboxes, and inconsistent timestamps for active explorations and answers.
 A disposable PostgreSQL fixture verified both outboxes, lease filtering,
-and rejection of a writable transaction. The observer and its disabled
-alert definition await a scoped live check. [B4 operations acceptance](beta/b4-20261124/OPERATIONS_ACCEPTANCE.md#counts-only-outbox-observer).
+and rejection of a writable transaction. Cloud Run accepted the validation-only
+request, and the focused hosted workflow passed. The live check remains open.
+[Candidate receipt](beta/b4-20261126/outbox-health-candidate.json).
 
 ## November 26 — Beta operational alerts live
 
