@@ -1,4 +1,31 @@
-# Beta deployment continuation — 2026-11-21 JST
+# Beta deployment continuation — 2026-11-26 JST
+
+## November 26 — Mockup navigation and IBM Plex live
+
+Source `2e887cd` puts Research, Context Catalog and Tools in the header as in
+the original mockup. Investigations and conversations remain in the Research
+rail, and the catalogue retains its directory. The header menu holds account
+and support destinations, with Administration available to authorized users.
+The beta bundles IBM Plex Sans and Sans JP for interface text and IBM Plex Mono
+for code. Square cards and the common page gutters carry forward from the
+November 24 update.
+
+Both v1 frontend CI jobs and the Tokyo frontend build passed. The separate
+legacy frontend job failed at its dependency audit. Browser checks used the
+local C26 fixture for desktop navigation, keyboard dismissal and English and
+Japanese at 390 pixels. The production host integration test checked sign-in,
+private routes, font assets and license delivery. Live HTTPS checks reached
+the Google sign-in screen and confirmed the same-origin fonts and private
+runtime boundary. The signed-in workspace was checked locally for this update.
+
+Serving generation 75 carries the new frontend image and revision, with the
+B2 API, serving settings, traffic policy, and private controller verified.
+The manual dispatch guard accepts the exact new generation using the original
+B2 configuration digest. The queue and Scheduler job were last observed paused
+on November 24. Their state was outside the scoped beta credential's current
+read access. The rollout used Cloud Run service operations only. B4 alerting,
+hosted restore and integrated worker recovery remain open.
+[Frontend deployment receipt](../beta/ui-20261126/frontend-plex-live.json).
 
 ## November 24 — Beta UI spacing update live
 

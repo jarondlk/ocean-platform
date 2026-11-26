@@ -1,0 +1,90 @@
+{
+  "version": "ocean-beta-frontend-plex-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "2e887cd787ecb3154bd759253d659ed5fffffba2",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "preceding_frontend_receipt_sha256": "b0c6d241e3d1db4b5977c7ac0183149b00756d7468b7a92535bacf941f5d6f27",
+  "build": {
+    "id": "fd43e9a9-1e02-4cb1-8e50-894b2778a451",
+    "status": "SUCCESS",
+    "source_manifest_sha256": "4a93a2feb414c6ed8c71d43904339f1169403bf2cfeb01c88197cd5bf7b25c0a",
+    "source_files": 71,
+    "staging_generation": "1795674862109444",
+    "image_sha256": "55b09bddd1e0a95bd22e8db94fe4b19bb3eb5edf18d01fa71bd0be0bd0f55d79",
+    "offline_source_transport_startup_fonts_and_licenses_passed": true,
+    "registry_tag_digest_matches": true
+  },
+  "verification": {
+    "local_frontend_tests_passed": 1095,
+    "local_host_tests_passed": 61,
+    "local_built_host_integration_tests_passed": 1,
+    "local_desktop_research_and_catalogue_navigation_passed": true,
+    "local_primary_navigation_occurs_once": true,
+    "local_menu_escape_returns_focus": true,
+    "local_mobile_width_px": 390,
+    "local_english_and_japanese_fit_without_horizontal_overflow": true,
+    "hosted_run_id": 45769041561,
+    "hosted_v1_frontend_job_id": 139736953026,
+    "hosted_v1_frontend_job_conclusion": "success",
+    "hosted_v1_auth_host_job_id": 139736953044,
+    "hosted_v1_auth_host_job_conclusion": "success",
+    "legacy_frontend_audit_job_conclusion": "failure",
+    "signed_in_live_browser_repeated": false,
+    "public_host": {
+      "login_http": 200,
+      "unauthenticated_redirect_to_login": true,
+      "unauthenticated_runtime_http": 401,
+      "same_origin_font_content_security_policy": true,
+      "stylesheets": [
+        "/_next/static/css/4616b447ad9b98b3.css",
+        "/_next/static/css/8f87acc4f009ef4c.css",
+        "/_next/static/css/61ed400c235a4500.css",
+        "/_next/static/css/9c70932f59f07911.css"
+      ],
+      "fonts": {
+        "IBM-Plex-Sans": {
+          "woff2_path": "/_next/static/media/ibm-plex-sans-cyrillic-ext-wght-normal.192d14b2.woff2",
+          "sha256": "7d0037a170882a49e65a45c38ef195237bb07b1cc791d078379f0ac0d7ae1935",
+          "license_served": true
+        },
+        "IBM-Plex-Sans-JP": {
+          "woff2_path": "/_next/static/media/ibm-plex-sans-jp-0-400-normal.90f30ed7.woff2",
+          "sha256": "972d96224e1f4cc6025e9188d8151ba188bcbeddf5d3ce52e5f06410dd5aeea4",
+          "license_served": true
+        },
+        "IBM-Plex-Mono": {
+          "woff2_path": "/_next/static/media/ibm-plex-mono-latin-400-normal.06ac09dc.woff2",
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+          "license_served": true
+        }
+      }
+    }
+  },
+  "deployment": {
+    "previous_generation": 74,
+    "generation": 75,
+    "revision": "ocean-v1-beta-serving-plex-2e887cd",
+    "frontend_before": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:2d5ceae059ec117a802d4569332c18756e2aa951475d9af8fe596e0d5a0ac718",
+    "frontend_after": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:55b09bddd1e0a95bd22e8db94fe4b19bb3eb5edf18d01fa71bd0be0bd0f55d79",
+    "baseline_frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "configuration_sha256": "bb7c263b3f79daf17a55dc2286a7b95ad23d4ea03d70cbda9079b1a9860c059e",
+    "baseline_configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "only_frontend_image_and_revision_changed": true,
+    "validation_only_passed": true,
+    "traffic_percent": 100,
+    "ready_utc": "2026-11-26T06:39:18.979742+00:00",
+    "controller": {
+      "configuration_sha256": "f34d33b451a438a3069328566d29b10cd687ad96835dd11a9f3dcf5e1211ba72",
+      "generation": "10",
+      "iam_sha256": "44620c08d95301e945c30acb6a7866d32c9ff09ed50ccc7768ef004778c42ce0",
+      "latest_ready_revision": "projects/ocean-v1-beta-20261101/locations/asia-northeast1/services/ocean-v1-beta-research-controller/revisions/ocean-v1-beta-research-controller-b2-discovery-1122"
+    },
+    "queue_or_scheduler_modified": false,
+    "queue_and_scheduler_fresh_readback_available": false,
+    "queue_last_recorded_state": "PAUSED",
+    "scheduler_last_recorded_state": "PAUSED"
+  },
+  "b4_complete": false
+}

@@ -38,12 +38,18 @@ B2_SWEEP_RESTORATION_GENERATION = '73'
 B2_LAYOUT_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/b4-20261124/frontend-layout-live.json'
 B2_LAYOUT_RECEIPT_SHA256 = 'b0c6d241e3d1db4b5977c7ac0183149b00756d7468b7a92535bacf941f5d6f27'
 B2_LAYOUT_GENERATION = '74'
+B2_PLEX_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/ui-20261126/frontend-plex-live.json'
+B2_PLEX_RECEIPT_SHA256 = '9905548daf8bb9e24d675543ef4fbf56220f7ec76ab427f269839f10bad5b1d4'
+B2_PLEX_GENERATION = '75'
 
 
 def qualified_b2_serving(service, original):
     generation = str(service['generation'])
-    layout = generation == B2_LAYOUT_GENERATION
-    if layout:
+    frontend_only = generation in (B2_LAYOUT_GENERATION, B2_PLEX_GENERATION)
+    if generation == B2_PLEX_GENERATION:
+        path, digest = B2_PLEX_RECEIPT, B2_PLEX_RECEIPT_SHA256
+        version = 'ocean-beta-frontend-plex-live-v1'
+    elif generation == B2_LAYOUT_GENERATION:
         path, digest = B2_LAYOUT_RECEIPT, B2_LAYOUT_RECEIPT_SHA256
         version = 'ocean-beta-frontend-layout-live-v1'
     elif generation == B2_SWEEP_RESTORATION_GENERATION:
@@ -58,14 +64,16 @@ def qualified_b2_serving(service, original):
     guard.require(receipt['version'] == version
                   and receipt['project'] == rollout.PROJECT and receipt['region'] == rollout.REGION
                   and receipt['baseline_receipt_sha256'] == B2_RECEIPT_SHA256)
-    selection = receipt['deployment' if layout else 'restoration']
+    selection = receipt['deployment' if frontend_only else 'restoration']
     template = {**service['template'], 'revision': original['revision']}
-    if layout:
+    if frontend_only:
         frontend, = (item for item in template['containers'] if item.get('name') == 'frontend')
         guard.require(selection['only_frontend_image_and_revision_changed'] is True
                       and frontend['image'] == selection['frontend_after'])
+        baseline_field = 'baseline_frontend_image' if generation == B2_PLEX_GENERATION else 'frontend_before'
+        baseline_frontend = selection[baseline_field]
         template['containers'] = [
-            {**item, 'image': selection['frontend_before']} if item is frontend else item
+            {**item, 'image': baseline_frontend} if item is frontend else item
             for item in template['containers']
         ]
     else:
@@ -73,7 +81,7 @@ def qualified_b2_serving(service, original):
     guard.require(selection['baseline_configuration_sha256'] == original['configuration_sha256']
                   and rollout.sha({'template': template, 'traffic': service['traffic']})
                   == original['configuration_sha256'])
-    return {'revision': selection['revision' if layout else 'restored_revision'],
+    return {'revision': selection['revision' if frontend_only else 'restored_revision'],
             'generation': selection['generation'],
             'configuration_sha256': selection['configuration_sha256'], 'new_image': selection['image']}
 

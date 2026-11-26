@@ -126,13 +126,15 @@ def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous
     'restored_image_drift', 'restored_config_drift', 'bad_restoration_receipt',
     'changed_baseline', 'sweep_restored', 'sweep_restored_config_drift',
     'layout_deployed', 'layout_wrong_frontend', 'layout_unrelated_change',
+    'plex_deployed', 'plex_wrong_baseline_frontend',
 ])
 def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, state):
     import hashlib
     import json
 
     image = 'synthetic-image-pin'
-    layout = state.startswith('layout_')
+    plex = state.startswith('plex_')
+    layout = plex or state.startswith('layout_')
     receipt = {'image_proof': {'image': image, 'build_status': 'SUCCESS', 'offline_proof': 'success'},
                'initial_cold_discovery_delivery_passed': True}
     services = {}
@@ -172,7 +174,6 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
             serving['template']['containers'][1]['image'] = 'qualified-frontend'
             field = 'B2_LAYOUT_RECEIPT'
             version = 'ocean-beta-frontend-layout-live-v1'
-            monkeypatch.setattr(delivery, 'B2_LAYOUT_GENERATION', '3')
             proof = {
                 'revision': revision, 'generation': 3, 'image': image,
                 'frontend_before': 'original-frontend', 'frontend_after': 'qualified-frontend',
@@ -180,6 +181,16 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
                 'baseline_configuration_sha256': receipt['serving']['configuration_sha256'],
                 'configuration_sha256': delivery.rollout.sha({'template': serving['template'], 'traffic': traffic}),
             }
+            if plex:
+                field = 'B2_PLEX_RECEIPT'
+                version = 'ocean-beta-frontend-plex-live-v1'
+                monkeypatch.setattr(delivery, 'B2_PLEX_GENERATION', '3')
+                proof['frontend_before'] = 'qualified-layout-frontend'
+                proof['baseline_frontend_image'] = (
+                    'original-frontend' if state == 'plex_deployed' else 'wrong-baseline-frontend'
+                )
+            else:
+                monkeypatch.setattr(delivery, 'B2_LAYOUT_GENERATION', '3')
         else:
             field = 'B2_SWEEP_RESTORATION_RECEIPT' if sweep else 'B2_RESTORATION_RECEIPT'
             version = 'ocean-beta-b4-research-sweep-live-v1' if sweep else 'ocean-beta-b4-research-trial-live-v1'
@@ -220,7 +231,7 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
 
     monkeypatch.setattr(delivery, 'dispatch', dispatch)
     cloud = type('Cloud', (), {'request': lambda _, url: services[url.split('/v2/', 1)[1]]})()
-    if state not in ('original', 'restored', 'sweep_restored', 'layout_deployed'):
+    if state not in ('original', 'restored', 'sweep_restored', 'layout_deployed', 'plex_deployed'):
         with pytest.raises(delivery.guard.Rejected):
             delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True)
         assert not calls

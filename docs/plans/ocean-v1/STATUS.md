@@ -1,5 +1,17 @@
 # Implementation status
 
+## November 26 — Mockup navigation and IBM Plex live
+
+Research, Context Catalog and Tools appear once in the header. The Research
+rail holds investigations and conversations, while the catalogue has its own
+directory. Settings and support are in the application menu. The beta serves
+IBM Plex Sans, Sans JP and Mono and their license notices from its own host.
+Both hosted v1 frontend jobs passed. Desktop, keyboard and 390-pixel layout
+checks used a local fixture. Live checks covered login and font delivery.
+Serving generation 75 updated the frontend, with the B2 API and controller
+configuration verified against their accepted receipts.
+[Frontend deployment receipt](beta/ui-20261126/frontend-plex-live.json).
+
 ## November 24 — Beta UI spacing update live
 
 The signed-in beta uses aligned Research and catalogue gutters, square
