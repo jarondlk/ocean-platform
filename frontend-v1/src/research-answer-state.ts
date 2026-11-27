@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 /** Consecutive public answer activity, kept separately from immutable wire snapshots. */
 import type { AnswerEvent, AnswerJob, AnswerEventsResponse } from "./research-evidence-contract.ts";
 import { freezeEvidenceValue } from "./research-evidence-contract.ts";
@@ -24,4 +25,18 @@ export function mergeAnswerEvents(view: AnswerView, page: AnswerEventsResponse):
   let elapsed = view.activity.at(-1)?.elapsed_ms ?? 0;
   for (const [index, event] of page.events.entries()) { if (event.job_id !== view.job.id || event.cursor !== view.event_cursor + index + 1 || event.elapsed_ms < elapsed) return fail(); elapsed = event.elapsed_ms; }
   return freezeEvidenceValue({ job: { ...view.job, latest_event_cursor: page.latest_event_cursor }, activity: [...view.activity, ...page.events], event_cursor: page.next_cursor });
+}
+
+/** How long an item may sit in "queued" in front of the user before we explain the wait. */
+export const LONG_WAIT_MS = 90_000;
+/** True once `waiting` has stayed true for LONG_WAIT_MS while this view was open. */
+export function useLongWait(waiting: boolean, limit = LONG_WAIT_MS): boolean {
+  const [since, setSince] = useState<number | null>(null), [now, setNow] = useState(0);
+  useEffect(() => {
+    if (!waiting) { setSince(null); return; }
+    setSince(current => current ?? Date.now()); setNow(Date.now());
+    const timer = setInterval(() => setNow(Date.now()), 15_000);
+    return () => clearInterval(timer);
+  }, [waiting]);
+  return waiting && since !== null && now - since >= limit;
 }

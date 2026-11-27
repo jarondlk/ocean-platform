@@ -1,11 +1,18 @@
 "use client";
 
 import { useId, useState } from "react";
+import { useLongWait } from "./research-answer-state";
 import type { Locale } from "./model";
 import { canCancelRun, canContinueRun, formatActiveElapsed, isRunActive, type ResearchRun, type ResearchRunStatus, type RunEvidence } from "./research-run-contract";
 import "./research-activity.css";
 
 const say = (locale: Locale, en: string, ja: string) => locale === "en" ? en : ja;
+
+export function LongWaitNotice({ locale, kind }: { locale: Locale; kind: "question" | "answer" }) {
+  return <p className="ra-long-wait" role="status">{say(locale,
+    `This ${kind} is still waiting to start. It is saved and will be processed when the research service picks it up — you can leave and come back later.`,
+    kind === "question" ? "この質問はまだ開始待ちです。保存されており、リサーチサービスが処理を始めると回答されます。このページを離れて後で戻っても大丈夫です。" : "この回答はまだ準備開始待ちです。保存されており、リサーチサービスが処理を始めると作成されます。このページを離れて後で戻っても大丈夫です。")}</p>;
+}
 const statuses: Record<ResearchRunStatus, readonly [string, string]> = {
   queued: ["Queued", "待機中"], running: ["Running", "実行中"], awaiting_clarification: ["Awaiting clarification", "確認待ち"], awaiting_approval: ["Awaiting approval", "承認待ち"],
   completed: ["Completed", "完了"], partial: ["Partial output", "途中結果"], failed: ["Failed", "失敗"], cancelled: ["Cancelled", "キャンセル済み"],
@@ -31,10 +38,12 @@ export function ResearchActivity({ locale, runs, busy = false, executionAvailabl
 function RunCard({ locale, run, busy, onStatus, onEvents, onCancel, onClarify, onContinue, onOpenEvidence }: Omit<ResearchActivityProps, "runs" | "executionAvailable"> & { run: ResearchRun }) {
   const [answer, setAnswer] = useState(""); const id = useId(); const index = locale === "en" ? 0 : 1;
   const active = isRunActive(run.status); const waiting = run.status === "awaiting_clarification"; const approval = run.status === "awaiting_approval";
+  const longWait = useLongWait(run.status === "queued");
   return <article className="ra-run" data-run-id={run.id} data-status={run.status}>
     <header><p className="ra-question">{run.question}</p><span className="ra-status" role="status">{statuses[run.status][index]}</span></header>
     {run.synthetic && <p className="ra-synthetic">{say(locale, "Synthetic development activity · test data", "合成された開発用の処理・テストデータ")}</p>}
     <div className="ra-run-meta"><span>{say(locale, "Working time", "処理時間")}: <time>{formatActiveElapsed(run.active_elapsed_ms)}</time>{(waiting || approval) && ` · ${say(locale, "paused while waiting", "確認待ちのため一時停止中")}`}</span></div>
+    {longWait && <LongWaitNotice locale={locale} kind="question" />}
     {approval && <p className="ra-unavailable">{say(locale, "Approval is required. Approval controls are not available here yet.", "承認が必要です。ここでは承認操作をまだ利用できません。")}</p>}
     {run.status === "completed" && !run.result && <p>{say(locale, "Exploration finished.", "探索が完了しました。")}</p>}
     {run.continuation_of && <p className="ra-continuation">{say(locale, "Continuation of", "継続元")}: <code>{run.continuation_of}</code></p>}

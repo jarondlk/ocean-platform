@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ResearchHistoryScheduler } from "./research-history-scheduler";
 import { loadAnswerHistory } from "./research-answer-history";
-import { answerActive, mergeAnswerSnapshot, type AnswerView } from "./research-answer-state";
+import { answerActive, mergeAnswerSnapshot, useLongWait, type AnswerView } from "./research-answer-state";
 import { answerAddress, executeAnswerMutation, sameAnswerBinding, type AnswerClient, type AnswerMutationIntent, type EvidenceClient } from "./research-evidence-service";
 import type { AnswerJob, AnswerListResponse, EvidenceReceipt, EvidenceResponse, EvidencePageResponse, ContextReference, ResultColumn } from "./research-evidence-contract";
 import { ResearchDraftStore, type AnswerSelection } from "./research-state";
@@ -162,11 +162,13 @@ export function AnswerCard({ locale, view, busy, onCancel, onCitation, receipts 
   const { job } = view, answer = job.answer;
   const { notes, details } = answer ? splitQualifications(answer.qualifications) : { notes: [], details: [] };
   const seconds = Math.floor(job.active_elapsed_ms / 1000);
+  const longWait = useLongWait(job.status === "queued");
   return <article className="ra-run ra-answer" data-answer-status={job.status}>
     <header>
       <h4>{say(locale, "Answer", "回答")}</h4>
       <span role="status" className={`ra-badge ra-badge-${job.status}`}>{answerStatus(job.status, locale)}</span>
     </header>
+    {longWait && <p className="ra-long-wait" role="status">{say(locale, "This answer is still waiting to start. It is saved and will be prepared when the research service picks it up — you can leave and come back later.", "この回答はまだ準備開始待ちです。保存されており、リサーチサービスが処理を始めると作成されます。このページを離れて後で戻っても大丈夫です。")}</p>}
     {answerActive(job) && <button type="button" className="button secondary" disabled={busy} onClick={onCancel}>{say(locale, "Cancel answer preparation", "回答準備をキャンセル")}</button>}
     {job.error && <p role="alert">{job.error[locale]}</p>}
     {job.status === "cancelled" && <p>{say(locale, "Answer preparation was cancelled.", "回答準備はキャンセルされました。")}</p>}

@@ -184,7 +184,8 @@ const activityModule = { exports: {} as {
   ResearchEvidence: ComponentType<{ locale: "en" | "ja"; evidence: contract.RunEvidence | null }>;
 } };
 const compiled = ts.transpileModule(readFileSync(new URL("../src/research-activity.tsx", import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
-new Function("require", "module", "exports", compiled)((name: string) => name === "./research-run-contract" ? contract : name.endsWith(".css") ? {} : require(name), activityModule, activityModule.exports);
+const answerState = await import("../src/research-answer-state.ts");
+new Function("require", "module", "exports", compiled)((name: string) => name === "./research-run-contract" ? contract : name === "./research-answer-state" ? answerState : name.endsWith(".css") ? {} : require(name), activityModule, activityModule.exports);
 const { ResearchActivity, ResearchResults, ResearchEvidence } = activityModule.exports;
 
 for (const locale of ["en", "ja"] as const) test(`actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (${locale})`, async () => {
@@ -236,4 +237,12 @@ test("a result citation invokes the supplied evidence action with the exact run 
   };
   walk(tree); assert.equal(buttons.length, 1); assert.match(buttons[0].props["aria-label"]!, /Open evidence 1/); buttons[0].props.onClick!();
   assert.deepEqual(calls, [[done.result!.evidence[0], done]]);
+});
+
+test("a long wait explains that the question is saved without claiming a cause", () => {
+  const { LongWaitNotice } = activityModule.exports;
+  const en = renderToStaticMarkup(React.createElement(LongWaitNotice, { locale: "en", kind: "question" }));
+  const ja = renderToStaticMarkup(React.createElement(LongWaitNotice, { locale: "ja", kind: "question" }));
+  assert.match(en, /still waiting to start\. It is saved/); assert.match(en, /role="status"/);
+  assert.match(ja, /保存されており/); assert.doesNotMatch(en + ja, /paused|failed|停止|失敗/);
 });

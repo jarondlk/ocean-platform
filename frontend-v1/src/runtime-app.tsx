@@ -154,7 +154,10 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
   const bootstrap = runtime.status === "ready" ? runtime.bootstrap : undefined;
   const runTransport = researchRunTransport ?? (bootstrap?.research_runs?.transport === "http-v1" ? serviceRuns : undefined);
   const runSource = researchRunTransport ? "development-fixture" as const : "service" as const;
-  const links = (destinations: RuntimeDestination[]): ShellLink[] => destinations.filter((item) => bootstrap && capabilityVisible(bootstrap, item)).map((item) => {
+  // Sections that are not integrated yet are hidden instead of leading to a dead end.
+  const hiddenWhenUnavailable: RuntimeDestination[] = ["tools", "administration", "feedback"];
+  const links = (destinations: RuntimeDestination[]): ShellLink[] => destinations.filter((item) => bootstrap && capabilityVisible(bootstrap, item)
+    && !(hiddenWhenUnavailable.includes(item) && getCapability(bootstrap, item)?.status !== "ready")).map((item) => {
     const Icon = icons[item]; return { id: item, href: destinationPath(item), label: label(item, locale), icon: <Icon size={16} /> };
   });
   const primaryLinks = links(primary), supportLinks = links(support);
