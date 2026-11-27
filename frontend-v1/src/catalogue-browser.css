@@ -134,3 +134,10 @@
   .cb-node-label strong { font-size: 13px; }
   .cb-object-list li > button { min-height: 68px; }
 }
+
+/* Secondary filters stay available but out of the way. */
+.cb-more-filters { flex-basis: 100%; font-size: 13px; }
+.cb-more-filters .cb-page-size { margin: 0; }
+.cb-more-filters > summary { cursor: pointer; color: var(--blue-ink); width: max-content; }
+.cb-more-filters-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; align-items: end; margin-top: 10px; }
+.cb-filter-help { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
