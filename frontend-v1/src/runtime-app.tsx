@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, ChevronDown, Database, Globe2, Info, Layers3, LockKeyhole, LogOut, MessageSquare, Moon, RefreshCw, Settings2, ShieldCheck, Sun, UserRound, Wrench } from "lucide-react";
+import { ArrowRight, ChevronDown, Database, Globe2, Info, Layers3, LockKeyhole, LogOut, Mail, MessageSquare, Moon, RefreshCw, Settings2, ShieldCheck, Sun, UserRound, Wrench } from "lucide-react";
 import { ApplicationShell, ShellDialog, type ShellLink } from "./application-shell";
 import { ShellSplitPanels } from "./shell-panels";
 import { CatalogueBrowser } from "./catalogue-browser";
@@ -33,6 +33,9 @@ const icons = { research: MessageSquare, catalogue: Layers3, tools: Wrench, sett
 const canonical = (destination: ShellDestination): RuntimeDestination => destination === "admin" ? "administration" : destination;
 const label = (destination: RuntimeDestination, locale: Locale) => labels[destination][locale === "en" ? 0 : 1];
 const language = (locale: Locale, english: string, japanese: string) => locale === "en" ? english : japanese;
+/** Beta support contact, chosen by the project owner (2026-11-27). */
+export const SUPPORT_EMAIL = "dilokkalayakul.jaronchai.p8@dc.tohoku.ac.jp";
+export const supportMailto = (locale: Locale) => `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(language(locale, "OCEAN beta feedback", "OCEANベータへのフィードバック"))}`;
 
 export function RuntimeApp({ initialDestination = "research", transport, researchRunTransport, fetcher, signOutAction }: {
   initialDestination?: ShellDestination; transport?: RuntimeTransport; researchRunTransport?: ResearchRunTransport;
@@ -182,6 +185,7 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault(); navigate(link);
       }}>{link.icon}<span>{link.label}</span></a>)}
+    <a className="sidebar-link" href={supportMailto(locale)}><Mail size={16} /><span>{language(locale, "Report a problem", "問題を報告")}</span></a>
   </nav>;
   const permitted = bootstrap && routeAccessible(bootstrap, destination);
   const content = !bootstrap ? <RuntimeBoundary state={runtime} locale={locale} retry={reload} />
@@ -189,7 +193,7 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
     : destination === "research" && capabilityReady(bootstrap, destination) ? <ResearchWorkspace key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} session={researchSession.current} preferences={preferences} onPreferences={patch => setPreferences(current => ({ ...current, ...patch }))} onAccessLost={reload} client={hostInvestigations} catalogueClient={hostCatalogue} runTransport={runTransport} runSource={runSource} runSubmitEnabled={!!researchRunTransport || bootstrap.research_runs?.submit_enabled === true} answerClient={!researchRunTransport && bootstrap.research_evidence?.transport === "http-v1" ? serviceAnswers : undefined} evidenceClient={!researchRunTransport && bootstrap.research_evidence?.transport === "http-v1" ? serviceEvidence : undefined} answerSubmitEnabled={!researchRunTransport && bootstrap.research_evidence?.submit_enabled === true} experimentClient={bootstrap.research_experiments?.proposal_transport === "http-v1" ? serviceExperiments : undefined} executionClient={bootstrap.research_experiments?.execution_transport === "http-v1" ? serviceExecutions : undefined} experimentApprovalEnabled={bootstrap.research_experiments?.approval_enabled === true} canExport={bootstrap.identity.permissions.includes("data:export")} />
     : destination === "catalogue" && capabilityReady(bootstrap, destination) ? <CatalogueBrowser key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} client={hostCatalogue} onAccessLost={reload} />
     : destination === "settings" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><div className="runtime-preferences"><label>{language(locale, "Language", "言語")}<select value={locale} onChange={(event) => setPreferences((current) => ({ ...current, locale: event.target.value as Locale }))}><option value="en">English</option><option value="ja">日本語</option></select></label><label>{language(locale, "Theme", "テーマ")}<select value={preferences.theme} onChange={(event) => setPreferences((current) => ({ ...current, theme: event.target.value as "light" | "dark" }))}><option value="light">{language(locale, "Light", "ライト")}</option><option value="dark">{language(locale, "Dark", "ダーク")}</option></select></label></div></section>
-    : destination === "about" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><dl className="runtime-account-details"><div><dt>{language(locale, "Application", "アプリケーション")}</dt><dd>OCEAN</dd></div></dl></section>
+    : destination === "about" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><dl className="runtime-account-details"><div><dt>{language(locale, "Application", "アプリケーション")}</dt><dd>OCEAN</dd></div><div><dt>{language(locale, "Questions and problems", "質問・問題の連絡先")}</dt><dd><a href={supportMailto(locale)}>{SUPPORT_EMAIL}</a></dd></div></dl></section>
     : <section className="runtime-destination"><PageHeading destination={destination} locale={locale} />{destination === "research" || destination === "catalogue" ? <ShellSplitPanels
       locale={locale} width={preferences.workspaceWidth} open={preferences.workspaceOpen} active={preferences.mobilePane === "workspace" ? "secondary" : "primary"}
       onWidth={(workspaceWidth) => setPreferences((current) => ({ ...current, workspaceWidth }))} onOpen={(workspaceOpen) => setPreferences((current) => ({ ...current, workspaceOpen }))} onActive={(active) => setPreferences((current) => ({ ...current, mobilePane: active === "secondary" ? "workspace" : "chat" }))}
