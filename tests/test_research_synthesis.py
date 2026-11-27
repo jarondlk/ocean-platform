@@ -406,3 +406,55 @@ def test_unsupported_output_locale_does_not_invent_translation():
     pack = build_synthesis_pack(verified())
     with pytest.raises(SynthesisInvalid, match="locale"):
         render_selection(parse_selection(select([]), pack), pack, "fr")
+
+
+def _example_node(family):
+    import json
+    from pathlib import Path
+    nodes = json.loads((Path(__file__).resolve().parents[1] / "schema/context_catalogue_examples.json").read_text())["nodes"]
+    return next(node for node in nodes if (node.get("descriptor") or {}).get("family") == family)
+
+
+def verified_object(node, *, payload=None):
+    from schema.research_controller import ObjectWitness
+    source = verified(count=1, payload=payload if payload is not None else {"node": node, "rows": []})
+    observation = source.anchor.controller_result.observations[0].model_copy(update={
+        "objects": (ObjectWitness(object_id=node["id"], exact_names=(node["title"]["en"],)),)})
+    fact = source.completion.facts[0].model_copy(update={"value_json": canonical_json({"object_id": node["id"]})})
+    result = source.anchor.controller_result.model_copy(update={"observations": (observation,),
+        "completion": source.completion.model_copy(update={"facts": (fact,)})})
+    return replace(source, anchor=replace(source.anchor, controller_result=result,
+        controller_result_sha256=canonical_hash(result.model_dump(mode="json"))))
+
+
+@pytest.mark.parametrize("family", ["remote_sensing", "ctd", "metagenome", "edna_metabarcoding"])
+@pytest.mark.parametrize("locale", ["en", "ja"])
+def test_object_fact_renders_readable_sentence_from_exact_catalogue_values(family, locale):
+    node = _example_node(family)
+    pack = build_synthesis_pack(verified_object(node))
+    answer = render_selection(parse_selection(select([]), pack), pack, locale)
+    block = next(block for block in answer.blocks if block.fact_id == "requested:1")
+    assert node["title"][locale] in block.text
+    assert node["id"] not in block.text  # identifiers stay in block data, not prose
+    assert block.data["value"] == {"object_id": node["id"]}
+    if family == "remote_sensing":
+        descriptor = node["descriptor"]
+        assert str(descriptor["product_version"]) in block.text
+        assert descriptor["product_id"].upper() in block.text
+    if node["lifecycle"]["scientific_approval"] == "not_reviewed":
+        assert ("Not yet scientifically reviewed." if locale == "en" else "科学的なレビューは未実施です。") in block.text
+
+
+def test_object_fact_without_verified_node_keeps_identifier_rendering():
+    node = _example_node("remote_sensing")
+    pack = build_synthesis_pack(verified_object(node, payload={"rows": []}))
+    answer = render_selection(parse_selection(select([]), pack), pack, "en")
+    block = next(block for block in answer.blocks if block.fact_id == "requested:1")
+    assert block.text.endswith("Retained object: " + node["id"])
+
+
+@pytest.mark.parametrize(("count", "noun"), [(1, "1 dataset"), (3, "3 datasets")])
+def test_count_fact_reads_as_quantity_with_its_definition(count, noun):
+    pack = build_synthesis_pack(verified(count=count))
+    answer = render_selection(deterministic_selection(pack), pack, "en", model_used=False)
+    assert noun + " — counted as: complete frozen scope." in answer.blocks[0].text
