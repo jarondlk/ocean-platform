@@ -275,3 +275,50 @@ def test_one_task_requires_complete_pages_and_encodes_token():
 def test_incomplete_duplicate_looping_or_empty_task_listing_refused(pages):
     with pytest.raises(delivery.guard.Rejected):
         delivery.one_queued_task(page_cloud(pages), "https://cloudtasks.googleapis.com/v2/fixed")
+
+
+@pytest.mark.parametrize('state', ['answers_live', 'answers_serving_drift', 'answers_wrong_image'])
+def test_answers_deployment_requires_both_services_on_the_receipt_image(tmp_path, monkeypatch, state):
+    import hashlib
+    import json
+
+    image = 'answers-image'
+    traffic = [{'type': 'TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST', 'percent': 100}]
+    services, receipt = {}, {'version': 'ocean-beta-answers-live-v1', 'project': delivery.rollout.PROJECT,
+                             'region': delivery.rollout.REGION, 'baseline_receipt_sha256': 'b2', 'image': image}
+    for key, slug, container in (('serving', 'ocean-v1-beta-serving', 'api'),
+                                 ('research_controller', 'ocean-v1-beta-research-controller', 'controller')):
+        name = f'{delivery.rollout.PREFIX}/services/{slug}'
+        revision = slug + '-answers'
+        env = [{'name': flag, 'value': 'true'} for flag in delivery.rollout.FLAGS] if key == 'serving' else []
+        template = {'revision': revision, 'containers': [{'name': container, 'image': image, 'env': env}]}
+        receipt[key] = {'new_image': image, 'revision': revision, 'generation': 11,
+                        'configuration_sha256': delivery.rollout.sha({'template': template, 'traffic': traffic})}
+        services[name] = {'name': name, 'generation': '11', 'observedGeneration': '11', 'template': template,
+                          'traffic': traffic, 'latestCreatedRevision': revision, 'latestReadyRevision': revision,
+                          'terminalCondition': {'state': 'CONDITION_SUCCEEDED'},
+                          'trafficStatuses': [{'revision': revision, 'percent': 100}]}
+    b2 = tmp_path / 'b2.json'
+    b2_raw = json.dumps({'image_proof': {'image': 'old-b2-image', 'build_status': 'SUCCESS', 'offline_proof': 'success'},
+                         'initial_cold_discovery_delivery_passed': True, 'serving': {}, 'research_controller': {}}).encode()
+    b2.write_bytes(b2_raw)
+    receipt['baseline_receipt_sha256'] = hashlib.sha256(b2_raw).hexdigest()
+    path = tmp_path / 'answers.json'
+    raw = json.dumps(receipt).encode()
+    path.write_bytes(raw)
+    monkeypatch.setattr(delivery, 'B2_RECEIPT', b2)
+    monkeypatch.setattr(delivery, 'B2_RECEIPT_SHA256', receipt['baseline_receipt_sha256'])
+    monkeypatch.setattr(delivery, 'ANSWERS_RECEIPT', path)
+    monkeypatch.setattr(delivery, 'ANSWERS_RECEIPT_SHA256', hashlib.sha256(raw).hexdigest())
+    monkeypatch.setattr(delivery, 'ANSWERS_CONTROLLER_GENERATION', '11')
+    serving = services[f'{delivery.rollout.PREFIX}/services/ocean-v1-beta-serving']
+    if state == 'answers_serving_drift':
+        serving['template']['timeout'] = '240s'
+    elif state == 'answers_wrong_image':
+        serving['template']['containers'][0]['image'] = 'old-b2-image'
+    cloud = type('Cloud', (), {'request': lambda _, url, **__: services[url.split('/v2/', 1)[1]]})()
+    if state == 'answers_live':
+        assert delivery.verify_b2_deployment(cloud).endswith('ocean-v1-beta-research-controller')
+    else:
+        with pytest.raises(delivery.guard.Rejected):
+            delivery.verify_b2_deployment(cloud)

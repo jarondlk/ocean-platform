@@ -1,0 +1,35 @@
+{
+  "version": "ocean-beta-answers-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "candidate_receipt_sha256": "1b670c55aaf6894e4092baeb663cd1e224f6d197da9821434aba965943af916d",
+  "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:d47032d296d58f75b079158df440df7ad0a6abfcda59700a05c8589a224b4637",
+  "runtime_revision": "8f3aee4031354416d8c03ef468e505b22b4f4a21",
+  "research_controller": {
+    "previous_generation": 10,
+    "previous_revision": "ocean-v1-beta-research-controller-b2-discovery-1122",
+    "generation": 11,
+    "revision": "ocean-v1-beta-research-controller-answers-8f3aee4",
+    "new_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:d47032d296d58f75b079158df440df7ad0a6abfcda59700a05c8589a224b4637",
+    "configuration_sha256": "7e34743731802f44a53c62ea2d4148e2a47a071942f2ad98773303171875a850",
+    "only_image_and_revision_changed": true,
+    "validation_only_passed": true,
+    "traffic_percent": 100,
+    "updated_by": "operator personal credential (user-authorized 2026-11-27)"
+  },
+  "serving": {
+    "previous_generation": 78,
+    "previous_revision": "ocean-v1-beta-serving-readable-3e35423",
+    "generation": 79,
+    "revision": "ocean-v1-beta-serving-answers-8f3aee4",
+    "new_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:d47032d296d58f75b079158df440df7ad0a6abfcda59700a05c8589a224b4637",
+    "configuration_sha256": "d4f07e82d26f406a15c9a810e9d78a170ac3d31109c14c4b08c6b5a764119264",
+    "only_image_and_revision_changed": true,
+    "validation_only_passed": true,
+    "traffic_percent": 100,
+    "updated_by": "ocean-v1-beta-cli scoped deployer"
+  },
+  "order": "controller first, then serving api; serving frontend, sql-proxy, identities, secrets, ingress, scaling and traffic unchanged",
+  "queue_or_scheduler_modified": false
+}

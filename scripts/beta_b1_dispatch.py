@@ -50,6 +50,26 @@ B2_WAIT_GENERATION = '77'
 B2_SUPPORT_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/ui-20261127/frontend-support-live.json'
 B2_SUPPORT_RECEIPT_SHA256 = '8092c303e0f183a135e0b4cf68aea02f38e8205795ba4fb0d154d39e8e111e2c'
 B2_SUPPORT_GENERATION = '78'
+# Readable-answer API image on both services (controller generation 11, serving 79).
+ANSWERS_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/answers-20261127/answers-live.json'
+ANSWERS_RECEIPT_SHA256 = 'e14e795fa62143114d77bfa71874e9d6c7740cdbfa7e4171eac016e77b0f25c5'
+ANSWERS_CONTROLLER_GENERATION = '11'
+
+
+def answers_deployment(cloud):
+    """The answers receipt when the live controller is at its generation, else None."""
+    controller = cloud.request(f'https://run.googleapis.com/v2/{rollout.PREFIX}/services/ocean-v1-beta-research-controller')
+    if str(controller['generation']) != ANSWERS_CONTROLLER_GENERATION:
+        return None
+    raw = ANSWERS_RECEIPT.read_bytes()
+    guard.require(hashlib.sha256(raw).hexdigest() == ANSWERS_RECEIPT_SHA256)
+    receipt = guard.document(raw)
+    guard.require(receipt['version'] == 'ocean-beta-answers-live-v1'
+                  and receipt['project'] == rollout.PROJECT and receipt['region'] == rollout.REGION
+                  and receipt['baseline_receipt_sha256'] == B2_RECEIPT_SHA256
+                  and str(receipt['research_controller']['generation']) == ANSWERS_CONTROLLER_GENERATION
+                  and receipt['research_controller']['new_image'] == receipt['serving']['new_image'] == receipt['image'])
+    return receipt
 
 
 def qualified_b2_serving(service, original):
@@ -115,12 +135,17 @@ def verify_b2_deployment(cloud):
     guard.require(receipt['image_proof']['build_status'] == 'SUCCESS'
                   and receipt['image_proof']['offline_proof'] == 'success'
                   and receipt['initial_cold_discovery_delivery_passed'] is True)
+    answers = answers_deployment(cloud)
+    if answers is not None:
+        # Both services must match the answers receipt exactly; no other serving
+        # generation is qualified on the new image.
+        receipt, image = answers, answers['image']
     for kind, slug, key in (('serving', 'ocean-v1-beta-serving', 'serving'),
                             ('controller', 'ocean-v1-beta-research-controller', 'research_controller')):
         name = f'{rollout.PREFIX}/services/{slug}'
         selection = receipt[key]
         service = cloud.request('https://run.googleapis.com/v2/' + name)
-        if kind == 'serving' and str(service['generation']) != str(selection['generation']):
+        if answers is None and kind == 'serving' and str(service['generation']) != str(selection['generation']):
             selection = qualified_b2_serving(service, selection)
         revision = selection['revision']
         active, = service['trafficStatuses']
