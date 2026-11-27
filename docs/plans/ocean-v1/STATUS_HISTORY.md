@@ -2,6 +2,18 @@
 
 Dated log, newest first. The current one-page summary is [STATUS.md](STATUS.md).
 
+## November 27 — Readable-answers image on controller and serving API
+
+The research controller (generation 11, updated with the operator's
+credential at the user's request) and then the serving API container
+(generation 79, scoped deployer) moved to the verified readable-answers image
+`snapshot-api@sha256:d47032d2…`; each update was validated first and read
+back with only the image and revision changed. The dispatch guard accepts
+exactly this pair. Re-preparing the old MUR answer returns the existing
+answer, so the MUR question was asked again; its exploration `d3af5ed0…` is
+queued and waits for a manual dispatch.
+[Deployment record](beta/answers-20261127/answers-live.json).
+
 ## November 27 — Support contact live
 
 Serving generation 78 (`ocean-v1-beta-serving-readable-3e35423`) changes only

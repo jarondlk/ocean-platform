@@ -9,8 +9,8 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 | Part | State |
 |---|---|
 | Site | `https://beta.oceaninfobio.com`, Google sign-in, invite-only |
-| Serving | `ocean-v1-beta-serving` generation 78, revision `ocean-v1-beta-serving-readable-3e35423` (frontend `3e35423`, API image unchanged since B2) |
-| Research controller | `ocean-v1-beta-research-controller` generation 10, same API image as serving |
+| Serving | `ocean-v1-beta-serving` generation 79, revision `ocean-v1-beta-serving-answers-8f3aee4` (frontend `3e35423`; API = readable-answers image `d47032d2…`) |
+| Research controller | `ocean-v1-beta-research-controller` generation 11, same readable-answers image as the serving API |
 | Research delivery | Cloud Tasks queue and Scheduler job last recorded **paused** (Nov 24); manual operator dispatch only |
 | Data in the catalogue | CTD, metagenome, MUR regional SST (2020–2023) and raw ANEMONE eDNA inventory (39 datasets) |
 | Monitoring | Alert policies for queue backlog, Research delivery failures and SQL backups are active |
@@ -29,11 +29,10 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
   submissions, but delivery is paused, so a new question waits until an
   operator dispatches it. After 90 s the page now tells the user the question
   is saved and still waiting.
-- **Answer wording is still technical** ("Retained object: …"). A verified API
-  image with the readable templates is built
-  ([candidate record](beta/answers-20261127/answers-api-candidate.json)); it
-  goes live once the operator updates the research controller, after which the
-  serving API is updated to the same image.
+- **Readable answer wording is deployed but not yet seen live.** Both services
+  run the readable-answers image ([record](beta/answers-20261127/answers-live.json)).
+  Answers prepared earlier keep their old wording; a new exploration
+  (`d3af5ed0…`, the MUR question) is queued and needs a manual dispatch.
 - **eDNA questions** cannot give scientific results: the live eDNA data is raw
   inventory with unknown or control classifications and no resolved sample
   identities.
