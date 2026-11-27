@@ -1,5 +1,19 @@
 # Implementation status
 
+## November 27 — Readable Research and catalogue UI live
+
+Serving generation 76 (`ocean-v1-beta-serving-readable-b7e5623`) changes only
+the frontend image, built from `b7e5623`. Focus and tab switches no longer
+reload the app, so first clicks and the catalogue's first load work. Research
+opens on a welcome screen, lists conversations before showing the question box,
+and shows the selected exploration's answer in the chat with limitations and
+technical details collapsed. The catalogue uses collection cards, readable
+names and a "More filters" panel. Signed-in live checks passed. The readable
+answer templates in `research_synthesis.py` are committed but not live: they
+run in the research controller, which the CLI identity cannot update. The
+dispatch guard accepts generation 76 through its receipt.
+[Frontend deployment receipt](beta/ui-20261127/frontend-readable-live.json).
+
 ## November 26 — Counts-only Research outbox observer prepared
 
 The outbox observer reports aged pending and sent work, missing current

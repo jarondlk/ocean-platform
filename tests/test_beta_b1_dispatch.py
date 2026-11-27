@@ -127,13 +127,15 @@ def test_list_dispatch_requires_its_own_qualified_contract_and_rejects_ambiguous
     'changed_baseline', 'sweep_restored', 'sweep_restored_config_drift',
     'layout_deployed', 'layout_wrong_frontend', 'layout_unrelated_change',
     'plex_deployed', 'plex_wrong_baseline_frontend',
+    'readable_deployed', 'readable_wrong_baseline_frontend',
 ])
 def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_path, monkeypatch, state):
     import hashlib
     import json
 
     image = 'synthetic-image-pin'
-    plex = state.startswith('plex_')
+    readable = state.startswith('readable_')
+    plex = readable or state.startswith('plex_')
     layout = plex or state.startswith('layout_')
     receipt = {'image_proof': {'image': image, 'build_status': 'SUCCESS', 'offline_proof': 'success'},
                'initial_cold_discovery_delivery_passed': True}
@@ -182,12 +184,12 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
                 'configuration_sha256': delivery.rollout.sha({'template': serving['template'], 'traffic': traffic}),
             }
             if plex:
-                field = 'B2_PLEX_RECEIPT'
-                version = 'ocean-beta-frontend-plex-live-v1'
-                monkeypatch.setattr(delivery, 'B2_PLEX_GENERATION', '3')
+                field = 'B2_READABLE_RECEIPT' if readable else 'B2_PLEX_RECEIPT'
+                version = 'ocean-beta-frontend-readable-live-v1' if readable else 'ocean-beta-frontend-plex-live-v1'
+                monkeypatch.setattr(delivery, 'B2_READABLE_GENERATION' if readable else 'B2_PLEX_GENERATION', '3')
                 proof['frontend_before'] = 'qualified-layout-frontend'
                 proof['baseline_frontend_image'] = (
-                    'original-frontend' if state == 'plex_deployed' else 'wrong-baseline-frontend'
+                    'original-frontend' if state.endswith('_deployed') else 'wrong-baseline-frontend'
                 )
             else:
                 monkeypatch.setattr(delivery, 'B2_LAYOUT_GENERATION', '3')
@@ -231,7 +233,7 @@ def test_b2_dispatch_checks_both_accepted_live_templates_before_delivery(tmp_pat
 
     monkeypatch.setattr(delivery, 'dispatch', dispatch)
     cloud = type('Cloud', (), {'request': lambda _, url: services[url.split('/v2/', 1)[1]]})()
-    if state not in ('original', 'restored', 'sweep_restored', 'layout_deployed', 'plex_deployed'):
+    if state not in ('original', 'restored', 'sweep_restored', 'layout_deployed', 'plex_deployed', 'readable_deployed'):
         with pytest.raises(delivery.guard.Rejected):
             delivery.execute(cloud, tmp_path, 'run', IDENTITY, b2_candidate=True)
         assert not calls

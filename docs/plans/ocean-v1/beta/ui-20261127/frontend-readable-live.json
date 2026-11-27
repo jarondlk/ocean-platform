@@ -1,0 +1,74 @@
+{
+  "version": "ocean-beta-frontend-readable-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "b7e56235bbee45037e0a80d7a497960990b82004",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "preceding_frontend_receipt_sha256": "9905548daf8bb9e24d675543ef4fbf56220f7ec76ab427f269839f10bad5b1d4",
+  "change_summary": [
+    "Focus/visibility recheck identity quietly instead of reloading the app (479a224)",
+    "Answers shown inline in chat; limitations and technical details collapsed (8686f6a, frontend part)",
+    "Research welcome screen, conversation chooser and plainer labels (80f9cbd)",
+    "Catalogue collection picker, readable names and simpler filters (b7e5623)"
+  ],
+  "not_deployed": {
+    "readable_answer_templates": "orchestration/research_synthesis.py changes run in ocean-v1-beta-research-controller, which the CLI identity cannot update; serving API and controller images were left unchanged and equal."
+  },
+  "build": {
+    "id": "0f6d6bad-36a7-4314-83f4-cabc09be24af",
+    "status": "SUCCESS",
+    "source_manifest_sha256": "2227487a4c2804684ff8cf7f571490216ccd891a4cda2666c8f18798d069769a",
+    "source_files": 71,
+    "image_sha256": "e0f925467173cda9616ba8ad4c4491053d9d30be2cec83f0b114e89744f6d686",
+    "serving_adapter_sha256": "a5e46f2cecd3502721e2c62c4ac19df29c15e42596cacd40255a61d788bcd53e",
+    "startup_gate_sha256": "bb0ffc222990abd1e6774fe18408841a056bc0601ce4f338c529e61e697148b2",
+    "offline_source_transport_startup_fonts_and_ui_strings_passed": true
+  },
+  "verification": {
+    "local_frontend_tests_passed": 1101,
+    "local_typecheck_passed": true,
+    "local_backend_answer_and_evidence_tests_passed": 385,
+    "local_c26_harness_browser_checks": [
+      "welcome",
+      "conversation chooser",
+      "inline answer",
+      "catalogue overview and breadcrumbs",
+      "English and Japanese",
+      "800px narrow layout"
+    ],
+    "hosted_run_id": 45943003037,
+    "hosted_v1_frontend_job_conclusion": "success",
+    "hosted_v1_auth_host_job_conclusion": "success",
+    "legacy_frontend_audit_job_conclusion": "failure (pre-existing npm audit finding; fixed by PR #141 on main)",
+    "public_host": {
+      "login_http": 200,
+      "unauthenticated_runtime_http": 401,
+      "root_redirects_to_login": true
+    },
+    "signed_in_live_browser": {
+      "welcome_and_data_versions_loaded": true,
+      "first_click_opens_investigation": true,
+      "saved_mur_answer_shown_inline_with_collapsed_limitations": true,
+      "catalogue_first_load_without_error": true,
+      "focus_events_within_30s_caused_runtime_refetches": 0
+    }
+  },
+  "deployment": {
+    "method": "Cloud Run v2 PATCH updateMask=template, validateOnly first",
+    "previous_generation": 75,
+    "generation": 76,
+    "revision": "ocean-v1-beta-serving-readable-b7e5623",
+    "frontend_before": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:55b09bddd1e0a95bd22e8db94fe4b19bb3eb5edf18d01fa71bd0be0bd0f55d79",
+    "frontend_after": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:e0f925467173cda9616ba8ad4c4491053d9d30be2cec83f0b114e89744f6d686",
+    "baseline_frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "configuration_sha256": "b8d86ed12b048a383cb39aaf4e55f595ff88d60977c28d767c5e58535330cf00",
+    "baseline_configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "only_frontend_image_and_revision_changed": true,
+    "validation_only_passed": true,
+    "traffic_percent": 100,
+    "controller_modified": false,
+    "queue_or_scheduler_modified": false
+  },
+  "b4_complete": false
+}

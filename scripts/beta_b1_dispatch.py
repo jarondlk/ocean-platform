@@ -41,12 +41,18 @@ B2_LAYOUT_GENERATION = '74'
 B2_PLEX_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/ui-20261126/frontend-plex-live.json'
 B2_PLEX_RECEIPT_SHA256 = '9905548daf8bb9e24d675543ef4fbf56220f7ec76ab427f269839f10bad5b1d4'
 B2_PLEX_GENERATION = '75'
+B2_READABLE_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/ui-20261127/frontend-readable-live.json'
+B2_READABLE_RECEIPT_SHA256 = 'e269d8df601c435f8321d87fe4d74aeafcd24919b214e22c0d43f1c51ad58458'
+B2_READABLE_GENERATION = '76'
 
 
 def qualified_b2_serving(service, original):
     generation = str(service['generation'])
-    frontend_only = generation in (B2_LAYOUT_GENERATION, B2_PLEX_GENERATION)
-    if generation == B2_PLEX_GENERATION:
+    frontend_only = generation in (B2_LAYOUT_GENERATION, B2_PLEX_GENERATION, B2_READABLE_GENERATION)
+    if generation == B2_READABLE_GENERATION:
+        path, digest = B2_READABLE_RECEIPT, B2_READABLE_RECEIPT_SHA256
+        version = 'ocean-beta-frontend-readable-live-v1'
+    elif generation == B2_PLEX_GENERATION:
         path, digest = B2_PLEX_RECEIPT, B2_PLEX_RECEIPT_SHA256
         version = 'ocean-beta-frontend-plex-live-v1'
     elif generation == B2_LAYOUT_GENERATION:
@@ -70,7 +76,8 @@ def qualified_b2_serving(service, original):
         frontend, = (item for item in template['containers'] if item.get('name') == 'frontend')
         guard.require(selection['only_frontend_image_and_revision_changed'] is True
                       and frontend['image'] == selection['frontend_after'])
-        baseline_field = 'baseline_frontend_image' if generation == B2_PLEX_GENERATION else 'frontend_before'
+        baseline_field = ('baseline_frontend_image' if generation in (B2_PLEX_GENERATION, B2_READABLE_GENERATION)
+                          else 'frontend_before')
         baseline_frontend = selection[baseline_field]
         template['containers'] = [
             {**item, 'image': baseline_frontend} if item is frontend else item
