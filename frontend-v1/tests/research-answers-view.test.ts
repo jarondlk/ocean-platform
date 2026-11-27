@@ -60,3 +60,40 @@ test("production runtime and workspace wire independent transport and explicit a
   assert.match(source, /downloadBlob\(result\.content_text, result\.filename, result\.mime_type\)/); assert.match(source, /scheduler\.current\?\.pause\(\); receiptScheduler\.current\?\.pause\(\)/);
   assert.match(source, /window\.addEventListener\("focus", check\)/); assert.match(source, /setInterval\(\(\) => \{ if \(document\.visibilityState !== "hidden"\) poll\.request\(\); \}, 10000\)/);
 });
+
+test("answer text drops only known authority prefixes, which are shown as tags instead", () => {
+  const { withoutAuthorityPrefix } = module.exports;
+  assert.equal(withoutAuthorityPrefix("Descriptive result: MUR regional SST — v04.1."), "MUR regional SST — v04.1.");
+  assert.equal(withoutAuthorityPrefix("Descriptive result, Published analysis: 3 datasets."), "3 datasets.");
+  assert.equal(withoutAuthorityPrefix("記述的な結果: データセット: 1。"), "データセット: 1。");
+  assert.equal(withoutAuthorityPrefix("Temperature: 12 °C"), "Temperature: 12 °C");
+  assert.equal(withoutAuthorityPrefix("No prefix here"), "No prefix here");
+});
+
+test("qualification JSON fragments become labelled details; plain notes stay verbatim and deduplicated", () => {
+  const { splitQualifications } = module.exports;
+  const result = splitQualifications(["Not reviewed.", '{"node.descriptor.product_version":"04.1"}', '{"node.descriptor.spatial_resolution":0.05}', "Not reviewed.", '{"a":1,"b":2}', "{not json}", '{"node.lifecycle.publication":null}']);
+  assert.deepEqual(result.notes, ["Not reviewed.", '{"a":1,"b":2}', "{not json}"]);
+  assert.deepEqual(result.details, [["node.descriptor.product_version", "04.1"], ["node.descriptor.spatial_resolution", "0.05"]]);
+  assert.deepEqual(splitQualifications(['{"columns.0.key":"entity"}']).details, []);
+});
+
+test("answer card leads with answer text and keeps limitations, verification note and technical details available", () => {
+  const job = f.job("completed"); job.answer!.blocks[0].text = "Descriptive result: Readable answer sentence.";
+  job.answer!.qualifications = ["Sampling is limited.", '{"node.descriptor.product_version":"04.1"}'];
+  const html = renderToStaticMarkup(React.createElement(AnswerCard, { locale: "en", view: state.mergeAnswerSnapshot(undefined, job), busy: false, onCancel() {}, onCitation() {}, receipts: [f.receipt()] }));
+  assert.match(html, /<p class="ra-answer-text">Readable answer sentence\.<\/p>/);
+  assert.match(html, /Limitations and notes \(1\)/); assert.match(html, /Sampling is limited\./);
+  assert.match(html, /Product version/); assert.match(html, /04\.1/);
+  assert.match(html, /not independent scientific verification/); assert.match(html, /Technical details/);
+  assert.ok(html.indexOf("ra-answer-text") < html.indexOf("Technical details"));
+});
+
+test("limitation blocks that only restate qualifications are not repeated in the main answer", () => {
+  const { repeatsQualifications } = module.exports;
+  const quals = ["Not reviewed.", '{"a.b":1}'];
+  assert.equal(repeatsQualifications({ kind: "limitation", fact_id: null, text: 'Not reviewed.\n{"a.b":1}' }, quals), true);
+  assert.equal(repeatsQualifications({ kind: "limitation", fact_id: "requested:1", text: "Not reviewed." }, quals), false);
+  assert.equal(repeatsQualifications({ kind: "limitation", fact_id: null, text: "Unresolved input cohort: cohort:x" }, quals), false);
+  assert.equal(repeatsQualifications({ kind: "fact", fact_id: null, text: "Not reviewed." }, quals), false);
+});

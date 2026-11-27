@@ -48,3 +48,27 @@
 .ra-results > ul:empty { display: none; }
 @media (max-width: 760px) { .ra-run, .ra-results > article, .ra-evidence { padding: 12px; } .ra-run > header { display: grid; gap: 6px; } .ra-binding dl > div, .ra-evidence dl > div { grid-template-columns: 1fr; gap: 2px; } .ra-controls button { min-height: 40px; } }
 @media (max-width: 760px) { .ra-run[data-answer-status] > header { display: flex; align-items: baseline; } }
+
+/* Readable answers: answer text first, details on demand. */
+.ra-inline { margin: 4px 0 8px; }
+.ra-inline-empty { display: grid; gap: 8px; justify-items: start; padding: 14px; border: 1px dashed var(--control-line); border-radius: var(--box-radius); background: var(--blue-wash); }
+.ra-inline-empty p { margin: 0; }
+.ra-answer { gap: 12px; }
+.ra-answer > header { align-items: center; }
+.ra-answer > header h4 { font-size: 14px; }
+.ra-badge { padding: 1px 8px; border-radius: 999px; font-size: 11.5px; background: var(--blue-wash); color: var(--blue-ink); white-space: nowrap; }
+.ra-badge-partial, .ra-badge-failed, .ra-badge-unavailable { background: transparent; border: 1px solid var(--warning); color: var(--text); }
+.ra-answer-block { display: grid; gap: 6px; }
+.ra-answer .ra-answer-text { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--text); }
+.ra-run [data-answer-kind] > p.ra-answer-text:first-child { color: var(--text); font-size: 14.5px; }
+.ra-answer-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 12px; }
+.ra-tag { padding: 0 6px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-size: 11.5px; }
+.ra-verification { margin: 0; color: var(--muted); font-size: 12px; }
+.ra-limitations, .ra-technical { font-size: 12.5px; color: var(--muted); }
+.ra-limitations > summary, .ra-technical > summary { cursor: pointer; color: var(--blue-ink); }
+.ra-limitations ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; color: var(--text); }
+.ra-fields { display: grid; grid-template-columns: minmax(120px, max-content) 1fr; gap: 2px 12px; margin: 6px 0 0; }
+.ra-fields > div { display: contents; }
+.ra-fields dt { color: var(--muted); }
+.ra-fields dd { margin: 0; color: var(--text); overflow-wrap: anywhere; }
+.ra-technical pre { max-height: 240px; overflow: auto; font-family: var(--font-code); font-size: 11.5px; }

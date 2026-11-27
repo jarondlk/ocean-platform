@@ -147,21 +147,107 @@ export function useResearchAnswers(props: Props) {
     </>}
   </section>;
   const evidencePanel = !selection.receiptId ? <p>{say(locale, "Open an answer citation or retained evidence receipt.", "回答の引用または保持済みエビデンスを開いてください。")}</p> : !opened || !page ? <div role="status"><p>{say(locale, receiptError ? "Retained evidence is unavailable. Reload to check current access." : "Checking retained evidence…", receiptError ? "保持済みエビデンスを利用できません。現在のアクセス条件を再確認してください。" : "保持済みエビデンスを確認しています…")}</p>{receiptError && <button className="button secondary" onClick={() => setRefresh(value => value + 1)}>{say(locale, "Reload evidence", "エビデンスを再読込")}</button>}</div> : <RetainedEvidence locale={locale} value={page} section={section} busy={busy || props.externalBusy} canExport={props.canExport} canAttach={props.canAttach} onSection={value => { setOffset(0); setSection(value); }} onPage={setOffset} onExport={format => void exportPage(format)} onAttach={() => void attach()} />;
-  return { controls, evidencePanel, active: !!selection.receiptId };
+  // The answer for the selected exploration, shown directly in the chat.
+  const featured = views.find(view => view.job.answer && view.job.locale === locale) ?? views.find(view => answerActive(view.job)) ?? views.find(view => view.job.answer);
+  const inline = !answers || !evidence || !selection.runId ? null : featured
+    ? <div className="ra-inline"><AnswerCard locale={locale} view={featured} busy={busy || !!pending || props.externalBusy} onCancel={() => cancel(featured.job)} onCitation={openReceipt} receipts={receipts} /></div>
+    : discovery?.eligible && props.submitEnabled ? <div className="ra-inline ra-inline-empty">
+      <p>{say(locale, "The exploration is finished. Prepare a cited answer from its evidence.", "探索が完了しました。根拠に基づく引用付きの回答を準備できます。")}</p>
+      <button type="button" className="button primary" onClick={prepare} disabled={busy || !!pending || props.externalBusy}>{say(locale, "Prepare answer", "回答を準備")}</button>
+    </div> : null;
+  return { controls, evidencePanel, inline, active: !!selection.receiptId };
 }
 
 export function AnswerCard({ locale, view, busy, onCancel, onCitation, receipts = [] }: { locale: Locale; view: AnswerView; busy: boolean; onCancel: () => void; onCitation: (id: string) => void; receipts?: readonly EvidenceReceipt[] }) {
   const { job } = view, answer = job.answer;
-  return <article className="ra-run" data-answer-status={job.status}><header><h4>{say(locale, "Answer", "回答")} · {job.locale.toUpperCase()}</h4><span role="status">{answerStatus(job.status, locale)}</span></header>
-    <p>{say(locale, "Answer preparation active time", "回答準備の実行時間")}: {Math.floor(job.active_elapsed_ms / 1000)}s</p>
+  const { notes, details } = answer ? splitQualifications(answer.qualifications) : { notes: [], details: [] };
+  const seconds = Math.floor(job.active_elapsed_ms / 1000);
+  return <article className="ra-run ra-answer" data-answer-status={job.status}>
+    <header>
+      <h4>{say(locale, "Answer", "回答")}</h4>
+      <span role="status" className={`ra-badge ra-badge-${job.status}`}>{answerStatus(job.status, locale)}</span>
+    </header>
     {answerActive(job) && <button type="button" className="button secondary" disabled={busy} onClick={onCancel}>{say(locale, "Cancel answer preparation", "回答準備をキャンセル")}</button>}
-    {job.error && <p role="alert">{job.error[locale]}</p>}{job.status === "cancelled" && <p>{say(locale, "Answer preparation was cancelled.", "回答準備はキャンセルされました。")}</p>}
-    {answer && <><p className={answer.completion === "partial" ? "ra-partial" : "ra-status"}>{say(locale, answer.completion === "partial" ? "Partial answer — unresolved work remains." : "Complete against the retained requested evidence.", answer.completion === "partial" ? "途中の回答です。未解決の作業が残っています。" : "保持された要求エビデンスに対して完了しています。")}</p>
-      {answer.blocks.map(block => <section key={block.id} data-answer-kind={block.kind}><p>{[...new Set(block.receipt_ids.map(id => receipts.find(receipt => receipt.id === id)?.authority).filter(Boolean))].map(authority => authorityLabel(authority!, locale)).join(" · ")}</p><p>{block.text}</p><div>{block.receipt_ids.map((id, index) => <button key={id} type="button" className="text-button" onClick={() => onCitation(id)}>{say(locale, "Open evidence", "エビデンスを開く")} {index + 1}</button>)}</div>{block.data && <><AnswerTables locale={locale} data={block.data} /><details><summary>{say(locale, "Retained values", "保持された値")}</summary><pre>{JSON.stringify(block.data, null, 2)}</pre></details></>}</section>)}
-      {answer.qualifications.map((text, index) => <p key={index} className="ra-partial">{text}</p>)}<p>{say(locale, "Structured source selections are not independent scientific verification.", "構造化されたソースの選択は、独立した科学的検証を意味しません。")}</p></>}
-    <details><summary>{say(locale, "Submitted context and shared budget", "送信時の対象範囲と共有の実行予算")}</summary><pre>{JSON.stringify({ binding: job.binding, input_version: job.input_version, budget: job.budget }, null, 2)}</pre></details>
-    <details><summary>{say(locale, "Answer preparation activity", "回答準備の処理状況")} ({view.event_cursor}/{job.latest_event_cursor})</summary><ol>{view.activity.map(event => <li key={event.cursor}>{event.summary[locale]}</li>)}</ol></details>
+    {job.error && <p role="alert">{job.error[locale]}</p>}
+    {job.status === "cancelled" && <p>{say(locale, "Answer preparation was cancelled.", "回答準備はキャンセルされました。")}</p>}
+    {answer && <>
+      {answer.completion === "partial" && <p className="ra-partial">{say(locale, "Partial answer — some requested work is unresolved.", "途中の回答です。未解決の作業が残っています。")}</p>}
+      {answer.blocks.filter(block => !repeatsQualifications(block, answer.qualifications)).map(block => {
+        const authorities = [...new Set(block.receipt_ids.map(id => receipts.find(receipt => receipt.id === id)?.authority).filter(Boolean))].map(authority => authorityLabel(authority!, locale));
+        return <section key={block.id} data-answer-kind={block.kind} className="ra-answer-block">
+          <p className="ra-answer-text">{withoutAuthorityPrefix(block.text)}</p>
+          <div className="ra-answer-meta">
+            {authorities.map(label => <span key={label} className="ra-tag">{label}</span>)}
+            {block.receipt_ids.map((id, index) => <button key={id} type="button" className="text-button" onClick={() => onCitation(id)}>{say(locale, "Open evidence", "エビデンスを開く")} {index + 1}</button>)}
+          </div>
+          {block.data && <AnswerTables locale={locale} data={block.data} />}
+        </section>;
+      })}
+      <p className="ra-verification">{say(locale, "Structured source selections are not independent scientific verification.", "構造化されたソースの選択は、独立した科学的検証を意味しません。")}</p>
+      {(notes.length > 0 || details.length > 0) && <details className="ra-limitations">
+        <summary>{say(locale, `Limitations and notes (${notes.length})`, `制約と注記（${notes.length}件）`)}</summary>
+        <ul>{notes.map((text, index) => <li key={index}>{text}</li>)}</ul>
+        {details.length > 0 && <details><summary>{say(locale, "Catalogue details", "カタログの詳細")}</summary>
+          <dl className="ra-fields">{details.map(([key, value], index) => <div key={index}><dt>{fieldLabel(key)}</dt><dd>{value}</dd></div>)}</dl>
+        </details>}
+      </details>}
+    </>}
+    <details className="ra-technical">
+      <summary>{say(locale, "Technical details", "技術的な詳細")}</summary>
+      <p>{say(locale, "Language", "言語")}: {job.locale.toUpperCase()} · {say(locale, "Preparation time", "準備時間")}: {seconds}s</p>
+      {answer && <details><summary>{say(locale, "All retained qualifications", "保持されたすべての注記")} ({answer.qualifications.length})</summary><ul>{answer.qualifications.map((text, index) => <li key={index}><code>{text}</code></li>)}</ul></details>}
+      {answer?.blocks.filter(block => block.data).map(block => <details key={block.id}><summary>{say(locale, "Retained values", "保持された値")}</summary><pre>{JSON.stringify(block.data, null, 2)}</pre></details>)}
+      <details><summary>{say(locale, "Submitted context and shared budget", "送信時の対象範囲と共有の実行予算")}</summary><pre>{JSON.stringify({ binding: job.binding, input_version: job.input_version, budget: job.budget }, null, 2)}</pre></details>
+      <details><summary>{say(locale, "Answer preparation activity", "回答準備の処理状況")} ({view.event_cursor}/{job.latest_event_cursor})</summary><ol>{view.activity.map(event => <li key={event.cursor}>{event.summary[locale]}</li>)}</ol></details>
+    </details>
   </article>;
+}
+
+// Display helpers. They change presentation only; exact retained text stays
+// available in Technical details and in the evidence views.
+const AUTHORITY_PREFIXES = ["Descriptive result", "Published analysis", "Experimental output", "Source documentation", "記述的な結果", "公開済みの解析", "実験的な出力", "資料"];
+/** The server writes "Label[, Label]: text"; the labels are shown as tags instead. */
+export function withoutAuthorityPrefix(text: string): string {
+  const split = text.indexOf(": ");
+  if (split < 0) return text;
+  const labels = text.slice(0, split).split(", ");
+  return labels.every(label => AUTHORITY_PREFIXES.includes(label)) ? text.slice(split + 2) : text;
+}
+/**
+ * The server also emits limitation blocks that restate the answer's
+ * qualifications line by line. Those lines are already listed under
+ * "Limitations and notes", so the main answer skips such exact repeats.
+ * Unresolved facts and cohorts are not repeats and stay visible.
+ */
+export function repeatsQualifications(block: { kind: string; fact_id?: string | null; text: string }, qualifications: readonly string[]): boolean {
+  if (block.kind !== "limitation" || block.fact_id) return false;
+  const known = new Set(qualifications);
+  return block.text.split("\n").every(line => known.has(line));
+}
+/** Server qualifications include single-field JSON fragments such as {"node.descriptor.unit":"degC"}. */
+export function splitQualifications(qualifications: readonly string[]): { notes: string[]; details: Array<[string, string]> } {
+  const notes: string[] = [], details: Array<[string, string]> = [];
+  for (const text of qualifications) {
+    const trimmed = text.trim();
+    if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+      try {
+        const value = JSON.parse(trimmed);
+        if (value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 1) {
+          const [key, item] = Object.entries(value)[0];
+          // Column metadata repeats the table headers; it stays in Technical details.
+          if (item !== null && item !== "" && !key.startsWith("columns.")) details.push([key, typeof item === "string" ? item : JSON.stringify(item)]);
+          continue;
+        }
+      } catch { /* Not a fragment; keep it as a note. */ }
+    }
+    notes.push(text);
+  }
+  return { notes: [...new Set(notes)], details };
+}
+function fieldLabel(path: string): string {
+  const parts = path.split(".").filter(part => !/^\d+$/.test(part) && !["node", "descriptor", "lifecycle"].includes(part));
+  const label = (parts.at(-2) && ["en", "ja"].includes(parts.at(-1)!) ? `${parts.at(-2)} (${parts.at(-1)})` : parts.at(-1) ?? path).replaceAll("_", " ");
+  return label.charAt(0).toUpperCase() + label.slice(1);
 }
 export function RetainedEvidence({ locale, value, section, busy, canExport, canAttach, onSection, onPage, onExport, onAttach }: { locale: Locale; value: EvidencePageResponse; section: "rows" | "inputs"; busy: boolean; canExport: boolean; canAttach: boolean; onSection: (section: "rows" | "inputs") => void; onPage: (offset: number) => void; onExport: (format: "csv" | "json") => void; onAttach: () => void }) {
   const receipt = value.receipt, columns = section === "rows" ? receipt.columns.map(column => ({ key: column.key, title: column.title[locale], unit: column.unit })) : [...new Set(value.rows.flatMap(row => Object.keys(row)))].map(key => ({ key, title: key, unit: null }));

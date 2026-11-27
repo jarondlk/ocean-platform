@@ -14,11 +14,12 @@ import uuid
 from pydantic import Field
 
 from model_runtime import GenerationResult
-from schema.context_catalogue import ContractModel
+from schema.context_catalogue import CatalogueNode, ContractModel
 from schema.research_controller import canonical_hash, canonical_json, strict_json
 from schema.research_evidence import AnswerBlock, EvidenceReceipt, RenderedAnswer, VerifiedEvidenceSet
 
-PACK_VERSION = "c21-synthesis-pack-v1"
+# v2 adds host-extracted object summaries to object facts (readable rendering).
+PACK_VERSION = "c21-synthesis-pack-v2"
 SELECTION_VERSION = "c21-selection-v1"
 QUALIFICATION = "Structured evidence selection is traceability, not independent scientific verification."
 
@@ -125,6 +126,91 @@ def _documentary_excerpts(payload):
     if len({item["excerpt_id"] for item in result}) != len(result):
         raise SynthesisInvalid("documentary_excerpt_invalid")
     return result
+
+
+def _object_summary(payload, object_id):
+    """Exact typed fields of one catalogue node from a hash-verified payload.
+
+    Used only for host rendering; the model never supplies these values.
+    """
+    if not isinstance(payload, dict):
+        return None
+    candidates = [payload.get("node", payload)]
+    if isinstance(payload.get("items"), list):
+        candidates.extend(payload["items"])
+    for item in candidates:
+        if not isinstance(item, dict) or item.get("id") != object_id:
+            continue
+        try:
+            node = CatalogueNode.model_validate(item)
+        except ValueError:
+            continue
+        return {"object_id": node.id, "kind": node.kind, "title": node.title.model_dump(mode="json"),
+                "source_family": node.source_family,
+                "descriptor": node.descriptor.model_dump(mode="json") if node.descriptor else None,
+                "scientific_approval": node.lifecycle.scientific_approval}
+    return None
+
+
+_ENTITIES = {
+    "canonical_objects": (("catalogue object", "catalogue objects"), "カタログ項目"),
+    "datasets": (("dataset", "datasets"), "データセット"),
+    "observations": (("observation", "observations"), "観測"),
+    "source_occurrences": (("source occurrence", "source occurrences"), "ソース上の出現"),
+    "assays": (("assay", "assays"), "アッセイ"),
+    "detection_rows": (("detection row", "detection rows"), "検出行"),
+    "rows": (("row", "rows"), "行"),
+}
+
+
+def _count_text(value, locale):
+    english, japanese = _ENTITIES.get(value["entity"], ((value["entity"], value["entity"]), value["entity"]))
+    if locale == "ja":
+        return f"{japanese}: {value['value']}（数え方: {value['denominator']}）。"
+    noun = english[0] if value["value"] == 1 else english[1]
+    return f"{value['value']} {noun} — counted as: {value['denominator']}."
+
+
+def _words(value):
+    """Display form of a snake_case label; the exact value stays in block data."""
+    return str(value).replace("_", " ")
+
+
+def _number(value):
+    return f"{value:g}" if isinstance(value, float) else str(value)
+
+
+def _describe_object(summary, locale):
+    """One plain sentence from exact catalogue values; no inferred claims."""
+    title = summary["title"]["ja" if locale == "ja" else "en"]
+    d = summary.get("descriptor") or {}
+    family = d.get("family")
+    ja = locale == "ja"
+    parts = []
+    if family == "remote_sensing":
+        unit = {"degC": "°C", "K": "K"}.get(d.get("unit"), d.get("unit"))
+        res_unit = {"degree": "°", "km": " km", "m": " m"}.get(d.get("spatial_resolution_unit"), "")
+        resolution = _number(d.get("spatial_resolution")) + res_unit
+        version = str(d.get("product_version"))
+        product = f"{str(d.get('product_id', '')).upper()} {version if version[:1] in 'vV' else 'v' + version}"
+        parts = ([f"海面水温（{product}）", f"{resolution}格子", str(d.get("temporal_resolution")), f"単位 {unit}"] if ja
+                 else [f"sea-surface temperature from {product}", f"{resolution} grid", str(d.get("temporal_resolution")), f"values in {unit}"])
+    elif family == "ctd":
+        entity = {"cast": ("per cast", "キャストごと"), "depth_observation": ("per depth observation", "深度観測ごと")}.get(
+            d.get("observation_entity"), (d.get("observation_entity"), d.get("observation_entity")))
+        parts = ([f"{_words(d.get('measurement'))}（{d.get('unit')}）", entity[1], f"深度単位 {d.get('depth_unit')}", f"採取方法: {d.get('sampling_contract')}"] if ja
+                 else [f"{_words(d.get('measurement'))} ({d.get('unit')})", f"recorded {entity[0]}", f"depth in {d.get('depth_unit')}", f"sampling: {d.get('sampling_contract')}"])
+    elif family == "metagenome":
+        parts = ([f"{_words(d.get('measurement'))}", f"手法 {d.get('method')}", f"分類階級 {d.get('taxonomic_rank')}", f"存在量 {d.get('abundance_unit')}（分母: {d.get('abundance_denominator')}）"] if ja
+                 else [f"{_words(d.get('measurement'))}", f"method {d.get('method')}", f"{d.get('taxonomic_rank')} rank", f"abundance in {d.get('abundance_unit')} of {d.get('abundance_denominator')}"])
+    elif family == "edna_metabarcoding":
+        parts = ([f"プロトコル {d.get('protocol')}（{d.get('protocol_id')}）", f"割り当て方法 {d.get('assignment_method')}", f"試料の種類 {_words(d.get('sample_kind'))}"] if ja
+                 else [f"protocol {d.get('protocol')} ({d.get('protocol_id')})", f"assignment method {d.get('assignment_method')}", f"sample kind {_words(d.get('sample_kind'))}"])
+    review = {"not_reviewed": ("Not yet scientifically reviewed.", "科学的なレビューは未実施です。"),
+              "rejected": ("Scientific review rejected this item.", "科学的レビューで却下されています。"),
+              "unknown": ("Scientific review status is unknown.", "科学的レビューの状況は不明です。")}.get(summary.get("scientific_approval"))
+    sentence = title + ("：" + "、".join(parts) + "。" if ja else " — " + "; ".join(parts) + ".") if parts else title + ("。" if ja else ".")
+    return sentence + (("" if ja else " ") + review[ja] if review else "")
 
 
 def build_synthesis_pack(verified: VerifiedEvidenceSet, documentary=None) -> SynthesisPack:
@@ -240,7 +326,13 @@ def build_synthesis_pack(verified: VerifiedEvidenceSet, documentary=None) -> Syn
                 if not all(value["object_id"] in {item.object_id for item in observations[identity].objects}
                            for identity in fact.observation_ids):
                     raise SynthesisInvalid("object_witness_invalid")
-        facts.append({**fact.model_dump(mode="json"), "aliases": witnesses})
+        summary = None
+        if fact.state == "supported" and fact.value_json is not None:
+            value = strict_json(fact.value_json)
+            if isinstance(value, dict) and "object_id" in value:
+                summary = next((found for alias in witnesses
+                                if (found := _object_summary(payloads.get(packets[alias]["receipt_id"]), value["object_id"]))), None)
+        facts.append({**fact.model_dump(mode="json"), "aliases": witnesses, "object": summary})
     for item in anchor.controller_result.observations:
         qualifications.extend(item.qualifications)
     qualifications.extend(verified.unresolved_work)
@@ -357,7 +449,9 @@ def render_selection(selection: Selection, pack: SynthesisPack, locale="en", *, 
         ids = [packets[alias]["receipt_id"] for alias in fact["aliases"]]
         value = strict_json(fact["value_json"]) if fact["value_json"] else None
         if isinstance(value, dict) and value.get("state") == "known" and type(value.get("value")) is int:
-            text = f"{value['entity']}: {value['value']} ({value['denominator']})."
+            text = _count_text(value, locale)
+        elif isinstance(value, dict) and "object_id" in value and fact.get("object"):
+            text = _describe_object(fact["object"], locale)
         elif isinstance(value, dict) and "object_id" in value:
             text = ("Retained object: " if locale == "en" else "保持されたオブジェクト: ") + value["object_id"]
         else:
@@ -372,6 +466,9 @@ def render_selection(selection: Selection, pack: SynthesisPack, locale="en", *, 
             text = ", ".join(labels[authority][locale == "ja"] for authority in authorities) + ": " + f"{value['entity']}: {value['value']}. "
             text += ("The complete denominator is retained in this fact's values." if locale == "en"
                      else "分母の全文は、この事実の保持された値に含まれています。")
+        elif len(text) > 10000 and isinstance(value, dict) and "object_id" in value:
+            text = ", ".join(labels[authority][locale == "ja"] for authority in authorities) + ": " + (
+                ("Retained object: " if locale == "en" else "保持されたオブジェクト: ") + value["object_id"])
         outputs = [{"receipt_id": packets[alias]["receipt_id"], "authority": packets[alias]["authority"],
                     "rows": [row["row"] for row in packets[alias]["rows"]], "columns": packets[alias]["columns"],
                     "total_rows": packets[alias]["total_rows"], "preview_truncated": packets[alias]["preview_truncated"]}
