@@ -75,7 +75,7 @@ manual dispatch.
 |---|---|---|
 | Decide the first group of beta users | You | Names/roles agreed |
 | Enroll them with the existing enrollment tooling | Operator | Each can sign in with the intended role |
-| Replace the "Feedback unavailable" page with a working contact (email or issue link) | CLI, needs the contact address from you | Visible from the app menu |
+| Replace the "Feedback unavailable" page with a working contact (email or issue link) | CLI | **Done (gen 78):** "Report a problem" in the app menu and the address on About |
 | Short About/help text: what the data is, what "descriptive" and "not reviewed" mean | CLI | Reviewed by you |
 | Hide or relabel Experiments, Tools and Administration until they work | CLI | **Done (gen 77)** |
 

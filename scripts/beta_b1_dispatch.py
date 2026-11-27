@@ -47,12 +47,19 @@ B2_READABLE_GENERATION = '76'
 B2_WAIT_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/ui-20261127/frontend-wait-live.json'
 B2_WAIT_RECEIPT_SHA256 = '42cbf674a7c395b1094194337839b8828cf50ef222f969d3752d53fe577eb9e0'
 B2_WAIT_GENERATION = '77'
+B2_SUPPORT_RECEIPT = rollout.ROOT / 'docs/plans/ocean-v1/beta/ui-20261127/frontend-support-live.json'
+B2_SUPPORT_RECEIPT_SHA256 = '8092c303e0f183a135e0b4cf68aea02f38e8205795ba4fb0d154d39e8e111e2c'
+B2_SUPPORT_GENERATION = '78'
 
 
 def qualified_b2_serving(service, original):
     generation = str(service['generation'])
-    frontend_only = generation in (B2_LAYOUT_GENERATION, B2_PLEX_GENERATION, B2_READABLE_GENERATION, B2_WAIT_GENERATION)
-    if generation == B2_WAIT_GENERATION:
+    frontend_only = generation in (B2_LAYOUT_GENERATION, B2_PLEX_GENERATION, B2_READABLE_GENERATION, B2_WAIT_GENERATION,
+                                  B2_SUPPORT_GENERATION)
+    if generation == B2_SUPPORT_GENERATION:
+        path, digest = B2_SUPPORT_RECEIPT, B2_SUPPORT_RECEIPT_SHA256
+        version = 'ocean-beta-frontend-support-live-v1'
+    elif generation == B2_WAIT_GENERATION:
         path, digest = B2_WAIT_RECEIPT, B2_WAIT_RECEIPT_SHA256
         version = 'ocean-beta-frontend-wait-live-v1'
     elif generation == B2_READABLE_GENERATION:
@@ -82,7 +89,8 @@ def qualified_b2_serving(service, original):
         frontend, = (item for item in template['containers'] if item.get('name') == 'frontend')
         guard.require(selection['only_frontend_image_and_revision_changed'] is True
                       and frontend['image'] == selection['frontend_after'])
-        baseline_field = ('baseline_frontend_image' if generation in (B2_PLEX_GENERATION, B2_READABLE_GENERATION, B2_WAIT_GENERATION)
+        baseline_field = ('baseline_frontend_image' if generation in (B2_PLEX_GENERATION, B2_READABLE_GENERATION, B2_WAIT_GENERATION,
+                                                             B2_SUPPORT_GENERATION)
                           else 'frontend_before')
         baseline_frontend = selection[baseline_field]
         template['containers'] = [

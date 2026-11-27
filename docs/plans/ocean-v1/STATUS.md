@@ -9,7 +9,7 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 | Part | State |
 |---|---|
 | Site | `https://beta.oceaninfobio.com`, Google sign-in, invite-only |
-| Serving | `ocean-v1-beta-serving` generation 77, revision `ocean-v1-beta-serving-readable-062fa7a` (frontend `062fa7a`, API image unchanged since B2) |
+| Serving | `ocean-v1-beta-serving` generation 78, revision `ocean-v1-beta-serving-readable-3e35423` (frontend `3e35423`, API image unchanged since B2) |
 | Research controller | `ocean-v1-beta-research-controller` generation 10, same API image as serving |
 | Research delivery | Cloud Tasks queue and Scheduler job last recorded **paused** (Nov 24); manual operator dispatch only |
 | Data in the catalogue | CTD, metagenome, MUR regional SST (2020–2023) and raw ANEMONE eDNA inventory (39 datasets) |
@@ -21,6 +21,7 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 - Browse the catalogue by collection, folder, search and filters.
 - Create investigations and conversations, choose data, and reopen saved work.
 - Read saved answers with citations, open evidence, and download CSV/JSON.
+- Report a problem by email from the app menu or the About page.
 
 ## What does not work yet
 
@@ -36,8 +37,8 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 - **eDNA questions** cannot give scientific results: the live eDNA data is raw
   inventory with unknown or control classifications and no resolved sample
   identities.
-- Experiments, Tools, Administration and Feedback are not integrated; they are
-  hidden from the interface until they are.
+- Experiments, Tools, Administration and in-app Feedback are not integrated;
+  they are hidden from the interface until they are.
 
 ## Milestones
 

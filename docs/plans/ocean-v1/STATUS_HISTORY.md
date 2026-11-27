@@ -2,6 +2,16 @@
 
 Dated log, newest first. The current one-page summary is [STATUS.md](STATUS.md).
 
+## November 27 — Support contact live
+
+Serving generation 78 (`ocean-v1-beta-serving-readable-3e35423`) changes only
+the frontend image, built from `3e35423`: "Report a problem" in the app menu
+opens an email to the beta support address, which About also lists.
+Separately, a verified readable-answers API candidate
+(`snapshot-api@sha256:d47032d2…`) awaits the research controller update.
+[Frontend deployment receipt](beta/ui-20261127/frontend-support-live.json) ·
+[API candidate](beta/answers-20261127/answers-api-candidate.json).
+
 ## November 27 — Unfinished sections hidden and wait notice live
 
 Serving generation 77 (`ocean-v1-beta-serving-readable-062fa7a`) changes only

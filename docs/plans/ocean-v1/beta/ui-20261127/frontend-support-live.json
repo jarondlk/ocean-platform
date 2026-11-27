@@ -1,0 +1,50 @@
+{
+  "version": "ocean-beta-frontend-support-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "3e354238ad20395d91616e276236be6f7a85b421",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "preceding_frontend_receipt_sha256": "42cbf674a7c395b1094194337839b8828cf50ef222f969d3752d53fe577eb9e0",
+  "change_summary": [
+    "Report a problem mailto link in the app menu and support address on About (3e35423)"
+  ],
+  "build": {
+    "id": "cffc25c3-8eb7-43f4-9652-8ccc69eca68e",
+    "status": "SUCCESS",
+    "source_manifest_sha256": "62cb725732c89e5c83567486413c0ed7b8aad5cae5d227d831f21ecd25b440fa",
+    "source_files": 71,
+    "image_sha256": "6f7054780bd9f1c38d1b1200459ca308195b8c515a1cd789358f865cd75d9a94",
+    "serving_adapter_sha256": "a5e46f2cecd3502721e2c62c4ac19df29c15e42596cacd40255a61d788bcd53e",
+    "startup_gate_sha256": "bb0ffc222990abd1e6774fe18408841a056bc0601ce4f338c529e61e697148b2",
+    "offline_source_transport_startup_fonts_and_ui_strings_passed": true
+  },
+  "verification": {
+    "clean_typecheck_passed": true,
+    "local_frontend_tests_passed": 1102,
+    "hosted_run_id": 45954427809,
+    "hosted_v1_frontend_job_conclusion": "success",
+    "hosted_v1_auth_host_job_conclusion": "success",
+    "signed_in_live_browser": {
+      "report_a_problem_link": true,
+      "about_shows_support_address": true
+    }
+  },
+  "deployment": {
+    "method": "Cloud Run v2 PATCH updateMask=template, validateOnly first",
+    "previous_generation": 77,
+    "generation": 78,
+    "revision": "ocean-v1-beta-serving-readable-3e35423",
+    "frontend_before": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:4296150b48ead6b8528a7d1f8aeebc0e6e732a499c21d69810fd68fcf8013185",
+    "frontend_after": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:6f7054780bd9f1c38d1b1200459ca308195b8c515a1cd789358f865cd75d9a94",
+    "baseline_frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "configuration_sha256": "7d93057448be372cc502078ade3f114b76740e2663d64d8ced84b76f9e26ae13",
+    "baseline_configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "only_frontend_image_and_revision_changed": true,
+    "validation_only_passed": true,
+    "traffic_percent": 100,
+    "controller_modified": false,
+    "queue_or_scheduler_modified": false
+  },
+  "b4_complete": false
+}
