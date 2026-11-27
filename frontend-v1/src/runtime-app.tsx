@@ -14,7 +14,7 @@ import { createAnswerClient, createEvidenceClient } from "./research-evidence-se
 import { createCatalogueClient } from "./catalogue-service";
 import { createInvestigationClient } from "./investigation-service";
 import {
-  capabilityReady, capabilityVisible, createRuntimeTransport, destinationFromLocation,
+  backgroundRuntimeDecision, capabilityReady, capabilityVisible, createRuntimeTransport, destinationFromLocation, shouldRevalidateRuntime,
   destinationPath, getCapability, parseRuntimeBootstrap, routeAccessible,
   type Fetcher, type RuntimeDestination, type RuntimeState, type RuntimeTransport, type ShellDestination,
 } from "./runtime";
@@ -91,13 +91,45 @@ export function RuntimeApp({ initialDestination = "research", transport, researc
       if (!nextController.signal.aborted && request === generation.current) setRuntime({ status: "error", message: "The v1 service could not be reached", retryable: true });
     }).finally(() => clearTimeout(timer));
   }, [dependency]);
+  // Focus and visibility changes recheck identity quietly. The current screen
+  // stays mounted (keeping in-flight requests, selections and drafts) unless
+  // the account or its permissions changed, or access was revoked.
+  const runtimeRef = useRef(runtime); runtimeRef.current = runtime;
+  const revalidating = useRef(false); const lastChecked = useRef<number | null>(null);
+  const revalidate = useCallback(() => {
+    if (runtimeRef.current.status !== "ready") return;
+    if (!shouldRevalidateRuntime({ inFlight: revalidating.current, lastCheckedAt: lastChecked.current, now: Date.now() })) return;
+    const request = generation.current; revalidating.current = true; lastChecked.current = Date.now();
+    const quiet = new AbortController(); const timer = setTimeout(() => quiet.abort(), 10_000);
+    void dependency.load(quiet.signal).then((result) => {
+      if (quiet.signal.aborted || request !== generation.current) return;
+      let next: RuntimeState = result;
+      if (result.status === "ready") {
+        try { next = { status: "ready", bootstrap: parseRuntimeBootstrap(result.bootstrap) }; }
+        catch { return; }
+      }
+      const decision = backgroundRuntimeDecision(runtimeRef.current, next);
+      if (decision === "keep") return;
+      if (decision === "clear") { clearResearch(); setRuntime(next); return; }
+      if (next.status === "ready") {
+        const identity = `${next.bootstrap.identity.id}:${next.bootstrap.permission_revision}`;
+        if (decision === "remount") {
+          if (researchIdentity.current !== identity) researchSession.current.runs.clear();
+          researchSession.current.drafts.bind({ accountId: next.bootstrap.identity.id, permissionRevision: next.bootstrap.permission_revision });
+          researchSession.current.experiments.bind(identity); researchSession.current.executions.bind(identity);
+          researchIdentity.current = identity; setAccountOpen(false);
+        }
+      }
+      setRuntime(next);
+    }).catch(() => undefined).finally(() => { clearTimeout(timer); revalidating.current = false; });
+  }, [dependency]);
   useEffect(() => {
-    reload();
-    const focus = () => reload();
-    const visible = () => { if (document.visibilityState === "visible") reload(); };
+    reload(); lastChecked.current = Date.now();
+    const focus = () => revalidate();
+    const visible = () => { if (document.visibilityState === "visible") revalidate(); };
     window.addEventListener("focus", focus); document.addEventListener("visibilitychange", visible);
     return () => { ++generation.current; controller.current?.abort(); if (deadline.current !== null) clearTimeout(deadline.current); window.removeEventListener("focus", focus); document.removeEventListener("visibilitychange", visible); };
-  }, [reload]);
+  }, [reload, revalidate]);
   useEffect(() => {
     try { setPreferences(restorePresentation(localStorage.getItem(PRESENTATION_STORAGE_KEY))); } catch { setStorageAvailable(false); }
     setPresentationReady(true);

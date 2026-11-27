@@ -39,6 +39,35 @@ export type RuntimeState = { status: "loading" } | { status: "ready"; bootstrap:
 export type Fetcher = (input: string, init?: RequestInit) => Promise<Response>;
 export type RuntimeTransport = { load(signal?: AbortSignal): Promise<RuntimeState> };
 
+/** Minimum gap between background identity checks triggered by focus/visibility. */
+export const RUNTIME_REVALIDATE_INTERVAL_MS = 30_000;
+
+/**
+ * Decide whether a focus/visibility event should start a background identity
+ * check. Never overlap a running check, and do not repeat one too soon.
+ */
+export function shouldRevalidateRuntime(state: { inFlight: boolean; lastCheckedAt: number | null; now: number }): boolean {
+  if (state.inFlight) return false;
+  return state.lastCheckedAt === null || state.now - state.lastCheckedAt >= RUNTIME_REVALIDATE_INTERVAL_MS;
+}
+
+/**
+ * How a background identity check changes what is on screen.
+ * - "replace": same account and permissions; update in place, keep screens mounted.
+ * - "remount": account or permissions changed; reset protected views.
+ * - "clear": access was revoked or the session ended; leave protected views.
+ * - "keep": the check itself failed (network/service); keep the current view.
+ *   Every data request is still authorized by the server, so a failed check
+ *   never grants access; it only avoids blanking the page on a transient error.
+ */
+export function backgroundRuntimeDecision(current: RuntimeState, next: RuntimeState): "replace" | "remount" | "clear" | "keep" {
+  if (next.status === "unauthorized" || next.status === "forbidden") return "clear";
+  if (next.status !== "ready") return current.status === "ready" ? "keep" : "replace";
+  if (current.status !== "ready") return "remount";
+  return current.bootstrap.identity.id === next.bootstrap.identity.id
+    && current.bootstrap.permission_revision === next.bootstrap.permission_revision ? "replace" : "remount";
+}
+
 export class RuntimeContractError extends Error {
   constructor(message = "The v1 runtime response is invalid") { super(message); this.name = "RuntimeContractError"; }
 }

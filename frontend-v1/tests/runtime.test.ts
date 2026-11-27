@@ -4,7 +4,8 @@ import {
   MODE_VERSION, RUNTIME_VERSION, MAX_RUNTIME_BYTES, REQUIRED_PERMISSIONS, RUNTIME_DESTINATIONS,
   RuntimeContractError, capabilityReady, capabilityVisible, createRuntimeTransport, destinationFromLocation,
   destinationFromPath, destinationPath, isLoopbackHostname, loadRuntimeMode, parseRuntimeBootstrap,
-  parseRuntimeMode, routeAccessible,
+  parseRuntimeMode, routeAccessible, RUNTIME_REVALIDATE_INTERVAL_MS, backgroundRuntimeDecision,
+  shouldRevalidateRuntime, type RuntimeState,
 } from "../src/runtime.ts";
 
 function bootstrap() {
@@ -256,4 +257,30 @@ for (const [name, change] of [
 });
 test("experiment runtime cannot restore any missing research/export permission", () => {
   for (const permission of ["chat:use", "data:read", "data:export"]) { const input = experimentsBootstrap(); input.identity.permissions = input.identity.permissions.filter(p => p !== permission); assert.throws(() => parseRuntimeBootstrap(input), RuntimeContractError); }
+});
+
+test("focus revalidation never overlaps and is throttled", () => {
+  assert.equal(shouldRevalidateRuntime({ inFlight: false, lastCheckedAt: null, now: 0 }), true);
+  assert.equal(shouldRevalidateRuntime({ inFlight: true, lastCheckedAt: null, now: 0 }), false);
+  assert.equal(shouldRevalidateRuntime({ inFlight: false, lastCheckedAt: 1_000, now: 1_000 + RUNTIME_REVALIDATE_INTERVAL_MS - 1 }), false);
+  assert.equal(shouldRevalidateRuntime({ inFlight: false, lastCheckedAt: 1_000, now: 1_000 + RUNTIME_REVALIDATE_INTERVAL_MS }), true);
+});
+
+test("background revalidation keeps screens mounted unless access changed", () => {
+  const ready = (overrides: { id?: string; revision?: string } = {}): RuntimeState => {
+    const value = parseRuntimeBootstrap(bootstrap());
+    return { status: "ready", bootstrap: { ...value, identity: { ...value.identity, id: overrides.id ?? value.identity.id }, permission_revision: overrides.revision ?? value.permission_revision } };
+  };
+  const failed = (status: "unauthorized" | "forbidden" | "unavailable" | "error"): RuntimeState => ({ status, message: "x", retryable: true });
+  // Same account and permissions: update in place.
+  assert.equal(backgroundRuntimeDecision(ready(), ready()), "replace");
+  // Changed permissions or account: protected views reset.
+  assert.equal(backgroundRuntimeDecision(ready(), ready({ revision: "permissions-2" })), "remount");
+  assert.equal(backgroundRuntimeDecision(ready(), ready({ id: "87654321-1234-1234-1234-123456789abc" })), "remount");
+  // Revoked access or ended session always leaves protected views.
+  assert.equal(backgroundRuntimeDecision(ready(), failed("unauthorized")), "clear");
+  assert.equal(backgroundRuntimeDecision(ready(), failed("forbidden")), "clear");
+  // A failed check (network/service) keeps the current view instead of blanking it.
+  assert.equal(backgroundRuntimeDecision(ready(), failed("error")), "keep");
+  assert.equal(backgroundRuntimeDecision(ready(), failed("unavailable")), "keep");
 });
