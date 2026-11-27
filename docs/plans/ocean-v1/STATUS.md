@@ -9,7 +9,7 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 | Part | State |
 |---|---|
 | Site | `https://beta.oceaninfobio.com`, Google sign-in, invite-only |
-| Serving | `ocean-v1-beta-serving` generation 76, revision `ocean-v1-beta-serving-readable-b7e5623` (frontend `b7e5623`, API image unchanged since B2) |
+| Serving | `ocean-v1-beta-serving` generation 77, revision `ocean-v1-beta-serving-readable-062fa7a` (frontend `062fa7a`, API image unchanged since B2) |
 | Research controller | `ocean-v1-beta-research-controller` generation 10, same API image as serving |
 | Research delivery | Cloud Tasks queue and Scheduler job last recorded **paused** (Nov 24); manual operator dispatch only |
 | Data in the catalogue | CTD, metagenome, MUR regional SST (2020–2023) and raw ANEMONE eDNA inventory (39 datasets) |
@@ -26,14 +26,16 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 
 - **New questions are not answered automatically.** The question box accepts
   submissions, but delivery is paused, so a new question waits until an
-  operator dispatches it.
+  operator dispatches it. After 90 s the page now tells the user the question
+  is saved and still waiting.
 - **Answer wording is still technical** ("Retained object: …"). The readable
   templates are committed (`8686f6a`) but run in the research controller,
   which has not been updated.
 - **eDNA questions** cannot give scientific results: the live eDNA data is raw
   inventory with unknown or control classifications and no resolved sample
   identities.
-- Experiments, Tools, Administration and Feedback are not integrated.
+- Experiments, Tools, Administration and Feedback are not integrated; they are
+  hidden from the interface until they are.
 
 ## Milestones
 
@@ -53,5 +55,6 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
 - The C26 acceptance check reports source changes since Oct 29 that were never
   recorded as authorized supersessions; this must be resolved before B5.
 - Full cold navigation measured 17.7 s on Nov 16 (accepted as a known
-  limitation); the focus-reload fix in generation 76 removes repeated reloads
-  but has not been re-measured.
+  limitation); the focus-reload fix removes repeated reloads but has not been
+  re-measured. On Nov 27 a cold open of a saved answer took about 6.5 s for
+  answer events and 5.5 s for the evidence list.

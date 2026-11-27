@@ -38,7 +38,7 @@ manual dispatch.
 
 | Step | Owner | Done when |
 |---|---|---|
-| Show users when delivery is paused ("answers are delayed") instead of an endless "queued" state | CLI | Runtime or UI reports paused delivery; tested locally and on the beta |
+| Show users when delivery is paused ("answers are delayed") instead of an endless "queued" state | CLI | **Partly done (gen 77):** items queued for 90 s show a saved-and-waiting notice. The runtime cannot see the queue, so a true "paused" message needs a server flag set by the operator |
 | Run the live outbox-health check and the exhausted-task recovery trial (B4 open items) | Operator | Both receipts recorded; no stuck explorations or answers |
 | Set queue rate limits and per-day model budget, then resume the queue and Scheduler | Operator | Queue `RUNNING`, Scheduler enabled, limits read back |
 | Supervised soak: 10 real questions over 48 h | Operator + CLI | All answered unattended; alerts silent or acted on; cost measured |
@@ -47,7 +47,7 @@ manual dispatch.
 
 | Step | Owner | Done when |
 |---|---|---|
-| Build one API image from current `overhaul` (includes readable templates `8686f6a`) | CLI | Build and offline proof pass |
+| Build one API image: live B2 runtime `0994e9d` plus only `orchestration/research_synthesis.py` and its tests from `8686f6a` (applies cleanly), on its own branch with hosted CI and a qualification receipt, packaged as an overlay like `deploy/gcp/beta/b2/prepare_api_context.py` | CLI, after you approve the branch | Build and offline proof pass |
 | Update the research controller to that image first | Operator | Controller ready on the new image; readback matches |
 | Update the serving `api` container to the same image; record receipt and extend the dispatch guard | CLI | Generation 77 live; serving and controller images equal |
 | Re-ask the saved MUR question and one CTD count | CLI (signed in) | Answers read as sentences ("MUR … v04.1 …", "N datasets — counted as …") |
@@ -75,9 +75,9 @@ manual dispatch.
 |---|---|---|
 | Decide the first group of beta users | You | Names/roles agreed |
 | Enroll them with the existing enrollment tooling | Operator | Each can sign in with the intended role |
-| Replace the "Feedback unavailable" page with a working contact (email or issue link) | CLI | Visible from the app menu |
+| Replace the "Feedback unavailable" page with a working contact (email or issue link) | CLI, needs the contact address from you | Visible from the app menu |
 | Short About/help text: what the data is, what "descriptive" and "not reviewed" mean | CLI | Reviewed by you |
-| Hide or relabel Experiments, Tools and Administration until they work | CLI | No dead ends in the UI |
+| Hide or relabel Experiments, Tools and Administration until they work | CLI | **Done (gen 77)** |
 
 ### 6. Keep the repository healthy — in parallel
 

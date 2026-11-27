@@ -1,0 +1,67 @@
+{
+  "version": "ocean-beta-frontend-wait-live-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "source_revision": "062fa7a815a3630725ea3af221a1d5d6203c34b7",
+  "baseline_receipt_sha256": "d8e8fcf2874431bbc0d3772172827c7f1daca686ca310c51a4e2fa2597104556",
+  "preceding_frontend_receipt_sha256": "e269d8df601c435f8321d87fe4d74aeafcd24919b214e22c0d43f1c51ad58458",
+  "change_summary": [
+    "Tools, Administration and Feedback hidden unless ready; Experiments tab only with a configured experiment service (96edce4)",
+    "Questions or answers queued for 90 s show a saved-and-waiting notice (96edce4)",
+    "Test type declaration fix for clean-checkout typecheck (062fa7a)"
+  ],
+  "build": {
+    "id": "cee9670c-c656-43f1-a6b0-6c01ead296b2",
+    "status": "SUCCESS",
+    "source_manifest_sha256": "fe5bf0c00b9fd7a0f06dfdcb81abc7d4d69bab8bb3320a9713c2d99f2d305a9c",
+    "source_files": 71,
+    "image_sha256": "4296150b48ead6b8528a7d1f8aeebc0e6e732a499c21d69810fd68fcf8013185",
+    "serving_adapter_sha256": "a5e46f2cecd3502721e2c62c4ac19df29c15e42596cacd40255a61d788bcd53e",
+    "startup_gate_sha256": "bb0ffc222990abd1e6774fe18408841a056bc0601ce4f338c529e61e697148b2",
+    "offline_source_transport_startup_fonts_and_ui_strings_passed": true,
+    "superseded_unused_build": {
+      "id": "08cae202-0c88-4959-8c2b-ce7bdfede3fa",
+      "source_revision": "96edce47ff2c67038ab0b291a8e2715a3efece22",
+      "reason": "source commit failed the hosted clean-checkout typecheck on a test file; rebuilt from 062fa7a, not deployed"
+    }
+  },
+  "verification": {
+    "clean_checkout_typecheck_tests_build_passed": true,
+    "local_frontend_tests_passed": 1102,
+    "hosted_run_id": 45948194769,
+    "hosted_v1_frontend_job_conclusion": "success",
+    "hosted_v1_auth_host_job_conclusion": "success",
+    "signed_in_live_browser": {
+      "primary_navigation": [
+        "Research",
+        "Context Catalog"
+      ],
+      "workspace_tabs": [
+        "Context",
+        "Results",
+        "Evidence"
+      ],
+      "saved_answer_rendered_inline": true,
+      "observed_cold_answer_events_ms": 6464,
+      "observed_cold_evidence_list_ms": 5470
+    }
+  },
+  "deployment": {
+    "method": "Cloud Run v2 PATCH updateMask=template, validateOnly first",
+    "previous_generation": 76,
+    "generation": 77,
+    "revision": "ocean-v1-beta-serving-readable-062fa7a",
+    "frontend_before": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:e0f925467173cda9616ba8ad4c4491053d9d30be2cec83f0b114e89744f6d686",
+    "frontend_after": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/frontend@sha256:4296150b48ead6b8528a7d1f8aeebc0e6e732a499c21d69810fd68fcf8013185",
+    "baseline_frontend_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/context-frontend@sha256:acd11ce5aa74269d4d462cdf91b71f3dd58ba7dfa04e210b8f2c688a9ffa62e0",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "configuration_sha256": "eef9e1e91df23dee8b33f25d702b439c1859b156de5485757c96528bafdd1264",
+    "baseline_configuration_sha256": "b6f8d3357574a2fd032b225ef4b31500393c8c9ab4043ef7f27581316c80fa0e",
+    "only_frontend_image_and_revision_changed": true,
+    "validation_only_passed": true,
+    "traffic_percent": 100,
+    "controller_modified": false,
+    "queue_or_scheduler_modified": false
+  },
+  "b4_complete": false
+}

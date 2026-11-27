@@ -2,6 +2,16 @@
 
 Dated log, newest first. The current one-page summary is [STATUS.md](STATUS.md).
 
+## November 27 — Unfinished sections hidden and wait notice live
+
+Serving generation 77 (`ocean-v1-beta-serving-readable-062fa7a`) changes only
+the frontend image, built from `062fa7a`. Tools, Administration and Feedback
+are hidden unless ready, the Experiments tab appears only with a configured
+experiment service, and items queued for 90 s explain that they are saved and
+waiting. An earlier build from `96edce4` was not deployed because its hosted
+clean-checkout typecheck failed on a test declaration.
+[Frontend deployment receipt](beta/ui-20261127/frontend-wait-live.json).
+
 ## November 27 — Readable Research and catalogue UI live
 
 Serving generation 76 (`ocean-v1-beta-serving-readable-b7e5623`) changes only
