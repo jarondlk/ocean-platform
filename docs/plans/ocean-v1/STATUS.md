@@ -28,9 +28,11 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
   submissions, but delivery is paused, so a new question waits until an
   operator dispatches it. After 90 s the page now tells the user the question
   is saved and still waiting.
-- **Answer wording is still technical** ("Retained object: …"). The readable
-  templates are committed (`8686f6a`) but run in the research controller,
-  which has not been updated.
+- **Answer wording is still technical** ("Retained object: …"). A verified API
+  image with the readable templates is built
+  ([candidate record](beta/answers-20261127/answers-api-candidate.json)); it
+  goes live once the operator updates the research controller, after which the
+  serving API is updated to the same image.
 - **eDNA questions** cannot give scientific results: the live eDNA data is raw
   inventory with unknown or control classifications and no resolved sample
   identities.

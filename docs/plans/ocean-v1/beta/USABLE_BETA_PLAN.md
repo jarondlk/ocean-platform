@@ -47,8 +47,8 @@ manual dispatch.
 
 | Step | Owner | Done when |
 |---|---|---|
-| Build one API image: live B2 runtime `0994e9d` plus only `orchestration/research_synthesis.py` and its tests from `8686f6a` (applies cleanly), on its own branch with hosted CI and a qualification receipt, packaged as an overlay like `deploy/gcp/beta/b2/prepare_api_context.py` | CLI, after you approve the branch | Build and offline proof pass |
-| Update the research controller to that image first | Operator | Controller ready on the new image; readback matches |
+| Build one API image: live B2 runtime `0994e9d` plus only `orchestration/research_synthesis.py` | CLI | **Done:** `snapshot-api@sha256:d47032d2…` from branch `codex/readable-answers-runtime` (`8f3aee4`), hosted backend/PostgreSQL/v1 jobs passed, 178 image files verified against pins. [Candidate record](answers-20261127/answers-api-candidate.json) |
+| Update the research controller to that image first (image digest in the candidate record) | Operator | Controller ready on the new image; readback matches |
 | Update the serving `api` container to the same image; record receipt and extend the dispatch guard | CLI | Generation 77 live; serving and controller images equal |
 | Re-ask the saved MUR question and one CTD count | CLI (signed in) | Answers read as sentences ("MUR … v04.1 …", "N datasets — counted as …") |
 

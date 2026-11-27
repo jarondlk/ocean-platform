@@ -1,0 +1,63 @@
+{
+  "version": "ocean-beta-answers-api-candidate-v1",
+  "project": "ocean-v1-beta-20261101",
+  "region": "asia-northeast1",
+  "runtime_branch": "codex/readable-answers-runtime",
+  "runtime_revision": "8f3aee4031354416d8c03ef468e505b22b4f4a21",
+  "base_runtime_revision": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+  "overlay": [
+    "orchestration/research_synthesis.py"
+  ],
+  "package": {
+    "base_host_configuration_sha256": "f5506d5899e388aef9d7d4c22d7eab32f382f4f878e9766b2801c458a7757b92",
+    "base_image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:64f99fceba741b5ab781466c45191ea190d241cb9fe745fa342d2d53beeb574e",
+    "base_runtime_revision": "0994e9de7684025d5bf94ec8ad6a96e21edd1526",
+    "base_source_manifest_file_sha256": "b844e1a64995047561dd149cc6cf820e603161e7a0b8e07f77dd0de9148a637e",
+    "host_configuration_sha256": "6964d5281f169027c5ecac8dd9f87356fa68d3657ab9d72a493149bb7e443f79",
+    "image_tag": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api:answers-8f3aee403135",
+    "overlay": [
+      "orchestration/research_synthesis.py"
+    ],
+    "packager_sha256": "c44f9cfce5760b9328bcd321b2729d38a83078e914f83b0a61555bf367a87662",
+    "runtime_revision": "8f3aee4031354416d8c03ef468e505b22b4f4a21",
+    "source_manifest_file_sha256": "33a0a013a306f7c56a5d4a9f0e280c249b5c65e7307f048598a3c0df9830122b",
+    "version": "ocean-beta-answers-api-package-v1"
+  },
+  "build": {
+    "id": "a8336dac-930d-472f-998c-8285d68049e9",
+    "status": "SUCCESS",
+    "image": "asia-northeast1-docker.pkg.dev/ocean-v1-beta-20261101/ocean-v1-beta/snapshot-api@sha256:d47032d296d58f75b079158df440df7ad0a6abfcda59700a05c8589a224b4637",
+    "base_image_reconstruction_verified": true,
+    "base_image_files_matching_pins": 178,
+    "candidate_image_files_matching_pins": 178,
+    "readable_templates_import_verified": true,
+    "failed_earlier_attempt": {
+      "id": "1bd9f8e2-be50-4d39-8b25-96f17aa0ed9e",
+      "reason": "proof wrongly expected packaging-only pinned files in the image; corrected rules were proven on the base image first"
+    }
+  },
+  "local_verification": {
+    "synthesis_tests_on_branch_passed": 58
+  },
+  "hosted": {
+    "run_id": 45949714321,
+    "jobs": {
+      "Backend tests and security boundary": "success",
+      "PostgreSQL migration and metadata integration": "success",
+      "OCEAN v1 authenticated host tests and build": "success",
+      "OCEAN v1 prototype tests and build": "success",
+      "Frontend typecheck and build": "failure (legacy frontend npm audit; pre-existing, fixed by PR #141)"
+    }
+  },
+  "deployment": {
+    "deployed": false,
+    "required_order": [
+      "Operator updates ocean-v1-beta-research-controller to this image (preserving its identity, sidecar, secrets and settings)",
+      "CLI updates the serving api container to the same image; receipt and dispatch-guard entry follow",
+      "Signed-in check: re-ask the MUR product question and one CTD count"
+    ],
+    "controller_modified": false,
+    "serving_modified": false
+  },
+  "package_commit": "c437f96"
+}
