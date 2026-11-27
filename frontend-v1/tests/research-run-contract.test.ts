@@ -189,7 +189,7 @@ const { ResearchActivity, ResearchResults, ResearchEvidence } = activityModule.e
 
 for (const locale of ["en", "ja"] as const) test(`actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (${locale})`, async () => {
   const empty = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs: [] }));
-  assert.match(empty, locale === "en" ? /No submitted activity/ : /実行履歴はありません/);
+  assert.match(empty, locale === "en" ? /No questions yet/ : /まだ質問はありません/);
   assert.doesNotMatch(empty, /ra-unavailable|C\d{2}/);
   const runs: contract.ResearchRun[] = [];
   for (const scenario of ["running", "failed", "partial", "clarification"] as const) {
@@ -217,7 +217,7 @@ for (const locale of ["en", "ja"] as const) test(`production completion and appr
   assert.doesNotMatch(complete, /An answer is not available yet|回答はまだありません/);
   assert.match(results, locale === "en" ? /An answer is not available yet\./ : /回答はまだありません。/);
   for (const markup of [complete, results]) assert.doesNotMatch(markup, /Synthetic|C20|C21|ra-result-body|ra-citations/);
-  assert.match(complete, locale === "en" ? /Showing 0 of 3 saved activity updates/ : /処理状況3件のうち0件を表示/);
+  assert.match(complete, locale === "en" ? /Showing 0 of 3 saved steps/ : /処理状況3件のうち0件を表示/);
   const approval = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs: [{ ...base, status: "awaiting_approval" }], executionAvailable: true, onCancel: () => undefined }));
   assert.match(approval, locale === "en" ? /Awaiting approval/ : /承認待ち/); assert.match(approval, locale === "en" ? /paused while waiting/ : /一時停止中/);
   assert.match(approval, locale === "en" ? />Cancel activity<\/button>/ : />処理をキャンセル<\/button>/); assert.doesNotMatch(approval, /<button[^>]*>Approve|<form|ra-result-body/);

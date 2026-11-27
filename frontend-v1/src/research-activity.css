@@ -72,3 +72,5 @@
 .ra-fields dt { color: var(--muted); }
 .ra-fields dd { margin: 0; color: var(--text); overflow-wrap: anywhere; }
 .ra-technical pre { max-height: 240px; overflow: auto; font-family: var(--font-code); font-size: 11.5px; }
+.ra-run .ra-question { margin: 0; font-size: 14.5px; font-weight: 550; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ra-empty p { margin: 4px 0 0; color: var(--muted); }

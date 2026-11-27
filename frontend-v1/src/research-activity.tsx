@@ -23,7 +23,7 @@ export type ResearchActivityProps = {
 export function ResearchActivity({ locale, runs, busy = false, executionAvailable = false, onStatus, onEvents, onCancel, onClarify, onContinue, onOpenEvidence }: ResearchActivityProps) {
   return <section className="ra-activity" aria-label={say(locale, "Conversation activity", "会話の実行履歴")}>
     {!executionAvailable && runs.length > 0 && <p className="ra-unavailable" role="status">{say(locale, "Execution unavailable.", "実行は利用できません。")}</p>}
-    {runs.length === 0 ? <div className="ra-empty"><h3>{say(locale, "No submitted activity", "実行履歴はありません")}</h3></div>
+    {runs.length === 0 ? <div className="ra-empty"><h3>{say(locale, "No questions yet", "まだ質問はありません")}</h3><p>{say(locale, "Ask a question below. Answers cite the data they use.", "下の欄から質問してください。回答には使用したデータの引用が付きます。")}</p></div>
       : <ol className="ra-runs">{runs.map((run) => <li key={run.id}><RunCard {...{ locale, run, busy, onStatus, onEvents, onCancel, onClarify, onContinue, onOpenEvidence }} /></li>)}</ol>}
   </section>;
 }
@@ -32,26 +32,26 @@ function RunCard({ locale, run, busy, onStatus, onEvents, onCancel, onClarify, o
   const [answer, setAnswer] = useState(""); const id = useId(); const index = locale === "en" ? 0 : 1;
   const active = isRunActive(run.status); const waiting = run.status === "awaiting_clarification"; const approval = run.status === "awaiting_approval";
   return <article className="ra-run" data-run-id={run.id} data-status={run.status}>
-    <header><h3>{run.question}</h3><span className="ra-status" role="status">{statuses[run.status][index]}</span></header>
+    <header><p className="ra-question">{run.question}</p><span className="ra-status" role="status">{statuses[run.status][index]}</span></header>
     {run.synthetic && <p className="ra-synthetic">{say(locale, "Synthetic development activity · test data", "合成された開発用の処理・テストデータ")}</p>}
-    <div className="ra-run-meta"><span>{say(locale, "Active elapsed time", "実行時間")}: <time>{formatActiveElapsed(run.active_elapsed_ms)}</time>{(waiting || approval) && ` · ${say(locale, "paused while waiting", "確認待ちのため一時停止中")}`}</span><code>{run.id}</code></div>
+    <div className="ra-run-meta"><span>{say(locale, "Working time", "処理時間")}: <time>{formatActiveElapsed(run.active_elapsed_ms)}</time>{(waiting || approval) && ` · ${say(locale, "paused while waiting", "確認待ちのため一時停止中")}`}</span></div>
     {approval && <p className="ra-unavailable">{say(locale, "Approval is required. Approval controls are not available here yet.", "承認が必要です。ここでは承認操作をまだ利用できません。")}</p>}
     {run.status === "completed" && !run.result && <p>{say(locale, "Exploration finished.", "探索が完了しました。")}</p>}
     {run.continuation_of && <p className="ra-continuation">{say(locale, "Continuation of", "継続元")}: <code>{run.continuation_of}</code></p>}
-    <details className="ra-binding"><summary>{say(locale, "Submitted context — fixed for this run", "送信時の対象範囲・この実行では固定")}</summary><dl>
-      {([["Snapshot", "スナップショット", run.context.binding.snapshot_id], ["Context revision", "コンテキストの版", run.context.binding.revision_id], ["Context payload SHA-256", "コンテキストのSHA-256", run.context.binding.payload_sha256], ["Investigation", "調査", run.context.binding.investigation_id], ["Conversation", "会話", run.context.binding.conversation_id]] as const).map(([en, ja, value]) => <div key={en}><dt>{say(locale, en, ja)}</dt><dd><code>{value}</code></dd></div>)}
+    <details className="ra-binding"><summary>{say(locale, "Data used for this question", "この質問で使ったデータ")}</summary><dl>
+      {([["Question ID", "質問ID", run.id], ["Snapshot", "スナップショット", run.context.binding.snapshot_id], ["Context revision", "コンテキストの版", run.context.binding.revision_id], ["Context payload SHA-256", "コンテキストのSHA-256", run.context.binding.payload_sha256], ["Investigation", "調査", run.context.binding.investigation_id], ["Conversation", "会話", run.context.binding.conversation_id]] as const).map(([en, ja, value]) => <div key={en}><dt>{say(locale, en, ja)}</dt><dd><code>{value}</code></dd></div>)}
       <div><dt>{say(locale, "Attachments / pins", "添付 / 固定した制約")}</dt><dd>{run.context.attachments.length} / {run.context.pins.length}</dd></div>
     </dl><pre>{JSON.stringify({ scope: run.context.scope, attachments: run.context.attachments, pins: run.context.pins }, null, 2)}</pre></details>
-    <details className="ra-public-events"><summary>{say(locale, "Public activity", "公開された処理状況")} ({run.activity.length})</summary><ol>{run.activity.map((event) => <li key={event.cursor}><time>{formatActiveElapsed(event.elapsed_ms)}</time><span>{event.summary[locale]}</span></li>)}</ol></details>
-    {run.latest_event_cursor !== undefined && run.event_cursor < run.latest_event_cursor && <p className="ra-unavailable">{say(locale, `Showing ${run.event_cursor} of ${run.latest_event_cursor} saved activity updates. Check activity to load more.`, `保存された処理状況${run.latest_event_cursor}件のうち${run.event_cursor}件を表示しています。「処理状況を確認」で追加の状況を読み込めます。`)}</p>}
+    <details className="ra-public-events"><summary>{say(locale, "Steps", "処理の手順")} ({run.activity.length})</summary><ol>{run.activity.map((event) => <li key={event.cursor}><time>{formatActiveElapsed(event.elapsed_ms)}</time><span>{event.summary[locale]}</span></li>)}</ol></details>
+    {run.latest_event_cursor !== undefined && run.event_cursor < run.latest_event_cursor && <p className="ra-unavailable">{say(locale, `Showing ${run.event_cursor} of ${run.latest_event_cursor} saved steps. Use “Load steps” to see more.`, `保存された処理状況${run.latest_event_cursor}件のうち${run.event_cursor}件を表示しています。「手順を読み込む」で続きを表示できます。`)}</p>}
     {run.error && <p className="ra-error" role="alert">{run.error[locale]}</p>}
     {run.status === "partial" && <p className="ra-partial">{say(locale, "This output is incomplete. Its limitations remain part of the result.", "これは途中結果です。制約を含めて確認してください。")}</p>}
     {run.status === "cancelled" && <p className="ra-unavailable">{say(locale, "Activity stopped. Cancellation does not turn partial output into a complete result.", "処理は停止しました。キャンセルしても途中結果が完了した結果になることはありません。")}</p>}
     {active && !run.result && <p className="ra-unavailable">{say(locale, "No output is available yet.", "出力はまだありません。")}</p>}
     {run.result && <ResultBody {...{ locale, run, onOpenEvidence }} />}
     <div className="ra-controls">
-      <button type="button" className="button subtle" disabled={busy || !onStatus} onClick={() => onStatus?.(run)}>{say(locale, "Check status", "状態を確認")}</button>
-      <button type="button" className="button subtle" disabled={busy || !onEvents} onClick={() => onEvents?.(run)}>{say(locale, "Check activity", "処理状況を確認")}</button>
+      <button type="button" className="button subtle" disabled={busy || !onStatus} onClick={() => onStatus?.(run)}>{say(locale, "Refresh status", "状態を更新")}</button>
+      <button type="button" className="button subtle" disabled={busy || !onEvents} onClick={() => onEvents?.(run)}>{say(locale, "Load steps", "手順を読み込む")}</button>
       {canCancelRun(run.status) && <button type="button" className="button subtle" disabled={busy || !onCancel} onClick={() => onCancel?.(run)}>{say(locale, "Cancel activity", "処理をキャンセル")}</button>}
       {canContinueRun(run.status) && <button type="button" className="button subtle" disabled={busy || !onContinue} onClick={() => onContinue?.(run)}>{say(locale, "Continue with submitted context", "送信時の対象範囲で継続")}</button>}
     </div>
