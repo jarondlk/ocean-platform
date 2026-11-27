@@ -182,6 +182,7 @@ const activityModule = { exports: {} as {
   ResearchActivity: ComponentType<ResearchActivityProps>;
   ResearchResults: ComponentType<{ locale: "en" | "ja"; runs: readonly contract.ResearchRun[]; onOpenEvidence?: (e: contract.RunEvidence, r: contract.ResearchRun) => void }>;
   ResearchEvidence: ComponentType<{ locale: "en" | "ja"; evidence: contract.RunEvidence | null }>;
+  LongWaitNotice: ComponentType<{ locale: "en" | "ja"; kind: "question" | "answer" }>;
 } };
 const compiled = ts.transpileModule(readFileSync(new URL("../src/research-activity.tsx", import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
 const answerState = await import("../src/research-answer-state.ts");
