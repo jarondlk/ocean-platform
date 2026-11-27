@@ -1,94 +1,27 @@
-# OCEAN v1.0.0 Planning Hub
+# OCEAN v1 planning hub
 
-Current phase (2026-11-14 JST): **cloud integration and operational acceptance**
-for the independent beta at `https://beta.oceaninfobio.com`. The main Mac has
-resumed from second-Mac checkpoint `7002312`; unrelated local work is preserved.
+OCEAN v1 is the separate research site at `https://beta.oceaninfobio.com`:
+Context Catalog, Research and Workspace over Miyagi CTD, metagenome, SST and
+eDNA data. Components P00 and C01–C27 are built; the beta is now being
+completed and operated (milestones B0–B5).
 
-P00/C01–C26 are complete within documented software/component boundaries;
-C27 is complete for local release preparation. Authenticated hosting, CTD,
-metagenome/MUR SST catalogues and saved investigations are deployed. Research
-has a qualified API awaiting guarded rollout; eDNA, production experiments,
-recovery and full release acceptance remain open. There is no later CXX
-component to invent or automatically mark complete.
+## Read in this order
 
-B0 preparation and its dated live preflight now pass; see the
-[B0 checkpoint](beta/b0-20261114/README.md). B1 guarded Research rollout
-preparation is next. The new guard/observer tooling is portable; the B1 writer
-still needs recovery or reconstruction/review. Research admission stays paused,
-and any future apply requires fresh state/quiescence rather than saved arguments.
+1. [STATUS.md](STATUS.md) — what is live and what does not work yet (one page).
+2. [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md) — the remaining work
+   before invited users can rely on the beta.
+3. [beta/BETA_COMPLETION_PLAN.md](beta/BETA_COMPLETION_PLAN.md) — the full
+   B0–B5 gates, the 43 evaluation rows and 20 operational gates.
+4. [handoffs/BETA_DEPLOYMENT.md](handoffs/BETA_DEPLOYMENT.md) — deployment log
+   and exact live identities.
+5. [MASTER_PLAN.md](MASTER_PLAN.md) and [DECISIONS.md](DECISIONS.md) — design
+   and locked decisions, when a change touches them.
 
-Start with [STATUS](STATUS.md), the [current deployment handoff](handoffs/BETA_DEPLOYMENT.md)
-and the [beta completion plan](beta/BETA_COMPLETION_PLAN.md). The plan organizes
-remaining work as B0 resume/preflight, B1 usable Research, B2 complete data,
-B3 production experiments, B4 durable operations and B5 accepted beta release.
-It retains all 43 formal evaluation rows and 20 original operational gates.
-[Main-Mac audit](beta/main-mac-return-20261114/audit.json) records the exact
-current source/image findings. Research dispatch/synthesis and the three-hour
-Codex schedule remain paused; no full beta/release acceptance is claimed.
-
-The November 1 [integration preparation](beta/PREPARATION.md),
-[release package](C27_RELEASE_PREPARATION.md) and component handoffs are historical
-source-bound evidence. Their pre-deployment wording does not describe current
-cloud progress. Preserve their receipts; use the current handoff/plan to resume.
-
-This folder is the portable source of truth for accepted architecture, component
-contracts, progress and resumable work. The root repository README's unrelated
-local changes remain outside this update.
-
-Component-era raw evidence (C01–C27) is archived rather than kept in the
-working tree; see [EVIDENCE_ARCHIVE.md](EVIDENCE_ARCHIVE.md) to open it.
-
-## Read and choose
-
-1. Read [MASTER_PLAN.md](MASTER_PLAN.md) and [DECISIONS.md](DECISIONS.md).
-2. Check [STATUS.md](STATUS.md) and the selected component's prerequisites.
-3. Open its specification from [COMPONENTS.md](COMPONENTS.md).
-4. Copy its planning, implementation or resume prompt from
-   [PROMPTS.md](PROMPTS.md). Planning is the default until the user explicitly
-   selects implementation.
-
-## Historical component checkpoints
-
-The following dated component notes retain their original progression. Current
-state and remaining beta work are in STATUS and the completion plan above.
-
-**Completed:** P00 — Local UI and UX prototype, accepted on 2026-10-14 JST.
-The Pipeline & jobs page is omitted as requested. Read [its handoff](handoffs/P00.md)
-for the accepted direction and verified source receipt. C01 scientific scope
-validation is Complete; read [its handoff](handoffs/C01.md). C02 derived-evidence
-software and synthetic acceptance are Complete; read [its handoff](handoffs/C02.md).
-C03 retention integrity is Complete with actual disposable PostgreSQL acceptance;
-read [its handoff](handoffs/C03.md). C04 authentication responsiveness is Complete locally;
-read [its handoff](handoffs/C04.md). C05 retrieval correctness is Complete locally
-with actual PostgreSQL acceptance; read [its handoff](handoffs/C05.md) and
-[deferred rebuild procedure](C05_REBUILD_RUNBOOK.md). Later components require separate selection.
-
-The user subsequently authorized audited repository delivery. See the
-[C01/C02 delivery audit](DELIVERY_AUDIT_2026-10-14.md) and its final source receipt;
-the original component receipts remain historical after the audit corrections.
-C03/C04 delivery and hosted acceptance now pass;
-[C05 readiness audit](C05_READINESS_AUDIT_2026-10-15.md) records the current source
-and records readiness before C05 was selected. Current C05 acceptance is
-recorded separately in [its receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C05/verification.json).
-C05 is now committed/pushed as `fd8f520` with passing hosted CI;
-[the C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) verifies its prerequisite
-and 99-test baseline. C06 was explicitly selected after the readiness checkpoint and is Complete locally;
-read [its handoff](handoffs/C06.md). C06 is committed/pushed as `27d76c9`
-with passing hosted CI; [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C06/delivery.json).
-C07 export safety is complete and committed/pushed as `1195796` with
-[passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411); read [its handoff](handoffs/C07.md) and
-[delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C07/delivery.json). C08 is Complete locally; read its handoff and contract guide. C09 is now selected and Complete locally; see its handoff.
-
-The new site is fully isolated from the legacy production site. Read
-[SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
-All work continues on overhaul; main and the legacy deployment remain unchanged.
-
-Use P00 first, then one C01–C27 component at a time, numerically by default.
-Dependencies, not the number alone, determine readiness. Each component has
-smaller checkpoints:
-finishing one checkpoint and recording a useful handoff is valid partial
-progress. New chats do not increase account usage limits; the purpose here is
-recoverable, bounded work when a session is interrupted.
+Component contracts and handoffs remain the reference for how each part
+behaves. Component-era raw evidence is archived; see
+[EVIDENCE_ARCHIVE.md](EVIDENCE_ARCHIVE.md). Choosing and starting a component
+or milestone still follows [PROMPTS.md](PROMPTS.md): planning is the default
+until the user selects implementation.
 
 ## Documents
 
@@ -99,7 +32,7 @@ recoverable, bounded work when a session is interrupted.
 | [Site separation](SITE_SEPARATION.md) | Independent infrastructure, approved-data copies and legacy preservation |
 | [UI/UX brief](UI_UX_BRIEF.md) | Local prototype journeys, human-centered interactions and review loop |
 | [Components](COMPONENTS.md) | Component map and exact dependency graph |
-| [Status](STATUS.md) | Actual work state, checks and next eligible work |
+| [Status](STATUS.md) | One-page current state; dated log in [STATUS_HISTORY.md](STATUS_HISTORY.md) |
 | [Prompts](PROMPTS.md) | Independent planning, implementation and resume prompts |
 | [Acceptance map](ACCEPTANCE_MAP.md) | Requirement ownership and integration gates |
 | [Scalability review](SCALABILITY_REVIEW.md) | Data, analysis and user growth assessment; proposed capacity refinements |
@@ -159,7 +92,105 @@ The existing frontend/package.json remains a legacy reference and regression
 boundary; its checks do not validate the new frontend. Record the actual interpreter,
 dependency state and any unavailable integration environment in the handoff.
 
-## Baseline and scope
+## History
+
+Earlier hub summaries, kept verbatim for reference.
+
+### Hub introduction as of 2026-11-14
+
+
+Current phase (2026-11-14 JST): **cloud integration and operational acceptance**
+for the independent beta at `https://beta.oceaninfobio.com`. The main Mac has
+resumed from second-Mac checkpoint `7002312`; unrelated local work is preserved.
+
+P00/C01–C26 are complete within documented software/component boundaries;
+C27 is complete for local release preparation. Authenticated hosting, CTD,
+metagenome/MUR SST catalogues and saved investigations are deployed. Research
+has a qualified API awaiting guarded rollout; eDNA, production experiments,
+recovery and full release acceptance remain open. There is no later CXX
+component to invent or automatically mark complete.
+
+B0 preparation and its dated live preflight now pass; see the
+[B0 checkpoint](beta/b0-20261114/README.md). B1 guarded Research rollout
+preparation is next. The new guard/observer tooling is portable; the B1 writer
+still needs recovery or reconstruction/review. Research admission stays paused,
+and any future apply requires fresh state/quiescence rather than saved arguments.
+
+Start with [STATUS](STATUS.md), the [current deployment handoff](handoffs/BETA_DEPLOYMENT.md)
+and the [beta completion plan](beta/BETA_COMPLETION_PLAN.md). The plan organizes
+remaining work as B0 resume/preflight, B1 usable Research, B2 complete data,
+B3 production experiments, B4 durable operations and B5 accepted beta release.
+It retains all 43 formal evaluation rows and 20 original operational gates.
+[Main-Mac audit](beta/main-mac-return-20261114/audit.json) records the exact
+current source/image findings. Research dispatch/synthesis and the three-hour
+Codex schedule remain paused; no full beta/release acceptance is claimed.
+
+The November 1 [integration preparation](beta/PREPARATION.md),
+[release package](C27_RELEASE_PREPARATION.md) and component handoffs are historical
+source-bound evidence. Their pre-deployment wording does not describe current
+cloud progress. Preserve their receipts; use the current handoff/plan to resume.
+
+This folder is the portable source of truth for accepted architecture, component
+contracts, progress and resumable work. The root repository README's unrelated
+local changes remain outside this update.
+
+Component-era raw evidence (C01–C27) is archived rather than kept in the
+working tree; see [EVIDENCE_ARCHIVE.md](EVIDENCE_ARCHIVE.md) to open it.
+
+### Read and choose
+
+1. Read [MASTER_PLAN.md](MASTER_PLAN.md) and [DECISIONS.md](DECISIONS.md).
+2. Check [STATUS.md](STATUS.md) and the selected component's prerequisites.
+3. Open its specification from [COMPONENTS.md](COMPONENTS.md).
+4. Copy its planning, implementation or resume prompt from
+   [PROMPTS.md](PROMPTS.md). Planning is the default until the user explicitly
+   selects implementation.
+
+### Historical component checkpoints
+
+
+The following dated component notes retain their original progression. Current
+state and remaining beta work are in STATUS and the completion plan above.
+
+**Completed:** P00 — Local UI and UX prototype, accepted on 2026-10-14 JST.
+The Pipeline & jobs page is omitted as requested. Read [its handoff](handoffs/P00.md)
+for the accepted direction and verified source receipt. C01 scientific scope
+validation is Complete; read [its handoff](handoffs/C01.md). C02 derived-evidence
+software and synthetic acceptance are Complete; read [its handoff](handoffs/C02.md).
+C03 retention integrity is Complete with actual disposable PostgreSQL acceptance;
+read [its handoff](handoffs/C03.md). C04 authentication responsiveness is Complete locally;
+read [its handoff](handoffs/C04.md). C05 retrieval correctness is Complete locally
+with actual PostgreSQL acceptance; read [its handoff](handoffs/C05.md) and
+[deferred rebuild procedure](C05_REBUILD_RUNBOOK.md). Later components require separate selection.
+
+The user subsequently authorized audited repository delivery. See the
+[C01/C02 delivery audit](DELIVERY_AUDIT_2026-10-14.md) and its final source receipt;
+the original component receipts remain historical after the audit corrections.
+C03/C04 delivery and hosted acceptance now pass;
+[C05 readiness audit](C05_READINESS_AUDIT_2026-10-15.md) records the current source
+and records readiness before C05 was selected. Current C05 acceptance is
+recorded separately in [its receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C05/verification.json).
+C05 is now committed/pushed as `fd8f520` with passing hosted CI;
+[the C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) verifies its prerequisite
+and 99-test baseline. C06 was explicitly selected after the readiness checkpoint and is Complete locally;
+read [its handoff](handoffs/C06.md). C06 is committed/pushed as `27d76c9`
+with passing hosted CI; [delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C06/delivery.json).
+C07 export safety is complete and committed/pushed as `1195796` with
+[passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411); read [its handoff](handoffs/C07.md) and
+[delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C07/delivery.json). C08 is Complete locally; read its handoff and contract guide. C09 is now selected and Complete locally; see its handoff.
+
+The new site is fully isolated from the legacy production site. Read
+[SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
+All work continues on overhaul; main and the legacy deployment remain unchanged.
+
+Use P00 first, then one C01–C27 component at a time, numerically by default.
+Dependencies, not the number alone, determine readiness. Each component has
+smaller checkpoints:
+finishing one checkpoint and recording a useful handoff is valid partial
+progress. New chats do not increase account usage limits; the purpose here is
+recoverable, bounded work when a session is interrupted.
+
+### Baseline and scope
 
 Design began on 2026-10-12 JST; planning package prepared on 2026-10-13 JST from main at
 a73ea7fa48b88fe91995fda0cc25e481e63a9355. This is a discovery baseline,
@@ -238,7 +269,7 @@ C14 source `19ba911` is committed/pushed with [passing hosted CI](https://github
 tests and both builds/typechecks/audits. [Delivery receipt](https://github.com/jarondlk/ocean-platform/blob/8f70cceb3a1a279d484a54d703530706c1a8af35/docs/plans/ocean-v1/evidence/C14/delivery.json).
 C15 local readiness preparation passes; final selection follows this delivery.
 
-### C15 delivered; C16 started — 2026-10-17 JST
+#### C15 delivered; C16 started — 2026-10-17 JST
 
 C15 source7b1659c passes source-bound hosted CI38923128922 and is delivered
 at9688867. Trusted identity, isolated preview, responsive shell and browser gates
@@ -248,7 +279,7 @@ C16 formal prerequisites reconcile across75 accepted-current entries and the
 selects implementation. [Current C16 handoff](handoffs/C16.md). No cloud or real
 data operation is implied.
 
-### C16 local acceptance — 2026-10-18 JST
+#### C16 local acceptance — 2026-10-18 JST
 
 Explicit authenticated snapshot discovery and the standalone service catalogue
 pass local acceptance:510 v1 tests,3895 backend/127 gated skips/84.87%,134 actual
@@ -259,7 +290,7 @@ Source4981642 is committed/pushed with [passing hosted CI](https://github.com/ja
 and unrelated/scientific/legacy files remain unchanged. C17 formal source audit
 may now be finalized before automatic local implementation.
 
-### C17 local acceptance — 2026-10-18 JST
+#### C17 local acceptance — 2026-10-18 JST
 
 Owner-private investigations, conversations, immutable context revisions and
 explicit refresh branches pass local acceptance. Final backend4187/187 gated
