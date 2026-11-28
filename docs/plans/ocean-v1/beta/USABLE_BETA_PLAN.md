@@ -48,9 +48,14 @@ manual dispatch.
 | Step | Owner | Done when |
 |---|---|---|
 | Build one API image: live B2 runtime `0994e9d` plus only `orchestration/research_synthesis.py` | CLI | **Done:** `snapshot-api@sha256:d47032d2…` from branch `codex/readable-answers-runtime` (`8f3aee4`), hosted backend/PostgreSQL/v1 jobs passed, 178 image files verified against pins. [Candidate record](answers-20261127/answers-api-candidate.json) |
-| Update the research controller to that image first (image digest in the candidate record) | Operator | Controller ready on the new image; readback matches |
-| Update the serving `api` container to the same image; record receipt and extend the dispatch guard | CLI | Generation 77 live; serving and controller images equal |
-| Re-ask the saved MUR question and one CTD count | CLI (signed in) | Answers read as sentences ("MUR … v04.1 …", "N datasets — counted as …") |
+| Update the research controller to that image first (image digest in the candidate record) | Operator | **Done (Nov 27–28)** |
+| Update the serving `api` container to the same image; record receipt and extend the dispatch guard | CLI | **Done (Nov 27–28)** |
+| Re-ask the saved MUR question and one CTD count | CLI (signed in) | **Done (Nov 27–28)** |
+
+**Follow-ups found in the live check:** the answer view keeps the previously
+selected exploration instead of the newest; repeated questions have identical
+labels in the exploration selector; the row-preview block still reads
+"Retained row preview; preview length is not the result population."
 
 ### 3. The answers are right for real questions — blocking
 

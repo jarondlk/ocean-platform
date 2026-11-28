@@ -29,10 +29,10 @@ work is in [beta/USABLE_BETA_PLAN.md](beta/USABLE_BETA_PLAN.md).
   submissions, but delivery is paused, so a new question waits until an
   operator dispatches it. After 90 s the page now tells the user the question
   is saved and still waiting.
-- **Readable answer wording is deployed but not yet seen live.** Both services
-  run the readable-answers image ([record](beta/answers-20261127/answers-live.json)).
-  Answers prepared earlier keep their old wording; a new exploration
-  (`d3af5ed0…`, the MUR question) is queued and needs a manual dispatch.
+- **Answers prepared before Nov 27 keep their old technical wording.** New
+  answers read plainly — the re-asked MUR question answered "MUR Miyagi
+  2020–2023 — … sea-surface temperature from MUR v04.1; 0.05° grid; … values in
+  °C. Not yet scientifically reviewed." ([signed-in check](beta/answers-20261127/answers-signed-in-check.json)).
 - **eDNA questions** cannot give scientific results: the live eDNA data is raw
   inventory with unknown or control classifications and no resolved sample
   identities.

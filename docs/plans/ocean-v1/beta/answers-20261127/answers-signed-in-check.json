@@ -1,0 +1,56 @@
+{
+  "version": "ocean-beta-answers-signed-in-check-v1",
+  "captured_utc": "2026-11-28",
+  "project": "ocean-v1-beta-20261101",
+  "deployment_receipt_sha256": "e14e795fa62143114d77bfa71874e9d6c7740cdbfa7e4171eac016e77b0f25c5",
+  "serving_generation": 79,
+  "controller_generation": 11,
+  "investigation_id": "1139cbdb-e2c5-4448-87ee-04cf87fcb4b5",
+  "conversation_id": "8f119259-8ed0-43e0-97ea-281f0dfb061c",
+  "exploration_id": "d3af5ed0-8323-4042-8832-95264c8423fe",
+  "answer_job_id": "f29d6857-7c81-4cbc-b64d-920bb7404606",
+  "question": "Find object \"beta:sst:regional-preview:a02e…\". What sea-surface temperature product does this regional dataset use? Cite the catalogue evidence.",
+  "clarification": "Find object \"beta:sst:regional-preview:a02e205a70cc43532631b10ec170a3500052e01e9f75d9f050bac202236bdc33\" (same exact-lookup clarification as Nov 24)",
+  "manual_dispatches": [
+    {
+      "kind": "run",
+      "phase": "initial_exploration",
+      "controller_status": 200,
+      "controller_latency_seconds": 27.68,
+      "result": "awaiting_clarification"
+    },
+    {
+      "kind": "run",
+      "phase": "clarified_exploration",
+      "result": "completed"
+    },
+    {
+      "kind": "answer",
+      "phase": "answer_synthesis",
+      "result": "completed"
+    }
+  ],
+  "dispatch_authorization": "user allowed Claude to run scripts/beta_b1_dispatch.py with the operator credential (2026-11-28)",
+  "answer_main_sentence": "MUR Miyagi 2020–2023 — provisional regional preview — sea-surface temperature from MUR v04.1; 0.05° grid; daily foundation analysis; source09:00UTC instant retained; values in °C. Not yet scientifically reviewed.",
+  "matches_catalogue": {
+    "product": "MUR",
+    "version": "04.1",
+    "resolution": "0.05 degree",
+    "unit": "degC",
+    "scientific_approval": "not_reviewed"
+  },
+  "limitations_collapsed_count": 12,
+  "citation_present": true,
+  "repreparing_old_exploration_returns_existing_answer": true,
+  "ui_follow_ups": [
+    "answer view keeps the previously selected exploration instead of the newest",
+    "exploration selector shows identical labels for repeated questions",
+    "row-preview block still reads 'Retained row preview; preview length is not the result population.'"
+  ],
+  "final_delivery_control": {
+    "queue": "PAUSED",
+    "tasks_after": 0,
+    "automatic_delivery_enabled": false
+  },
+  "full_beta_acceptance": false
+}
